@@ -10,6 +10,7 @@ namespace MyCouch.Schemes
         {
             yield return p => p.Name.Equals("_rev", StringComparison.OrdinalIgnoreCase);
             yield return p => p.Name.Equals(string.Concat(p.DeclaringType.Name, "rev"), StringComparison.OrdinalIgnoreCase);
+            yield return p => p.Name.Equals("documentrev", StringComparison.OrdinalIgnoreCase);
             yield return p => p.Name.Equals("entityrev", StringComparison.OrdinalIgnoreCase);
             yield return p => p.Name.Equals("rev", StringComparison.OrdinalIgnoreCase);
         }

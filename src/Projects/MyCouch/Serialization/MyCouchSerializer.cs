@@ -39,12 +39,12 @@ namespace MyCouch.Serialization
             };
         }
 
-        public virtual string Serialize<T>(T doc) where T : class
+        public virtual string Serialize<T>(T item) where T : class
         {
             var content = new StringBuilder();
             using (var textWriter = new StringWriter(content))
             {
-                Serializer.Serialize(textWriter, doc);
+                Serializer.Serialize(textWriter, item);
             }
             return content.ToString();
         }

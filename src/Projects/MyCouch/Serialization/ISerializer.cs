@@ -5,7 +5,7 @@ namespace MyCouch.Serialization
 {
     public interface ISerializer
     {
-        string Serialize<T>(T doc) where T : class;
+        string Serialize<T>(T item) where T : class;
         string SerializeEntity<T>(T entity) where T : class;
         T Deserialize<T>(Stream data) where T : class;
         T Deserialize<T>(string data) where T : class;

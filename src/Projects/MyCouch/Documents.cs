@@ -79,7 +79,10 @@ namespace MyCouch
             response.Entity = entity;
 
             if (response.IsSuccess)
+            {
+                Client.EntityAccessor.IdMember.SetValueTo(response.Entity, response.Id);
                 Client.EntityAccessor.RevMember.SetValueTo(response.Entity, response.Rev);
+            }
 
             return response;
         }
@@ -185,11 +188,6 @@ namespace MyCouch
         protected virtual async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
         {
             return await Client.Connection.SendAsync(request);
-        }
-
-        protected virtual string Serialize<T>(T doc) where T : class
-        {
-            return Client.Serializer.Serialize(doc);
         }
 
         protected virtual string SerializeEntity<T>(T entity) where T : class
