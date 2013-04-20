@@ -16,9 +16,9 @@ namespace MyCouch.ConsoleSamples
 
                 //DocCrudUsingNonTypedApi(client, false);
                 //DocCrudUsingEntityApi(client, false);
-                ViewsUsingNonTypedQueryApi(client);
-                ViewsUsingNonTypedRunQueryApi(client);
-                ViewsUsingTypedRunQueryApi(client);
+                //ViewsUsingNonTypedQueryApi(client);
+                //ViewsUsingNonTypedRunQueryApi(client);
+                //ViewsUsingTypedRunQueryApi(client);
 
                 //DeleteDb(client);
             }
