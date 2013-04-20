@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F721C24F-162E-4505-9D5E-F7565CA16886}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MyCouch</RootNamespace>
+    <AssemblyName>MyCouch</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EnsureThat">
+      <HintPath>..\..\packages\Ensure.That.0.10.1\lib\net40\EnsureThat.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\packages\Newtonsoft.Json.5.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="DatabaseResponse.cs" />
+    <Compile Include="Databases.cs" />
+    <Compile Include="IDatabases.cs" />
+    <Compile Include="ISingleDocumentResponse.cs" />
+    <Compile Include="Response.cs" />
+    <Compile Include="DbClientResponseFactory.cs" />
+    <Compile Include="IDbClientResponseFactory.cs" />
+    <Compile Include="Net\HttpRequest.cs" />
+    <Compile Include="IResponse.cs" />
+    <Compile Include="Net\HttpContentTypes.cs" />
+    <Compile Include="Net\Connection.cs" />
+    <Compile Include="Client.cs" />
+    <Compile Include="Documents.cs" />
+    <Compile Include="DocumentResponse.cs" />
+    <Compile Include="EntityResponse.cs" />
+    <Compile Include="Net\IConnection.cs" />
+    <Compile Include="IClient.cs" />
+    <Compile Include="IDocuments.cs" />
+    <Compile Include="IViewQuery.cs" />
+    <Compile Include="IViewQueryConfigurator.cs" />
+    <Compile Include="IViewQueryOptions.cs" />
+    <Compile Include="IViews.cs" />
+    <Compile Include="ViewQueryResponse.cs" />
+    <Compile Include="Reflections\DynamicGetter.cs" />
+    <Compile Include="Reflections\DynamicProperty.cs" />
+    <Compile Include="Reflections\DynamicPropertyFactory.cs" />
+    <Compile Include="Reflections\DynamicSetter.cs" />
+    <Compile Include="Schemes\EntityIdMember.cs" />
+    <Compile Include="Schemes\EntityMember.cs" />
+    <Compile Include="Schemes\EntityRevMember.cs" />
+    <Compile Include="Schemes\EntityAccessor.cs" />
+    <Compile Include="Schemes\IEntityAccessor.cs" />
+    <Compile Include="Serialization\Conventions\DocTypeSerializationConvention.cs" />
+    <Compile Include="Serialization\DocSerializationConventions.cs" />
+    <Compile Include="Serialization\Conventions\IDocTypeSerializationConvention.cs" />
+    <Compile Include="Serialization\SerializationContractResolver.cs" />
+    <Compile Include="Serialization\ISerializer.cs" />
+    <Compile Include="Net\JsonContent.cs" />
+    <Compile Include="Serialization\SerializationEntityWriter.cs" />
+    <Compile Include="Serialization\MyCouchSerializer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Schemes\IEntityMember.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Querying\ViewQuery.cs" />
+    <Compile Include="Querying\ViewQueryConfigurator.cs" />
+    <Compile Include="Querying\ViewQueryOptions.cs" />
+    <Compile Include="Views.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
