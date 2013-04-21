@@ -12,15 +12,7 @@ namespace MyCouch.IntegrationTests
         {
             base.OnFixtureInitialize();
 
-            Client = TestClientFactory.CreateDefault();
-        }
-
-        protected override void OnFixtureFinalize()
-        {
-            base.OnFixtureFinalize();
-
-            Client.Dispose();
-            Client = null;
+            Client = IntegrationTestsRuntime.Client;
         }
     }
 

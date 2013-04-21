@@ -8,19 +8,13 @@ namespace MyCouch.IntegrationTests
         [SetUp]
         public void RunBeforeAnyTests()
         {
-            //using (var client = TestClientFactory.CreateDefault())
-            //{
-            //    client.Databases.Put(TestConstants.TestDbName);
-            //}
+            IntegrationTestsRuntime.Init();
         }
 
         [TearDown]
         public void RunAfterAnyTests()
         {
-            //using (var client = TestClientFactory.CreateDefault())
-            //{
-            //    client.Databases.Delete(TestConstants.TestDbName);
-            //}
+            IntegrationTestsRuntime.Close();
         }
     }
 }

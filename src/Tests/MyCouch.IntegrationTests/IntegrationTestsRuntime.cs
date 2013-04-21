@@ -1,9 +1,21 @@
-﻿using System.Collections.Generic;
-
-namespace MyCouch.IntegrationTests
+﻿namespace MyCouch.IntegrationTests
 {
-    internal static class DbHelper
+    internal static class IntegrationTestsRuntime
     {
+        internal static IClient Client { get; private set; }
+
+        internal static void Init()
+        {
+            Client = TestClientFactory.CreateDefault();
+            //Client.Databases.Put(TestConstants.TestDbName);
+        }
+
+        internal static void Close()
+        {
+            Client.Dispose();
+            Client = null;
+        }
+
         internal static void ClearAllDocuments()
         {
             using (var client = TestClientFactory.CreateDefault())

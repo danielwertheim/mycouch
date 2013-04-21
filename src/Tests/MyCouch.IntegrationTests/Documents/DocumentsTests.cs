@@ -17,7 +17,7 @@ namespace MyCouch.IntegrationTests.Documents
         {
             base.OnTestFinalize();
 
-            DbHelper.ClearAllDocuments();
+            IntegrationTestsRuntime.ClearAllDocuments();
         }
 
         [Test]
