@@ -131,9 +131,9 @@ namespace MyCouch.ConsoleSamples
         }
     }
 
-    public static class Views
+    internal static class Views
     {
-        public const string ArtistsAlbums =
+        internal const string ArtistsAlbums =
             "{" +
                 "\"_id\": \"_design/artists\"," +
                 "\"language\": \"javascript\"," +
@@ -145,17 +145,17 @@ namespace MyCouch.ConsoleSamples
             "}";
     }
 
-    public class Artist
+    internal class Artist
     {
         //Could be _id, ArtistId, EntityId, Id (you can change this convention)
-        public string ArtistId { get; set; }
+        internal string ArtistId { get; set; }
 
         //Could be _rev, ArtistRev, EntityRev, Rev (you can change this convention)
-        public string ArtistRev { get; set; }
+        internal string ArtistRev { get; set; }
 
-        public string Name { get; set; }
+        internal string Name { get; set; }
 
-        public Album[] Albums { get; set; }
+        internal Album[] Albums { get; set; }
     }
 
     public class Album
@@ -163,12 +163,12 @@ namespace MyCouch.ConsoleSamples
         public string Name { get; set; }
     }
 
-    public static class SampleData
+    internal static class SampleData
     {
-        public const string Doc1 = "{\"_id\": \"1\", \"$doctype\": \"artist\", \"name\": \"Fake artist 1\", \"albums\":[{\"name\": \"Greatest fakes #1\"}]}";
-        public const string Doc2 = "{\"_id\": \"2\", \"$doctype\": \"artist\", \"name\": \"Fake artist 2\", \"albums\":[{\"name\": \"Greatest fakes #2\"}]}";
+        internal const string Doc1 = "{\"_id\": \"1\", \"$doctype\": \"artist\", \"name\": \"Fake artist 1\", \"albums\":[{\"name\": \"Greatest fakes #1\"}]}";
+        internal const string Doc2 = "{\"_id\": \"2\", \"$doctype\": \"artist\", \"name\": \"Fake artist 2\", \"albums\":[{\"name\": \"Greatest fakes #2\"}]}";
 
-        public static readonly Artist Doc3 = new Artist
+        internal static readonly Artist Doc3 = new Artist
         {
             ArtistId = "3",
             Name = "Fake artist 3",
@@ -177,7 +177,8 @@ namespace MyCouch.ConsoleSamples
                 new Album { Name = "Greatest fakes #3" }
             }
         };
-        public static readonly Artist Doc4 = new Artist
+
+        internal static readonly Artist Doc4 = new Artist
         {
             ArtistId = "4",
             Name = "Fake artist 4",
