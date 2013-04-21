@@ -124,6 +124,7 @@ namespace MyCouch
         protected virtual void OnSuccessfulResponseContentMaterializer<T>(HttpResponseMessage response, ViewQueryResponse<T> result) where T : class
         {
             var content = response.Content.ReadAsStreamAsync().Result;
+            //var test = Serializer.Deserialize<ViewQueryResponse<T>>(content);
             var kv = Serializer.Deserialize<IDictionary<string, JToken>>(content);
 
             if (kv.ContainsKey("total_rows"))
@@ -142,7 +143,16 @@ namespace MyCouch
                     {
                         Id = r["id"].Value<string>(),
                         Key = r["key"].Value<string>(),
-                        Value = r["value"].Select(vr => vr.ToString() as T).ToArray()
+                        Value = r["value"].ToString() as T
+                    }).ToArray();
+                }
+                else if (result is ViewQueryResponse<string[]>)
+                {
+                    result.Rows = rows.Select(r => new ViewQueryResponse<T>.Row
+                    {
+                        Id = r["id"].Value<string>(),
+                        Key = r["key"].Value<string>(),
+                        Value = r["value"].Select(vr => vr.ToString() as T).ToArray() as T
                     }).ToArray();
                 }
                 else
@@ -151,7 +161,7 @@ namespace MyCouch
                     {
                         Id = r["id"].Value<string>(),
                         Key = r["key"].Value<string>(),
-                        Value = Serializer.Deserialize<T>(r["value"].Select(vr => vr.ToString())).ToArray()
+                        Value = Serializer.Deserialize<T>(r["value"].ToString())
                     }).ToArray();
                 }
             }

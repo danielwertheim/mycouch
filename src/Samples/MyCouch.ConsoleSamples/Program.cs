@@ -126,7 +126,7 @@ namespace MyCouch.ConsoleSamples
         {
             Console.WriteLine("***** ***** ViewsUsingNonTypedRunQueryApi ***** *****");
             var query = client.Views.CreateQuery("artists", "albums").Configure(o => o.Limit(5).Reduce(false));
-            var result = client.Views.RunQuery<Album>(query);
+            var result = client.Views.RunQuery<Album[]>(query);
             Console.WriteLine(result);
         }
     }

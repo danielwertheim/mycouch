@@ -28,7 +28,7 @@ namespace MyCouch
         {
             public string Id { get; set; }
             public string Key { get; set; }
-            public T[] Value { get; set; }
+            public T Value { get; set; }
         }
     }
 }
