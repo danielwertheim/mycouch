@@ -145,17 +145,17 @@ namespace MyCouch.ConsoleSamples
             "}";
     }
 
-    internal class Artist
+    public class Artist
     {
-        //Could be _id, ArtistId, EntityId, Id (you can change this convention)
-        internal string ArtistId { get; set; }
+        //Could be _id, ArtistId, DocumentId, EntityId, Id (you can change this convention)
+        public string ArtistId { get; set; }
 
-        //Could be _rev, ArtistRev, EntityRev, Rev (you can change this convention)
-        internal string ArtistRev { get; set; }
+        //Could be _rev, ArtistRev, DocumentRev, EntityRev, Rev (you can change this convention)
+        public string ArtistRev { get; set; }
 
-        internal string Name { get; set; }
+        public string Name { get; set; }
 
-        internal Album[] Albums { get; set; }
+        public Album[] Albums { get; set; }
     }
 
     public class Album
