@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -7,7 +6,6 @@ using System.Net.Http.Headers;
 using System.Text;
 using EnsureThat;
 using MyCouch.Serialization;
-using Newtonsoft.Json.Linq;
 
 namespace MyCouch
 {
@@ -64,50 +62,43 @@ namespace MyCouch
             return result;
         }
 
-        protected virtual void OnSuccessfulResponseContentMaterializer(HttpResponseMessage response, DatabaseResponse result)
-        {
-        }
+        protected virtual void OnSuccessfulResponseContentMaterializer(HttpResponseMessage response, DatabaseResponse result) { }
 
         protected virtual void OnSuccessfulResponseContentMaterializer(HttpResponseMessage response, DocumentResponse result)
         {
-            var content = response.Content.ReadAsStreamAsync().Result;
-
-            OnSuccessfulResponseContentMaterializer(response.Headers, content, result);
-
-            if (result.RequestMethod == HttpMethod.Get)
+            using (var content = response.Content.ReadAsStreamAsync().Result)
             {
-                content.Position = 0;
-                using (var reader = new StreamReader(content, Encoding.UTF8))
+                OnSuccessfulResponseContentMaterializer(response.Headers, content, result);
+
+                if (result.RequestMethod == HttpMethod.Get)
                 {
-                    result.Content = reader.ReadToEnd();
+                    content.Position = 0;
+                    using (var reader = new StreamReader(content, Encoding.UTF8))
+                    {
+                        result.Content = reader.ReadToEnd();
+                    }
                 }
             }
         }
 
         protected virtual void OnSuccessfulResponseContentMaterializer<T>(HttpResponseMessage response, EntityResponse<T> result) where T : class
         {
-            var content = response.Content.ReadAsStreamAsync().Result;
-
-            OnSuccessfulResponseContentMaterializer(response.Headers, content, result);
-
-            if (result.RequestMethod == HttpMethod.Get)
+            using (var content = response.Content.ReadAsStreamAsync().Result)
             {
-                content.Position = 0;
-                result.Entity = Serializer.Deserialize<T>(content);
+                OnSuccessfulResponseContentMaterializer(response.Headers, content, result);
+
+                if (result.RequestMethod == HttpMethod.Get)
+                {
+                    content.Position = 0;
+                    result.Entity = Serializer.Deserialize<T>(content);
+                }
             }
         }
 
         protected virtual void OnSuccessfulResponseContentMaterializer<T>(HttpResponseHeaders headers, Stream content, T result) where T : SingleDocumentResponse
         {
             if (result.ContentShouldHaveIdAndRev())
-            {
-                var kv = Serializer.Deserialize<IDictionary<string, dynamic>>(content);
-                if (kv.ContainsKey("id"))
-                    result.Id = kv["id"];
-
-                if (kv.ContainsKey("rev"))
-                    result.Rev = kv["rev"];
-            }
+                Serializer.PopulateSingleDocumentResponse(result, content);
 
             if (result.RequestMethod == HttpMethod.Get)
             {
@@ -120,61 +111,16 @@ namespace MyCouch
             }
         }
 
-        //TODO: Make more effective
         protected virtual void OnSuccessfulResponseContentMaterializer<T>(HttpResponseMessage response, ViewQueryResponse<T> result) where T : class
         {
-            var content = response.Content.ReadAsStreamAsync().Result;
-            //var test = Serializer.Deserialize<ViewQueryResponse<T>>(content);
-            var kv = Serializer.Deserialize<IDictionary<string, JToken>>(content);
-
-            if (kv.ContainsKey("total_rows"))
-                result.TotalRows = kv["total_rows"].Value<long>();
-
-            if (kv.ContainsKey("offset"))
-                result.OffSet = kv["offset"].Value<long>();
-
-            if (kv.ContainsKey("rows"))
-            {
-                var rows = (JArray)kv["rows"];
-
-                if (result is ViewQueryResponse<string>)
-                {
-                    result.Rows = rows.Select(r => new ViewQueryResponse<T>.Row
-                    {
-                        Id = r["id"].Value<string>(),
-                        Key = r["key"].Value<string>(),
-                        Value = r["value"].ToString() as T
-                    }).ToArray();
-                }
-                else if (result is ViewQueryResponse<string[]>)
-                {
-                    result.Rows = rows.Select(r => new ViewQueryResponse<T>.Row
-                    {
-                        Id = r["id"].Value<string>(),
-                        Key = r["key"].Value<string>(),
-                        Value = r["value"].Select(vr => vr.ToString() as T).ToArray() as T
-                    }).ToArray();
-                }
-                else
-                {
-                    result.Rows = rows.Select(r => new ViewQueryResponse<T>.Row
-                    {
-                        Id = r["id"].Value<string>(),
-                        Key = r["key"].Value<string>(),
-                        Value = Serializer.Deserialize<T>(r["value"].ToString())
-                    }).ToArray();
-                }
-            }
+            using(var content = response.Content.ReadAsStreamAsync().Result)
+                Serializer.PopulateViewQueryResponse(result, content);
         }
         
         protected virtual void OnFailedResponseContentMaterializer<T>(HttpResponseMessage response, T result) where T : Response
         {
-            var kv = Serializer.Deserialize<IDictionary<string, dynamic>>(response.Content.ReadAsStreamAsync().Result);
-            if (kv.ContainsKey("error"))
-                result.Error = kv["error"];
-
-            if (kv.ContainsKey("reason"))
-                result.Reason = kv["reason"];
+            using (var content = response.Content.ReadAsStreamAsync().Result)
+                Serializer.PopulateFailedResponse(result, content);
         }
     }
 }

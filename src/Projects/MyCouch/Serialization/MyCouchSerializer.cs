@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Text;
 using MyCouch.Schemes;
 using Newtonsoft.Json;
@@ -88,9 +86,108 @@ namespace MyCouch.Serialization
             }
         }
 
-        public virtual IEnumerable<T> Deserialize<T>(IEnumerable<string> data) where T : class
+        public virtual void PopulateSingleDocumentResponse<T>(T response, Stream data) where T : SingleDocumentResponse
         {
-            return data.Select(Deserialize<T>);
+            using (var sr = new StreamReader(data))
+            {
+                using (var jr = new JsonTextReader(sr))
+                {
+                    while (jr.Read())
+                    {
+                        if (jr.TokenType == JsonToken.PropertyName)
+                        {
+                            var propName = jr.Path;
+                            if (propName == "id")
+                            {
+                                if (!jr.Read())
+                                    break;
+                                response.Id = jr.Value.ToString();
+                                continue;
+                            }
+
+                            if (propName == "rev")
+                            {
+                                if (!jr.Read())
+                                    break;
+                                response.Rev = jr.Value.ToString();
+                                continue;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public virtual void PopulateViewQueryResponse<T>(ViewQueryResponse<T> response, Stream data) where T : class
+        {
+            using (var sr = new StreamReader(data))
+            {
+                using (var jr = new JsonTextReader(sr))
+                {
+                    while (jr.Read())
+                    {
+                        if (jr.TokenType == JsonToken.PropertyName)
+                        {
+                            var propName = jr.Path;
+                            if (propName == "total_rows")
+                            {
+                                if (!jr.Read())
+                                    break;
+                                response.TotalRows = (long)jr.Value;
+                                continue;
+                            }
+
+                            if (propName == "offset")
+                            {
+                                if (!jr.Read())
+                                    break;
+                                response.OffSet = (long)jr.Value;
+                                continue;
+                            }
+
+                            if (propName == "rows")
+                            {
+                                if (!jr.Read())
+                                    break;
+
+                                response.Rows = Serializer.Deserialize<ViewQueryResponse<T>.Row[]>(jr);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public virtual void PopulateFailedResponse<T>(T response, Stream data) where T : Response
+        {
+            using (var sr = new StreamReader(data))
+            {
+                using (var jr = new JsonTextReader(sr))
+                {
+                    while (jr.Read())
+                    {
+                        if (jr.TokenType == JsonToken.PropertyName)
+                        {
+                            var propName = jr.Path;
+                            if (propName == "error")
+                            {
+                                if (!jr.Read())
+                                    break;
+                                response.Error = jr.Value.ToString();
+                                continue;
+                            }
+
+                            if (propName == "reason")
+                            {
+                                if (!jr.Read())
+                                    break;
+                                response.Reason = jr.Value.ToString();
+                                continue;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         protected virtual SerializationEntityWriter CreateEntityWriter(TextWriter textWriter)
