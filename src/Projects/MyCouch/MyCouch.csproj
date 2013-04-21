@@ -49,6 +49,8 @@
     <Compile Include="Databases.cs" />
     <Compile Include="IDatabases.cs" />
     <Compile Include="ISingleDocumentResponse.cs" />
+    <Compile Include="ISystemViewQuery.cs" />
+    <Compile Include="Querying\SystemViewQuery.cs" />
     <Compile Include="Response.cs" />
     <Compile Include="DbClientResponseFactory.cs" />
     <Compile Include="IDbClientResponseFactory.cs" />

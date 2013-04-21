@@ -19,6 +19,16 @@ namespace MyCouch
         IViewQuery CreateQuery(string designDocument, string viewname);
 
         /// <summary>
+        /// Creates a system-query, targetting builtin views of CouchDb,
+        /// which you later can run against any number of database instaces
+        /// using <see cref="RunQuery"/> or <see cref="RunQueryAsync"/>. The query is not
+        /// tied to the current connected client.
+        /// </summary>
+        /// <param name="viewname"></param>
+        /// <returns></returns>
+        ISystemViewQuery CreateSystemQuery(string viewname);
+
+        /// <summary>
         /// Lets you run an <see cref="IViewQuery"/> against the current database.
         /// </summary>
         /// <param name="query"></param>

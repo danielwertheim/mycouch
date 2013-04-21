@@ -21,7 +21,12 @@ namespace MyCouch
 
         public virtual IViewQuery CreateQuery(string designDocument, string viewname)
         {
-            return new ViewQuery(Client, designDocument, viewname);
+            return new ViewQuery(designDocument, viewname);
+        }
+
+        public virtual ISystemViewQuery CreateSystemQuery(string viewname)
+        {
+            return new SystemViewQuery(viewname);
         }
 
         public virtual ViewQueryResponse RunQuery(IViewQuery query)
@@ -91,16 +96,24 @@ namespace MyCouch
 
         protected virtual string GenerateRequestUrl(IViewQuery query)
         {
+            if (query is ISystemViewQuery)
+            {
+                return string.Format("{0}/{1}?{2}",
+                Client.Connection.Address,
+                query.ViewName,
+                GenerateQueryStringParams(query.Options));
+            }
+
             return string.Format("{0}/_design/{1}/_view/{2}?{3}",
                 Client.Connection.Address,
                 query.DesignDocument,
                 query.ViewName,
-                GenerateQueryStringParams(query));
+                GenerateQueryStringParams(query.Options));
         }
 
-        protected virtual string GenerateQueryStringParams(IViewQuery query)
+        protected virtual string GenerateQueryStringParams(IViewQueryOptions options)
         {
-            return string.Join("&", query.Options.Select(kv => string.Format("{0}={1}", kv.Key, Uri.EscapeDataString(kv.Value))));
+            return string.Join("&", options.Select(kv => string.Format("{0}={1}", kv.Key, Uri.EscapeDataString(kv.Value))));
         }
 
         protected virtual async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
