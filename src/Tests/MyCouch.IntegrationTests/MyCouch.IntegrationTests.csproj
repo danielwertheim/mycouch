@@ -52,6 +52,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AssemblyInitializer.cs" />
+    <Compile Include="DbHelper.cs" />
     <Compile Include="Documents\DocumentsTests.cs" />
     <Compile Include="IntegrationTestsOf.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

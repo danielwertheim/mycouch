@@ -11,6 +11,8 @@ namespace MyCouch.UnitTests.Serialization
     {
         protected override void OnTestInitialize()
         {
+            base.OnTestInitialize();
+
             SUT = new MyCouchSerializer(new EntityAccessor());
         }
 

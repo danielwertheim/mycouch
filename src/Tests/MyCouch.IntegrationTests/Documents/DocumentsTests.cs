@@ -8,7 +8,16 @@ namespace MyCouch.IntegrationTests.Documents
     {
         protected override void OnTestInitialize()
         {
+            base.OnTestInitialize();
+
             SUT = Client.Documents;
+        }
+
+        protected override void OnTestFinalize()
+        {
+            base.OnTestFinalize();
+
+            DbHelper.ClearAllDocuments();
         }
 
         [Test]
