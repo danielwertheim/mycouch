@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using MyCouch.Schemes;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 
 namespace MyCouch.Serialization
@@ -95,24 +94,21 @@ namespace MyCouch.Serialization
                 {
                     while (jr.Read())
                     {
-                        if (jr.TokenType == JsonToken.PropertyName)
+                        if (jr.TokenType != JsonToken.PropertyName) 
+                            continue;
+                        
+                        var propName = jr.Value.ToString();
+                        if (propName == "id")
                         {
-                            var propName = jr.Path;
-                            if (propName == "id")
-                            {
-                                if (!jr.Read())
-                                    break;
-                                response.Id = jr.Value.ToString();
-                                continue;
-                            }
-
-                            if (propName == "rev")
-                            {
-                                if (!jr.Read())
-                                    break;
-                                response.Rev = jr.Value.ToString();
-                                continue;
-                            }
+                            if (!jr.Read())
+                                break;
+                            response.Id = jr.Value.ToString();
+                        }
+                        else if (propName == "rev")
+                        {
+                            if (!jr.Read())
+                                break;
+                            response.Rev = jr.Value.ToString();
                         }
                     }
                 }
@@ -253,24 +249,21 @@ namespace MyCouch.Serialization
                 {
                     while (jr.Read())
                     {
-                        if (jr.TokenType == JsonToken.PropertyName)
+                        if (jr.TokenType != JsonToken.PropertyName) 
+                            continue;
+                        
+                        var propName = jr.Value.ToString();
+                        if (propName == "error")
                         {
-                            var propName = jr.Path;
-                            if (propName == "error")
-                            {
-                                if (!jr.Read())
-                                    break;
-                                response.Error = jr.Value.ToString();
-                                continue;
-                            }
-
-                            if (propName == "reason")
-                            {
-                                if (!jr.Read())
-                                    break;
-                                response.Reason = jr.Value.ToString();
-                                continue;
-                            }
+                            if (!jr.Read())
+                                break;
+                            response.Error = jr.Value.ToString();
+                        }
+                        else if (propName == "reason")
+                        {
+                            if (!jr.Read())
+                                break;
+                            response.Reason = jr.Value.ToString();
                         }
                     }
                 }
