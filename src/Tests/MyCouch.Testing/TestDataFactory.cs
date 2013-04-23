@@ -20,7 +20,7 @@ namespace MyCouch.Testing
             {
                 var artist = new Artist
                 {
-                    ArtistId = c.ToString(),
+                    ArtistId = (c + 1).ToString(),
                     Name = "Artist #" + numOf
                 };
 
