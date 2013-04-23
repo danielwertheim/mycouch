@@ -43,7 +43,7 @@ namespace MyCouch.IntegrationTests.Documents
         }
 
         [Test]
-        public void When_put_of_new_document_Using_an_entity_The_document_is_persisted()
+        public void When_put_of_new_document_Using_an_entity_The_document_is_replaced()
         {
             var artist = TestDataFactory.CreateArtist();
             var initialId = artist.ArtistId;
@@ -54,7 +54,7 @@ namespace MyCouch.IntegrationTests.Documents
         }
 
         [Test]
-        public void When_put_of_new_document_Using_json_The_document_is_persisted()
+        public void When_put_of_new_document_Using_json_The_document_is_replaced()
         {
             var artist = TestDataFactory.CreateArtist();
             var initialId = artist.ArtistId;
@@ -66,7 +66,7 @@ namespace MyCouch.IntegrationTests.Documents
         }
 
         [Test]
-        public void When_put_of_existing_document_Using_an_entity_The_document_is_updated()
+        public void When_put_of_existing_document_Using_an_entity_The_document_is_replaced()
         {
             var artist = TestDataFactory.CreateArtist();
             var initialId = artist.ArtistId;
@@ -78,7 +78,7 @@ namespace MyCouch.IntegrationTests.Documents
         }
         
         [Test]
-        public void When_put_of_existing_document_Using_json_The_document_is_updated()
+        public void When_put_of_existing_document_Using_json_The_document_is_replaced()
         {
             var artist = TestDataFactory.CreateArtist();
             var initialId = artist.ArtistId;
