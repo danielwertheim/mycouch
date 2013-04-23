@@ -24,10 +24,22 @@ namespace MyCouch.IntegrationTests.Documents
         public void When_post_of_new_document_Using_an_entity_The_document_is_persisted()
         {
             var artist = TestDataFactory.CreateArtist();
+            var initialId = artist.ArtistId;
 
             var response = SUT.Post(artist);
 
-            response.Should().BeSuccessfulPost(e => e.ArtistId, e => e.ArtistRev);
+            response.Should().BeSuccessfulPost(initialId, e => e.ArtistId, e => e.ArtistRev);
+        }
+
+        [Test]
+        public void When_post_of_new_document_Using_json_The_document_is_persisted()
+        {
+            var artist = TestDataFactory.CreateArtist();
+            var json = Client.Serializer.SerializeEntity(artist);
+
+            var response = SUT.Post(json);
+
+            response.Should().BeSuccessfulPost(artist.ArtistId);
         }
     }
 }
