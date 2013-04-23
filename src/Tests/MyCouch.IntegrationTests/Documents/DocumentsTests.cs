@@ -89,5 +89,17 @@ namespace MyCouch.IntegrationTests.Documents
 
             response.Should().BeSuccessfulPut(initialId);
         }
+
+        [Test]
+        public void When_delete_of_existing_document_Using_an_entity_The_document_is_deleted()
+        {
+            var artist = TestDataFactory.CreateArtist();
+            var initialId = artist.ArtistId;
+            SUT.Post(artist);
+
+            var response = SUT.Delete(artist);
+
+            response.Should().BeSuccessfulDelete(initialId, e => e.ArtistId, e => e.ArtistRev);
+        }
     }
 }
