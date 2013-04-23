@@ -41,5 +41,16 @@ namespace MyCouch.IntegrationTests.Documents
 
             response.Should().BeSuccessfulPost(artist.ArtistId);
         }
+
+        [Test]
+        public void When_put_of_new_document_Using_an_entity_The_document_is_persisted()
+        {
+            var artist = TestDataFactory.CreateArtist();
+            var initialId = artist.ArtistId;
+
+            var response = SUT.Put(artist);
+
+            response.Should().BeSuccessfulPutOfNew(initialId, e => e.ArtistId, e => e.ArtistRev);
+        }
     }
 }

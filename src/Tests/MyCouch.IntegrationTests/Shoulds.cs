@@ -40,7 +40,23 @@ namespace MyCouch.IntegrationTests
             Response.Id.Should().NotBeNullOrEmpty();
             Response.Id.Should().Be(initialId);
             Response.Rev.Should().NotBeNullOrEmpty();
-            
+
+            idAccessor(Response.Entity).Should().Be(Response.Id);
+            revAccessor(Response.Entity).Should().Be(Response.Rev);
+        }
+
+        internal void BeSuccessfulPutOfNew(string initialId, Func<T, string> idAccessor, Func<T, string> revAccessor)
+        {
+            Response.IsSuccess.Should().BeTrue();
+            Response.StatusCode.Should().Be(HttpStatusCode.Created);
+            Response.Error.Should().BeNull();
+            Response.Reason.Should().BeNull();
+            Response.IsEmpty.Should().BeFalse();
+            Response.Entity.Should().NotBeNull();
+            Response.Id.Should().NotBeNullOrEmpty();
+            Response.Id.Should().Be(initialId);
+            Response.Rev.Should().NotBeNullOrEmpty();
+
             idAccessor(Response.Entity).Should().Be(Response.Id);
             revAccessor(Response.Entity).Should().Be(Response.Rev);
         }

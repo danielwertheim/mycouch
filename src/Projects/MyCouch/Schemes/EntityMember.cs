@@ -30,7 +30,7 @@ namespace MyCouch.Schemes
 
         public virtual string GetValueFrom<T>(T entity)
         {
-            return GetGetterFor(typeof (T)).GetValue(entity).ToString();
+            return GetGetterFor(typeof (T)).GetValue(entity) as string;
         }
 
         public void SetValueTo<T>(T entity, string value)
