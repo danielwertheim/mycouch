@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -149,10 +150,10 @@ namespace MyCouch.Serialization
                                 break;
 
                             if (response is ViewQueryResponse<string>)
-                                response.Rows = YieldViewQueryStringResponseRows<T>(jr).ToArray();
+                                response.Rows = YieldViewQueryRowsOfString(jr).ToArray() as ViewQueryResponse<T>.Row[];
                             else if (response is ViewQueryResponse<string[]>)
                             {
-                                //TODO: Fix
+                                response.Rows = YieldViewQueryRowsOfStrings(jr).ToArray() as ViewQueryResponse<T>.Row[];
                             }
                             else
                                 response.Rows = Deserializer.Deserialize<ViewQueryResponse<T>.Row[]>(jr);
@@ -162,12 +163,12 @@ namespace MyCouch.Serialization
             }
         }
 
-        protected IEnumerable<ViewQueryResponse<T>.Row> YieldViewQueryStringResponseRows<T>(JsonReader jr) where T : class
+        protected IEnumerable<ViewQueryResponse<string>.Row> YieldViewQueryRowsOfString(JsonReader jr)
         {
             if (jr.TokenType != JsonToken.StartArray)
                 yield break;
 
-            var row = new ViewQueryResponse<T>.Row();
+            var row = new ViewQueryResponse<string>.Row();
             var startDepth = jr.Depth;
             var sb = new StringBuilder();
             var hasMappedId = false;
@@ -202,7 +203,7 @@ namespace MyCouch.Serialization
                             if (!jr.Read())
                                 break;
                             jw.WriteToken(jr, true);
-                            row.Value = sb.ToString() as T;
+                            row.Value = sb.ToString();
                             sb.Clear();
                             hasMappedValue = true;
                         }
@@ -213,33 +214,80 @@ namespace MyCouch.Serialization
                         {
                             hasMappedId = hasMappedKey = hasMappedValue = false;
                             yield return row;
-                            row = new ViewQueryResponse<T>.Row();
+                            row = new ViewQueryResponse<string>.Row();
                         }
                     }
                 }
             }
         }
 
-        //protected IEnumerable<string> YieldViewQueryResponseRows(JsonReader jr)
-        //{
-        //    if(jr.TokenType != JsonToken.StartArray)
-        //        yield break;
+        protected IEnumerable<ViewQueryResponse<string[]>.Row> YieldViewQueryRowsOfStrings(JsonReader jr)
+        {
+            if (jr.TokenType != JsonToken.StartArray)
+                yield break;
 
-        //    var sb = new StringBuilder();
-        //    using (var sw = new StringWriter(sb))
-        //    {
-        //        using (var jw = new JsonTextWriter(sw))
-        //        {
-        //            var startDepth = jr.Depth;
-        //            while (jr.Read() && !(jr.TokenType == JsonToken.EndArray && jr.Depth == startDepth))
-        //            {
-        //                jw.WriteToken(jr, true);
-        //                yield return sb.ToString();
-        //                sb.Clear();
-        //            }
-        //        }
-        //    }
-        //}
+            var row = new ViewQueryResponse<string[]>.Row();
+            var startDepth = jr.Depth;
+            var sb = new StringBuilder();
+            var rowValues = new List<string>();
+            var hasMappedId = false;
+            var hasMappedKey = false;
+            var hasMappedValue = false;
+            using (var sw = new StringWriter(sb))
+            {
+                using (var jw = new JsonTextWriter(sw))
+                {
+                    while (jr.Read() && !(jr.TokenType == JsonToken.EndArray && jr.Depth == startDepth))
+                    {
+                        if (jr.TokenType != JsonToken.PropertyName)
+                            continue;
+
+                        var propName = jr.Value.ToString().ToLower();
+                        if (propName == "id")
+                        {
+                            if (!jr.Read())
+                                break;
+                            row.Id = jr.Value.ToString();
+                            hasMappedId = true;
+                        }
+                        else if (propName == "key")
+                        {
+                            if (!jr.Read())
+                                break;
+                            row.Key = jr.Value.ToString();
+                            hasMappedKey = true;
+                        }
+                        else if (propName == "value")
+                        {
+                            if (!jr.Read())
+                                break;
+
+                            var valueStartDepth = jr.Depth;
+                            
+                            while (jr.Read() && !(jr.TokenType == JsonToken.EndArray && jr.Depth == valueStartDepth))
+                            {
+                                jw.WriteToken(jr, true);
+                                rowValues.Add(sb.ToString());
+                                sb.Clear();
+                            }
+
+                            row.Value = rowValues.ToArray();
+                            rowValues.Clear();
+                            hasMappedValue = true;
+                        }
+                        else
+                            continue;
+
+                        if (hasMappedId && hasMappedKey && hasMappedValue)
+                        {
+                            hasMappedId = hasMappedKey = hasMappedValue = false;
+                            yield return row;
+                            row = new ViewQueryResponse<string[]>.Row();
+                        }
+                    }
+                }
+            }
+        }
 
         public virtual void PopulateFailedResponse<T>(T response, Stream data) where T : Response
         {
