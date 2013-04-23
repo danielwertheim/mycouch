@@ -110,7 +110,7 @@ namespace MyCouch.ConsoleSamples
         private static void ViewsUsingNonTypedQueryApi(IClient client)
         {
             Console.WriteLine("***** ***** ViewsUsingNonTypedQueryApi ***** *****");
-            var result = client.Views.Query("artists", "albums", cfg => cfg.Limit(5).Reduce(false));
+            var result = client.Views.Query<string>("artists", "albums", cfg => cfg.Limit(5).Reduce(false));
             Console.WriteLine(result);
         }
 
@@ -118,7 +118,7 @@ namespace MyCouch.ConsoleSamples
         {
             Console.WriteLine("***** ***** ViewsUsingNonTypedRunQueryApi ***** *****");
             var query = client.Views.CreateQuery("artists", "albums").Configure(o => o.Limit(5).Reduce(false));
-            var result = client.Views.RunQuery(query);
+            var result = client.Views.RunQuery<string[]>(query);
             Console.WriteLine(result);
         }
 

@@ -3,9 +3,6 @@
 namespace MyCouch
 {
     [Serializable]
-    public class ViewQueryResponse : ViewQueryResponse<string> { }
-
-    [Serializable]
     public class ViewQueryResponse<T> : Response where T : class 
     {
         public long TotalRows { get; set; }

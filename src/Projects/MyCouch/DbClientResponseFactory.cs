@@ -35,11 +35,6 @@ namespace MyCouch
             return CreateResponse<EntityResponse<T>>(response, OnSuccessfulResponseContentMaterializer, OnFailedResponseContentMaterializer);
         }
 
-        public virtual ViewQueryResponse CreateViewQueryResponse(HttpResponseMessage response)
-        {
-            return CreateResponse<ViewQueryResponse>(response, OnSuccessfulResponseContentMaterializer, OnFailedResponseContentMaterializer);
-        }
-
         public virtual ViewQueryResponse<T> CreateViewQueryResponse<T>(HttpResponseMessage response) where T : class
         {
             return CreateResponse<ViewQueryResponse<T>>(response, OnSuccessfulResponseContentMaterializer, OnFailedResponseContentMaterializer);
