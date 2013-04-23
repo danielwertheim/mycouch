@@ -101,6 +101,19 @@ namespace MyCouch.IntegrationTests
             Response.Rev.Should().NotBeNullOrEmpty();
         }
 
+        internal void BeSuccessfulPut(string initialId)
+        {
+            Response.IsSuccess.Should().BeTrue();
+            Response.StatusCode.Should().Be(HttpStatusCode.Created);
+            Response.Error.Should().BeNull();
+            Response.Reason.Should().BeNull();
+            Response.IsEmpty.Should().BeTrue();
+            Response.Content.Should().BeNull();
+            Response.Id.Should().NotBeNullOrEmpty();
+            Response.Id.Should().Be(initialId);
+            Response.Rev.Should().NotBeNullOrEmpty();
+        }
+
         internal void BeSuccessfulPutOfNew(string initialId)
         {
             Response.IsSuccess.Should().BeTrue();

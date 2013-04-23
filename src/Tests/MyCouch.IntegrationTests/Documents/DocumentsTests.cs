@@ -57,8 +57,8 @@ namespace MyCouch.IntegrationTests.Documents
         public void When_put_of_new_document_Using_json_The_document_is_persisted()
         {
             var artist = TestDataFactory.CreateArtist();
-            var json = Client.Serializer.SerializeEntity(artist);
             var initialId = artist.ArtistId;
+            var json = Client.Serializer.SerializeEntity(artist);
 
             var response = SUT.Put(initialId, json);
 
@@ -75,6 +75,19 @@ namespace MyCouch.IntegrationTests.Documents
             var response = SUT.Put(artist);
 
             response.Should().BeSuccessfulPut(initialId, e => e.ArtistId, e => e.ArtistRev);
+        }
+        
+        [Test]
+        public void When_put_of_existing_document_Using_json_The_document_is_updated()
+        {
+            var artist = TestDataFactory.CreateArtist();
+            var initialId = artist.ArtistId;
+            SUT.Post(artist);
+            var json = Client.Serializer.SerializeEntity(artist);
+
+            var response = SUT.Put(initialId, json);
+
+            response.Should().BeSuccessfulPut(initialId);
         }
     }
 }
