@@ -8,6 +8,7 @@
         {
             Client = TestClientFactory.CreateDefault();
             //Client.Databases.Put(TestConstants.TestDbName);
+            ClearAllDocuments();
         }
 
         internal static void Close()
@@ -20,6 +21,7 @@
         {
             using (var client = TestClientFactory.CreateDefault())
             {
+                //TODO: Use batch delete instead
                 var query = client.Views.CreateSystemQuery("_all_docs");
                 var response = client.Views.RunQuery<dynamic>(query);
 
