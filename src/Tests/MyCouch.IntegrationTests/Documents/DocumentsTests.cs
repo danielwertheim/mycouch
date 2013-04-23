@@ -54,6 +54,18 @@ namespace MyCouch.IntegrationTests.Documents
         }
 
         [Test]
+        public void When_put_of_new_document_Using_json_The_document_is_persisted()
+        {
+            var artist = TestDataFactory.CreateArtist();
+            var json = Client.Serializer.SerializeEntity(artist);
+            var initialId = artist.ArtistId;
+
+            var response = SUT.Put(initialId, json);
+
+            response.Should().BeSuccessfulPutOfNew(initialId);
+        }
+
+        [Test]
         public void When_put_of_existing_document_Using_an_entity_The_document_is_updated()
         {
             var artist = TestDataFactory.CreateArtist();
