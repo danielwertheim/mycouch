@@ -165,74 +165,45 @@ namespace MyCouch.Serialization
 
         protected IEnumerable<ViewQueryResponse<string>.Row> YieldViewQueryRowsOfString(JsonReader jr)
         {
-            if (jr.TokenType != JsonToken.StartArray)
-                yield break;
-
-            var row = new ViewQueryResponse<string>.Row();
-            var startDepth = jr.Depth;
-            var sb = new StringBuilder();
-            var hasMappedId = false;
-            var hasMappedKey = false;
-            var hasMappedValue = false;
-            using (var sw = new StringWriter(sb))
+            return YieldViewQueryRows<string>(jr, (row, jw, sb) =>
             {
-                using (var jw = new JsonTextWriter(sw))
-                {
-                    while (jr.Read() && !(jr.TokenType == JsonToken.EndArray && jr.Depth == startDepth))
-                    {
-                        if (jr.TokenType != JsonToken.PropertyName) 
-                            continue;
-
-                        var propName = jr.Value.ToString().ToLower();
-                        if (propName == "id")
-                        {
-                            if (!jr.Read())
-                                break;
-                            row.Id = jr.Value.ToString();
-                            hasMappedId = true;
-                        }
-                        else if (propName == "key")
-                        {
-                            if (!jr.Read())
-                                break;
-                            row.Key = jr.Value.ToString();
-                            hasMappedKey = true;
-                        }
-                        else if (propName == "value")
-                        {
-                            if (!jr.Read())
-                                break;
-                            jw.WriteToken(jr, true);
-                            row.Value = sb.ToString();
-                            sb.Clear();
-                            hasMappedValue = true;
-                        }
-                        else
-                            continue;
-
-                        if (hasMappedId && hasMappedKey && hasMappedValue)
-                        {
-                            hasMappedId = hasMappedKey = hasMappedValue = false;
-                            yield return row;
-                            row = new ViewQueryResponse<string>.Row();
-                        }
-                    }
-                }
-            }
+                jw.WriteToken(jr, true);
+                row.Value = sb.ToString();
+            });
         }
 
         protected IEnumerable<ViewQueryResponse<string[]>.Row> YieldViewQueryRowsOfStrings(JsonReader jr)
         {
+            var rowValues = new List<string>();
+
+            return YieldViewQueryRows<string[]>(jr, (row, jw, sb) =>
+            {
+                var valueStartDepth = jr.Depth;
+
+                while (jr.Read() && !(jr.TokenType == JsonToken.EndArray && jr.Depth == valueStartDepth))
+                {
+                    jw.WriteToken(jr, true);
+                    rowValues.Add(sb.ToString());
+                    sb.Clear();
+                }
+
+                row.Value = rowValues.ToArray();
+                rowValues.Clear();
+            });
+        }
+
+        protected IEnumerable<ViewQueryResponse<T>.Row> YieldViewQueryRows<T>(JsonReader jr, Action<ViewQueryResponse<T>.Row, JsonWriter, StringBuilder> onVisitValue) where T : class 
+        {
             if (jr.TokenType != JsonToken.StartArray)
                 yield break;
 
-            var row = new ViewQueryResponse<string[]>.Row();
+            var row = new ViewQueryResponse<T>.Row();
             var startDepth = jr.Depth;
             var sb = new StringBuilder();
-            var rowValues = new List<string>();
             var hasMappedId = false;
             var hasMappedKey = false;
             var hasMappedValue = false;
+
             using (var sw = new StringWriter(sb))
             {
                 using (var jw = new JsonTextWriter(sw))
@@ -262,17 +233,8 @@ namespace MyCouch.Serialization
                             if (!jr.Read())
                                 break;
 
-                            var valueStartDepth = jr.Depth;
-                            
-                            while (jr.Read() && !(jr.TokenType == JsonToken.EndArray && jr.Depth == valueStartDepth))
-                            {
-                                jw.WriteToken(jr, true);
-                                rowValues.Add(sb.ToString());
-                                sb.Clear();
-                            }
-
-                            row.Value = rowValues.ToArray();
-                            rowValues.Clear();
+                            onVisitValue(row, jw, sb);
+                            sb.Clear();
                             hasMappedValue = true;
                         }
                         else
@@ -282,7 +244,7 @@ namespace MyCouch.Serialization
                         {
                             hasMappedId = hasMappedKey = hasMappedValue = false;
                             yield return row;
-                            row = new ViewQueryResponse<string[]>.Row();
+                            row = new ViewQueryResponse<T>.Row();
                         }
                     }
                 }
