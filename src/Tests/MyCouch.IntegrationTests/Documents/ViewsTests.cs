@@ -12,11 +12,19 @@ namespace MyCouch.IntegrationTests.Documents
     [TestFixture]
     public class ViewsTests : IntegrationTestsOf<IViews>
     {
+        protected Artist[] Artists;
+
         protected override void OnFixtureInitialize()
         {
             base.OnFixtureInitialize();
 
-            Client.Documents.Post(TestData.Views.ArtistsAlbums);
+            Artists = TestData.CreateArtists(10);
+            
+            var tasks = new List<Task>();
+            tasks.AddRange(Artists.Select(item => Client.Documents.PostAsync(item)));
+            tasks.Add(Client.Documents.PostAsync(TestData.Views.ArtistsAlbums));
+            
+            Task.WaitAll(tasks.ToArray());
         }
 
         protected override void OnTestInitialize()
@@ -26,21 +34,26 @@ namespace MyCouch.IntegrationTests.Documents
             SUT = Client.Views;
         }
 
-        protected override void OnTestFinalize()
+        protected override void OnFixtureFinalize()
         {
-            base.OnTestFinalize();
+            base.OnFixtureFinalize();
 
             IntegrationTestsRuntime.ClearAllDocuments();
         }
 
         [Test]
-        public void When_Skip_and_Limit_to_get_range_Then_range_is_returned()
+        public void When_Skipping_2_of_10_Then_8_rows_are_returned()
         {
-            var items = TestData.CreateArtists(10);
-            var t = items.Select(item => Client.Documents.PostAsync(item)).ToArray();
-            Task.WaitAll(t);
+            var query = new ViewQuery("artists", "albums").Configure(cfg => cfg.Skip(2));
+            var response = SUT.RunQuery<Album[]>(query);
 
-            var query = new ViewQuery("artists", "albums").Configure(cfg => cfg.Skip(2).Limit(2));
+            response.Should().BeSuccessfulGet(8);
+        }
+
+        [Test]
+        public void When_Limit_to_2_Then_2_rows_are_returned()
+        {
+            var query = new ViewQuery("artists", "albums").Configure(cfg => cfg.Limit(2));
             var response = SUT.RunQuery<Album[]>(query);
 
             response.Should().BeSuccessfulGet(2);
