@@ -52,8 +52,8 @@
     <Compile Include="ISystemViewQuery.cs" />
     <Compile Include="Querying\SystemViewQuery.cs" />
     <Compile Include="Response.cs" />
-    <Compile Include="DbClientResponseFactory.cs" />
-    <Compile Include="IDbClientResponseFactory.cs" />
+    <Compile Include="ResponseFactory.cs" />
+    <Compile Include="IResponseFactory.cs" />
     <Compile Include="Net\HttpRequest.cs" />
     <Compile Include="IResponse.cs" />
     <Compile Include="Net\HttpContentTypes.cs" />

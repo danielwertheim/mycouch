@@ -9,11 +9,11 @@ using MyCouch.Serialization;
 
 namespace MyCouch
 {
-    public class DbClientResponseFactory : IDbClientResponseFactory
+    public class ResponseFactory : IResponseFactory
     {
         protected readonly ISerializer Serializer;
 
-        public DbClientResponseFactory(ISerializer serializer)
+        public ResponseFactory(ISerializer serializer)
         {
             Ensure.That(serializer, "serializer").IsNotNull();
 

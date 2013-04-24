@@ -22,7 +22,7 @@ namespace MyCouch
         /// <summary>
         /// Factory used to build <see cref="IResponse"/>.
         /// </summary>
-        IDbClientResponseFactory ResponseFactory { get; set; }
+        IResponseFactory ResponseFactory { get; set; }
 
         /// <summary>
         /// Used to get and set specific members of entities when you are using the

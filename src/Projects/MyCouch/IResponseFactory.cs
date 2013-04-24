@@ -2,7 +2,7 @@
 
 namespace MyCouch
 {
-    public interface IDbClientResponseFactory 
+    public interface IResponseFactory 
     {
         DatabaseResponse CreateDatabaseResponse(HttpResponseMessage response);
         DocumentResponse CreateDocumentResponse(HttpResponseMessage response);

@@ -10,7 +10,7 @@ namespace MyCouch
     {
         public IConnection Connection { get; protected set; }
         public ISerializer Serializer { get; set; }
-        public IDbClientResponseFactory ResponseFactory { get; set; }
+        public IResponseFactory ResponseFactory { get; set; }
         public IEntityAccessor EntityAccessor { get; set; }
         public IDatabases Databases { get; protected set; }
         public IDocuments Documents { get; protected set; }
@@ -25,7 +25,7 @@ namespace MyCouch
             Connection = new Connection(uri);
             EntityAccessor = new EntityAccessor();
             Serializer = new MyCouchSerializer(EntityAccessor);
-            ResponseFactory = new DbClientResponseFactory(Serializer);
+            ResponseFactory = new ResponseFactory(Serializer);
             Databases = new Databases(this);
             Documents = new Documents(this);
             Views = new Views(this);
