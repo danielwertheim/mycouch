@@ -4,7 +4,7 @@ using MyCouch.Testing.Model;
 
 namespace MyCouch.Testing
 {
-    public static class TestDataFactory
+    public static class TestData
     {
         public static class Json
         {
