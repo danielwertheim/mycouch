@@ -5,7 +5,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using EnsureThat;
-using MyCouch.Serialization;
 
 namespace MyCouch
 {
@@ -85,7 +84,7 @@ namespace MyCouch
                 if (result.RequestMethod == HttpMethod.Get)
                 {
                     content.Position = 0;
-                    result.Entity = Client.Serializer.Deserialize<T>(content);
+                    result.Entity = Client.Serializer.DeserializeEntity<T>(content);
                 }
             }
         }

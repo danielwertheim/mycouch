@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using MyCouch.Testing;
+using MyCouch.Testing.Model;
 using NUnit.Framework;
 
 namespace MyCouch.IntegrationTests.Documents
@@ -147,6 +148,38 @@ namespace MyCouch.IntegrationTests.Documents
 
             var delete2 = SUT.Delete(put2.Id, put2.Rev);
             delete2.Should().BeSuccessfulDelete(put2.Id);
+        }
+
+        [Test]
+        public void CRUD_using_typed_API()
+        {
+            var artists = TestData.CreateArtists(2);
+            var artist1 = artists[0];
+            var artist2 = artists[1];
+
+            var post1 = SUT.PostAsync(artist1).Result;
+            post1.Should().BeSuccessfulPost(artist1.ArtistId, e => e.ArtistId, e => e.ArtistRev);
+
+            var post2 = SUT.Post(artist2);
+            post2.Should().BeSuccessfulPost(artist2.ArtistId, e => e.ArtistId, e => e.ArtistRev);
+
+            var get1 = SUT.GetAsync<Artist>(post1.Id).Result;
+            get1.Should().BeSuccessfulGet(post1.Id);
+
+            var get2 = SUT.Get<Artist>(post2.Id);
+            get2.Should().BeSuccessfulGet(post2.Id);
+
+            get1.Entity.Albums = new List<Album>(get1.Entity.Albums) { new Album { Name = "Test" } }.ToArray();
+            var put1 = SUT.PutAsync(get1.Entity).Result;
+
+            get2.Entity.Albums = new List<Album>(get2.Entity.Albums) { new Album { Name = "Test" } }.ToArray();
+            var put2 = SUT.Put(get2.Entity);
+
+            var delete1 = SUT.DeleteAsync(put1.Entity).Result;
+            delete1.Should().BeSuccessfulDelete(put1.Id, e => e.ArtistId, e => e.ArtistRev);
+
+            var delete2 = SUT.Delete(put2.Entity);
+            delete2.Should().BeSuccessfulDelete(put2.Id, e => e.ArtistId, e => e.ArtistRev);
         }
     }
 }

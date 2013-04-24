@@ -30,6 +30,20 @@ namespace MyCouch.IntegrationTests
             Response = response;
         }
 
+        internal void BeSuccessfulGet(string id)
+        {
+            Response.RequestMethod.Should().Be(HttpMethod.Get);
+            Response.IsSuccess.Should().BeTrue();
+            Response.StatusCode.Should().Be(HttpStatusCode.OK);
+            Response.Error.Should().BeNull();
+            Response.Reason.Should().BeNull();
+            Response.IsEmpty.Should().BeFalse();
+            Response.Entity.Should().NotBeNull();
+            Response.Id.Should().NotBeNullOrEmpty();
+            Response.Id.Should().Be(id);
+            Response.Rev.Should().NotBeNullOrEmpty();
+        }
+
         internal void BeSuccessfulPost(string initialId, Func<T, string> idAccessor, Func<T, string> revAccessor)
         {
             Response.RequestMethod.Should().Be(HttpMethod.Post);
