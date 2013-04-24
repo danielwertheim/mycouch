@@ -19,16 +19,6 @@ namespace MyCouch
             Client = client;
         }
 
-        public virtual IViewQuery CreateQuery(string designDocument, string viewname)
-        {
-            return new ViewQuery(designDocument, viewname);
-        }
-
-        public virtual ISystemViewQuery CreateSystemQuery(string viewname)
-        {
-            return new SystemViewQuery(viewname);
-        }
-
         public virtual ViewQueryResponse<T> RunQuery<T>(IViewQuery query) where T : class
         {
             return RunQueryAsync<T>(query).Result;
@@ -55,6 +45,16 @@ namespace MyCouch
             query.Configure(configurator);
 
             return await RunQueryAsync<T>(query);
+        }
+
+        protected virtual IViewQuery CreateQuery(string designDocument, string viewname)
+        {
+            return new ViewQuery(designDocument, viewname);
+        }
+
+        protected virtual ISystemViewQuery CreateSystemQuery(string viewname)
+        {
+            return new SystemViewQuery(viewname);
         }
 
         protected virtual HttpRequestMessage CreateRequest(IViewQuery query)

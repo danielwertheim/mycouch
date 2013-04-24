@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using MyCouch.Querying;
 
 namespace MyCouch.ConsoleSamples
 {
@@ -117,7 +118,7 @@ namespace MyCouch.ConsoleSamples
         private static void ViewsUsingNonTypedRunQueryApi(IClient client)
         {
             Console.WriteLine("***** ***** ViewsUsingNonTypedRunQueryApi ***** *****");
-            var query = client.Views.CreateQuery("artists", "albums").Configure(o => o.Limit(5).Reduce(false));
+            var query = new ViewQuery("artists", "albums").Configure(o => o.Limit(5).Reduce(false));
             var result = client.Views.RunQuery<string[]>(query);
             Console.WriteLine(result);
         }
@@ -125,7 +126,7 @@ namespace MyCouch.ConsoleSamples
         private static void ViewsUsingTypedRunQueryApi(IClient client)
         {
             Console.WriteLine("***** ***** ViewsUsingNonTypedRunQueryApi ***** *****");
-            var query = client.Views.CreateQuery("artists", "albums").Configure(o => o.Limit(5).Reduce(false));
+            var query = new ViewQuery("artists", "albums").Configure(o => o.Limit(5).Reduce(false));
             var result = client.Views.RunQuery<Album[]>(query);
             Console.WriteLine(result);
         }

@@ -1,4 +1,6 @@
-﻿namespace MyCouch.IntegrationTests
+﻿using MyCouch.Querying;
+
+namespace MyCouch.IntegrationTests
 {
     internal static class IntegrationTestsRuntime
     {
@@ -22,7 +24,7 @@
             using (var client = TestClientFactory.CreateDefault())
             {
                 //TODO: Use batch delete instead
-                var query = client.Views.CreateSystemQuery("_all_docs");
+                var query = new SystemViewQuery("_all_docs");
                 var response = client.Views.RunQuery<dynamic>(query);
 
                 foreach (var row in response.Rows)
