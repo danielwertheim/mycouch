@@ -9,6 +9,11 @@ namespace MyCouch.IntegrationTests
     [DebuggerStepThrough]
     internal static class Shoulds
     {
+        internal static ViewQueryResponseAssertions<T> Should<T>(this ViewQueryResponse<T> response) where T : class
+        {
+            return new ViewQueryResponseAssertions<T>(response);
+        }
+
         internal static EntityResponseAssertions<T> Should<T>(this EntityResponse<T> response) where T : class
         {
             return new EntityResponseAssertions<T>(response);
@@ -17,6 +22,33 @@ namespace MyCouch.IntegrationTests
         internal static DocumentResponseAssertions Should(this DocumentResponse response)
         {
             return new DocumentResponseAssertions(response);
+        }
+    }
+
+    internal class ViewQueryResponseAssertions<T> where T : class
+    {
+        protected readonly ViewQueryResponse<T> Response;
+
+        [DebuggerStepThrough]
+        public ViewQueryResponseAssertions(ViewQueryResponse<T> response)
+        {
+            Response = response;
+        }
+
+        internal void BeSuccessfulGet(int numOfRows)
+        {
+            Response.RequestMethod.Should().Be(HttpMethod.Get);
+            Response.IsSuccess.Should().BeTrue();
+            Response.StatusCode.Should().Be(HttpStatusCode.OK);
+            Response.Error.Should().BeNull();
+            Response.Reason.Should().BeNull();
+            Response.IsEmpty.Should().BeFalse();
+
+            if (numOfRows > 0)
+            {
+                Response.Rows.Should().NotBeNull();
+                Response.RowCount.Should().Be(numOfRows);
+            }
         }
     }
 

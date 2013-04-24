@@ -15,6 +15,20 @@ namespace MyCouch.Testing
             public const string Artist2 = "{\"_id\": \"sample:2\", \"$doctype\": \"artist\", \"name\": \"Fake artist 2\", \"albums\":[{\"name\": \"Greatest fakes #2\"},{\"name\": \"Greatest fakes #3\"}]}";
         }
 
+        public static class Views
+        {
+            public const string ArtistsAlbums =
+                "{" +
+                    "\"_id\": \"_design/artists\"," +
+                    "\"language\": \"javascript\"," +
+                    "\"views\": {" +
+                        "\"albums\": {" +
+                            "\"map\": \"function(doc) {  if(!doc.$doctype === 'artist') return;  emit(doc.name, doc.albums);}\"" +
+                        "}" +
+                    "}" +
+                "}";
+        }
+
         public static Artist CreateArtist()
         {
             return CreateArtists(1).Single();
