@@ -5,6 +5,11 @@ namespace MyCouch
     public interface IViewQueryOptions : IEnumerable<KeyValuePair<string, string>>
     {
         /// <summary>
+        /// Include the full content of the documents in the return.
+        /// </summary>
+        bool IncludeDocs { get; set; }
+        
+        /// <summary>
         /// Return the documents in descending by key order.
         /// </summary>
         bool Descending { get; set; }

@@ -3,6 +3,13 @@
     public interface IViewQueryConfigurator
     {
         /// <summary>
+        ///  Include the full content of the documents in the return;
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        IViewQueryConfigurator IncludeDocs(bool value);
+
+        /// <summary>
         /// Return the documents in descending by key order.
         /// </summary>
         /// <param name="value"></param>

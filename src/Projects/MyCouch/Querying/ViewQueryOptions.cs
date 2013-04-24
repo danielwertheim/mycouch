@@ -7,6 +7,7 @@ namespace MyCouch.Querying
     [Serializable]
     public class ViewQueryOptions : IViewQueryOptions
     {
+        public bool IncludeDocs { get; set; }
         public bool Descending { get; set; }
         public string Key { get; set; }
         public string StartKey { get; set; }
@@ -21,6 +22,7 @@ namespace MyCouch.Querying
         public ViewQueryOptions()
         {
             //Set defaults according to docs: http://docs.couchdb.org/en/latest/api/database.html#get-db-all-docs
+            IncludeDocs = false;
             Descending = false;
             Reduce = true;
             InclusiveEnd = true;
@@ -38,6 +40,9 @@ namespace MyCouch.Querying
 
         public IEnumerable<KeyValuePair<string, string>> ToKeyValues()
         {
+            if (IncludeDocs)
+                yield return new KeyValuePair<string, string>("include_docs", IncludeDocs.ToString().ToLower());
+
             if (Descending)
                 yield return new KeyValuePair<string, string>("descending", Descending.ToString().ToLower());
 
