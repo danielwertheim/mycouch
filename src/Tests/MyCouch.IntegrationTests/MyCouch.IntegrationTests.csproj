@@ -53,6 +53,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AssemblyInitializer.cs" />
+    <Compile Include="Documents\ViewsTests.cs" />
     <Compile Include="IntegrationTestsRuntime.cs" />
     <Compile Include="Documents\DocumentsTests.cs" />
     <Compile Include="IntegrationTestsOf.cs" />
