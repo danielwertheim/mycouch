@@ -6,6 +6,15 @@ namespace MyCouch.Testing
 {
     public static class TestDataFactory
     {
+        public static class Json
+        {
+            public const string Artist1Id = "sample:1";
+            public const string Artist2Id = "sample:2";
+
+            public const string Artist1 = "{\"_id\": \"sample:1\", \"$doctype\": \"artist\", \"name\": \"Fake artist 1\", \"albums\":[{\"name\": \"Greatest fakes #1\"}]}";
+            public const string Artist2 = "{\"_id\": \"sample:2\", \"$doctype\": \"artist\", \"name\": \"Fake artist 2\", \"albums\":[{\"name\": \"Greatest fakes #2\"},{\"name\": \"Greatest fakes #3\"}]}";
+        }
+
         public static Artist CreateArtist()
         {
             return CreateArtists(1).Single();

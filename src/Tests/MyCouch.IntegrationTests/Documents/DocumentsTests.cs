@@ -1,4 +1,5 @@
-﻿using MyCouch.Testing;
+﻿using System.Collections.Generic;
+using MyCouch.Testing;
 using NUnit.Framework;
 
 namespace MyCouch.IntegrationTests.Documents
@@ -112,6 +113,40 @@ namespace MyCouch.IntegrationTests.Documents
             var response = SUT.Delete(artist.ArtistId, artist.ArtistRev);
 
             response.Should().BeSuccessfulDelete(initialId);
+        }
+
+        [Test]
+        public void CRUD_using_non_typed_API()
+        {
+            var post1 = SUT.PostAsync(TestDataFactory.Json.Artist1).Result;
+            post1.Should().BeSuccessfulPost(TestDataFactory.Json.Artist1Id);
+
+            var post2 = SUT.Post(TestDataFactory.Json.Artist2);
+            post2.Should().BeSuccessfulPost(TestDataFactory.Json.Artist2Id);
+
+            var get1 = SUT.GetAsync(post1.Id).Result;
+            get1.Should().BeSuccessfulGet(post1.Id);
+
+            var get2 = SUT.Get(post2.Id);
+            get2.Should().BeSuccessfulGet(post2.Id);
+
+            var kv1 = Client.Serializer.Deserialize<IDictionary<string, dynamic>>(get1.Content);
+            kv1["year"] = 2000;
+            var docUpd1 = Client.Serializer.Serialize(kv1);
+            var put1 = SUT.PutAsync(get1.Id, docUpd1).Result;
+            put1.Should().BeSuccessfulPut(get1.Id);
+
+            var kv2 = Client.Serializer.Deserialize<IDictionary<string, dynamic>>(get2.Content);
+            kv2["year"] = 2001;
+            var docUpd2 = Client.Serializer.Serialize(kv2);
+            var put2 = SUT.Put(get2.Id, docUpd2);
+            put2.Should().BeSuccessfulPut(get2.Id);
+
+            var delete1 = SUT.DeleteAsync(put1.Id, put1.Rev).Result;
+            delete1.Should().BeSuccessfulDelete(put1.Id);
+
+            var delete2 = SUT.Delete(put2.Id, put2.Rev);
+            delete2.Should().BeSuccessfulDelete(put2.Id);
         }
     }
 }

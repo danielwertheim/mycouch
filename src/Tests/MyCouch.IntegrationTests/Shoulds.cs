@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Net;
+using System.Net.Http;
 using FluentAssertions;
 
 namespace MyCouch.IntegrationTests
@@ -31,6 +32,7 @@ namespace MyCouch.IntegrationTests
 
         internal void BeSuccessfulPost(string initialId, Func<T, string> idAccessor, Func<T, string> revAccessor)
         {
+            Response.RequestMethod.Should().Be(HttpMethod.Post);
             Response.IsSuccess.Should().BeTrue();
             Response.StatusCode.Should().Be(HttpStatusCode.Created);
             Response.Error.Should().BeNull();
@@ -47,6 +49,7 @@ namespace MyCouch.IntegrationTests
 
         internal void BeSuccessfulPut(string initialId, Func<T, string> idAccessor, Func<T, string> revAccessor)
         {
+            Response.RequestMethod.Should().Be(HttpMethod.Put);
             Response.IsSuccess.Should().BeTrue();
             Response.StatusCode.Should().Be(HttpStatusCode.Created);
             Response.Error.Should().BeNull();
@@ -63,6 +66,7 @@ namespace MyCouch.IntegrationTests
 
         internal void BeSuccessfulPutOfNew(string initialId, Func<T, string> idAccessor, Func<T, string> revAccessor)
         {
+            Response.RequestMethod.Should().Be(HttpMethod.Put);
             Response.IsSuccess.Should().BeTrue();
             Response.StatusCode.Should().Be(HttpStatusCode.Created);
             Response.Error.Should().BeNull();
@@ -79,6 +83,7 @@ namespace MyCouch.IntegrationTests
 
         internal void BeSuccessfulDelete(string initialId, Func<T, string> idAccessor, Func<T, string> revAccessor)
         {
+            Response.RequestMethod.Should().Be(HttpMethod.Delete);
             Response.IsSuccess.Should().BeTrue();
             Response.StatusCode.Should().Be(HttpStatusCode.OK);
             Response.Error.Should().BeNull();
@@ -104,8 +109,23 @@ namespace MyCouch.IntegrationTests
             Response = response;
         }
 
+        internal void BeSuccessfulGet(string id)
+        {
+            Response.RequestMethod.Should().Be(HttpMethod.Get);
+            Response.IsSuccess.Should().BeTrue();
+            Response.StatusCode.Should().Be(HttpStatusCode.OK);
+            Response.Error.Should().BeNull();
+            Response.Reason.Should().BeNull();
+            Response.IsEmpty.Should().BeFalse();
+            Response.Content.Should().NotBeNullOrEmpty();
+            Response.Id.Should().NotBeNullOrEmpty();
+            Response.Id.Should().Be(id);
+            Response.Rev.Should().NotBeNullOrEmpty();
+        }
+
         internal void BeSuccessfulPost(string initialId)
         {
+            Response.RequestMethod.Should().Be(HttpMethod.Post);
             Response.IsSuccess.Should().BeTrue();
             Response.StatusCode.Should().Be(HttpStatusCode.Created);
             Response.Error.Should().BeNull();
@@ -119,6 +139,7 @@ namespace MyCouch.IntegrationTests
 
         internal void BeSuccessfulPut(string initialId)
         {
+            Response.RequestMethod.Should().Be(HttpMethod.Put);
             Response.IsSuccess.Should().BeTrue();
             Response.StatusCode.Should().Be(HttpStatusCode.Created);
             Response.Error.Should().BeNull();
@@ -132,6 +153,7 @@ namespace MyCouch.IntegrationTests
 
         internal void BeSuccessfulPutOfNew(string initialId)
         {
+            Response.RequestMethod.Should().Be(HttpMethod.Put);
             Response.IsSuccess.Should().BeTrue();
             Response.StatusCode.Should().Be(HttpStatusCode.Created);
             Response.Error.Should().BeNull();
@@ -145,6 +167,7 @@ namespace MyCouch.IntegrationTests
 
         internal void BeSuccessfulDelete(string initialId)
         {
+            Response.RequestMethod.Should().Be(HttpMethod.Delete);
             Response.IsSuccess.Should().BeTrue();
             Response.StatusCode.Should().Be(HttpStatusCode.OK);
             Response.Error.Should().BeNull();
