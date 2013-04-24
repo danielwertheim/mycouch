@@ -25,7 +25,7 @@ namespace MyCouch
             Connection = new Connection(uri);
             EntityAccessor = new EntityAccessor();
             Serializer = new MyCouchSerializer(EntityAccessor);
-            ResponseFactory = new ResponseFactory(Serializer);
+            ResponseFactory = new ResponseFactory(this);
             Databases = new Databases(this);
             Documents = new Documents(this);
             Views = new Views(this);

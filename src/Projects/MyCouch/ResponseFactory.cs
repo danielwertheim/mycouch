@@ -11,13 +11,13 @@ namespace MyCouch
 {
     public class ResponseFactory : IResponseFactory
     {
-        protected readonly ISerializer Serializer;
+        protected readonly IClient Client;
 
-        public ResponseFactory(ISerializer serializer)
+        public ResponseFactory(IClient client)
         {
-            Ensure.That(serializer, "serializer").IsNotNull();
+            Ensure.That(client, "client").IsNotNull();
 
-            Serializer = serializer;
+            Client = client;
         }
 
         public virtual DatabaseResponse CreateDatabaseResponse(HttpResponseMessage response)
@@ -85,7 +85,7 @@ namespace MyCouch
                 if (result.RequestMethod == HttpMethod.Get)
                 {
                     content.Position = 0;
-                    result.Entity = Serializer.Deserialize<T>(content);
+                    result.Entity = Client.Serializer.Deserialize<T>(content);
                 }
             }
         }
@@ -93,7 +93,7 @@ namespace MyCouch
         protected virtual void OnSuccessfulResponseContentMaterializer<T>(HttpResponseHeaders headers, Stream content, T result) where T : SingleDocumentResponse
         {
             if (result.ContentShouldHaveIdAndRev())
-                Serializer.PopulateSingleDocumentResponse(result, content);
+                Client.Serializer.PopulateSingleDocumentResponse(result, content);
 
             if (result.RequestMethod == HttpMethod.Get)
             {
@@ -109,13 +109,13 @@ namespace MyCouch
         protected virtual void OnSuccessfulResponseContentMaterializer<T>(HttpResponseMessage response, ViewQueryResponse<T> result) where T : class
         {
             using(var content = response.Content.ReadAsStreamAsync().Result)
-                Serializer.PopulateViewQueryResponse(result, content);
+                Client.Serializer.PopulateViewQueryResponse(result, content);
         }
         
         protected virtual void OnFailedResponseContentMaterializer<T>(HttpResponseMessage response, T result) where T : Response
         {
             using (var content = response.Content.ReadAsStreamAsync().Result)
-                Serializer.PopulateFailedResponse(result, content);
+                Client.Serializer.PopulateFailedResponse(result, content);
         }
     }
 }
