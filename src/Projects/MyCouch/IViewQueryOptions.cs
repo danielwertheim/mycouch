@@ -33,6 +33,11 @@ namespace MyCouch
         /// Stop returning records when the specified document ID is reached.
         /// </summary>
         string EndKeyDocId { get; set; }
+
+        /// <summary>
+        /// Specifies whether the specified end key should be included in the result.
+        /// </summary>
+        bool InclusiveEnd { get; set; }
         
         /// <summary>
         /// Skip this number of records before starting to return the results.

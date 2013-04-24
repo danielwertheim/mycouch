@@ -51,6 +51,18 @@
             return this;
         }
 
+        /// <summary>
+        /// Specifies whether the specified end key should be included in the result.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public IViewQueryConfigurator InclusiveEnd(bool value)
+        {
+            Options.InclusiveEnd = value;
+
+            return this;
+        }
+
         public IViewQueryConfigurator Skip(int value)
         {
             Options.Skip = value;

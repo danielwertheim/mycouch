@@ -45,6 +45,13 @@
         IViewQueryConfigurator EndKeyDocId(string value);
 
         /// <summary>
+        /// Specifies whether the specified end key should be included in the result.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        IViewQueryConfigurator InclusiveEnd(bool value);
+
+        /// <summary>
         /// Skip this number of records before starting to return the results.
         /// </summary>
         /// <param name="value"></param>

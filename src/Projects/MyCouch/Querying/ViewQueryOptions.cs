@@ -13,6 +13,7 @@ namespace MyCouch.Querying
         public string StartKeyDocId { get; set; }
         public string EndKey { get; set; }
         public string EndKeyDocId { get; set; }
+        public bool InclusiveEnd { get; set; }
         public int Skip { get; set; }
         public int Limit { get; set; }
         public bool Reduce { get; set; }
@@ -22,6 +23,7 @@ namespace MyCouch.Querying
             //Set defaults according to docs: http://docs.couchdb.org/en/latest/api/database.html#get-db-all-docs
             Descending = false;
             Reduce = true;
+            InclusiveEnd = true;
         }
 
         public virtual IEnumerator<KeyValuePair<string, string>> GetEnumerator()
@@ -41,6 +43,9 @@ namespace MyCouch.Querying
 
             if(!Reduce)
                 yield return new KeyValuePair<string, string>("reduce", Reduce.ToString().ToLower());
+
+            if (!InclusiveEnd)
+                yield return new KeyValuePair<string, string>("inclusive_end", InclusiveEnd.ToString().ToLower());
 
             if (HasValue(Key))
                 yield return new KeyValuePair<string, string>("key", FormatValue(Key));
