@@ -157,6 +157,9 @@ namespace MyCouch.Serialization
                             if (!jr.Read())
                                 break;
 
+                            //TODO: THIS MUST BE MERGED TO THREE INSTEAD OF FOUR String, String[] + Others
+                            //Doc has _id --> _id --> id --> ArtistId.. .. .. ..
+
                             if (response is ViewQueryResponse<string>)
                                 response.Rows = YieldViewQueryRowsOfString(jr).ToArray() as ViewQueryResponse<T>.Row[];
                             else if (response is ViewQueryResponse<string[]>)

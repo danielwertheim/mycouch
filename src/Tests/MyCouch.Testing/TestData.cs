@@ -44,7 +44,7 @@ namespace MyCouch.Testing
                 var artist = new Artist
                 {
                     ArtistId = (c + 1).ToString(),
-                    Name = "Artist #" + numOf
+                    Name = "Artist #" + (c + 1)
                 };
 
                 artist.Albums = CreateAlbums(numOfAlbums[c % numOfAlbums.Length], artist.Name);

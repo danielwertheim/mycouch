@@ -58,5 +58,17 @@ namespace MyCouch.IntegrationTests.Documents
 
             response.Should().BeSuccessfulGet(2);
         }
+
+        [Test]
+        public void When_Key_is_specified_Then_matching_row_is_returned()
+        {
+            var artist = Artists[2];
+            var query = new ViewQuery("artists", "albums").Configure(cfg => cfg.Key(artist.Name));
+            var response = SUT.RunQuery<Album[]>(query);
+
+            response.Should().BeSuccessfulGet(1);
+            response.Rows[0].Id.Should().Be(artist.ArtistId);
+            response.Rows[0].Key.Should().Be(artist.Name);
+        }
     }
 }

@@ -62,10 +62,10 @@ namespace MyCouch.Querying
             if (!InclusiveEnd)
                 yield return new KeyValuePair<string, string>("inclusive_end", InclusiveEnd.ToString().ToLower());
 
-            if (!UpdateSeq)
+            if (UpdateSeq)
                 yield return new KeyValuePair<string, string>("update_seq", UpdateSeq.ToString().ToLower());
 
-            if (!Group)
+            if (Group)
                 yield return new KeyValuePair<string, string>("group", Group.ToString().ToLower());
 
             if (HasValue(GroupLevel))
@@ -116,13 +116,12 @@ namespace MyCouch.Querying
 
         private static string FormatValue(string value)
         {
-            return Uri.EscapeDataString(string.Format("\"{0}\"", value));
+            return string.Format("\"{0}\"", value);
         }
 
         private static string FormatValue(IEnumerable<string> value)
         {
-            return Uri.EscapeDataString(
-                string.Format("[{0}]", string.Join(",", value.Select(v => string.Format("\"{0}\"", v)))));
+            return string.Format("[{0}]", string.Join(",", value.Select(v => string.Format("\"{0}\"", v))));
         }
     }
 }
