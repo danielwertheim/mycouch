@@ -7,6 +7,7 @@ namespace MyCouch
     {
         public long TotalRows { get; set; }
         public long RowCount { get { return IsEmpty ? 0 : Rows.Length; } }
+        public long UpdateSeq { get; set; }
         public long OffSet { get; set; }
         public bool IsEmpty
         {

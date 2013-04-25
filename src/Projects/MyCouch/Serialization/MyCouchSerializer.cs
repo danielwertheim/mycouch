@@ -136,6 +136,14 @@ namespace MyCouch.Serialization
                             continue;
                         }
 
+                        if (propName == "update_seq")
+                        {
+                            if (!jr.Read())
+                                break;
+                            response.UpdateSeq = (long)jr.Value;
+                            continue;
+                        }
+
                         if (propName == "offset")
                         {
                             if (!jr.Read())
