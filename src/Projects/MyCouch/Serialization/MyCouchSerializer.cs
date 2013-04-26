@@ -163,8 +163,7 @@ namespace MyCouch.Serialization
                             else if (response is ViewQueryResponse<string[]>)
                                 response.Rows = YieldViewQueryRowsOfStrings(jr).ToArray() as ViewQueryResponse<T>.Row[];
                             else
-                                //response.Rows = YieldViewQueryRowsOf<T>(jr).ToArray();
-                            response.Rows = InternalSerializer.Deserialize<ViewQueryResponse<T>.Row[]>(jr);
+                                response.Rows = InternalSerializer.Deserialize<ViewQueryResponse<T>.Row[]>(jr);
                         }
                     }
                 }
@@ -177,19 +176,6 @@ namespace MyCouch.Serialization
             {
                 jw.WriteToken(jr, true);
                 row.Value = sb.ToString();
-            });
-        }
-
-        protected IEnumerable<ViewQueryResponse<T>.Row> YieldViewQueryRowsOf<T>(JsonReader jr) where T : class 
-        {
-            return YieldViewQueryRows<T>(jr, (row, jw, sb) =>
-            {
-                jw.WriteToken(jr, true);
-                
-                if(sb.Length < 1)
-                    return;
-
-                row.Value = Deserialize<T>(sb.ToString());
             });
         }
 
