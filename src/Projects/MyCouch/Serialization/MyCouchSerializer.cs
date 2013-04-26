@@ -163,8 +163,8 @@ namespace MyCouch.Serialization
                             else if (response is ViewQueryResponse<string[]>)
                                 response.Rows = YieldViewQueryRowsOfStrings(jr).ToArray() as ViewQueryResponse<T>.Row[];
                             else
-                                response.Rows = YieldViewQueryRowsOf<T>(jr).ToArray();
-                                //response.Rows = InternalSerializer.Deserialize<ViewQueryResponse<T>.Row[]>(jr);
+                                //response.Rows = YieldViewQueryRowsOf<T>(jr).ToArray();
+                            response.Rows = InternalSerializer.Deserialize<ViewQueryResponse<T>.Row[]>(jr);
                         }
                     }
                 }

@@ -19,6 +19,9 @@ namespace MyCouch.Serialization
 
         protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
         {
+            if (type.IsGenericType && typeof(ViewQueryResponse<>.Row) == type.GetGenericTypeDefinition())
+                return base.CreateProperties(type, memberSerialization);
+
             var props = base.CreateProperties(type, memberSerialization);
             int? idRank = null, revRank = null;
             JsonProperty id = null, rev = null;
