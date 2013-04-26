@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System.Collections.Generic;
+using FluentAssertions;
 using MyCouch.Schemes;
 using MyCouch.Serialization;
 using MyCouch.Testing;
@@ -122,6 +123,61 @@ namespace MyCouch.UnitTests.Serialization
             var json = SUT.SerializeEntity(model);
 
             json.Should().Be("{\"$doctype\":\"modelwithidinwrongorder\",\"id\":\"abc\",\"_id\":\"def\",\"value\":\"ghi\"}");
+        }
+
+        [Test]
+        public void It_can_populate_an_all_docs_view_query_response_of_string()
+        {
+            var response = new ViewQueryResponse<string>();
+            
+            SUT.PopulateViewQueryResponse(response, JsonTestData.AllDocsResult.AsStream());
+
+            response.RowCount.Should().Be(2);
+            response.Rows[0].Id.Should().Be("1");
+            response.Rows[0].Key.Should().Be("1");
+            response.Rows[0].Value.Should().Be("{\"rev\":\"43-4886b6a3da60a647adea18b1c6c81cd5\"}");
+
+            response.Rows[1].Id.Should().Be("2");
+            response.Rows[1].Key.Should().Be("2");
+            response.Rows[1].Value.Should().Be("{\"rev\":\"42-e7620ba0ea71c48f6a11bacee4999d79\"}");
+        }
+
+        [Test]
+        public void It_can_populate_an_all_docs_view_query_response_of_dynamic()
+        {
+            var response = new ViewQueryResponse<dynamic>();
+
+            SUT.PopulateViewQueryResponse(response, JsonTestData.AllDocsResult.AsStream());
+
+            response.RowCount.Should().Be(2);
+            response.Rows[0].Id.Should().Be("1");
+            response.Rows[0].Key.Should().Be("1");
+            string rev1 = response.Rows[0].Value.rev;
+            rev1.Should().Be("43-4886b6a3da60a647adea18b1c6c81cd5");
+
+            response.Rows[1].Id.Should().Be("2");
+            response.Rows[1].Key.Should().Be("2");
+            string rev2 = response.Rows[1].Value.rev;
+            rev2.Should().Be("42-e7620ba0ea71c48f6a11bacee4999d79");
+        }
+
+        [Test]
+        public void It_can_populate_an_all_docs_view_query_response_of_dictionary()
+        {
+            var response = new ViewQueryResponse<IDictionary<string, object>>();
+
+            SUT.PopulateViewQueryResponse(response, JsonTestData.AllDocsResult.AsStream());
+
+            response.RowCount.Should().Be(2);
+            //response.Rows[0].Id.Should().Be("1");
+            response.Rows[0].Key.Should().Be("1");
+            string rev1 = response.Rows[0].Value["rev"].ToString();
+            rev1.Should().Be("43-4886b6a3da60a647adea18b1c6c81cd5");
+
+            //response.Rows[1].Id.Should().Be("2");
+            response.Rows[1].Key.Should().Be("2");
+            string rev2 = response.Rows[1].Value["rev"].ToString();
+            rev2.Should().Be("42-e7620ba0ea71c48f6a11bacee4999d79");
         }
 
         private class ModelWithIdInWrongOrder

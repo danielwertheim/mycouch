@@ -51,6 +51,11 @@
     </Compile>
     <Compile Include="DoFake.cs" />
     <Compile Include="Model\Artist.cs" />
+    <Compile Include="JsonTestData.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>JsonTestData.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GlobalTestConstants.cs" />
     <Compile Include="TestData.cs" />
@@ -58,6 +63,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="JsonTestData.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>JsonTestData.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

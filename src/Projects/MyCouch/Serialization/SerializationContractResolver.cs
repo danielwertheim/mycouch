@@ -1,4 +1,6 @@
-﻿using MyCouch.Extensions;
+﻿using System;
+using System.Collections.Generic;
+using MyCouch.Extensions;
 using MyCouch.Schemes;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -15,7 +17,7 @@ namespace MyCouch.Serialization
             EntityAccessor = entityAccessor;
         }
 
-        protected override System.Collections.Generic.IList<JsonProperty> CreateProperties(System.Type type, MemberSerialization memberSerialization)
+        protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
         {
             var props = base.CreateProperties(type, memberSerialization);
             int? idRank = null, revRank = null;

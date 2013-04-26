@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using MyCouch.Testing.Model;
 
 namespace MyCouch.Testing
@@ -68,6 +70,11 @@ namespace MyCouch.Testing
             }
 
             return albums.ToArray();
+        }
+
+        public static Stream AsStream(this string json)
+        {
+            return new MemoryStream(Encoding.UTF8.GetBytes(json));
         }
     }
 }
