@@ -12,14 +12,12 @@ namespace MyCouch.Serialization
     public class MyCouchSerializer : ISerializer
     {
         protected readonly IEntityAccessor EntityAccessor;
-        protected readonly JsonSerializer VanillaSerializer;
-        protected readonly JsonSerializer EntitySerializer;
+        protected readonly JsonSerializer InternalSerializer;
 
         public MyCouchSerializer(IEntityAccessor entityAccessor)
         {
             EntityAccessor = entityAccessor;
-            VanillaSerializer = JsonSerializer.Create(CreateSettings(new DefaultContractResolver(true)));
-            EntitySerializer = JsonSerializer.Create(CreateSettings(new SerializationContractResolver(EntityAccessor)));
+            InternalSerializer = JsonSerializer.Create(CreateSettings(new SerializationContractResolver(EntityAccessor)));
         }
 
         protected virtual JsonSerializerSettings CreateSettings(IContractResolver contractResolver)
@@ -43,7 +41,7 @@ namespace MyCouch.Serialization
             var content = new StringBuilder();
             using (var textWriter = new StringWriter(content))
             {
-                VanillaSerializer.Serialize(textWriter, item);
+                InternalSerializer.Serialize(textWriter, item);
             }
             return content.ToString();
         }
@@ -56,7 +54,7 @@ namespace MyCouch.Serialization
                 using (var jsonWriter = CreateEntityWriter(textWriter))
                 {
                     jsonWriter.WriteDocHeaderFor(entity);
-                    EntitySerializer.Serialize(jsonWriter, entity);
+                    InternalSerializer.Serialize(jsonWriter, entity);
                 }
             }
             return content.ToString();
@@ -71,18 +69,21 @@ namespace MyCouch.Serialization
             {
                 using (var jsonReader = new JsonTextReader(reader))
                 {
-                    return VanillaSerializer.Deserialize<T>(jsonReader);
+                    return InternalSerializer.Deserialize<T>(jsonReader);
                 }
             }
         }
 
-        public virtual T DeserializeEntity<T>(Stream data) where T : class
+        public virtual T Deserialize<T>(Stream data) where T : class
         {
+            if (data == null || data.Length < 1)
+                return null;
+
             using (var reader = new StreamReader(data, Encoding.UTF8))
             {
                 using (var jsonReader = new JsonTextReader(reader))
                 {
-                    return EntitySerializer.Deserialize<T>(jsonReader);
+                    return InternalSerializer.Deserialize<T>(jsonReader);
                 }
             }
         }
@@ -164,10 +165,10 @@ namespace MyCouch.Serialization
                                 response.Rows = YieldViewQueryRowsOfString(jr).ToArray() as ViewQueryResponse<T>.Row[];
                             else if (response is ViewQueryResponse<string[]>)
                                 response.Rows = YieldViewQueryRowsOfStrings(jr).ToArray() as ViewQueryResponse<T>.Row[];
-                            else if (response is ViewQueryResponse<object>)
-                                response.Rows = VanillaSerializer.Deserialize<ViewQueryResponse<T>.Row[]>(jr);
+                            //else if (response is ViewQueryResponse<object>)
+                            //    response.Rows = VanillaSerializer.Deserialize<ViewQueryResponse<T>.Row[]>(jr);
                             else
-                                response.Rows = EntitySerializer.Deserialize<ViewQueryResponse<T>.Row[]>(jr);
+                                response.Rows = InternalSerializer.Deserialize<ViewQueryResponse<T>.Row[]>(jr);
                         }
                     }
                 }

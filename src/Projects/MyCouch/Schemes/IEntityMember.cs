@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reflection;
 
 namespace MyCouch.Schemes
@@ -7,7 +6,7 @@ namespace MyCouch.Schemes
     public interface IEntityMember
     {
         BindingFlags PropertyBindingFlags { set; }
-        IList<Func<PropertyInfo, bool>> PropertyLocatorPredicates { get; }
+        int? GetMemberRankingIndex(Type entityType, string membername);
         string GetValueFrom<T>(T entity);
         void SetValueTo<T>(T entity, string value);
     }

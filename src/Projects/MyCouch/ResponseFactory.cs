@@ -84,7 +84,7 @@ namespace MyCouch
                 if (result.RequestMethod == HttpMethod.Get)
                 {
                     content.Position = 0;
-                    result.Entity = Client.Serializer.DeserializeEntity<T>(content);
+                    result.Entity = Client.Serializer.Deserialize<T>(content);
                 }
             }
         }

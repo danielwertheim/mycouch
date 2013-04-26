@@ -13,6 +13,19 @@ namespace MyCouch.UnitTests.Schemes
         }
 
         [Test]
+        public void Verify_MemberRanking()
+        {
+            var t = typeof(ModelForMemberRanking);
+
+            SUT.GetMemberRankingIndex(t, "FDE29AC2-C452-4493-8D61-5349E2E5B5D5").Should().Be(null);
+            SUT.GetMemberRankingIndex(t, "_Rev").Should().Be(0);
+            SUT.GetMemberRankingIndex(t, "ModelForMemberRankingRev").Should().Be(1);
+            SUT.GetMemberRankingIndex(t, "DocumentRev").Should().Be(2);
+            SUT.GetMemberRankingIndex(t, "EntityRev").Should().Be(3);
+            SUT.GetMemberRankingIndex(t, "Rev").Should().Be(4);
+        }
+
+        [Test]
         public void When_only_having_member_Rev_It_extracts_the_Rev()
         {
             var model = new ModelOne { Rev = "ModelOne:Rev:1" };
@@ -73,6 +86,15 @@ namespace MyCouch.UnitTests.Schemes
             };
 
             SUT.GetValueFrom(model).Should().Be(model._Rev);
+        }
+
+        private class ModelForMemberRanking
+        {
+            public string Rev { get; set; }
+            public string EntityRev { get; set; }
+            public string DocumentRev { get; set; }
+            public string ModelForMemberRankingRev { get; set; }
+            public string _Rev { get; set; }
         }
 
         private class ModelOne

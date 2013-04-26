@@ -1,18 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
 
 namespace MyCouch.Schemes
 {
     public class EntityRevMember : EntityMember 
     {
-        protected override IEnumerable<Func<PropertyInfo, bool>> GetDefaultPropertyLocators()
+        public override int? GetMemberRankingIndex(Type entityType, string membername)
         {
-            yield return p => p.Name.Equals("_rev", StringComparison.OrdinalIgnoreCase);
-            yield return p => p.Name.Equals(string.Concat(p.DeclaringType.Name, "rev"), StringComparison.OrdinalIgnoreCase);
-            yield return p => p.Name.Equals("documentrev", StringComparison.OrdinalIgnoreCase);
-            yield return p => p.Name.Equals("entityrev", StringComparison.OrdinalIgnoreCase);
-            yield return p => p.Name.Equals("rev", StringComparison.OrdinalIgnoreCase);
+            if (membername.Equals("_rev", StringComparison.OrdinalIgnoreCase))
+                return 0;
+
+            if (membername.Equals(string.Concat(entityType.Name, "rev"), StringComparison.OrdinalIgnoreCase))
+                return 1;
+
+            if (membername.Equals("documentrev", StringComparison.OrdinalIgnoreCase))
+                return 2;
+
+            if (membername.Equals("entityrev", StringComparison.OrdinalIgnoreCase))
+                return 3;
+
+            if (membername.Equals("rev", StringComparison.OrdinalIgnoreCase))
+                return 4;
+
+            return null;
         }
     }
 }

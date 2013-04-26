@@ -12,13 +12,11 @@ namespace MyCouch.Schemes
         protected readonly ConcurrentDictionary<Type, DynamicProperty> IdPropertyCache;
 
         public BindingFlags PropertyBindingFlags { protected get; set; }
-        public IList<Func<PropertyInfo, bool>> PropertyLocatorPredicates { get; protected set; }
 
         protected EntityMember()
         {
             IdPropertyCache = new ConcurrentDictionary<Type, DynamicProperty>();
             PropertyBindingFlags = GetDefaultPropertyBindingFlags();
-            PropertyLocatorPredicates = GetDefaultPropertyLocators().ToList();
         }
 
         protected virtual BindingFlags GetDefaultPropertyBindingFlags()
@@ -26,7 +24,7 @@ namespace MyCouch.Schemes
             return BindingFlags.Public | BindingFlags.Instance | BindingFlags.GetProperty;
         }
 
-        protected abstract IEnumerable<Func<PropertyInfo, bool>> GetDefaultPropertyLocators();
+        public abstract int? GetMemberRankingIndex(Type entityType, string membername);
 
         public virtual string GetValueFrom<T>(T entity)
         {
@@ -54,7 +52,15 @@ namespace MyCouch.Schemes
 
         protected virtual PropertyInfo GetPropertyFor(Type type)
         {
-            return GetPropertiesFor(type).FirstOrDefault(property => PropertyLocatorPredicates.Any(predicate => predicate(property)));
+            return GetPropertiesFor(type).Select(p => new
+            {
+                PropertyInfo = p,
+                Ranking = GetMemberRankingIndex(type, p.Name)
+            })
+            .Where(r => r.Ranking.HasValue)
+            .OrderBy(r => r.Ranking.Value)
+            .Select(r => r.PropertyInfo)
+            .FirstOrDefault();
         }
 
         protected virtual IEnumerable<PropertyInfo> GetPropertiesFor(Type type)

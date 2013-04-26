@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Reflection;
-using MyCouch.Extensions;
+﻿using MyCouch.Extensions;
 using MyCouch.Schemes;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -17,19 +15,46 @@ namespace MyCouch.Serialization
             EntityAccessor = entityAccessor;
         }
 
-        protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
+        protected override System.Collections.Generic.IList<JsonProperty> CreateProperties(System.Type type, MemberSerialization memberSerialization)
         {
-            var prop = base.CreateProperty(member, memberSerialization);
+            var props = base.CreateProperties(type, memberSerialization);
+            int? idRank = null, revRank = null;
+            JsonProperty id = null, rev = null;
 
-            if (!(member is PropertyInfo))
-                return prop;
+            foreach (var prop in props)
+            {
+                var tmpRank = EntityAccessor.IdMember.GetMemberRankingIndex(type, prop.PropertyName);
+                if (tmpRank != null)
+                {
+                    if (idRank == null || tmpRank < idRank)
+                    {
+                        idRank = tmpRank;
+                        id = prop;
+                    }
 
-            if (EntityAccessor.IdMember.PropertyLocatorPredicates.Any(p => p((PropertyInfo) member)))
-                prop.PropertyName = "_id";
-            else if (EntityAccessor.RevMember.PropertyLocatorPredicates.Any(p => p((PropertyInfo)member)))
-                prop.PropertyName = "_rev";
+                    continue;
+                }
 
-            return prop;
+                tmpRank = EntityAccessor.RevMember.GetMemberRankingIndex(type, prop.PropertyName);
+                if (tmpRank != null)
+                {
+                    if (revRank == null || tmpRank < revRank)
+                    {
+                        revRank = tmpRank;
+                        rev = prop;
+                    }
+
+                    continue;
+                }
+            }
+
+            if (id != null)
+                id.PropertyName = "_id";
+
+            if (rev != null)
+                rev.PropertyName = "_rev";
+
+            return props;
         }
 
         protected override string ResolvePropertyName(string propertyName)

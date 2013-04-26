@@ -13,6 +13,19 @@ namespace MyCouch.UnitTests.Schemes
         }
 
         [Test]
+        public void Verify_MemberRanking()
+        {
+            var t = typeof (ModelForMemberRanking);
+
+            SUT.GetMemberRankingIndex(t, "FDE29AC2-C452-4493-8D61-5349E2E5B5D5").Should().Be(null);
+            SUT.GetMemberRankingIndex(t, "_Id").Should().Be(0);
+            SUT.GetMemberRankingIndex(t, "ModelForMemberRankingId").Should().Be(1);
+            SUT.GetMemberRankingIndex(t, "DocumentId").Should().Be(2);
+            SUT.GetMemberRankingIndex(t, "EntityId").Should().Be(3);
+            SUT.GetMemberRankingIndex(t, "Id").Should().Be(4);
+        }
+
+        [Test]
         public void When_only_having_member_Id_It_extracts_the_id()
         {
             var model = new ModelOne { Id = "ModelOne:Id:1" };
@@ -73,6 +86,15 @@ namespace MyCouch.UnitTests.Schemes
             };
 
             SUT.GetValueFrom(model).Should().Be(model._Id);
+        }
+
+        private class ModelForMemberRanking
+        {
+            public string Id { get; set; }
+            public string EntityId { get; set; }
+            public string DocumentId { get; set; }
+            public string ModelForMemberRankingId { get; set; }
+            public string _Id { get; set; }
         }
 
         private class ModelOne

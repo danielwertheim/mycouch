@@ -1,18 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
 
 namespace MyCouch.Schemes
 {
     public class EntityIdMember : EntityMember
     {
-        protected override IEnumerable<Func<PropertyInfo, bool>> GetDefaultPropertyLocators()
+        public override int? GetMemberRankingIndex(Type entityType, string membername)
         {
-            yield return p => p.Name.Equals("_id", StringComparison.OrdinalIgnoreCase);
-            yield return p => p.Name.Equals(string.Concat(p.DeclaringType.Name, "id"), StringComparison.OrdinalIgnoreCase);
-            yield return p => p.Name.Equals("documentid", StringComparison.OrdinalIgnoreCase);
-            yield return p => p.Name.Equals("entityid", StringComparison.OrdinalIgnoreCase);
-            yield return p => p.Name.Equals("id", StringComparison.OrdinalIgnoreCase);
+            if (membername.Equals("_id", StringComparison.OrdinalIgnoreCase))
+                return 0;
+
+            if (membername.Equals(string.Concat(entityType.Name, "id"), StringComparison.OrdinalIgnoreCase))
+                return 1;
+
+            if (membername.Equals("documentid", StringComparison.OrdinalIgnoreCase))
+                return 2;
+
+            if (membername.Equals("entityid", StringComparison.OrdinalIgnoreCase))
+                return 3;
+
+            if (membername.Equals("id", StringComparison.OrdinalIgnoreCase))
+                return 4;
+
+            return null;
         }
     }
 }
