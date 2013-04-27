@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -45,18 +46,22 @@ namespace MyCouch.IntegrationTests.Documents
         public void When_Skipping_2_of_10_Then_8_rows_are_returned()
         {
             var query = new ViewQuery("artists", "albums").Configure(cfg => cfg.Skip(2));
+
             var response = SUT.RunQuery<Album[]>(query);
 
-            response.Should().BeSuccessfulGet(8);
+            var expected = GetExpectedAlbums(a => a.Skip(2));
+            response.Should().BeSuccessfulGet(expected);
         }
 
         [Test]
         public void When_Limit_to_2_Then_2_rows_are_returned()
         {
             var query = new ViewQuery("artists", "albums").Configure(cfg => cfg.Limit(2));
+            
             var response = SUT.RunQuery<Album[]>(query);
 
-            response.Should().BeSuccessfulGet(2);
+            var expected = GetExpectedAlbums(a => a.Take(2));
+            response.Should().BeSuccessfulGet(expected);
         }
 
         [Test]
@@ -64,11 +69,17 @@ namespace MyCouch.IntegrationTests.Documents
         {
             var artist = Artists[2];
             var query = new ViewQuery("artists", "albums").Configure(cfg => cfg.Key(artist.Name));
+
             var response = SUT.RunQuery<Album[]>(query);
 
-            response.Should().BeSuccessfulGet(1);
-            response.Rows[0].Id.Should().Be(artist.ArtistId);
-            response.Rows[0].Key.Should().Be(artist.Name);
+            response.Should().BeSuccessfulGet(new [] { artist.Albums });
+        }
+
+        protected virtual Album[][] GetExpectedAlbums(Func<IEnumerable<Artist>,IEnumerable<Artist>> modifyArtists)
+        {
+            var expected = Artists.OrderBy(a => a.Name);
+
+            return modifyArtists(expected).Select(a => a.Albums).ToArray();
         }
     }
 }

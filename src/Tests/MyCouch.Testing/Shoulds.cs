@@ -35,6 +35,13 @@ namespace MyCouch.Testing
             Response = response;
         }
 
+        public void BeSuccessfulGet(T[] expected)
+        {
+            BeSuccessfulGet(expected.Length);
+            for (var i = 0; i < Response.RowCount; i++)
+                CustomAsserts.AreValueEqual(expected[i], Response.Rows[i].Value);
+        }
+
         public void BeSuccessfulGet(int numOfRows)
         {
             Response.RequestMethod.Should().Be(HttpMethod.Get);
