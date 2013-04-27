@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+    <metadata>
+        <id>MyCouch</id>    
+        <title>MyCouch - CouchDb client</title>
+        <version>$version$</version>
+        <authors>danielwertheim</authors>
+        <copyright>Daniel Wertheim</copyright>
+        <summary>Simple async CouchDb client.</summary>
+        <description>
+            A simple CouchDb client that uses the async HttpClient. Provides you with some model conventions like injectiong $doctype etc to the document. 
+        </description>
+        <projectUrl>https://github.com/danielwertheim/MyCouch</projectUrl>
+        <licenseUrl>https://github.com/danielwertheim/MyCouch#license</licenseUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
+        <copyright>Copyright 2013 Daniel Wertheim</copyright>
+        <tags>couchdb</tags>
+        <frameworkAssemblies>
+            <frameworkAssembly assemblyName="System.Net.Http" targetFramework="net40" />
+        </frameworkAssemblies>
+        <dependencies>
+            <dependency id="Ensure.That" version="0.10.1" />
+            <dependency id="Newtonsoft.Json" version="5.0.4" />
+        </dependencies>
+    </metadata>
+    <files>
+      <file src="*\MyCouch.dll" target="lib\net40" />
+      <file src="*\MyCouch.xml" target="lib\net40" />
+    </files>
+</package>
