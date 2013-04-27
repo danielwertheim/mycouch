@@ -2,7 +2,7 @@
 
 namespace MyCouch
 {
-    public interface IViewQueryOptions : IEnumerable<KeyValuePair<string, string>>
+    public interface IViewQueryOptions
     {
         /// <summary>
         /// Allow the results from a stale view to be used.
@@ -83,5 +83,7 @@ namespace MyCouch
         /// Specify the group level to be used.
         /// </summary>
         int GroupLevel { get; set; }
+
+        IEnumerable<KeyValuePair<string, string>> ToKeyValues();
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -36,16 +35,6 @@ namespace MyCouch.Querying
             InclusiveEnd = true;
             UpdateSeq = false;
             Group = false;
-        }
-
-        public virtual IEnumerator<KeyValuePair<string, string>> GetEnumerator()
-        {
-            return ToKeyValues().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
         }
 
         public IEnumerable<KeyValuePair<string, string>> ToKeyValues()

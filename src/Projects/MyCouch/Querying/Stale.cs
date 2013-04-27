@@ -23,6 +23,6 @@ namespace MyCouch.Querying
         }
 
         public static Stale Ok { get { return new Stale("ok"); } }
-        public static Stale UpdateAfter { get { return new Stale("ok"); } }
+        public static Stale UpdateAfter { get { return new Stale("update_after"); } }
     }
 }

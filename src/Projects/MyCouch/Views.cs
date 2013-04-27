@@ -81,7 +81,7 @@ namespace MyCouch
 
         protected virtual string GenerateQueryStringParams(IViewQueryOptions options)
         {
-            return string.Join("&", options.Select(kv => string.Format("{0}={1}", kv.Key, Uri.EscapeDataString(kv.Value))));
+            return string.Join("&", options.ToKeyValues().Select(kv => string.Format("{0}={1}", kv.Key, Uri.EscapeDataString(kv.Value))));
         }
 
         protected virtual async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
