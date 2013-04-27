@@ -28,7 +28,7 @@ namespace MyCouch
         /// Used to get and set specific members of entities when you are using the
         /// typed API.
         /// </summary>
-        IEntityAccessor EntityAccessor { get; set; }
+        IEntityReflector EntityReflector { get; set; }
 
         /// <summary>
         /// Database oriented APU operations, for managing databases.

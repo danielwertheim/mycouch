@@ -15,7 +15,7 @@ namespace MyCouch.UnitTests.Serialization
         {
             base.OnTestInitialize();
 
-            SUT = new MyCouchSerializer(new EntityAccessor());
+            SUT = new MyCouchSerializer(new EntityReflector());
         }
 
         [Test]

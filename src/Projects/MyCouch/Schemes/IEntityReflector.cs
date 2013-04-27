@@ -1,6 +1,6 @@
 namespace MyCouch.Schemes
 {
-    public interface IEntityAccessor 
+    public interface IEntityReflector 
     {
         IEntityMember IdMember { get; set; }
         IEntityMember RevMember { get; set; }

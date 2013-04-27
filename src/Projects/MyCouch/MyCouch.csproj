@@ -79,8 +79,8 @@
     <Compile Include="Schemes\EntityIdMember.cs" />
     <Compile Include="Schemes\EntityMember.cs" />
     <Compile Include="Schemes\EntityRevMember.cs" />
-    <Compile Include="Schemes\EntityAccessor.cs" />
-    <Compile Include="Schemes\IEntityAccessor.cs" />
+    <Compile Include="Schemes\EntityReflector.cs" />
+    <Compile Include="Schemes\IEntityReflector.cs" />
     <Compile Include="Serialization\Conventions\DocTypeSerializationConvention.cs" />
     <Compile Include="Serialization\DocSerializationConventions.cs" />
     <Compile Include="Serialization\Conventions\IDocTypeSerializationConvention.cs" />

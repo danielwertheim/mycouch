@@ -11,7 +11,7 @@ namespace MyCouch
         public IConnection Connection { get; protected set; }
         public ISerializer Serializer { get; set; }
         public IResponseFactory ResponseFactory { get; set; }
-        public IEntityAccessor EntityAccessor { get; set; }
+        public IEntityReflector EntityReflector { get; set; }
         public IDatabases Databases { get; protected set; }
         public IDocuments Documents { get; protected set; }
         public IViews Views { get; protected set; }
@@ -23,8 +23,8 @@ namespace MyCouch
             Ensure.That(uri, "uri").IsNotNull();
 
             Connection = new Connection(uri);
-            EntityAccessor = new EntityAccessor();
-            Serializer = new MyCouchSerializer(EntityAccessor);
+            EntityReflector = new EntityReflector();
+            Serializer = new MyCouchSerializer(EntityReflector);
             ResponseFactory = new ResponseFactory(this);
             Databases = new Databases(this);
             Documents = new Documents(this);

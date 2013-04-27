@@ -1,11 +1,11 @@
 namespace MyCouch.Schemes
 {
-    public class EntityAccessor : IEntityAccessor
+    public class EntityReflector : IEntityReflector
     {
         public IEntityMember IdMember { get; set; }
         public IEntityMember RevMember { get; set; }
 
-        public EntityAccessor()
+        public EntityReflector()
         {
             IdMember = new EntityIdMember();
             RevMember = new EntityRevMember();

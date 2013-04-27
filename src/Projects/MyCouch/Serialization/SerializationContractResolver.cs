@@ -9,12 +9,12 @@ namespace MyCouch.Serialization
 {
     public class SerializationContractResolver : DefaultContractResolver
     {
-        protected readonly IEntityAccessor EntityAccessor;
+        protected readonly IEntityReflector EntityReflector;
 
-        public SerializationContractResolver(IEntityAccessor entityAccessor)
+        public SerializationContractResolver(IEntityReflector entityReflector)
             : base(true)
         {
-            EntityAccessor = entityAccessor;
+            EntityReflector = entityReflector;
         }
 
         protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
@@ -28,7 +28,7 @@ namespace MyCouch.Serialization
 
             foreach (var prop in props)
             {
-                var tmpRank = EntityAccessor.IdMember.GetMemberRankingIndex(type, prop.PropertyName);
+                var tmpRank = EntityReflector.IdMember.GetMemberRankingIndex(type, prop.PropertyName);
                 if (tmpRank != null)
                 {
                     if (idRank == null || tmpRank < idRank)
@@ -40,7 +40,7 @@ namespace MyCouch.Serialization
                     continue;
                 }
 
-                tmpRank = EntityAccessor.RevMember.GetMemberRankingIndex(type, prop.PropertyName);
+                tmpRank = EntityReflector.RevMember.GetMemberRankingIndex(type, prop.PropertyName);
                 if (tmpRank != null)
                 {
                     if (revRank == null || tmpRank < revRank)

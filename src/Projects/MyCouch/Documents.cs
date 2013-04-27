@@ -80,8 +80,8 @@ namespace MyCouch
 
             if (response.IsSuccess)
             {
-                Client.EntityAccessor.IdMember.SetValueTo(response.Entity, response.Id);
-                Client.EntityAccessor.RevMember.SetValueTo(response.Entity, response.Rev);
+                Client.EntityReflector.IdMember.SetValueTo(response.Entity, response.Id);
+                Client.EntityReflector.RevMember.SetValueTo(response.Entity, response.Rev);
             }
 
             return response;
@@ -130,8 +130,8 @@ namespace MyCouch
                 HttpMethod.Put,
                 new DocCommand
                 {
-                    Id = Client.EntityAccessor.IdMember.GetValueFrom(entity),
-                    Rev = Client.EntityAccessor.RevMember.GetValueFrom(entity),
+                    Id = Client.EntityReflector.IdMember.GetValueFrom(entity),
+                    Rev = Client.EntityReflector.RevMember.GetValueFrom(entity),
                     Content = SerializeEntity(entity)
                 });
 
@@ -139,7 +139,7 @@ namespace MyCouch
             response.Entity = entity;
 
             if (response.IsSuccess)
-                Client.EntityAccessor.RevMember.SetValueTo(response.Entity, response.Rev);
+                Client.EntityReflector.RevMember.SetValueTo(response.Entity, response.Rev);
 
             return response;
         }
@@ -172,15 +172,15 @@ namespace MyCouch
                 HttpMethod.Delete,
                 new DocCommand
                 {
-                    Id = Client.EntityAccessor.IdMember.GetValueFrom(entity),
-                    Rev = Client.EntityAccessor.RevMember.GetValueFrom(entity)
+                    Id = Client.EntityReflector.IdMember.GetValueFrom(entity),
+                    Rev = Client.EntityReflector.RevMember.GetValueFrom(entity)
                 });
 
             var response = await ProcessHttpResponseAsync<T>(SendAsync(req));
             response.Entity = entity;
 
             if (response.IsSuccess)
-                Client.EntityAccessor.RevMember.SetValueTo(response.Entity, response.Rev);
+                Client.EntityReflector.RevMember.SetValueTo(response.Entity, response.Rev);
 
             return response;
         }
