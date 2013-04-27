@@ -25,7 +25,7 @@ namespace MyCouch.IntegrationTests.Documents
         [Test]
         public void When_post_of_new_document_Using_an_entity_The_document_is_persisted()
         {
-            var artist = TestData.CreateArtist();
+            var artist = TestData.Artists.CreateArtist();
             var initialId = artist.ArtistId;
 
             var response = SUT.Post(artist);
@@ -36,7 +36,7 @@ namespace MyCouch.IntegrationTests.Documents
         [Test]
         public void When_post_of_new_document_Using_json_The_document_is_persisted()
         {
-            var artist = TestData.CreateArtist();
+            var artist = TestData.Artists.CreateArtist();
             var json = Client.Serializer.SerializeEntity(artist);
 
             var response = SUT.Post(json);
@@ -47,7 +47,7 @@ namespace MyCouch.IntegrationTests.Documents
         [Test]
         public void When_put_of_new_document_Using_an_entity_The_document_is_replaced()
         {
-            var artist = TestData.CreateArtist();
+            var artist = TestData.Artists.CreateArtist();
             var initialId = artist.ArtistId;
 
             var response = SUT.Put(artist);
@@ -58,7 +58,7 @@ namespace MyCouch.IntegrationTests.Documents
         [Test]
         public void When_put_of_new_document_Using_json_The_document_is_replaced()
         {
-            var artist = TestData.CreateArtist();
+            var artist = TestData.Artists.CreateArtist();
             var initialId = artist.ArtistId;
             var json = Client.Serializer.SerializeEntity(artist);
 
@@ -70,7 +70,7 @@ namespace MyCouch.IntegrationTests.Documents
         [Test]
         public void When_put_of_existing_document_Using_an_entity_The_document_is_replaced()
         {
-            var artist = TestData.CreateArtist();
+            var artist = TestData.Artists.CreateArtist();
             var initialId = artist.ArtistId;
             SUT.Post(artist);
 
@@ -82,7 +82,7 @@ namespace MyCouch.IntegrationTests.Documents
         [Test]
         public void When_put_of_existing_document_Using_json_The_document_is_replaced()
         {
-            var artist = TestData.CreateArtist();
+            var artist = TestData.Artists.CreateArtist();
             var initialId = artist.ArtistId;
             SUT.Post(artist);
             var json = Client.Serializer.SerializeEntity(artist);
@@ -95,7 +95,7 @@ namespace MyCouch.IntegrationTests.Documents
         [Test]
         public void When_delete_of_existing_document_Using_an_entity_The_document_is_deleted()
         {
-            var artist = TestData.CreateArtist();
+            var artist = TestData.Artists.CreateArtist();
             var initialId = artist.ArtistId;
             SUT.Post(artist);
 
@@ -107,7 +107,7 @@ namespace MyCouch.IntegrationTests.Documents
         [Test]
         public void When_delete_of_existing_document_Using_id_and_rev_The_document_is_deleted()
         {
-            var artist = TestData.CreateArtist();
+            var artist = TestData.Artists.CreateArtist();
             var initialId = artist.ArtistId;
             SUT.Post(artist);
 
@@ -119,11 +119,11 @@ namespace MyCouch.IntegrationTests.Documents
         [Test]
         public void CRUD_using_non_typed_API()
         {
-            var post1 = SUT.PostAsync(TestData.Json.Artist1).Result;
-            post1.Should().BeSuccessfulPost(TestData.Json.Artist1Id);
+            var post1 = SUT.PostAsync(TestData.Artists.Artist1Json).Result;
+            post1.Should().BeSuccessfulPost(TestData.Artists.Artist1Id);
 
-            var post2 = SUT.Post(TestData.Json.Artist2);
-            post2.Should().BeSuccessfulPost(TestData.Json.Artist2Id);
+            var post2 = SUT.Post(TestData.Artists.Artist2Json);
+            post2.Should().BeSuccessfulPost(TestData.Artists.Artist2Id);
 
             var get1 = SUT.GetAsync(post1.Id).Result;
             get1.Should().BeSuccessfulGet(post1.Id);
@@ -153,7 +153,7 @@ namespace MyCouch.IntegrationTests.Documents
         [Test]
         public void CRUD_using_typed_API()
         {
-            var artists = TestData.CreateArtists(2);
+            var artists = TestData.Artists.CreateArtists(2);
             var artist1 = artists[0];
             var artist2 = artists[1];
 

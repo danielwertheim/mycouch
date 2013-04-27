@@ -4,28 +4,28 @@ using System.Net;
 using System.Net.Http;
 using FluentAssertions;
 
-namespace MyCouch.IntegrationTests
+namespace MyCouch.Testing
 {
     [DebuggerStepThrough]
-    internal static class Shoulds
+    public static class Shoulds
     {
-        internal static ViewQueryResponseAssertions<T> Should<T>(this ViewQueryResponse<T> response) where T : class
+        public static ViewQueryResponseAssertions<T> Should<T>(this ViewQueryResponse<T> response) where T : class
         {
             return new ViewQueryResponseAssertions<T>(response);
         }
 
-        internal static EntityResponseAssertions<T> Should<T>(this EntityResponse<T> response) where T : class
+        public static EntityResponseAssertions<T> Should<T>(this EntityResponse<T> response) where T : class
         {
             return new EntityResponseAssertions<T>(response);
         }
 
-        internal static DocumentResponseAssertions Should(this DocumentResponse response)
+        public static DocumentResponseAssertions Should(this DocumentResponse response)
         {
             return new DocumentResponseAssertions(response);
         }
     }
 
-    internal class ViewQueryResponseAssertions<T> where T : class
+    public class ViewQueryResponseAssertions<T> where T : class
     {
         protected readonly ViewQueryResponse<T> Response;
 
@@ -35,7 +35,7 @@ namespace MyCouch.IntegrationTests
             Response = response;
         }
 
-        internal void BeSuccessfulGet(int numOfRows)
+        public void BeSuccessfulGet(int numOfRows)
         {
             Response.RequestMethod.Should().Be(HttpMethod.Get);
             Response.IsSuccess.Should().BeTrue();
@@ -52,7 +52,7 @@ namespace MyCouch.IntegrationTests
         }
     }
 
-    internal class EntityResponseAssertions<T> where T : class
+    public class EntityResponseAssertions<T> where T : class
     {
         protected readonly EntityResponse<T> Response;
 
@@ -62,7 +62,7 @@ namespace MyCouch.IntegrationTests
             Response = response;
         }
 
-        internal void BeSuccessfulGet(string id)
+        public void BeSuccessfulGet(string id)
         {
             Response.RequestMethod.Should().Be(HttpMethod.Get);
             Response.IsSuccess.Should().BeTrue();
@@ -76,7 +76,7 @@ namespace MyCouch.IntegrationTests
             Response.Rev.Should().NotBeNullOrEmpty();
         }
 
-        internal void BeSuccessfulPost(string initialId, Func<T, string> idAccessor, Func<T, string> revAccessor)
+        public void BeSuccessfulPost(string initialId, Func<T, string> idAccessor, Func<T, string> revAccessor)
         {
             Response.RequestMethod.Should().Be(HttpMethod.Post);
             Response.IsSuccess.Should().BeTrue();
@@ -93,7 +93,7 @@ namespace MyCouch.IntegrationTests
             revAccessor(Response.Entity).Should().Be(Response.Rev);
         }
 
-        internal void BeSuccessfulPut(string initialId, Func<T, string> idAccessor, Func<T, string> revAccessor)
+        public void BeSuccessfulPut(string initialId, Func<T, string> idAccessor, Func<T, string> revAccessor)
         {
             Response.RequestMethod.Should().Be(HttpMethod.Put);
             Response.IsSuccess.Should().BeTrue();
@@ -110,7 +110,7 @@ namespace MyCouch.IntegrationTests
             revAccessor(Response.Entity).Should().Be(Response.Rev);
         }
 
-        internal void BeSuccessfulPutOfNew(string initialId, Func<T, string> idAccessor, Func<T, string> revAccessor)
+        public void BeSuccessfulPutOfNew(string initialId, Func<T, string> idAccessor, Func<T, string> revAccessor)
         {
             Response.RequestMethod.Should().Be(HttpMethod.Put);
             Response.IsSuccess.Should().BeTrue();
@@ -127,7 +127,7 @@ namespace MyCouch.IntegrationTests
             revAccessor(Response.Entity).Should().Be(Response.Rev);
         }
 
-        internal void BeSuccessfulDelete(string initialId, Func<T, string> idAccessor, Func<T, string> revAccessor)
+        public void BeSuccessfulDelete(string initialId, Func<T, string> idAccessor, Func<T, string> revAccessor)
         {
             Response.RequestMethod.Should().Be(HttpMethod.Delete);
             Response.IsSuccess.Should().BeTrue();
@@ -145,7 +145,7 @@ namespace MyCouch.IntegrationTests
         }
     }
 
-    internal class DocumentResponseAssertions
+    public class DocumentResponseAssertions
     {
         protected readonly DocumentResponse Response;
 
@@ -155,7 +155,7 @@ namespace MyCouch.IntegrationTests
             Response = response;
         }
 
-        internal void BeSuccessfulGet(string id)
+        public void BeSuccessfulGet(string id)
         {
             Response.RequestMethod.Should().Be(HttpMethod.Get);
             Response.IsSuccess.Should().BeTrue();
@@ -169,7 +169,7 @@ namespace MyCouch.IntegrationTests
             Response.Rev.Should().NotBeNullOrEmpty();
         }
 
-        internal void BeSuccessfulPost(string initialId)
+        public void BeSuccessfulPost(string initialId)
         {
             Response.RequestMethod.Should().Be(HttpMethod.Post);
             Response.IsSuccess.Should().BeTrue();
@@ -183,7 +183,7 @@ namespace MyCouch.IntegrationTests
             Response.Rev.Should().NotBeNullOrEmpty();
         }
 
-        internal void BeSuccessfulPut(string initialId)
+        public void BeSuccessfulPut(string initialId)
         {
             Response.RequestMethod.Should().Be(HttpMethod.Put);
             Response.IsSuccess.Should().BeTrue();
@@ -197,7 +197,7 @@ namespace MyCouch.IntegrationTests
             Response.Rev.Should().NotBeNullOrEmpty();
         }
 
-        internal void BeSuccessfulPutOfNew(string initialId)
+        public void BeSuccessfulPutOfNew(string initialId)
         {
             Response.RequestMethod.Should().Be(HttpMethod.Put);
             Response.IsSuccess.Should().BeTrue();
@@ -211,7 +211,7 @@ namespace MyCouch.IntegrationTests
             Response.Rev.Should().NotBeNullOrEmpty();
         }
 
-        internal void BeSuccessfulDelete(string initialId)
+        public void BeSuccessfulDelete(string initialId)
         {
             Response.RequestMethod.Should().Be(HttpMethod.Delete);
             Response.IsSuccess.Should().BeTrue();

@@ -62,6 +62,36 @@ namespace MyCouch.Testing {
         
         /// <summary>
         ///   Looks up a localized string similar to {
+        ///    &quot;total_rows&quot;: 4,
+        ///    &quot;offset&quot;: 0,
+        ///    &quot;rows&quot;: [
+        ///        {
+        ///            &quot;id&quot;: &quot;1&quot;,
+        ///            &quot;key&quot;: &quot;Fake artist 1&quot;,
+        ///            &quot;value&quot;: [
+        ///                {
+        ///                    &quot;name&quot;: &quot;Greatest fakes #1&quot;
+        ///                }
+        ///            ]
+        ///        },
+        ///        {
+        ///            &quot;id&quot;: &quot;2&quot;,
+        ///            &quot;key&quot;: &quot;Fake artist 2&quot;,
+        ///            &quot;value&quot;: [
+        ///                {
+        ///                    &quot;name&quot;: &quot;Greatest fakes #2.1&quot;
+        ///                },
+        ///                {
+        ///                    &quot;name&quot;: &quot;Greatest f [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string ViewQueryAlbums {
+            get {
+                return ResourceManager.GetString("ViewQueryAlbums", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
         ///    &quot;total_rows&quot;: 3,
         ///    &quot;offset&quot;: 0,
         ///    &quot;rows&quot;: [
@@ -82,9 +112,9 @@ namespace MyCouch.Testing {
         ///    ]
         ///}.
         /// </summary>
-        public static string AllDocsResult {
+        public static string ViewQueryAllDocsResult {
             get {
-                return ResourceManager.GetString("AllDocsResult", resourceCulture);
+                return ResourceManager.GetString("ViewQueryAllDocsResult", resourceCulture);
             }
         }
     }

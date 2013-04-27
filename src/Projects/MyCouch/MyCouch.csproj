@@ -47,6 +47,7 @@
     </Compile>
     <Compile Include="DatabaseResponse.cs" />
     <Compile Include="Databases.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="IDatabases.cs" />
     <Compile Include="SingleDocumentResponse.cs" />
     <Compile Include="ISystemViewQuery.cs" />

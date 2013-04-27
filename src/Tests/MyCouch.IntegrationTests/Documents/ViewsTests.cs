@@ -18,7 +18,7 @@ namespace MyCouch.IntegrationTests.Documents
         {
             base.OnFixtureInitialize();
 
-            Artists = TestData.CreateArtists(10);
+            Artists = TestData.Artists.CreateArtists(10);
             
             var tasks = new List<Task>();
             tasks.AddRange(Artists.Select(item => Client.Documents.PostAsync(item)));

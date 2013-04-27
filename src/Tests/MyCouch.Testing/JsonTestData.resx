@@ -117,7 +117,69 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AllDocsResult" xml:space="preserve">
+  <data name="ViewQueryAlbums" xml:space="preserve">
+    <value>{
+    "total_rows": 4,
+    "offset": 0,
+    "rows": [
+        {
+            "id": "1",
+            "key": "Fake artist 1",
+            "value": [
+                {
+                    "name": "Greatest fakes #1"
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "key": "Fake artist 2",
+            "value": [
+                {
+                    "name": "Greatest fakes #2.1"
+                },
+                {
+                    "name": "Greatest fakes #2.2"
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "key": "Fake artist 3",
+            "value": [
+                {
+                    "name": "Greatest fakes #3.1"
+                },
+                {
+                    "name": "Greatest fakes #3.2"
+                },
+                {
+                    "name": "Greatest fakes #3.3"
+                }
+            ]
+        },
+        {
+            "id": "4",
+            "key": "Fake artist 4",
+            "value": [
+                {
+                    "name": "Greatest fakes #4.1"
+                },
+                {
+                    "name": "Greatest fakes #4.2"
+                },
+                {
+                    "name": "Greatest fakes #4.3"
+                },
+                {
+                    "name": "Greatest fakes #4.4"
+                }
+            ]
+        }
+    ]
+}</value>
+  </data>
+  <data name="ViewQueryAllDocsResult" xml:space="preserve">
     <value>{
     "total_rows": 3,
     "offset": 0,
