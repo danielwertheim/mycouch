@@ -1,4 +1,4 @@
-# v2013-04-18.1
+# v2013-04-27.1
 # vs
 [Aa]pp_[Dd]ata/
 [Bb]in/
@@ -11,6 +11,9 @@
 *.vssscc
 *.suo
 *.cache
+
+# deploy
+deploy/build
 
 # misc
 *~
