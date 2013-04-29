@@ -80,7 +80,7 @@ namespace MyCouch.Testing
                     artists.Add(artist);
                 }
 
-                return artists.ToArray();
+                return artists.OrderBy(a => a.Name).ToArray();
             }
 
             private static Album[] CreateAlbums(int numOf, int artistIndex)
