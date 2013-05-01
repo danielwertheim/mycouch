@@ -24,6 +24,7 @@ namespace MyCouch
         {
             Ensure.That(connection, "connection").IsNotNull();
 
+            Connection = connection;
             EntityReflector = new EntityReflector();
             Serializer = new MyCouchSerializer(EntityReflector);
             ResponseFactory = new ResponseFactory(this);
