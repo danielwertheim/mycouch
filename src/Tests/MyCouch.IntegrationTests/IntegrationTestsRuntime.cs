@@ -27,8 +27,9 @@ namespace MyCouch.IntegrationTests
                 var query = new SystemViewQuery("_all_docs");
                 var response = client.Views.RunQuery<dynamic>(query);
 
-                foreach (var row in response.Rows)
-                    client.Documents.Delete(row.Id, row.Value.rev.ToString());
+                if (!response.IsEmpty)
+                    foreach (var row in response.Rows)
+                        client.Documents.Delete(row.Id, row.Value.rev.ToString());
             }
         }
     }
