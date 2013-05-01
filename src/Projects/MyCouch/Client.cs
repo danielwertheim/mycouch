@@ -26,7 +26,7 @@ namespace MyCouch
 
             Connection = connection;
             EntityReflector = new EntityReflector();
-            Serializer = new MyCouchSerializer(EntityReflector);
+            Serializer = new MyCouchSerializer(EntityReflector); //TODO: Either replace with Func<IEntityReflector> or pass IClient Latter is ugly...ugliest...
             ResponseFactory = new ResponseFactory(this);
             Databases = new Databases(this);
             Documents = new Documents(this);
