@@ -116,7 +116,7 @@ namespace MyCouch.Testing
 
         public static Stream AsStream(this string json)
         {
-            return new MemoryStream(Encoding.UTF8.GetBytes(json));
+            return new MemoryStream(MyCouchRuntime.DefaultEncoding.GetBytes(json));
         }
     }
 }

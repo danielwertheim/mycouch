@@ -67,7 +67,7 @@ namespace MyCouch
                 if (result.RequestMethod == HttpMethod.Get)
                 {
                     content.Position = 0;
-                    using (var reader = new StreamReader(content, Encoding.UTF8))
+                    using (var reader = new StreamReader(content, MyCouchRuntime.DefaultEncoding))
                     {
                         result.Content = reader.ReadToEnd();
                     }

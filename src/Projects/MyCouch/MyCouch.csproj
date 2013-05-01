@@ -52,6 +52,7 @@
     <Compile Include="Databases.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="IDatabases.cs" />
+    <Compile Include="MyCouchRuntime.cs" />
     <Compile Include="SingleDocumentResponse.cs" />
     <Compile Include="ISystemViewQuery.cs" />
     <Compile Include="Querying\SystemViewQuery.cs" />
