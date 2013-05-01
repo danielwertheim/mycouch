@@ -29,8 +29,9 @@ namespace MyCouch
             Ensure.That(query, "query").IsNotNull();
 
             var req = CreateRequest(query);
-
-            return await ProcessHttpResponseAsync<T>(SendAsync(req));
+            var res = SendAsync(req);
+            
+            return await ProcessHttpResponseAsync<T>(res);
         }
 
         public virtual ViewQueryResponse<T> Query<T>(string designDocument, string viewname, Action<IViewQueryConfigurator> configurator) where T : class
@@ -84,9 +85,9 @@ namespace MyCouch
             return string.Join("&", options.ToKeyValues().Select(kv => string.Format("{0}={1}", kv.Key, Uri.EscapeDataString(kv.Value))));
         }
 
-        protected virtual async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
+        protected virtual Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
         {
-            return await Client.Connection.SendAsync(request);
+            return Client.Connection.SendAsync(request);
         }
 
         protected virtual async Task<ViewQueryResponse<T>> ProcessHttpResponseAsync<T>(Task<HttpResponseMessage> responseTask) where T : class 

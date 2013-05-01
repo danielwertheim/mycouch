@@ -58,9 +58,9 @@ namespace MyCouch
                 dbname);
         }
 
-        protected virtual async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
+        protected virtual Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
         {
-            return await Client.Connection.SendAsync(request);
+            return Client.Connection.SendAsync(request);
         }
 
         protected virtual async Task<DatabaseResponse> ProcessHttpResponseAsync(Task<HttpResponseMessage> responseTask)

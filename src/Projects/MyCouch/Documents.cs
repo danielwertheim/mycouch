@@ -27,8 +27,9 @@ namespace MyCouch
             Ensure.That(id, "id").IsNotNullOrWhiteSpace();
 
             var req = CreateRequest(HttpMethod.Get, new DocCommand { Id = id, Rev = rev });
-
-            return await ProcessHttpResponseAsync(SendAsync(req));
+            var res = SendAsync(req);
+            
+            return await ProcessHttpResponseAsync(res);
         }
 
         public virtual EntityResponse<T> Get<T>(string id, string rev = null) where T : class
@@ -41,8 +42,9 @@ namespace MyCouch
             Ensure.That(id, "id").IsNotNullOrWhiteSpace();
 
             var req = CreateRequest(HttpMethod.Get, new DocCommand { Id = id, Rev = rev });
-
-            return await ProcessHttpResponseAsync<T>(SendAsync(req));
+            var res = SendAsync(req);
+            
+            return await ProcessHttpResponseAsync<T>(res);
         }
 
         public virtual DocumentResponse Post(string doc)
@@ -55,8 +57,9 @@ namespace MyCouch
             Ensure.That(doc, "entity").IsNotNullOrWhiteSpace();
 
             var req = CreateRequest(HttpMethod.Post, new DocCommand { Content = doc });
-
-            return await ProcessHttpResponseAsync(SendAsync(req));
+            var res = SendAsync(req);
+            
+            return await ProcessHttpResponseAsync(res);
         }
 
         public virtual EntityResponse<T> Post<T>(T entity) where T : class
@@ -75,7 +78,8 @@ namespace MyCouch
                     Content = SerializeEntity(entity)
                 });
 
-            var response = await ProcessHttpResponseAsync<T>(SendAsync(req));
+            var res = SendAsync(req);
+            var response = await ProcessHttpResponseAsync<T>(res);
             response.Entity = entity;
 
             if (response.IsSuccess)
@@ -98,8 +102,9 @@ namespace MyCouch
             Ensure.That(doc, "entity").IsNotNullOrWhiteSpace();
 
             var req = CreateRequest(HttpMethod.Put, new DocCommand { Id = id, Content = doc });
-
-            return await ProcessHttpResponseAsync(SendAsync(req));
+            var res = SendAsync(req);
+            
+            return await ProcessHttpResponseAsync(res);
         }
 
         public virtual DocumentResponse Put(string id, string rev, string doc)
@@ -113,8 +118,9 @@ namespace MyCouch
             Ensure.That(doc, "entity").IsNotNullOrWhiteSpace();
 
             var req = CreateRequest(HttpMethod.Put, new DocCommand { Id = id, Rev = rev, Content = doc });
-
-            return await ProcessHttpResponseAsync(SendAsync(req));
+            var res = SendAsync(req);
+            
+            return await ProcessHttpResponseAsync(res);
         }
 
         public virtual EntityResponse<T> Put<T>(T entity) where T : class
@@ -134,8 +140,8 @@ namespace MyCouch
                     Rev = Client.EntityReflector.RevMember.GetValueFrom(entity),
                     Content = SerializeEntity(entity)
                 });
-
-            var response = await ProcessHttpResponseAsync<T>(SendAsync(req));
+            var res = SendAsync(req);
+            var response = await ProcessHttpResponseAsync<T>(res);
             response.Entity = entity;
 
             if (response.IsSuccess)
@@ -155,8 +161,9 @@ namespace MyCouch
             Ensure.That(rev, "rev").IsNotNullOrWhiteSpace();
 
             var req = CreateRequest(HttpMethod.Delete, new DocCommand { Id = id, Rev = rev });
-
-            return await ProcessHttpResponseAsync(SendAsync(req));
+            var res = SendAsync(req);
+            
+            return await ProcessHttpResponseAsync(res);
         }
 
         public virtual EntityResponse<T> Delete<T>(T entity) where T : class
@@ -175,8 +182,8 @@ namespace MyCouch
                     Id = Client.EntityReflector.IdMember.GetValueFrom(entity),
                     Rev = Client.EntityReflector.RevMember.GetValueFrom(entity)
                 });
-
-            var response = await ProcessHttpResponseAsync<T>(SendAsync(req));
+            var res = SendAsync(req);
+            var response = await ProcessHttpResponseAsync<T>(res);
             response.Entity = entity;
 
             if (response.IsSuccess)
@@ -185,9 +192,9 @@ namespace MyCouch
             return response;
         }
 
-        protected virtual async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
+        protected virtual Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
         {
-            return await Client.Connection.SendAsync(request);
+            return Client.Connection.SendAsync(request);
         }
 
         protected virtual string SerializeEntity<T>(T entity) where T : class

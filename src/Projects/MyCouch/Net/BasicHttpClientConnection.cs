@@ -64,9 +64,9 @@ namespace MyCouch.Net
             return client;
         }
 
-        public virtual async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
+        public virtual Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
         {
-            return await HttpClient.SendAsync(request);
+            return HttpClient.SendAsync(request);
         }
     }
 }
