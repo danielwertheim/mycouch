@@ -18,13 +18,15 @@ namespace MyCouch
 
         public Client(string url) : this(new Uri(url)) { }
 
-        public Client(Uri uri)
-        {
-            Ensure.That(uri, "uri").IsNotNull();
+        public Client(Uri uri) : this(new BasicHttpClientConnection(uri)) { }
 
-            Connection = new Connection(uri);
+        public Client(IConnection connection)
+        {
+            Ensure.That(connection, "connection").IsNotNull();
+
+            Connection = connection;
             EntityReflector = new EntityReflector();
-            Serializer = new MyCouchSerializer(EntityReflector);
+            Serializer = new MyCouchSerializer(EntityReflector); //TODO: Either replace with Func<IEntityReflector> or pass IClient Latter is ugly...ugliest...
             ResponseFactory = new ResponseFactory(this);
             Databases = new Databases(this);
             Documents = new Documents(this);

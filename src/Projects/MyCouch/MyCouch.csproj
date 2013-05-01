@@ -29,6 +29,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\MyCouch.XML</DocumentationFile>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EnsureThat">
@@ -51,6 +52,12 @@
     <Compile Include="Databases.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="IDatabases.cs" />
+    <Compile Include="MyCouchRuntime.cs" />
+    <Compile Include="Resources\ExceptionStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ExceptionStrings.resx</DependentUpon>
+    </Compile>
     <Compile Include="SingleDocumentResponse.cs" />
     <Compile Include="ISystemViewQuery.cs" />
     <Compile Include="Querying\SystemViewQuery.cs" />
@@ -60,7 +67,7 @@
     <Compile Include="Net\HttpRequest.cs" />
     <Compile Include="IResponse.cs" />
     <Compile Include="Net\HttpContentTypes.cs" />
-    <Compile Include="Net\Connection.cs" />
+    <Compile Include="Net\BasicHttpClientConnection.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="Documents.cs" />
     <Compile Include="DocumentResponse.cs" />
@@ -102,7 +109,12 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ExceptionStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ExceptionStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -21,15 +21,13 @@ namespace MyCouch.IntegrationTests
 
         internal static void ClearAllDocuments()
         {
-            using (var client = TestClientFactory.CreateDefault())
-            {
-                //TODO: Use batch delete instead
-                var query = new SystemViewQuery("_all_docs");
-                var response = client.Views.RunQuery<dynamic>(query);
+            //TODO: Use batch delete instead
+            var query = new SystemViewQuery("_all_docs");
+            var response = Client.Views.RunQuery<dynamic>(query);
 
+            if (!response.IsEmpty)
                 foreach (var row in response.Rows)
-                    client.Documents.Delete(row.Id, row.Value.rev.ToString());
-            }
+                    Client.Documents.Delete(row.Id, row.Value.rev.ToString());
         }
     }
 }

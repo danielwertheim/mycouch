@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Net.Http;
-using System.Text;
 
 namespace MyCouch.Net
 {
@@ -8,6 +7,6 @@ namespace MyCouch.Net
     public class JsonContent : StringContent
     {
         public JsonContent(string content) 
-            : base(content, Encoding.UTF8, "application/json") {}
+            : base(content, MyCouchRuntime.DefaultEncoding, "application/json") {}
     }
 }

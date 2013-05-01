@@ -1,10 +1,16 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.Text;
 
 namespace MyCouch.Extensions
 {
     public static class StringExtensions
     {
+        public static string AsBase64Encoded(this string value)
+        {
+            return Convert.ToBase64String(MyCouchRuntime.DefaultEncoding.GetBytes(value));
+        }
+
         public static string ToCamelCase(this string s)
         {
             if (string.IsNullOrWhiteSpace(s))

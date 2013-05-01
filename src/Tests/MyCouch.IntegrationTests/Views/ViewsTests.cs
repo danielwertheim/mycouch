@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FluentAssertions;
 using MyCouch.Querying;
 using MyCouch.Testing;
 using MyCouch.Testing.Model;
 using NUnit.Framework;
 
-namespace MyCouch.IntegrationTests.Documents
+namespace MyCouch.IntegrationTests.Views
 {
     [TestFixture]
     public class ViewsTests : IntegrationTestsOf<IViews>
@@ -73,6 +72,45 @@ namespace MyCouch.IntegrationTests.Documents
             var response = SUT.RunQuery<Album[]>(query);
 
             response.Should().BeSuccessfulGet(new [] { artist.Albums });
+        }
+
+        [Test]
+        public void When_Keys_are_specified_Then_matching_rows_are_returned()
+        {
+            var artists = Artists.Skip(2).Take(3).ToArray();
+            var keys = artists.Select(a => a.Name).ToArray();
+            var query = new ViewQuery("artists", "albums").Configure(cfg => cfg.Keys(keys));
+
+            var response = SUT.RunQuery<Album[]>(query);
+
+            response.Should().BeSuccessfulGet(artists.Select(a => a.Albums).ToArray());
+        }
+
+        [Test]
+        public void When_StartKey_and_EndKey_are_specified_Then_matching_rows_are_returned()
+        {
+            var artists = Artists.Skip(2).Take(5).ToArray();
+            var query = new ViewQuery("artists", "albums").Configure(cfg => cfg
+                .StartKey(artists.First().Name)
+                .EndKey(artists.Last().Name));
+
+            var response = SUT.RunQuery<Album[]>(query);
+
+            response.Should().BeSuccessfulGet(artists.Select(a => a.Albums).ToArray());
+        }
+
+        [Test]
+        public void When_StartKey_and_EndKey_with_non_inclusive_end_are_specified_Then_matching_rows_are_returned()
+        {
+            var artists = Artists.Skip(2).Take(5).ToArray();
+            var query = new ViewQuery("artists", "albums").Configure(cfg => cfg
+                .StartKey(artists.First().Name)
+                .EndKey(artists.Last().Name)
+                .InclusiveEnd(false));
+
+            var response = SUT.RunQuery<Album[]>(query);
+
+            response.Should().BeSuccessfulGet(artists.Take(artists.Length - 1).Select(a => a.Albums).ToArray());
         }
 
         protected virtual Album[][] GetExpectedAlbums(Func<IEnumerable<Artist>,IEnumerable<Artist>> modifyArtists)

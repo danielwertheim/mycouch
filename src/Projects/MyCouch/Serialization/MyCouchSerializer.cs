@@ -79,7 +79,7 @@ namespace MyCouch.Serialization
             if (data == null || data.Length < 1)
                 return null;
 
-            using (var reader = new StreamReader(data, Encoding.UTF8))
+            using (var reader = new StreamReader(data, MyCouchRuntime.DefaultEncoding))
             {
                 using (var jsonReader = new JsonTextReader(reader))
                 {

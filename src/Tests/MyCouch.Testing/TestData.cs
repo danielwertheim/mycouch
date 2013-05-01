@@ -80,7 +80,7 @@ namespace MyCouch.Testing
                     artists.Add(artist);
                 }
 
-                return artists.ToArray();
+                return artists.OrderBy(a => a.Name).ToArray();
             }
 
             private static Album[] CreateAlbums(int numOf, int artistIndex)
@@ -116,7 +116,7 @@ namespace MyCouch.Testing
 
         public static Stream AsStream(this string json)
         {
-            return new MemoryStream(Encoding.UTF8.GetBytes(json));
+            return new MemoryStream(MyCouchRuntime.DefaultEncoding.GetBytes(json));
         }
     }
 }
