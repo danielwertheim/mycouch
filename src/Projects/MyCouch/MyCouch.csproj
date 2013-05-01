@@ -61,7 +61,7 @@
     <Compile Include="Net\HttpRequest.cs" />
     <Compile Include="IResponse.cs" />
     <Compile Include="Net\HttpContentTypes.cs" />
-    <Compile Include="Net\Connection.cs" />
+    <Compile Include="Net\BasicHttpClientConnection.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="Documents.cs" />
     <Compile Include="DocumentResponse.cs" />

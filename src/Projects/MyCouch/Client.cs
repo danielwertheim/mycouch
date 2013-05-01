@@ -22,7 +22,7 @@ namespace MyCouch
         {
             Ensure.That(uri, "uri").IsNotNull();
 
-            Connection = new Connection(uri);
+            Connection = new BasicHttpClientConnection(uri);
             EntityReflector = new EntityReflector();
             Serializer = new MyCouchSerializer(EntityReflector);
             ResponseFactory = new ResponseFactory(this);

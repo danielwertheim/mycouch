@@ -6,7 +6,7 @@ using EnsureThat;
 
 namespace MyCouch.Net
 {
-    public class Connection : IConnection
+    public class BasicHttpClientConnection : IConnection
     {
         protected HttpClient HttpClient;
 
@@ -15,7 +15,7 @@ namespace MyCouch.Net
             get { return HttpClient.BaseAddress; }
         }
 
-        public Connection(Uri uri)
+        public BasicHttpClientConnection(Uri uri)
         {
             Ensure.That(uri, "uri").IsNotNull();
 
@@ -25,7 +25,7 @@ namespace MyCouch.Net
         public virtual void Dispose()
         {
             if (HttpClient == null)
-                throw new ObjectDisposedException(typeof(Connection).Name);
+                throw new ObjectDisposedException(typeof(BasicHttpClientConnection).Name);
 
             HttpClient.CancelPendingRequests();
             HttpClient.Dispose();
