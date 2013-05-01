@@ -18,11 +18,12 @@ namespace MyCouch
 
         public Client(string url) : this(new Uri(url)) { }
 
-        public Client(Uri uri)
-        {
-            Ensure.That(uri, "uri").IsNotNull();
+        public Client(Uri uri) : this(new BasicHttpClientConnection(uri)) { }
 
-            Connection = new BasicHttpClientConnection(uri);
+        public Client(IConnection connection)
+        {
+            Ensure.That(connection, "connection").IsNotNull();
+
             EntityReflector = new EntityReflector();
             Serializer = new MyCouchSerializer(EntityReflector);
             ResponseFactory = new ResponseFactory(this);
