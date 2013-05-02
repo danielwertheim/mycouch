@@ -58,7 +58,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ExceptionStrings.resx</DependentUpon>
     </Compile>
-    <Compile Include="SingleDocumentResponse.cs" />
+    <Compile Include="DocumentResponse.cs" />
     <Compile Include="ISystemViewQuery.cs" />
     <Compile Include="Querying\SystemViewQuery.cs" />
     <Compile Include="Response.cs" />
@@ -70,7 +70,7 @@
     <Compile Include="Net\BasicHttpClientConnection.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="Documents.cs" />
-    <Compile Include="DocumentResponse.cs" />
+    <Compile Include="JsonResponse.cs" />
     <Compile Include="EntityResponse.cs" />
     <Compile Include="Net\IConnection.cs" />
     <Compile Include="IClient.cs" />

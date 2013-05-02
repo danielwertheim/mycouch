@@ -88,7 +88,7 @@ namespace MyCouch.Serialization
             }
         }
 
-        public virtual void PopulateSingleDocumentResponse<T>(T response, Stream data) where T : SingleDocumentResponse
+        public virtual void PopulateSingleDocumentResponse<T>(T response, Stream data) where T : DocumentResponse
         {
             using (var sr = new StreamReader(data))
             {

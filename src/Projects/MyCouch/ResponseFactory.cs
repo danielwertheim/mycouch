@@ -24,9 +24,9 @@ namespace MyCouch
             return CreateResponse<DatabaseResponse>(response, OnSuccessfulResponseContentMaterializer, OnFailedResponseContentMaterializer);
         }
 
-        public virtual DocumentResponse CreateDocumentResponse(HttpResponseMessage response)
+        public virtual JsonResponse CreateDocumentResponse(HttpResponseMessage response)
         {
-            return CreateResponse<DocumentResponse>(response, OnSuccessfulResponseContentMaterializer, OnFailedResponseContentMaterializer);
+            return CreateResponse<JsonResponse>(response, OnSuccessfulResponseContentMaterializer, OnFailedResponseContentMaterializer);
         }
 
         public virtual EntityResponse<T> CreateEntityResponse<T>(HttpResponseMessage response) where T : class
@@ -58,7 +58,7 @@ namespace MyCouch
 
         protected virtual void OnSuccessfulResponseContentMaterializer(HttpResponseMessage response, DatabaseResponse result) { }
 
-        protected virtual void OnSuccessfulResponseContentMaterializer(HttpResponseMessage response, DocumentResponse result)
+        protected virtual void OnSuccessfulResponseContentMaterializer(HttpResponseMessage response, JsonResponse result)
         {
             using (var content = response.Content.ReadAsStreamAsync().Result)
             {
@@ -89,7 +89,7 @@ namespace MyCouch
             }
         }
 
-        protected virtual void OnSuccessfulResponseContentMaterializer<T>(HttpResponseHeaders headers, Stream content, T result) where T : SingleDocumentResponse
+        protected virtual void OnSuccessfulResponseContentMaterializer<T>(HttpResponseHeaders headers, Stream content, T result) where T : DocumentResponse
         {
             if (result.ContentShouldHaveIdAndRev())
                 Client.Serializer.PopulateSingleDocumentResponse(result, content);

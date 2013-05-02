@@ -10,7 +10,7 @@ namespace MyCouch.Serialization
         T Deserialize<T>(string data) where T : class;
         T Deserialize<T>(Stream data) where T : class;
 
-        void PopulateSingleDocumentResponse<T>(T response, Stream data) where T : SingleDocumentResponse;
+        void PopulateSingleDocumentResponse<T>(T response, Stream data) where T : DocumentResponse;
         void PopulateViewQueryResponse<T>(ViewQueryResponse<T> item, Stream data) where T : class;
         void PopulateFailedResponse<T>(T response, Stream data) where T : Response;
     }

@@ -17,12 +17,12 @@ namespace MyCouch
             Client = client;
         }
 
-        public virtual DocumentResponse Get(string id, string rev = null)
+        public virtual JsonResponse Get(string id, string rev = null)
         {
             return GetAsync(id, rev).Result;
         }
 
-        public virtual async Task<DocumentResponse> GetAsync(string id, string rev = null)
+        public virtual async Task<JsonResponse> GetAsync(string id, string rev = null)
         {
             Ensure.That(id, "id").IsNotNullOrWhiteSpace();
 
@@ -47,12 +47,12 @@ namespace MyCouch
             return await ProcessHttpResponseAsync<T>(res);
         }
 
-        public virtual DocumentResponse Post(string doc)
+        public virtual JsonResponse Post(string doc)
         {
             return PostAsync(doc).Result;
         }
 
-        public virtual async Task<DocumentResponse> PostAsync(string doc)
+        public virtual async Task<JsonResponse> PostAsync(string doc)
         {
             Ensure.That(doc, "entity").IsNotNullOrWhiteSpace();
 
@@ -91,12 +91,12 @@ namespace MyCouch
             return response;
         }
 
-        public virtual DocumentResponse Put(string id, string doc)
+        public virtual JsonResponse Put(string id, string doc)
         {
             return PutAsync(id, doc).Result;
         }
 
-        public virtual async Task<DocumentResponse> PutAsync(string id, string doc)
+        public virtual async Task<JsonResponse> PutAsync(string id, string doc)
         {
             Ensure.That(id, "id").IsNotNullOrWhiteSpace();
             Ensure.That(doc, "entity").IsNotNullOrWhiteSpace();
@@ -107,12 +107,12 @@ namespace MyCouch
             return await ProcessHttpResponseAsync(res);
         }
 
-        public virtual DocumentResponse Put(string id, string rev, string doc)
+        public virtual JsonResponse Put(string id, string rev, string doc)
         {
             return PutAsync(id, rev, doc).Result;
         }
 
-        public virtual async Task<DocumentResponse> PutAsync(string id, string rev, string doc)
+        public virtual async Task<JsonResponse> PutAsync(string id, string rev, string doc)
         {
             Ensure.That(id, "id").IsNotNullOrWhiteSpace();
             Ensure.That(doc, "entity").IsNotNullOrWhiteSpace();
@@ -150,12 +150,12 @@ namespace MyCouch
             return response;
         }
 
-        public virtual DocumentResponse Delete(string id, string rev)
+        public virtual JsonResponse Delete(string id, string rev)
         {
             return DeleteAsync(id, rev).Result;
         }
 
-        public virtual async Task<DocumentResponse> DeleteAsync(string id, string rev)
+        public virtual async Task<JsonResponse> DeleteAsync(string id, string rev)
         {
             Ensure.That(id, "id").IsNotNullOrWhiteSpace();
             Ensure.That(rev, "rev").IsNotNullOrWhiteSpace();
@@ -227,7 +227,7 @@ namespace MyCouch
                 cmd.Rev == null ? string.Empty : string.Concat("?rev=", cmd.Rev));
         }
 
-        protected virtual async Task<DocumentResponse> ProcessHttpResponseAsync(Task<HttpResponseMessage> responseTask)
+        protected virtual async Task<JsonResponse> ProcessHttpResponseAsync(Task<HttpResponseMessage> responseTask)
         {
             return Client.ResponseFactory.CreateDocumentResponse(await responseTask);
         }
