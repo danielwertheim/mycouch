@@ -9,6 +9,11 @@ namespace MyCouch.Testing
     [DebuggerStepThrough]
     public static class Shoulds
     {
+        public static ViewQueryResponseAssertions Should(this JsonViewQueryResponse response)
+        {
+            return new ViewQueryResponseAssertions(response);
+        }
+
         public static ViewQueryResponseAssertions<T> Should<T>(this ViewQueryResponse<T> response) where T : class
         {
             return new ViewQueryResponseAssertions<T>(response);
@@ -22,6 +27,40 @@ namespace MyCouch.Testing
         public static DocumentResponseAssertions Should(this JsonResponse response)
         {
             return new DocumentResponseAssertions(response);
+        }
+    }
+
+    public class ViewQueryResponseAssertions
+    {
+        protected readonly JsonViewQueryResponse Response;
+
+        [DebuggerStepThrough]
+        public ViewQueryResponseAssertions(JsonViewQueryResponse response)
+        {
+            Response = response;
+        }
+
+        public void BeSuccessfulGet(string[] expected)
+        {
+            BeSuccessfulGet(expected.Length);
+            for (var i = 0; i < Response.RowCount; i++)
+                CustomAsserts.AreValueEqual(expected[i], Response.Rows[i].Value);
+        }
+
+        public void BeSuccessfulGet(int numOfRows)
+        {
+            Response.RequestMethod.Should().Be(HttpMethod.Get);
+            Response.IsSuccess.Should().BeTrue();
+            Response.StatusCode.Should().Be(HttpStatusCode.OK);
+            Response.Error.Should().BeNull();
+            Response.Reason.Should().BeNull();
+            Response.IsEmpty.Should().BeFalse();
+
+            if (numOfRows > 0)
+            {
+                Response.Rows.Should().NotBeNull();
+                Response.RowCount.Should().Be(numOfRows);
+            }
         }
     }
 

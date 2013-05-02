@@ -19,6 +19,21 @@ namespace MyCouch
             Client = client;
         }
 
+        public virtual JsonViewQueryResponse RunQuery(IViewQuery query)
+        {
+            return RunQueryAsync(query).Result;
+        }
+
+        public virtual async Task<JsonViewQueryResponse> RunQueryAsync(IViewQuery query)
+        {
+            Ensure.That(query, "query").IsNotNull();
+
+            var req = CreateRequest(query);
+            var res = SendAsync(req);
+
+            return await ProcessHttpResponseAsync(res);
+        }
+
         public virtual ViewQueryResponse<T> RunQuery<T>(IViewQuery query) where T : class
         {
             return RunQueryAsync<T>(query).Result;
@@ -32,6 +47,20 @@ namespace MyCouch
             var res = SendAsync(req);
             
             return await ProcessHttpResponseAsync<T>(res);
+        }
+
+        public virtual JsonViewQueryResponse Query(string designDocument, string viewname, Action<IViewQueryConfigurator> configurator)
+        {
+            return QueryAsync(designDocument, viewname, configurator).Result;
+        }
+
+        public virtual async Task<JsonViewQueryResponse> QueryAsync(string designDocument, string viewname, Action<IViewQueryConfigurator> configurator)
+        {
+            var query = CreateQuery(designDocument, viewname);
+
+            query.Configure(configurator);
+
+            return await RunQueryAsync(query);
         }
 
         public virtual ViewQueryResponse<T> Query<T>(string designDocument, string viewname, Action<IViewQueryConfigurator> configurator) where T : class
@@ -88,6 +117,11 @@ namespace MyCouch
         protected virtual Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
         {
             return Client.Connection.SendAsync(request);
+        }
+
+        protected virtual async Task<JsonViewQueryResponse> ProcessHttpResponseAsync(Task<HttpResponseMessage> responseTask)
+        {
+            return Client.ResponseFactory.CreateViewQueryResponse(await responseTask);
         }
 
         protected virtual async Task<ViewQueryResponse<T>> ProcessHttpResponseAsync<T>(Task<HttpResponseMessage> responseTask) where T : class 
