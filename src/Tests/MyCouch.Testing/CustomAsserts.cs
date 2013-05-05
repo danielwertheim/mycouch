@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections;
-using MyCouch.Extensions;
+using MyCouch.Core;
 using NUnit.Framework;
 
 namespace MyCouch.Testing

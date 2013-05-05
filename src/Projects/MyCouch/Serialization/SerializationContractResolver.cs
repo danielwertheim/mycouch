@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using MyCouch.Extensions;
+using MyCouch.Core;
 using MyCouch.Schemes;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -19,7 +19,7 @@ namespace MyCouch.Serialization
 
         protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
         {
-            if (type.IsGenericType && typeof(ViewQueryResponse<>.Row) == type.GetGenericTypeDefinition())
+            if (type == typeof(BulkResponse.Row) || (type.IsGenericType && typeof(ViewQueryResponse<>.Row) == type.GetGenericTypeDefinition()))
                 return base.CreateProperties(type, memberSerialization);
 
             var props = base.CreateProperties(type, memberSerialization);

@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace MyCouch.Extensions
+namespace MyCouch.Core
 {
     /// <summary>
     /// From http://github.com/danielwertheim/ncore

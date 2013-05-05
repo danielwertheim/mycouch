@@ -24,7 +24,7 @@ namespace MyCouch.Testing
             return new EntityResponseAssertions<T>(response);
         }
 
-        public static DocumentResponseAssertions Should(this JsonResponse response)
+        public static DocumentResponseAssertions Should(this JsonDocumentResponse response)
         {
             return new DocumentResponseAssertions(response);
         }
@@ -193,10 +193,10 @@ namespace MyCouch.Testing
 
     public class DocumentResponseAssertions
     {
-        protected readonly JsonResponse Response;
+        protected readonly JsonDocumentResponse Response;
 
         [DebuggerStepThrough]
-        public DocumentResponseAssertions(JsonResponse response)
+        public DocumentResponseAssertions(JsonDocumentResponse response)
         {
             Response = response;
         }

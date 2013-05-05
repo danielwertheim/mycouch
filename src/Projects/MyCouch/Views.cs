@@ -81,12 +81,7 @@ namespace MyCouch
         {
             return new ViewQuery(designDocument, viewname);
         }
-
-        protected virtual ISystemViewQuery CreateSystemQuery(string viewname)
-        {
-            return new SystemViewQuery(viewname);
-        }
-
+        
         protected virtual HttpRequestMessage CreateRequest(IViewQuery query)
         {
             return new HttpRequest(HttpMethod.Get, GenerateRequestUrl(query));
@@ -121,7 +116,7 @@ namespace MyCouch
 
         protected virtual async Task<JsonViewQueryResponse> ProcessHttpResponseAsync(Task<HttpResponseMessage> responseTask)
         {
-            return Client.ResponseFactory.CreateViewQueryResponse(await responseTask);
+            return Client.ResponseFactory.CreateJsonViewQueryResponse(await responseTask);
         }
 
         protected virtual async Task<ViewQueryResponse<T>> ProcessHttpResponseAsync<T>(Task<HttpResponseMessage> responseTask) where T : class 

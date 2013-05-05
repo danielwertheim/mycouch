@@ -8,15 +8,20 @@ namespace MyCouch
     public interface IDocuments
     {
         /// <summary>
-        /// Gets untyped response with the JSON representation of the document.
+        /// Lets you use the underlying bulk API to insert, update and delete
+        /// documents.
         /// </summary>
-        /// <param name="id">The Id of the document.</param>
-        /// <param name="rev">
-        /// Optional. Lets you specify a specific document revision.
-        /// If not specified, you will get the latest document.
-        /// </param>
-        /// <returns>Untyped response with JSON.</returns>
-        JsonResponse Get(string id, string rev = null);
+        /// <param name="cmd"></param>
+        /// <returns></returns>
+        BulkResponse Bulk(BulkCommand cmd);
+
+        /// <summary>
+        /// Lets you use the underlying bulk API to insert, update and delete
+        /// documents.
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
+        Task<BulkResponse> BulkAsync(BulkCommand cmd);
 
         /// <summary>
         /// Gets untyped response with the JSON representation of the document.
@@ -27,7 +32,18 @@ namespace MyCouch
         /// If not specified, you will get the latest document.
         /// </param>
         /// <returns>Untyped response with JSON.</returns>
-        Task<JsonResponse> GetAsync(string id, string rev = null);
+        JsonDocumentResponse Get(string id, string rev = null);
+
+        /// <summary>
+        /// Gets untyped response with the JSON representation of the document.
+        /// </summary>
+        /// <param name="id">The Id of the document.</param>
+        /// <param name="rev">
+        /// Optional. Lets you specify a specific document revision.
+        /// If not specified, you will get the latest document.
+        /// </param>
+        /// <returns>Untyped response with JSON.</returns>
+        Task<JsonDocumentResponse> GetAsync(string id, string rev = null);
 
         /// <summary>
         /// Gets typed entity-response (<see cref="EntityResponse{T}"/> of <typeparamref name="T"/>)
@@ -66,14 +82,14 @@ namespace MyCouch
         /// </summary>
         /// <param name="doc"></param>
         /// <returns></returns>
-        JsonResponse Post(string doc);
+        JsonDocumentResponse Post(string doc);
 
         /// <summary>
         /// Inserts sent JSON document as it is. No additional metadata like doctype will be added.
         /// </summary>
         /// <param name="doc"></param>
         /// <returns></returns>
-        Task<JsonResponse> PostAsync(string doc);
+        Task<JsonDocumentResponse> PostAsync(string doc);
 
         /// <summary>
         /// Inserts sent entity. The resulting JSON that is inserted will have some additional
@@ -99,7 +115,7 @@ namespace MyCouch
         /// <param name="id"></param>
         /// <param name="doc"></param>
         /// <returns></returns>
-        JsonResponse Put(string id, string doc);
+        JsonDocumentResponse Put(string id, string doc);
 
         /// <summary>
         /// Updates or Inserts entity. The document <paramref name="doc"/> needs to contain the _rev field.
@@ -107,7 +123,7 @@ namespace MyCouch
         /// <param name="id"></param>
         /// <param name="doc"></param>
         /// <returns></returns>
-        Task<JsonResponse> PutAsync(string id, string doc);
+        Task<JsonDocumentResponse> PutAsync(string id, string doc);
 
         /// <summary>
         /// Updates entity, without having to specify _rev field in the document <paramref name="doc"/>.
@@ -116,7 +132,7 @@ namespace MyCouch
         /// <param name="rev"></param>
         /// <param name="doc"></param>
         /// <returns></returns>
-        JsonResponse Put(string id, string rev, string doc);
+        JsonDocumentResponse Put(string id, string rev, string doc);
 
         /// <summary>
         /// Updates entity, without having to specify _rev field in the document <paramref name="doc"/>.
@@ -125,7 +141,7 @@ namespace MyCouch
         /// <param name="rev"></param>
         /// <param name="doc"></param>
         /// <returns></returns>
-        Task<JsonResponse> PutAsync(string id, string rev, string doc);
+        Task<JsonDocumentResponse> PutAsync(string id, string rev, string doc);
 
         /// <summary>
         /// Updates sent entity and returns it in the response, and if successful, then with and
@@ -135,7 +151,7 @@ namespace MyCouch
         /// <param name="entity"></param>
         /// <returns></returns>
         EntityResponse<T> Put<T>(T entity) where T : class;
-        
+
         /// <summary>
         /// Updates sent entity and returns it in the response, and if successful, then with and
         /// updated _rev value.
@@ -151,7 +167,7 @@ namespace MyCouch
         /// <param name="id"></param>
         /// <param name="rev"></param>
         /// <returns></returns>
-        JsonResponse Delete(string id, string rev);
+        JsonDocumentResponse Delete(string id, string rev);
 
         /// <summary>
         /// Deletes the document that matches sent <paramref name="id"/> and <paramref name="rev"/>.
@@ -159,7 +175,7 @@ namespace MyCouch
         /// <param name="id"></param>
         /// <param name="rev"></param>
         /// <returns></returns>
-        Task<JsonResponse> DeleteAsync(string id, string rev);
+        Task<JsonDocumentResponse> DeleteAsync(string id, string rev);
 
         /// <summary>
         /// Deletes the document that matches the values of the document _id and _rev extracted from <paramref name="entity"/>.
@@ -168,7 +184,7 @@ namespace MyCouch
         /// <param name="entity"></param>
         /// <returns></returns>
         EntityResponse<T> Delete<T>(T entity) where T : class;
-        
+
         /// <summary>
         /// Deletes the document that matches the values of the document _id and _rev extracted from <paramref name="entity"/>.
         /// </summary>

@@ -48,9 +48,11 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="BulkCommand.cs" />
+    <Compile Include="BulkResponse.cs" />
     <Compile Include="DatabaseResponse.cs" />
     <Compile Include="Databases.cs" />
-    <Compile Include="Extensions\TypeExtensions.cs" />
+    <Compile Include="Core\TypeExtensions.cs" />
     <Compile Include="IDatabases.cs" />
     <Compile Include="MyCouchRuntime.cs" />
     <Compile Include="Resources\ExceptionStrings.Designer.cs">
@@ -62,6 +64,7 @@
     <Compile Include="ISystemViewQuery.cs" />
     <Compile Include="Querying\SystemViewQuery.cs" />
     <Compile Include="Response.cs" />
+    <Compile Include="ResponseExtensions.cs" />
     <Compile Include="ResponseFactory.cs" />
     <Compile Include="IResponseFactory.cs" />
     <Compile Include="Net\HttpRequest.cs" />
@@ -70,7 +73,7 @@
     <Compile Include="Net\BasicHttpClientConnection.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="Documents.cs" />
-    <Compile Include="JsonResponse.cs" />
+    <Compile Include="JsonDocumentResponse.cs" />
     <Compile Include="EntityResponse.cs" />
     <Compile Include="Net\IConnection.cs" />
     <Compile Include="IClient.cs" />
@@ -100,7 +103,7 @@
     <Compile Include="Serialization\MyCouchSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Schemes\IEntityMember.cs" />
-    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Core\StringExtensions.cs" />
     <Compile Include="Querying\ViewQuery.cs" />
     <Compile Include="Querying\ViewQueryConfigurator.cs" />
     <Compile Include="Querying\ViewQueryOptions.cs" />

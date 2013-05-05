@@ -3,7 +3,7 @@
 namespace MyCouch
 {
     [Serializable]
-    public class JsonResponse : DocumentResponse
+    public class JsonDocumentResponse : DocumentResponse
     {
         public string Content { get; set; }
         public override bool IsEmpty

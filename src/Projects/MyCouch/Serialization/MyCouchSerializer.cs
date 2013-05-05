@@ -88,17 +88,28 @@ namespace MyCouch.Serialization
             }
         }
 
-        public virtual void PopulateSingleDocumentResponse<T>(T response, Stream data) where T : DocumentResponse
+        public virtual void PopulateBulkResponse(BulkResponse response, Stream data)
         {
             using (var sr = new StreamReader(data))
             {
-                using (var jr = new JsonTextReader(sr))
+                using (var jr = new JsonTextReader(sr) { CloseInput = false })
+                {
+                    response.Rows = InternalSerializer.Deserialize<BulkResponse.Row[]>(jr);
+                }
+            }
+        }
+
+        public virtual void PopulateDocumentResponse<T>(T response, Stream data) where T : DocumentResponse
+        {
+            using (var sr = new StreamReader(data))
+            {
+                using (var jr = new JsonTextReader(sr) { CloseInput = false })
                 {
                     while (jr.Read())
                     {
-                        if (jr.TokenType != JsonToken.PropertyName) 
+                        if (jr.TokenType != JsonToken.PropertyName)
                             continue;
-                        
+
                         var propName = jr.Value.ToString();
                         if (propName == "id")
                         {
@@ -121,13 +132,13 @@ namespace MyCouch.Serialization
         {
             using (var sr = new StreamReader(data))
             {
-                using (var jr = new JsonTextReader(sr))
+                using (var jr = new JsonTextReader(sr) { CloseInput = false })
                 {
                     while (jr.Read())
                     {
-                        if (jr.TokenType != JsonToken.PropertyName) 
+                        if (jr.TokenType != JsonToken.PropertyName)
                             continue;
-                        
+
                         var propName = jr.Value.ToString();
                         if (propName == "total_rows")
                         {
@@ -199,7 +210,7 @@ namespace MyCouch.Serialization
             });
         }
 
-        protected IEnumerable<ViewQueryResponse<T>.Row> YieldViewQueryRows<T>(JsonReader jr, Action<ViewQueryResponse<T>.Row, JsonWriter, StringBuilder> onVisitValue) where T : class 
+        protected IEnumerable<ViewQueryResponse<T>.Row> YieldViewQueryRows<T>(JsonReader jr, Action<ViewQueryResponse<T>.Row, JsonWriter, StringBuilder> onVisitValue) where T : class
         {
             if (jr.TokenType != JsonToken.StartArray)
                 yield break;
@@ -262,13 +273,13 @@ namespace MyCouch.Serialization
         {
             using (var sr = new StreamReader(data))
             {
-                using (var jr = new JsonTextReader(sr))
+                using (var jr = new JsonTextReader(sr) { CloseInput = false })
                 {
                     while (jr.Read())
                     {
-                        if (jr.TokenType != JsonToken.PropertyName) 
+                        if (jr.TokenType != JsonToken.PropertyName)
                             continue;
-                        
+
                         var propName = jr.Value.ToString();
                         if (propName == "error")
                         {
