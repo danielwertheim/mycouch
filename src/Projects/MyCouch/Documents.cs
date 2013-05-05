@@ -41,25 +41,10 @@ namespace MyCouch
         {
             Ensure.That(id, "id").IsNotNullOrWhiteSpace();
 
-            var req = CreateRequest(HttpMethod.Get, new DocumentCommand { Id = id, Rev = rev });
+            var req = CreateRequest(HttpMethod.Get, new JsonDocumentCommand { Id = id, Rev = rev });
             var res = SendAsync(req);
             
             return await ProcessHttpJsonDocumentResponseAsync(res);
-        }
-
-        public virtual EntityResponse<T> Get<T>(string id, string rev = null) where T : class
-        {
-            return GetAsync<T>(id, rev).Result;
-        }
-
-        public virtual async Task<EntityResponse<T>> GetAsync<T>(string id, string rev = null) where T : class
-        {
-            Ensure.That(id, "id").IsNotNullOrWhiteSpace();
-
-            var req = CreateRequest(HttpMethod.Get, new DocumentCommand { Id = id, Rev = rev });
-            var res = SendAsync(req);
-            
-            return await ProcessHttpEntityResponseAsync<T>(res);
         }
 
         public virtual JsonDocumentResponse Post(string doc)
@@ -71,39 +56,10 @@ namespace MyCouch
         {
             Ensure.That(doc, "entity").IsNotNullOrWhiteSpace();
 
-            var req = CreateRequest(HttpMethod.Post, new DocumentCommand { Content = doc });
+            var req = CreateRequest(HttpMethod.Post, new JsonDocumentCommand { Content = doc });
             var res = SendAsync(req);
             
             return await ProcessHttpJsonDocumentResponseAsync(res);
-        }
-
-        public virtual EntityResponse<T> Post<T>(T entity) where T : class
-        {
-            return PostAsync(entity).Result;
-        }
-
-        public virtual async Task<EntityResponse<T>> PostAsync<T>(T entity) where T : class
-        {
-            Ensure.That(entity, "entity").IsNotNull();
-
-            var req = CreateRequest(
-                HttpMethod.Post,
-                new DocumentCommand
-                {
-                    Content = SerializeEntity(entity)
-                });
-
-            var res = SendAsync(req);
-            var response = await ProcessHttpEntityResponseAsync<T>(res);
-            response.Entity = entity;
-
-            if (response.IsSuccess)
-            {
-                Client.EntityReflector.IdMember.SetValueTo(response.Entity, response.Id);
-                Client.EntityReflector.RevMember.SetValueTo(response.Entity, response.Rev);
-            }
-
-            return response;
         }
 
         public virtual JsonDocumentResponse Put(string id, string doc)
@@ -116,7 +72,7 @@ namespace MyCouch
             Ensure.That(id, "id").IsNotNullOrWhiteSpace();
             Ensure.That(doc, "entity").IsNotNullOrWhiteSpace();
 
-            var req = CreateRequest(HttpMethod.Put, new DocumentCommand { Id = id, Content = doc });
+            var req = CreateRequest(HttpMethod.Put, new JsonDocumentCommand { Id = id, Content = doc });
             var res = SendAsync(req);
             
             return await ProcessHttpJsonDocumentResponseAsync(res);
@@ -132,37 +88,10 @@ namespace MyCouch
             Ensure.That(id, "id").IsNotNullOrWhiteSpace();
             Ensure.That(doc, "entity").IsNotNullOrWhiteSpace();
 
-            var req = CreateRequest(HttpMethod.Put, new DocumentCommand { Id = id, Rev = rev, Content = doc });
+            var req = CreateRequest(HttpMethod.Put, new JsonDocumentCommand { Id = id, Rev = rev, Content = doc });
             var res = SendAsync(req);
             
             return await ProcessHttpJsonDocumentResponseAsync(res);
-        }
-
-        public virtual EntityResponse<T> Put<T>(T entity) where T : class
-        {
-            return PutAsync(entity).Result;
-        }
-
-        public virtual async Task<EntityResponse<T>> PutAsync<T>(T entity) where T : class
-        {
-            Ensure.That(entity, "entity").IsNotNull();
-
-            var req = CreateRequest(
-                HttpMethod.Put,
-                new DocumentCommand
-                {
-                    Id = Client.EntityReflector.IdMember.GetValueFrom(entity),
-                    Rev = Client.EntityReflector.RevMember.GetValueFrom(entity),
-                    Content = SerializeEntity(entity)
-                });
-            var res = SendAsync(req);
-            var response = await ProcessHttpEntityResponseAsync<T>(res);
-            response.Entity = entity;
-
-            if (response.IsSuccess)
-                Client.EntityReflector.RevMember.SetValueTo(response.Entity, response.Rev);
-
-            return response;
         }
 
         public virtual JsonDocumentResponse Delete(string id, string rev)
@@ -175,51 +104,15 @@ namespace MyCouch
             Ensure.That(id, "id").IsNotNullOrWhiteSpace();
             Ensure.That(rev, "rev").IsNotNullOrWhiteSpace();
 
-            var req = CreateRequest(HttpMethod.Delete, new DocumentCommand { Id = id, Rev = rev });
+            var req = CreateRequest(HttpMethod.Delete, new JsonDocumentCommand { Id = id, Rev = rev });
             var res = SendAsync(req);
             
             return await ProcessHttpJsonDocumentResponseAsync(res);
         }
 
-        public virtual EntityResponse<T> Delete<T>(T entity) where T : class
-        {
-            return DeleteAsync(entity).Result;
-        }
-
-        public virtual async Task<EntityResponse<T>> DeleteAsync<T>(T entity) where T : class
-        {
-            Ensure.That(entity, "entity").IsNotNull();
-
-            var req = CreateRequest(
-                HttpMethod.Delete,
-                new DocumentCommand
-                {
-                    Id = Client.EntityReflector.IdMember.GetValueFrom(entity),
-                    Rev = Client.EntityReflector.RevMember.GetValueFrom(entity)
-                });
-            var res = SendAsync(req);
-            var response = await ProcessHttpEntityResponseAsync<T>(res);
-            response.Entity = entity;
-
-            if (response.IsSuccess)
-                Client.EntityReflector.RevMember.SetValueTo(response.Entity, response.Rev);
-
-            return response;
-        }
-
         protected virtual Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
         {
             return Client.Connection.SendAsync(request);
-        }
-
-        protected virtual string SerializeEntity<T>(T entity) where T : class
-        {
-            return Client.Serializer.SerializeEntity(entity);
-        }
-
-        protected virtual T Deserialize<T>(string data) where T : class
-        {
-            return Client.Serializer.Deserialize<T>(data);
         }
 
         protected virtual HttpRequestMessage CreateRequest(BulkCommand cmd)
@@ -231,7 +124,7 @@ namespace MyCouch
             return req;
         }
 
-        protected virtual HttpRequestMessage CreateRequest(HttpMethod method, DocumentCommand cmd)
+        protected virtual HttpRequestMessage CreateRequest(HttpMethod method, JsonDocumentCommand cmd)
         {
             var req = new HttpRequest(method, GenerateRequestUrl(cmd));
 
@@ -248,7 +141,7 @@ namespace MyCouch
             return string.Format("{0}/_bulk_docs", Client.Connection.Address);
         }
 
-        protected virtual string GenerateRequestUrl(DocumentCommand cmd)
+        protected virtual string GenerateRequestUrl(JsonDocumentCommand cmd)
         {
             return string.Format("{0}/{1}{2}",
                 Client.Connection.Address,
@@ -266,13 +159,8 @@ namespace MyCouch
             return Client.ResponseFactory.CreateJsonDocumentResponse(await responseTask);
         }
 
-        protected virtual async Task<EntityResponse<T>> ProcessHttpEntityResponseAsync<T>(Task<HttpResponseMessage> responseTask) where T : class
-        {
-            return Client.ResponseFactory.CreateEntityResponse<T>(await responseTask);
-        }
-
         [Serializable]
-        protected internal class DocumentCommand
+        protected internal class JsonDocumentCommand
         {
             public string Id { get; set; }
             public string Rev { get; set; }

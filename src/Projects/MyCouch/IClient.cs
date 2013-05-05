@@ -36,9 +36,14 @@ namespace MyCouch
         IDatabases Databases { get; }
 
         /// <summary>
-        /// Document oriented API operations, for accessing and managing documents.
+        /// Document oriented API operations, for accessing and managing RAW documents.
         /// </summary>
         IDocuments Documents { get; }
+
+        /// <summary>
+        /// Entity oriented API operations, for accessing and managing documents as Entities.
+        /// </summary>
+        IEntities Entities { get; }
         
         /// <summary>
         /// View oriented API operations, for accessing and managing views.

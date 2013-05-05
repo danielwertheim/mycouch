@@ -53,7 +53,9 @@
     <Compile Include="DatabaseResponse.cs" />
     <Compile Include="Databases.cs" />
     <Compile Include="Core\TypeExtensions.cs" />
+    <Compile Include="Entities.cs" />
     <Compile Include="IDatabases.cs" />
+    <Compile Include="IEntities.cs" />
     <Compile Include="MyCouchRuntime.cs" />
     <Compile Include="Resources\ExceptionStrings.Designer.cs">
       <AutoGen>True</AutoGen>

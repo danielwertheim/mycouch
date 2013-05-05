@@ -6,7 +6,7 @@ using MyCouch.Testing;
 using MyCouch.Testing.Model;
 using NUnit.Framework;
 
-namespace MyCouch.IntegrationTests.Views
+namespace MyCouch.IntegrationTests.ClientTests
 {
     [TestFixture]
     public class ViewsTests : IntegrationTestsOf<IViews>
@@ -20,7 +20,7 @@ namespace MyCouch.IntegrationTests.Views
             Artists = TestData.Artists.CreateArtists(10);
             
             var tasks = new List<Task>();
-            tasks.AddRange(Artists.Select(item => Client.Documents.PostAsync(item)));
+            tasks.AddRange(Artists.Select(item => Client.Entities.PostAsync(item)));
             tasks.Add(Client.Documents.PostAsync(TestData.Views.ArtistsAlbums));
             
             Task.WaitAll(tasks.ToArray());
