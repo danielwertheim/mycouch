@@ -29,7 +29,6 @@ namespace MyCouch.IntegrationTests
                 var bulkCmd = new BulkCommand();
                 foreach (var row in response.Rows)
                     bulkCmd.Delete(row.Id, row.Value.rev.ToString());
-
                 Client.Documents.Bulk(bulkCmd);
             }
         }
