@@ -9,18 +9,58 @@ namespace MyCouch
     public interface IViews
     {
         /// <summary>
-        /// Lets you run an <see cref="IViewQuery"/> against the current database.
+        /// Lets you run an <see cref="IViewQuery"/>.
+        /// The resulting <see cref="JsonViewQueryResponse"/> will consist of
+        /// Rows being of JSON-strings.
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        JsonViewQueryResponse RunQuery(IViewQuery query);
+
+        /// <summary>
+        /// Lets you run an <see cref="IViewQuery"/>.
+        /// The resulting <see cref="JsonViewQueryResponse"/> will consist of
+        /// Rows being JSON-strings.
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        Task<JsonViewQueryResponse> RunQueryAsync(IViewQuery query);
+
+        /// <summary>
+        /// Lets you run an <see cref="IViewQuery"/>.
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
         ViewQueryResponse<T> RunQuery<T>(IViewQuery query) where T : class;
 
         /// <summary>
-        /// Lets you run an <see cref="IViewQuery"/> against the current database.
+        /// Lets you run an <see cref="IViewQuery"/>.
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
         Task<ViewQueryResponse<T>> RunQueryAsync<T>(IViewQuery query) where T : class;
+
+        /// <summary>
+        /// Creates and executes an <see cref="IViewQuery"/> on the fly.
+        /// The resulting <see cref="JsonViewQueryResponse"/> will consist of
+        /// Rows being JSON-strings.
+        /// </summary>
+        /// <param name="designDocument"></param>
+        /// <param name="viewname"></param>
+        /// <param name="configurator"></param>
+        /// <returns></returns>
+        JsonViewQueryResponse Query(string designDocument, string viewname, Action<IViewQueryConfigurator> configurator);
+
+        /// <summary>
+        /// Creates and executes an <see cref="IViewQuery"/> on the fly.
+        /// The resulting <see cref="JsonViewQueryResponse"/> will consist of
+        /// Rows being JSON-strings.
+        /// </summary>
+        /// <param name="designDocument"></param>
+        /// <param name="viewname"></param>
+        /// <param name="configurator"></param>
+        /// <returns></returns>
+        Task<JsonViewQueryResponse> QueryAsync(string designDocument, string viewname, Action<IViewQueryConfigurator> configurator);
 
         /// <summary>
         /// Creates and executes an <see cref="IViewQuery"/> on the fly.

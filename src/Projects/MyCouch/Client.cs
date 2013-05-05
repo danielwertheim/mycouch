@@ -14,6 +14,7 @@ namespace MyCouch
         public IEntityReflector EntityReflector { get; set; }
         public IDatabases Databases { get; protected set; }
         public IDocuments Documents { get; protected set; }
+        public IEntities Entities { get; protected set; }
         public IViews Views { get; protected set; }
 
         public Client(string url) : this(new Uri(url)) { }
@@ -30,6 +31,7 @@ namespace MyCouch
             ResponseFactory = new ResponseFactory(this);
             Databases = new Databases(this);
             Documents = new Documents(this);
+            Entities = new Entities(this);
             Views = new Views(this);
         }
 

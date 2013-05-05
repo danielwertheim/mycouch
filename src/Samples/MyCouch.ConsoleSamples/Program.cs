@@ -83,29 +83,29 @@ namespace MyCouch.ConsoleSamples
         private static void DocCrudUsingEntityApi(IClient client, bool deleteDocs)
         {
             Console.WriteLine("***** ***** DocCrudUsingEntityApi ***** *****");
-            var post3 = client.Documents.PostAsync(SampleData.Doc3).Result;
+            var post3 = client.Entities.PostAsync(SampleData.Doc3).Result;
             Console.WriteLine(post3);
 
-            var post4 = client.Documents.Post(SampleData.Doc4);
+            var post4 = client.Entities.Post(SampleData.Doc4);
             Console.WriteLine(post4);
 
-            var get3 = client.Documents.GetAsync<Artist>(post3.Id).Result;
+            var get3 = client.Entities.GetAsync<Artist>(post3.Id).Result;
             Console.WriteLine(get3);
 
-            var get4 = client.Documents.Get<Artist>(post4.Id);
+            var get4 = client.Entities.Get<Artist>(post4.Id);
             Console.WriteLine(get4);
 
             get3.Entity.Albums = new List<Album>(get3.Entity.Albums) { new Album { Name = "Test" } }.ToArray();
-            var put3 = client.Documents.PutAsync(get3.Entity).Result;
+            var put3 = client.Entities.PutAsync(get3.Entity).Result;
 
             get4.Entity.Albums = new List<Album>(get4.Entity.Albums) { new Album { Name = "Test" } }.ToArray();
-            var put4 = client.Documents.Put(get4.Entity);
+            var put4 = client.Entities.Put(get4.Entity);
 
             if (!deleteDocs)
                 return;
 
-            Console.WriteLine(client.Documents.DeleteAsync(put3.Entity).Result);
-            Console.WriteLine(client.Documents.Delete(put4.Entity));
+            Console.WriteLine(client.Entities.DeleteAsync(put3.Entity).Result);
+            Console.WriteLine(client.Entities.Delete(put4.Entity));
         }
 
         private static void ViewsUsingNonTypedQueryApi(IClient client)

@@ -49,6 +49,7 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="BulkCommandTests.cs" />
     <Compile Include="Querying\ViewQueryOptionsTests.cs" />
     <Compile Include="Schemes\EntityRevMemberTests.cs" />
     <Compile Include="Schemes\EntityIdMemberTests.cs" />

@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Text;
 
-namespace MyCouch.Extensions
+namespace MyCouch.Core
 {
     public static class StringExtensions
     {

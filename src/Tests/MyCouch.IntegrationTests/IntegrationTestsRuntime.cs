@@ -21,13 +21,16 @@ namespace MyCouch.IntegrationTests
 
         internal static void ClearAllDocuments()
         {
-            //TODO: Use batch delete instead
             var query = new SystemViewQuery("_all_docs");
             var response = Client.Views.RunQuery<dynamic>(query);
 
             if (!response.IsEmpty)
+            {
+                var bulkCmd = new BulkCommand();
                 foreach (var row in response.Rows)
-                    Client.Documents.Delete(row.Id, row.Value.rev.ToString());
+                    bulkCmd.Delete(row.Id, row.Value.rev.ToString());
+                Client.Documents.Bulk(bulkCmd);
+            }
         }
     }
 }

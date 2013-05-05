@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using EnsureThat;
-using MyCouch.Extensions;
+using MyCouch.Core;
 using MyCouch.Resources;
 
 namespace MyCouch.Net
