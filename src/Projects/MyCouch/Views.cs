@@ -21,12 +21,14 @@ namespace MyCouch
 
         public virtual JsonViewQueryResponse RunQuery(IViewQuery query)
         {
+            query.EnsureValid();
+
             return RunQueryAsync(query).Result;
         }
 
         public virtual async Task<JsonViewQueryResponse> RunQueryAsync(IViewQuery query)
         {
-            Ensure.That(query, "query").IsNotNull();
+            query.EnsureValid();
 
             var req = CreateRequest(query);
             var res = SendAsync(req);
@@ -36,12 +38,14 @@ namespace MyCouch
 
         public virtual ViewQueryResponse<T> RunQuery<T>(IViewQuery query) where T : class
         {
+            query.EnsureValid();
+
             return RunQueryAsync<T>(query).Result;
         }
 
         public virtual async Task<ViewQueryResponse<T>> RunQueryAsync<T>(IViewQuery query) where T : class
         {
-            Ensure.That(query, "query").IsNotNull();
+            query.EnsureValid();
 
             var req = CreateRequest(query);
             var res = SendAsync(req);
@@ -51,11 +55,19 @@ namespace MyCouch
 
         public virtual JsonViewQueryResponse Query(string designDocument, string viewname, Action<IViewQueryConfigurator> configurator)
         {
+            Ensure.That(designDocument, "designDocument").IsNotNullOrWhiteSpace();
+            Ensure.That(viewname, "viewname").IsNotNullOrWhiteSpace();
+            Ensure.That(configurator, "configurator").IsNotNull();
+
             return QueryAsync(designDocument, viewname, configurator).Result;
         }
 
         public virtual async Task<JsonViewQueryResponse> QueryAsync(string designDocument, string viewname, Action<IViewQueryConfigurator> configurator)
         {
+            Ensure.That(designDocument, "designDocument").IsNotNullOrWhiteSpace();
+            Ensure.That(viewname, "viewname").IsNotNullOrWhiteSpace();
+            Ensure.That(configurator, "configurator").IsNotNull();
+
             var query = CreateQuery(designDocument, viewname);
 
             query.Configure(configurator);
@@ -65,11 +77,19 @@ namespace MyCouch
 
         public virtual ViewQueryResponse<T> Query<T>(string designDocument, string viewname, Action<IViewQueryConfigurator> configurator) where T : class
         {
+            Ensure.That(designDocument, "designDocument").IsNotNullOrWhiteSpace();
+            Ensure.That(viewname, "viewname").IsNotNullOrWhiteSpace();
+            Ensure.That(configurator, "configurator").IsNotNull();
+
             return QueryAsync<T>(designDocument, viewname, configurator).Result;
         }
 
         public virtual async Task<ViewQueryResponse<T>> QueryAsync<T>(string designDocument, string viewname, Action<IViewQueryConfigurator> configurator) where T : class
         {
+            Ensure.That(designDocument, "designDocument").IsNotNullOrWhiteSpace();
+            Ensure.That(viewname, "viewname").IsNotNullOrWhiteSpace();
+            Ensure.That(configurator, "configurator").IsNotNull();
+
             var query = CreateQuery(designDocument, viewname);
 
             query.Configure(configurator);

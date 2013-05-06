@@ -19,6 +19,8 @@ namespace MyCouch
 
         public virtual BulkResponse Bulk(BulkCommand cmd)
         {
+            Ensure.That(cmd, "cmd").IsNotNull();
+
             return BulkAsync(cmd).Result;
         }
 
@@ -34,6 +36,9 @@ namespace MyCouch
 
         public virtual CopyDocumentResponse Copy(string srcId, string newId)
         {
+            Ensure.That(srcId, "srcId").IsNotNullOrWhiteSpace();
+            Ensure.That(newId, "newId").IsNotNullOrWhiteSpace();
+
             return Copy(new CopyDocumentCommand { SrcId = srcId, NewId = newId });
         }
 
@@ -47,14 +52,14 @@ namespace MyCouch
 
         public virtual CopyDocumentResponse Copy(CopyDocumentCommand cmd)
         {
+            cmd.EnsureValid();
+
             return CopyAsync(cmd).Result;
         }
 
         public virtual async Task<CopyDocumentResponse> CopyAsync(CopyDocumentCommand cmd)
         {
-            Ensure.That(cmd, "cmd").IsNotNull();
-            Ensure.That(cmd.SrcId, "cmd.SrcId").IsNotNullOrWhiteSpace();
-            Ensure.That(cmd.NewId, "cmd.NewId").IsNotNullOrWhiteSpace();
+            cmd.EnsureValid();
 
             var req = CreateRequest(cmd);
             var res = SendAsync(req);
@@ -64,6 +69,8 @@ namespace MyCouch
 
         public virtual JsonDocumentResponse Get(string id, string rev = null)
         {
+            Ensure.That(id, "id").IsNotNullOrWhiteSpace();
+
             return GetAsync(id, rev).Result;
         }
 
@@ -79,12 +86,14 @@ namespace MyCouch
 
         public virtual JsonDocumentResponse Post(string doc)
         {
+            Ensure.That(doc, "doc").IsNotNullOrWhiteSpace();
+
             return PostAsync(doc).Result;
         }
 
         public virtual async Task<JsonDocumentResponse> PostAsync(string doc)
         {
-            Ensure.That(doc, "entity").IsNotNullOrWhiteSpace();
+            Ensure.That(doc, "doc").IsNotNullOrWhiteSpace();
 
             var req = CreateRequest(HttpMethod.Post, new JsonDocumentCommand { Content = doc });
             var res = SendAsync(req);
@@ -94,13 +103,16 @@ namespace MyCouch
 
         public virtual JsonDocumentResponse Put(string id, string doc)
         {
+            Ensure.That(id, "id").IsNotNullOrWhiteSpace();
+            Ensure.That(doc, "doc").IsNotNullOrWhiteSpace();
+
             return PutAsync(id, doc).Result;
         }
 
         public virtual async Task<JsonDocumentResponse> PutAsync(string id, string doc)
         {
             Ensure.That(id, "id").IsNotNullOrWhiteSpace();
-            Ensure.That(doc, "entity").IsNotNullOrWhiteSpace();
+            Ensure.That(doc, "doc").IsNotNullOrWhiteSpace();
 
             var req = CreateRequest(HttpMethod.Put, new JsonDocumentCommand { Id = id, Content = doc });
             var res = SendAsync(req);
@@ -110,13 +122,16 @@ namespace MyCouch
 
         public virtual JsonDocumentResponse Put(string id, string rev, string doc)
         {
+            Ensure.That(id, "id").IsNotNullOrWhiteSpace();
+            Ensure.That(doc, "doc").IsNotNullOrWhiteSpace();
+
             return PutAsync(id, rev, doc).Result;
         }
 
         public virtual async Task<JsonDocumentResponse> PutAsync(string id, string rev, string doc)
         {
             Ensure.That(id, "id").IsNotNullOrWhiteSpace();
-            Ensure.That(doc, "entity").IsNotNullOrWhiteSpace();
+            Ensure.That(doc, "doc").IsNotNullOrWhiteSpace();
 
             var req = CreateRequest(HttpMethod.Put, new JsonDocumentCommand { Id = id, Rev = rev, Content = doc });
             var res = SendAsync(req);
@@ -126,6 +141,9 @@ namespace MyCouch
 
         public virtual JsonDocumentResponse Delete(string id, string rev)
         {
+            Ensure.That(id, "id").IsNotNullOrWhiteSpace();
+            Ensure.That(rev, "rev").IsNotNullOrWhiteSpace();
+
             return DeleteAsync(id, rev).Result;
         }
 
