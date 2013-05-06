@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using FluentAssertions;
 using MyCouch.Testing;
 using NUnit.Framework;
 
@@ -56,6 +57,23 @@ namespace MyCouch.IntegrationTests.ClientTests
             var response = SUT.Delete(r.Id, r.Rev);
 
             response.Should().BeSuccessfulDelete(TestData.Artists.Artist1Id);
+        }
+
+        [Test]
+        public void When_copy_to_new_id_The_document_is_copied()
+        {
+            var orgResponse = SUT.Post(TestData.Artists.Artist1Json);
+            var newCopyId = "copyTest:1";
+
+            var copyResponse = SUT.Copy(orgResponse.Id, newCopyId);
+
+            var org = SUT.Get(orgResponse.Id);
+            var copy = SUT.Get(copyResponse.Id);
+
+            copyResponse.Id.Should().Be(newCopyId);
+            copy.Content.Should().Be(org.Content
+                .Replace("\"_id\":\"" + orgResponse.Id + "\"", "\"_id\":\"" + copyResponse.Id + "\"")
+                .Replace("\"_rev\":\"" + orgResponse.Rev + "\"", "\"_rev\":\"" + copyResponse.Rev + "\""));
         }
 
         [Test]

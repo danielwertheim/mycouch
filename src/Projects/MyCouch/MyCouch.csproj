@@ -50,6 +50,8 @@
     </Compile>
     <Compile Include="BulkCommand.cs" />
     <Compile Include="BulkResponse.cs" />
+    <Compile Include="CopyDocumentCommand.cs" />
+    <Compile Include="CopyDocumentResponse.cs" />
     <Compile Include="DatabaseResponse.cs" />
     <Compile Include="Databases.cs" />
     <Compile Include="Core\TypeExtensions.cs" />

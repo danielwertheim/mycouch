@@ -99,6 +99,35 @@ namespace MyCouch.Serialization
             }
         }
 
+        public virtual void PopulateCopyDocumentResponse(CopyDocumentResponse response, Stream data)
+        {
+            using (var sr = new StreamReader(data))
+            {
+                using (var jr = new JsonTextReader(sr) { CloseInput = false })
+                {
+                    while (jr.Read())
+                    {
+                        if (jr.TokenType != JsonToken.PropertyName)
+                            continue;
+
+                        var propName = jr.Value.ToString();
+                        if (propName == "id")
+                        {
+                            if (!jr.Read())
+                                break;
+                            response.Id = jr.Value.ToString();
+                        }
+                        else if (propName == "rev")
+                        {
+                            if (!jr.Read())
+                                break;
+                            response.Rev = jr.Value.ToString();
+                        }
+                    }
+                }
+            }
+        }
+
         public virtual void PopulateDocumentResponse<T>(T response, Stream data) where T : DocumentResponse
         {
             using (var sr = new StreamReader(data))

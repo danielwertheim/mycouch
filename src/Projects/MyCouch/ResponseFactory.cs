@@ -28,6 +28,11 @@ namespace MyCouch
             return CreateResponse<BulkResponse>(response, OnSuccessfulResponseContentMaterializer, OnFailedResponseContentMaterializer);
         }
 
+        public virtual CopyDocumentResponse CreateCopyDocumentResponse(HttpResponseMessage response)
+        {
+            return CreateResponse<CopyDocumentResponse>(response, OnSuccessfulResponseContentMaterializer, OnFailedResponseContentMaterializer);
+        }
+
         public virtual JsonDocumentResponse CreateJsonDocumentResponse(HttpResponseMessage response)
         {
             return CreateResponse<JsonDocumentResponse>(response, OnSuccessfulResponseContentMaterializer, OnFailedResponseContentMaterializer);
@@ -71,6 +76,12 @@ namespace MyCouch
         {
             using (var content = response.Content.ReadAsStreamAsync().Result)
                 Client.Serializer.PopulateBulkResponse(result, content);
+        }
+
+        protected virtual void OnSuccessfulResponseContentMaterializer(HttpResponseMessage response, CopyDocumentResponse result)
+        {
+            using (var content = response.Content.ReadAsStreamAsync().Result)
+                Client.Serializer.PopulateCopyDocumentResponse(result, content);
         }
 
         protected virtual void OnSuccessfulResponseContentMaterializer(HttpResponseMessage response, JsonDocumentResponse result)

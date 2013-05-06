@@ -11,6 +11,7 @@ namespace MyCouch.Serialization
         T Deserialize<T>(Stream data) where T : class;
 
         void PopulateBulkResponse(BulkResponse response, Stream data);
+        void PopulateCopyDocumentResponse(CopyDocumentResponse response, Stream data);
         void PopulateDocumentResponse<T>(T response, Stream data) where T : DocumentResponse;
         void PopulateViewQueryResponse<T>(ViewQueryResponse<T> item, Stream data) where T : class;
         void PopulateFailedResponse<T>(T response, Stream data) where T : Response;

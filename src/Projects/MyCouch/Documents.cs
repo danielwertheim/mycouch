@@ -32,6 +32,36 @@ namespace MyCouch
             return await ProcessHttpBulkResponseAsync(res);
         }
 
+        public virtual CopyDocumentResponse Copy(string srcId, string newId)
+        {
+            return Copy(new CopyDocumentCommand { SrcId = srcId, NewId = newId });
+        }
+
+        public virtual Task<CopyDocumentResponse> CopyAsync(string srcId, string newId)
+        {
+            Ensure.That(srcId, "srcId").IsNotNullOrWhiteSpace();
+            Ensure.That(newId, "newId").IsNotNullOrWhiteSpace();
+
+            return CopyAsync(new CopyDocumentCommand { SrcId = srcId, NewId = newId });
+        }
+
+        public virtual CopyDocumentResponse Copy(CopyDocumentCommand cmd)
+        {
+            return CopyAsync(cmd).Result;
+        }
+
+        public virtual async Task<CopyDocumentResponse> CopyAsync(CopyDocumentCommand cmd)
+        {
+            Ensure.That(cmd, "cmd").IsNotNull();
+            Ensure.That(cmd.SrcId, "cmd.SrcId").IsNotNullOrWhiteSpace();
+            Ensure.That(cmd.NewId, "cmd.NewId").IsNotNullOrWhiteSpace();
+
+            var req = CreateRequest(cmd);
+            var res = SendAsync(req);
+
+            return await ProcessHttpCopyDocumentResponseAsync(res);
+        }
+
         public virtual JsonDocumentResponse Get(string id, string rev = null)
         {
             return GetAsync(id, rev).Result;
@@ -43,7 +73,7 @@ namespace MyCouch
 
             var req = CreateRequest(HttpMethod.Get, new JsonDocumentCommand { Id = id, Rev = rev });
             var res = SendAsync(req);
-            
+
             return await ProcessHttpJsonDocumentResponseAsync(res);
         }
 
@@ -58,7 +88,7 @@ namespace MyCouch
 
             var req = CreateRequest(HttpMethod.Post, new JsonDocumentCommand { Content = doc });
             var res = SendAsync(req);
-            
+
             return await ProcessHttpJsonDocumentResponseAsync(res);
         }
 
@@ -74,7 +104,7 @@ namespace MyCouch
 
             var req = CreateRequest(HttpMethod.Put, new JsonDocumentCommand { Id = id, Content = doc });
             var res = SendAsync(req);
-            
+
             return await ProcessHttpJsonDocumentResponseAsync(res);
         }
 
@@ -90,7 +120,7 @@ namespace MyCouch
 
             var req = CreateRequest(HttpMethod.Put, new JsonDocumentCommand { Id = id, Rev = rev, Content = doc });
             var res = SendAsync(req);
-            
+
             return await ProcessHttpJsonDocumentResponseAsync(res);
         }
 
@@ -106,7 +136,7 @@ namespace MyCouch
 
             var req = CreateRequest(HttpMethod.Delete, new JsonDocumentCommand { Id = id, Rev = rev });
             var res = SendAsync(req);
-            
+
             return await ProcessHttpJsonDocumentResponseAsync(res);
         }
 
@@ -120,6 +150,15 @@ namespace MyCouch
             var req = new HttpRequest(HttpMethod.Post, GenerateRequestUrl(cmd));
 
             req.SetContent(cmd.ToJson());
+
+            return req;
+        }
+
+        protected virtual HttpRequestMessage CreateRequest(CopyDocumentCommand cmd)
+        {
+            var req = new HttpRequest(new HttpMethod("COPY"), GenerateRequestUrl(cmd));
+
+            req.Headers.Add("Destination", cmd.NewId);
 
             return req;
         }
@@ -141,17 +180,32 @@ namespace MyCouch
             return string.Format("{0}/_bulk_docs", Client.Connection.Address);
         }
 
+        protected virtual string GenerateRequestUrl(CopyDocumentCommand cmd)
+        {
+            return GenerateDocumentRequestUrl(cmd.SrcId, cmd.SrcRev);
+        }
+
         protected virtual string GenerateRequestUrl(JsonDocumentCommand cmd)
+        {
+            return GenerateDocumentRequestUrl(cmd.Id, cmd.Rev);
+        }
+
+        protected virtual string GenerateDocumentRequestUrl(string id, string rev = null)
         {
             return string.Format("{0}/{1}{2}",
                 Client.Connection.Address,
-                cmd.Id ?? string.Empty,
-                cmd.Rev == null ? string.Empty : string.Concat("?rev=", cmd.Rev));
+                id,
+                rev == null ? string.Empty : string.Concat("?rev=", rev));
         }
 
         protected virtual async Task<BulkResponse> ProcessHttpBulkResponseAsync(Task<HttpResponseMessage> responseTask)
         {
             return Client.ResponseFactory.CreateBulkResponse(await responseTask);
+        }
+
+        protected virtual async Task<CopyDocumentResponse> ProcessHttpCopyDocumentResponseAsync(Task<HttpResponseMessage> responseTask)
+        {
+            return Client.ResponseFactory.CreateCopyDocumentResponse(await responseTask);
         }
 
         protected virtual async Task<JsonDocumentResponse> ProcessHttpJsonDocumentResponseAsync(Task<HttpResponseMessage> responseTask)
