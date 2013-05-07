@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using FluentAssertions;
 using MyCouch.Testing;
 using NUnit.Framework;
 
@@ -56,6 +57,75 @@ namespace MyCouch.IntegrationTests.ClientTests
             var response = SUT.Delete(r.Id, r.Rev);
 
             response.Should().BeSuccessfulDelete(TestData.Artists.Artist1Id);
+        }
+
+        [Test]
+        public void When_copying_using_srcId_The_document_is_copied()
+        {
+            var artistPost = SUT.Post(TestData.Artists.Artist1Json);
+            var srcArtist = SUT.Get(artistPost.Id);
+            var newCopyId = "copyTest:1";
+
+            var copyResponse = SUT.Copy(artistPost.Id, newCopyId);
+
+            copyResponse.Id.Should().Be(newCopyId);
+
+            var copied = SUT.Get(newCopyId);
+            copied.Content.Should().Be(srcArtist.Content
+                .Replace("\"_id\":\"" + srcArtist.Id + "\"", "\"_id\":\"" + copyResponse.Id + "\"")
+                .Replace("\"_rev\":\"" + srcArtist.Rev + "\"", "\"_rev\":\"" + copyResponse.Rev + "\""));
+        }
+
+        [Test]
+        public void When_copying_using_srcId_and_srcRev_The_document_is_copied()
+        {
+            var artistPost1 = SUT.Post(TestData.Artists.Artist1Json);
+            var srcArtist = SUT.Get(artistPost1.Id);
+            var artistPost2 = SUT.Put(srcArtist.Id, srcArtist.Content);
+            var newCopyId = "copyTest:1";
+
+            var copyResponse = SUT.Copy(artistPost1.Id, artistPost1.Rev, newCopyId);
+
+            copyResponse.Id.Should().Be(newCopyId);
+
+            var copied = SUT.Get(newCopyId);
+            copied.Content.Should().Be(srcArtist.Content
+                .Replace("\"_id\":\"" + srcArtist.Id + "\"", "\"_id\":\"" + copyResponse.Id + "\"")
+                .Replace("\"_rev\":\"" + srcArtist.Rev + "\"", "\"_rev\":\"" + copyResponse.Rev + "\""));
+        }
+
+        [Test]
+        public void When_replacing_using_srcId_The_document_is_replacing_target()
+        {
+            var artist1Post = SUT.Post(TestData.Artists.Artist1Json);
+            var artist2Post = SUT.Post(TestData.Artists.Artist2Json);
+            var srcArtist1 = SUT.Get(artist1Post.Id);
+
+            var replaceResponse = SUT.Replace(artist1Post.Id, artist2Post.Id, artist2Post.Rev);
+
+            replaceResponse.Id.Should().Be(artist2Post.Id);
+
+            var replaced = SUT.Get(artist2Post.Id);
+            replaced.Content.Should().Be(srcArtist1.Content
+                .Replace("\"_id\":\"" + srcArtist1.Id + "\"", "\"_id\":\"" + replaceResponse.Id + "\"")
+                .Replace("\"_rev\":\"" + srcArtist1.Rev + "\"", "\"_rev\":\"" + replaceResponse.Rev + "\""));
+        }
+
+        [Test]
+        public void When_replacing_using_srcId_and_srcRev_The_document_is_replacing_target()
+        {
+            var artist1Post = SUT.Post(TestData.Artists.Artist1Json);
+            var artist2Post = SUT.Post(TestData.Artists.Artist2Json);
+            var srcArtist1 = SUT.Get(artist1Post.Id);
+
+            var replaceResponse = SUT.Replace(artist1Post.Id, artist1Post.Rev, artist2Post.Id, artist2Post.Rev);
+
+            replaceResponse.Id.Should().Be(artist2Post.Id);
+
+            var replaced = SUT.Get(artist2Post.Id);
+            replaced.Content.Should().Be(srcArtist1.Content
+                .Replace("\"_id\":\"" + srcArtist1.Id + "\"", "\"_id\":\"" + replaceResponse.Id + "\"")
+                .Replace("\"_rev\":\"" + srcArtist1.Rev + "\"", "\"_rev\":\"" + replaceResponse.Rev + "\""));
         }
 
         [Test]

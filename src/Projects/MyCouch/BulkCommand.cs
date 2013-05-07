@@ -15,6 +15,12 @@ namespace MyCouch
             Docs = new List<string>();
         }
 
+        /// <summary>
+        /// Includes documents for insert, updates or deletes. For deletes
+        /// you can also use <see cref="Delete"/>.
+        /// </summary>
+        /// <param name="docs"></param>
+        /// <returns></returns>
         public virtual BulkCommand Include(params string[] docs)
         {
             Docs.AddRange(docs);
@@ -22,6 +28,12 @@ namespace MyCouch
             return this;
         }
 
+        /// <summary>
+        /// Includes a document for deletion.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="rev"></param>
+        /// <returns></returns>
         public virtual BulkCommand Delete(string id, string rev)
         {
             Include(string.Format("{{\"_id\":\"{0}\",\"_rev\":\"{1}\",\"_deleted\":true}}", id, rev));

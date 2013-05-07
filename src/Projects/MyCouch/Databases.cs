@@ -18,6 +18,8 @@ namespace MyCouch
 
         public virtual DatabaseResponse Put(string dbname)
         {
+            Ensure.That(dbname, "dbname").IsNotNullOrWhiteSpace();
+
             return PutAsync(dbname).Result;
         }
 
@@ -33,6 +35,8 @@ namespace MyCouch
 
         public virtual DatabaseResponse Delete(string dbname)
         {
+            Ensure.That(dbname, "dbname").IsNotNullOrWhiteSpace();
+
             return DeleteAsync(dbname).Result;
         }
 

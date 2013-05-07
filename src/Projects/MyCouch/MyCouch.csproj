@@ -50,6 +50,8 @@
     </Compile>
     <Compile Include="BulkCommand.cs" />
     <Compile Include="BulkResponse.cs" />
+    <Compile Include="CopyDocumentCommand.cs" />
+    <Compile Include="CopyDocumentResponse.cs" />
     <Compile Include="DatabaseResponse.cs" />
     <Compile Include="Databases.cs" />
     <Compile Include="Core\TypeExtensions.cs" />
@@ -57,6 +59,8 @@
     <Compile Include="IDatabases.cs" />
     <Compile Include="IEntities.cs" />
     <Compile Include="MyCouchRuntime.cs" />
+    <Compile Include="ReplaceDocumentCommand.cs" />
+    <Compile Include="ReplaceDocumentResponse.cs" />
     <Compile Include="Resources\ExceptionStrings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
