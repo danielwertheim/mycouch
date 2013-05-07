@@ -36,35 +36,76 @@ namespace MyCouch
 
         public virtual CopyDocumentResponse Copy(string srcId, string newId)
         {
-            Ensure.That(srcId, "srcId").IsNotNullOrWhiteSpace();
-            Ensure.That(newId, "newId").IsNotNullOrWhiteSpace();
-
-            return Copy(new CopyDocumentCommand { SrcId = srcId, NewId = newId });
+            return Copy(new CopyDocumentCommand(srcId, newId));
         }
 
         public virtual Task<CopyDocumentResponse> CopyAsync(string srcId, string newId)
         {
-            Ensure.That(srcId, "srcId").IsNotNullOrWhiteSpace();
-            Ensure.That(newId, "newId").IsNotNullOrWhiteSpace();
+            return CopyAsync(new CopyDocumentCommand(srcId, newId));
+        }
 
-            return CopyAsync(new CopyDocumentCommand { SrcId = srcId, NewId = newId });
+        public virtual CopyDocumentResponse Copy(string srcId, string srcRev, string newId)
+        {
+            return Copy(new CopyDocumentCommand(srcId, srcRev, newId));
+        }
+
+        public virtual Task<CopyDocumentResponse> CopyAsync(string srcId, string srcRev, string newId)
+        {
+            return CopyAsync(new CopyDocumentCommand(srcId, srcRev, newId));
         }
 
         public virtual CopyDocumentResponse Copy(CopyDocumentCommand cmd)
         {
-            cmd.EnsureValid();
+            Ensure.That(cmd, "cmd").IsNotNull();
 
             return CopyAsync(cmd).Result;
         }
 
         public virtual async Task<CopyDocumentResponse> CopyAsync(CopyDocumentCommand cmd)
         {
-            cmd.EnsureValid();
+            Ensure.That(cmd, "cmd").IsNotNull();
 
             var req = CreateRequest(cmd);
             var res = SendAsync(req);
 
             return await ProcessHttpCopyDocumentResponseAsync(res);
+        }
+
+        public virtual ReplaceDocumentResponse Replace(string srcId, string trgId, string trgRev)
+        {
+            return Replace(new ReplaceDocumentCommand(srcId, trgId, trgRev));
+        }
+
+        public virtual Task<ReplaceDocumentResponse> ReplaceAsync(string srcId, string trgId, string trgRev)
+        {
+            return ReplaceAsync(new ReplaceDocumentCommand(srcId, trgId, trgRev));
+        }
+
+        public virtual ReplaceDocumentResponse Replace(string srcId, string srcRev, string trgId, string trgRev)
+        {
+            return Replace(new ReplaceDocumentCommand(srcId, srcRev, trgId, trgRev));
+        }
+
+        public virtual Task<ReplaceDocumentResponse> ReplaceAsync(string srcId, string srcRev, string trgId, string trgRev)
+        {
+            return ReplaceAsync(new ReplaceDocumentCommand(srcId, srcRev, trgId, trgRev));
+        }
+
+        public virtual ReplaceDocumentResponse Replace(ReplaceDocumentCommand cmd)
+        {
+            Ensure.That(cmd, "cmd").IsNotNull();
+
+            return ReplaceAsync(cmd).Result;
+        }
+
+        public virtual async Task<ReplaceDocumentResponse> ReplaceAsync(ReplaceDocumentCommand cmd)
+        {
+            Ensure.That(cmd, "cmd").IsNotNull();
+
+            var req = CreateRequest(cmd);
+            var res = SendAsync(req);
+
+            return await ProcessHttpReplaceDocumentResponseAsync(res);
         }
 
         public virtual JsonDocumentResponse Get(string id, string rev = null)
@@ -181,6 +222,15 @@ namespace MyCouch
             return req;
         }
 
+        protected virtual HttpRequestMessage CreateRequest(ReplaceDocumentCommand cmd)
+        {
+            var req = new HttpRequest(new HttpMethod("COPY"), GenerateRequestUrl(cmd));
+
+            req.Headers.Add("Destination", string.Concat(cmd.TrgId, "?rev=", cmd.TrgRev));
+
+            return req;
+        }
+
         protected virtual HttpRequestMessage CreateRequest(HttpMethod method, JsonDocumentCommand cmd)
         {
             var req = new HttpRequest(method, GenerateRequestUrl(cmd));
@@ -199,6 +249,11 @@ namespace MyCouch
         }
 
         protected virtual string GenerateRequestUrl(CopyDocumentCommand cmd)
+        {
+            return GenerateDocumentRequestUrl(cmd.SrcId, cmd.SrcRev);
+        }
+
+        protected virtual string GenerateRequestUrl(ReplaceDocumentCommand cmd)
         {
             return GenerateDocumentRequestUrl(cmd.SrcId, cmd.SrcRev);
         }
@@ -224,6 +279,11 @@ namespace MyCouch
         protected virtual async Task<CopyDocumentResponse> ProcessHttpCopyDocumentResponseAsync(Task<HttpResponseMessage> responseTask)
         {
             return Client.ResponseFactory.CreateCopyDocumentResponse(await responseTask);
+        }
+
+        protected virtual async Task<ReplaceDocumentResponse> ProcessHttpReplaceDocumentResponseAsync(Task<HttpResponseMessage> responseTask)
+        {
+            return Client.ResponseFactory.CreateReplaceDocumentResponse(await responseTask);
         }
 
         protected virtual async Task<JsonDocumentResponse> ProcessHttpJsonDocumentResponseAsync(Task<HttpResponseMessage> responseTask)

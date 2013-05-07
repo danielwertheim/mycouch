@@ -119,6 +119,16 @@ namespace MyCouch.Serialization
             Map(data, mappings);
         }
 
+        public virtual void PopulateReplaceDocumentResponse(ReplaceDocumentResponse response, Stream data)
+        {
+            var mappings = new Dictionary<string, Action<JsonTextReader>>
+            {
+                {"id", jr => response.Id = jr.Value.ToString()},
+                {"rev", jr => response.Rev = jr.Value.ToString()}
+            };
+            Map(data, mappings);
+        }
+
         public virtual void PopulateDocumentResponse<T>(T response, Stream data) where T : DocumentResponse
         {
             var mappings = new Dictionary<string, Action<JsonTextReader>>

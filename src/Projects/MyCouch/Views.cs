@@ -21,14 +21,14 @@ namespace MyCouch
 
         public virtual JsonViewQueryResponse RunQuery(IViewQuery query)
         {
-            query.EnsureValid();
+            EnsureValidQuery(query);
 
             return RunQueryAsync(query).Result;
         }
 
         public virtual async Task<JsonViewQueryResponse> RunQueryAsync(IViewQuery query)
         {
-            query.EnsureValid();
+            EnsureValidQuery(query);
 
             var req = CreateRequest(query);
             var res = SendAsync(req);
@@ -38,14 +38,14 @@ namespace MyCouch
 
         public virtual ViewQueryResponse<T> RunQuery<T>(IViewQuery query) where T : class
         {
-            query.EnsureValid();
+            EnsureValidQuery(query);
 
             return RunQueryAsync<T>(query).Result;
         }
 
         public virtual async Task<ViewQueryResponse<T>> RunQueryAsync<T>(IViewQuery query) where T : class
         {
-            query.EnsureValid();
+            EnsureValidQuery(query);
 
             var req = CreateRequest(query);
             var res = SendAsync(req);
@@ -95,6 +95,11 @@ namespace MyCouch
             query.Configure(configurator);
 
             return await RunQueryAsync<T>(query);
+        }
+
+        protected virtual void EnsureValidQuery(IViewQuery query)
+        {
+            Ensure.That(query, "query").IsNotNull();
         }
 
         protected virtual IViewQuery CreateQuery(string designDocument, string viewname)

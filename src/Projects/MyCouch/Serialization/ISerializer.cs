@@ -13,6 +13,7 @@ namespace MyCouch.Serialization
         void PopulateFailedResponse<T>(T response, Stream data) where T : Response;
         void PopulateBulkResponse(BulkResponse response, Stream data);
         void PopulateCopyDocumentResponse(CopyDocumentResponse response, Stream data);
+        void PopulateReplaceDocumentResponse(ReplaceDocumentResponse response, Stream data);
         void PopulateDocumentResponse<T>(T response, Stream data) where T : DocumentResponse;
         void PopulateViewQueryResponse<T>(ViewQueryResponse<T> item, Stream data) where T : class;
     }
