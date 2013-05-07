@@ -88,6 +88,16 @@ namespace MyCouch.Serialization
             }
         }
 
+        public virtual void PopulateFailedResponse<T>(T response, Stream data) where T : Response
+        {
+            var mappings = new Dictionary<string, Action<JsonTextReader>>
+            {
+                {"error", jr => response.Error = jr.Value.ToString()},
+                {"reason", jr => response.Reason = jr.Value.ToString()}
+            };
+            Map(data, mappings);
+        }
+
         public virtual void PopulateBulkResponse(BulkResponse response, Stream data)
         {
             using (var sr = new StreamReader(data))
@@ -101,110 +111,70 @@ namespace MyCouch.Serialization
 
         public virtual void PopulateCopyDocumentResponse(CopyDocumentResponse response, Stream data)
         {
-            using (var sr = new StreamReader(data))
+            var mappings = new Dictionary<string, Action<JsonTextReader>>
             {
-                using (var jr = new JsonTextReader(sr) { CloseInput = false })
-                {
-                    while (jr.Read())
-                    {
-                        if (jr.TokenType != JsonToken.PropertyName)
-                            continue;
-
-                        var propName = jr.Value.ToString();
-                        if (propName == "id")
-                        {
-                            if (!jr.Read())
-                                break;
-                            response.Id = jr.Value.ToString();
-                        }
-                        else if (propName == "rev")
-                        {
-                            if (!jr.Read())
-                                break;
-                            response.Rev = jr.Value.ToString();
-                        }
-                    }
-                }
-            }
+                {"id", jr => response.Id = jr.Value.ToString()},
+                {"rev", jr => response.Rev = jr.Value.ToString()}
+            };
+            Map(data, mappings);
         }
 
         public virtual void PopulateDocumentResponse<T>(T response, Stream data) where T : DocumentResponse
         {
-            using (var sr = new StreamReader(data))
+            var mappings = new Dictionary<string, Action<JsonTextReader>>
             {
-                using (var jr = new JsonTextReader(sr) { CloseInput = false })
-                {
-                    while (jr.Read())
-                    {
-                        if (jr.TokenType != JsonToken.PropertyName)
-                            continue;
-
-                        var propName = jr.Value.ToString();
-                        if (propName == "id")
-                        {
-                            if (!jr.Read())
-                                break;
-                            response.Id = jr.Value.ToString();
-                        }
-                        else if (propName == "rev")
-                        {
-                            if (!jr.Read())
-                                break;
-                            response.Rev = jr.Value.ToString();
-                        }
-                    }
-                }
-            }
+                {"id", jr => response.Id = jr.Value.ToString()},
+                {"rev", jr => response.Rev = jr.Value.ToString()}
+            };
+            Map(data, mappings);
         }
 
         public virtual void PopulateViewQueryResponse<T>(ViewQueryResponse<T> response, Stream data) where T : class
         {
+            var mappings = new Dictionary<string, Action<JsonTextReader>>
+            {
+                {"total_rows", jr => response.TotalRows = (long)jr.Value},
+                {"update_seq", jr => response.UpdateSeq = (long)jr.Value},
+                {"offset", jr => response.OffSet = (long)jr.Value},
+                {"rows", jr =>
+                {
+                    if (response is ViewQueryResponse<string>)
+                        response.Rows = YieldViewQueryRowsOfString(jr).ToArray() as ViewQueryResponse<T>.Row[];
+                    else if (response is ViewQueryResponse<string[]>)
+                        response.Rows = YieldViewQueryRowsOfStrings(jr).ToArray() as ViewQueryResponse<T>.Row[];
+                    else
+                        response.Rows = InternalSerializer.Deserialize<ViewQueryResponse<T>.Row[]>(jr);
+                }},
+            };
+            Map(data, mappings);
+        }
+
+        protected virtual void Map(Stream data, IDictionary<string, Action<JsonTextReader>> mappings)
+        {
+            var numOfHandlersProcessed = 0;
+
             using (var sr = new StreamReader(data))
             {
                 using (var jr = new JsonTextReader(sr) { CloseInput = false })
                 {
                     while (jr.Read())
                     {
+                        if(numOfHandlersProcessed == mappings.Count)
+                            break;
+
                         if (jr.TokenType != JsonToken.PropertyName)
                             continue;
 
                         var propName = jr.Value.ToString();
-                        if (propName == "total_rows")
-                        {
-                            if (!jr.Read())
-                                break;
-                            response.TotalRows = (long)jr.Value;
+                        if (!mappings.ContainsKey(propName))
                             continue;
-                        }
 
-                        if (propName == "update_seq")
-                        {
-                            if (!jr.Read())
-                                break;
-                            response.UpdateSeq = (long)jr.Value;
-                            continue;
-                        }
+                        if (!jr.Read())
+                            break;
+                        
+                        mappings[propName](jr);
 
-                        if (propName == "offset")
-                        {
-                            if (!jr.Read())
-                                break;
-                            response.OffSet = (long)jr.Value;
-                            continue;
-                        }
-
-                        if (propName == "rows")
-                        {
-                            if (!jr.Read())
-                                break;
-
-                            if (response is ViewQueryResponse<string>)
-                                response.Rows = YieldViewQueryRowsOfString(jr).ToArray() as ViewQueryResponse<T>.Row[];
-                            else if (response is ViewQueryResponse<string[]>)
-                                response.Rows = YieldViewQueryRowsOfStrings(jr).ToArray() as ViewQueryResponse<T>.Row[];
-                            else
-                                response.Rows = InternalSerializer.Deserialize<ViewQueryResponse<T>.Row[]>(jr);
-                        }
+                        numOfHandlersProcessed++;
                     }
                 }
             }
@@ -292,35 +262,6 @@ namespace MyCouch.Serialization
                             hasMappedId = hasMappedKey = hasMappedValue = false;
                             yield return row;
                             row = new ViewQueryResponse<T>.Row();
-                        }
-                    }
-                }
-            }
-        }
-
-        public virtual void PopulateFailedResponse<T>(T response, Stream data) where T : Response
-        {
-            using (var sr = new StreamReader(data))
-            {
-                using (var jr = new JsonTextReader(sr) { CloseInput = false })
-                {
-                    while (jr.Read())
-                    {
-                        if (jr.TokenType != JsonToken.PropertyName)
-                            continue;
-
-                        var propName = jr.Value.ToString();
-                        if (propName == "error")
-                        {
-                            if (!jr.Read())
-                                break;
-                            response.Error = jr.Value.ToString();
-                        }
-                        else if (propName == "reason")
-                        {
-                            if (!jr.Read())
-                                break;
-                            response.Reason = jr.Value.ToString();
                         }
                     }
                 }
