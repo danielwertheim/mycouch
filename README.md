@@ -1,5 +1,11 @@
 # MyCouch #
-Simple async CouchDb client for .Net.
+Simple async CouchDb client for .Net - builds on top of the async http client and uses JSON.Net to provide flexible serialization behavior. It tries to keep the domain language of CouchDb instead of bringing in generic repositories and other confusing stuff.
+
+## Documentation ##
+The documentation is contained in the [project wiki](https://github.com/danielwertheim/mycouch/wiki).
+
+## Issues, questions, etc ##
+So you have issues or questions... Great! That means someone is using it. Use the issues function here at the project page or contact me via mail: firstname@lastname.se; or Twitter: [@danielwertheim](https://twitter.com/danielwertheim)
 
 ## License ##
 The MIT License (MIT)
