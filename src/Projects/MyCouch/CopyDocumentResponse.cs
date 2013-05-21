@@ -3,7 +3,7 @@
 namespace MyCouch
 {
     [Serializable]
-    public class CopyDocumentResponse : Response
+    public class CopyDocumentResponse : Response, IDocumentHeaderResponse
     {
         public string Id { get; set; }
         public string Rev { get; set; }

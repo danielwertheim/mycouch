@@ -57,6 +57,7 @@
     <Compile Include="Core\TypeExtensions.cs" />
     <Compile Include="Entities.cs" />
     <Compile Include="IDatabases.cs" />
+    <Compile Include="IDocumentHeaderResponse.cs" />
     <Compile Include="IEntities.cs" />
     <Compile Include="MyCouchRuntime.cs" />
     <Compile Include="ReplaceDocumentCommand.cs" />
