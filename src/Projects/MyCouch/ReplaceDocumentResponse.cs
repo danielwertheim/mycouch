@@ -11,7 +11,10 @@ namespace MyCouch
         protected override string GenerateToStringDebugVersion()
         {
             return string.Format("{0}{1}{0}Id: {2}{0}Rev: {3}",
-                Environment.NewLine, base.GenerateToStringDebugVersion(), Id ?? "<NULL>", Rev ?? "<NULL>");
+                Environment.NewLine, 
+                base.GenerateToStringDebugVersion(), 
+                Id ?? "<NULL>", 
+                Rev ?? "<NULL>");
         }
     }
 }

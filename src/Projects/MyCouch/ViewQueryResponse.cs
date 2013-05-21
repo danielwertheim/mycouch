@@ -18,7 +18,12 @@ namespace MyCouch
         protected override string GenerateToStringDebugVersion()
         {
             return string.Format("{0}{1}{0}IsEmpty: {2}{0}TotalRows: {3}{0}RowCount:{4}{0}Offset: {5}",
-                Environment.NewLine, base.GenerateToStringDebugVersion(), IsEmpty, TotalRows, RowCount, OffSet);
+                Environment.NewLine, 
+                base.GenerateToStringDebugVersion(), 
+                IsEmpty, 
+                TotalRows, 
+                RowCount, 
+                OffSet);
         }
 
         [Serializable]

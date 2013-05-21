@@ -3,6 +3,5 @@
 namespace MyCouch
 {
     [Serializable]
-    public class DatabaseResponse : Response
-    {}
+    public class DatabaseResponse : Response { }
 }

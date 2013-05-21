@@ -15,7 +15,9 @@ namespace MyCouch
         protected override string GenerateToStringDebugVersion()
         {
             return string.Format("{0}{1}{0}Model: {2}", 
-                Environment.NewLine, base.GenerateToStringDebugVersion(), typeof(T).Name);
+                Environment.NewLine, 
+                base.GenerateToStringDebugVersion(), 
+                typeof(T).Name);
         }
     }
 }
