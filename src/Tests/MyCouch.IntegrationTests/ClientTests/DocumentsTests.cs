@@ -23,6 +23,44 @@ namespace MyCouch.IntegrationTests.ClientTests
         }
 
         [Test]
+        public void When_exists_of_non_existing_document_The_response_is_empty()
+        {
+            var response = SUT.Exists("fooId");
+
+            response.Should().BeHead404();
+        }
+
+        [Test]
+        public void When_exists_using_not_matching_rev_The_response_is_empty()
+        {
+            var postResponse = SUT.Post(TestData.Artists.Artist1Json);
+
+            var response = SUT.Exists(postResponse.Id, "1-795258d03c3bdb58fffc409e153c5d45");
+
+            response.Should().BeHead404();
+        }
+
+        [Test]
+        public void When_exists_using_matching_id_The_response_is_ok()
+        {
+            var postResponse = SUT.Post(TestData.Artists.Artist1Json);
+
+            var response = SUT.Exists(postResponse.Id);
+
+            response.Should().BeHead200(postResponse.Id, postResponse.Rev);
+        }
+
+        [Test]
+        public void When_exists_using_matching_id_and_rev_The_response_is_ok()
+        {
+            var postResponse = SUT.Post(TestData.Artists.Artist1Json);
+
+            var response = SUT.Exists(postResponse.Id, postResponse.Rev);
+
+            response.Should().BeHead200(postResponse.Id, postResponse.Rev);
+        }
+
+        [Test]
         public void When_post_of_new_document_Using_json_The_document_is_persisted()
         {
             var response = SUT.Post(TestData.Artists.Artist1Json);
@@ -41,10 +79,10 @@ namespace MyCouch.IntegrationTests.ClientTests
         [Test]
         public void When_put_of_existing_document_Using_json_The_document_is_replaced()
         {
-            var r = SUT.Post(TestData.Artists.Artist1Json);
-            r = SUT.Get(r.Id);
+            var postResponse = SUT.Post(TestData.Artists.Artist1Json);
+            var getResponse = SUT.Get(postResponse.Id);
 
-            var response = SUT.Put(r.Id, r.Content);
+            var response = SUT.Put(getResponse.Id, getResponse.Content);
 
             response.Should().BeSuccessfulPut(TestData.Artists.Artist1Id);
         }

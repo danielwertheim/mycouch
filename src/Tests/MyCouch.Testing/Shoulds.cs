@@ -28,6 +28,11 @@ namespace MyCouch.Testing
         {
             return new DocumentResponseAssertions(response);
         }
+
+        public static DocumentHeaderResponseAssertions Should(this DocumentHeaderResponse response)
+        {
+            return new DocumentHeaderResponseAssertions(response);
+        }
     }
 
     public class ViewQueryResponseAssertions
@@ -214,6 +219,39 @@ namespace MyCouch.Testing
             Response.Id.Should().Be(id);
             Response.Rev.Should().NotBeNullOrEmpty();
         }
+    }
+
+    public class DocumentHeaderResponseAssertions
+    {
+        protected readonly DocumentHeaderResponse Response;
+
+        [DebuggerStepThrough]
+        public DocumentHeaderResponseAssertions(DocumentHeaderResponse response)
+        {
+            Response = response;
+        }
+
+        public void BeHead404()
+        {
+            Response.RequestMethod.Should().Be(HttpMethod.Head);
+            Response.IsSuccess.Should().BeFalse();
+            Response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+            Response.Error.Should().BeNull();
+            Response.Reason.Should().BeNull();
+            Response.Id.Should().BeNull();
+            Response.Rev.Should().BeNull();
+        }
+
+        public void BeHead200(string id, string rev)
+        {
+            Response.RequestMethod.Should().Be(HttpMethod.Head);
+            Response.IsSuccess.Should().BeTrue();
+            Response.StatusCode.Should().Be(HttpStatusCode.OK);
+            Response.Error.Should().BeNull();
+            Response.Reason.Should().BeNull();
+            Response.Id.Should().Be(id);
+            Response.Rev.Should().Be(rev);
+        }
 
         public void BeSuccessfulPost(string initialId)
         {
@@ -222,8 +260,6 @@ namespace MyCouch.Testing
             Response.StatusCode.Should().Be(HttpStatusCode.Created);
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
-            Response.IsEmpty.Should().BeTrue();
-            Response.Content.Should().BeNull();
             Response.Id.Should().NotBeNullOrEmpty();
             Response.Id.Should().Be(initialId);
             Response.Rev.Should().NotBeNullOrEmpty();
@@ -236,8 +272,6 @@ namespace MyCouch.Testing
             Response.StatusCode.Should().Be(HttpStatusCode.Created);
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
-            Response.IsEmpty.Should().BeTrue();
-            Response.Content.Should().BeNull();
             Response.Id.Should().NotBeNullOrEmpty();
             Response.Id.Should().Be(initialId);
             Response.Rev.Should().NotBeNullOrEmpty();
@@ -250,8 +284,6 @@ namespace MyCouch.Testing
             Response.StatusCode.Should().Be(HttpStatusCode.Created);
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
-            Response.IsEmpty.Should().BeTrue();
-            Response.Content.Should().BeNull();
             Response.Id.Should().NotBeNullOrEmpty();
             Response.Id.Should().Be(initialId);
             Response.Rev.Should().NotBeNullOrEmpty();
@@ -264,8 +296,6 @@ namespace MyCouch.Testing
             Response.StatusCode.Should().Be(HttpStatusCode.OK);
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
-            Response.IsEmpty.Should().BeTrue();
-            Response.Content.Should().BeNull();
             Response.Id.Should().NotBeNullOrEmpty();
             Response.Id.Should().Be(initialId);
             Response.Rev.Should().NotBeNullOrEmpty();
