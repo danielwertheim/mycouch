@@ -12,7 +12,7 @@ namespace MyCouch
             get { return string.IsNullOrWhiteSpace(Content); }
         }
 
-        protected override string GenerateToStringDebugVersion()
+        public override string GenerateToStringDebugVersion()
         {
             return string.Format("{0}{1}{0}Content: {2}",
                 Environment.NewLine, 
