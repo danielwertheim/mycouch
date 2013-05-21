@@ -32,7 +32,7 @@ namespace MyCouch
         /// <param name="srcId"></param>
         /// <param name="newId"></param>
         /// <returns></returns>
-        CopyDocumentResponse Copy(string srcId, string newId);
+        DocumentHeaderResponse Copy(string srcId, string newId);
 
         /// <summary>
         /// Copies the document having a document id matching <paramref name="srcId"/> to a new document
@@ -42,7 +42,7 @@ namespace MyCouch
         /// <param name="srcId"></param>
         /// <param name="newId"></param>
         /// <returns></returns>
-        Task<CopyDocumentResponse> CopyAsync(string srcId, string newId);
+        Task<DocumentHeaderResponse> CopyAsync(string srcId, string newId);
 
         /// <summary>
         /// Copies the document having a document id matching <paramref name="srcId"/> and rev matching <paramref name="srcRev"/>
@@ -53,7 +53,7 @@ namespace MyCouch
         /// <param name="srcRev"></param>
         /// <param name="newId"></param>
         /// <returns></returns>
-        CopyDocumentResponse Copy(string srcId, string srcRev, string newId);
+        DocumentHeaderResponse Copy(string srcId, string srcRev, string newId);
 
         /// <summary>
         /// Copies the document having a document id matching <paramref name="srcId"/> and rev matching <paramref name="srcRev"/>
@@ -64,7 +64,7 @@ namespace MyCouch
         /// <param name="srcRev"></param>
         /// <param name="newId"></param>
         /// <returns></returns>
-        Task<CopyDocumentResponse> CopyAsync(string srcId, string srcRev, string newId);
+        Task<DocumentHeaderResponse> CopyAsync(string srcId, string srcRev, string newId);
 
         /// <summary>
         /// Copies the document having a document id matching <paramref name="cmd.SrcId"/> to a new document
@@ -73,7 +73,7 @@ namespace MyCouch
         /// </summary>
         /// <param name="cmd"></param>
         /// <returns></returns>
-        CopyDocumentResponse Copy(CopyDocumentCommand cmd);
+        DocumentHeaderResponse Copy(CopyDocumentCommand cmd);
 
         /// <summary>
         /// Copies the document having a document id matching <paramref name="cmd.SrcId"/> to a new document
@@ -82,7 +82,7 @@ namespace MyCouch
         /// </summary>
         /// <param name="cmd"></param>
         /// <returns></returns>
-        Task<CopyDocumentResponse> CopyAsync(CopyDocumentCommand cmd);
+        Task<DocumentHeaderResponse> CopyAsync(CopyDocumentCommand cmd);
 
         /// <summary>
         /// Replaces the document having a document id matching <paramref name="trgId"/> and rev <paramref name="trgRev"/>
@@ -92,7 +92,7 @@ namespace MyCouch
         /// <param name="trgId"></param>
         /// <param name="trgRev"></param>
         /// <returns></returns>
-        ReplaceDocumentResponse Replace(string srcId, string trgId, string trgRev);
+        DocumentHeaderResponse Replace(string srcId, string trgId, string trgRev);
 
         /// <summary>
         /// Replaces the document having a document id matching <paramref name="trgId"/> and rev <paramref name="trgRev"/>
@@ -102,7 +102,7 @@ namespace MyCouch
         /// <param name="trgId"></param>
         /// <param name="trgRev"></param>
         /// <returns></returns>
-        Task<ReplaceDocumentResponse> ReplaceAsync(string srcId, string trgId, string trgRev);
+        Task<DocumentHeaderResponse> ReplaceAsync(string srcId, string trgId, string trgRev);
 
         /// <summary>
         /// Replaces the document having a document id matching <paramref name="trgId"/> and rev <paramref name="trgRev"/>
@@ -113,7 +113,7 @@ namespace MyCouch
         /// <param name="trgId"></param>
         /// <param name="trgRev"></param>
         /// <returns></returns>
-        ReplaceDocumentResponse Replace(string srcId, string srcRev, string trgId, string trgRev);
+        DocumentHeaderResponse Replace(string srcId, string srcRev, string trgId, string trgRev);
 
         /// <summary>
         /// Replaces the document having a document id matching <paramref name="trgId"/> and rev <paramref name="trgRev"/>
@@ -124,7 +124,7 @@ namespace MyCouch
         /// <param name="trgId"></param>
         /// <param name="trgRev"></param>
         /// <returns></returns>
-        Task<ReplaceDocumentResponse> ReplaceAsync(string srcId, string srcRev, string trgId, string trgRev);
+        Task<DocumentHeaderResponse> ReplaceAsync(string srcId, string srcRev, string trgId, string trgRev);
 
         /// <summary>
         /// Replaces the document having a document id matching <paramref name="cmd.TrgId"/> and rev <paramref name="cmd.TrgRev"/>
@@ -132,7 +132,7 @@ namespace MyCouch
         /// </summary>
         /// <param name="cmd"></param>
         /// <returns></returns>
-        ReplaceDocumentResponse Replace(ReplaceDocumentCommand cmd);
+        DocumentHeaderResponse Replace(ReplaceDocumentCommand cmd);
 
         /// <summary>
         /// Copies the document having a document id matching <paramref name="cmd.SrcId"/> to a new document
@@ -141,7 +141,7 @@ namespace MyCouch
         /// </summary>
         /// <param name="cmd"></param>
         /// <returns></returns>
-        Task<ReplaceDocumentResponse> ReplaceAsync(ReplaceDocumentCommand cmd);
+        Task<DocumentHeaderResponse> ReplaceAsync(ReplaceDocumentCommand cmd);
 
         /// <summary>
         /// Gets untyped response with the JSON representation of the document.

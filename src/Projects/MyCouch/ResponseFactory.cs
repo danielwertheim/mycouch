@@ -28,14 +28,9 @@ namespace MyCouch
             return CreateResponse<BulkResponse>(response, OnSuccessfulResponseContentMaterializer, OnFailedResponseContentMaterializer);
         }
 
-        public virtual CopyDocumentResponse CreateCopyDocumentResponse(HttpResponseMessage response)
+        public virtual DocumentHeaderResponse CreateDocumentHeaderResponse(HttpResponseMessage response)
         {
-            return CreateResponse<CopyDocumentResponse>(response, OnSuccessfulResponseContentMaterializer, OnFailedResponseContentMaterializer);
-        }
-
-        public virtual ReplaceDocumentResponse CreateReplaceDocumentResponse(HttpResponseMessage response)
-        {
-            return CreateResponse<ReplaceDocumentResponse>(response, OnSuccessfulResponseContentMaterializer, OnFailedResponseContentMaterializer);
+            return CreateResponse<DocumentHeaderResponse>(response, OnSuccessfulResponseContentMaterializer, OnFailedResponseContentMaterializer);
         }
 
         public virtual JsonDocumentResponse CreateJsonDocumentResponse(HttpResponseMessage response)
@@ -83,16 +78,10 @@ namespace MyCouch
                 Client.Serializer.PopulateBulkResponse(result, content);
         }
 
-        protected virtual void OnSuccessfulResponseContentMaterializer(HttpResponseMessage response, CopyDocumentResponse result)
+        protected virtual void OnSuccessfulResponseContentMaterializer(HttpResponseMessage response, DocumentHeaderResponse result)
         {
             using (var content = response.Content.ReadAsStreamAsync().Result)
-                Client.Serializer.PopulateCopyDocumentResponse(result, content);
-        }
-
-        protected virtual void OnSuccessfulResponseContentMaterializer(HttpResponseMessage response, ReplaceDocumentResponse result)
-        {
-            using (var content = response.Content.ReadAsStreamAsync().Result)
-                Client.Serializer.PopulateReplaceDocumentResponse(result, content);
+                Client.Serializer.PopulateDocumentHeaderResponse(result, content);
         }
 
         protected virtual void OnSuccessfulResponseContentMaterializer(HttpResponseMessage response, JsonDocumentResponse result)
