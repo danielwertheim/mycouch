@@ -133,9 +133,7 @@ namespace MyCouch
         {
             var req = new HttpRequest(method, GenerateRequestUrl(cmd));
 
-            if (!string.IsNullOrWhiteSpace(cmd.Rev))
-                req.SetIfMatch(cmd.Rev);
-
+            req.SetIfMatch(cmd.Rev);
             req.SetContent(cmd.Json);
 
             return req;

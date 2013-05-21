@@ -144,6 +144,26 @@ namespace MyCouch
         Task<DocumentHeaderResponse> ReplaceAsync(ReplaceDocumentCommand cmd);
 
         /// <summary>
+        /// Makes a simple HEAD request which doesn not include the actual JSON document,
+        /// and returns any matched info for the <paramref name="id"/> and the optional
+        /// <paramref name="rev"/>.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="rev">optional</param>
+        /// <returns></returns>
+        DocumentHeaderResponse Exists(string id, string rev = null);
+
+        /// <summary>
+        /// Makes a simple HEAD request which doesn not include the actual JSON document,
+        /// and returns any matched info for the <paramref name="id"/> and the optional
+        /// <paramref name="rev"/>.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="rev">optional</param>
+        /// <returns></returns>
+        Task<DocumentHeaderResponse> ExistsAsync(string id, string rev = null);
+
+        /// <summary>
         /// Gets untyped response with the JSON representation of the document.
         /// </summary>
         /// <param name="id">The Id of the document.</param>

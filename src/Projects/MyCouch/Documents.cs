@@ -108,6 +108,23 @@ namespace MyCouch
             return await ProcessHttpDocumentHeaderResponseAsync(res);
         }
 
+        public virtual DocumentHeaderResponse Exists(string id, string rev = null)
+        {
+            Ensure.That(id, "id").IsNotNullOrWhiteSpace();
+
+            return ExistsAsync(id, rev).Result;
+        }
+
+        public virtual async Task<DocumentHeaderResponse> ExistsAsync(string id, string rev = null)
+        {
+            Ensure.That(id, "id").IsNotNullOrWhiteSpace();
+
+            var req = CreateRequest(HttpMethod.Head, new JsonDocumentCommand { Id = id, Rev = rev });
+            var res = SendAsync(req);
+
+            return await ProcessHttpDocumentHeaderResponseAsync(res);
+        }
+
         public virtual JsonDocumentResponse Get(string id, string rev = null)
         {
             Ensure.That(id, "id").IsNotNullOrWhiteSpace();
@@ -235,9 +252,7 @@ namespace MyCouch
         {
             var req = new HttpRequest(method, GenerateRequestUrl(cmd));
 
-            if (!string.IsNullOrWhiteSpace(cmd.Rev))
-                req.SetIfMatch(cmd.Rev);
-
+            req.SetIfMatch(cmd.Rev);
             req.SetContent(cmd.Content);
 
             return req;
@@ -263,11 +278,11 @@ namespace MyCouch
             return GenerateDocumentRequestUrl(cmd.Id, cmd.Rev);
         }
 
-        protected virtual string GenerateDocumentRequestUrl(string id, string rev = null)
+        protected virtual string GenerateDocumentRequestUrl(string id = null, string rev = null)
         {
             return string.Format("{0}/{1}{2}",
                 Client.Connection.Address,
-                id,
+                id ?? string.Empty,
                 rev == null ? string.Empty : string.Concat("?rev=", rev));
         }
 

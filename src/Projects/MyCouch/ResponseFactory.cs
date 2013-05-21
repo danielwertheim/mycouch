@@ -80,6 +80,14 @@ namespace MyCouch
 
         protected virtual void OnSuccessfulResponseContentMaterializer(HttpResponseMessage response, DocumentHeaderResponse result)
         {
+            if (response.RequestMessage.Method == HttpMethod.Head)
+            {
+                result.Id = response.RequestMessage.RequestUri.Segments.LastOrDefault();
+                result.Rev = response.Headers.ETag.Tag.Replace("\"", string.Empty);
+
+                return;
+            }
+
             using (var content = response.Content.ReadAsStreamAsync().Result)
                 Client.Serializer.PopulateDocumentHeaderResponse(result, content);
         }

@@ -231,6 +231,28 @@ namespace MyCouch.Testing
             Response = response;
         }
 
+        public void BeHead404()
+        {
+            Response.RequestMethod.Should().Be(HttpMethod.Head);
+            Response.IsSuccess.Should().BeFalse();
+            Response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+            Response.Error.Should().BeNull();
+            Response.Reason.Should().BeNull();
+            Response.Id.Should().BeNull();
+            Response.Rev.Should().BeNull();
+        }
+
+        public void BeHead200(string id, string rev)
+        {
+            Response.RequestMethod.Should().Be(HttpMethod.Head);
+            Response.IsSuccess.Should().BeTrue();
+            Response.StatusCode.Should().Be(HttpStatusCode.OK);
+            Response.Error.Should().BeNull();
+            Response.Reason.Should().BeNull();
+            Response.Id.Should().Be(id);
+            Response.Rev.Should().Be(rev);
+        }
+
         public void BeSuccessfulPost(string initialId)
         {
             Response.RequestMethod.Should().Be(HttpMethod.Post);
