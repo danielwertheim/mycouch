@@ -170,14 +170,14 @@ namespace MyCouch
         /// </summary>
         /// <param name="doc"></param>
         /// <returns></returns>
-        JsonDocumentResponse Post(string doc);
+        DocumentHeaderResponse Post(string doc);
 
         /// <summary>
         /// Inserts sent JSON document as it is. No additional metadata like doctype will be added.
         /// </summary>
         /// <param name="doc"></param>
         /// <returns></returns>
-        Task<JsonDocumentResponse> PostAsync(string doc);
+        Task<DocumentHeaderResponse> PostAsync(string doc);
 
         /// <summary>
         /// Updates or Inserts entity. The document <paramref name="doc"/> needs to contain the _rev field.

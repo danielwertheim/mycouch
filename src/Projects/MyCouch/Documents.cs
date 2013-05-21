@@ -125,21 +125,21 @@ namespace MyCouch
             return await ProcessHttpJsonDocumentResponseAsync(res);
         }
 
-        public virtual JsonDocumentResponse Post(string doc)
+        public virtual DocumentHeaderResponse Post(string doc)
         {
             Ensure.That(doc, "doc").IsNotNullOrWhiteSpace();
 
             return PostAsync(doc).Result;
         }
 
-        public virtual async Task<JsonDocumentResponse> PostAsync(string doc)
+        public virtual async Task<DocumentHeaderResponse> PostAsync(string doc)
         {
             Ensure.That(doc, "doc").IsNotNullOrWhiteSpace();
 
             var req = CreateRequest(HttpMethod.Post, new JsonDocumentCommand { Content = doc });
             var res = SendAsync(req);
 
-            return await ProcessHttpJsonDocumentResponseAsync(res);
+            return await ProcessHttpDocumentHeaderResponseAsync(res);
         }
 
         public virtual DocumentHeaderResponse Put(string id, string doc)

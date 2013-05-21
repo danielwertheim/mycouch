@@ -41,10 +41,10 @@ namespace MyCouch.IntegrationTests.ClientTests
         [Test]
         public void When_put_of_existing_document_Using_json_The_document_is_replaced()
         {
-            var r = SUT.Post(TestData.Artists.Artist1Json);
-            r = SUT.Get(r.Id);
+            var postResponse = SUT.Post(TestData.Artists.Artist1Json);
+            var getResponse = SUT.Get(postResponse.Id);
 
-            var response = SUT.Put(r.Id, r.Content);
+            var response = SUT.Put(getResponse.Id, getResponse.Content);
 
             response.Should().BeSuccessfulPut(TestData.Artists.Artist1Id);
         }
