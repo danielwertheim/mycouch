@@ -233,6 +233,17 @@ namespace MyCouch.Testing
             Response.Id.Should().Be(initialId);
             Response.Rev.Should().NotBeNullOrEmpty();
         }
+    }
+
+    public class DocumentHeaderResponseAssertions
+    {
+        protected readonly DocumentHeaderResponse Response;
+
+        [DebuggerStepThrough]
+        public DocumentHeaderResponseAssertions(DocumentHeaderResponse response)
+        {
+            Response = response;
+        }
 
         public void BeSuccessfulPut(string initialId)
         {
@@ -241,8 +252,6 @@ namespace MyCouch.Testing
             Response.StatusCode.Should().Be(HttpStatusCode.Created);
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
-            Response.IsEmpty.Should().BeTrue();
-            Response.Content.Should().BeNull();
             Response.Id.Should().NotBeNullOrEmpty();
             Response.Id.Should().Be(initialId);
             Response.Rev.Should().NotBeNullOrEmpty();
@@ -255,22 +264,9 @@ namespace MyCouch.Testing
             Response.StatusCode.Should().Be(HttpStatusCode.Created);
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
-            Response.IsEmpty.Should().BeTrue();
-            Response.Content.Should().BeNull();
             Response.Id.Should().NotBeNullOrEmpty();
             Response.Id.Should().Be(initialId);
             Response.Rev.Should().NotBeNullOrEmpty();
-        }
-    }
-
-    public class DocumentHeaderResponseAssertions
-    {
-        protected readonly DocumentHeaderResponse Response;
-
-        [DebuggerStepThrough]
-        public DocumentHeaderResponseAssertions(DocumentHeaderResponse response)
-        {
-            Response = response;
         }
 
         public void BeSuccessfulDelete(string initialId)

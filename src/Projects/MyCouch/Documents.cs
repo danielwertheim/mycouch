@@ -142,7 +142,7 @@ namespace MyCouch
             return await ProcessHttpJsonDocumentResponseAsync(res);
         }
 
-        public virtual JsonDocumentResponse Put(string id, string doc)
+        public virtual DocumentHeaderResponse Put(string id, string doc)
         {
             Ensure.That(id, "id").IsNotNullOrWhiteSpace();
             Ensure.That(doc, "doc").IsNotNullOrWhiteSpace();
@@ -150,7 +150,7 @@ namespace MyCouch
             return PutAsync(id, doc).Result;
         }
 
-        public virtual async Task<JsonDocumentResponse> PutAsync(string id, string doc)
+        public virtual async Task<DocumentHeaderResponse> PutAsync(string id, string doc)
         {
             Ensure.That(id, "id").IsNotNullOrWhiteSpace();
             Ensure.That(doc, "doc").IsNotNullOrWhiteSpace();
@@ -158,10 +158,10 @@ namespace MyCouch
             var req = CreateRequest(HttpMethod.Put, new JsonDocumentCommand { Id = id, Content = doc });
             var res = SendAsync(req);
 
-            return await ProcessHttpJsonDocumentResponseAsync(res);
+            return await ProcessHttpDocumentHeaderResponseAsync(res);
         }
 
-        public virtual JsonDocumentResponse Put(string id, string rev, string doc)
+        public virtual DocumentHeaderResponse Put(string id, string rev, string doc)
         {
             Ensure.That(id, "id").IsNotNullOrWhiteSpace();
             Ensure.That(doc, "doc").IsNotNullOrWhiteSpace();
@@ -169,7 +169,7 @@ namespace MyCouch
             return PutAsync(id, rev, doc).Result;
         }
 
-        public virtual async Task<JsonDocumentResponse> PutAsync(string id, string rev, string doc)
+        public virtual async Task<DocumentHeaderResponse> PutAsync(string id, string rev, string doc)
         {
             Ensure.That(id, "id").IsNotNullOrWhiteSpace();
             Ensure.That(doc, "doc").IsNotNullOrWhiteSpace();
@@ -177,7 +177,7 @@ namespace MyCouch
             var req = CreateRequest(HttpMethod.Put, new JsonDocumentCommand { Id = id, Rev = rev, Content = doc });
             var res = SendAsync(req);
 
-            return await ProcessHttpJsonDocumentResponseAsync(res);
+            return await ProcessHttpDocumentHeaderResponseAsync(res);
         }
 
         public virtual DocumentHeaderResponse Delete(string id, string rev)

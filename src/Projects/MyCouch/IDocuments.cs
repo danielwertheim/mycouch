@@ -185,7 +185,7 @@ namespace MyCouch
         /// <param name="id"></param>
         /// <param name="doc"></param>
         /// <returns></returns>
-        JsonDocumentResponse Put(string id, string doc);
+        DocumentHeaderResponse Put(string id, string doc);
 
         /// <summary>
         /// Updates or Inserts entity. The document <paramref name="doc"/> needs to contain the _rev field.
@@ -193,7 +193,7 @@ namespace MyCouch
         /// <param name="id"></param>
         /// <param name="doc"></param>
         /// <returns></returns>
-        Task<JsonDocumentResponse> PutAsync(string id, string doc);
+        Task<DocumentHeaderResponse> PutAsync(string id, string doc);
 
         /// <summary>
         /// Updates entity, without having to specify _rev field in the document <paramref name="doc"/>.
@@ -202,7 +202,7 @@ namespace MyCouch
         /// <param name="rev"></param>
         /// <param name="doc"></param>
         /// <returns></returns>
-        JsonDocumentResponse Put(string id, string rev, string doc);
+        DocumentHeaderResponse Put(string id, string rev, string doc);
 
         /// <summary>
         /// Updates entity, without having to specify _rev field in the document <paramref name="doc"/>.
@@ -211,7 +211,7 @@ namespace MyCouch
         /// <param name="rev"></param>
         /// <param name="doc"></param>
         /// <returns></returns>
-        Task<JsonDocumentResponse> PutAsync(string id, string rev, string doc);
+        Task<DocumentHeaderResponse> PutAsync(string id, string rev, string doc);
 
         /// <summary>
         /// Deletes the document that matches sent <paramref name="id"/> and <paramref name="rev"/>.
