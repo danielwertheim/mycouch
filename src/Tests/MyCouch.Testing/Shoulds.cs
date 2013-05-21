@@ -28,6 +28,11 @@ namespace MyCouch.Testing
         {
             return new DocumentResponseAssertions(response);
         }
+
+        public static DocumentHeaderResponseAssertions Should(this DocumentHeaderResponse response)
+        {
+            return new DocumentHeaderResponseAssertions(response);
+        }
     }
 
     public class ViewQueryResponseAssertions
@@ -256,6 +261,17 @@ namespace MyCouch.Testing
             Response.Id.Should().Be(initialId);
             Response.Rev.Should().NotBeNullOrEmpty();
         }
+    }
+
+    public class DocumentHeaderResponseAssertions
+    {
+        protected readonly DocumentHeaderResponse Response;
+
+        [DebuggerStepThrough]
+        public DocumentHeaderResponseAssertions(DocumentHeaderResponse response)
+        {
+            Response = response;
+        }
 
         public void BeSuccessfulDelete(string initialId)
         {
@@ -264,8 +280,6 @@ namespace MyCouch.Testing
             Response.StatusCode.Should().Be(HttpStatusCode.OK);
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
-            Response.IsEmpty.Should().BeTrue();
-            Response.Content.Should().BeNull();
             Response.Id.Should().NotBeNullOrEmpty();
             Response.Id.Should().Be(initialId);
             Response.Rev.Should().NotBeNullOrEmpty();

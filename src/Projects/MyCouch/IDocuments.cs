@@ -219,7 +219,7 @@ namespace MyCouch
         /// <param name="id"></param>
         /// <param name="rev"></param>
         /// <returns></returns>
-        JsonDocumentResponse Delete(string id, string rev);
+        DocumentHeaderResponse Delete(string id, string rev);
 
         /// <summary>
         /// Deletes the document that matches sent <paramref name="id"/> and <paramref name="rev"/>.
@@ -227,6 +227,6 @@ namespace MyCouch
         /// <param name="id"></param>
         /// <param name="rev"></param>
         /// <returns></returns>
-        Task<JsonDocumentResponse> DeleteAsync(string id, string rev);
+        Task<DocumentHeaderResponse> DeleteAsync(string id, string rev);
     }
 }

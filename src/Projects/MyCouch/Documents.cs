@@ -180,7 +180,7 @@ namespace MyCouch
             return await ProcessHttpJsonDocumentResponseAsync(res);
         }
 
-        public virtual JsonDocumentResponse Delete(string id, string rev)
+        public virtual DocumentHeaderResponse Delete(string id, string rev)
         {
             Ensure.That(id, "id").IsNotNullOrWhiteSpace();
             Ensure.That(rev, "rev").IsNotNullOrWhiteSpace();
@@ -188,7 +188,7 @@ namespace MyCouch
             return DeleteAsync(id, rev).Result;
         }
 
-        public virtual async Task<JsonDocumentResponse> DeleteAsync(string id, string rev)
+        public virtual async Task<DocumentHeaderResponse> DeleteAsync(string id, string rev)
         {
             Ensure.That(id, "id").IsNotNullOrWhiteSpace();
             Ensure.That(rev, "rev").IsNotNullOrWhiteSpace();
@@ -196,7 +196,7 @@ namespace MyCouch
             var req = CreateRequest(HttpMethod.Delete, new JsonDocumentCommand { Id = id, Rev = rev });
             var res = SendAsync(req);
 
-            return await ProcessHttpJsonDocumentResponseAsync(res);
+            return await ProcessHttpDocumentHeaderResponseAsync(res);
         }
 
         protected virtual Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
