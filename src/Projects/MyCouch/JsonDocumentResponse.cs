@@ -6,6 +6,7 @@ namespace MyCouch
     public class JsonDocumentResponse : DocumentResponse
     {
         public string Content { get; set; }
+
         public override bool IsEmpty
         {
             get { return string.IsNullOrWhiteSpace(Content); }

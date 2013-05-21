@@ -6,6 +6,7 @@ namespace MyCouch
     public class EntityResponse<T> : DocumentResponse where T : class
     {
         public T Entity { get; set; }
+
         public override bool IsEmpty
         {
             get { return Entity == null; }
