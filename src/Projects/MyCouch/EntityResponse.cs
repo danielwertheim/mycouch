@@ -12,7 +12,7 @@ namespace MyCouch
             get { return Entity == null; }
         }
 
-        protected override string GenerateToStringDebugVersion()
+        public override string GenerateToStringDebugVersion()
         {
             return string.Format("{0}{1}{0}Model: {2}", 
                 Environment.NewLine, 

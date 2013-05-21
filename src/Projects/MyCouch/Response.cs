@@ -26,7 +26,7 @@ namespace MyCouch
 #endif
         }
 
-        protected virtual string GenerateToStringDebugVersion()
+        public virtual string GenerateToStringDebugVersion()
         {
             return string.Format("RequestUri: {1}{0}RequestMethod: {2}{0}Status: {3}({4}){0}Error:{5}{0}Reason: {6}",
                 Environment.NewLine,

@@ -15,7 +15,7 @@ namespace MyCouch
         }
         public Row[] Rows { get; set; }
 
-        protected override string GenerateToStringDebugVersion()
+        public override string GenerateToStringDebugVersion()
         {
             return string.Format("{0}{1}{0}IsEmpty: {2}{0}TotalRows: {3}{0}RowCount:{4}{0}Offset: {5}",
                 Environment.NewLine, 

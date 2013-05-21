@@ -8,7 +8,7 @@ namespace MyCouch
         public string Id { get; set; }
         public string Rev { get; set; }
 
-        protected override string GenerateToStringDebugVersion()
+        public override string GenerateToStringDebugVersion()
         {
             return string.Format("{0}{1}{0}Id: {2}{0}Rev: {3}",
                 Environment.NewLine,
