@@ -2,7 +2,6 @@
 using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using EnsureThat;
 
 namespace MyCouch
@@ -20,37 +19,37 @@ namespace MyCouch
 
         public virtual DatabaseResponse CreateDatabaseResponse(HttpResponseMessage response)
         {
-            return CreateResponse<DatabaseResponse>(response, OnSuccessfulResponseContentMaterializer, OnFailedResponseContentMaterializer);
+            return CreateResponse<DatabaseResponse>(response, OnSuccessfulDatabaseResponseContentMaterializer, OnFailedResponseContentMaterializer);
         }
 
         public virtual BulkResponse CreateBulkResponse(HttpResponseMessage response)
         {
-            return CreateResponse<BulkResponse>(response, OnSuccessfulResponseContentMaterializer, OnFailedResponseContentMaterializer);
+            return CreateResponse<BulkResponse>(response, OnSuccessfulBulkResponseContentMaterializer, OnFailedResponseContentMaterializer);
         }
 
         public virtual DocumentHeaderResponse CreateDocumentHeaderResponse(HttpResponseMessage response)
         {
-            return CreateResponse<DocumentHeaderResponse>(response, OnSuccessfulResponseContentMaterializer, OnFailedResponseContentMaterializer);
+            return CreateResponse<DocumentHeaderResponse>(response, OnSuccessfulDocumentHeaderResponseContentMaterializer, OnFailedDocumentHeaderResponseContentMaterializer);
         }
 
         public virtual JsonDocumentResponse CreateJsonDocumentResponse(HttpResponseMessage response)
         {
-            return CreateResponse<JsonDocumentResponse>(response, OnSuccessfulResponseContentMaterializer, OnFailedResponseContentMaterializer);
+            return CreateResponse<JsonDocumentResponse>(response, OnSuccessfulJsonDocumentResponseContentMaterializer, OnFailedResponseContentMaterializer);
         }
 
         public virtual EntityResponse<T> CreateEntityResponse<T>(HttpResponseMessage response) where T : class
         {
-            return CreateResponse<EntityResponse<T>>(response, OnSuccessfulResponseContentMaterializer, OnFailedResponseContentMaterializer);
+            return CreateResponse<EntityResponse<T>>(response, OnSuccessfulEntityResponseContentMaterializer, OnFailedEntityResponseContentMaterializer);
         }
 
         public virtual JsonViewQueryResponse CreateJsonViewQueryResponse(HttpResponseMessage response)
         {
-            return CreateResponse<JsonViewQueryResponse>(response, OnSuccessfulResponseContentMaterializer, OnFailedResponseContentMaterializer);
+            return CreateResponse<JsonViewQueryResponse>(response, OnSuccessfulViewQueryResponseContentMaterializer, OnFailedResponseContentMaterializer);
         }
 
         public virtual ViewQueryResponse<T> CreateViewQueryResponse<T>(HttpResponseMessage response) where T : class
         {
-            return CreateResponse<ViewQueryResponse<T>>(response, OnSuccessfulResponseContentMaterializer, OnFailedResponseContentMaterializer);
+            return CreateResponse<ViewQueryResponse<T>>(response, OnSuccessfulViewQueryResponseContentMaterializer, OnFailedResponseContentMaterializer);
         }
 
         protected virtual T CreateResponse<T>(HttpResponseMessage response, Action<HttpResponseMessage, T> onSuccessfulResponseContentMaterializer, Action<HttpResponseMessage, T> onFailedResponseContentMaterializer) where T : Response, new()
@@ -70,20 +69,20 @@ namespace MyCouch
             return result;
         }
 
-        protected virtual void OnSuccessfulResponseContentMaterializer(HttpResponseMessage response, DatabaseResponse result) { }
+        protected virtual void OnSuccessfulDatabaseResponseContentMaterializer(HttpResponseMessage response, DatabaseResponse result) { }
 
-        protected virtual void OnSuccessfulResponseContentMaterializer(HttpResponseMessage response, BulkResponse result)
+        protected virtual void OnSuccessfulBulkResponseContentMaterializer(HttpResponseMessage response, BulkResponse result)
         {
             using (var content = response.Content.ReadAsStreamAsync().Result)
                 Client.Serializer.PopulateBulkResponse(result, content);
         }
 
-        protected virtual void OnSuccessfulResponseContentMaterializer(HttpResponseMessage response, DocumentHeaderResponse result)
+        protected virtual void OnSuccessfulDocumentHeaderResponseContentMaterializer(HttpResponseMessage response, DocumentHeaderResponse result)
         {
             if (response.RequestMessage.Method == HttpMethod.Head)
             {
-                result.Id = response.RequestMessage.RequestUri.Segments.LastOrDefault();
-                result.Rev = response.Headers.ETag.Tag.Replace("\"", string.Empty);
+                AssignMissingIdFromRequest(response, result);
+                AssignMissingRevFromRequest(response, result);
 
                 return;
             }
@@ -92,11 +91,11 @@ namespace MyCouch
                 Client.Serializer.PopulateDocumentHeaderResponse(result, content);
         }
 
-        protected virtual void OnSuccessfulResponseContentMaterializer(HttpResponseMessage response, JsonDocumentResponse result)
+        protected virtual void OnSuccessfulJsonDocumentResponseContentMaterializer(HttpResponseMessage response, JsonDocumentResponse result)
         {
             using (var content = response.Content.ReadAsStreamAsync().Result)
             {
-                OnSuccessfulResponseContentMaterializer(response.Headers, content, result);
+                OnSuccessfulDocumentResponseContentMaterializer(response, content, result);
 
                 if (result.RequestMethod == HttpMethod.Get)
                 {
@@ -109,11 +108,11 @@ namespace MyCouch
             }
         }
 
-        protected virtual void OnSuccessfulResponseContentMaterializer<T>(HttpResponseMessage response, EntityResponse<T> result) where T : class
+        protected virtual void OnSuccessfulEntityResponseContentMaterializer<T>(HttpResponseMessage response, EntityResponse<T> result) where T : class
         {
             using (var content = response.Content.ReadAsStreamAsync().Result)
             {
-                OnSuccessfulResponseContentMaterializer(response.Headers, content, result);
+                OnSuccessfulDocumentResponseContentMaterializer(response, content, result);
 
                 if (result.RequestMethod == HttpMethod.Get)
                 {
@@ -123,43 +122,56 @@ namespace MyCouch
             }
         }
 
-        protected virtual void OnSuccessfulResponseContentMaterializer<T>(HttpResponseHeaders headers, Stream content, T result) where T : DocumentResponse
+        protected virtual void OnSuccessfulDocumentResponseContentMaterializer<T>(HttpResponseMessage response, Stream content, T result) where T : DocumentResponse
         {
             if (result.ContentShouldHaveIdAndRev())
                 Client.Serializer.PopulateDocumentResponse(result, content);
 
             if (result.RequestMethod == HttpMethod.Get)
             {
-                if (result.RequestUri.Segments.Any())
-                    result.Id = result.RequestUri.Segments.Last();
-
-                var etag = headers.ETag;
-                if (etag != null && etag.Tag != null)
-                    result.Rev = etag.Tag.Substring(1, etag.Tag.Length - 2);
+                AssignMissingIdFromRequest(response, result);
+                AssignMissingRevFromRequest(response, result);
             }
         }
 
-        protected virtual void OnSuccessfulResponseContentMaterializer<T>(HttpResponseMessage response, ViewQueryResponse<T> result) where T : class
+        protected virtual void OnSuccessfulViewQueryResponseContentMaterializer<T>(HttpResponseMessage response, ViewQueryResponse<T> result) where T : class
         {
             using(var content = response.Content.ReadAsStreamAsync().Result)
                 Client.Serializer.PopulateViewQueryResponse(result, content);
         }
 
-        protected virtual void OnFailedResponseContentMaterializer(HttpResponseMessage response, DocumentHeaderResponse result)
-        {
-            OnFailedResponseContentMaterializer<DocumentHeaderResponse>(response, result);
-
-            if (result.RequestUri.Segments.Any())
-                result.Id = result.RequestUri.Segments.Last();
-
-            //var ifMatch = response.RequestMessage.Headers.IfMatch;
-            //result.Rev = ifMatch == null ? null : ifMatch.ToString();
-        }
-        
-        protected virtual void OnFailedResponseContentMaterializer<T>(HttpResponseMessage response, T result) where T : Response
+        protected virtual void OnFailedResponseContentMaterializer<T>(HttpResponseMessage response, T result) where T : IResponse
         {
             using (var content = response.Content.ReadAsStreamAsync().Result)
                 Client.Serializer.PopulateFailedResponse(result, content);
+        }
+
+        protected virtual void OnFailedDocumentHeaderResponseContentMaterializer(HttpResponseMessage response, IDocumentHeaderResponse result)
+        {
+            OnFailedResponseContentMaterializer(response, result);
+
+            AssignMissingIdFromRequest(response, result);
+        }
+
+        protected virtual void OnFailedEntityResponseContentMaterializer<T>(HttpResponseMessage response, EntityResponse<T> result) where T : class 
+        {
+            OnFailedDocumentHeaderResponseContentMaterializer(response, (IDocumentHeaderResponse)result);
+        }
+
+        protected virtual void AssignMissingIdFromRequest(HttpResponseMessage response, IDocumentHeaderResponse result)
+        {
+            if (string.IsNullOrWhiteSpace(result.Id))
+                result.Id = response.RequestMessage.RequestUri.Segments.LastOrDefault();
+        }
+
+        protected virtual void AssignMissingRevFromRequest(HttpResponseMessage response, IDocumentHeaderResponse result)
+        {
+            if (string.IsNullOrWhiteSpace(result.Rev))
+            {
+                var etag = response.Headers.ETag;
+                if (etag != null && etag.Tag != null)
+                    result.Rev = etag.Tag.Substring(1, etag.Tag.Length - 2);
+            }
         }
     }
 }
