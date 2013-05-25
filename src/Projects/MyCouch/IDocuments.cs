@@ -67,18 +67,18 @@ namespace MyCouch
         Task<DocumentHeaderResponse> CopyAsync(string srcId, string srcRev, string newId);
 
         /// <summary>
-        /// Copies the document having a document id matching <paramref name="cmd.SrcId"/> to a new document
-        /// with a new id being <paramref name="cmd.NewId"/>.
-        /// You can also specify a specific revision to copy via <paramref name="cmd.SrcRev"/>.
+        /// Copies the document having a document id matching <paramref name="cmd"/>.SrcId to a new document
+        /// with a new id being <paramref name="cmd"/>.NewId.
+        /// You can also specify a specific revision to copy via <paramref name="cmd"/>.SrcRev
         /// </summary>
         /// <param name="cmd"></param>
         /// <returns></returns>
         DocumentHeaderResponse Copy(CopyDocumentCommand cmd);
 
         /// <summary>
-        /// Copies the document having a document id matching <paramref name="cmd.SrcId"/> to a new document
-        /// with a new id being <paramref name="cmd.NewId"/>.
-        /// You can also specify a specific revision to copy via <paramref name="cmd.SrcRev"/>.
+        /// Copies the document having a document id matching <paramref name="cmd"/>.SrcId to a new document
+        /// with a new id being <paramref name="cmd"/>.NewId.
+        /// You can also specify a specific revision to copy via <paramref name="cmd"/>.SrcRev.
         /// </summary>
         /// <param name="cmd"></param>
         /// <returns></returns>
@@ -127,17 +127,17 @@ namespace MyCouch
         Task<DocumentHeaderResponse> ReplaceAsync(string srcId, string srcRev, string trgId, string trgRev);
 
         /// <summary>
-        /// Replaces the document having a document id matching <paramref name="cmd.TrgId"/> and rev <paramref name="cmd.TrgRev"/>
-        /// with the document having id matching <paramref name="cmd.SrcId"/> and optional rev <paramref name="cmd.SrcRev"/>.
+        /// Replaces the document having a document id matching <paramref name="cmd"/>.TrgId and rev <paramref name="cmd"/>.TrgRev
+        /// with the document having id matching <paramref name="cmd"/>.SrcId and optional rev <paramref name="cmd"/>.SrcRev.
         /// </summary>
         /// <param name="cmd"></param>
         /// <returns></returns>
         DocumentHeaderResponse Replace(ReplaceDocumentCommand cmd);
 
         /// <summary>
-        /// Copies the document having a document id matching <paramref name="cmd.SrcId"/> to a new document
-        /// with a new id being <paramref name="cmd.NewId"/>.
-        /// You can also specify a specific revision to copy via <paramref name="cmd.SrcRev"/>.
+        /// Copies the document having a document id matching <paramref name="cmd"/>.SrcId to a new document
+        /// with a new id being <paramref name="cmd"/>.NewId.
+        /// You can also specify a specific revision to copy via <paramref name="cmd"/>.SrcRev.
         /// </summary>
         /// <param name="cmd"></param>
         /// <returns></returns>
@@ -200,7 +200,7 @@ namespace MyCouch
         Task<DocumentHeaderResponse> PostAsync(string doc);
 
         /// <summary>
-        /// Updates or Inserts entity. The document <paramref name="doc"/> needs to contain the _rev field.
+        /// Inserts or Updates. The document <paramref name="doc"/> needs to contain the _id and for updates also the _rev field.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="doc"></param>
@@ -208,7 +208,7 @@ namespace MyCouch
         DocumentHeaderResponse Put(string id, string doc);
 
         /// <summary>
-        /// Updates or Inserts entity. The document <paramref name="doc"/> needs to contain the _rev field.
+        /// Inserts or Updates. The document <paramref name="doc"/> needs to contain the _id and for updates also the _rev field.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="doc"></param>
@@ -216,7 +216,7 @@ namespace MyCouch
         Task<DocumentHeaderResponse> PutAsync(string id, string doc);
 
         /// <summary>
-        /// Updates entity, without having to specify _rev field in the document <paramref name="doc"/>.
+        /// Inserts or Updates. The document <paramref name="doc"/> needs to contain the _id but not the _rev, neither for inserts nor for updates.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="rev"></param>
@@ -225,7 +225,7 @@ namespace MyCouch
         DocumentHeaderResponse Put(string id, string rev, string doc);
 
         /// <summary>
-        /// Updates entity, without having to specify _rev field in the document <paramref name="doc"/>.
+        /// Inserts or Updates. The document <paramref name="doc"/> needs to contain the _id but not the _rev, neither for inserts nor for updates.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="rev"></param>

@@ -88,7 +88,7 @@ namespace MyCouch.Serialization
             }
         }
 
-        public virtual void PopulateFailedResponse<T>(T response, Stream data) where T : Response
+        public virtual void PopulateFailedResponse<T>(T response, Stream data) where T : IResponse
         {
             var mappings = new Dictionary<string, Action<JsonTextReader>>
             {
@@ -109,7 +109,7 @@ namespace MyCouch.Serialization
             }
         }
 
-        public virtual void PopulateDocumentHeaderResponse(DocumentHeaderResponse response, Stream data)
+        public virtual void PopulateDocumentHeaderResponse(IDocumentHeaderResponse response, Stream data)
         {
             var mappings = new Dictionary<string, Action<JsonTextReader>>
             {

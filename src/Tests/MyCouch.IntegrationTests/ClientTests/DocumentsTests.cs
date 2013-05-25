@@ -27,7 +27,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         {
             var response = SUT.Exists("fooId");
 
-            response.Should().BeHead404();
+            response.Should().BeHead404("fooId");
         }
 
         [Test]
@@ -37,7 +37,7 @@ namespace MyCouch.IntegrationTests.ClientTests
 
             var response = SUT.Exists(postResponse.Id, "1-795258d03c3bdb58fffc409e153c5d45");
 
-            response.Should().BeHead404();
+            response.Should().BeHead404(postResponse.Id);
         }
 
         [Test]
@@ -61,7 +61,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         }
 
         [Test]
-        public void When_post_of_new_document_Using_json_The_document_is_persisted()
+        public void When_post_of_new_document_The_document_is_persisted()
         {
             var response = SUT.Post(TestData.Artists.Artist1Json);
 
@@ -69,7 +69,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         }
 
         [Test]
-        public void When_put_of_new_document_Using_json_The_document_is_replaced()
+        public void When_put_of_new_document_The_document_is_replaced()
         {
             var response = SUT.Put(TestData.Artists.Artist1Id, TestData.Artists.Artist1Json);
 
@@ -77,7 +77,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         }
         
         [Test]
-        public void When_put_of_existing_document_Using_json_The_document_is_replaced()
+        public void When_put_of_existing_document_The_document_is_replaced()
         {
             var postResponse = SUT.Post(TestData.Artists.Artist1Json);
             var getResponse = SUT.Get(postResponse.Id);
@@ -85,6 +85,16 @@ namespace MyCouch.IntegrationTests.ClientTests
             var response = SUT.Put(getResponse.Id, getResponse.Content);
 
             response.Should().BeSuccessfulPut(TestData.Artists.Artist1Id);
+        }
+
+        [Test]
+        public void When_put_of_existing_document_Using_wrong_rev_A_conflict_is_detected()
+        {
+            var postResponse = SUT.Post(TestData.Artists.Artist1Json);
+
+            var response = SUT.Put(postResponse.Id, "2-179d36174ee192594c63b8e8d8f09345", TestData.Artists.Artist1Json);
+
+            response.Should().Be409Put(TestData.Artists.Artist1Id);
         }
 
         [Test]

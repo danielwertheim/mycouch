@@ -7,6 +7,9 @@ The documentation is contained in the [project wiki](https://github.com/danielwe
 ## Issues, questions, etc ##
 So you have issues or questions... Great! That means someone is using it. Use the issues function here at the project page or contact me via mail: firstname@lastname.se; or Twitter: [@danielwertheim](https://twitter.com/danielwertheim)
 
+## A word about the integration tests ##
+They are written using NUnit and to get started you need to create a database `mycouchtests` and one user `mycouchtester` with password `p@ssword`. The user also must be allowed to create views in the database.
+
 ## License ##
 The MIT License (MIT)
 

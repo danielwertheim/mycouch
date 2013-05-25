@@ -33,19 +33,13 @@ namespace MyCouch.Net
             HttpClient = null;
         }
 
-        protected virtual void EnsureValidUri(Uri uri)
-        {
-            Ensure.That(uri, "uri").IsNotNull();
-            Ensure.That(uri.LocalPath, "uri.LocalPath")
-                .IsNotNullOrEmpty()
-                .WithExtraMessageOf(() => ExceptionStrings.BasicHttpClientConnection_UriIsMissingDb);
-        }
-
         protected virtual HttpClient CreateHttpClient(Uri uri)
         {
             EnsureValidUri(uri);
 
             var url = string.Format("{0}://{1}{2}", uri.Scheme, uri.Authority, uri.LocalPath);
+            if (url.EndsWith("//"))
+                url = url.Substring(0, url.Length - 1);
 
             var client = new HttpClient { BaseAddress = new Uri(url) };
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(HttpContentTypes.Json));
@@ -61,6 +55,14 @@ namespace MyCouch.Net
             }
 
             return client;
+        }
+
+        protected virtual void EnsureValidUri(Uri uri)
+        {
+            Ensure.That(uri, "uri").IsNotNull();
+            Ensure.That(uri.LocalPath, "uri.LocalPath")
+                  .IsNotNullOrEmpty()
+                  .WithExtraMessageOf(() => ExceptionStrings.BasicHttpClientConnection_UriIsMissingDb);
         }
 
         public virtual Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)

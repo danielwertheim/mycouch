@@ -57,6 +57,17 @@ namespace MyCouch.IntegrationTests.ClientTests
         }
 
         [Test]
+        public void When_put_of_existing_document_Using_wrong_rev_A_conflict_is_detected()
+        {
+            var postResponse = SUT.Post(TestData.Artists.Artist1);
+
+            postResponse.Entity.ArtistRev = "2-179d36174ee192594c63b8e8d8f09345";
+            var response = SUT.Put(TestData.Artists.Artist1);
+
+            response.Should().Be409Put(TestData.Artists.Artist1Id);
+        }
+
+        [Test]
         public void When_delete_of_existing_document_Using_an_entity_The_document_is_deleted()
         {
             var artist = TestData.Artists.CreateArtist();
