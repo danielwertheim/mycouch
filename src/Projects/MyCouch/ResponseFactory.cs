@@ -144,6 +144,17 @@ namespace MyCouch
             using(var content = response.Content.ReadAsStreamAsync().Result)
                 Client.Serializer.PopulateViewQueryResponse(result, content);
         }
+
+        protected virtual void OnFailedResponseContentMaterializer(HttpResponseMessage response, DocumentHeaderResponse result)
+        {
+            OnFailedResponseContentMaterializer<DocumentHeaderResponse>(response, result);
+
+            if (result.RequestUri.Segments.Any())
+                result.Id = result.RequestUri.Segments.Last();
+
+            //var ifMatch = response.RequestMessage.Headers.IfMatch;
+            //result.Rev = ifMatch == null ? null : ifMatch.ToString();
+        }
         
         protected virtual void OnFailedResponseContentMaterializer<T>(HttpResponseMessage response, T result) where T : Response
         {

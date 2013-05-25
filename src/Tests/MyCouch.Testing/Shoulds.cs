@@ -231,14 +231,14 @@ namespace MyCouch.Testing
             Response = response;
         }
 
-        public void BeHead404()
+        public void BeHead404(string initialId)
         {
             Response.RequestMethod.Should().Be(HttpMethod.Head);
             Response.IsSuccess.Should().BeFalse();
             Response.StatusCode.Should().Be(HttpStatusCode.NotFound);
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
-            Response.Id.Should().BeNull();
+            Response.Id.Should().Be(initialId);
             Response.Rev.Should().BeNull();
         }
 
@@ -260,7 +260,6 @@ namespace MyCouch.Testing
             Response.StatusCode.Should().Be(HttpStatusCode.Created);
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
-            Response.Id.Should().NotBeNullOrEmpty();
             Response.Id.Should().Be(initialId);
             Response.Rev.Should().NotBeNullOrEmpty();
         }
@@ -272,9 +271,19 @@ namespace MyCouch.Testing
             Response.StatusCode.Should().Be(HttpStatusCode.Created);
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
-            Response.Id.Should().NotBeNullOrEmpty();
             Response.Id.Should().Be(initialId);
             Response.Rev.Should().NotBeNullOrEmpty();
+        }
+
+        public void Be409Put(string initialId)
+        {
+            Response.RequestMethod.Should().Be(HttpMethod.Put);
+            Response.IsSuccess.Should().BeFalse();
+            Response.StatusCode.Should().Be(HttpStatusCode.Conflict);
+            Response.Error.Should().Be("conflict");
+            Response.Reason.Should().Be("Document update conflict.");
+            Response.Id.Should().Be(initialId);
+            Response.Rev.Should().BeNull();
         }
 
         public void BeSuccessfulPutOfNew(string initialId)
@@ -296,7 +305,6 @@ namespace MyCouch.Testing
             Response.StatusCode.Should().Be(HttpStatusCode.OK);
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
-            Response.Id.Should().NotBeNullOrEmpty();
             Response.Id.Should().Be(initialId);
             Response.Rev.Should().NotBeNullOrEmpty();
         }
