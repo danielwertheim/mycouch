@@ -64,7 +64,7 @@ namespace MyCouch
 
             if (result.IsSuccess)
                 onSuccessfulResponseContentMaterializer(response, result);
-            else if (!result.IsSuccess)
+            else
                 onFailedResponseContentMaterializer(response, result);
 
             return result;
