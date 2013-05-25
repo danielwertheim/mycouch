@@ -155,7 +155,7 @@ namespace MyCouch
 
         protected virtual void OnFailedEntityResponseContentMaterializer<T>(HttpResponseMessage response, EntityResponse<T> result) where T : class 
         {
-            OnFailedDocumentHeaderResponseContentMaterializer(response, (IDocumentHeaderResponse)result);
+            OnFailedDocumentHeaderResponseContentMaterializer(response, result);
         }
 
         protected virtual void AssignMissingIdFromRequest(HttpResponseMessage response, IDocumentHeaderResponse result)
