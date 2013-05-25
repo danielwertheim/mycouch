@@ -91,9 +91,8 @@ namespace MyCouch.IntegrationTests.ClientTests
         public void When_put_of_existing_document_Using_wrong_rev_A_conflict_is_detected()
         {
             var postResponse = SUT.Post(TestData.Artists.Artist1Json);
-            var getResponse = SUT.Get(postResponse.Id);
 
-            var response = SUT.Put(getResponse.Id, "2-179d36174ee192594c63b8e8d8f09345", TestData.Artists.Artist1Json);
+            var response = SUT.Put(postResponse.Id, "2-179d36174ee192594c63b8e8d8f09345", TestData.Artists.Artist1Json);
 
             response.Should().Be409Put(TestData.Artists.Artist1Id);
         }

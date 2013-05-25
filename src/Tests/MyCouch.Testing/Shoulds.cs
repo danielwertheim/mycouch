@@ -161,6 +161,17 @@ namespace MyCouch.Testing
             revAccessor(Response.Entity).Should().Be(Response.Rev);
         }
 
+        public void Be409Put(string initialId)
+        {
+            Response.RequestMethod.Should().Be(HttpMethod.Put);
+            Response.IsSuccess.Should().BeFalse();
+            Response.StatusCode.Should().Be(HttpStatusCode.Conflict);
+            Response.Error.Should().Be("conflict");
+            Response.Reason.Should().Be("Document update conflict.");
+            Response.Id.Should().Be(initialId);
+            Response.Rev.Should().BeNull();
+        }
+
         public void BeSuccessfulPutOfNew(string initialId, Func<T, string> idAccessor, Func<T, string> revAccessor)
         {
             Response.RequestMethod.Should().Be(HttpMethod.Put);
