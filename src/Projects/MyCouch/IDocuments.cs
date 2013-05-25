@@ -67,18 +67,18 @@ namespace MyCouch
         Task<DocumentHeaderResponse> CopyAsync(string srcId, string srcRev, string newId);
 
         /// <summary>
-        /// Copies the document having a document id matching <paramref name="cmd.SrcId"/> to a new document
-        /// with a new id being <paramref name="cmd.NewId"/>.
-        /// You can also specify a specific revision to copy via <paramref name="cmd.SrcRev"/>.
+        /// Copies the document having a document id matching <paramref name="cmd"/>.SrcId to a new document
+        /// with a new id being <paramref name="cmd"/>.NewId.
+        /// You can also specify a specific revision to copy via <paramref name="cmd"/>.SrcRev
         /// </summary>
         /// <param name="cmd"></param>
         /// <returns></returns>
         DocumentHeaderResponse Copy(CopyDocumentCommand cmd);
 
         /// <summary>
-        /// Copies the document having a document id matching <paramref name="cmd.SrcId"/> to a new document
-        /// with a new id being <paramref name="cmd.NewId"/>.
-        /// You can also specify a specific revision to copy via <paramref name="cmd.SrcRev"/>.
+        /// Copies the document having a document id matching <paramref name="cmd"/>.SrcId to a new document
+        /// with a new id being <paramref name="cmd"/>.NewId.
+        /// You can also specify a specific revision to copy via <paramref name="cmd"/>.SrcRev.
         /// </summary>
         /// <param name="cmd"></param>
         /// <returns></returns>
@@ -127,17 +127,17 @@ namespace MyCouch
         Task<DocumentHeaderResponse> ReplaceAsync(string srcId, string srcRev, string trgId, string trgRev);
 
         /// <summary>
-        /// Replaces the document having a document id matching <paramref name="cmd.TrgId"/> and rev <paramref name="cmd.TrgRev"/>
-        /// with the document having id matching <paramref name="cmd.SrcId"/> and optional rev <paramref name="cmd.SrcRev"/>.
+        /// Replaces the document having a document id matching <paramref name="cmd"/>.TrgId and rev <paramref name="cmd"/>.TrgRev
+        /// with the document having id matching <paramref name="cmd"/>.SrcId and optional rev <paramref name="cmd"/>.SrcRev.
         /// </summary>
         /// <param name="cmd"></param>
         /// <returns></returns>
         DocumentHeaderResponse Replace(ReplaceDocumentCommand cmd);
 
         /// <summary>
-        /// Copies the document having a document id matching <paramref name="cmd.SrcId"/> to a new document
-        /// with a new id being <paramref name="cmd.NewId"/>.
-        /// You can also specify a specific revision to copy via <paramref name="cmd.SrcRev"/>.
+        /// Copies the document having a document id matching <paramref name="cmd"/>.SrcId to a new document
+        /// with a new id being <paramref name="cmd"/>.NewId.
+        /// You can also specify a specific revision to copy via <paramref name="cmd"/>.SrcRev.
         /// </summary>
         /// <param name="cmd"></param>
         /// <returns></returns>
