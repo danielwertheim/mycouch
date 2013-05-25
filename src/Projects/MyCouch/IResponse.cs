@@ -6,11 +6,11 @@ namespace MyCouch
 {
     public interface IResponse
     {
-        HttpStatusCode StatusCode { get; }
+        HttpStatusCode StatusCode { get; set; }
         bool IsSuccess { get; }
-        Uri RequestUri { get; }
-        HttpMethod RequestMethod { get; }
-        string Error { get; }
-        string Reason { get; }
+        Uri RequestUri { get; set; }
+        HttpMethod RequestMethod { get; set; }
+        string Error { get; set; }
+        string Reason { get; set; }
     }
 }
