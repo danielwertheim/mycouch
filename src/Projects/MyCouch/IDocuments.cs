@@ -200,7 +200,7 @@ namespace MyCouch
         Task<DocumentHeaderResponse> PostAsync(string doc);
 
         /// <summary>
-        /// Updates or Inserts entity. The document <paramref name="doc"/> needs to contain the _rev field.
+        /// Inserts or Updates. The document <paramref name="doc"/> needs to contain the _id and for updates also the _rev field.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="doc"></param>
@@ -208,7 +208,7 @@ namespace MyCouch
         DocumentHeaderResponse Put(string id, string doc);
 
         /// <summary>
-        /// Updates or Inserts entity. The document <paramref name="doc"/> needs to contain the _rev field.
+        /// Inserts or Updates. The document <paramref name="doc"/> needs to contain the _id and for updates also the _rev field.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="doc"></param>
@@ -216,7 +216,7 @@ namespace MyCouch
         Task<DocumentHeaderResponse> PutAsync(string id, string doc);
 
         /// <summary>
-        /// Updates entity, without having to specify _rev field in the document <paramref name="doc"/>.
+        /// Inserts or Updates. The document <paramref name="doc"/> needs to contain the _id but not the _rev, neither for inserts nor for updates.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="rev"></param>
@@ -225,7 +225,7 @@ namespace MyCouch
         DocumentHeaderResponse Put(string id, string rev, string doc);
 
         /// <summary>
-        /// Updates entity, without having to specify _rev field in the document <paramref name="doc"/>.
+        /// Inserts or Updates. The document <paramref name="doc"/> needs to contain the _id but not the _rev, neither for inserts nor for updates.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="rev"></param>

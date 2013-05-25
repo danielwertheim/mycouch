@@ -58,7 +58,7 @@ namespace MyCouch
         Task<EntityResponse<T>> PostAsync<T>(T entity) where T : class;
 
         /// <summary>
-        /// Updates sent entity and returns it in the response, and if successful, then with and
+        /// Inserts or Updates sent entity and returns it in the response, and if successful, then with an
         /// updated _rev value.
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -67,7 +67,7 @@ namespace MyCouch
         EntityResponse<T> Put<T>(T entity) where T : class;
 
         /// <summary>
-        /// Updates sent entity and returns it in the response, and if successful, then with and
+        /// Inserts or Updates sent entity and returns it in the response, and if successful, then with an
         /// updated _rev value.
         /// </summary>
         /// <typeparam name="T"></typeparam>
