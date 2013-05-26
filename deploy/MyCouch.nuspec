@@ -8,14 +8,13 @@
         <copyright>Copyright 2013 Daniel Wertheim</copyright>
         <summary>Simple async CouchDb client.</summary>
         <description>
-            A Simple CouchDb client that uses the async HttpClient. Provides you with some model conventions like injection of $doctype etc to the document.
-            Lets you work with raw JSON or entities, POCOS without any interfaces, baseclasses etc.
+            A Simple CouchDb client that uses the asynchronous HttpClient. Lets you work with native JSON documents as well as entities. MyCouch does NOT require you to implement any specific interfaces or base-classes. MyCouch is pluggable. If you do not like something....switch it out. MyCouch comes with simple model conventions as automatically injecting $doctype.
         </description>
         <projectUrl>https://github.com/danielwertheim/MyCouch</projectUrl>
         <licenseUrl>https://github.com/danielwertheim/MyCouch#license</licenseUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <releaseNotes>Can be found on project site: https://github.com/danielwertheim/mycouch/wiki/release-notes</releaseNotes>        
-        <tags>couchdb, nosql, json, document-db, db, poco, async</tags>
+        <tags>couchdb nosql json document-db db poco async, asynchronous</tags>
         <frameworkAssemblies>
             <frameworkAssembly assemblyName="System.Net.Http" targetFramework="net40" />
         </frameworkAssemblies>
