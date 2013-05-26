@@ -107,7 +107,7 @@ namespace MyCouch.Testing
                     "\"language\": \"javascript\"," +
                     "\"views\": {" +
                         "\"albums\": {" +
-                            "\"map\": \"function(doc) {  if(!doc.$doctype === 'artist') return;  emit(doc.name, doc.albums);}\"" +
+                            "\"map\": \"function(doc) {  if(doc.$doctype !== 'artist') return;  emit(doc.name, doc.albums);}\"" +
                         "}" +
                     "}" +
                 "}";
