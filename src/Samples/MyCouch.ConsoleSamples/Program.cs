@@ -30,7 +30,7 @@ namespace MyCouch.ConsoleSamples
         private static void CreateDb(IClient client)
         {
             Console.WriteLine("***** ***** CreateDb ***** *****");
-            var r = client.Databases.Put("test");
+            var r = client.Database.Put();
             Console.WriteLine(r);
         }
 
@@ -44,7 +44,7 @@ namespace MyCouch.ConsoleSamples
         private static void DeleteDb(IClient client)
         {
             Console.WriteLine("***** ***** DeleteDb ***** *****");
-            var r = client.Databases.Delete("test");
+            var r = client.Database.Delete();
             Console.WriteLine(r);
         }
 
