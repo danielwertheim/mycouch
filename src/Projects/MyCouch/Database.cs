@@ -26,7 +26,7 @@ namespace MyCouch
             var req = CreateRequest(HttpMethod.Put);
             var res = SendAsync(req);
 
-            return await ProcessHttpResponseAsync(res);
+            return await ProcessResponseAsync(res);
         }
 
         public virtual DatabaseResponse Delete()
@@ -39,7 +39,7 @@ namespace MyCouch
             var req = CreateRequest(HttpMethod.Delete);
             var res = SendAsync(req);
 
-            return await ProcessHttpResponseAsync(res);
+            return await ProcessResponseAsync(res);
         }
 
         protected virtual HttpRequestMessage CreateRequest(HttpMethod method)
@@ -57,7 +57,7 @@ namespace MyCouch
             return Client.Connection.SendAsync(request);
         }
 
-        protected virtual async Task<DatabaseResponse> ProcessHttpResponseAsync(Task<HttpResponseMessage> responseTask)
+        protected virtual async Task<DatabaseResponse> ProcessResponseAsync(Task<HttpResponseMessage> responseTask)
         {
             return Client.ResponseFactory.CreateDatabaseResponse(await responseTask);
         }

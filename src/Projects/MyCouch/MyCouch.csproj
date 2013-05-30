@@ -77,7 +77,7 @@
     <Compile Include="Net\BasicHttpClientConnection.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="Documents.cs" />
-    <Compile Include="JsonDocumentResponse.cs" />
+    <Compile Include="DocumentResponse.cs" />
     <Compile Include="EntityResponse.cs" />
     <Compile Include="Net\IConnection.cs" />
     <Compile Include="IClient.cs" />

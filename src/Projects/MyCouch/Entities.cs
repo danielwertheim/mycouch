@@ -29,7 +29,7 @@ namespace MyCouch
             var req = CreateRequest(HttpMethod.Get, new EntityCommand { Id = id, Rev = rev });
             var res = SendAsync(req);
 
-            return await ProcessHttpEntityResponseAsync<T>(res);
+            return await ProcessEntityResponseAsync<T>(res);
         }
 
         public virtual EntityResponse<T> Post<T>(T entity) where T : class
@@ -49,7 +49,7 @@ namespace MyCouch
                 });
 
             var res = SendAsync(req);
-            var response = await ProcessHttpEntityResponseAsync<T>(res);
+            var response = await ProcessEntityResponseAsync<T>(res);
             response.Entity = entity;
 
             if (response.IsSuccess)
@@ -79,7 +79,7 @@ namespace MyCouch
                     Json = SerializeEntity(entity)
                 });
             var res = SendAsync(req);
-            var response = await ProcessHttpEntityResponseAsync<T>(res);
+            var response = await ProcessEntityResponseAsync<T>(res);
             response.Entity = entity;
 
             if (response.IsSuccess)
@@ -105,7 +105,7 @@ namespace MyCouch
                     Rev = Client.EntityReflector.RevMember.GetValueFrom(entity)
                 });
             var res = SendAsync(req);
-            var response = await ProcessHttpEntityResponseAsync<T>(res);
+            var response = await ProcessEntityResponseAsync<T>(res);
             response.Entity = entity;
 
             if (response.IsSuccess)
@@ -147,7 +147,7 @@ namespace MyCouch
                 cmd.Rev == null ? string.Empty : string.Concat("?rev=", cmd.Rev));
         }
 
-        protected virtual async Task<EntityResponse<T>> ProcessHttpEntityResponseAsync<T>(Task<HttpResponseMessage> responseTask) where T : class
+        protected virtual async Task<EntityResponse<T>> ProcessEntityResponseAsync<T>(Task<HttpResponseMessage> responseTask) where T : class
         {
             return Client.ResponseFactory.CreateEntityResponse<T>(await responseTask);
         }

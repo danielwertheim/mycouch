@@ -31,7 +31,7 @@ namespace MyCouch
             var req = CreateRequest(cmd);
             var res = SendAsync(req);
 
-            return await ProcessHttpBulkResponseAsync(res);
+            return await ProcessBulkResponseAsync(res);
         }
 
         public virtual DocumentHeaderResponse Copy(string srcId, string newId)
@@ -68,7 +68,7 @@ namespace MyCouch
             var req = CreateRequest(cmd);
             var res = SendAsync(req);
 
-            return await ProcessHttpDocumentHeaderResponseAsync(res);
+            return await ProcessDocumentHeaderResponseAsync(res);
         }
 
         public virtual DocumentHeaderResponse Replace(string srcId, string trgId, string trgRev)
@@ -105,7 +105,7 @@ namespace MyCouch
             var req = CreateRequest(cmd);
             var res = SendAsync(req);
 
-            return await ProcessHttpDocumentHeaderResponseAsync(res);
+            return await ProcessDocumentHeaderResponseAsync(res);
         }
 
         public virtual DocumentHeaderResponse Exists(string id, string rev = null)
@@ -119,27 +119,27 @@ namespace MyCouch
         {
             Ensure.That(id, "id").IsNotNullOrWhiteSpace();
 
-            var req = CreateRequest(HttpMethod.Head, new JsonDocumentCommand { Id = id, Rev = rev });
+            var req = CreateRequest(HttpMethod.Head, new DocumentCommand { Id = id, Rev = rev });
             var res = SendAsync(req);
 
-            return await ProcessHttpDocumentHeaderResponseAsync(res);
+            return await ProcessDocumentHeaderResponseAsync(res);
         }
 
-        public virtual JsonDocumentResponse Get(string id, string rev = null)
+        public virtual DocumentResponse Get(string id, string rev = null)
         {
             Ensure.That(id, "id").IsNotNullOrWhiteSpace();
 
             return GetAsync(id, rev).Result;
         }
 
-        public virtual async Task<JsonDocumentResponse> GetAsync(string id, string rev = null)
+        public virtual async Task<DocumentResponse> GetAsync(string id, string rev = null)
         {
             Ensure.That(id, "id").IsNotNullOrWhiteSpace();
 
-            var req = CreateRequest(HttpMethod.Get, new JsonDocumentCommand { Id = id, Rev = rev });
+            var req = CreateRequest(HttpMethod.Get, new DocumentCommand { Id = id, Rev = rev });
             var res = SendAsync(req);
 
-            return await ProcessHttpJsonDocumentResponseAsync(res);
+            return await ProcessDocumentResponseAsync(res);
         }
 
         public virtual DocumentHeaderResponse Post(string doc)
@@ -153,10 +153,10 @@ namespace MyCouch
         {
             Ensure.That(doc, "doc").IsNotNullOrWhiteSpace();
 
-            var req = CreateRequest(HttpMethod.Post, new JsonDocumentCommand { Content = doc });
+            var req = CreateRequest(HttpMethod.Post, new DocumentCommand { Content = doc });
             var res = SendAsync(req);
 
-            return await ProcessHttpDocumentHeaderResponseAsync(res);
+            return await ProcessDocumentHeaderResponseAsync(res);
         }
 
         public virtual DocumentHeaderResponse Put(string id, string doc)
@@ -172,10 +172,10 @@ namespace MyCouch
             Ensure.That(id, "id").IsNotNullOrWhiteSpace();
             Ensure.That(doc, "doc").IsNotNullOrWhiteSpace();
 
-            var req = CreateRequest(HttpMethod.Put, new JsonDocumentCommand { Id = id, Content = doc });
+            var req = CreateRequest(HttpMethod.Put, new DocumentCommand { Id = id, Content = doc });
             var res = SendAsync(req);
 
-            return await ProcessHttpDocumentHeaderResponseAsync(res);
+            return await ProcessDocumentHeaderResponseAsync(res);
         }
 
         public virtual DocumentHeaderResponse Put(string id, string rev, string doc)
@@ -191,10 +191,10 @@ namespace MyCouch
             Ensure.That(id, "id").IsNotNullOrWhiteSpace();
             Ensure.That(doc, "doc").IsNotNullOrWhiteSpace();
 
-            var req = CreateRequest(HttpMethod.Put, new JsonDocumentCommand { Id = id, Rev = rev, Content = doc });
+            var req = CreateRequest(HttpMethod.Put, new DocumentCommand { Id = id, Rev = rev, Content = doc });
             var res = SendAsync(req);
 
-            return await ProcessHttpDocumentHeaderResponseAsync(res);
+            return await ProcessDocumentHeaderResponseAsync(res);
         }
 
         public virtual DocumentHeaderResponse Delete(string id, string rev)
@@ -210,10 +210,10 @@ namespace MyCouch
             Ensure.That(id, "id").IsNotNullOrWhiteSpace();
             Ensure.That(rev, "rev").IsNotNullOrWhiteSpace();
 
-            var req = CreateRequest(HttpMethod.Delete, new JsonDocumentCommand { Id = id, Rev = rev });
+            var req = CreateRequest(HttpMethod.Delete, new DocumentCommand { Id = id, Rev = rev });
             var res = SendAsync(req);
 
-            return await ProcessHttpDocumentHeaderResponseAsync(res);
+            return await ProcessDocumentHeaderResponseAsync(res);
         }
 
         protected virtual Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
@@ -248,7 +248,7 @@ namespace MyCouch
             return req;
         }
 
-        protected virtual HttpRequestMessage CreateRequest(HttpMethod method, JsonDocumentCommand cmd)
+        protected virtual HttpRequestMessage CreateRequest(HttpMethod method, DocumentCommand cmd)
         {
             var req = new HttpRequest(method, GenerateRequestUrl(cmd));
 
@@ -273,7 +273,7 @@ namespace MyCouch
             return GenerateDocumentRequestUrl(cmd.SrcId, cmd.SrcRev);
         }
 
-        protected virtual string GenerateRequestUrl(JsonDocumentCommand cmd)
+        protected virtual string GenerateRequestUrl(DocumentCommand cmd)
         {
             return GenerateDocumentRequestUrl(cmd.Id, cmd.Rev);
         }
@@ -286,23 +286,23 @@ namespace MyCouch
                 rev == null ? string.Empty : string.Concat("?rev=", rev));
         }
 
-        protected virtual async Task<BulkResponse> ProcessHttpBulkResponseAsync(Task<HttpResponseMessage> responseTask)
+        protected virtual async Task<BulkResponse> ProcessBulkResponseAsync(Task<HttpResponseMessage> responseTask)
         {
             return Client.ResponseFactory.CreateBulkResponse(await responseTask);
         }
 
-        protected virtual async Task<DocumentHeaderResponse> ProcessHttpDocumentHeaderResponseAsync(Task<HttpResponseMessage> responseTask)
+        protected virtual async Task<DocumentHeaderResponse> ProcessDocumentHeaderResponseAsync(Task<HttpResponseMessage> responseTask)
         {
             return Client.ResponseFactory.CreateDocumentHeaderResponse(await responseTask);
         }
 
-        protected virtual async Task<JsonDocumentResponse> ProcessHttpJsonDocumentResponseAsync(Task<HttpResponseMessage> responseTask)
+        protected virtual async Task<DocumentResponse> ProcessDocumentResponseAsync(Task<HttpResponseMessage> responseTask)
         {
-            return Client.ResponseFactory.CreateJsonDocumentResponse(await responseTask);
+            return Client.ResponseFactory.CreateDocumentResponse(await responseTask);
         }
 
         [Serializable]
-        protected internal class JsonDocumentCommand
+        protected internal class DocumentCommand
         {
             public string Id { get; set; }
             public string Rev { get; set; }
