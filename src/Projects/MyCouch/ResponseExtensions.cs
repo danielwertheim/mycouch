@@ -4,12 +4,12 @@ namespace MyCouch
 {
     internal static class ResponseExtensions
     {
-        internal static bool ContentShouldHaveIdAndRev(this IResponse response)
+        internal static bool ContentShouldHaveIdAndRev(this HttpResponseMessage response)
         {
             return
-                response.RequestMethod == HttpMethod.Post ||
-                response.RequestMethod == HttpMethod.Put ||
-                response.RequestMethod == HttpMethod.Delete;
+                response.RequestMessage.Method == HttpMethod.Post ||
+                response.RequestMessage.Method == HttpMethod.Put ||
+                response.RequestMessage.Method == HttpMethod.Delete;
         }
     }
 }

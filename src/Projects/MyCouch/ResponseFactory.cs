@@ -95,15 +95,18 @@ namespace MyCouch
         {
             using (var content = response.Content.ReadAsStreamAsync().Result)
             {
-                OnSuccessfulDocumentResponseContentMaterializer(response, content, result);
-
-                if (result.RequestMethod == HttpMethod.Get)
+                if (response.ContentShouldHaveIdAndRev())
+                    Client.Serializer.PopulateDocumentHeaderResponse(result, content);
+                else
                 {
-                    content.Position = 0;
-                    using (var reader = new StreamReader(content, MyCouchRuntime.DefaultEncoding))
-                    {
-                        result.Content = reader.ReadToEnd();
-                    }
+                    AssignMissingIdFromRequest(response, result);
+                    AssignMissingRevFromRequest(response, result);
+                }
+
+                content.Position = 0;
+                using (var reader = new StreamReader(content, MyCouchRuntime.DefaultEncoding))
+                {
+                    result.Content = reader.ReadToEnd();
                 }
             }
         }
@@ -112,25 +115,19 @@ namespace MyCouch
         {
             using (var content = response.Content.ReadAsStreamAsync().Result)
             {
-                OnSuccessfulDocumentResponseContentMaterializer(response, content, result);
+                if (response.ContentShouldHaveIdAndRev())
+                    Client.Serializer.PopulateDocumentHeaderResponse(result, content);
+                else
+                {
+                    AssignMissingIdFromRequest(response, result);
+                    AssignMissingRevFromRequest(response, result);
+                }
 
                 if (result.RequestMethod == HttpMethod.Get)
                 {
                     content.Position = 0;
                     result.Entity = Client.Serializer.Deserialize<T>(content);
                 }
-            }
-        }
-
-        protected virtual void OnSuccessfulDocumentResponseContentMaterializer<T>(HttpResponseMessage response, Stream content, T result) where T : DocumentResponse
-        {
-            if (result.ContentShouldHaveIdAndRev())
-                Client.Serializer.PopulateDocumentResponse(result, content);
-
-            if (result.RequestMethod == HttpMethod.Get)
-            {
-                AssignMissingIdFromRequest(response, result);
-                AssignMissingRevFromRequest(response, result);
             }
         }
 
@@ -146,7 +143,7 @@ namespace MyCouch
                 Client.Serializer.PopulateFailedResponse(result, content);
         }
 
-        protected virtual void OnFailedDocumentHeaderResponseContentMaterializer(HttpResponseMessage response, IDocumentHeaderResponse result)
+        protected virtual void OnFailedDocumentHeaderResponseContentMaterializer(HttpResponseMessage response, DocumentHeaderResponse result)
         {
             OnFailedResponseContentMaterializer(response, result);
 
@@ -158,13 +155,13 @@ namespace MyCouch
             OnFailedDocumentHeaderResponseContentMaterializer(response, result);
         }
 
-        protected virtual void AssignMissingIdFromRequest(HttpResponseMessage response, IDocumentHeaderResponse result)
+        protected virtual void AssignMissingIdFromRequest(HttpResponseMessage response, DocumentHeaderResponse result)
         {
             if (string.IsNullOrWhiteSpace(result.Id))
                 result.Id = response.RequestMessage.RequestUri.Segments.LastOrDefault();
         }
 
-        protected virtual void AssignMissingRevFromRequest(HttpResponseMessage response, IDocumentHeaderResponse result)
+        protected virtual void AssignMissingRevFromRequest(HttpResponseMessage response, DocumentHeaderResponse result)
         {
             if (string.IsNullOrWhiteSpace(result.Rev))
             {

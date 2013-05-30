@@ -3,22 +3,22 @@
 namespace MyCouch
 {
     [Serializable]
-    public class JsonDocumentResponse : DocumentResponse
+    public class JsonDocumentResponse : DocumentHeaderResponse
     {
         public string Content { get; set; }
 
-        public override bool IsEmpty
+        public bool IsEmpty
         {
             get { return string.IsNullOrWhiteSpace(Content); }
         }
 
         public override string GenerateToStringDebugVersion()
         {
-            return string.Format("{0}{1}{0}Content: {2}",
+            return string.Format("{0}{1}{0}IsEmpty: {2}{0}Content: {3}",
                 Environment.NewLine, 
-                base.GenerateToStringDebugVersion(), 
-                Content ?? 
-                "<NULL>");
+                base.GenerateToStringDebugVersion(),
+                IsEmpty, 
+                Content ?? "<NULL>");
         }
     }
 }
