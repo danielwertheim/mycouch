@@ -48,17 +48,22 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Attachments.cs" />
     <Compile Include="BulkCommand.cs" />
     <Compile Include="BulkResponse.cs" />
     <Compile Include="CopyDocumentCommand.cs" />
     <Compile Include="DatabaseResponse.cs" />
     <Compile Include="Database.cs" />
     <Compile Include="Core\TypeExtensions.cs" />
+    <Compile Include="DeleteAttachmentCommand.cs" />
     <Compile Include="DocumentHeaderResponse.cs" />
     <Compile Include="Entities.cs" />
+    <Compile Include="IAttachments.cs" />
     <Compile Include="IDatabase.cs" />
     <Compile Include="IEntities.cs" />
     <Compile Include="MyCouchRuntime.cs" />
+    <Compile Include="Net\AttachmentContent.cs" />
+    <Compile Include="PutAttachmentCommand.cs" />
     <Compile Include="ReplaceDocumentCommand.cs" />
     <Compile Include="Resources\ExceptionStrings.Designer.cs">
       <AutoGen>True</AutoGen>

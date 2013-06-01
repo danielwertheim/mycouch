@@ -15,6 +15,7 @@ namespace MyCouch
         public IDatabase Database { get; protected set; }
         public IDocuments Documents { get; protected set; }
         public IEntities Entities { get; protected set; }
+        public IAttachments Attachments { get; protected set; }
         public IViews Views { get; protected set; }
 
         public Client(string url) : this(new Uri(url)) { }
@@ -32,6 +33,7 @@ namespace MyCouch
             Database = new Database(this);
             Documents = new Documents(this);
             Entities = new Entities(this);
+            Attachments = new Attachments(this);
             Views = new Views(this);
         }
 
