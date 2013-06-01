@@ -172,7 +172,7 @@ namespace MyCouch
         /// If not specified, you will get the latest document.
         /// </param>
         /// <returns>Untyped response with JSON.</returns>
-        JsonDocumentResponse Get(string id, string rev = null);
+        DocumentResponse Get(string id, string rev = null);
 
         /// <summary>
         /// Gets untyped response with the JSON representation of the document.
@@ -183,7 +183,7 @@ namespace MyCouch
         /// If not specified, you will get the latest document.
         /// </param>
         /// <returns>Untyped response with JSON.</returns>
-        Task<JsonDocumentResponse> GetAsync(string id, string rev = null);
+        Task<DocumentResponse> GetAsync(string id, string rev = null);
 
         /// <summary>
         /// Inserts sent JSON document as it is. No additional metadata like doctype will be added.

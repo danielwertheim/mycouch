@@ -109,17 +109,7 @@ namespace MyCouch.Serialization
             }
         }
 
-        public virtual void PopulateDocumentHeaderResponse(IDocumentHeaderResponse response, Stream data)
-        {
-            var mappings = new Dictionary<string, Action<JsonTextReader>>
-            {
-                {"id", jr => response.Id = jr.Value.ToString()},
-                {"rev", jr => response.Rev = jr.Value.ToString()}
-            };
-            Map(data, mappings);
-        }
-
-        public virtual void PopulateDocumentResponse<T>(T response, Stream data) where T : DocumentResponse
+        public virtual void PopulateDocumentHeaderResponse(DocumentHeaderResponse response, Stream data)
         {
             var mappings = new Dictionary<string, Action<JsonTextReader>>
             {

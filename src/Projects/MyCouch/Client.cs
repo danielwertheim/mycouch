@@ -12,9 +12,10 @@ namespace MyCouch
         public ISerializer Serializer { get; set; }
         public IResponseFactory ResponseFactory { get; set; }
         public IEntityReflector EntityReflector { get; set; }
-        public IDatabases Databases { get; protected set; }
+        public IDatabase Database { get; protected set; }
         public IDocuments Documents { get; protected set; }
         public IEntities Entities { get; protected set; }
+        public IAttachments Attachments { get; protected set; }
         public IViews Views { get; protected set; }
 
         public Client(string url) : this(new Uri(url)) { }
@@ -29,9 +30,10 @@ namespace MyCouch
             EntityReflector = new EntityReflector();
             Serializer = new MyCouchSerializer(EntityReflector); //TODO: Either replace with Func<IEntityReflector> or pass IClient Latter is ugly...ugliest...
             ResponseFactory = new ResponseFactory(this);
-            Databases = new Databases(this);
+            Database = new Database(this);
             Documents = new Documents(this);
             Entities = new Entities(this);
+            Attachments = new Attachments(this);
             Views = new Views(this);
         }
 

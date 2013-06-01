@@ -23,5 +23,11 @@ namespace MyCouch.Net
             if(!string.IsNullOrWhiteSpace(content))
                 Content = new JsonContent(content);
         }
+
+        public virtual void SetContent(string contentType, byte[] content)
+        {
+            if (content != null && content.Length > 0)
+                Content = new AttachmentContent(contentType, content);
+        }
     }
 }

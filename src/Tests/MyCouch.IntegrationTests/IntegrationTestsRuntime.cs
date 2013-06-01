@@ -9,7 +9,7 @@ namespace MyCouch.IntegrationTests
         internal static void Init()
         {
             Client = TestClientFactory.CreateDefault();
-            //Client.Databases.Put(TestConstants.TestDbName);
+            //Client.Database.Put();
             ClearAllDocuments();
         }
 

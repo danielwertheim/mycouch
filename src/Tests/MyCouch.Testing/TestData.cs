@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using MyCouch.Net;
 using MyCouch.Testing.Model;
 
 namespace MyCouch.Testing
@@ -107,15 +109,36 @@ namespace MyCouch.Testing
                     "\"language\": \"javascript\"," +
                     "\"views\": {" +
                         "\"albums\": {" +
-                            "\"map\": \"function(doc) {  if(!doc.$doctype === 'artist') return;  emit(doc.name, doc.albums);}\"" +
+                            "\"map\": \"function(doc) {  if(doc.$doctype !== 'artist') return;  emit(doc.name, doc.albums);}\"" +
                         "}" +
                     "}" +
                 "}";
         }
 
-        public static Stream AsStream(this string json)
+        public static class Attachments
         {
-            return new MemoryStream(MyCouchRuntime.DefaultEncoding.GetBytes(json));
+            public static class One
+            {
+                public const string Name = "att:1";
+                public const string ContentEncoded = "TXlDb3VjaCwgdGhlIHNpbXBsZSBhc3luY2hyb25vdXMgY2xpZW50IGZvciAuTmV0";
+                public const string ContentDecoded = "MyCouch, the simple asynchronous client for .Net";
+                public static readonly string ContentType = HttpContentTypes.Text;
+            }
+        }
+
+        public static string AsBase64EncodedString(this byte[] bytes)
+        {
+            return Convert.ToBase64String(bytes);
+        }
+
+        public static byte[] AsBytes(this string content)
+        {
+            return MyCouchRuntime.DefaultEncoding.GetBytes(content);
+        }
+
+        public static Stream AsStream(this string content)
+        {
+            return new MemoryStream(MyCouchRuntime.DefaultEncoding.GetBytes(content));
         }
     }
 }

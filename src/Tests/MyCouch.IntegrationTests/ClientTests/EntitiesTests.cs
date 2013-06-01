@@ -80,7 +80,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         }
 
         [Test]
-        public void Flow_tests_of_CRUD()
+        public void Flow_tests()
         {
             var artists = TestData.Artists.CreateArtists(2);
             var artist1 = artists[0];

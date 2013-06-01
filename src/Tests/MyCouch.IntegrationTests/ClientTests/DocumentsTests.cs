@@ -177,7 +177,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         }
 
         [Test]
-        public void Flow_tests_of_CRUD()
+        public void Flow_tests()
         {
             var post1 = SUT.PostAsync(TestData.Artists.Artist1Json);
             var post2 = SUT.Post(TestData.Artists.Artist2Json);

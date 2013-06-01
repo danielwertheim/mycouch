@@ -3,13 +3,14 @@
 namespace MyCouch
 {
     [Serializable]
-    public class DocumentResponse : DocumentHeaderResponse
+    public class AttachmentResponse : DocumentHeaderResponse
     {
-        public string Content { get; set; }
+        public string Name { get; set; }
+        public byte[] Content { get; set; }
 
         public bool IsEmpty
         {
-            get { return string.IsNullOrWhiteSpace(Content); }
+            get { return Content == null || Content.Length < 1; }
         }
 
         public override string GenerateToStringDebugVersion()
@@ -17,8 +18,8 @@ namespace MyCouch
             return string.Format("{0}{1}{0}IsEmpty: {2}{0}Content: {3}",
                 Environment.NewLine, 
                 base.GenerateToStringDebugVersion(),
-                IsEmpty, 
-                Content ?? "<NULL>");
+                IsEmpty,
+                IsEmpty ? "<NULL>" : Convert.ToBase64String(Content));
         }
     }
 }

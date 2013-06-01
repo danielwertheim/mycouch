@@ -31,9 +31,9 @@ namespace MyCouch
         IEntityReflector EntityReflector { get; set; }
 
         /// <summary>
-        /// Database oriented APU operations, for managing databases.
+        /// Database oriented API operations.
         /// </summary>
-        IDatabases Databases { get; }
+        IDatabase Database { get; }
 
         /// <summary>
         /// Document oriented API operations, for accessing and managing RAW documents.
@@ -41,9 +41,14 @@ namespace MyCouch
         IDocuments Documents { get; }
 
         /// <summary>
-        /// Entity oriented API operations, for accessing and managing documents as Entities.
+        /// Entity oriented API operations, for accessing and managing documents as entities.
         /// </summary>
         IEntities Entities { get; }
+
+        /// <summary>
+        /// Attachment oriented API operations, for accessing and managing attachments to documents.
+        /// </summary>
+        IAttachments Attachments { get; }
         
         /// <summary>
         /// View oriented API operations, for accessing and managing views.

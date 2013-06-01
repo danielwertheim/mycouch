@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using EnsureThat;
+using MyCouch.Net;
 
 namespace MyCouch
 {
@@ -32,14 +33,19 @@ namespace MyCouch
             return CreateResponse<DocumentHeaderResponse>(response, OnSuccessfulDocumentHeaderResponseContentMaterializer, OnFailedDocumentHeaderResponseContentMaterializer);
         }
 
-        public virtual JsonDocumentResponse CreateJsonDocumentResponse(HttpResponseMessage response)
+        public virtual DocumentResponse CreateDocumentResponse(HttpResponseMessage response)
         {
-            return CreateResponse<JsonDocumentResponse>(response, OnSuccessfulJsonDocumentResponseContentMaterializer, OnFailedResponseContentMaterializer);
+            return CreateResponse<DocumentResponse>(response, OnSuccessfulDocumentResponseContentMaterializer, OnFailedResponseContentMaterializer);
         }
 
         public virtual EntityResponse<T> CreateEntityResponse<T>(HttpResponseMessage response) where T : class
         {
             return CreateResponse<EntityResponse<T>>(response, OnSuccessfulEntityResponseContentMaterializer, OnFailedEntityResponseContentMaterializer);
+        }
+
+        public virtual AttachmentResponse CreateAttachmentResponse(HttpResponseMessage response)
+        {
+            return CreateResponse<AttachmentResponse>(response, OnSuccessfulAttachmentResponseContentMaterializer, OnFailedResponseContentMaterializer);
         }
 
         public virtual JsonViewQueryResponse CreateJsonViewQueryResponse(HttpResponseMessage response)
@@ -81,8 +87,8 @@ namespace MyCouch
         {
             if (response.RequestMessage.Method == HttpMethod.Head)
             {
-                AssignMissingIdFromRequest(response, result);
-                AssignMissingRevFromRequest(response, result);
+                AssignMissingIdFromRequestUri(response, result);
+                AssignMissingRevFromRequestHeaders(response, result);
 
                 return;
             }
@@ -91,19 +97,22 @@ namespace MyCouch
                 Client.Serializer.PopulateDocumentHeaderResponse(result, content);
         }
 
-        protected virtual void OnSuccessfulJsonDocumentResponseContentMaterializer(HttpResponseMessage response, JsonDocumentResponse result)
+        protected virtual void OnSuccessfulDocumentResponseContentMaterializer(HttpResponseMessage response, DocumentResponse result)
         {
             using (var content = response.Content.ReadAsStreamAsync().Result)
             {
-                OnSuccessfulDocumentResponseContentMaterializer(response, content, result);
-
-                if (result.RequestMethod == HttpMethod.Get)
+                if (ContentShouldHaveIdAndRev(response.RequestMessage))
+                    Client.Serializer.PopulateDocumentHeaderResponse(result, content);
+                else
                 {
-                    content.Position = 0;
-                    using (var reader = new StreamReader(content, MyCouchRuntime.DefaultEncoding))
-                    {
-                        result.Content = reader.ReadToEnd();
-                    }
+                    AssignMissingIdFromRequestUri(response, result);
+                    AssignMissingRevFromRequestHeaders(response, result);
+                }
+
+                content.Position = 0;
+                using (var reader = new StreamReader(content, MyCouchRuntime.DefaultEncoding))
+                {
+                    result.Content = reader.ReadToEnd();
                 }
             }
         }
@@ -112,7 +121,13 @@ namespace MyCouch
         {
             using (var content = response.Content.ReadAsStreamAsync().Result)
             {
-                OnSuccessfulDocumentResponseContentMaterializer(response, content, result);
+                if (ContentShouldHaveIdAndRev(response.RequestMessage))
+                    Client.Serializer.PopulateDocumentHeaderResponse(result, content);
+                else
+                {
+                    AssignMissingIdFromRequestUri(response, result);
+                    AssignMissingRevFromRequestHeaders(response, result);
+                }
 
                 if (result.RequestMethod == HttpMethod.Get)
                 {
@@ -122,15 +137,19 @@ namespace MyCouch
             }
         }
 
-        protected virtual void OnSuccessfulDocumentResponseContentMaterializer<T>(HttpResponseMessage response, Stream content, T result) where T : DocumentResponse
+        protected virtual void OnSuccessfulAttachmentResponseContentMaterializer(HttpResponseMessage response, AttachmentResponse result)
         {
-            if (result.ContentShouldHaveIdAndRev())
-                Client.Serializer.PopulateDocumentResponse(result, content);
-
-            if (result.RequestMethod == HttpMethod.Get)
+            using (var content = response.Content.ReadAsStreamAsync().Result)
             {
-                AssignMissingIdFromRequest(response, result);
-                AssignMissingRevFromRequest(response, result);
+                AssignMissingIdFromRequestUri(response, result);
+                AssignMissingNameFromRequestUri(response, result);
+                AssignMissingRevFromRequestHeaders(response, result);
+
+                content.Position = 0;
+                using (var reader = new StreamReader(content, MyCouchRuntime.DefaultEncoding))
+                {
+                    result.Content = Convert.FromBase64String(reader.ReadToEnd());
+                }
             }
         }
 
@@ -146,32 +165,48 @@ namespace MyCouch
                 Client.Serializer.PopulateFailedResponse(result, content);
         }
 
-        protected virtual void OnFailedDocumentHeaderResponseContentMaterializer(HttpResponseMessage response, IDocumentHeaderResponse result)
+        protected virtual void OnFailedDocumentHeaderResponseContentMaterializer(HttpResponseMessage response, DocumentHeaderResponse result)
         {
             OnFailedResponseContentMaterializer(response, result);
 
-            AssignMissingIdFromRequest(response, result);
+            AssignMissingIdFromRequestUri(response, result);
         }
 
         protected virtual void OnFailedEntityResponseContentMaterializer<T>(HttpResponseMessage response, EntityResponse<T> result) where T : class 
         {
-            OnFailedDocumentHeaderResponseContentMaterializer(response, (IDocumentHeaderResponse)result);
+            OnFailedDocumentHeaderResponseContentMaterializer(response, result);
         }
 
-        protected virtual void AssignMissingIdFromRequest(HttpResponseMessage response, IDocumentHeaderResponse result)
+        protected virtual bool ContentShouldHaveIdAndRev(HttpRequestMessage request)
+        {
+            return
+                request.Method == HttpMethod.Post ||
+                request.Method == HttpMethod.Put ||
+                request.Method == HttpMethod.Delete;
+        }
+
+        protected virtual void AssignMissingIdFromRequestUri(HttpResponseMessage response, DocumentHeaderResponse result)
         {
             if (string.IsNullOrWhiteSpace(result.Id))
-                result.Id = response.RequestMessage.RequestUri.Segments.LastOrDefault();
+                result.Id = response.RequestMessage.GetUriSegmentByRightOffset();
         }
 
-        protected virtual void AssignMissingRevFromRequest(HttpResponseMessage response, IDocumentHeaderResponse result)
+        protected virtual void AssignMissingIdFromRequestUri(HttpResponseMessage response, AttachmentResponse result)
+        {
+            if (string.IsNullOrWhiteSpace(result.Id))
+                result.Id = response.RequestMessage.GetUriSegmentByRightOffset(1);
+        }
+
+        protected virtual void AssignMissingNameFromRequestUri(HttpResponseMessage response, AttachmentResponse result)
+        {
+            if (string.IsNullOrWhiteSpace(result.Name))
+                result.Name = response.RequestMessage.GetUriSegmentByRightOffset();
+        }
+
+        protected virtual void AssignMissingRevFromRequestHeaders(HttpResponseMessage response, DocumentHeaderResponse result)
         {
             if (string.IsNullOrWhiteSpace(result.Rev))
-            {
-                var etag = response.Headers.ETag;
-                if (etag != null && etag.Tag != null)
-                    result.Rev = etag.Tag.Substring(1, etag.Tag.Length - 2);
-            }
+                result.Rev = response.Headers.GetETag();
         }
     }
 }
