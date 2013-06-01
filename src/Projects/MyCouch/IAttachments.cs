@@ -72,6 +72,24 @@ namespace MyCouch
         /// <summary>
         /// Used to delete an existing attachment.
         /// </summary>
+        /// <param name="docId"></param>
+        /// <param name="docRev"></param>
+        /// <param name="attachmentName"></param>
+        /// <returns></returns>
+        DocumentHeaderResponse Delete(string docId, string docRev, string attachmentName);
+
+        /// <summary>
+        /// Used to delete an existing attachment.
+        /// </summary>
+        /// <param name="docId"></param>
+        /// <param name="docRev"></param>
+        /// <param name="attachmentName"></param>
+        /// <returns></returns>
+        Task<DocumentHeaderResponse> DeleteAsync(string docId, string docRev, string attachmentName);
+
+        /// <summary>
+        /// Used to delete an existing attachment.
+        /// </summary>
         /// <param name="cmd"></param>
         /// <returns></returns>
         DocumentHeaderResponse Delete(DeleteAttachmentCommand cmd);

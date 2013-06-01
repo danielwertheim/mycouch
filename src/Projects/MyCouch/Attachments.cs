@@ -70,6 +70,16 @@ namespace MyCouch
             return await ProcessDocumentHeaderResponseAsync(res);
         }
 
+        public virtual DocumentHeaderResponse Delete(string docId, string docRev, string attachmentName)
+        {
+            return Delete(new DeleteAttachmentCommand(docId, docRev, attachmentName));
+        }
+
+        public virtual Task<DocumentHeaderResponse> DeleteAsync(string docId, string docRev, string attachmentName)
+        {
+            return DeleteAsync(new DeleteAttachmentCommand(docId, docRev, attachmentName));
+        }
+
         public virtual DocumentHeaderResponse Delete(DeleteAttachmentCommand cmd)
         {
             Ensure.That(cmd, "cmd").IsNotNull();
