@@ -8,6 +8,54 @@ namespace MyCouch
     public interface IAttachments
     {
         /// <summary>
+        /// Returns only the requested attachment and not the complete document.
+        /// </summary>
+        /// <param name="docId"></param>
+        /// <param name="attachmentName"></param>
+        /// <returns></returns>
+        AttachmentResponse Get(string docId, string attachmentName);
+
+        /// <summary>
+        /// Returns only the requested attachment and not the complete document.
+        /// </summary>
+        /// <param name="docId"></param>
+        /// <param name="docRev"></param>
+        /// <param name="attachmentName"></param>
+        /// <returns></returns>
+        AttachmentResponse Get(string docId, string docRev, string attachmentName);
+
+        /// <summary>
+        /// Returns only the requested attachment and not the complete document.
+        /// </summary>
+        /// <param name="docId"></param>
+        /// <param name="attachmentName"></param>
+        /// <returns></returns>
+        Task<AttachmentResponse> GetAsync(string docId, string attachmentName);
+
+        /// <summary>
+        /// Returns only the requested attachment and not the complete document.
+        /// </summary>
+        /// <param name="docId"></param>
+        /// <param name="docRev"></param>
+        /// <param name="attachmentName"></param>
+        /// <returns></returns>
+        Task<AttachmentResponse> GetAsync(string docId, string docRev, string attachmentName);
+
+        /// <summary>
+        /// Returns only the requested attachment and not the complete document.
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
+        AttachmentResponse Get(GetAttachmentCommand cmd);
+
+        /// <summary>
+        /// Returns only the requested attachment and not the complete document.
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
+        Task<AttachmentResponse> GetAsync(GetAttachmentCommand cmd);
+
+        /// <summary>
         /// Used to add an attachment to an existing document.
         /// </summary>
         /// <param name="cmd"></param>

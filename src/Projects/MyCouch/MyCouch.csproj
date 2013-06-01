@@ -48,6 +48,7 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="AttachmentResponse.cs" />
     <Compile Include="Attachments.cs" />
     <Compile Include="BulkCommand.cs" />
     <Compile Include="BulkResponse.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="DeleteAttachmentCommand.cs" />
     <Compile Include="DocumentHeaderResponse.cs" />
     <Compile Include="Entities.cs" />
+    <Compile Include="GetAttachmentCommand.cs" />
     <Compile Include="IAttachments.cs" />
     <Compile Include="IDatabase.cs" />
     <Compile Include="IEntities.cs" />
@@ -73,7 +75,7 @@
     <Compile Include="ISystemViewQuery.cs" />
     <Compile Include="Querying\SystemViewQuery.cs" />
     <Compile Include="Response.cs" />
-    <Compile Include="ResponseExtensions.cs" />
+    <Compile Include="Net\HttpExtensions.cs" />
     <Compile Include="ResponseFactory.cs" />
     <Compile Include="IResponseFactory.cs" />
     <Compile Include="Net\HttpRequest.cs" />

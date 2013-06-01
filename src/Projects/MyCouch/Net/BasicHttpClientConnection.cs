@@ -35,13 +35,7 @@ namespace MyCouch.Net
 
         protected virtual HttpClient CreateHttpClient(Uri uri)
         {
-            EnsureValidUri(uri);
-
-            var url = string.Format("{0}://{1}{2}", uri.Scheme, uri.Authority, uri.LocalPath);
-            if (url.EndsWith("//"))
-                url = url.Substring(0, url.Length - 1);
-
-            var client = new HttpClient { BaseAddress = new Uri(url) };
+            var client = new HttpClient { BaseAddress = new Uri(BuildCleanUrl(uri)) };
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(HttpContentTypes.Json));
 
             if (!string.IsNullOrWhiteSpace(uri.UserInfo))
@@ -55,6 +49,17 @@ namespace MyCouch.Net
             }
 
             return client;
+        }
+
+        protected virtual string BuildCleanUrl(Uri uri)
+        {
+            EnsureValidUri(uri);
+
+            var url = string.Format("{0}://{1}{2}", uri.Scheme, uri.Authority, uri.LocalPath);
+            while (url.EndsWith("/"))
+                url = url.Substring(0, url.Length - 1);
+
+            return url;
         }
 
         protected virtual void EnsureValidUri(Uri uri)

@@ -19,14 +19,19 @@ namespace MyCouch.Testing
             return new ViewQueryResponseAssertions<T>(response);
         }
 
+        public static DocumentResponseAssertions Should(this DocumentResponse response)
+        {
+            return new DocumentResponseAssertions(response);
+        }
+
         public static EntityResponseAssertions<T> Should<T>(this EntityResponse<T> response) where T : class
         {
             return new EntityResponseAssertions<T>(response);
         }
 
-        public static DocumentResponseAssertions Should(this DocumentResponse response)
+        public static AttachmentResponseAssertions Should(this AttachmentResponse response)
         {
-            return new DocumentResponseAssertions(response);
+            return new AttachmentResponseAssertions(response);
         }
 
         public static DocumentHeaderResponseAssertions Should(this DocumentHeaderResponse response)
@@ -226,9 +231,33 @@ namespace MyCouch.Testing
             Response.Reason.Should().BeNull();
             Response.IsEmpty.Should().BeFalse();
             Response.Content.Should().NotBeNullOrEmpty();
-            Response.Id.Should().NotBeNullOrEmpty();
-            Response.Id.Should().Be(id);
+            Response.Id.Should().NotBeNullOrEmpty().And.Be(id);
             Response.Rev.Should().NotBeNullOrEmpty();
+        }
+    }
+
+    public class AttachmentResponseAssertions
+    {
+        protected readonly AttachmentResponse Response;
+
+        [DebuggerStepThrough]
+        public AttachmentResponseAssertions(AttachmentResponse response)
+        {
+            Response = response;
+        }
+
+        public void BeSuccessfulGet(string docId, string attachmentName)
+        {
+            Response.RequestMethod.Should().Be(HttpMethod.Get);
+            Response.IsSuccess.Should().BeTrue();
+            Response.StatusCode.Should().Be(HttpStatusCode.OK);
+            Response.Error.Should().BeNull();
+            Response.Reason.Should().BeNull();
+            Response.IsEmpty.Should().BeFalse();
+            Response.Content.Should().NotBeNull().And.NotBeEmpty();
+            Response.Id.Should().NotBeNullOrEmpty().And.Be(docId);
+            Response.Rev.Should().NotBeNullOrEmpty();
+            Response.Name.Should().NotBeNullOrEmpty().And.Be(attachmentName);
         }
     }
 
