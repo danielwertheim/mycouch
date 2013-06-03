@@ -50,6 +50,7 @@
     </Compile>
     <Compile Include="AttachmentResponse.cs" />
     <Compile Include="Attachments.cs" />
+    <Compile Include="ClientExecuteExtensions.cs" />
     <Compile Include="Commands\BulkCommand.cs" />
     <Compile Include="BulkResponse.cs" />
     <Compile Include="Commands\CopyDocumentCommand.cs" />
