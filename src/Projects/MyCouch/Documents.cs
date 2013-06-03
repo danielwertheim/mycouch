@@ -138,16 +138,26 @@ namespace MyCouch
 
         public virtual DocumentResponse Get(string id, string rev = null)
         {
-            Ensure.That(id, "id").IsNotNullOrWhiteSpace();
-
-            return GetAsync(id, rev).Result;
+            return Get(new GetDocumentCommand(id, rev));
         }
 
-        public virtual async Task<DocumentResponse> GetAsync(string id, string rev = null)
+        public virtual Task<DocumentResponse> GetAsync(string id, string rev = null)
         {
-            Ensure.That(id, "id").IsNotNullOrWhiteSpace();
+            return GetAsync(new GetDocumentCommand(id, rev));
+        }
 
-            var req = CreateRequest(HttpMethod.Get, new DocumentCommand { Id = id, Rev = rev });
+        public virtual DocumentResponse Get(GetDocumentCommand cmd)
+        {
+            Ensure.That(cmd, "cmd").IsNotNull();
+
+            return GetAsync(cmd).Result;
+        }
+
+        public virtual async Task<DocumentResponse> GetAsync(GetDocumentCommand cmd)
+        {
+            Ensure.That(cmd, "cmd").IsNotNull();
+
+            var req = CreateRequest(cmd);
             var res = SendAsync(req);
 
             return await ProcessDocumentResponseAsync(res);
@@ -270,6 +280,15 @@ namespace MyCouch
         protected virtual HttpRequestMessage CreateRequest(DocumentExistsCommand cmd)
         {
             var req = new HttpRequest(HttpMethod.Head, GenerateRequestUrl(cmd.Id, cmd.Rev));
+
+            req.SetIfMatch(cmd.Rev);
+
+            return req;
+        }
+
+        protected virtual HttpRequestMessage CreateRequest(GetDocumentCommand cmd)
+        {
+            var req = new HttpRequest(HttpMethod.Get, GenerateRequestUrl(cmd.Id, cmd.Rev));
 
             req.SetIfMatch(cmd.Rev);
 

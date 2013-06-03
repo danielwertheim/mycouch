@@ -203,6 +203,20 @@ namespace MyCouch
         Task<DocumentResponse> GetAsync(string id, string rev = null);
 
         /// <summary>
+        /// Gets untyped response with the JSON representation of the document.
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
+        DocumentResponse Get(GetDocumentCommand cmd);
+
+        /// <summary>
+        /// Gets untyped response with the JSON representation of the document.
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
+        Task<DocumentResponse> GetAsync(GetDocumentCommand cmd);
+
+        /// <summary>
         /// Inserts sent JSON document as it is. No additional metadata like doctype will be added.
         /// </summary>
         /// <param name="doc"></param>

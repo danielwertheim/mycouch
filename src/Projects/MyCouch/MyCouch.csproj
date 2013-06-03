@@ -55,6 +55,7 @@
     <Compile Include="Commands\CopyDocumentCommand.cs" />
     <Compile Include="Commands\DeleteDocumentCommand.cs" />
     <Compile Include="Commands\DocumentExistsCommand.cs" />
+    <Compile Include="Commands\GetDocumentCommand.cs" />
     <Compile Include="Commands\GetEntityCommand.cs" />
     <Compile Include="DatabaseResponse.cs" />
     <Compile Include="Database.cs" />
