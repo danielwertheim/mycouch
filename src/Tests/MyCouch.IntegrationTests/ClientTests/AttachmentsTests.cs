@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using MyCouch.Commands;
 using MyCouch.Testing;
 using NUnit.Framework;
 

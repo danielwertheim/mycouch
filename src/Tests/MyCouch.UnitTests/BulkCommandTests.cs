@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using MyCouch.Commands;
 using NUnit.Framework;
 
 namespace MyCouch.UnitTests

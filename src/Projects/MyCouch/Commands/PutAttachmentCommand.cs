@@ -1,7 +1,7 @@
 ﻿using System;
 using EnsureThat;
 
-namespace MyCouch
+namespace MyCouch.Commands
 {
     [Serializable]
     public class PutAttachmentCommand
