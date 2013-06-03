@@ -200,18 +200,26 @@ namespace MyCouch
 
         public virtual DocumentHeaderResponse Delete(string id, string rev)
         {
-            Ensure.That(id, "id").IsNotNullOrWhiteSpace();
-            Ensure.That(rev, "rev").IsNotNullOrWhiteSpace();
-
-            return DeleteAsync(id, rev).Result;
+            return DeleteAsync(new DeleteDocumentCommand(id, rev)).Result;
         }
 
-        public virtual async Task<DocumentHeaderResponse> DeleteAsync(string id, string rev)
+        public virtual Task<DocumentHeaderResponse> DeleteAsync(string id, string rev)
         {
-            Ensure.That(id, "id").IsNotNullOrWhiteSpace();
-            Ensure.That(rev, "rev").IsNotNullOrWhiteSpace();
+            return DeleteAsync(new DeleteDocumentCommand(id, rev));
+        }
 
-            var req = CreateRequest(HttpMethod.Delete, new DocumentCommand { Id = id, Rev = rev });
+        public virtual DocumentHeaderResponse Delete(DeleteDocumentCommand cmd)
+        {
+            Ensure.That(cmd, "cmd").IsNotNull();
+
+            return DeleteAsync(cmd).Result;
+        }
+
+        public virtual async Task<DocumentHeaderResponse> DeleteAsync(DeleteDocumentCommand cmd)
+        {
+            Ensure.That(cmd, "cmd").IsNotNull();
+
+            var req = CreateRequest(cmd);
             var res = SendAsync(req);
 
             return await ProcessDocumentHeaderResponseAsync(res);
@@ -249,6 +257,15 @@ namespace MyCouch
             return req;
         }
 
+        protected virtual HttpRequestMessage CreateRequest(DeleteDocumentCommand cmd)
+        {
+            var req = new HttpRequest(HttpMethod.Delete, GenerateRequestUrl(cmd));
+
+            req.SetIfMatch(cmd.Rev);
+
+            return req;
+        }
+
         protected virtual HttpRequestMessage CreateRequest(HttpMethod method, DocumentCommand cmd)
         {
             var req = new HttpRequest(method, GenerateRequestUrl(cmd));
@@ -272,6 +289,11 @@ namespace MyCouch
         protected virtual string GenerateRequestUrl(ReplaceDocumentCommand cmd)
         {
             return GenerateDocumentRequestUrl(cmd.SrcId, cmd.SrcRev);
+        }
+
+        protected virtual string GenerateRequestUrl(DeleteDocumentCommand cmd)
+        {
+            return GenerateDocumentRequestUrl(cmd.Id, cmd.Rev);
         }
 
         protected virtual string GenerateRequestUrl(DocumentCommand cmd)

@@ -249,5 +249,19 @@ namespace MyCouch
         /// <param name="rev"></param>
         /// <returns></returns>
         Task<DocumentHeaderResponse> DeleteAsync(string id, string rev);
+
+        /// <summary>
+        /// Deletes the document that matches sent <paramref name="cmd"/>.
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
+        DocumentHeaderResponse Delete(DeleteDocumentCommand cmd);
+
+        /// <summary>
+        /// Deletes the document that matches sent <paramref name="cmd"/>.
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
+        Task<DocumentHeaderResponse> DeleteAsync(DeleteDocumentCommand cmd);
     }
 }
