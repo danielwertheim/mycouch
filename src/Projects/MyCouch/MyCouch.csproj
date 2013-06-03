@@ -53,6 +53,7 @@
     <Compile Include="Commands\BulkCommand.cs" />
     <Compile Include="BulkResponse.cs" />
     <Compile Include="Commands\CopyDocumentCommand.cs" />
+    <Compile Include="Commands\GetEntityCommand.cs" />
     <Compile Include="DatabaseResponse.cs" />
     <Compile Include="Database.cs" />
     <Compile Include="Core\TypeExtensions.cs" />
