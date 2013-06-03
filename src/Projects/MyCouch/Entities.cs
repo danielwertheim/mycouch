@@ -20,7 +20,7 @@ namespace MyCouch
 
         public virtual EntityResponse<T> Get<T>(string id, string rev = null) where T : class
         {
-            return GetAsync<T>(new GetEntityCommand(id, rev)).Result;
+            return Get<T>(new GetEntityCommand(id, rev));
         }
 
         public virtual Task<EntityResponse<T>> GetAsync<T>(string id, string rev = null) where T : class
