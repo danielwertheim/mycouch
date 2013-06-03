@@ -6,7 +6,7 @@ using System.Text;
 namespace MyCouch.Commands
 {
     [Serializable]
-    public class BulkCommand
+    public class BulkCommand : IMyCouchCommand
     {
         protected readonly List<string> Docs;
 

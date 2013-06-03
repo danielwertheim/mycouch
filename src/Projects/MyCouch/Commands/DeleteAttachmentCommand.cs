@@ -4,7 +4,7 @@ using EnsureThat;
 namespace MyCouch.Commands
 {
     [Serializable]
-    public class DeleteAttachmentCommand
+    public class DeleteAttachmentCommand : IMyCouchCommand
     {
         public string DocId { get; private set; }
         public string DocRev { get; private set; }

@@ -4,7 +4,7 @@ using EnsureThat;
 namespace MyCouch.Commands
 {
     [Serializable]
-    public class PutDocumentCommand
+    public class PutDocumentCommand : IMyCouchCommand
     {
         public string Id { get; private set; }
         public string Rev { get; private set; }
