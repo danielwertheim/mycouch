@@ -57,6 +57,7 @@
     <Compile Include="Commands\DocumentExistsCommand.cs" />
     <Compile Include="Commands\GetDocumentCommand.cs" />
     <Compile Include="Commands\GetEntityCommand.cs" />
+    <Compile Include="Commands\PutDocumentCommand.cs" />
     <Compile Include="DatabaseResponse.cs" />
     <Compile Include="Database.cs" />
     <Compile Include="Core\TypeExtensions.cs" />

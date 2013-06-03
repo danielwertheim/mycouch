@@ -265,6 +265,22 @@ namespace MyCouch
         Task<DocumentHeaderResponse> PutAsync(string id, string rev, string doc);
 
         /// <summary>
+        /// Inserts or Updates. The document in passed <paramref name="cmd"/>.
+        /// The document needs to contain the _id but not the _rev, neither for inserts nor for updates.
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
+        DocumentHeaderResponse Put(PutDocumentCommand cmd);
+
+        /// <summary>
+        /// Inserts or Updates. The document in passed <paramref name="cmd"/>.
+        /// The document needs to contain the _id but not the _rev, neither for inserts nor for updates.
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
+        Task<DocumentHeaderResponse> PutAsync(PutDocumentCommand cmd);
+
+        /// <summary>
         /// Deletes the document that matches sent <paramref name="id"/> and <paramref name="rev"/>.
         /// </summary>
         /// <param name="id"></param>

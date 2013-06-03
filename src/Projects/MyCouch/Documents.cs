@@ -182,37 +182,36 @@ namespace MyCouch
 
         public virtual DocumentHeaderResponse Put(string id, string doc)
         {
-            Ensure.That(id, "id").IsNotNullOrWhiteSpace();
-            Ensure.That(doc, "doc").IsNotNullOrWhiteSpace();
-
-            return PutAsync(id, doc).Result;
+            return Put(new PutDocumentCommand(id, doc));
         }
 
-        public virtual async Task<DocumentHeaderResponse> PutAsync(string id, string doc)
+        public virtual Task<DocumentHeaderResponse> PutAsync(string id, string doc)
         {
-            Ensure.That(id, "id").IsNotNullOrWhiteSpace();
-            Ensure.That(doc, "doc").IsNotNullOrWhiteSpace();
-
-            var req = CreateRequest(HttpMethod.Put, new DocumentCommand { Id = id, Content = doc });
-            var res = SendAsync(req);
-
-            return await ProcessDocumentHeaderResponseAsync(res);
+            return PutAsync(new PutDocumentCommand(id, doc));
         }
 
         public virtual DocumentHeaderResponse Put(string id, string rev, string doc)
         {
-            Ensure.That(id, "id").IsNotNullOrWhiteSpace();
-            Ensure.That(doc, "doc").IsNotNullOrWhiteSpace();
-
-            return PutAsync(id, rev, doc).Result;
+            return Put(new PutDocumentCommand(id, rev, doc));
         }
 
-        public virtual async Task<DocumentHeaderResponse> PutAsync(string id, string rev, string doc)
+        public virtual Task<DocumentHeaderResponse> PutAsync(string id, string rev, string doc)
         {
-            Ensure.That(id, "id").IsNotNullOrWhiteSpace();
-            Ensure.That(doc, "doc").IsNotNullOrWhiteSpace();
+            return PutAsync(new PutDocumentCommand(id, rev, doc));
+        }
 
-            var req = CreateRequest(HttpMethod.Put, new DocumentCommand { Id = id, Rev = rev, Content = doc });
+        public virtual DocumentHeaderResponse Put(PutDocumentCommand cmd)
+        {
+            Ensure.That(cmd, "cmd").IsNotNull();
+
+            return PutAsync(cmd).Result;
+        }
+
+        public virtual async Task<DocumentHeaderResponse> PutAsync(PutDocumentCommand cmd)
+        {
+            Ensure.That(cmd, "cmd").IsNotNull();
+
+            var req = CreateRequest(cmd);
             var res = SendAsync(req);
 
             return await ProcessDocumentHeaderResponseAsync(res);
@@ -300,6 +299,16 @@ namespace MyCouch
             var req = new HttpRequest(HttpMethod.Delete, GenerateRequestUrl(cmd));
 
             req.SetIfMatch(cmd.Rev);
+
+            return req;
+        }
+
+        protected virtual HttpRequestMessage CreateRequest(PutDocumentCommand cmd)
+        {
+            var req = new HttpRequest(HttpMethod.Put, GenerateRequestUrl(cmd.Id, cmd.Rev));
+
+            req.SetIfMatch(cmd.Rev);
+            req.SetContent(cmd.Content);
 
             return req;
         }
