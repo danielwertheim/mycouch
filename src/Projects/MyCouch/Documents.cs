@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Commands;
@@ -270,7 +269,7 @@ namespace MyCouch
 
         protected virtual HttpRequestMessage CreateRequest(CopyDocumentCommand cmd)
         {
-            var req = new HttpRequest(new HttpMethod("COPY"), GenerateRequestUrl(cmd));
+            var req = new HttpRequest(new HttpMethod("COPY"), GenerateRequestUrl(cmd.SrcId, cmd.SrcRev));
 
             req.Headers.Add("Destination", cmd.NewId);
 
@@ -279,7 +278,7 @@ namespace MyCouch
 
         protected virtual HttpRequestMessage CreateRequest(ReplaceDocumentCommand cmd)
         {
-            var req = new HttpRequest(new HttpMethod("COPY"), GenerateRequestUrl(cmd));
+            var req = new HttpRequest(new HttpMethod("COPY"), GenerateRequestUrl(cmd.SrcId, cmd.SrcRev));
 
             req.Headers.Add("Destination", string.Concat(cmd.TrgId, "?rev=", cmd.TrgRev));
 
@@ -306,7 +305,7 @@ namespace MyCouch
 
         protected virtual HttpRequestMessage CreateRequest(DeleteDocumentCommand cmd)
         {
-            var req = new HttpRequest(HttpMethod.Delete, GenerateRequestUrl(cmd));
+            var req = new HttpRequest(HttpMethod.Delete, GenerateRequestUrl(cmd.Id, cmd.Rev));
 
             req.SetIfMatch(cmd.Rev);
 
@@ -335,21 +334,6 @@ namespace MyCouch
         protected virtual string GenerateRequestUrl(BulkCommand cmd)
         {
             return string.Format("{0}/_bulk_docs", Client.Connection.Address);
-        }
-
-        protected virtual string GenerateRequestUrl(CopyDocumentCommand cmd)
-        {
-            return GenerateRequestUrl(cmd.SrcId, cmd.SrcRev);
-        }
-
-        protected virtual string GenerateRequestUrl(ReplaceDocumentCommand cmd)
-        {
-            return GenerateRequestUrl(cmd.SrcId, cmd.SrcRev);
-        }
-
-        protected virtual string GenerateRequestUrl(DeleteDocumentCommand cmd)
-        {
-            return GenerateRequestUrl(cmd.Id, cmd.Rev);
         }
 
         protected virtual string GenerateRequestUrl(string id = null, string rev = null)
