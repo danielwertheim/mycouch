@@ -22,6 +22,20 @@ namespace MyCouch.IntegrationTests.ClientTests
         }
 
         [Test]
+        public void When_PUT_of_a_new_attachment_and_new_document_The_response_is_ok()
+        {
+            var putCmd = new PutAttachmentCommand(
+                TestData.Artists.Artist1Id,
+                TestData.Attachments.One.Name,
+                TestData.Attachments.One.ContentType,
+                TestData.Attachments.One.ContentDecoded.AsBytes());
+
+            var putAttachmentAndDocResponse = SUT.Put(putCmd);
+
+            putAttachmentAndDocResponse.Should().BeSuccessfulPut(TestData.Artists.Artist1Id);
+        }
+
+        [Test]
         public void When_PUT_of_a_new_attachment_The_response_is_ok()
         {
             var putDocResponse = Client.Documents.Post(TestData.Artists.Artist1Json);
