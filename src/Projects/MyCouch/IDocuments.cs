@@ -231,6 +231,20 @@ namespace MyCouch
         Task<DocumentHeaderResponse> PostAsync(string doc);
 
         /// <summary>
+        /// Inserts sent JSON document as it is. No additional metadata like doctype will be added.
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
+        DocumentHeaderResponse Post(PostDocumentCommand cmd);
+
+        /// <summary>
+        /// Inserts sent JSON document as it is. No additional metadata like doctype will be added.
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
+        Task<DocumentHeaderResponse> PostAsync(PostDocumentCommand cmd);
+
+        /// <summary>
         /// Inserts or Updates. The document <paramref name="doc"/> needs to contain the _id and for updates also the _rev field.
         /// </summary>
         /// <param name="id"></param>

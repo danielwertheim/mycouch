@@ -165,16 +165,26 @@ namespace MyCouch
 
         public virtual DocumentHeaderResponse Post(string doc)
         {
-            Ensure.That(doc, "doc").IsNotNullOrWhiteSpace();
-
-            return PostAsync(doc).Result;
+            return Post(new PostDocumentCommand(doc));
         }
 
-        public virtual async Task<DocumentHeaderResponse> PostAsync(string doc)
+        public virtual Task<DocumentHeaderResponse> PostAsync(string doc)
         {
-            Ensure.That(doc, "doc").IsNotNullOrWhiteSpace();
+            return PostAsync(new PostDocumentCommand(doc));
+        }
 
-            var req = CreateRequest(HttpMethod.Post, new DocumentCommand { Content = doc });
+        public virtual DocumentHeaderResponse Post(PostDocumentCommand cmd)
+        {
+            Ensure.That(cmd, "cmd").IsNotNull();
+
+            return PostAsync(cmd).Result;
+        }
+
+        public virtual async Task<DocumentHeaderResponse> PostAsync(PostDocumentCommand cmd)
+        {
+            Ensure.That(cmd, "cmd").IsNotNull();
+
+            var req = CreateRequest(cmd);
             var res = SendAsync(req);
 
             return await ProcessDocumentHeaderResponseAsync(res);
@@ -313,11 +323,10 @@ namespace MyCouch
             return req;
         }
 
-        protected virtual HttpRequestMessage CreateRequest(HttpMethod method, DocumentCommand cmd)
+        protected virtual HttpRequestMessage CreateRequest(PostDocumentCommand cmd)
         {
-            var req = new HttpRequest(method, GenerateRequestUrl(cmd));
+            var req = new HttpRequest(HttpMethod.Post, GenerateRequestUrl());
 
-            req.SetIfMatch(cmd.Rev);
             req.SetContent(cmd.Content);
 
             return req;
@@ -343,11 +352,6 @@ namespace MyCouch
             return GenerateRequestUrl(cmd.Id, cmd.Rev);
         }
 
-        protected virtual string GenerateRequestUrl(DocumentCommand cmd)
-        {
-            return GenerateRequestUrl(cmd.Id, cmd.Rev);
-        }
-
         protected virtual string GenerateRequestUrl(string id = null, string rev = null)
         {
             return string.Format("{0}/{1}{2}",
@@ -369,14 +373,6 @@ namespace MyCouch
         protected virtual async Task<DocumentResponse> ProcessDocumentResponseAsync(Task<HttpResponseMessage> responseTask)
         {
             return Client.ResponseFactory.CreateDocumentResponse(await responseTask);
-        }
-
-        [Serializable]
-        protected internal class DocumentCommand
-        {
-            public string Id { get; set; }
-            public string Rev { get; set; }
-            public string Content { get; set; }
         }
     }
 }
