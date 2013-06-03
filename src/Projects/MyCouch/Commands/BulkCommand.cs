@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace MyCouch
+namespace MyCouch.Commands
 {
     [Serializable]
-    public class BulkCommand
+    public class BulkCommand : IMyCouchCommand
     {
         protected readonly List<string> Docs;
 

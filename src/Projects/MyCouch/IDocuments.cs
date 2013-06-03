@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using MyCouch.Commands;
 
 namespace MyCouch
 {
@@ -27,7 +28,7 @@ namespace MyCouch
         /// <summary>
         /// Copies the document having a document id matching <paramref name="srcId"/> to a new document
         /// with a new id being <paramref name="newId"/>.
-        /// For more options use <see cref="Copy(MyCouch.CopyDocumentCommand)"/> instead.
+        /// For more options use <see cref="Copy(CopyDocumentCommand)"/> instead.
         /// </summary>
         /// <param name="srcId"></param>
         /// <param name="newId"></param>
@@ -37,7 +38,7 @@ namespace MyCouch
         /// <summary>
         /// Copies the document having a document id matching <paramref name="srcId"/> to a new document
         /// with a new id being <paramref name="newId"/>.
-        /// For more options use <see cref="CopyAsync(MyCouch.CopyDocumentCommand)"/> instead.
+        /// For more options use <see cref="CopyAsync(CopyDocumentCommand)"/> instead.
         /// </summary>
         /// <param name="srcId"></param>
         /// <param name="newId"></param>
@@ -47,7 +48,7 @@ namespace MyCouch
         /// <summary>
         /// Copies the document having a document id matching <paramref name="srcId"/> and rev matching <paramref name="srcRev"/>
         /// to a new document with a new id being <paramref name="newId"/>.
-        /// For more options use <see cref="Copy(MyCouch.CopyDocumentCommand)"/> instead.
+        /// For more options use <see cref="Copy(CopyDocumentCommand)"/> instead.
         /// </summary>
         /// <param name="srcId"></param>
         /// <param name="srcRev"></param>
@@ -58,7 +59,7 @@ namespace MyCouch
         /// <summary>
         /// Copies the document having a document id matching <paramref name="srcId"/> and rev matching <paramref name="srcRev"/>
         /// to a new document with a new id being <paramref name="newId"/>.
-        /// For more options use <see cref="CopyAsync(MyCouch.CopyDocumentCommand)"/> instead.
+        /// For more options use <see cref="CopyAsync(CopyDocumentCommand)"/> instead.
         /// </summary>
         /// <param name="srcId"></param>
         /// <param name="srcRev"></param>
@@ -164,6 +165,22 @@ namespace MyCouch
         Task<DocumentHeaderResponse> ExistsAsync(string id, string rev = null);
 
         /// <summary>
+        /// Makes a simple HEAD request which doesn not include the actual JSON document,
+        /// and returns any matched info for the <paramref name="cmd"/>.
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
+        DocumentHeaderResponse Exists(DocumentExistsCommand cmd);
+
+        /// <summary>
+        /// Makes a simple HEAD request which doesn not include the actual JSON document,
+        /// and returns any matched info for the <paramref name="cmd"/>.
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
+        Task<DocumentHeaderResponse> ExistsAsync(DocumentExistsCommand cmd);
+
+        /// <summary>
         /// Gets untyped response with the JSON representation of the document.
         /// </summary>
         /// <param name="id">The Id of the document.</param>
@@ -186,6 +203,20 @@ namespace MyCouch
         Task<DocumentResponse> GetAsync(string id, string rev = null);
 
         /// <summary>
+        /// Gets untyped response with the JSON representation of the document.
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
+        DocumentResponse Get(GetDocumentCommand cmd);
+
+        /// <summary>
+        /// Gets untyped response with the JSON representation of the document.
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
+        Task<DocumentResponse> GetAsync(GetDocumentCommand cmd);
+
+        /// <summary>
         /// Inserts sent JSON document as it is. No additional metadata like doctype will be added.
         /// </summary>
         /// <param name="doc"></param>
@@ -198,6 +229,20 @@ namespace MyCouch
         /// <param name="doc"></param>
         /// <returns></returns>
         Task<DocumentHeaderResponse> PostAsync(string doc);
+
+        /// <summary>
+        /// Inserts sent JSON document as it is. No additional metadata like doctype will be added.
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
+        DocumentHeaderResponse Post(PostDocumentCommand cmd);
+
+        /// <summary>
+        /// Inserts sent JSON document as it is. No additional metadata like doctype will be added.
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
+        Task<DocumentHeaderResponse> PostAsync(PostDocumentCommand cmd);
 
         /// <summary>
         /// Inserts or Updates. The document <paramref name="doc"/> needs to contain the _id and for updates also the _rev field.
@@ -234,6 +279,22 @@ namespace MyCouch
         Task<DocumentHeaderResponse> PutAsync(string id, string rev, string doc);
 
         /// <summary>
+        /// Inserts or Updates. The document in passed <paramref name="cmd"/>.
+        /// The document needs to contain the _id but not the _rev, neither for inserts nor for updates.
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
+        DocumentHeaderResponse Put(PutDocumentCommand cmd);
+
+        /// <summary>
+        /// Inserts or Updates. The document in passed <paramref name="cmd"/>.
+        /// The document needs to contain the _id but not the _rev, neither for inserts nor for updates.
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
+        Task<DocumentHeaderResponse> PutAsync(PutDocumentCommand cmd);
+
+        /// <summary>
         /// Deletes the document that matches sent <paramref name="id"/> and <paramref name="rev"/>.
         /// </summary>
         /// <param name="id"></param>
@@ -248,5 +309,19 @@ namespace MyCouch
         /// <param name="rev"></param>
         /// <returns></returns>
         Task<DocumentHeaderResponse> DeleteAsync(string id, string rev);
+
+        /// <summary>
+        /// Deletes the document that matches sent <paramref name="cmd"/>.
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
+        DocumentHeaderResponse Delete(DeleteDocumentCommand cmd);
+
+        /// <summary>
+        /// Deletes the document that matches sent <paramref name="cmd"/>.
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
+        Task<DocumentHeaderResponse> DeleteAsync(DeleteDocumentCommand cmd);
     }
 }

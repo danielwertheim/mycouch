@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using MyCouch.Commands;
 using MyCouch.Testing;
 using NUnit.Framework;
 
@@ -19,6 +20,20 @@ namespace MyCouch.IntegrationTests.ClientTests
             base.OnTestFinalize();
 
             IntegrationTestsRuntime.ClearAllDocuments();
+        }
+
+        [Test]
+        public void When_PUT_of_a_new_attachment_and_new_document_The_response_is_ok()
+        {
+            var putCmd = new PutAttachmentCommand(
+                TestData.Artists.Artist1Id,
+                TestData.Attachments.One.Name,
+                TestData.Attachments.One.ContentType,
+                TestData.Attachments.One.ContentDecoded.AsBytes());
+
+            var putAttachmentAndDocResponse = SUT.Put(putCmd);
+
+            putAttachmentAndDocResponse.Should().BeSuccessfulPut(TestData.Artists.Artist1Id);
         }
 
         [Test]

@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using EnsureThat;
+using MyCouch.Commands;
 using MyCouch.Net;
 
 namespace MyCouch
@@ -19,14 +20,26 @@ namespace MyCouch
 
         public virtual EntityResponse<T> Get<T>(string id, string rev = null) where T : class
         {
-            return GetAsync<T>(id, rev).Result;
+            return Get<T>(new GetEntityCommand(id, rev));
         }
 
-        public virtual async Task<EntityResponse<T>> GetAsync<T>(string id, string rev = null) where T : class
+        public virtual Task<EntityResponse<T>> GetAsync<T>(string id, string rev = null) where T : class
         {
-            Ensure.That(id, "id").IsNotNullOrWhiteSpace();
+            return GetAsync<T>(new GetEntityCommand(id, rev));
+        }
 
-            var req = CreateRequest(HttpMethod.Get, new EntityCommand { Id = id, Rev = rev });
+        public virtual EntityResponse<T> Get<T>(GetEntityCommand cmd) where T : class
+        {
+            Ensure.That(cmd, "cmd").IsNotNull();
+
+            return GetAsync<T>(cmd).Result;
+        }
+
+        public virtual async Task<EntityResponse<T>> GetAsync<T>(GetEntityCommand cmd) where T : class
+        {
+            Ensure.That(cmd, "cmd").IsNotNull();
+
+            var req = CreateRequest(cmd);
             var res = SendAsync(req);
 
             return await ProcessEntityResponseAsync<T>(res);
@@ -129,9 +142,18 @@ namespace MyCouch
             return Client.Serializer.Deserialize<T>(data);
         }
 
+        protected virtual HttpRequestMessage CreateRequest(GetEntityCommand cmd)
+        {
+            var req = new HttpRequest(HttpMethod.Get, GenerateRequestUrl(cmd.Id, cmd.Rev));
+
+            req.SetIfMatch(cmd.Rev);
+
+            return req;
+        }
+
         protected virtual HttpRequestMessage CreateRequest(HttpMethod method, EntityCommand cmd)
         {
-            var req = new HttpRequest(method, GenerateRequestUrl(cmd));
+            var req = new HttpRequest(method, GenerateRequestUrl(cmd.Id, cmd.Rev));
 
             req.SetIfMatch(cmd.Rev);
             req.SetContent(cmd.Json);
@@ -139,12 +161,12 @@ namespace MyCouch
             return req;
         }
 
-        protected virtual string GenerateRequestUrl(EntityCommand cmd)
+        protected virtual string GenerateRequestUrl(string id, string rev)
         {
             return string.Format("{0}/{1}{2}",
                 Client.Connection.Address,
-                cmd.Id ?? string.Empty,
-                cmd.Rev == null ? string.Empty : string.Concat("?rev=", cmd.Rev));
+                id ?? string.Empty,
+                rev == null ? string.Empty : string.Concat("?rev=", rev));
         }
 
         protected virtual async Task<EntityResponse<T>> ProcessEntityResponseAsync<T>(Task<HttpResponseMessage> responseTask) where T : class

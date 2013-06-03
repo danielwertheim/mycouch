@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using MyCouch.Commands;
 
 namespace MyCouch
 {
@@ -38,6 +39,24 @@ namespace MyCouch
         /// representation of the document
         /// </returns>
         Task<EntityResponse<T>> GetAsync<T>(string id, string rev = null) where T : class;
+
+        /// <summary>
+        /// Gets typed entity-response (<see cref="EntityResponse{T}"/> of <typeparamref name="T"/>)
+        /// representation of the document.
+        /// </summary>
+        /// <typeparam name="T">The type you want the document deserialized as.</typeparam>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
+        EntityResponse<T> Get<T>(GetEntityCommand cmd) where T : class;
+
+        /// <summary>
+        /// Gets typed entity-response (<see cref="EntityResponse{T}"/> of <typeparamref name="T"/>)
+        /// representation of the document.
+        /// </summary>
+        /// <typeparam name="T">The type you want the document deserialized as.</typeparam>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
+        Task<EntityResponse<T>> GetAsync<T>(GetEntityCommand cmd) where T : class;
 
         /// <summary>
         /// Inserts sent entity. The resulting JSON that is inserted will have some additional

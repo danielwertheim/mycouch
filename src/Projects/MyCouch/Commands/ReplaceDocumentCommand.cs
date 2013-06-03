@@ -1,10 +1,10 @@
 ﻿using System;
 using EnsureThat;
 
-namespace MyCouch
+namespace MyCouch.Commands
 {
     [Serializable]
-    public class ReplaceDocumentCommand
+    public class ReplaceDocumentCommand : IMyCouchCommand
     {
         /// <summary>
         /// The Id of the document to copy.
