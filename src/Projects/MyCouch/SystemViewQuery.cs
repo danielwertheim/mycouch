@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MyCouch.Querying
+namespace MyCouch
 {
     [Serializable]
     public class SystemViewQuery : ViewQuery, ISystemViewQuery

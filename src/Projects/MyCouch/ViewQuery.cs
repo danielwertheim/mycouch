@@ -1,7 +1,8 @@
 ﻿using System;
 using EnsureThat;
+using MyCouch.Querying;
 
-namespace MyCouch.Querying
+namespace MyCouch
 {
     [Serializable]
     public class ViewQuery : IViewQuery
