@@ -70,6 +70,11 @@ namespace MyCouch.Net
                   .WithExtraMessageOf(() => ExceptionStrings.BasicHttpClientConnection_UriIsMissingDb);
         }
 
+        public virtual HttpResponseMessage Send(HttpRequestMessage request)
+        {
+            return SendAsync(request).Result;
+        }
+
         public virtual Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
         {
             return HttpClient.SendAsync(request);

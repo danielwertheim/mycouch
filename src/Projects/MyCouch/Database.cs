@@ -18,7 +18,10 @@ namespace MyCouch
 
         public virtual DatabaseResponse Put()
         {
-            return PutAsync().Result;
+            var req = CreateRequest(HttpMethod.Put);
+            var res = Send(req);
+
+            return ProcessResponse(res);
         }
 
         public virtual async Task<DatabaseResponse> PutAsync()
@@ -26,12 +29,15 @@ namespace MyCouch
             var req = CreateRequest(HttpMethod.Put);
             var res = SendAsync(req);
 
-            return await ProcessResponseAsync(res);
+            return ProcessResponse(await res);
         }
 
         public virtual DatabaseResponse Delete()
         {
-            return DeleteAsync().Result;
+            var req = CreateRequest(HttpMethod.Delete);
+            var res = Send(req);
+
+            return ProcessResponse(res);
         }
 
         public virtual async Task<DatabaseResponse> DeleteAsync()
@@ -39,7 +45,7 @@ namespace MyCouch
             var req = CreateRequest(HttpMethod.Delete);
             var res = SendAsync(req);
 
-            return await ProcessResponseAsync(res);
+            return ProcessResponse(await res);
         }
 
         protected virtual HttpRequestMessage CreateRequest(HttpMethod method)
@@ -52,14 +58,19 @@ namespace MyCouch
             return Client.Connection.Address.ToString();
         }
 
+        protected virtual HttpResponseMessage Send(HttpRequestMessage request)
+        {
+            return Client.Connection.Send(request);
+        }
+
         protected virtual Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
         {
             return Client.Connection.SendAsync(request);
         }
 
-        protected virtual async Task<DatabaseResponse> ProcessResponseAsync(Task<HttpResponseMessage> responseTask)
+        protected virtual DatabaseResponse ProcessResponse(HttpResponseMessage response)
         {
-            return Client.ResponseFactory.CreateDatabaseResponse(await responseTask);
+            return Client.ResponseFactory.CreateDatabaseResponse(response);
         }
     }
 }

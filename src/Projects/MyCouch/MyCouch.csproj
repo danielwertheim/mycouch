@@ -55,12 +55,15 @@
     <Compile Include="BulkResponse.cs" />
     <Compile Include="Commands\CopyDocumentCommand.cs" />
     <Compile Include="Commands\DeleteDocumentCommand.cs" />
+    <Compile Include="Commands\DeleteEntityCommand.cs" />
     <Compile Include="Commands\DocumentExistsCommand.cs" />
     <Compile Include="Commands\GetDocumentCommand.cs" />
     <Compile Include="Commands\GetEntityCommand.cs" />
     <Compile Include="Commands\IMyCouchCommand.cs" />
     <Compile Include="Commands\PostDocumentCommand.cs" />
+    <Compile Include="Commands\PostEntityCommand.cs" />
     <Compile Include="Commands\PutDocumentCommand.cs" />
+    <Compile Include="Commands\PutEntityCommand.cs" />
     <Compile Include="DatabaseResponse.cs" />
     <Compile Include="Database.cs" />
     <Compile Include="Core\TypeExtensions.cs" />

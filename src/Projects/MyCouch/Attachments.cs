@@ -41,7 +41,10 @@ namespace MyCouch
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
-            return GetAsync(cmd).Result;
+            var req = CreateRequest(cmd);
+            var res = Send(req);
+
+            return ProcessAttachmentResponse(res);
         }
 
         public virtual async Task<AttachmentResponse> GetAsync(GetAttachmentCommand cmd)
@@ -51,14 +54,17 @@ namespace MyCouch
             var req = CreateRequest(cmd);
             var res = SendAsync(req);
 
-            return await ProcessAttachmentResponseAsync(res);
+            return ProcessAttachmentResponse(await res);
         }
 
         public virtual DocumentHeaderResponse Put(PutAttachmentCommand cmd)
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
-            return PutAsync(cmd).Result;
+            var req = CreateRequest(cmd);
+            var res = Send(req);
+
+            return ProcessDocumentHeaderResponse(res);
         }
 
         public virtual async Task<DocumentHeaderResponse> PutAsync(PutAttachmentCommand cmd)
@@ -68,7 +74,7 @@ namespace MyCouch
             var req = CreateRequest(cmd);
             var res = SendAsync(req);
 
-            return await ProcessDocumentHeaderResponseAsync(res);
+            return ProcessDocumentHeaderResponse(await res);
         }
 
         public virtual DocumentHeaderResponse Delete(string docId, string docRev, string attachmentName)
@@ -85,7 +91,10 @@ namespace MyCouch
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
-            return DeleteAsync(cmd).Result;
+            var req = CreateRequest(cmd);
+            var res = Send(req);
+
+            return ProcessDocumentHeaderResponse(res);
         }
 
         public virtual async Task<DocumentHeaderResponse> DeleteAsync(DeleteAttachmentCommand cmd)
@@ -95,7 +104,7 @@ namespace MyCouch
             var req = CreateRequest(cmd);
             var res = SendAsync(req);
 
-            return await ProcessDocumentHeaderResponseAsync(res);
+            return ProcessDocumentHeaderResponse(await res);
         }
 
         protected virtual HttpRequestMessage CreateRequest(GetAttachmentCommand cmd)
@@ -135,19 +144,24 @@ namespace MyCouch
                 docRev == null ? string.Empty : string.Concat("?rev=", docRev));
         }
 
+        protected virtual HttpResponseMessage Send(HttpRequestMessage request)
+        {
+            return Client.Connection.Send(request);
+        }
+
         protected virtual Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
         {
             return Client.Connection.SendAsync(request);
         }
 
-        protected virtual async Task<AttachmentResponse> ProcessAttachmentResponseAsync(Task<HttpResponseMessage> responseTask)
+        protected virtual AttachmentResponse ProcessAttachmentResponse(HttpResponseMessage response)
         {
-            return Client.ResponseFactory.CreateAttachmentResponse(await responseTask);
+            return Client.ResponseFactory.CreateAttachmentResponse(response);
         }
 
-        protected virtual async Task<DocumentHeaderResponse> ProcessDocumentHeaderResponseAsync(Task<HttpResponseMessage> responseTask)
+        protected virtual DocumentHeaderResponse ProcessDocumentHeaderResponse(HttpResponseMessage response)
         {
-            return Client.ResponseFactory.CreateDocumentHeaderResponse(await responseTask);
+            return Client.ResponseFactory.CreateDocumentHeaderResponse(response);
         }
     }
 }
