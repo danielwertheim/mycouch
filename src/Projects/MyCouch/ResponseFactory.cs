@@ -78,7 +78,7 @@ namespace MyCouch
 
         protected virtual void OnSuccessfulBulkResponseContentMaterializer(HttpResponseMessage response, BulkResponse result)
         {
-            using (var content = response.Content.ReadAsStreamAsync().Result)
+            using (var content = response.Content.ReadAsStream())
                 Client.Serializer.PopulateBulkResponse(result, content);
         }
 
@@ -92,13 +92,13 @@ namespace MyCouch
                 return;
             }
 
-            using (var content = response.Content.ReadAsStreamAsync().Result)
+            using (var content = response.Content.ReadAsStream())
                 Client.Serializer.PopulateDocumentHeaderResponse(result, content);
         }
 
         protected virtual void OnSuccessfulDocumentResponseContentMaterializer(HttpResponseMessage response, DocumentResponse result)
         {
-            using (var content = response.Content.ReadAsStreamAsync().Result)
+            using (var content = response.Content.ReadAsStream())
             {
                 if (ContentShouldHaveIdAndRev(response.RequestMessage))
                     Client.Serializer.PopulateDocumentHeaderResponse(result, content);
@@ -118,7 +118,7 @@ namespace MyCouch
 
         protected virtual void OnSuccessfulEntityResponseContentMaterializer<T>(HttpResponseMessage response, EntityResponse<T> result) where T : class
         {
-            using (var content = response.Content.ReadAsStreamAsync().Result)
+            using (var content = response.Content.ReadAsStream())
             {
                 if (ContentShouldHaveIdAndRev(response.RequestMessage))
                     Client.Serializer.PopulateDocumentHeaderResponse(result, content);
@@ -138,7 +138,7 @@ namespace MyCouch
 
         protected virtual void OnSuccessfulAttachmentResponseContentMaterializer(HttpResponseMessage response, AttachmentResponse result)
         {
-            using (var content = response.Content.ReadAsStreamAsync().Result)
+            using (var content = response.Content.ReadAsStream())
             {
                 AssignMissingIdFromRequestUri(response, result);
                 AssignMissingNameFromRequestUri(response, result);
@@ -154,13 +154,13 @@ namespace MyCouch
 
         protected virtual void OnSuccessfulViewQueryResponseContentMaterializer<T>(HttpResponseMessage response, ViewQueryResponse<T> result) where T : class
         {
-            using(var content = response.Content.ReadAsStreamAsync().Result)
+            using(var content = response.Content.ReadAsStream())
                 Client.Serializer.PopulateViewQueryResponse(result, content);
         }
 
         protected virtual void OnFailedResponseContentMaterializer<T>(HttpResponseMessage response, T result) where T : IResponse
         {
-            using (var content = response.Content.ReadAsStreamAsync().Result)
+            using (var content = response.Content.ReadAsStream())
                 Client.Serializer.PopulateFailedResponse(result, content);
         }
 
