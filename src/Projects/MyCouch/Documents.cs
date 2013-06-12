@@ -1,7 +1,9 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Commands;
+using MyCouch.Core;
 using MyCouch.Net;
 
 namespace MyCouch
@@ -21,7 +23,10 @@ namespace MyCouch
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
-            return BulkAsync(cmd).Result;
+            var req = CreateRequest(cmd);
+            var res = Send(req);
+
+            return ProcessBulkResponse(res);
         }
 
         public virtual async Task<BulkResponse> BulkAsync(BulkCommand cmd)
@@ -31,7 +36,7 @@ namespace MyCouch
             var req = CreateRequest(cmd);
             var res = SendAsync(req);
 
-            return await ProcessBulkResponseAsync(res);
+            return ProcessBulkResponse(await res.ForAwait());
         }
 
         public virtual DocumentHeaderResponse Copy(string srcId, string newId)
@@ -58,7 +63,10 @@ namespace MyCouch
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
-            return CopyAsync(cmd).Result;
+            var req = CreateRequest(cmd);
+            var res = Send(req);
+
+            return ProcessDocumentHeaderResponse(res);
         }
 
         public virtual async Task<DocumentHeaderResponse> CopyAsync(CopyDocumentCommand cmd)
@@ -68,7 +76,7 @@ namespace MyCouch
             var req = CreateRequest(cmd);
             var res = SendAsync(req);
 
-            return await ProcessDocumentHeaderResponseAsync(res);
+            return ProcessDocumentHeaderResponse(await res.ForAwait());
         }
 
         public virtual DocumentHeaderResponse Replace(string srcId, string trgId, string trgRev)
@@ -95,7 +103,10 @@ namespace MyCouch
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
-            return ReplaceAsync(cmd).Result;
+            var req = CreateRequest(cmd);
+            var res = Send(req);
+
+            return ProcessDocumentHeaderResponse(res);
         }
 
         public virtual async Task<DocumentHeaderResponse> ReplaceAsync(ReplaceDocumentCommand cmd)
@@ -105,7 +116,7 @@ namespace MyCouch
             var req = CreateRequest(cmd);
             var res = SendAsync(req);
 
-            return await ProcessDocumentHeaderResponseAsync(res);
+            return ProcessDocumentHeaderResponse(await res.ForAwait());
         }
 
         public virtual DocumentHeaderResponse Exists(string id, string rev = null)
@@ -122,7 +133,10 @@ namespace MyCouch
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
-            return ExistsAsync(cmd).Result;
+            var req = CreateRequest(cmd);
+            var res = Send(req);
+
+            return ProcessDocumentHeaderResponse(res);
         }
 
         public virtual async Task<DocumentHeaderResponse> ExistsAsync(DocumentExistsCommand cmd)
@@ -132,7 +146,7 @@ namespace MyCouch
             var req = CreateRequest(cmd);
             var res = SendAsync(req);
 
-            return await ProcessDocumentHeaderResponseAsync(res);
+            return ProcessDocumentHeaderResponse(await res.ForAwait());
         }
 
         public virtual DocumentResponse Get(string id, string rev = null)
@@ -149,7 +163,10 @@ namespace MyCouch
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
-            return GetAsync(cmd).Result;
+            var req = CreateRequest(cmd);
+            var res = Send(req);
+
+            return ProcessDocumentResponse(res);
         }
 
         public virtual async Task<DocumentResponse> GetAsync(GetDocumentCommand cmd)
@@ -159,7 +176,7 @@ namespace MyCouch
             var req = CreateRequest(cmd);
             var res = SendAsync(req);
 
-            return await ProcessDocumentResponseAsync(res);
+            return ProcessDocumentResponse(await res.ForAwait());
         }
 
         public virtual DocumentHeaderResponse Post(string doc)
@@ -176,7 +193,10 @@ namespace MyCouch
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
-            return PostAsync(cmd).Result;
+            var req = CreateRequest(cmd);
+            var res = Send(req);
+
+            return ProcessDocumentHeaderResponse(res);
         }
 
         public virtual async Task<DocumentHeaderResponse> PostAsync(PostDocumentCommand cmd)
@@ -186,7 +206,7 @@ namespace MyCouch
             var req = CreateRequest(cmd);
             var res = SendAsync(req);
 
-            return await ProcessDocumentHeaderResponseAsync(res);
+            return ProcessDocumentHeaderResponse(await res.ForAwait());
         }
 
         public virtual DocumentHeaderResponse Put(string id, string doc)
@@ -213,7 +233,10 @@ namespace MyCouch
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
-            return PutAsync(cmd).Result;
+            var req = CreateRequest(cmd);
+            var res = Send(req);
+
+            return ProcessDocumentHeaderResponse(res);
         }
 
         public virtual async Task<DocumentHeaderResponse> PutAsync(PutDocumentCommand cmd)
@@ -223,12 +246,12 @@ namespace MyCouch
             var req = CreateRequest(cmd);
             var res = SendAsync(req);
 
-            return await ProcessDocumentHeaderResponseAsync(res);
+            return ProcessDocumentHeaderResponse(await res.ForAwait());
         }
 
         public virtual DocumentHeaderResponse Delete(string id, string rev)
         {
-            return DeleteAsync(new DeleteDocumentCommand(id, rev)).Result;
+            return Delete(new DeleteDocumentCommand(id, rev));
         }
 
         public virtual Task<DocumentHeaderResponse> DeleteAsync(string id, string rev)
@@ -240,7 +263,10 @@ namespace MyCouch
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
-            return DeleteAsync(cmd).Result;
+            var req = CreateRequest(cmd);
+            var res = Send(req);
+
+            return ProcessDocumentHeaderResponse(res);
         }
 
         public virtual async Task<DocumentHeaderResponse> DeleteAsync(DeleteDocumentCommand cmd)
@@ -250,7 +276,12 @@ namespace MyCouch
             var req = CreateRequest(cmd);
             var res = SendAsync(req);
 
-            return await ProcessDocumentHeaderResponseAsync(res);
+            return ProcessDocumentHeaderResponse(await res.ForAwait());
+        }
+
+        protected virtual HttpResponseMessage Send(HttpRequestMessage request)
+        {
+            return Client.Connection.Send(request);
         }
 
         protected virtual Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
@@ -344,19 +375,19 @@ namespace MyCouch
                 rev == null ? string.Empty : string.Concat("?rev=", rev));
         }
 
-        protected virtual async Task<BulkResponse> ProcessBulkResponseAsync(Task<HttpResponseMessage> responseTask)
+        protected virtual BulkResponse ProcessBulkResponse(HttpResponseMessage response)
         {
-            return Client.ResponseFactory.CreateBulkResponse(await responseTask);
+            return Client.ResponseFactory.CreateBulkResponse(response);
         }
 
-        protected virtual async Task<DocumentHeaderResponse> ProcessDocumentHeaderResponseAsync(Task<HttpResponseMessage> responseTask)
+        protected virtual DocumentHeaderResponse ProcessDocumentHeaderResponse(HttpResponseMessage response)
         {
-            return Client.ResponseFactory.CreateDocumentHeaderResponse(await responseTask);
+            return Client.ResponseFactory.CreateDocumentHeaderResponse(response);
         }
 
-        protected virtual async Task<DocumentResponse> ProcessDocumentResponseAsync(Task<HttpResponseMessage> responseTask)
+        protected virtual DocumentResponse ProcessDocumentResponse(HttpResponseMessage response)
         {
-            return Client.ResponseFactory.CreateDocumentResponse(await responseTask);
+            return Client.ResponseFactory.CreateDocumentResponse(response);
         }
     }
 }

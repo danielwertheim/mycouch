@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using MyCouch.Querying;
 
 namespace MyCouch.ConsoleSamples
 {
-    //http://wiki.apache.org/couchdb/HTTP_view_API
-    //http://wiki.apache.org/couchdb/Introduction_to_CouchDB_views
     public class Program
     {
         static void Main(string[] args)

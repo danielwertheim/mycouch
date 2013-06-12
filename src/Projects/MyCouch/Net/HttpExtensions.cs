@@ -1,5 +1,7 @@
-﻿using System.Net.Http;
+﻿using System.IO;
+using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 namespace MyCouch.Net
 {
@@ -20,6 +22,11 @@ namespace MyCouch.Net
             return headers.ETag == null || headers.ETag.Tag == null
                 ? string.Empty
                 : headers.ETag.Tag.Substring(1, headers.ETag.Tag.Length - 2);
+        }
+
+        internal static Stream ReadAsStream(this HttpContent content)
+        {
+            return content.ReadAsStreamAsync().Result;
         }
     }
 }

@@ -3,8 +3,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using EnsureThat;
+using MyCouch.Core;
 using MyCouch.Net;
-using MyCouch.Querying;
 
 namespace MyCouch
 {
@@ -23,7 +23,10 @@ namespace MyCouch
         {
             EnsureValidQuery(query);
 
-            return RunQueryAsync(query).Result;
+            var req = CreateRequest(query);
+            var res = Send(req);
+
+            return ProcessHttpResponse(res);
         }
 
         public virtual async Task<JsonViewQueryResponse> RunQueryAsync(IViewQuery query)
@@ -33,14 +36,17 @@ namespace MyCouch
             var req = CreateRequest(query);
             var res = SendAsync(req);
 
-            return await ProcessHttpResponseAsync(res);
+            return ProcessHttpResponse(await res.ForAwait());
         }
 
         public virtual ViewQueryResponse<T> RunQuery<T>(IViewQuery query) where T : class
         {
             EnsureValidQuery(query);
 
-            return RunQueryAsync<T>(query).Result;
+            var req = CreateRequest(query);
+            var res = Send(req);
+
+            return ProcessHttpResponse<T>(res);
         }
 
         public virtual async Task<ViewQueryResponse<T>> RunQueryAsync<T>(IViewQuery query) where T : class
@@ -50,7 +56,7 @@ namespace MyCouch
             var req = CreateRequest(query);
             var res = SendAsync(req);
             
-            return await ProcessHttpResponseAsync<T>(res);
+            return ProcessHttpResponse<T>(await res.ForAwait());
         }
 
         public virtual JsonViewQueryResponse Query(string designDocument, string viewname, Action<IViewQueryConfigurator> configurator)
@@ -59,10 +65,14 @@ namespace MyCouch
             Ensure.That(viewname, "viewname").IsNotNullOrWhiteSpace();
             Ensure.That(configurator, "configurator").IsNotNull();
 
-            return QueryAsync(designDocument, viewname, configurator).Result;
+            var query = CreateQuery(designDocument, viewname);
+
+            query.Configure(configurator);
+
+            return RunQuery(query);
         }
 
-        public virtual async Task<JsonViewQueryResponse> QueryAsync(string designDocument, string viewname, Action<IViewQueryConfigurator> configurator)
+        public virtual Task<JsonViewQueryResponse> QueryAsync(string designDocument, string viewname, Action<IViewQueryConfigurator> configurator)
         {
             Ensure.That(designDocument, "designDocument").IsNotNullOrWhiteSpace();
             Ensure.That(viewname, "viewname").IsNotNullOrWhiteSpace();
@@ -72,7 +82,7 @@ namespace MyCouch
 
             query.Configure(configurator);
 
-            return await RunQueryAsync(query);
+            return RunQueryAsync(query);
         }
 
         public virtual ViewQueryResponse<T> Query<T>(string designDocument, string viewname, Action<IViewQueryConfigurator> configurator) where T : class
@@ -81,10 +91,14 @@ namespace MyCouch
             Ensure.That(viewname, "viewname").IsNotNullOrWhiteSpace();
             Ensure.That(configurator, "configurator").IsNotNull();
 
-            return QueryAsync<T>(designDocument, viewname, configurator).Result;
+            var query = CreateQuery(designDocument, viewname);
+
+            query.Configure(configurator);
+
+            return RunQuery<T>(query);
         }
 
-        public virtual async Task<ViewQueryResponse<T>> QueryAsync<T>(string designDocument, string viewname, Action<IViewQueryConfigurator> configurator) where T : class
+        public virtual Task<ViewQueryResponse<T>> QueryAsync<T>(string designDocument, string viewname, Action<IViewQueryConfigurator> configurator) where T : class
         {
             Ensure.That(designDocument, "designDocument").IsNotNullOrWhiteSpace();
             Ensure.That(viewname, "viewname").IsNotNullOrWhiteSpace();
@@ -94,7 +108,7 @@ namespace MyCouch
 
             query.Configure(configurator);
 
-            return await RunQueryAsync<T>(query);
+            return RunQueryAsync<T>(query);
         }
 
         protected virtual void EnsureValidQuery(IViewQuery query)
@@ -134,19 +148,24 @@ namespace MyCouch
             return string.Join("&", options.ToKeyValues().Select(kv => string.Format("{0}={1}", kv.Key, Uri.EscapeDataString(kv.Value))));
         }
 
+        protected virtual HttpResponseMessage Send(HttpRequestMessage request)
+        {
+            return Client.Connection.Send(request);
+        }
+
         protected virtual Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
         {
             return Client.Connection.SendAsync(request);
         }
 
-        protected virtual async Task<JsonViewQueryResponse> ProcessHttpResponseAsync(Task<HttpResponseMessage> responseTask)
+        protected virtual JsonViewQueryResponse ProcessHttpResponse(HttpResponseMessage response)
         {
-            return Client.ResponseFactory.CreateJsonViewQueryResponse(await responseTask);
+            return Client.ResponseFactory.CreateJsonViewQueryResponse(response);
         }
 
-        protected virtual async Task<ViewQueryResponse<T>> ProcessHttpResponseAsync<T>(Task<HttpResponseMessage> responseTask) where T : class 
+        protected virtual ViewQueryResponse<T> ProcessHttpResponse<T>(HttpResponseMessage response) where T : class
         {
-            return Client.ResponseFactory.CreateViewQueryResponse<T>(await responseTask);
+            return Client.ResponseFactory.CreateViewQueryResponse<T>(response);
         }
     }
 }

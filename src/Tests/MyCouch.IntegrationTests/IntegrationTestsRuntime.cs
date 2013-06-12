@@ -1,5 +1,4 @@
 ﻿using MyCouch.Commands;
-using MyCouch.Querying;
 
 namespace MyCouch.IntegrationTests
 {
