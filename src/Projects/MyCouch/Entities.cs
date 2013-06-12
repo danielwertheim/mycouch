@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Commands;
+using MyCouch.Core;
 using MyCouch.Net;
 
 namespace MyCouch
@@ -44,7 +45,7 @@ namespace MyCouch
             var req = CreateRequest(cmd);
             var res = SendAsync(req);
 
-            return ProcessEntityResponse<T>(cmd, await res);
+            return ProcessEntityResponse<T>(cmd, await res.ForAwait());
         }
 
         public virtual EntityResponse<T> Post<T>(T entity) where T : class
@@ -74,7 +75,7 @@ namespace MyCouch
             var req = CreateRequest(cmd);
             var res = SendAsync(req);
 
-            return ProcessEntityResponse(cmd, await res);
+            return ProcessEntityResponse(cmd, await res.ForAwait());
         }
 
         public virtual EntityResponse<T> Put<T>(T entity) where T : class
@@ -104,7 +105,7 @@ namespace MyCouch
             var req = CreateRequest(cmd);
             var res = SendAsync(req);
 
-            return ProcessEntityResponse(cmd, await res);
+            return ProcessEntityResponse(cmd, await res.ForAwait());
         }
 
         public virtual EntityResponse<T> Delete<T>(T entity) where T : class
@@ -134,7 +135,7 @@ namespace MyCouch
             var req = CreateRequest(cmd);
             var res = SendAsync(req);
             
-            return ProcessEntityResponse(cmd, await res);
+            return ProcessEntityResponse(cmd, await res.ForAwait());
         }
 
         protected virtual HttpResponseMessage Send(HttpRequestMessage request)

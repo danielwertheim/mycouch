@@ -1,7 +1,9 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Commands;
+using MyCouch.Core;
 using MyCouch.Net;
 
 namespace MyCouch
@@ -34,7 +36,7 @@ namespace MyCouch
             var req = CreateRequest(cmd);
             var res = SendAsync(req);
 
-            return ProcessBulkResponse(await res);
+            return ProcessBulkResponse(await res.ForAwait());
         }
 
         public virtual DocumentHeaderResponse Copy(string srcId, string newId)
@@ -74,7 +76,7 @@ namespace MyCouch
             var req = CreateRequest(cmd);
             var res = SendAsync(req);
 
-            return ProcessDocumentHeaderResponse(await res);
+            return ProcessDocumentHeaderResponse(await res.ForAwait());
         }
 
         public virtual DocumentHeaderResponse Replace(string srcId, string trgId, string trgRev)
@@ -114,7 +116,7 @@ namespace MyCouch
             var req = CreateRequest(cmd);
             var res = SendAsync(req);
 
-            return ProcessDocumentHeaderResponse(await res);
+            return ProcessDocumentHeaderResponse(await res.ForAwait());
         }
 
         public virtual DocumentHeaderResponse Exists(string id, string rev = null)
@@ -144,7 +146,7 @@ namespace MyCouch
             var req = CreateRequest(cmd);
             var res = SendAsync(req);
 
-            return ProcessDocumentHeaderResponse(await res);
+            return ProcessDocumentHeaderResponse(await res.ForAwait());
         }
 
         public virtual DocumentResponse Get(string id, string rev = null)
@@ -174,7 +176,7 @@ namespace MyCouch
             var req = CreateRequest(cmd);
             var res = SendAsync(req);
 
-            return ProcessDocumentResponse(await res);
+            return ProcessDocumentResponse(await res.ForAwait());
         }
 
         public virtual DocumentHeaderResponse Post(string doc)
@@ -204,7 +206,7 @@ namespace MyCouch
             var req = CreateRequest(cmd);
             var res = SendAsync(req);
 
-            return ProcessDocumentHeaderResponse(await res);
+            return ProcessDocumentHeaderResponse(await res.ForAwait());
         }
 
         public virtual DocumentHeaderResponse Put(string id, string doc)
@@ -244,7 +246,7 @@ namespace MyCouch
             var req = CreateRequest(cmd);
             var res = SendAsync(req);
 
-            return ProcessDocumentHeaderResponse(await res);
+            return ProcessDocumentHeaderResponse(await res.ForAwait());
         }
 
         public virtual DocumentHeaderResponse Delete(string id, string rev)
@@ -274,7 +276,7 @@ namespace MyCouch
             var req = CreateRequest(cmd);
             var res = SendAsync(req);
 
-            return ProcessDocumentHeaderResponse(await res);
+            return ProcessDocumentHeaderResponse(await res.ForAwait());
         }
 
         protected virtual HttpResponseMessage Send(HttpRequestMessage request)

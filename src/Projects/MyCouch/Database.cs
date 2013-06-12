@@ -1,6 +1,7 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 using EnsureThat;
+using MyCouch.Core;
 using MyCouch.Net;
 
 namespace MyCouch
@@ -29,7 +30,7 @@ namespace MyCouch
             var req = CreateRequest(HttpMethod.Put);
             var res = SendAsync(req);
 
-            return ProcessResponse(await res);
+            return ProcessResponse(await res.ForAwait());
         }
 
         public virtual DatabaseResponse Delete()
@@ -45,7 +46,7 @@ namespace MyCouch
             var req = CreateRequest(HttpMethod.Delete);
             var res = SendAsync(req);
 
-            return ProcessResponse(await res);
+            return ProcessResponse(await res.ForAwait());
         }
 
         protected virtual HttpRequestMessage CreateRequest(HttpMethod method)

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Commands;
 using MyCouch.Net;
+using MyCouch.Core;
 
 namespace MyCouch
 {
@@ -54,7 +55,7 @@ namespace MyCouch
             var req = CreateRequest(cmd);
             var res = SendAsync(req);
 
-            return ProcessAttachmentResponse(await res);
+            return ProcessAttachmentResponse(await res.ForAwait());
         }
 
         public virtual DocumentHeaderResponse Put(PutAttachmentCommand cmd)
@@ -74,7 +75,7 @@ namespace MyCouch
             var req = CreateRequest(cmd);
             var res = SendAsync(req);
 
-            return ProcessDocumentHeaderResponse(await res);
+            return ProcessDocumentHeaderResponse(await res.ForAwait());
         }
 
         public virtual DocumentHeaderResponse Delete(string docId, string docRev, string attachmentName)
@@ -104,7 +105,7 @@ namespace MyCouch
             var req = CreateRequest(cmd);
             var res = SendAsync(req);
 
-            return ProcessDocumentHeaderResponse(await res);
+            return ProcessDocumentHeaderResponse(await res.ForAwait());
         }
 
         protected virtual HttpRequestMessage CreateRequest(GetAttachmentCommand cmd)
