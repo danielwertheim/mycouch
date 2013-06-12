@@ -24,14 +24,9 @@ namespace MyCouch.Net
                 : headers.ETag.Tag.Substring(1, headers.ETag.Tag.Length - 2);
         }
 
-        internal static async Task<Stream> ReadAsNonMarshalledStreamAsync(this HttpContent content)
-        {
-            return await content.ReadAsStreamAsync().ConfigureAwait(false);
-        }
-
         internal static Stream ReadAsStream(this HttpContent content)
         {
-            return content.ReadAsNonMarshalledStreamAsync().Result;
+            return content.ReadAsStreamAsync().Result;
         }
     }
 }
