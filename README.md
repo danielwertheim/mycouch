@@ -7,6 +7,20 @@ MyCouch is distributed via NuGet. You can [find the package here](https://nuget.
 ## Documentation ##
 The documentation is contained in the [project wiki](https://github.com/danielwertheim/mycouch/wiki).
 
+# Get up and running with the source code #
+The Sample has been written using Visual Studio 2012, targetting multiple platforms using a portable class library (PCL). Please note. **No NuGet packages are checked in**. To get your project up and running you need to install the missing NuGet packages using the provided PowerShell script:
+
+    ps:> .\setup-devenv.ps1
+
+or
+
+    cmd:> powershell -executionpolicy unrestricted .\setup-devenv.ps1
+
+For the script to work, you need to have [the NuGet command line](http://nuget.codeplex.com/releases) `(NuGet.exe) registrered in the environment path`, or you need to tweak the script so it knows where it will find your NuGet.exe.
+
+## How-to Contribute ##
+This is described in the wiki, under: ["How-to Contribute"](https://github.com/danielwertheim/mycouch/wiki/how-to-contribute).
+
 ## Issues, questions, etc ##
 So you have issues or questions... Great! That means someone is using it. Use the issues function here at the project page or contact me via mail: firstname@lastname.se; or Twitter: [@danielwertheim](https://twitter.com/danielwertheim)
 
