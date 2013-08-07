@@ -64,6 +64,7 @@
     <Compile Include="Shoulds.cs" />
     <Compile Include="TestData.cs" />
     <Compile Include="TestsOf.cs" />
+    <Compile Include="TypeExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

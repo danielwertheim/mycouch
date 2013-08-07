@@ -67,7 +67,6 @@
     <Compile Include="Commands\PutEntityCommand.cs" />
     <Compile Include="DatabaseResponse.cs" />
     <Compile Include="Database.cs" />
-    <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Commands\DeleteAttachmentCommand.cs" />
     <Compile Include="DocumentHeaderResponse.cs" />
     <Compile Include="Entities.cs" />
