@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using FluentAssertions;
 using MyCouch.Schemes;
+using MyCouch.Schemes.Reflections;
 using MyCouch.Serialization;
 using MyCouch.Testing;
 using MyCouch.Testing.Model;
@@ -15,7 +16,7 @@ namespace MyCouch.UnitTests.Serialization
         {
             base.OnTestInitialize();
 
-            SUT = new MyCouchSerializer(new EntityReflector());
+            SUT = new MyCouchSerializer(new EntityReflector(new LambdaDynamicPropertyFactory()));
         }
 
         [Test]

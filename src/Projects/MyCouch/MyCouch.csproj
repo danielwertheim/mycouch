@@ -84,6 +84,10 @@
       <DependentUpon>ExceptionStrings.resx</DependentUpon>
     </Compile>
     <Compile Include="ISystemViewQuery.cs" />
+    <Compile Include="Schemes\Reflections\DynamicStringGetter.cs" />
+    <Compile Include="Schemes\Reflections\DynamicStringSetter.cs" />
+    <Compile Include="Schemes\Reflections\IDynamicPropertyFactory.cs" />
+    <Compile Include="Schemes\Reflections\LambdaDynamicPropertyFactory.cs" />
     <Compile Include="SystemViewQuery.cs" />
     <Compile Include="Response.cs" />
     <Compile Include="Net\HttpExtensions.cs" />
@@ -106,10 +110,7 @@
     <Compile Include="IViews.cs" />
     <Compile Include="Querying\Stale.cs" />
     <Compile Include="JsonViewQueryResponse.cs" />
-    <Compile Include="Schemes\Reflections\DynamicGetter.cs" />
     <Compile Include="Schemes\Reflections\DynamicProperty.cs" />
-    <Compile Include="Schemes\Reflections\DynamicPropertyFactory.cs" />
-    <Compile Include="Schemes\Reflections\DynamicSetter.cs" />
     <Compile Include="Schemes\EntityIdMember.cs" />
     <Compile Include="Schemes\EntityMember.cs" />
     <Compile Include="Schemes\EntityRevMember.cs" />

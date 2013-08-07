@@ -3,32 +3,32 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using EnsureThat;
 using MyCouch.Schemes.Reflections;
 
 namespace MyCouch.Schemes
 {
     public abstract class EntityMember : IEntityMember 
     {
+        protected readonly IDynamicPropertyFactory DynamicPropertyFactory;
         protected readonly ConcurrentDictionary<Type, DynamicProperty> IdPropertyCache;
-
+        
         public BindingFlags PropertyBindingFlags { protected get; set; }
 
-        protected EntityMember()
+        protected EntityMember(IDynamicPropertyFactory dynamicPropertyFactory)
         {
-            IdPropertyCache = new ConcurrentDictionary<Type, DynamicProperty>();
-            PropertyBindingFlags = GetDefaultPropertyBindingFlags();
-        }
+            Ensure.That(dynamicPropertyFactory, "dynamicPropertyFactory").IsNotNull();
 
-        protected virtual BindingFlags GetDefaultPropertyBindingFlags()
-        {
-            return BindingFlags.Public | BindingFlags.Instance | BindingFlags.GetProperty;
+            DynamicPropertyFactory = dynamicPropertyFactory;
+            IdPropertyCache = new ConcurrentDictionary<Type, DynamicProperty>();
+            PropertyBindingFlags = BindingFlags.Public | BindingFlags.Instance;
         }
 
         public abstract int? GetMemberRankingIndex(Type entityType, string membername);
 
         public virtual string GetValueFrom<T>(T entity)
         {
-            return GetGetterFor(typeof (T)).GetValue(entity) as string;
+            return GetGetterFor(typeof (T)).GetValue(entity);
         }
 
         public void SetValueTo<T>(T entity, string value)
@@ -36,14 +36,14 @@ namespace MyCouch.Schemes
             GetSetterFor(typeof(T)).SetValue(entity, value);
         }
 
-        protected virtual DynamicGetter GetGetterFor(Type type)
+        protected virtual DynamicStringGetter GetGetterFor(Type type)
         {
             return IdPropertyCache.GetOrAdd(
                 type, 
                 t => DynamicPropertyFactory.PropertyFor(GetPropertyFor(type))).Getter;
         }
 
-        protected virtual DynamicSetter GetSetterFor(Type type)
+        protected virtual DynamicStringSetter GetSetterFor(Type type)
         {
             return IdPropertyCache.GetOrAdd(
                 type,

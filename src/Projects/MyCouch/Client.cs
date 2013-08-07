@@ -2,6 +2,7 @@
 using EnsureThat;
 using MyCouch.Net;
 using MyCouch.Schemes;
+using MyCouch.Schemes.Reflections;
 using MyCouch.Serialization;
 
 namespace MyCouch
@@ -27,7 +28,7 @@ namespace MyCouch
             Ensure.That(connection, "connection").IsNotNull();
 
             Connection = connection;
-            EntityReflector = new EntityReflector();
+            EntityReflector = new EntityReflector(new LambdaDynamicPropertyFactory());
             Serializer = new MyCouchSerializer(EntityReflector); //TODO: Either replace with Func<IEntityReflector> or pass IClient Latter is ugly...ugliest...
             ResponseFactory = new ResponseFactory(this);
             Database = new Database(this);

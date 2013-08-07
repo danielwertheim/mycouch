@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using MyCouch.Schemes;
+using MyCouch.Schemes.Reflections;
 using NUnit.Framework;
 
 namespace MyCouch.UnitTests.Schemes
@@ -9,7 +10,7 @@ namespace MyCouch.UnitTests.Schemes
     {
         protected override void OnTestInitialize()
         {
-            SUT = new EntityRevMember();
+            SUT = new EntityRevMember(new LambdaDynamicPropertyFactory());
         }
 
         [Test]
