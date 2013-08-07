@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using MyCouch.Core;
+using MyCouch.Extensions;
 using MyCouch.Schemes;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;

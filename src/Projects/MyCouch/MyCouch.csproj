@@ -67,7 +67,7 @@
     <Compile Include="Commands\PutEntityCommand.cs" />
     <Compile Include="DatabaseResponse.cs" />
     <Compile Include="Database.cs" />
-    <Compile Include="Core\TypeExtensions.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Commands\DeleteAttachmentCommand.cs" />
     <Compile Include="DocumentHeaderResponse.cs" />
     <Compile Include="Entities.cs" />
@@ -126,8 +126,8 @@
     <Compile Include="Serialization\MyCouchSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Schemes\IEntityMember.cs" />
-    <Compile Include="Core\StringExtensions.cs" />
-    <Compile Include="Core\TaskExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\TaskExtensions.cs" />
     <Compile Include="ViewQuery.cs" />
     <Compile Include="Querying\ViewQueryConfigurator.cs" />
     <Compile Include="Querying\ViewQueryOptions.cs" />
