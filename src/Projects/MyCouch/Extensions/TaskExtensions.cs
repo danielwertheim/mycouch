@@ -1,4 +1,8 @@
-﻿using System.Runtime.CompilerServices;
+﻿#if net45
+using System.Runtime.CompilerServices;
+#elif net40
+using Microsoft.Runtime.CompilerServices;
+#endif
 using System.Threading.Tasks;
 
 namespace MyCouch.Extensions

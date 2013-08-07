@@ -8,7 +8,9 @@ MyCouch is distributed via NuGet. You can [find the package here](https://nuget.
 The documentation is contained in the [project wiki](https://github.com/danielwertheim/mycouch/wiki).
 
 # Get up and running with the source code #
-The Sample has been written using Visual Studio 2012, targetting multiple platforms using a portable class library (PCL). Please note. **No NuGet packages are checked in**. To get your project up and running you need to install the missing NuGet packages using the provided PowerShell script:
+The Sample has been written using Visual Studio 2012, targetting multiple platforms (.Net40 & .Net45). .Net45 is the mainstream project. .Net4.0 uses Microsofts various portable class library (PCL) for adding missing BCL capabilities, the async HttpClient etc. to .Net4.0.
+
+Please note. **No NuGet packages are checked in**. To get your project up and running you need to install the missing NuGet packages using the provided PowerShell script:
 
     ps:> .\setup-devenv.ps1
 
