@@ -106,10 +106,10 @@
     <Compile Include="IViews.cs" />
     <Compile Include="Querying\Stale.cs" />
     <Compile Include="JsonViewQueryResponse.cs" />
-    <Compile Include="Reflections\DynamicGetter.cs" />
-    <Compile Include="Reflections\DynamicProperty.cs" />
-    <Compile Include="Reflections\DynamicPropertyFactory.cs" />
-    <Compile Include="Reflections\DynamicSetter.cs" />
+    <Compile Include="Schemes\Reflections\DynamicGetter.cs" />
+    <Compile Include="Schemes\Reflections\DynamicProperty.cs" />
+    <Compile Include="Schemes\Reflections\DynamicPropertyFactory.cs" />
+    <Compile Include="Schemes\Reflections\DynamicSetter.cs" />
     <Compile Include="Schemes\EntityIdMember.cs" />
     <Compile Include="Schemes\EntityMember.cs" />
     <Compile Include="Schemes\EntityRevMember.cs" />
