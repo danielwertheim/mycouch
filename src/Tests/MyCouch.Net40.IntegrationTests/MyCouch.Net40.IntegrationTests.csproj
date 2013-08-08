@@ -113,6 +113,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\Projects\MyCouch.Net40\MyCouch.Net40.csproj">
       <Project>{f6f6b78c-3213-452c-834b-2d2c8ae69685}</Project>
       <Name>MyCouch.Net40</Name>
@@ -121,9 +124,6 @@
       <Project>{a83298e6-e7b3-4577-bc7b-a9aaed71772a}</Project>
       <Name>MyCouch.Net40.Testing</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.8\tools\Microsoft.Bcl.Build.targets" />
