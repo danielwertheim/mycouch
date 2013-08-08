@@ -254,6 +254,9 @@
     <Compile Include="..\mycouch\schemes\reflections\IDynamicPropertyFactory.cs">
       <Link>Schemes\Reflections\IDynamicPropertyFactory.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch\Schemes\Reflections\IlDynamicPropertyFactory.cs">
+      <Link>Schemes\Reflections\IlDynamicPropertyFactory.cs</Link>
+    </Compile>
     <Compile Include="..\mycouch\schemes\reflections\LambdaDynamicPropertyFactory.cs">
       <Link>Schemes\Reflections\LambdaDynamicPropertyFactory.cs</Link>
     </Compile>

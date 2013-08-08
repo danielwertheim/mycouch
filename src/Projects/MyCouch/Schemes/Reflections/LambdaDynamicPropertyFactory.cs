@@ -8,7 +8,6 @@ namespace MyCouch.Schemes.Reflections
     {
         public virtual DynamicProperty PropertyFor(PropertyInfo p)
         {
-            //TODO: Switch to generic
             return new DynamicProperty(
                 new DynamicStringGetter(CreateLambdaGetter<string>(p.DeclaringType, p)), 
                 new DynamicStringSetter(CreateLambdaSetter<string>(p.DeclaringType, p)));

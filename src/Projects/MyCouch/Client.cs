@@ -28,8 +28,8 @@ namespace MyCouch
             Ensure.That(connection, "connection").IsNotNull();
 
             Connection = connection;
-            EntityReflector = new EntityReflector(new LambdaDynamicPropertyFactory());
-            Serializer = new MyCouchSerializer(EntityReflector); //TODO: Either replace with Func<IEntityReflector> or pass IClient Latter is ugly...ugliest...
+            EntityReflector = new EntityReflector(new IlDynamicPropertyFactory());
+            Serializer = new MyCouchSerializer(() => EntityReflector);
             ResponseFactory = new ResponseFactory(this);
             Database = new Database(this);
             Documents = new Documents(this);

@@ -6,7 +6,29 @@ using NUnit.Framework;
 namespace MyCouch.UnitTests.Schemes
 {
     [TestFixture]
-    public class EntityIdMemberTests : UnitTestsOf<EntityIdMember>
+    public class EntityIdMemberTestsWithLambdaPropertyFactoryTests : EntityIdMemberTests
+    {
+        protected override void OnTestInitialize()
+        {
+            base.OnTestInitialize();
+
+            SUT = new EntityIdMember(new LambdaDynamicPropertyFactory());
+        }
+    }
+
+    [TestFixture]
+    public class EntityIdMemberTestsWithIlPropertyFactoryTests : EntityIdMemberTests
+    {
+        protected override void OnTestInitialize()
+        {
+            base.OnTestInitialize();
+
+            SUT = new EntityIdMember(new IlDynamicPropertyFactory());
+        }
+    }
+
+    [TestFixture]
+    public abstract class EntityIdMemberTests : UnitTestsOf<EntityIdMember>
     {
         protected override void OnTestInitialize()
         {

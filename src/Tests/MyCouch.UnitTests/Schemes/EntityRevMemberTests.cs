@@ -6,13 +6,30 @@ using NUnit.Framework;
 namespace MyCouch.UnitTests.Schemes
 {
     [TestFixture]
-    public class EntityRevMemberTests : UnitTestsOf<EntityRevMember>
+    public class EntityRevMemberTestsWithLambdaPropertyFactoryTests : EntityRevMemberTests
     {
         protected override void OnTestInitialize()
         {
+            base.OnTestInitialize();
+
             SUT = new EntityRevMember(new LambdaDynamicPropertyFactory());
         }
+    }
 
+    [TestFixture]
+    public class EntityRevMemberTestsWithIlPropertyFactoryTests : EntityRevMemberTests
+    {
+        protected override void OnTestInitialize()
+        {
+            base.OnTestInitialize();
+
+            SUT = new EntityRevMember(new IlDynamicPropertyFactory());
+        }
+    }
+
+    [TestFixture]
+    public abstract class EntityRevMemberTests : UnitTestsOf<EntityRevMember>
+    {
         [Test]
         public void Verify_MemberRanking()
         {

@@ -87,6 +87,7 @@
     <Compile Include="Schemes\Reflections\DynamicStringGetter.cs" />
     <Compile Include="Schemes\Reflections\DynamicStringSetter.cs" />
     <Compile Include="Schemes\Reflections\IDynamicPropertyFactory.cs" />
+    <Compile Include="Schemes\Reflections\IlDynamicPropertyFactory.cs" />
     <Compile Include="Schemes\Reflections\LambdaDynamicPropertyFactory.cs" />
     <Compile Include="SystemViewQuery.cs" />
     <Compile Include="Response.cs" />

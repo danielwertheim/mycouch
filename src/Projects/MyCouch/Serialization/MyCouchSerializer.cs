@@ -11,16 +11,14 @@ namespace MyCouch.Serialization
 {
     public class MyCouchSerializer : ISerializer
     {
-        protected readonly IEntityReflector EntityReflector;
         protected readonly JsonSerializer InternalSerializer;
 
-        public MyCouchSerializer(IEntityReflector entityReflector)
+        public MyCouchSerializer(Func<IEntityReflector> entityReflectorFn)
         {
-            EntityReflector = entityReflector;
-            InternalSerializer = JsonSerializer.Create(CreateSettings(new SerializationContractResolver(EntityReflector)));
+            InternalSerializer = JsonSerializer.Create(CreateDefaultSettings(new SerializationContractResolver(entityReflectorFn)));
         }
 
-        protected virtual JsonSerializerSettings CreateSettings(IContractResolver contractResolver)
+        protected JsonSerializerSettings CreateDefaultSettings(IContractResolver contractResolver)
         {
             return new JsonSerializerSettings
             {

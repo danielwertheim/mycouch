@@ -10,15 +10,32 @@ using NUnit.Framework;
 namespace MyCouch.UnitTests.Serialization
 {
     [TestFixture]
-    public class MyCouchSerializerTests : UnitTestsOf<MyCouchSerializer>
+    public class MyCouchSerializerWithLambdaPropertyFactoryTests : MyCouchSerializerTests
     {
         protected override void OnTestInitialize()
         {
             base.OnTestInitialize();
 
-            SUT = new MyCouchSerializer(new EntityReflector(new LambdaDynamicPropertyFactory()));
+            var entityReflector = new EntityReflector(new LambdaDynamicPropertyFactory());
+            SUT = new MyCouchSerializer(() => entityReflector);
         }
+    }
 
+    [TestFixture]
+    public class MyCouchSerializerWithIlPropertyFactoryTests : MyCouchSerializerTests
+    {
+        protected override void OnTestInitialize()
+        {
+            base.OnTestInitialize();
+
+            var entityReflector = new EntityReflector(new IlDynamicPropertyFactory());
+            SUT = new MyCouchSerializer(() => entityReflector);
+        }
+    }
+
+    [TestFixture]
+    public abstract class MyCouchSerializerTests : UnitTestsOf<MyCouchSerializer>
+    {
         [Test]
         public void When_serializing_entity_It_will_inject_document_header_in_json()
         {
