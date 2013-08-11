@@ -20,7 +20,7 @@ namespace MyCouch.UnitTests.Serialization
             SUT = new MyCouchSerializer(() => entityReflector);
         }
     }
-
+#if !WinRT
     [TestFixture]
     public class MyCouchSerializerWithIlPropertyFactoryTests : MyCouchSerializerTests
     {
@@ -32,7 +32,7 @@ namespace MyCouch.UnitTests.Serialization
             SUT = new MyCouchSerializer(() => entityReflector);
         }
     }
-
+#endif
     [TestFixture]
     public abstract class MyCouchSerializerTests : UnitTestsOf<MyCouchSerializer>
     {

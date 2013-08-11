@@ -41,9 +41,13 @@ namespace MyCouch.Schemes.Reflections
             var objExpr = Expression.Parameter(typeof(object), "theItem");
             var castedObjExpr = Expression.Convert(objExpr, type);
             var parameter = Expression.Parameter(typeof(TProp), "param");
-
+#if !WinRT
             return Expression.Lambda<Action<object, TProp>>(
                 Expression.Call(castedObjExpr, property.GetSetMethod(), parameter), new[] { objExpr, parameter }).Compile();
+#else
+            return Expression.Lambda<Action<object, TProp>>(
+                Expression.Call(castedObjExpr, property.SetMethod, parameter), new[] { objExpr, parameter }).Compile();
+#endif
         }
 
         //private static Action<T, TProp> CreateLambdaSetter<T, TProp>(PropertyInfo property)

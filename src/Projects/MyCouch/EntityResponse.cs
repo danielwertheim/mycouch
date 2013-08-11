@@ -2,7 +2,9 @@
 
 namespace MyCouch
 {
+#if !WinRT
     [Serializable]
+#endif
     public class EntityResponse<T> : DocumentHeaderResponse where T : class
     {
         public T Entity { get; set; }

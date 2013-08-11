@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Reflection;
 using MyCouch.Extensions;
 using NUnit.Framework;
 
@@ -53,7 +54,7 @@ namespace MyCouch.Testing
                 Assert.AreEqual(a, b);
                 return;
             }
-
+#if !WinRT
             foreach (var propertyInfo in type.GetProperties())
             {
                 var propertyType = propertyInfo.PropertyType;
@@ -66,6 +67,20 @@ namespace MyCouch.Testing
                 else
                     AreValueEqual(propertyType, valueForA, valueForB);
             }
+#else
+            foreach (var propertyInfo in type.GetRuntimeProperties())
+            {
+                var propertyType = propertyInfo.PropertyType;
+                var valueForA = propertyInfo.GetValue(a, null);
+                var valueForB = propertyInfo.GetValue(b, null);
+
+                var isSimpleType = propertyType.IsSimpleType();
+                if (isSimpleType)
+                    Assert.AreEqual(valueForA, valueForB, "Values in property '{0}' doesn't match.", propertyInfo.Name);
+                else
+                    AreValueEqual(propertyType, valueForA, valueForB);
+            }
+#endif
         }
     }
 }

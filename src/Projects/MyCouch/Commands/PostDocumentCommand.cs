@@ -3,7 +3,9 @@ using EnsureThat;
 
 namespace MyCouch.Commands
 {
+#if !WinRT
     [Serializable]
+#endif
     public class PostDocumentCommand : IMyCouchCommand
     {
         public string Content { get; set; }

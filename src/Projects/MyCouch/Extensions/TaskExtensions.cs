@@ -1,4 +1,4 @@
-﻿#if net45
+﻿#if net45 || WinRT
 using System.Runtime.CompilerServices;
 #elif net40
 using Microsoft.Runtime.CompilerServices;

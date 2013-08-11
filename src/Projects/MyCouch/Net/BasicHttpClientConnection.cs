@@ -5,7 +5,6 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Extensions;
-using MyCouch.Resources;
 
 namespace MyCouch.Net
 {
@@ -67,7 +66,7 @@ namespace MyCouch.Net
             Ensure.That(uri, "uri").IsNotNull();
             Ensure.That(uri.LocalPath, "uri.LocalPath")
                   .IsNotNullOrEmpty()
-                  .WithExtraMessageOf(() => ExceptionStrings.BasicHttpClientConnection_UriIsMissingDb);
+                  .WithExtraMessageOf(() => ExceptionStrings.BasicHttpClientConnectionUriIsMissingDb);
         }
 
         public virtual HttpResponseMessage Send(HttpRequestMessage request)

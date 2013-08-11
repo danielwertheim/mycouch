@@ -71,6 +71,7 @@
     <Compile Include="DocumentHeaderResponse.cs" />
     <Compile Include="Entities.cs" />
     <Compile Include="Commands\GetAttachmentCommand.cs" />
+    <Compile Include="ExceptionStrings.cs" />
     <Compile Include="IAttachments.cs" />
     <Compile Include="IDatabase.cs" />
     <Compile Include="IEntities.cs" />
@@ -78,11 +79,6 @@
     <Compile Include="Net\AttachmentContent.cs" />
     <Compile Include="Commands\PutAttachmentCommand.cs" />
     <Compile Include="Commands\ReplaceDocumentCommand.cs" />
-    <Compile Include="Resources\ExceptionStrings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ExceptionStrings.resx</DependentUpon>
-    </Compile>
     <Compile Include="ISystemViewQuery.cs" />
     <Compile Include="Schemes\Reflections\DynamicStringGetter.cs" />
     <Compile Include="Schemes\Reflections\DynamicStringSetter.cs" />
@@ -137,12 +133,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\ExceptionStrings.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>ExceptionStrings.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

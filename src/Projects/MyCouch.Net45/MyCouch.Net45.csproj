@@ -134,6 +134,9 @@
     <Compile Include="..\MyCouch\EntityResponse.cs">
       <Link>EntityResponse.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch\ExceptionStrings.cs">
+      <Link>ExceptionStrings.cs</Link>
+    </Compile>
     <Compile Include="..\mycouch\extensions\StringExtensions.cs">
       <Link>Extensions\StringExtensions.cs</Link>
     </Compile>
@@ -211,12 +214,6 @@
     </Compile>
     <Compile Include="..\mycouch\querying\ViewQueryOptions.cs">
       <Link>Querying\ViewQueryOptions.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch\resources\ExceptionStrings.Designer.cs">
-      <Link>Resources\ExceptionStrings.Designer.cs</Link>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ExceptionStrings.resx</DependentUpon>
     </Compile>
     <Compile Include="..\MyCouch\Response.cs">
       <Link>Response.cs</Link>
@@ -298,13 +295,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="..\mycouch\resources\ExceptionStrings.resx">
-      <Link>Resources\ExceptionStrings.resx</Link>
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>ExceptionStrings.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

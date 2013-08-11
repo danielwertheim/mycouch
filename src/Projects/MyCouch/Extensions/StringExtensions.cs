@@ -25,7 +25,7 @@ namespace MyCouch.Extensions
             {
                 if (i == 0 || i == lastIndex || char.IsUpper(s[i + 1]))
                 {
-                    sb.Append(char.ToLower(s[i], CultureInfo.InvariantCulture));
+                    sb.Append(char.ToLower(s[i]));
                     continue;
                 }
                 sb.Append(s.Substring(i));

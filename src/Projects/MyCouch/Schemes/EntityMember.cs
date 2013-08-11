@@ -12,8 +12,6 @@ namespace MyCouch.Schemes
     {
         protected readonly IDynamicPropertyFactory DynamicPropertyFactory;
         protected readonly ConcurrentDictionary<Type, DynamicProperty> IdPropertyCache;
-        
-        public BindingFlags PropertyBindingFlags { protected get; set; }
 
         protected EntityMember(IDynamicPropertyFactory dynamicPropertyFactory)
         {
@@ -21,7 +19,6 @@ namespace MyCouch.Schemes
 
             DynamicPropertyFactory = dynamicPropertyFactory;
             IdPropertyCache = new ConcurrentDictionary<Type, DynamicProperty>();
-            PropertyBindingFlags = BindingFlags.Public | BindingFlags.Instance;
         }
 
         public abstract int? GetMemberRankingIndex(Type entityType, string membername);
@@ -65,7 +62,12 @@ namespace MyCouch.Schemes
 
         protected virtual IEnumerable<PropertyInfo> GetPropertiesFor(Type type)
         {
-            return type.GetProperties(PropertyBindingFlags);
+#if !WinRT
+            return type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+#else
+            //TODO: Ensure perf
+            return type.GetRuntimeProperties();
+#endif
         }
     }
 }

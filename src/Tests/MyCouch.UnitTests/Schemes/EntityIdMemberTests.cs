@@ -15,7 +15,7 @@ namespace MyCouch.UnitTests.Schemes
             SUT = new EntityIdMember(new LambdaDynamicPropertyFactory());
         }
     }
-
+#if !WinRT
     [TestFixture]
     public class EntityIdMemberTestsWithIlPropertyFactoryTests : EntityIdMemberTests
     {
@@ -26,7 +26,7 @@ namespace MyCouch.UnitTests.Schemes
             SUT = new EntityIdMember(new IlDynamicPropertyFactory());
         }
     }
-
+#endif
     [TestFixture]
     public abstract class EntityIdMemberTests : UnitTestsOf<EntityIdMember>
     {

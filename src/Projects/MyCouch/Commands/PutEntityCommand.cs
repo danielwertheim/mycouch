@@ -3,7 +3,9 @@ using EnsureThat;
 
 namespace MyCouch.Commands
 {
+#if !WinRT
     [Serializable]
+#endif
     public class PutEntityCommand<T> : IMyCouchCommand where T : class
     {
         public T Entity { get; set; }

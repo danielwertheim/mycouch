@@ -28,7 +28,11 @@ namespace MyCouch
             Ensure.That(connection, "connection").IsNotNull();
 
             Connection = connection;
+#if !WinRT
             EntityReflector = new EntityReflector(new IlDynamicPropertyFactory());
+#else
+            EntityReflector = new EntityReflector(new LambdaDynamicPropertyFactory());
+#endif
             Serializer = new MyCouchSerializer(() => EntityReflector);
             ResponseFactory = new ResponseFactory(this);
             Database = new Database(this);

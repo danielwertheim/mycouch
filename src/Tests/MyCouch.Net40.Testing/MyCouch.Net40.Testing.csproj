@@ -31,9 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FakeItEasy">
-      <HintPath>..\..\packages\FakeItEasy.1.13.1\lib\net40\FakeItEasy.dll</HintPath>
-    </Reference>
     <Reference Include="FluentAssertions">
       <HintPath>..\..\packages\FluentAssertions.2.0.1\lib\net40\FluentAssertions.dll</HintPath>
     </Reference>
@@ -86,14 +83,11 @@
     <Compile Include="..\MyCouch.Testing\CustomAsserts.cs">
       <Link>CustomAsserts.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Testing\DoFake.cs">
-      <Link>DoFake.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Testing\GlobalTestConstants.cs">
       <Link>GlobalTestConstants.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Testing\JsonTestData.Designer.cs">
-      <Link>JsonTestData.Designer.cs</Link>
+    <Compile Include="..\MyCouch.Testing\JsonTestData.cs">
+      <Link>JsonTestData.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Testing\Model\Artist.cs">
       <Link>Model\Artist.cs</Link>
@@ -119,11 +113,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="..\MyCouch.Testing\JsonTestData.resx">
-      <Link>JsonTestData.resx</Link>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="..\MyCouch.Testing\JsonTestDataFiles\ViewQueryAlbums.json">
+      <Link>JsonTestDataFiles\ViewQueryAlbums.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\MyCouch.Testing\JsonTestDataFiles\ViewQueryAllDocsResult.json">
+      <Link>JsonTestDataFiles\ViewQueryAllDocsResult.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

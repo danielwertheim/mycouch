@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !WinRT
+using System;
 using System.Reflection;
 using System.Reflection.Emit;
 using EnsureThat;
@@ -121,3 +122,4 @@ namespace MyCouch.Schemes.Reflections
         }
     }
 }
+#endif

@@ -4,7 +4,9 @@ using System.Net.Http;
 
 namespace MyCouch
 {
+#if !WinRT
     [Serializable]
+#endif
     public abstract class Response : IResponse
     {
         public HttpStatusCode StatusCode { get; set; }

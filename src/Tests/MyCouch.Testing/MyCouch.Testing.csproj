@@ -30,10 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FakeItEasy, Version=1.13.1.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\FakeItEasy.1.13.1\lib\net40\FakeItEasy.dll</HintPath>
-    </Reference>
     <Reference Include="FluentAssertions">
       <HintPath>..\..\packages\FluentAssertions.2.0.1\lib\net45\FluentAssertions.dll</HintPath>
     </Reference>
@@ -52,13 +48,8 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="CustomAsserts.cs" />
-    <Compile Include="DoFake.cs" />
+    <Compile Include="JsonTestData.cs" />
     <Compile Include="Model\Artist.cs" />
-    <Compile Include="JsonTestData.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>JsonTestData.resx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GlobalTestConstants.cs" />
     <Compile Include="Shoulds.cs" />
@@ -67,14 +58,13 @@
     <Compile Include="TypeExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="JsonTestDataFiles\ViewQueryAlbums.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="JsonTestDataFiles\ViewQueryAllDocsResult.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="JsonTestData.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>JsonTestData.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Projects\MyCouch\MyCouch.csproj">
