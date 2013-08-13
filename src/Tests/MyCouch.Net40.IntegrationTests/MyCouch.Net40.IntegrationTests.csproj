@@ -96,7 +96,7 @@
       <Name>MyCouch.Net40</Name>
     </ProjectReference>
     <ProjectReference Include="..\MyCouch.Net40.Testing\MyCouch.Net40.Testing.csproj">
-      <Project>{42faaa80-970d-48fa-b96c-ddbc1f210d63}</Project>
+      <Project>{543ec318-d547-4325-bf8d-4d79519b35e6}</Project>
       <Name>MyCouch.Net40.Testing</Name>
     </ProjectReference>
   </ItemGroup>

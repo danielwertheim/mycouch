@@ -1,6 +1,9 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
+// General Information about an assembly is controlled through the following 
+// set of attributes. Change these attribute values to modify the information
+// associated with an assembly.
 [assembly: AssemblyTitle("MyCouch.UnitTests")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
@@ -9,4 +12,4 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("d6b92246-6a79-4790-ade5-3f6bd3c14d75")]
+[assembly: Guid("fca899ed-96d8-4aca-819a-6267eac3ddd5")]

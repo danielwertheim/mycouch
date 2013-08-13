@@ -167,6 +167,10 @@
       <Project>{df0afd90-f622-47fb-b50c-e4c91768f929}</Project>
       <Name>MyCouch.WinRT.IntegrationTests</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MyCouch.WinRT.Testing\MyCouch.WinRT.Testing.csproj">
+      <Project>{7a552c77-a314-4f2e-b7fe-765b3c78d3ba}</Project>
+      <Name>MyCouch.WinRT.Testing</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>

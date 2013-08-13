@@ -93,7 +93,7 @@
       <Name>MyCouch.Net45</Name>
     </ProjectReference>
     <ProjectReference Include="..\MyCouch.Net45.Testing\MyCouch.Net45.Testing.csproj">
-      <Project>{cc244560-6007-4fe0-8a2e-52196094c286}</Project>
+      <Project>{bc0e74f4-f02a-45ff-b1a0-af91bcc7f7d4}</Project>
       <Name>MyCouch.Net45.Testing</Name>
     </ProjectReference>
   </ItemGroup>
