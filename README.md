@@ -8,7 +8,7 @@ MyCouch is distributed via NuGet. You can [find the package here](https://nuget.
 The documentation is contained in the [project wiki](https://github.com/danielwertheim/mycouch/wiki).
 
 # Get up and running with the source code #
-The Sample has been written using Visual Studio 2012, targetting multiple platforms (.Net40 & .Net45). .Net45 is the mainstream project. .Net4.0 uses Microsofts various portable class library (PCL) for adding missing BCL capabilities, the async HttpClient etc. to .Net4.0.
+The Sample has been written using Visual Studio 2012, targeting multiple platforms (.Net40, .Net45, Windows Store apps). .Net45 is the mainstream project. .Net4.0 uses Microsofts various portable class library (PCL) for adding missing BCL capabilities, the async HttpClient etc. to .Net4.0.
 
 Please note. **No NuGet packages are checked in**. To get your project up and running you need to install the missing NuGet packages using the provided PowerShell script:
 
@@ -27,7 +27,7 @@ This is described in the wiki, under: ["How-to Contribute"](https://github.com/d
 So you have issues or questions... Great! That means someone is using it. Use the issues function here at the project page or contact me via mail: firstname@lastname.se; or Twitter: [@danielwertheim](https://twitter.com/danielwertheim)
 
 ## A word about the integration tests ##
-They are written using NUnit and to get started you need to create a database `mycouchtests` and one user `mycouchtester` with password `p@ssword`. The user also must be allowed to create views in the database.
+They are written using MSTest (to be able to easily test the lib, supporting Windows Store apps). To get started you need to create a database `mycouchtests` and one user `mycouchtester` with password `p@ssword`. The user also must be allowed to create views in the database.
 
 ## License ##
 The MIT License (MIT)
