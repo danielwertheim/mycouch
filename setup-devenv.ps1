@@ -1,22 +1,17 @@
-Set-Alias nget nuget.exe
-
 Function OutPut ($v) {
-    Write-Host $v -ForegroundColor Cyan
+  Write-Host $v -ForegroundColor Cyan
 }
 
-Function Get-Package-Configs {
-    return Get-ChildItem "src" -Filter "packages.config" -Recurse -File
-}
-
-Function Install-Packages {
-    OutPut "Installing missing NuGet packages..."
-    $c = 0
-    Get-Package-Configs | ForEach-Object { 
-        OutPut "Installing packages for: '$($_.FullName)'"
-        nget i ""$($_.FullName)"" -o "src\packages"
-        $c += 1
+Function Install-Packages($basePath) {
+  OutPut "Installing missing NuGet packages..."
+  $c = 0
+  Get-ChildItem $basePath -Filter "packages.config" -Recurse |
+    ForEach-Object {
+      OutPut "Installing packages for: '$($_.FullName)'"
+      nuget i ""$($_.FullName)"" -o "$($basePath)\packages"
+      $c += 1
     }
-    OutPut "Processed $($c) package(s).config."
+  OutPut "Processed $($c) package(s).config."
 }
 
-Install-Packages
+Install-Packages("src")

@@ -2,7 +2,9 @@
 
 namespace MyCouch
 {
+#if !WinRT
     [Serializable]
+#endif
     public class AttachmentResponse : DocumentHeaderResponse
     {
         public string Name { get; set; }

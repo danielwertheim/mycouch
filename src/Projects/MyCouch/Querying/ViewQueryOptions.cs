@@ -4,7 +4,9 @@ using System.Linq;
 
 namespace MyCouch.Querying
 {
+#if !WinRT
     [Serializable]
+#endif
     public class ViewQueryOptions : IViewQueryOptions
     {
         public string Stale { get; set; }

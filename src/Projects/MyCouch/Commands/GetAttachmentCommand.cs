@@ -3,7 +3,9 @@ using EnsureThat;
 
 namespace MyCouch.Commands
 {
+#if !WinRT
     [Serializable]
+#endif
     public class GetAttachmentCommand : IMyCouchCommand
     {
         public string DocId { get; private set; }

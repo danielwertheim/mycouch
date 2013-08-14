@@ -2,7 +2,9 @@
 
 namespace MyCouch
 {
+#if !WinRT
     [Serializable]
+#endif
     public class ViewQueryResponse<T> : Response where T : class 
     {
         public long TotalRows { get; set; }
@@ -26,7 +28,9 @@ namespace MyCouch
                 OffSet);
         }
 
+#if !WinRT
         [Serializable]
+#endif
         public class Row
         {
             public string Id { get; set; }

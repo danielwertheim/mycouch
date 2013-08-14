@@ -1,56 +1,38 @@
-﻿using NUnit.Framework;
+﻿using System;
+#if !WinRT
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+#else
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+#endif
 
 namespace MyCouch.Testing
 {
-    [TestFixture]
+    [TestClass]
     public abstract class TestsOf<T> : TestsOf where T : class
     {
         protected T SUT { get; set; }
     }
 
-    [TestFixture]
+    [TestClass]
     public abstract class TestsOf
     {
-        [TestFixtureSetUp]
-        public void FixtureInitializer()
-        {
-            OnFixtureInitialize();
-        }
+        protected Action OnTestInitialize { get; set; }
+        protected Action OnTestFinalize { get; set; }
 
-        protected virtual void OnFixtureInitialize()
-        {
-        }
-
-        [TestFixtureTearDown]
-        public void FixtureFinalizer()
-        {
-            OnFixtureFinalize();
-        }
-
-        protected virtual void OnFixtureFinalize()
-        {
-        }
-
-        [SetUp]
+        [TestInitialize]
         public void TestInitializer()
         {
             //Now.ValueFn = () => TestConstants.FixedDateTime;
-            OnTestInitialize();
+            if(OnTestInitialize != null)
+                OnTestInitialize();
         }
 
-        protected virtual void OnTestInitialize()
-        {
-        }
-
-        [TearDown]
+        [TestCleanup]
         public void TestFinalizer()
         {
-            OnTestFinalize();
+            if (OnTestFinalize != null)
+                OnTestFinalize();
             //Now.ValueFn = () => TestConstants.FixedDateTime;
-        }
-
-        protected virtual void OnTestFinalize()
-        {
         }
     }
 }

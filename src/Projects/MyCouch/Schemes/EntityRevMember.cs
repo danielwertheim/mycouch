@@ -1,9 +1,15 @@
 ﻿using System;
+using MyCouch.Schemes.Reflections;
 
 namespace MyCouch.Schemes
 {
     public class EntityRevMember : EntityMember 
     {
+        public EntityRevMember(IDynamicPropertyFactory dynamicPropertyFactory) 
+            : base(dynamicPropertyFactory)
+        {
+        }
+
         public override int? GetMemberRankingIndex(Type entityType, string membername)
         {
             if (membername.Equals("_rev", StringComparison.OrdinalIgnoreCase))

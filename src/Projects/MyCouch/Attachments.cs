@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Commands;
+using MyCouch.Extensions;
 using MyCouch.Net;
-using MyCouch.Core;
 
 namespace MyCouch
 {

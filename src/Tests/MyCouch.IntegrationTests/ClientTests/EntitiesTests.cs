@@ -1,28 +1,25 @@
 ﻿using System.Collections.Generic;
 using MyCouch.Testing;
 using MyCouch.Testing.Model;
-using NUnit.Framework;
+#if !WinRT
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+#else
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+#endif
+using MyCouch.Extensions;
 
 namespace MyCouch.IntegrationTests.ClientTests
 {
-    [TestFixture]
+    [TestClass]
     public class EntitiesTests : IntegrationTestsOf<IEntities>
     {
-        protected override void OnTestInitialize()
+        public EntitiesTests()
         {
-            base.OnTestInitialize();
-
-            SUT = Client.Entities;
+            OnTestInitialize = () => SUT = Client.Entities;
+            OnTestFinalize = () => IntegrationTestsRuntime.ClearAllDocuments();
         }
 
-        protected override void OnTestFinalize()
-        {
-            base.OnTestFinalize();
-
-            IntegrationTestsRuntime.ClearAllDocuments();
-        }
-
-        [Test]
+        [TestMethod]
         public void When_post_of_new_document_Using_an_entity_The_document_is_persisted()
         {
             var artist = TestData.Artists.CreateArtist();
@@ -33,7 +30,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             response.Should().BeSuccessfulPost(initialId, e => e.ArtistId, e => e.ArtistRev);
         }
 
-        [Test]
+        [TestMethod]
         public void When_put_of_new_document_Using_an_entity_The_document_is_replaced()
         {
             var artist = TestData.Artists.CreateArtist();
@@ -44,7 +41,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             response.Should().BeSuccessfulPutOfNew(initialId, e => e.ArtistId, e => e.ArtistRev);
         }
 
-        [Test]
+        [TestMethod]
         public void When_put_of_existing_document_Using_an_entity_The_document_is_replaced()
         {
             var artist = TestData.Artists.CreateArtist();
@@ -56,7 +53,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             response.Should().BeSuccessfulPut(initialId, e => e.ArtistId, e => e.ArtistRev);
         }
 
-        [Test]
+        [TestMethod]
         public void When_put_of_existing_document_Using_wrong_rev_A_conflict_is_detected()
         {
             var postResponse = SUT.Post(TestData.Artists.Artist1);
@@ -67,7 +64,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             response.Should().Be409Put(TestData.Artists.Artist1Id);
         }
 
-        [Test]
+        [TestMethod]
         public void When_delete_of_existing_document_Using_an_entity_The_document_is_deleted()
         {
             var artist = TestData.Artists.CreateArtist();
@@ -79,7 +76,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             response.Should().BeSuccessfulDelete(initialId, e => e.ArtistId, e => e.ArtistRev);
         }
 
-        [Test]
+        [TestMethod]
         public void Flow_tests()
         {
             var artists = TestData.Artists.CreateArtists(2);
