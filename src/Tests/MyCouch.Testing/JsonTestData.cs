@@ -37,7 +37,10 @@ namespace MyCouch.Testing
         private static string ReadFile(string name)
         {
 #if !WinRT
-            return Cache.GetOrAdd(name, File.ReadAllText(Path.Combine(name, ".json")));
+            var folder = string.Concat(typeof (JsonTestData).Name, "Files");
+            var filePath = Path.Combine(folder, string.Concat(name, ".json"));
+
+            return Cache.GetOrAdd(name, File.ReadAllText(filePath));
 #else
             return Cache.GetOrAdd(name, WinRtStyleOfDoingASimpleRead(name).Result);
 #endif

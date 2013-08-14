@@ -1,11 +1,11 @@
 ﻿using MyCouch.Testing;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace MyCouch.UnitTests
 {
-    [TestFixture]
+    [TestClass]
     public abstract class UnitTestsOf<T> : TestsOf<T> where T : class { }
 
-    [TestFixture]
+    [TestClass]
     public abstract class UnitTestsOf : TestsOf { }
 }

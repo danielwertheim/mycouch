@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Reflection;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MyCouch.Extensions;
-using NUnit.Framework;
-
 namespace MyCouch.Testing
 {
     public static class CustomAsserts
@@ -15,6 +14,9 @@ namespace MyCouch.Testing
 
         private static void AreValueEqual(Type type, object a, object b)
         {
+            if (type == typeof(object))
+                throw new Exception("You need to specify type to do the value equality comparision.");
+
             if (ReferenceEquals(a, b))
                 return;
 
@@ -26,28 +28,20 @@ namespace MyCouch.Testing
 
             if (type.IsEnumerableType())
             {
-                if (type.GetElementType().IsSimpleType())
-                    CollectionAssert.AreEquivalent(a as IEnumerable, b as IEnumerable);
-                else
+                var array1 = a as Array;
+                Assert.IsNotNull(array1);
+
+                var array2 = b as Array;
+                Assert.IsNotNull(array2);
+
+                for (var i = 0; i < array1.Length; i++)
                 {
-                    var array1 = a as Array;
-                    Assert.IsNotNull(array1);
-
-                    var array2 = b as Array;
-                    Assert.IsNotNull(array2);
-
-                    for (var i = 0; i < array1.Length; i++)
-                    {
-                        var v1 = array1.GetValue(i);
-                        var v2 = array2.GetValue(i);
-                        AreValueEqual(v1.GetType(), v1, v2);
-                    }
+                    var v1 = array1.GetValue(i);
+                    var v2 = array2.GetValue(i);
+                    AreValueEqual(v1.GetType(), v1, v2);
                 }
                 return;
             }
-
-            if (type == typeof(object))
-                throw new Exception("You need to specify type to do the value equality comparision.");
 
             if (type.IsSimpleType())
             {

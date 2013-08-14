@@ -1,28 +1,20 @@
 ﻿using System.Collections.Generic;
 using FluentAssertions;
 using MyCouch.Testing;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace MyCouch.IntegrationTests.ClientTests
 {
-    [TestFixture]
+    [TestClass]
     public class DocumentsTests : IntegrationTestsOf<IDocuments>
     {
-        protected override void OnTestInitialize()
+        public DocumentsTests()
         {
-            base.OnTestInitialize();
-
-            SUT = Client.Documents;
+            OnTestInitialize = () => SUT = Client.Documents;
+            OnTestFinalize = () => IntegrationTestsRuntime.ClearAllDocuments();
         }
 
-        protected override void OnTestFinalize()
-        {
-            base.OnTestFinalize();
-
-            IntegrationTestsRuntime.ClearAllDocuments();
-        }
-
-        [Test]
+        [TestMethod]
         public void When_exists_of_non_existing_document_The_response_is_empty()
         {
             var response = SUT.Exists("fooId");
@@ -30,7 +22,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             response.Should().BeHead404("fooId");
         }
 
-        [Test]
+        [TestMethod]
         public void When_exists_using_not_matching_rev_The_response_is_empty()
         {
             var postResponse = SUT.Post(TestData.Artists.Artist1Json);
@@ -40,7 +32,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             response.Should().BeHead404(postResponse.Id);
         }
 
-        [Test]
+        [TestMethod]
         public void When_exists_using_matching_id_The_response_is_ok()
         {
             var postResponse = SUT.Post(TestData.Artists.Artist1Json);
@@ -50,7 +42,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             response.Should().BeHead200(postResponse.Id, postResponse.Rev);
         }
 
-        [Test]
+        [TestMethod]
         public void When_exists_using_matching_id_and_rev_The_response_is_ok()
         {
             var postResponse = SUT.Post(TestData.Artists.Artist1Json);
@@ -60,7 +52,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             response.Should().BeHead200(postResponse.Id, postResponse.Rev);
         }
 
-        [Test]
+        [TestMethod]
         public void When_post_of_new_document_The_document_is_persisted()
         {
             var response = SUT.Post(TestData.Artists.Artist1Json);
@@ -68,7 +60,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             response.Should().BeSuccessfulPost(TestData.Artists.Artist1Id);
         }
 
-        [Test]
+        [TestMethod]
         public void When_put_of_new_document_The_document_is_replaced()
         {
             var response = SUT.Put(TestData.Artists.Artist1Id, TestData.Artists.Artist1Json);
@@ -76,7 +68,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             response.Should().BeSuccessfulPutOfNew(TestData.Artists.Artist1Id);
         }
         
-        [Test]
+        [TestMethod]
         public void When_put_of_existing_document_The_document_is_replaced()
         {
             var postResponse = SUT.Post(TestData.Artists.Artist1Json);
@@ -87,7 +79,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             response.Should().BeSuccessfulPut(TestData.Artists.Artist1Id);
         }
 
-        [Test]
+        [TestMethod]
         public void When_put_of_existing_document_Using_wrong_rev_A_conflict_is_detected()
         {
             var postResponse = SUT.Post(TestData.Artists.Artist1Json);
@@ -97,7 +89,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             response.Should().Be409Put(TestData.Artists.Artist1Id);
         }
 
-        [Test]
+        [TestMethod]
         public void When_delete_of_existing_document_Using_id_and_rev_The_document_is_deleted()
         {
             var r = SUT.Post(TestData.Artists.Artist1Json);
@@ -107,7 +99,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             response.Should().BeSuccessfulDelete(TestData.Artists.Artist1Id);
         }
 
-        [Test]
+        [TestMethod]
         public void When_copying_using_srcId_The_document_is_copied()
         {
             var artistPost = SUT.Post(TestData.Artists.Artist1Json);
@@ -124,7 +116,7 @@ namespace MyCouch.IntegrationTests.ClientTests
                 .Replace("\"_rev\":\"" + srcArtist.Rev + "\"", "\"_rev\":\"" + copyResponse.Rev + "\""));
         }
 
-        [Test]
+        [TestMethod]
         public void When_copying_using_srcId_and_srcRev_The_document_is_copied()
         {
             var artistPost1 = SUT.Post(TestData.Artists.Artist1Json);
@@ -142,7 +134,7 @@ namespace MyCouch.IntegrationTests.ClientTests
                 .Replace("\"_rev\":\"" + srcArtist.Rev + "\"", "\"_rev\":\"" + copyResponse.Rev + "\""));
         }
 
-        [Test]
+        [TestMethod]
         public void When_replacing_using_srcId_The_document_is_replacing_target()
         {
             var artist1Post = SUT.Post(TestData.Artists.Artist1Json);
@@ -159,7 +151,7 @@ namespace MyCouch.IntegrationTests.ClientTests
                 .Replace("\"_rev\":\"" + srcArtist1.Rev + "\"", "\"_rev\":\"" + replaceResponse.Rev + "\""));
         }
 
-        [Test]
+        [TestMethod]
         public void When_replacing_using_srcId_and_srcRev_The_document_is_replacing_target()
         {
             var artist1Post = SUT.Post(TestData.Artists.Artist1Json);
@@ -176,7 +168,7 @@ namespace MyCouch.IntegrationTests.ClientTests
                 .Replace("\"_rev\":\"" + srcArtist1.Rev + "\"", "\"_rev\":\"" + replaceResponse.Rev + "\""));
         }
 
-        [Test]
+        [TestMethod]
         public void Flow_tests()
         {
             var post1 = SUT.PostAsync(TestData.Artists.Artist1Json);
