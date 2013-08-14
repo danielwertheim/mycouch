@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Reflection;
+#if !WinRT
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+#else
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+#endif
 using MyCouch.Extensions;
+
 namespace MyCouch.Testing
 {
     public static class CustomAsserts

@@ -5,7 +5,12 @@ using System.Threading.Tasks;
 using MyCouch.Querying;
 using MyCouch.Testing;
 using MyCouch.Testing.Model;
+#if !WinRT
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+#else
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+#endif
+using MyCouch.Extensions;
 
 namespace MyCouch.IntegrationTests.ClientTests
 {

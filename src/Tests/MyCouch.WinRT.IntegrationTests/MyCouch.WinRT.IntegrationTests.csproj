@@ -168,7 +168,7 @@
       <Name>MyCouch.WinRT</Name>
     </ProjectReference>
     <ProjectReference Include="..\MyCouch.WinRT.Testing\MyCouch.WinRT.Testing.csproj">
-      <Project>{7a552c77-a314-4f2e-b7fe-765b3c78d3ba}</Project>
+      <Project>{3cb22cee-3d68-4ba4-9542-1a6630d6cb59}</Project>
       <Name>MyCouch.WinRT.Testing</Name>
     </ProjectReference>
   </ItemGroup>

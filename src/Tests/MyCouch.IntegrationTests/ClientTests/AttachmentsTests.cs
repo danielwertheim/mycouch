@@ -1,7 +1,12 @@
 ﻿using FluentAssertions;
 using MyCouch.Commands;
 using MyCouch.Testing;
+#if !WinRT
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+#else
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+#endif
+using MyCouch.Extensions;
 
 namespace MyCouch.IntegrationTests.ClientTests
 {

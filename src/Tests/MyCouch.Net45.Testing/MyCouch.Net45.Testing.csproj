@@ -72,14 +72,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\mycouch.testing\jsontestdatafiles\ViewQueryAlbums.json">
+    <Content Include="..\mycouch.testing\jsontestdatafiles\ViewQueryAlbums.json">
       <Link>JsonTestDataFiles\ViewQueryAlbums.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\mycouch.testing\jsontestdatafiles\ViewQueryAllDocsResult.json">
+    </Content>
+    <Content Include="..\mycouch.testing\jsontestdatafiles\ViewQueryAllDocsResult.json">
       <Link>JsonTestDataFiles\ViewQueryAllDocsResult.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

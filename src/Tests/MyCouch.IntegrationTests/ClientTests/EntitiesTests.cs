@@ -1,7 +1,12 @@
 ﻿using System.Collections.Generic;
 using MyCouch.Testing;
 using MyCouch.Testing.Model;
+#if !WinRT
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+#else
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+#endif
+using MyCouch.Extensions;
 
 namespace MyCouch.IntegrationTests.ClientTests
 {

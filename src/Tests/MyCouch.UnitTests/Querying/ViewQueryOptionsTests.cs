@@ -1,6 +1,11 @@
 ﻿using FluentAssertions;
 using MyCouch.Querying;
+#if !WinRT
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+#else
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+#endif
+using MyCouch.Extensions;
 using System.Linq;
 
 namespace MyCouch.UnitTests.Querying

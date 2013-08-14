@@ -5,7 +5,12 @@ using MyCouch.Schemes.Reflections;
 using MyCouch.Serialization;
 using MyCouch.Testing;
 using MyCouch.Testing.Model;
+#if !WinRT
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+#else
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+#endif
+using MyCouch.Extensions;
 
 namespace MyCouch.UnitTests.Serialization
 {
@@ -20,13 +25,6 @@ namespace MyCouch.UnitTests.Serialization
                 SUT = new MyCouchSerializer(() => entityReflector);
             };
         }
-        //protected override void OnTestInitialize()
-        //{
-        //    base.OnTestInitialize();
-
-        //    var entityReflector = new EntityReflector(new LambdaDynamicPropertyFactory());
-        //    SUT = new MyCouchSerializer(() => entityReflector);
-        //}
     }
 #if !WinRT
     [TestClass]

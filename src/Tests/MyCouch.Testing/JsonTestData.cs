@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 #if WinRT
 using Windows.ApplicationModel;
@@ -22,7 +23,7 @@ namespace MyCouch.Testing
         {
             get
             {
-                return ReadFile("ViewQueryAlbums");
+                return ReadFile("ViewQueryAlbums.json");
             }
         }
 
@@ -30,15 +31,14 @@ namespace MyCouch.Testing
         {
             get
             {
-                return ReadFile("ViewQueryAllDocsResult");
+                return ReadFile("ViewQueryAllDocsResult.json");
             }
         }
 
         private static string ReadFile(string name)
         {
 #if !WinRT
-            var folder = string.Concat(typeof (JsonTestData).Name, "Files");
-            var filePath = Path.Combine(folder, string.Concat(name, ".json"));
+            var filePath = Path.Combine(GenerateFilesFolderName(), name);
 
             return Cache.GetOrAdd(name, File.ReadAllText(filePath));
 #else
@@ -48,11 +48,15 @@ namespace MyCouch.Testing
 #if WinRT
         private static async Task<string> WinRtStyleOfDoingASimpleRead(string name)
         {
-            var folder = Package.Current.InstalledLocation;
-            var file = await folder.GetFileAsync(Path.Combine(name, ".json"));
+            var folder = await Package.Current.InstalledLocation.GetFolderAsync(GenerateFilesFolderName());
+            var file = await folder.GetFileAsync(name);
             
             return await FileIO.ReadTextAsync(file);
         }
 #endif
+        private static string GenerateFilesFolderName()
+        {
+            return string.Concat(typeof(JsonTestData).Name, "Files");
+        }
     }
 }

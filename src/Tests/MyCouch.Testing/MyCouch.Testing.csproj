@@ -56,12 +56,12 @@
     <Compile Include="TypeExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="JsonTestDataFiles\ViewQueryAlbums.json">
+    <Content Include="JsonTestDataFiles\ViewQueryAlbums.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="JsonTestDataFiles\ViewQueryAllDocsResult.json">
+    </Content>
+    <Content Include="JsonTestDataFiles\ViewQueryAllDocsResult.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
