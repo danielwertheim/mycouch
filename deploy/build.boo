@@ -56,6 +56,4 @@ target zip:
     
 target nuget_pack:
     mynuget(
-        options: "pack ${solution_name}.nuspec -version ${build_version} -basepath ${builds_dir_path} -outputdirectory ${builds_dir_path}")
-    mynuget(
-        options: "pack ${solution_name}.Source.nuspec -version ${build_version} -basepath ${solution_dir_path} -outputdirectory ${builds_dir_path}")
+        options: "pack ${project_name}.nuspec -version ${build_version} -basepath ${build_dir_path} -outputdirectory ${builds_dir_path}")

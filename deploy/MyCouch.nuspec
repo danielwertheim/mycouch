@@ -1,30 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package>
-    <metadata>
-        <id>MyCouch</id>    
-        <title>MyCouch - CouchDb client</title>
-        <version>$version$</version>
-        <authors>danielwertheim</authors>
-        <copyright>Copyright 2013 Daniel Wertheim</copyright>
-        <summary>Simple async CouchDb client.</summary>
-        <description>
-            Simple asynchronous CouchDb client for .Net - builds on top of the asynchronous HTTP client and uses JSON.Net to provide flexible serialization behavior. It tries to keep the domain language of CouchDb instead of bringing in generic repositories and other confusing stuff. MyCouch lets you work with raw JSON and/or entities/POCOS without requiring any implementation of interfaces, baseclasses etc. MyCouch provides you with some model conventions like injection of $doctype to the document. It is plug-gable. If you don't like some piece, then hook in your implementation instead.
-        </description>
-        <projectUrl>https://github.com/danielwertheim/MyCouch</projectUrl>
-        <licenseUrl>https://github.com/danielwertheim/MyCouch#license</licenseUrl>
-        <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <releaseNotes>Can be found on project site: https://github.com/danielwertheim/mycouch/wiki/release-notes</releaseNotes>        
-        <tags>couchdb nosql json document-db db poco async, asynchronous</tags>
-        <frameworkAssemblies>
-            <frameworkAssembly assemblyName="System.Net.Http" targetFramework="net40" />
-        </frameworkAssemblies>
-        <dependencies>
-            <dependency id="Ensure.That" version="0.10.1" />
-            <dependency id="Newtonsoft.Json" version="5.0.4" />
-        </dependencies>
-    </metadata>
-    <files>
-      <file src="*\MyCouch.dll" target="lib\net40" />
-      <file src="*\MyCouch.xml" target="lib\net40" />
-    </files>
+  <metadata>
+    <id>MyCouch</id>
+    <title>MyCouch - CouchDb client</title>
+    <version>$version$</version>
+    <authors>danielwertheim</authors>
+    <copyright>Copyright 2013 Daniel Wertheim</copyright>
+    <summary>Simple async CouchDb client.</summary>
+    <description>
+      Simple asynchronous CouchDb client for .Net - builds on top of the asynchronous HTTP client and uses JSON.Net to provide flexible serialization behaviour. It tries to keep the domain language of CouchDb instead of bringing in generic repositories and other confusing stuff. MyCouch lets you work with raw JSON and/or entities/POCOS without requiring any implementation of interfaces, baseclasses etc. MyCouch provides you with some model conventions like injection of $doctype to the document. It is plug-gable. If you don't like some piece, then hook in your implementation instead.
+      Supports .Net4.0, .Net4.5 and WinRT/Windows store/Windows8+.
+    </description>
+    <projectUrl>https://github.com/danielwertheim/MyCouch</projectUrl>
+    <licenseUrl>https://github.com/danielwertheim/MyCouch#license</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <releaseNotes>Can be found on project site: https://github.com/danielwertheim/mycouch/wiki/release-notes</releaseNotes>
+    <tags>couchdb nosql json document-db documents poco async asynchronous</tags>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.Net.Http" targetFramework="net45" />
+    </frameworkAssemblies>
+    <dependencies>
+       <group>
+         <dependency id="Ensure.That" version="1.0.0" />
+         <dependency id="Newtonsoft.Json" version="5.0.6" />
+       </group>
+       <group targetFramework="net40">
+         <dependency id="Microsoft.Bcl" version="1.1.3" />
+         <dependency id="Microsoft.Bcl.Async" version="1.0.16" />
+         <dependency id="Microsoft.Bcl.Build" version="1.0.8" />
+         <dependency id="Microsoft.Net.Http" version="2.2.13" />
+       </group>
+       <group targetFramework="net45"></group>
+       <group targetFramework="netcore"></group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="Net40\MyCouch.Net40.dll" target="lib\net40" />
+    <file src="Net40\MyCouch.Net40.xml" target="lib\net40" />
+    <file src="Net45\MyCouch.Net45.dll" target="lib\net45" />
+    <file src="Net45\MyCouch.Net45.xml" target="lib\net45" />
+    <file src="WinRT\MyCouch.WinRT.dll" target="lib\netcore45" />
+    <file src="WinRT\MyCouch.WinRT.xml" target="lib\netcore45" />
+  </files>
 </package>
