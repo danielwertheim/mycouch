@@ -4,7 +4,7 @@ using System.Net.Http;
 
 namespace MyCouch
 {
-#if !WinRT
+#if !NETFX_CORE
     [Serializable]
 #endif
     public abstract class Response : IResponse

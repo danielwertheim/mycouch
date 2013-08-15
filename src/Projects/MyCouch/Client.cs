@@ -28,7 +28,7 @@ namespace MyCouch
             Ensure.That(connection, "connection").IsNotNull();
 
             Connection = connection;
-#if !WinRT
+#if !NETFX_CORE
             EntityReflector = new EntityReflector(new IlDynamicPropertyFactory());
 #else
             EntityReflector = new EntityReflector(new LambdaDynamicPropertyFactory());

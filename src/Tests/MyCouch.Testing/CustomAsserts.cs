@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Reflection;
-#if !WinRT
+#if !NETFX_CORE
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 #else
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
@@ -53,7 +53,7 @@ namespace MyCouch.Testing
                 Assert.AreEqual(a, b);
                 return;
             }
-#if !WinRT
+#if !NETFX_CORE
             foreach (var propertyInfo in type.GetProperties())
             {
                 var propertyType = propertyInfo.PropertyType;

@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
   
-  <Identity Name="915acad4-d601-47d0-bc01-f8bcc24e30d5"
+  <Identity Name="dbd80027-ad93-4d31-9a65-696a958e7577"
             Publisher="CN=Daniel"
             Version="1.0.0.0" />
   
   <Properties>
-    <DisplayName>MyCouch.WinRT.UnitTests</DisplayName>
+    <DisplayName>MyCouch.NetCore45.UnitTests</DisplayName>
     <PublisherDisplayName>Daniel</PublisherDisplayName>
     <Logo>Images\UnitTestStoreLogo.png</Logo>
-    <Description>MyCouch.WinRT.UnitTests</Description>
+    <Description>MyCouch.NetCore45.UnitTests</Description>
   </Properties>
   
   <Prerequisites>

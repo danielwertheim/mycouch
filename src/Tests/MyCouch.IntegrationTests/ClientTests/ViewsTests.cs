@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using MyCouch.Querying;
 using MyCouch.Testing;
 using MyCouch.Testing.Model;
-#if !WinRT
+#if !NETFX_CORE
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 #else
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;

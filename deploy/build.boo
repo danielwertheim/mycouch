@@ -30,12 +30,12 @@ target copy:
         .Include("${project_name}.*.{dll,xml}")
         .ForEach def(file):
             file.CopyToDirectory("${build_dir_path}/Net45")
-    with FileList("${solution_dir_path}/Projects/${project_name}.WinRT/bin/${build_config}"):
+    with FileList("${solution_dir_path}/Projects/${project_name}.NetCore45/bin/${build_config}"):
         .Include("${project_name}.*.{dll,xml}")
         .ForEach def(file):
-            file.CopyToDirectory("${build_dir_path}/WinRT")
+            file.CopyToDirectory("${build_dir_path}/NetCore45")
 
-target test, (test40, test45, testwinrt):
+target test, (test40, test45, testnetcore45):
     pass
 
 target test40:
@@ -48,7 +48,7 @@ target test45:
         tool_path: "C:/Program Files (x86)/Microsoft Visual Studio 11.0/Common7/IDE/CommonExtensions/Microsoft/TestWindow/vstest.console.exe",
         assembly: "${solution_dir_path}/Tests/${project_name}.Net45.UnitTests/bin/${build_config}/${project_name}.Net45.UnitTests.dll")
 
-target testwinrt:
+target testnetcore45:
     print "Sorry. But this has to be done from within VS2012 for now. Switching to xUnit as soon has I have time over."
 
 target zip:

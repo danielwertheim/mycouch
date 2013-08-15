@@ -2,7 +2,7 @@
 
 namespace MyCouch
 {
-#if !WinRT
+#if !NETFX_CORE
     [Serializable]
 #endif
     public class BulkResponse : Response
@@ -13,7 +13,7 @@ namespace MyCouch
             get { return Rows == null || Rows.Length == 0; }
         }
 
-#if !WinRT
+#if !NETFX_CORE
         [Serializable]
 #endif
         public class Row

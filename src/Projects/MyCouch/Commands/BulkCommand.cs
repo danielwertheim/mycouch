@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MyCouch.Commands
 {
-#if !WinRT
+#if !NETFX_CORE
     [Serializable]
 #endif
     public class BulkCommand : IMyCouchCommand

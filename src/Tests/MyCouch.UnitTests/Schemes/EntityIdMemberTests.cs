@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using MyCouch.Schemes;
 using MyCouch.Schemes.Reflections;
-#if !WinRT
+#if !NETFX_CORE
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 #else
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
@@ -18,7 +18,7 @@ namespace MyCouch.UnitTests.Schemes
             OnTestInitialize = () => SUT = new EntityIdMember(new LambdaDynamicPropertyFactory());
         }
     }
-#if !WinRT
+#if !NETFX_CORE
     [TestClass]
     public class EntityIdMemberTestsWithIlPropertyFactoryTests : EntityIdMemberTests
     {

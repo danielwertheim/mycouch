@@ -23,7 +23,7 @@ namespace MyCouch.Serialization
 
         protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
         {
-#if !WinRT
+#if !NETFX_CORE
             if (type == typeof(BulkResponse.Row) || (type.IsGenericType && typeof(ViewQueryResponse<>.Row) == type.GetGenericTypeDefinition()))
                 return base.CreateProperties(type, memberSerialization);
 #else

@@ -5,7 +5,7 @@ using MyCouch.Schemes.Reflections;
 using MyCouch.Serialization;
 using MyCouch.Testing;
 using MyCouch.Testing.Model;
-#if !WinRT
+#if !NETFX_CORE
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 #else
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
@@ -26,7 +26,7 @@ namespace MyCouch.UnitTests.Serialization
             };
         }
     }
-#if !WinRT
+#if !NETFX_CORE
     [TestClass]
     public class MyCouchSerializerWithIlPropertyFactoryTests : MyCouchSerializerTests
     {

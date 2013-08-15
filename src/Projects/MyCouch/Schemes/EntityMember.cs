@@ -62,7 +62,7 @@ namespace MyCouch.Schemes
 
         protected virtual IEnumerable<PropertyInfo> GetPropertiesFor(Type type)
         {
-#if !WinRT
+#if !NETFX_CORE
             return type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
 #else
             //TODO: Ensure perf

@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-#if WinRT
+#if NETFX_CORE
 using Windows.ApplicationModel;
 using Windows.Storage;
 #endif
@@ -38,7 +38,7 @@ namespace MyCouch.Testing
 
         private static string ReadFile(string name)
         {
-#if !WinRT
+#if !NETFX_CORE
             var filePath = Path.Combine(string.Concat(typeof(JsonTestData).Name, "Files"), name);
 
             return Cache.GetOrAdd(name, File.ReadAllText(filePath));
@@ -46,7 +46,7 @@ namespace MyCouch.Testing
             return Cache.GetOrAdd(name, WinRtStyleOfDoingASimpleRead(name).Result);
 #endif
         }
-#if WinRT
+#if NETFX_CORE
         private static async Task<string> WinRtStyleOfDoingASimpleRead(string name)
         {
             var folder = await Package.Current.InstalledLocation.GetFolderAsync(Path.Combine(typeof(JsonTestData).GetTypeInfo().Assembly.GetName().Name, string.Concat(typeof(JsonTestData).Name, "Files")));

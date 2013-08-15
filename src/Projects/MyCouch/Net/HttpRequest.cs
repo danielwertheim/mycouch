@@ -4,7 +4,7 @@ using System.Net.Http.Headers;
 
 namespace MyCouch.Net
 {
-#if !WinRT
+#if !NETFX_CORE
     [Serializable]
 #endif
     public class HttpRequest : HttpRequestMessage

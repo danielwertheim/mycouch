@@ -18,7 +18,7 @@ namespace MyCouch.Testing
 
         public static bool IsSimpleType(this Type type)
         {
-#if !WinRT
+#if !NETFX_CORE
             return (type.IsGenericType == false && type.IsValueType) || type.IsPrimitive || type.IsEnum || ExtraPrimitiveTypes.Contains(type) || type.IsNullablePrimitiveType();
 #else
             var ti = type.GetTypeInfo();
@@ -29,7 +29,7 @@ namespace MyCouch.Testing
 
         public static bool IsEnumerableType(this Type type)
         {
-#if !WinRT
+#if !NETFX_CORE
             return type != StringType
                 && type.IsValueType == false
                 && type.IsPrimitive == false
@@ -46,7 +46,7 @@ namespace MyCouch.Testing
 
         public static bool IsNullablePrimitiveType(this Type t)
         {
-#if !WinRT
+#if !NETFX_CORE
             return ExtraPrimitiveNullableTypes.Contains(t) || (t.IsValueType && t.IsGenericType && t.GetGenericTypeDefinition() == NullableType && t.GetGenericArguments()[0].IsPrimitive);
 #else
             var ti = t.GetTypeInfo();

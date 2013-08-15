@@ -6,22 +6,22 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{DF0AFD90-F622-47FB-B50C-E4C91768F929}</ProjectGuid>
+    <ProjectGuid>{41274A50-68B3-4278-A64D-F94BD0939D1F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MyCouch.IntegrationTests</RootNamespace>
-    <AssemblyName>MyCouch.WinRT.IntegrationTests</AssemblyName>
+    <RootNamespace>MyCouch.UnitTests</RootNamespace>
+    <AssemblyName>MyCouch.NetCore45.UnitTests</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <PackageCertificateKeyFile>MyCouch.WinRT.IntegrationTests_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>MyCouch.NetCore45.UnitTests_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NETFX_CORE,WinRT</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -29,7 +29,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;NETFX_CORE,WinRT</DefineConstants>
+    <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -112,32 +112,23 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests\AssemblyInitializer.cs">
-      <Link>AssemblyInitializer.cs</Link>
+    <Compile Include="..\MyCouch.UnitTests\BulkCommandTests.cs">
+      <Link>BulkCommandTests.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.integrationtests\clienttests\AttachmentsTests.cs">
-      <Link>ClientTests\AttachmentsTests.cs</Link>
+    <Compile Include="..\mycouch.unittests\querying\ViewQueryOptionsTests.cs">
+      <Link>Querying\ViewQueryOptionsTests.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.integrationtests\clienttests\DocumentsTests.cs">
-      <Link>ClientTests\DocumentsTests.cs</Link>
+    <Compile Include="..\mycouch.unittests\schemes\EntityIdMemberTests.cs">
+      <Link>Schemes\EntityIdMemberTests.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.integrationtests\clienttests\EntitiesTests.cs">
-      <Link>ClientTests\EntitiesTests.cs</Link>
+    <Compile Include="..\mycouch.unittests\schemes\EntityRevMemberTests.cs">
+      <Link>Schemes\EntityRevMemberTests.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.integrationtests\clienttests\ViewsTests.cs">
-      <Link>ClientTests\ViewsTests.cs</Link>
+    <Compile Include="..\mycouch.unittests\serialization\MyCouchSerializerTests.cs">
+      <Link>Serialization\MyCouchSerializerTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests\IntegrationTestsOf.cs">
-      <Link>IntegrationTestsOf.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests\IntegrationTestsRuntime.cs">
-      <Link>IntegrationTestsRuntime.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests\TestClientFactory.cs">
-      <Link>TestClientFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests\TestConstants.cs">
-      <Link>TestConstants.cs</Link>
+    <Compile Include="..\MyCouch.UnitTests\UnitTestsOf.cs">
+      <Link>UnitTestsOf.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -145,7 +136,7 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="MyCouch.WinRT.IntegrationTests_TemporaryKey.pfx" />
+    <None Include="MyCouch.NetCore45.UnitTests_TemporaryKey.pfx" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -163,13 +154,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Projects\MyCouch.WinRT\MyCouch.WinRT.csproj">
+    <ProjectReference Include="..\..\Projects\MyCouch.NetCore45\MyCouch.NetCore45.csproj">
       <Project>{07fea184-bce6-4224-a9d7-b8d3ff5bb439}</Project>
-      <Name>MyCouch.WinRT</Name>
+      <Name>MyCouch.NetCore45</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MyCouch.WinRT.Testing\MyCouch.WinRT.Testing.csproj">
-      <Project>{8bfea1cd-3170-475b-9ad0-a4faabbdf302}</Project>
-      <Name>MyCouch.WinRT.Testing</Name>
+    <ProjectReference Include="..\MyCouch.NetCore45.Testing\MyCouch.NetCore45.Testing.csproj">
+      <Project>{9dd736f7-178a-4c14-aaa8-4221da19e684}</Project>
+      <Name>MyCouch.NetCore45.Testing</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

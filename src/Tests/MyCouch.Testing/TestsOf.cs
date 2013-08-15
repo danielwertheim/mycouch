@@ -1,5 +1,5 @@
 ﻿using System;
-#if !WinRT
+#if !NETFX_CORE
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 #else
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;

@@ -6,22 +6,21 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{37781B29-B70D-45AA-A762-F5A9C2BF79CF}</ProjectGuid>
+    <ProjectGuid>{9DD736F7-178A-4C14-AAA8-4221DA19E684}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MyCouch.UnitTests</RootNamespace>
-    <AssemblyName>MyCouch.WinRT.UnitTests</AssemblyName>
+    <RootNamespace>MyCouch.Testing</RootNamespace>
+    <AssemblyName>MyCouch.NetCore45.Testing</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <PackageCertificateKeyFile>MyCouch.WinRT.UnitTests_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NETFX_CORE,WinRT</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -29,7 +28,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;NETFX_CORE,WinRT</DefineConstants>
+    <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -99,57 +98,60 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
-  <PropertyGroup>
-    <AppXPackage>True</AppXPackage>
-    <AppxPackageIncludePrivateSymbols>true</AppxPackageIncludePrivateSymbols>
-  </PropertyGroup>
   <ItemGroup>
-    <!--A reference to the entire .Net Framework and Windows SDK are automatically included-->
-    <SDKReference Include="MSTestFramework, Version=11.0" />
-    <SDKReference Include="TestPlatform, Version=11.0" />
+    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <SDKReference Include="MSTestFramework, Version=11.0">
+      <Name>MSTest for Managed Projects</Name>
+    </SDKReference>
+    <SDKReference Include="TestPlatform, Version=11.0">
+      <Name>Microsoft Visual Studio Test Core</Name>
+    </SDKReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.UnitTests\BulkCommandTests.cs">
-      <Link>BulkCommandTests.cs</Link>
+    <Compile Include="..\MyCouch.Testing\CustomAsserts.cs">
+      <Link>CustomAsserts.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.unittests\querying\ViewQueryOptionsTests.cs">
-      <Link>Querying\ViewQueryOptionsTests.cs</Link>
+    <Compile Include="..\MyCouch.Testing\GlobalTestConstants.cs">
+      <Link>GlobalTestConstants.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.unittests\schemes\EntityIdMemberTests.cs">
-      <Link>Schemes\EntityIdMemberTests.cs</Link>
+    <Compile Include="..\MyCouch.Testing\JsonTestData.cs">
+      <Link>JsonTestData.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.unittests\schemes\EntityRevMemberTests.cs">
-      <Link>Schemes\EntityRevMemberTests.cs</Link>
+    <Compile Include="..\mycouch.testing\model\Artist.cs">
+      <Link>Model\Artist.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.unittests\serialization\MyCouchSerializerTests.cs">
-      <Link>Serialization\MyCouchSerializerTests.cs</Link>
+    <Compile Include="..\MyCouch.Testing\Shoulds.cs">
+      <Link>Shoulds.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.UnitTests\UnitTestsOf.cs">
-      <Link>UnitTestsOf.cs</Link>
+    <Compile Include="..\MyCouch.Testing\TestData.cs">
+      <Link>TestData.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Testing\TestsOf.cs">
+      <Link>TestsOf.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Testing\TypeExtensions.cs">
+      <Link>TypeExtensions.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <AppxManifest Include="Package.appxmanifest">
-      <SubType>Designer</SubType>
-    </AppxManifest>
-    <None Include="MyCouch.WinRT.UnitTests_TemporaryKey.pfx" />
-    <None Include="packages.config" />
+    <ProjectReference Include="..\..\Projects\MyCouch.NetCore45\MyCouch.NetCore45.csproj">
+      <Project>{07fea184-bce6-4224-a9d7-b8d3ff5bb439}</Project>
+      <Name>MyCouch.NetCore45</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\UnitTestLogo.png">
+    <Content Include="..\mycouch.testing\jsontestdatafiles\ViewQueryAlbums.json">
+      <Link>JsonTestDataFiles\ViewQueryAlbums.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Images\UnitTestSmallLogo.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\UnitTestSplashScreen.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\UnitTestStoreLogo.png">
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\mycouch.testing\jsontestdatafiles\ViewQueryAllDocsResult.json">
+      <Link>JsonTestDataFiles\ViewQueryAllDocsResult.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -159,14 +161,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Projects\MyCouch.WinRT\MyCouch.WinRT.csproj">
-      <Project>{07fea184-bce6-4224-a9d7-b8d3ff5bb439}</Project>
-      <Name>MyCouch.WinRT</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MyCouch.WinRT.Testing\MyCouch.WinRT.Testing.csproj">
-      <Project>{8bfea1cd-3170-475b-9ad0-a4faabbdf302}</Project>
-      <Name>MyCouch.WinRT.Testing</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
@@ -175,7 +170,7 @@
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
-  </Target>  
+  </Target>
   <Target Name="AfterBuild">
   </Target>
   -->
