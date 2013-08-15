@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 #if WinRT
 using Windows.ApplicationModel;
@@ -38,7 +39,7 @@ namespace MyCouch.Testing
         private static string ReadFile(string name)
         {
 #if !WinRT
-            var filePath = Path.Combine(GenerateFilesFolderName(), name);
+            var filePath = Path.Combine(string.Concat(typeof(JsonTestData).Name, "Files"), name);
 
             return Cache.GetOrAdd(name, File.ReadAllText(filePath));
 #else
@@ -48,15 +49,11 @@ namespace MyCouch.Testing
 #if WinRT
         private static async Task<string> WinRtStyleOfDoingASimpleRead(string name)
         {
-            var folder = await Package.Current.InstalledLocation.GetFolderAsync(GenerateFilesFolderName());
+            var folder = await Package.Current.InstalledLocation.GetFolderAsync(Path.Combine(typeof(JsonTestData).GetTypeInfo().Assembly.GetName().Name, string.Concat(typeof(JsonTestData).Name, "Files")));
             var file = await folder.GetFileAsync(name);
             
             return await FileIO.ReadTextAsync(file);
         }
 #endif
-        private static string GenerateFilesFolderName()
-        {
-            return string.Concat(typeof(JsonTestData).Name, "Files");
-        }
     }
 }
