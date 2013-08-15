@@ -10,7 +10,7 @@ build_name = "${project_name}-v${build_version}-${build_config}"
 build_dir_path = "${builds_dir_path}/${build_name}"
 
 target default, (clean, compile, copy, test, zip, nuget_pack):
-  pass
+    pass
 
 target clean:
     rm(build_dir_path)
@@ -35,10 +35,21 @@ target copy:
         .ForEach def(file):
             file.CopyToDirectory("${build_dir_path}/WinRT")
 
-target test:
-    mynunit(
-        assemblies: MyFileList("${solution_dir_path}/Tests/*.UnitTests/bin/${build_config}", "*.UnitTests.{dll}"),
-        options: "/framework=v4.0.30319 /xml=${build_dir_path}/NUnit-Report-${build_name}-UnitTests.xml")
+target test, (test40, test45, testwinrt):
+    pass
+
+target test40:
+    myvstest(
+        tool_path: "C:/Program Files (x86)/Microsoft Visual Studio 11.0/Common7/IDE/CommonExtensions/Microsoft/TestWindow/vstest.console.exe",
+        assembly: "${solution_dir_path}/Tests/${project_name}.Net40.UnitTests/bin/${build_config}/${project_name}.Net40.UnitTests.dll")
+
+target test45:
+    myvstest(
+        tool_path: "C:/Program Files (x86)/Microsoft Visual Studio 11.0/Common7/IDE/CommonExtensions/Microsoft/TestWindow/vstest.console.exe",
+        assembly: "${solution_dir_path}/Tests/${project_name}.Net45.UnitTests/bin/${build_config}/${project_name}.Net45.UnitTests.dll")
+
+target testwinrt:
+    print "Sorry. But this has to be done from within VS2012 for now. Switching to xUnit as soon has I have time over."
 
 target zip:
     zip(build_dir_path, "${builds_dir_path}/${build_name}.zip")
