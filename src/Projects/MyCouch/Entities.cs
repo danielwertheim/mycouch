@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Commands;
-using MyCouch.Core;
+using MyCouch.Extensions;
 using MyCouch.Net;
 
 namespace MyCouch

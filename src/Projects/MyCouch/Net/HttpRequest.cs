@@ -4,7 +4,9 @@ using System.Net.Http.Headers;
 
 namespace MyCouch.Net
 {
+#if !NETFX_CORE
     [Serializable]
+#endif
     public class HttpRequest : HttpRequestMessage
     {
         public HttpRequest(HttpMethod method, string url) : base(method, new Uri(url))

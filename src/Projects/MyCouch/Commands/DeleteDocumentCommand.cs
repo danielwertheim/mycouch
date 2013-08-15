@@ -3,7 +3,9 @@ using EnsureThat;
 
 namespace MyCouch.Commands
 {
+#if !NETFX_CORE
     [Serializable]
+#endif
     public class DeleteDocumentCommand : IMyCouchCommand
     {
         public string Id { get; private set; }

@@ -1,11 +1,15 @@
 ﻿using MyCouch.Testing;
-using NUnit.Framework;
+#if !NETFX_CORE
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+#else
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+#endif
 
 namespace MyCouch.UnitTests
 {
-    [TestFixture]
+    [TestClass]
     public abstract class UnitTestsOf<T> : TestsOf<T> where T : class { }
 
-    [TestFixture]
+    [TestClass]
     public abstract class UnitTestsOf : TestsOf { }
 }

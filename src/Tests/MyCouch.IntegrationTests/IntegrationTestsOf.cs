@@ -1,21 +1,24 @@
 ﻿using MyCouch.Testing;
-using NUnit.Framework;
+#if !NETFX_CORE
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+#else
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+#endif
+using MyCouch.Extensions;
 
 namespace MyCouch.IntegrationTests
 {
-    [TestFixture]
+    [TestClass]
     public abstract class IntegrationTestsOf<T> : TestsOf<T> where T : class
     {
         protected IClient Client;
 
-        protected override void OnFixtureInitialize()
+        protected IntegrationTestsOf()
         {
-            base.OnFixtureInitialize();
-
             Client = IntegrationTestsRuntime.Client;
         }
     }
 
-    [TestFixture]
+    [TestClass]
     public abstract class IntegrationTestsOf : TestsOf { }
 }

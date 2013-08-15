@@ -1,0 +1,372 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{07FEA184-BCE6-4224-A9D7-B8D3FF5BB439}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MyCouch</RootNamespace>
+    <AssemblyName>MyCouch.NetCore45</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NETFX_CORE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>1591</NoWarn>
+    <DocumentationFile>bin\Release\MyCouch.NetCore45.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <OutputPath>bin\ARM\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\AttachmentResponse.cs">
+      <Link>AttachmentResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Attachments.cs">
+      <Link>Attachments.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\BulkResponse.cs">
+      <Link>BulkResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Client.cs">
+      <Link>Client.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\ClientExecuteExtensions.cs">
+      <Link>ClientExecuteExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\commands\BulkCommand.cs">
+      <Link>Commands\BulkCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\commands\CopyDocumentCommand.cs">
+      <Link>Commands\CopyDocumentCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\commands\DeleteAttachmentCommand.cs">
+      <Link>Commands\DeleteAttachmentCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\commands\DeleteDocumentCommand.cs">
+      <Link>Commands\DeleteDocumentCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\commands\DeleteEntityCommand.cs">
+      <Link>Commands\DeleteEntityCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\commands\DocumentExistsCommand.cs">
+      <Link>Commands\DocumentExistsCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\commands\GetAttachmentCommand.cs">
+      <Link>Commands\GetAttachmentCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\commands\GetDocumentCommand.cs">
+      <Link>Commands\GetDocumentCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\commands\GetEntityCommand.cs">
+      <Link>Commands\GetEntityCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\commands\IMyCouchCommand.cs">
+      <Link>Commands\IMyCouchCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\commands\PostDocumentCommand.cs">
+      <Link>Commands\PostDocumentCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\commands\PostEntityCommand.cs">
+      <Link>Commands\PostEntityCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\commands\PutAttachmentCommand.cs">
+      <Link>Commands\PutAttachmentCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\commands\PutDocumentCommand.cs">
+      <Link>Commands\PutDocumentCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\commands\PutEntityCommand.cs">
+      <Link>Commands\PutEntityCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\commands\ReplaceDocumentCommand.cs">
+      <Link>Commands\ReplaceDocumentCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Database.cs">
+      <Link>Database.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\DatabaseResponse.cs">
+      <Link>DatabaseResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\DocumentHeaderResponse.cs">
+      <Link>DocumentHeaderResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\DocumentResponse.cs">
+      <Link>DocumentResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Documents.cs">
+      <Link>Documents.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Entities.cs">
+      <Link>Entities.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\EntityResponse.cs">
+      <Link>EntityResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\ExceptionStrings.cs">
+      <Link>ExceptionStrings.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\extensions\StringExtensions.cs">
+      <Link>Extensions\StringExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\extensions\TaskExtensions.cs">
+      <Link>Extensions\TaskExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\IAttachments.cs">
+      <Link>IAttachments.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\IClient.cs">
+      <Link>IClient.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\IDatabase.cs">
+      <Link>IDatabase.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\IDocuments.cs">
+      <Link>IDocuments.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\IEntities.cs">
+      <Link>IEntities.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\IResponse.cs">
+      <Link>IResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\IResponseFactory.cs">
+      <Link>IResponseFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\ISystemViewQuery.cs">
+      <Link>ISystemViewQuery.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\IViewQuery.cs">
+      <Link>IViewQuery.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\IViewQueryConfigurator.cs">
+      <Link>IViewQueryConfigurator.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\IViewQueryOptions.cs">
+      <Link>IViewQueryOptions.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\IViews.cs">
+      <Link>IViews.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\JsonViewQueryResponse.cs">
+      <Link>JsonViewQueryResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\MyCouchRuntime.cs">
+      <Link>MyCouchRuntime.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\net\AttachmentContent.cs">
+      <Link>Net\AttachmentContent.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\net\BasicHttpClientConnection.cs">
+      <Link>Net\BasicHttpClientConnection.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\net\HttpContentTypes.cs">
+      <Link>Net\HttpContentTypes.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\net\HttpExtensions.cs">
+      <Link>Net\HttpExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\net\HttpRequest.cs">
+      <Link>Net\HttpRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\net\IConnection.cs">
+      <Link>Net\IConnection.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\net\JsonContent.cs">
+      <Link>Net\JsonContent.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\querying\Stale.cs">
+      <Link>Querying\Stale.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\querying\ViewQueryConfigurator.cs">
+      <Link>Querying\ViewQueryConfigurator.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\querying\ViewQueryOptions.cs">
+      <Link>Querying\ViewQueryOptions.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Response.cs">
+      <Link>Response.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\ResponseFactory.cs">
+      <Link>ResponseFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\schemes\EntityIdMember.cs">
+      <Link>Schemes\EntityIdMember.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\schemes\EntityMember.cs">
+      <Link>Schemes\EntityMember.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\schemes\EntityReflector.cs">
+      <Link>Schemes\EntityReflector.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\schemes\EntityRevMember.cs">
+      <Link>Schemes\EntityRevMember.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\schemes\IEntityMember.cs">
+      <Link>Schemes\IEntityMember.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\schemes\IEntityReflector.cs">
+      <Link>Schemes\IEntityReflector.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\schemes\reflections\DynamicProperty.cs">
+      <Link>Schemes\Reflections\DynamicProperty.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\schemes\reflections\DynamicStringGetter.cs">
+      <Link>Schemes\Reflections\DynamicStringGetter.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\schemes\reflections\DynamicStringSetter.cs">
+      <Link>Schemes\Reflections\DynamicStringSetter.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\schemes\reflections\IDynamicPropertyFactory.cs">
+      <Link>Schemes\Reflections\IDynamicPropertyFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\schemes\reflections\IlDynamicPropertyFactory.cs">
+      <Link>Schemes\Reflections\IlDynamicPropertyFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\schemes\reflections\LambdaDynamicPropertyFactory.cs">
+      <Link>Schemes\Reflections\LambdaDynamicPropertyFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\serialization\conventions\DocTypeSerializationConvention.cs">
+      <Link>Serialization\Conventions\DocTypeSerializationConvention.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\serialization\conventions\IDocTypeSerializationConvention.cs">
+      <Link>Serialization\Conventions\IDocTypeSerializationConvention.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\serialization\DocSerializationConventions.cs">
+      <Link>Serialization\DocSerializationConventions.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\serialization\ISerializer.cs">
+      <Link>Serialization\ISerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\serialization\MyCouchSerializer.cs">
+      <Link>Serialization\MyCouchSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\serialization\SerializationContractResolver.cs">
+      <Link>Serialization\SerializationContractResolver.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\serialization\SerializationEntityWriter.cs">
+      <Link>Serialization\SerializationEntityWriter.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\SystemViewQuery.cs">
+      <Link>SystemViewQuery.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\ViewQuery.cs">
+      <Link>ViewQuery.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\ViewQueryResponse.cs">
+      <Link>ViewQueryResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Views.cs">
+      <Link>Views.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="EnsureThat">
+      <HintPath>..\..\packages\Ensure.That.1.0.0\lib\portable-win+net40+sl40+wp71\EnsureThat.dll\EnsureThat.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\packages\Newtonsoft.Json.5.0.6\lib\netcore45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
+    <VisualStudioVersion>11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -13,6 +13,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCompany("Daniel Wertheim")]
 [assembly: AssemblyCopyright("Copyright © 2013 Daniel Wertheim")]
 [assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
 
-[assembly: AssemblyVersion("0.8.1.*")]
-[assembly: AssemblyFileVersion("0.8.1")]
+[assembly: AssemblyVersion("0.9.0.*")]
+[assembly: AssemblyFileVersion("0.9.0")]

@@ -1,18 +1,22 @@
-﻿using NUnit.Framework;
+﻿#if !NETFX_CORE
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+#else
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+#endif
 
 namespace MyCouch.IntegrationTests
 {
-    [SetUpFixture]
-    public class AssemblyInitializer
+    [TestClass]
+    public static class AssemblyInitializer
     {
-        [SetUp]
-        public void RunBeforeAnyTests()
+        [AssemblyInitialize]
+        public static void RunBeforeAnyTests(TestContext context)
         {
             IntegrationTestsRuntime.Init();
         }
 
-        [TearDown]
-        public void RunAfterAnyTests()
+        [AssemblyCleanup]
+        public static void RunAfterAnyTests()
         {
             IntegrationTestsRuntime.Close();
         }

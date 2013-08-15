@@ -1,27 +1,29 @@
 ﻿using FluentAssertions;
 using MyCouch.Commands;
-using NUnit.Framework;
+#if !NETFX_CORE
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+#else
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+#endif
 
 namespace MyCouch.UnitTests
 {
-    [TestFixture]
+    [TestClass]
     public class BulkCommandTests : UnitTestsOf<BulkCommand>
     {
-        protected override void OnTestInitialize()
+        public BulkCommandTests()
         {
-            base.OnTestInitialize();
-
-            SUT = new BulkCommand();
+            OnTestInitialize = () => SUT = new BulkCommand();
         }
 
-        [Test]
+        [TestMethod]
         public void When_empty_Then_ToJson_returns_empty_array_document()
         {
             var json = SUT.ToJson();
             json.Should().Be("{\"docs\":[]}");
         }
 
-        [Test]
+        [TestMethod]
         public void When_it_has_deletes_exists_Then_ToJson_returns_deletes()
         {
             SUT.Delete("1", "1-1").Delete("2", "2-1");
@@ -30,7 +32,7 @@ namespace MyCouch.UnitTests
             json.Should().Be("{\"docs\":[{\"_id\":\"1\",\"_rev\":\"1-1\",\"_deleted\":true},{\"_id\":\"2\",\"_rev\":\"2-1\",\"_deleted\":true}]}");
         }
 
-        [Test]
+        [TestMethod]
         public void When_it_has_inlcudes_of_put_and_posts_Then_ToJson_returns_docs()
         {
             SUT.Include(
@@ -41,7 +43,7 @@ namespace MyCouch.UnitTests
             json.Should().Be("{\"docs\":[{\"_id\":\"1\",\"name\":\"Test1\"},{\"_id\":\"1\",\"_rev\":\"1-1\",\"name\":\"Test2\"}]}");
         }
 
-        [Test]
+        [TestMethod]
         public void When_it_has_inlcudes_of_put_and_posts_and_deletes_Then_ToJson_returns_docs()
         {
             SUT.Include(

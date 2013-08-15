@@ -2,7 +2,9 @@
 
 namespace MyCouch
 {
+#if !NETFX_CORE
     [Serializable]
+#endif
     public class EntityResponse<T> : DocumentHeaderResponse where T : class
     {
         public T Entity { get; set; }

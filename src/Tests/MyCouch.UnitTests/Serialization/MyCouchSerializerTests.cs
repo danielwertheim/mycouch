@@ -1,24 +1,49 @@
 ﻿using System.Collections.Generic;
 using FluentAssertions;
 using MyCouch.Schemes;
+using MyCouch.Schemes.Reflections;
 using MyCouch.Serialization;
 using MyCouch.Testing;
 using MyCouch.Testing.Model;
-using NUnit.Framework;
+#if !NETFX_CORE
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+#else
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+#endif
+using MyCouch.Extensions;
 
 namespace MyCouch.UnitTests.Serialization
 {
-    [TestFixture]
-    public class MyCouchSerializerTests : UnitTestsOf<MyCouchSerializer>
+    [TestClass]
+    public class MyCouchSerializerWithLambdaPropertyFactoryTests : MyCouchSerializerTests
     {
-        protected override void OnTestInitialize()
+        public MyCouchSerializerWithLambdaPropertyFactoryTests()
         {
-            base.OnTestInitialize();
-
-            SUT = new MyCouchSerializer(new EntityReflector());
+            OnTestInitialize = () =>
+            {
+                var entityReflector = new EntityReflector(new LambdaDynamicPropertyFactory());
+                SUT = new MyCouchSerializer(() => entityReflector);
+            };
         }
-
-        [Test]
+    }
+#if !NETFX_CORE
+    [TestClass]
+    public class MyCouchSerializerWithIlPropertyFactoryTests : MyCouchSerializerTests
+    {
+        public MyCouchSerializerWithIlPropertyFactoryTests()
+        {
+            OnTestInitialize = () =>
+            {
+                var entityReflector = new EntityReflector(new IlDynamicPropertyFactory());
+                SUT = new MyCouchSerializer(() => entityReflector);
+            };
+        }
+    }
+#endif
+    [TestClass]
+    public abstract class MyCouchSerializerTests : UnitTestsOf<MyCouchSerializer>
+    {
+        [TestMethod]
         public void When_serializing_entity_It_will_inject_document_header_in_json()
         {
             var model = TestData.Artists.CreateArtist();
@@ -28,7 +53,7 @@ namespace MyCouch.UnitTests.Serialization
             json.Should().StartWith("{\"$doctype\":\"artist\",");
         }
 
-        [Test]
+        [TestMethod]
         public void When_serializing_entity_with_Id_It_will_translate_it_to__id()
         {
             var model = new ModelOne { Id = "abc", Value = "def" };
@@ -38,7 +63,7 @@ namespace MyCouch.UnitTests.Serialization
             json.Should().Be("{\"$doctype\":\"modelone\",\"_id\":\"abc\",\"value\":\"def\"}");
         }
 
-        [Test]
+        [TestMethod]
         public void It_can_deserialize_entity_with_Id()
         {
             var json = "{\"$doctype\":\"modelone\",\"_id\":\"abc\",\"value\":\"def\"}";
@@ -50,7 +75,7 @@ namespace MyCouch.UnitTests.Serialization
             model.Value.Should().Be("def");
         }
 
-        [Test]
+        [TestMethod]
         public void When_serializing_entity_with_EntityId_It_will_translate_it_to__id()
         {
             var model = new ModelTwo { EntityId = "abc", Value = "def" };
@@ -60,7 +85,7 @@ namespace MyCouch.UnitTests.Serialization
             json.Should().Be("{\"$doctype\":\"modeltwo\",\"_id\":\"abc\",\"value\":\"def\"}");
         }
 
-        [Test]
+        [TestMethod]
         public void It_can_deserialize_entity_with_EntityId()
         {
             var json = "{\"$doctype\":\"modeltwo\",\"_id\":\"abc\",\"value\":\"def\"}";
@@ -72,7 +97,7 @@ namespace MyCouch.UnitTests.Serialization
             model.Value.Should().Be("def");
         }
 
-        [Test]
+        [TestMethod]
         public void When_serializing_entity_with_DocumentId_It_will_translate_it_to__id()
         {
             var model = new ModelThree { DocumentId = "abc", Value = "def" };
@@ -82,7 +107,7 @@ namespace MyCouch.UnitTests.Serialization
             json.Should().Be("{\"$doctype\":\"modelthree\",\"_id\":\"abc\",\"value\":\"def\"}");
         }
 
-        [Test]
+        [TestMethod]
         public void It_can_deserialize_entity_with_DocumentId()
         {
             var json = "{\"$doctype\":\"modelthree\",\"_id\":\"abc\",\"value\":\"def\"}";
@@ -94,7 +119,7 @@ namespace MyCouch.UnitTests.Serialization
             model.Value.Should().Be("def");
         }
 
-        [Test]
+        [TestMethod]
         public void When_serializing_entity_with_ModelId_It_will_translate_it_to__id()
         {
             var model = new ModelFour { ModelFourId = "abc", Value = "def" };
@@ -104,7 +129,7 @@ namespace MyCouch.UnitTests.Serialization
             json.Should().Be("{\"$doctype\":\"modelfour\",\"_id\":\"abc\",\"value\":\"def\"}");
         }
 
-        [Test]
+        [TestMethod]
         public void It_can_deserialize_entity_with_ModelId()
         {
             var json = "{\"$doctype\":\"modelfour\",\"_id\":\"abc\",\"value\":\"def\"}";
@@ -116,7 +141,7 @@ namespace MyCouch.UnitTests.Serialization
             model.Value.Should().Be("def");
         }
 
-        [Test]
+        [TestMethod]
         public void When_serializing_entity_with_Id_in_wrong_order_It_will_still_pick_the_more_specific_one()
         {
             var model = new ModelWithIdInWrongOrder { Id = "abc", ModelWithIdInWrongOrderId = "def", Value = "ghi" };
@@ -126,7 +151,7 @@ namespace MyCouch.UnitTests.Serialization
             json.Should().Be("{\"$doctype\":\"modelwithidinwrongorder\",\"id\":\"abc\",\"_id\":\"def\",\"value\":\"ghi\"}");
         }
 
-        [Test]
+        [TestMethod]
         public void It_can_populate_an_all_docs_view_query_response_of_string()
         {
             var response = new ViewQueryResponse<string>();
@@ -143,7 +168,7 @@ namespace MyCouch.UnitTests.Serialization
             response.Rows[1].Value.Should().Be("{\"rev\":\"42-e7620ba0ea71c48f6a11bacee4999d79\"}");
         }
 
-        [Test]
+        [TestMethod]
         public void It_can_populate_an_all_docs_view_query_response_of_dynamic()
         {
             var response = new ViewQueryResponse<dynamic>();
@@ -162,7 +187,7 @@ namespace MyCouch.UnitTests.Serialization
             rev2.Should().Be("42-e7620ba0ea71c48f6a11bacee4999d79");
         }
 
-        [Test]
+        [TestMethod]
         public void It_can_populate_an_all_docs_view_query_response_of_dictionary()
         {
             var response = new ViewQueryResponse<IDictionary<string, object>>();
@@ -181,7 +206,7 @@ namespace MyCouch.UnitTests.Serialization
             rev2.Should().Be("42-e7620ba0ea71c48f6a11bacee4999d79");
         }
 
-        [Test]
+        [TestMethod]
         public void It_can_populate_an_albums_view_query_response_of_string()
         {
             var response = new ViewQueryResponse<string>();
@@ -206,7 +231,7 @@ namespace MyCouch.UnitTests.Serialization
             response.Rows[3].Value.Should().Be("[{\"name\":\"Greatest fakes #4.1\"},{\"name\":\"Greatest fakes #4.2\"},{\"name\":\"Greatest fakes #4.3\"},{\"name\":\"Greatest fakes #4.4\"}]");
         }
 
-        [Test]
+        [TestMethod]
         public void It_can_populate_an_albums_view_query_response_of_strings()
         {
             var response = new ViewQueryResponse<string[]>();
@@ -241,7 +266,7 @@ namespace MyCouch.UnitTests.Serialization
             response.Rows[3].Value[3].Should().Be("{\"name\":\"Greatest fakes #4.4\"}");
         }
 
-        [Test]
+        [TestMethod]
         public void It_can_populate_an_albums_view_query_response_of_albums()
         {
             var response = new ViewQueryResponse<Album[]>();

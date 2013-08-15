@@ -1,21 +1,24 @@
 ﻿using FluentAssertions;
 using MyCouch.Querying;
-using NUnit.Framework;
+#if !NETFX_CORE
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+#else
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+#endif
+using MyCouch.Extensions;
 using System.Linq;
 
 namespace MyCouch.UnitTests.Querying
 {
-    [TestFixture]
+    [TestClass]
     public class ViewQueryOptionsTests : UnitTestsOf<ViewQueryOptions>
     {
-        protected override void OnTestInitialize()
+        public ViewQueryOptionsTests()
         {
-            base.OnTestInitialize();
-
-            SUT = new ViewQueryOptions();
+            OnTestInitialize = () => SUT = new ViewQueryOptions();
         }
 
-        [Test]
+        [TestMethod]
         public void When_not_configured_It_yields_no_key_values()
         {
             var kvs = SUT.ToKeyValues().ToArray();
@@ -23,7 +26,7 @@ namespace MyCouch.UnitTests.Querying
             kvs.Length.Should().Be(0);
         }
 
-        [Test]
+        [TestMethod]
         public void When_configured_It_yields_correct_key_values()
         {
             SUT.Stale = Stale.UpdateAfter;

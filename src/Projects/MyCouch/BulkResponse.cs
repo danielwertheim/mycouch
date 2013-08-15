@@ -2,7 +2,9 @@
 
 namespace MyCouch
 {
+#if !NETFX_CORE
     [Serializable]
+#endif
     public class BulkResponse : Response
     {
         public Row[] Rows { get; set; }
@@ -11,7 +13,9 @@ namespace MyCouch
             get { return Rows == null || Rows.Length == 0; }
         }
 
+#if !NETFX_CORE
         [Serializable]
+#endif
         public class Row
         {
             public string Id { get; set; }

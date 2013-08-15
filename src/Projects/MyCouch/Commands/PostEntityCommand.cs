@@ -3,7 +3,9 @@ using EnsureThat;
 
 namespace MyCouch.Commands
 {
+#if !NETFX_CORE
     [Serializable]
+#endif
     public class PostEntityCommand<T> : IMyCouchCommand where T : class
     {
         public T Entity { get; set; }

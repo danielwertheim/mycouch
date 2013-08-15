@@ -3,32 +3,29 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using MyCouch.Reflections;
+using EnsureThat;
+using MyCouch.Schemes.Reflections;
 
 namespace MyCouch.Schemes
 {
     public abstract class EntityMember : IEntityMember 
     {
+        protected readonly IDynamicPropertyFactory DynamicPropertyFactory;
         protected readonly ConcurrentDictionary<Type, DynamicProperty> IdPropertyCache;
 
-        public BindingFlags PropertyBindingFlags { protected get; set; }
-
-        protected EntityMember()
+        protected EntityMember(IDynamicPropertyFactory dynamicPropertyFactory)
         {
+            Ensure.That(dynamicPropertyFactory, "dynamicPropertyFactory").IsNotNull();
+
+            DynamicPropertyFactory = dynamicPropertyFactory;
             IdPropertyCache = new ConcurrentDictionary<Type, DynamicProperty>();
-            PropertyBindingFlags = GetDefaultPropertyBindingFlags();
-        }
-
-        protected virtual BindingFlags GetDefaultPropertyBindingFlags()
-        {
-            return BindingFlags.Public | BindingFlags.Instance | BindingFlags.GetProperty;
         }
 
         public abstract int? GetMemberRankingIndex(Type entityType, string membername);
 
         public virtual string GetValueFrom<T>(T entity)
         {
-            return GetGetterFor(typeof (T)).GetValue(entity) as string;
+            return GetGetterFor(typeof (T)).GetValue(entity);
         }
 
         public void SetValueTo<T>(T entity, string value)
@@ -36,14 +33,14 @@ namespace MyCouch.Schemes
             GetSetterFor(typeof(T)).SetValue(entity, value);
         }
 
-        protected virtual DynamicGetter GetGetterFor(Type type)
+        protected virtual DynamicStringGetter GetGetterFor(Type type)
         {
             return IdPropertyCache.GetOrAdd(
                 type, 
                 t => DynamicPropertyFactory.PropertyFor(GetPropertyFor(type))).Getter;
         }
 
-        protected virtual DynamicSetter GetSetterFor(Type type)
+        protected virtual DynamicStringSetter GetSetterFor(Type type)
         {
             return IdPropertyCache.GetOrAdd(
                 type,
@@ -65,7 +62,12 @@ namespace MyCouch.Schemes
 
         protected virtual IEnumerable<PropertyInfo> GetPropertiesFor(Type type)
         {
-            return type.GetProperties(PropertyBindingFlags);
+#if !NETFX_CORE
+            return type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+#else
+            //TODO: Ensure perf
+            return type.GetRuntimeProperties();
+#endif
         }
     }
 }

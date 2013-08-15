@@ -4,7 +4,9 @@ using System.Linq;
 
 namespace MyCouch.Querying
 {
+#if !NETFX_CORE
     [Serializable]
+#endif
     public class ViewQueryOptions : IViewQueryOptions
     {
         public string Stale { get; set; }

@@ -17,7 +17,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;net45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -25,19 +25,20 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;net45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\MyCouch.XML</DocumentationFile>
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EnsureThat">
-      <HintPath>..\..\packages\Ensure.That.0.10.1\lib\net40\EnsureThat.dll</HintPath>
+    <Reference Include="EnsureThat, Version=1.0.0.37966, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Ensure.That.1.0.0\lib\portable-win+net40+sl40+wp71\EnsureThat.dll\EnsureThat.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Newtonsoft.Json.5.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -66,11 +67,11 @@
     <Compile Include="Commands\PutEntityCommand.cs" />
     <Compile Include="DatabaseResponse.cs" />
     <Compile Include="Database.cs" />
-    <Compile Include="Core\TypeExtensions.cs" />
     <Compile Include="Commands\DeleteAttachmentCommand.cs" />
     <Compile Include="DocumentHeaderResponse.cs" />
     <Compile Include="Entities.cs" />
     <Compile Include="Commands\GetAttachmentCommand.cs" />
+    <Compile Include="ExceptionStrings.cs" />
     <Compile Include="IAttachments.cs" />
     <Compile Include="IDatabase.cs" />
     <Compile Include="IEntities.cs" />
@@ -78,12 +79,12 @@
     <Compile Include="Net\AttachmentContent.cs" />
     <Compile Include="Commands\PutAttachmentCommand.cs" />
     <Compile Include="Commands\ReplaceDocumentCommand.cs" />
-    <Compile Include="Resources\ExceptionStrings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ExceptionStrings.resx</DependentUpon>
-    </Compile>
     <Compile Include="ISystemViewQuery.cs" />
+    <Compile Include="Schemes\Reflections\DynamicStringGetter.cs" />
+    <Compile Include="Schemes\Reflections\DynamicStringSetter.cs" />
+    <Compile Include="Schemes\Reflections\IDynamicPropertyFactory.cs" />
+    <Compile Include="Schemes\Reflections\IlDynamicPropertyFactory.cs" />
+    <Compile Include="Schemes\Reflections\LambdaDynamicPropertyFactory.cs" />
     <Compile Include="SystemViewQuery.cs" />
     <Compile Include="Response.cs" />
     <Compile Include="Net\HttpExtensions.cs" />
@@ -106,10 +107,7 @@
     <Compile Include="IViews.cs" />
     <Compile Include="Querying\Stale.cs" />
     <Compile Include="JsonViewQueryResponse.cs" />
-    <Compile Include="Reflections\DynamicGetter.cs" />
-    <Compile Include="Reflections\DynamicProperty.cs" />
-    <Compile Include="Reflections\DynamicPropertyFactory.cs" />
-    <Compile Include="Reflections\DynamicSetter.cs" />
+    <Compile Include="Schemes\Reflections\DynamicProperty.cs" />
     <Compile Include="Schemes\EntityIdMember.cs" />
     <Compile Include="Schemes\EntityMember.cs" />
     <Compile Include="Schemes\EntityRevMember.cs" />
@@ -125,8 +123,8 @@
     <Compile Include="Serialization\MyCouchSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Schemes\IEntityMember.cs" />
-    <Compile Include="Core\StringExtensions.cs" />
-    <Compile Include="Core\TaskExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\TaskExtensions.cs" />
     <Compile Include="ViewQuery.cs" />
     <Compile Include="Querying\ViewQueryConfigurator.cs" />
     <Compile Include="Querying\ViewQueryOptions.cs" />
@@ -135,12 +133,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\ExceptionStrings.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>ExceptionStrings.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

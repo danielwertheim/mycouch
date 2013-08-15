@@ -1,5 +1,6 @@
-# v2013-04-27.1
+# v2013-08-15.1
 # vs
+AppPackages/
 [Aa]pp_[Dd]ata/
 [Bb]in/
 [D]ebug/
@@ -14,6 +15,7 @@
 
 # deploy
 deploy/build
+deploy/builds
 
 # misc
 *~

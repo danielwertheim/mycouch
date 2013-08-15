@@ -5,7 +5,9 @@ using System.Text;
 
 namespace MyCouch.Commands
 {
+#if !NETFX_CORE
     [Serializable]
+#endif
     public class BulkCommand : IMyCouchCommand
     {
         protected readonly List<string> Docs;

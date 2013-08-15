@@ -1,28 +1,25 @@
 ﻿using FluentAssertions;
 using MyCouch.Commands;
 using MyCouch.Testing;
-using NUnit.Framework;
+#if !NETFX_CORE
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+#else
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+#endif
+using MyCouch.Extensions;
 
 namespace MyCouch.IntegrationTests.ClientTests
 {
-    [TestFixture]
+    [TestClass]
     public class AttachmentsTests : IntegrationTestsOf<IAttachments>
     {
-        protected override void OnTestInitialize()
+        public AttachmentsTests()
         {
-            base.OnTestInitialize();
-
-            SUT = Client.Attachments;
+            OnTestInitialize = () => SUT = Client.Attachments;
+            OnTestFinalize = () => IntegrationTestsRuntime.ClearAllDocuments();
         }
 
-        protected override void OnTestFinalize()
-        {
-            base.OnTestFinalize();
-
-            IntegrationTestsRuntime.ClearAllDocuments();
-        }
-
-        [Test]
+        [TestMethod]
         public void When_PUT_of_a_new_attachment_and_new_document_The_response_is_ok()
         {
             var putCmd = new PutAttachmentCommand(
@@ -36,7 +33,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             putAttachmentAndDocResponse.Should().BeSuccessfulPut(TestData.Artists.Artist1Id);
         }
 
-        [Test]
+        [TestMethod]
         public void When_PUT_of_a_new_attachment_The_response_is_ok()
         {
             var putDocResponse = Client.Documents.Post(TestData.Artists.Artist1Json);
@@ -52,7 +49,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             putAttachmentResponse.Should().BeSuccessfulPut(TestData.Artists.Artist1Id);
         }
 
-        [Test]
+        [TestMethod]
         public void When_DELETE_of_an_existing_attachment_The_response_is_ok()
         {
             var putDocResponse = Client.Documents.Post(TestData.Artists.Artist1Json);
@@ -74,7 +71,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             deleteResponse.Should().BeSuccessfulDelete(TestData.Artists.Artist1Id);
         }
 
-        [Test]
+        [TestMethod]
         public void When_GET_of_an_existing_attachment_Using_id_The_attachment_is_returned_correctly()
         {
             var putDocResponse = Client.Documents.Post(TestData.Artists.Artist1Json);
@@ -96,7 +93,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             getAttachmentResponse.Content.AsBase64EncodedString().Should().Be(TestData.Attachments.One.ContentEncoded);
         }
 
-        [Test]
+        [TestMethod]
         public void When_GET_of_an_existing_attachment_Using_id_and_rev_The_attachment_is_returned_correctly()
         {
             var putDocResponse = Client.Documents.Post(TestData.Artists.Artist1Json);
@@ -119,7 +116,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             getAttachmentResponse.Content.AsBase64EncodedString().Should().Be(TestData.Attachments.One.ContentEncoded);
         }
 
-        [Test]
+        [TestMethod]
         public void Flow_tests()
         {
             var putDocResponse = Client.Documents.Post(TestData.Artists.Artist1Json);
