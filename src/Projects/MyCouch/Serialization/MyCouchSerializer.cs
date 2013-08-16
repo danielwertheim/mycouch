@@ -11,11 +11,13 @@ namespace MyCouch.Serialization
 {
     public class MyCouchSerializer : ISerializer
     {
+        protected readonly JsonSerializerSettings Settings;
         protected readonly JsonSerializer InternalSerializer;
 
         public MyCouchSerializer(Func<IEntityReflector> entityReflectorFn)
         {
-            InternalSerializer = JsonSerializer.Create(CreateDefaultSettings(new SerializationContractResolver(entityReflectorFn)));
+            Settings = CreateDefaultSettings(new SerializationContractResolver(entityReflectorFn));
+            InternalSerializer = JsonSerializer.Create(Settings);
         }
 
         protected JsonSerializerSettings CreateDefaultSettings(IContractResolver contractResolver)
@@ -37,9 +39,12 @@ namespace MyCouch.Serialization
         public virtual string Serialize<T>(T item) where T : class
         {
             var content = new StringBuilder();
-            using (var textWriter = new StringWriter(content))
+            using (var stringWriter = new StringWriter(content))
             {
-                InternalSerializer.Serialize(textWriter, item);
+                using (var jsonWriter = ConfigureJsonWriter(new SerializationJsonWriter(stringWriter)))
+                {
+                    InternalSerializer.Serialize(jsonWriter, item);
+                }
             }
             return content.ToString();
         }
@@ -47,9 +52,9 @@ namespace MyCouch.Serialization
         public virtual string SerializeEntity<T>(T entity) where T : class
         {
             var content = new StringBuilder();
-            using (var textWriter = new StringWriter(content))
+            using (var stringWriter = new StringWriter(content))
             {
-                using (var jsonWriter = CreateEntityWriter(textWriter))
+                using (var jsonWriter = ConfigureJsonWriter(new SerializationJsonWriter(stringWriter)))
                 {
                     jsonWriter.WriteDocHeaderFor(entity);
                     InternalSerializer.Serialize(jsonWriter, entity);
@@ -65,7 +70,7 @@ namespace MyCouch.Serialization
 
             using (var reader = new StringReader(data))
             {
-                using (var jsonReader = new JsonTextReader(reader))
+                using (var jsonReader = ConfigureJsonReader(new JsonTextReader(reader)))
                 {
                     return InternalSerializer.Deserialize<T>(jsonReader);
                 }
@@ -79,7 +84,7 @@ namespace MyCouch.Serialization
 
             using (var reader = new StreamReader(data, MyCouchRuntime.DefaultEncoding))
             {
-                using (var jsonReader = new JsonTextReader(reader))
+                using (var jsonReader = ConfigureJsonReader(new JsonTextReader(reader)))
                 {
                     return InternalSerializer.Deserialize<T>(jsonReader);
                 }
@@ -100,7 +105,7 @@ namespace MyCouch.Serialization
         {
             using (var sr = new StreamReader(data))
             {
-                using (var jr = new JsonTextReader(sr) { CloseInput = false })
+                using (var jr = ConfigureJsonReader(new JsonTextReader(sr)))
                 {
                     response.Rows = InternalSerializer.Deserialize<BulkResponse.Row[]>(jr);
                 }
@@ -143,7 +148,7 @@ namespace MyCouch.Serialization
 
             using (var sr = new StreamReader(data))
             {
-                using (var jr = new JsonTextReader(sr) { CloseInput = false })
+                using (var jr = ConfigureJsonReader(new JsonTextReader(sr)))
                 {
                     while (jr.Read())
                     {
@@ -170,34 +175,47 @@ namespace MyCouch.Serialization
 
         protected IEnumerable<ViewQueryResponse<string>.Row> YieldViewQueryRowsOfString(JsonReader jr)
         {
-            return YieldViewQueryRows<string>(jr, (row, jw, sb) =>
-            {
-                jw.WriteToken(jr, true);
-                row.Value = sb.ToString();
-            });
+            return YieldViewQueryRows<string>(
+                jr, 
+                (row, jw, sb) =>
+                {
+                    jw.WriteToken(jr, true);
+                    row.Value = sb.Length > 0 ? sb.ToString() : null;
+                },
+                (row, jw, sb) =>
+                {
+                    jw.WriteToken(jr, true);
+                    row.Doc = sb.Length > 0 ? sb.ToString() : null;
+                });
         }
 
         protected IEnumerable<ViewQueryResponse<string[]>.Row> YieldViewQueryRowsOfStrings(JsonReader jr)
         {
             var rowValues = new List<string>();
 
-            return YieldViewQueryRows<string[]>(jr, (row, jw, sb) =>
-            {
-                var valueStartDepth = jr.Depth;
-
-                while (jr.Read() && !(jr.TokenType == JsonToken.EndArray && jr.Depth == valueStartDepth))
+            return YieldViewQueryRows<string[]>(
+                jr, 
+                (row, jw, sb) =>
                 {
-                    jw.WriteToken(jr, true);
-                    rowValues.Add(sb.ToString());
-                    sb.Clear();
-                }
+                    var valueStartDepth = jr.Depth;
 
-                row.Value = rowValues.ToArray();
-                rowValues.Clear();
-            });
+                    while (jr.Read() && !(jr.TokenType == JsonToken.EndArray && jr.Depth == valueStartDepth))
+                    {
+                        jw.WriteToken(jr, true);
+                        rowValues.Add(sb.ToString());
+                        sb.Clear();
+                    }
+
+                    row.Value = rowValues.ToArray();
+                    rowValues.Clear();
+                },
+                null);
         }
 
-        protected IEnumerable<ViewQueryResponse<T>.Row> YieldViewQueryRows<T>(JsonReader jr, Action<ViewQueryResponse<T>.Row, JsonWriter, StringBuilder> onVisitValue) where T : class
+        protected IEnumerable<ViewQueryResponse<T>.Row> YieldViewQueryRows<T>(
+            JsonReader jr, 
+            Action<ViewQueryResponse<T>.Row, JsonTextWriter, StringBuilder> onVisitValue,
+            Action<ViewQueryResponse<T>.Row, JsonTextWriter, StringBuilder> onVisitDoc = null) where T : class
         {
             if (jr.TokenType != JsonToken.StartArray)
                 yield break;
@@ -208,15 +226,22 @@ namespace MyCouch.Serialization
             var hasMappedId = false;
             var hasMappedKey = false;
             var hasMappedValue = false;
+            var hasMappedIncludedDoc = false;
+            var shouldMapIncludedDoc = onVisitDoc != null; //TODO: I want info about the query here so that I know if include_docs = true
 
             using (var sw = new StringWriter(sb))
             {
-                using (var jw = new JsonTextWriter(sw))
+                using (var jw = ConfigureJsonWriter(new DeserializationJsonWriter(sw)))
                 {
                     while (jr.Read() && !(jr.TokenType == JsonToken.EndArray && jr.Depth == startDepth))
                     {
                         if (jr.TokenType != JsonToken.PropertyName)
+                        {
+                            if (jr.TokenType == JsonToken.EndObject && (hasMappedId && hasMappedKey && hasMappedValue))
+                                yield return row;
+                            
                             continue;
+                        }
 
                         var propName = jr.Value.ToString().ToLower();
                         if (propName == "id")
@@ -242,23 +267,57 @@ namespace MyCouch.Serialization
                             sb.Clear();
                             hasMappedValue = true;
                         }
+                        else if (shouldMapIncludedDoc && propName == "doc")
+                        {
+                            if (!jr.Read())
+                                break;
+
+                            onVisitDoc(row, jw, sb);
+                            sb.Clear();
+                            hasMappedIncludedDoc = true;
+                        }
                         else
                             continue;
 
                         if (hasMappedId && hasMappedKey && hasMappedValue)
                         {
-                            hasMappedId = hasMappedKey = hasMappedValue = false;
+                            if(shouldMapIncludedDoc && !hasMappedIncludedDoc)
+                                continue;
+
+                            hasMappedId = hasMappedKey = hasMappedValue = hasMappedIncludedDoc = false;
                             yield return row;
                             row = new ViewQueryResponse<T>.Row();
                         }
                     }
+
+                    if (hasMappedId || hasMappedKey || hasMappedValue)
+                        yield return row;
                 }
             }
         }
 
-        protected virtual SerializationEntityWriter CreateEntityWriter(TextWriter textWriter)
+        private T ConfigureJsonWriter<T>(T writer) where T : JsonTextWriter
         {
-            return new SerializationEntityWriter(textWriter);
+            writer.Culture = Settings.Culture;
+            writer.DateFormatHandling = Settings.DateFormatHandling;
+            writer.DateFormatString = Settings.DateFormatString;
+            writer.DateTimeZoneHandling = Settings.DateTimeZoneHandling;
+            writer.FloatFormatHandling = Settings.FloatFormatHandling;
+            writer.Formatting = Settings.Formatting;
+            writer.StringEscapeHandling = Settings.StringEscapeHandling;
+
+            return writer;
+        }
+
+        private T ConfigureJsonReader<T>(T reader) where T : JsonTextReader
+        {
+            reader.Culture = Settings.Culture;
+            reader.DateParseHandling = Settings.DateParseHandling;
+            reader.DateTimeZoneHandling = Settings.DateTimeZoneHandling;
+            reader.FloatParseHandling = Settings.FloatParseHandling;
+            reader.MaxDepth = Settings.MaxDepth;
+            
+            return reader;
         }
     }
 }

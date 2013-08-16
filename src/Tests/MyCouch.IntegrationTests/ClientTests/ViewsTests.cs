@@ -37,8 +37,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             Task.WaitAll(tasks.ToArray());
 
             tasks.Clear();
-            tasks.Add(IntegrationTestsRuntime.Client.Documents.PostAsync(TestData.Views.ArtistsAlbums));
-            tasks.Add(IntegrationTestsRuntime.Client.Documents.PostAsync(TestData.Views.ArtistsNamesNoValue));
+            tasks.Add(IntegrationTestsRuntime.Client.Documents.PostAsync(TestData.Views.Artists));
             Task.WaitAll(tasks.ToArray());
         }
 
@@ -46,6 +45,21 @@ namespace MyCouch.IntegrationTests.ClientTests
         public static void ClassCleanup()
         {
             IntegrationTestsRuntime.ClearAllDocuments();
+        }
+
+        [TestMethod]
+        public void When_IncludeDocs_and_no_value_is_returned_Then_the_included_docs_are_extracted()
+        {
+            var query = new ViewQuery(TestData.Views.ArtistsNamesNoValueViewId).Configure(cfg => cfg.IncludeDocs(true));
+
+            var response = SUT.RunQuery(query);
+
+            response.Should().BeSuccessfulGet(Artists.Length);
+            for (var i = 0; i < response.RowCount; i++)
+            {
+                Assert.IsNull(response.Rows[i].Value);
+                CustomAsserts.AreValueEqual(Artists[i], Client.Serializer.Deserialize<Artist>(response.Rows[i].Doc));
+            }
         }
 
         [TestMethod]
