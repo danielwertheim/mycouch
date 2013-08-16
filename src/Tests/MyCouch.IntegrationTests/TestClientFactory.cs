@@ -6,7 +6,7 @@ namespace MyCouch.IntegrationTests
     {
         internal static IClient CreateDefault()
         {
-            return new Client("http://mycouchtester:" + Uri.EscapeDataString("p@ssword") + "@localhost:5984/" + TestConstants.TestDbName + "/");
+            return new Client("http://mycouchtester:" + Uri.EscapeDataString("p@ssword") + "@192.168.33.50:5984/" + TestConstants.TestDbName + "/");
         }
     }
 }

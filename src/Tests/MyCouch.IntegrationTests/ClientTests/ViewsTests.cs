@@ -39,6 +39,11 @@ namespace MyCouch.IntegrationTests.ClientTests
             tasks.Clear();
             tasks.Add(IntegrationTestsRuntime.Client.Documents.PostAsync(TestData.Views.Artists));
             Task.WaitAll(tasks.ToArray());
+
+            var touchView1 = new ViewQuery(TestData.Views.ArtistsAlbumsViewId).Configure(q => q.Stale(Stale.UpdateAfter));
+            var touchView2 = new ViewQuery(TestData.Views.ArtistsNamesNoValueViewId).Configure(q => q.Stale(Stale.UpdateAfter));
+            IntegrationTestsRuntime.Client.Views.RunQuery(touchView1);
+            IntegrationTestsRuntime.Client.Views.RunQuery(touchView2);
         }
 
         [ClassCleanup]

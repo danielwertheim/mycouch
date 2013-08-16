@@ -226,8 +226,14 @@ namespace MyCouch.Serialization
             var hasMappedId = false;
             var hasMappedKey = false;
             var hasMappedValue = false;
-            var hasMappedIncludedDoc = false;
-            var shouldMapIncludedDoc = onVisitDoc != null; //TODO: I want info about the query here so that I know if include_docs = true
+            var hasMappedDoc = false;
+            var shouldTryAndMapDoc = onVisitDoc != null; //TODO: I want info about the query here so that I know if include_docs = true
+            Action reset = () =>
+            {
+                hasMappedId = hasMappedKey = hasMappedValue = hasMappedDoc = false;
+                row = new ViewQueryResponse<T>.Row();
+            };
+            Func<bool> hasMappedSomething = () => hasMappedId || hasMappedKey || hasMappedValue || hasMappedDoc;
 
             using (var sw = new StringWriter(sb))
             {
@@ -235,13 +241,18 @@ namespace MyCouch.Serialization
                 {
                     while (jr.Read() && !(jr.TokenType == JsonToken.EndArray && jr.Depth == startDepth))
                     {
-                        if (jr.TokenType != JsonToken.PropertyName)
+                        if (jr.TokenType == JsonToken.EndObject)
                         {
-                            if (jr.TokenType == JsonToken.EndObject && (hasMappedId && hasMappedKey && hasMappedValue))
+                            if (hasMappedSomething())
+                            {
                                 yield return row;
-                            
+                                reset();
+                            }
                             continue;
                         }
+
+                        if (jr.TokenType != JsonToken.PropertyName)
+                            continue;
 
                         var propName = jr.Value.ToString().ToLower();
                         if (propName == "id")
@@ -267,30 +278,29 @@ namespace MyCouch.Serialization
                             sb.Clear();
                             hasMappedValue = true;
                         }
-                        else if (shouldMapIncludedDoc && propName == "doc")
+                        else if (shouldTryAndMapDoc && propName == "doc")
                         {
                             if (!jr.Read())
                                 break;
 
                             onVisitDoc(row, jw, sb);
                             sb.Clear();
-                            hasMappedIncludedDoc = true;
+                            hasMappedDoc = true;
                         }
                         else
                             continue;
 
                         if (hasMappedId && hasMappedKey && hasMappedValue)
                         {
-                            if(shouldMapIncludedDoc && !hasMappedIncludedDoc)
+                            if(shouldTryAndMapDoc && !hasMappedDoc)
                                 continue;
 
-                            hasMappedId = hasMappedKey = hasMappedValue = hasMappedIncludedDoc = false;
                             yield return row;
-                            row = new ViewQueryResponse<T>.Row();
+                            reset();
                         }
                     }
 
-                    if (hasMappedId || hasMappedKey || hasMappedValue)
+                    if (hasMappedSomething())
                         yield return row;
                 }
             }
