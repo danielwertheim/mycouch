@@ -75,6 +75,7 @@
     <Compile Include="IAttachments.cs" />
     <Compile Include="IDatabase.cs" />
     <Compile Include="IEntities.cs" />
+    <Compile Include="IViewIdentity.cs" />
     <Compile Include="MyCouchRuntime.cs" />
     <Compile Include="Net\AttachmentContent.cs" />
     <Compile Include="Commands\PutAttachmentCommand.cs" />
@@ -125,6 +126,7 @@
     <Compile Include="Schemes\IEntityMember.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\TaskExtensions.cs" />
+    <Compile Include="ViewIdentity.cs" />
     <Compile Include="ViewQuery.cs" />
     <Compile Include="Querying\ViewQueryConfigurator.cs" />
     <Compile Include="Querying\ViewQueryOptions.cs" />

@@ -132,14 +132,14 @@ namespace MyCouch
             {
                 return string.Format("{0}/{1}?{2}",
                     Client.Connection.Address,
-                    query.ViewName,
+                    query.View.Name,
                     GenerateQueryStringParams(query.Options));
             }
 
             return string.Format("{0}/_design/{1}/_view/{2}?{3}",
                 Client.Connection.Address,
-                query.DesignDocument,
-                query.ViewName,
+                query.View.DesignDocument,
+                query.View.Name,
                 GenerateQueryStringParams(query.Options));
         }
 
