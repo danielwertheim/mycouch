@@ -111,13 +111,13 @@ namespace MyCouch.Testing
                         "\"albums\": {" +
                             "\"map\": \"function(doc) {  if(doc.$doctype !== 'artist') return;  emit(doc.name, doc.albums);}\"" +
                         "}," +
-                        "\"names_no_value\": {" +
+                        "\"name_no_value\": {" +
                             "\"map\": \"function(doc) {  if(doc.$doctype !== 'artist') return;  emit(doc.name, null);}\"" +
                         "}" +
                     "}" +
                 "}";
             public static readonly IViewIdentity ArtistsAlbumsViewId = new ViewIdentity("artists", "albums");
-            public static readonly IViewIdentity ArtistsNamesNoValueViewId = new ViewIdentity("artists", "names_no_value");
+            public static readonly IViewIdentity ArtistsNameNoValueViewId = new ViewIdentity("artists", "name_no_value");
         }
 
         public static class Attachments
