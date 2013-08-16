@@ -4,8 +4,7 @@ namespace MyCouch
 {
     public interface IViewQuery
     {
-        string DesignDocument { get; }
-        string ViewName { get; }
+        IViewIdentity View { get; }
         IViewQueryOptions Options { get; }
         IViewQuery Configure(Action<IViewQueryConfigurator> configurator);
     }

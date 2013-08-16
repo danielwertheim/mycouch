@@ -10,16 +10,14 @@ namespace MyCouch
     public class ViewQuery : IViewQuery
     {
         public IViewQueryOptions Options { get; private set; }
-        public string DesignDocument { get; private set; }
-        public string ViewName { get; private set; }
+        public IViewIdentity View { get; private set; }
 
-        public ViewQuery(string designDocument, string viewName)
+        public ViewQuery(string designDocument, string viewName) : this(new ViewIdentity(designDocument, viewName)) { }
+
+        public ViewQuery(IViewIdentity viewIdentity)
         {
-            Ensure.That(designDocument, "designDocument").IsNotNullOrWhiteSpace();
-            Ensure.That(viewName, "viewName").IsNotNullOrWhiteSpace();
-
-            DesignDocument = designDocument;
-            ViewName = viewName;
+            Ensure.That(viewIdentity, "viewIdentity").IsNotNull();
+            View = viewIdentity;
             Options = new ViewQueryOptions();
         }
 

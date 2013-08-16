@@ -103,16 +103,21 @@ namespace MyCouch.Testing
 
         public static class Views
         {
-            public const string ArtistsAlbums =
+            public const string Artists =
                 "{" +
                     "\"_id\": \"_design/artists\"," +
                     "\"language\": \"javascript\"," +
                     "\"views\": {" +
                         "\"albums\": {" +
                             "\"map\": \"function(doc) {  if(doc.$doctype !== 'artist') return;  emit(doc.name, doc.albums);}\"" +
+                        "}," +
+                        "\"name_no_value\": {" +
+                            "\"map\": \"function(doc) {  if(doc.$doctype !== 'artist') return;  emit(doc.name, null);}\"" +
                         "}" +
                     "}" +
                 "}";
+            public static readonly IViewIdentity ArtistsAlbumsViewId = new ViewIdentity("artists", "albums");
+            public static readonly IViewIdentity ArtistsNameNoValueViewId = new ViewIdentity("artists", "name_no_value");
         }
 
         public static class Attachments
