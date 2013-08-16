@@ -53,7 +53,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         }
 
         [TestMethod]
-        public void When_IncludeDocs_and_no_value_is_returned_Then_the_included_docs_are_extracted()
+        public void When_IncludeDocs_and_no_value_is_returned_for_string_response_Then_the_included_docs_are_extracted()
         {
             var query = new ViewQuery(TestData.Views.ArtistsNamesNoValueViewId).Configure(cfg => cfg.IncludeDocs(true));
 
@@ -64,6 +64,21 @@ namespace MyCouch.IntegrationTests.ClientTests
             {
                 Assert.IsNull(response.Rows[i].Value);
                 CustomAsserts.AreValueEqual(Artists[i], Client.Serializer.Deserialize<Artist>(response.Rows[i].Doc));
+            }
+        }
+
+        [TestMethod]
+        public void When_IncludeDocs_and_no_value_is_returned_but_non_array_doc_is_included_Then_the_included_docs_are_not_extracted()
+        {
+            var query = new ViewQuery(TestData.Views.ArtistsNamesNoValueViewId).Configure(cfg => cfg.IncludeDocs(true));
+
+            var response = SUT.RunQuery<string[]>(query);
+
+            response.Should().BeSuccessfulGet(Artists.Length);
+            for (var i = 0; i < response.RowCount; i++)
+            {
+                Assert.IsNull(response.Rows[i].Value);
+                Assert.IsNull(response.Rows[i].Doc);
             }
         }
 

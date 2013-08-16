@@ -197,6 +197,9 @@ namespace MyCouch.Serialization
                 jr, 
                 (row, jw, sb) =>
                 {
+                    if (jr.TokenType != JsonToken.StartArray)
+                        return;
+
                     var valueStartDepth = jr.Depth;
 
                     while (jr.Read() && !(jr.TokenType == JsonToken.EndArray && jr.Depth == valueStartDepth))
@@ -209,7 +212,23 @@ namespace MyCouch.Serialization
                     row.Value = rowValues.ToArray();
                     rowValues.Clear();
                 },
-                null);
+                (row, jw, sb) =>
+                {
+                    if (jr.TokenType != JsonToken.StartArray)
+                        return;
+
+                    var valueStartDepth = jr.Depth;
+
+                    while (jr.Read() && !(jr.TokenType == JsonToken.EndArray && jr.Depth == valueStartDepth))
+                    {
+                        jw.WriteToken(jr, true);
+                        rowValues.Add(sb.ToString());
+                        sb.Clear();
+                    }
+
+                    row.Doc = rowValues.ToArray();
+                    rowValues.Clear();
+                });
         }
 
         protected IEnumerable<ViewQueryResponse<T>.Row> YieldViewQueryRows<T>(
