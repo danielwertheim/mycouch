@@ -37,15 +37,64 @@ namespace MyCouch.IntegrationTests.ClientTests
             Task.WaitAll(tasks.ToArray());
 
             tasks.Clear();
-            tasks.Add(IntegrationTestsRuntime.Client.Documents.PostAsync(TestData.Views.ArtistsAlbums));
-            tasks.Add(IntegrationTestsRuntime.Client.Documents.PostAsync(TestData.Views.ArtistsNamesNoValue));
+            tasks.Add(IntegrationTestsRuntime.Client.Documents.PostAsync(TestData.Views.Artists));
             Task.WaitAll(tasks.ToArray());
+
+            var touchView1 = new ViewQuery(TestData.Views.ArtistsAlbumsViewId).Configure(q => q.Stale(Stale.UpdateAfter));
+            var touchView2 = new ViewQuery(TestData.Views.ArtistsNameNoValueViewId).Configure(q => q.Stale(Stale.UpdateAfter));
+            IntegrationTestsRuntime.Client.Views.RunQuery(touchView1);
+            IntegrationTestsRuntime.Client.Views.RunQuery(touchView2);
         }
 
         [ClassCleanup]
         public static void ClassCleanup()
         {
             IntegrationTestsRuntime.ClearAllDocuments();
+        }
+
+        [TestMethod]
+        public void When_IncludeDocs_and_no_value_is_returned_for_string_response_Then_the_included_docs_are_extracted()
+        {
+            var query = new ViewQuery(TestData.Views.ArtistsNameNoValueViewId).Configure(cfg => cfg.IncludeDocs(true));
+
+            var response = SUT.RunQuery(query);
+
+            response.Should().BeSuccessfulGet(Artists.Length);
+            for (var i = 0; i < response.RowCount; i++)
+            {
+                Assert.IsNull(response.Rows[i].Value);
+                CustomAsserts.AreValueEqual(Artists[i], Client.Serializer.Deserialize<Artist>(response.Rows[i].Doc));
+            }
+        }
+
+        [TestMethod]
+        public void When_IncludeDocs_and_no_value_is_returned_for_entity_response_Then_the_included_docs_are_extracted()
+        {
+            var query = new ViewQuery(TestData.Views.ArtistsNameNoValueViewId).Configure(cfg => cfg.IncludeDocs(true));
+
+            var response = SUT.RunQuery<Artist>(query);
+
+            response.Should().BeSuccessfulGet(Artists.Length);
+            for (var i = 0; i < response.RowCount; i++)
+            {
+                Assert.IsNull(response.Rows[i].Value);
+                CustomAsserts.AreValueEqual(Artists[i], response.Rows[i].Doc);
+            }
+        }
+
+        [TestMethod]
+        public void When_IncludeDocs_and_no_value_is_returned_but_non_array_doc_is_included_Then_the_included_docs_are_not_extracted()
+        {
+            var query = new ViewQuery(TestData.Views.ArtistsNameNoValueViewId).Configure(cfg => cfg.IncludeDocs(true));
+
+            var response = SUT.RunQuery<string[]>(query);
+
+            response.Should().BeSuccessfulGet(Artists.Length);
+            for (var i = 0; i < response.RowCount; i++)
+            {
+                Assert.IsNull(response.Rows[i].Value);
+                Assert.IsNull(response.Rows[i].Doc);
+            }
         }
 
         [TestMethod]
