@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
   
-  <Identity Name="41ebfc60-23ca-445e-adb7-df1ea16e87c9"
+  <Identity Name="3f7f38c4-2df6-41e0-ac54-6e6529c812be"
             Publisher="CN=Daniel"
             Version="1.0.0.0" />
   
@@ -13,8 +13,8 @@
   </Properties>
   
   <Prerequisites>
-    <OSMinVersion>6.2.1</OSMinVersion>
-    <OSMaxVersionTested>6.2.1</OSMaxVersionTested>
+    <OSMinVersion>6.2</OSMinVersion>
+    <OSMaxVersionTested>6.2</OSMaxVersionTested>
   </Prerequisites>
   
   <Resources>
@@ -50,7 +50,5 @@
         </VisualElements>
     </Application>
   </Applications>
-  <Capabilities>
-    <Capability Name="internetClient" />
-  </Capabilities>
+  
 </Package>

@@ -1,37 +1,29 @@
 ﻿using FluentAssertions;
 using MyCouch.Schemes;
 using MyCouch.Schemes.Reflections;
-#if !NETFX_CORE
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-#else
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-#endif
-using MyCouch.Extensions;
+using Xunit;
 
 namespace MyCouch.UnitTests.Schemes
 {
-    [TestClass]
     public class EntityIdMemberTestsWithLambdaPropertyFactoryTests : EntityIdMemberTests
     {
         public EntityIdMemberTestsWithLambdaPropertyFactoryTests()
         {
-            OnTestInitialize = () => SUT = new EntityIdMember(new LambdaDynamicPropertyFactory());
+            SUT = new EntityIdMember(new LambdaDynamicPropertyFactory());
         }
     }
 #if !NETFX_CORE
-    [TestClass]
     public class EntityIdMemberTestsWithIlPropertyFactoryTests : EntityIdMemberTests
     {
         public EntityIdMemberTestsWithIlPropertyFactoryTests()
         {
-            OnTestInitialize = () => SUT = new EntityIdMember(new IlDynamicPropertyFactory());
+            SUT = new EntityIdMember(new IlDynamicPropertyFactory());
         }
     }
 #endif
-    [TestClass]
     public abstract class EntityIdMemberTests : UnitTestsOf<EntityIdMember>
     {
-        [TestMethod]
+        [Fact]
         public void Verify_MemberRanking()
         {
             var t = typeof (ModelForMemberRanking);
@@ -44,7 +36,7 @@ namespace MyCouch.UnitTests.Schemes
             SUT.GetMemberRankingIndex(t, "Id").Should().Be(4);
         }
 
-        [TestMethod]
+        [Fact]
         public void When_only_having_member_Id_It_extracts_the_id()
         {
             var model = new ModelOne { Id = "ModelOne:Id:1" };
@@ -52,7 +44,7 @@ namespace MyCouch.UnitTests.Schemes
             SUT.GetValueFrom(model).Should().Be(model.Id);
         }
 
-        [TestMethod]
+        [Fact]
         public void When_having_members_Id_EntityId_It_extracts_EntityId()
         {
             var model = new ModelTwo
@@ -64,7 +56,7 @@ namespace MyCouch.UnitTests.Schemes
             SUT.GetValueFrom(model).Should().Be(model.EntityId);
         }
 
-        [TestMethod]
+        [Fact]
         public void When_having_members_Id_EntityId_DocumentId_It_extracts_DocumentId()
         {
             var model = new ModelThree
@@ -77,7 +69,7 @@ namespace MyCouch.UnitTests.Schemes
             SUT.GetValueFrom(model).Should().Be(model.DocumentId);
         }
 
-        [TestMethod]
+        [Fact]
         public void When_having_members_Id_EntityId_DocumentId_ModelId_It_extracts_ModelId()
         {
             var model = new ModelFour
@@ -91,7 +83,7 @@ namespace MyCouch.UnitTests.Schemes
             SUT.GetValueFrom(model).Should().Be(model.ModelFourId);
         }
 
-        [TestMethod]
+        [Fact]
         public void When_having_members_Id_EntityId_DocumentId_ModelId__Id_It_extracts__Id()
         {
             var model = new ModelFive

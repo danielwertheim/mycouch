@@ -1,36 +1,22 @@
-﻿using MyCouch.Commands;
+﻿using System;
+using MyCouch.Testing;
 
 namespace MyCouch.IntegrationTests
 {
     internal static class IntegrationTestsRuntime
     {
-        internal static IClient Client { get; private set; }
-
-        internal static void Init()
+        static IntegrationTestsRuntime()
         {
-            Client = TestClientFactory.CreateDefault();
-            //Client.Database.Put();
-            ClearAllDocuments();
-        }
-
-        internal static void Close()
-        {
-            Client.Dispose();
-            Client = null;
-        }
-
-        internal static void ClearAllDocuments()
-        {
-            var query = new SystemViewQuery("_all_docs");
-            var response = Client.Views.RunQuery<dynamic>(query);
-
-            if (!response.IsEmpty)
+            using (var client = CreateClient())
             {
-                var bulkCmd = new BulkCommand();
-                foreach (var row in response.Rows)
-                    bulkCmd.Delete(row.Id, row.Value.rev.ToString());
-                Client.Documents.Bulk(bulkCmd);
+                //client.Database.Put();
+                client.ClearAllDocuments();
             }
+
+        }
+        internal static IClient CreateClient()
+        {
+            return new Client("http://mycouchtester:" + Uri.EscapeDataString("p@ssword") + "@localhost:5984/" + TestConstants.TestDbName + "/");
         }
     }
 }

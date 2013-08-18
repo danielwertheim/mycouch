@@ -1,37 +1,29 @@
 ﻿using FluentAssertions;
 using MyCouch.Schemes;
 using MyCouch.Schemes.Reflections;
-#if !NETFX_CORE
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-#else
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-#endif
-using MyCouch.Extensions;
+using Xunit;
 
 namespace MyCouch.UnitTests.Schemes
 {
-    [TestClass]
     public class EntityRevMemberTestsWithLambdaPropertyFactoryTests : EntityRevMemberTests
     {
         public EntityRevMemberTestsWithLambdaPropertyFactoryTests()
         {
-            OnTestInitialize = () => SUT = new EntityRevMember(new LambdaDynamicPropertyFactory());
+            SUT = new EntityRevMember(new LambdaDynamicPropertyFactory());
         }
     }
 #if !NETFX_CORE
-    [TestClass]
     public class EntityRevMemberTestsWithIlPropertyFactoryTests : EntityRevMemberTests
     {
         public EntityRevMemberTestsWithIlPropertyFactoryTests()
         {
-            OnTestInitialize = () => SUT = new EntityRevMember(new IlDynamicPropertyFactory());
+            SUT = new EntityRevMember(new IlDynamicPropertyFactory());
         }
     }
 #endif
-    [TestClass]
     public abstract class EntityRevMemberTests : UnitTestsOf<EntityRevMember>
     {
-        [TestMethod]
+        [Fact]
         public void Verify_MemberRanking()
         {
             var t = typeof(ModelForMemberRanking);
@@ -44,7 +36,7 @@ namespace MyCouch.UnitTests.Schemes
             SUT.GetMemberRankingIndex(t, "Rev").Should().Be(4);
         }
 
-        [TestMethod]
+        [Fact]
         public void When_only_having_member_Rev_It_extracts_the_Rev()
         {
             var model = new ModelOne { Rev = "ModelOne:Rev:1" };
@@ -52,7 +44,7 @@ namespace MyCouch.UnitTests.Schemes
             SUT.GetValueFrom(model).Should().Be(model.Rev);
         }
 
-        [TestMethod]
+        [Fact]
         public void When_having_members_Rev_EntityRev_It_extracts_EntityRev()
         {
             var model = new ModelTwo
@@ -64,7 +56,7 @@ namespace MyCouch.UnitTests.Schemes
             SUT.GetValueFrom(model).Should().Be(model.EntityRev);
         }
 
-        [TestMethod]
+        [Fact]
         public void When_having_members_Rev_EntityRev_DocumentRev_It_extracts_DocumentRev()
         {
             var model = new ModelThree
@@ -77,7 +69,7 @@ namespace MyCouch.UnitTests.Schemes
             SUT.GetValueFrom(model).Should().Be(model.DocumentRev);
         }
 
-        [TestMethod]
+        [Fact]
         public void When_having_members_Rev_EntityRev_DocumentRev_ModelRev_It_extracts_ModelRev()
         {
             var model = new ModelFour
@@ -91,7 +83,7 @@ namespace MyCouch.UnitTests.Schemes
             SUT.GetValueFrom(model).Should().Be(model.ModelFourRev);
         }
 
-        [TestMethod]
+        [Fact]
         public void When_having_members_Rev_EntityRev_DocumentRev_ModelRev__Rev_It_extracts__Rev()
         {
             var model = new ModelFive

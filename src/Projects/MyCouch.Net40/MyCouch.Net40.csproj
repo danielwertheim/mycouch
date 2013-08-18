@@ -238,6 +238,9 @@
     <Compile Include="..\MyCouch\Net\JsonContent.cs">
       <Link>Net\JsonContent.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch\Now.cs">
+      <Link>Now.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch\Querying\Stale.cs">
       <Link>Querying\Stale.cs</Link>
     </Compile>
