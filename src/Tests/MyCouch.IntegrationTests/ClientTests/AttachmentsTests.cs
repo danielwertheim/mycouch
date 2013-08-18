@@ -1,25 +1,18 @@
 ﻿using FluentAssertions;
 using MyCouch.Commands;
 using MyCouch.Testing;
-#if !NETFX_CORE
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-#else
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-#endif
-using MyCouch.Extensions;
+using Xunit;
 
 namespace MyCouch.IntegrationTests.ClientTests
 {
-    [TestClass]
     public class AttachmentsTests : IntegrationTestsOf<IAttachments>
     {
         public AttachmentsTests()
         {
-            OnTestInitialize = () => SUT = Client.Attachments;
-            OnTestFinalize = () => IntegrationTestsRuntime.ClearAllDocuments();
+            SUT = Client.Attachments;
         }
 
-        [TestMethod]
+        [Fact]
         public void When_PUT_of_a_new_attachment_and_new_document_The_response_is_ok()
         {
             var putCmd = new PutAttachmentCommand(
@@ -33,7 +26,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             putAttachmentAndDocResponse.Should().BeSuccessfulPut(TestData.Artists.Artist1Id);
         }
 
-        [TestMethod]
+        [Fact]
         public void When_PUT_of_a_new_attachment_The_response_is_ok()
         {
             var putDocResponse = Client.Documents.Post(TestData.Artists.Artist1Json);
@@ -49,7 +42,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             putAttachmentResponse.Should().BeSuccessfulPut(TestData.Artists.Artist1Id);
         }
 
-        [TestMethod]
+        [Fact]
         public void When_DELETE_of_an_existing_attachment_The_response_is_ok()
         {
             var putDocResponse = Client.Documents.Post(TestData.Artists.Artist1Json);
@@ -71,7 +64,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             deleteResponse.Should().BeSuccessfulDelete(TestData.Artists.Artist1Id);
         }
 
-        [TestMethod]
+        [Fact]
         public void When_GET_of_an_existing_attachment_Using_id_The_attachment_is_returned_correctly()
         {
             var putDocResponse = Client.Documents.Post(TestData.Artists.Artist1Json);
@@ -93,7 +86,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             getAttachmentResponse.Content.AsBase64EncodedString().Should().Be(TestData.Attachments.One.ContentEncoded);
         }
 
-        [TestMethod]
+        [Fact]
         public void When_GET_of_an_existing_attachment_Using_id_and_rev_The_attachment_is_returned_correctly()
         {
             var putDocResponse = Client.Documents.Post(TestData.Artists.Artist1Json);
@@ -116,7 +109,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             getAttachmentResponse.Content.AsBase64EncodedString().Should().Be(TestData.Attachments.One.ContentEncoded);
         }
 
-        [TestMethod]
+        [Fact]
         public void Flow_tests()
         {
             var putDocResponse = Client.Documents.Post(TestData.Artists.Artist1Json);

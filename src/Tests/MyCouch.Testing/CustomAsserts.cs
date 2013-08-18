@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Reflection;
-#if !NETFX_CORE
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-#else
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-#endif
+using FluentAssertions;
 using MyCouch.Extensions;
+using Xunit;
 
 namespace MyCouch.Testing
 {
@@ -29,15 +26,15 @@ namespace MyCouch.Testing
                 return;
 
             if (a == null || b == null)
-                Assert.AreEqual(a, b); //Force exception
+                a.Should().Be(b);
 
             if (type.IsEnumerableType())
             {
                 var array1 = a as Array;
-                Assert.IsNotNull(array1);
+                array1.Should().NotBeNull();
 
                 var array2 = b as Array;
-                Assert.IsNotNull(array2);
+                array2.Should().NotBeNull();
 
                 for (var i = 0; i < array1.Length; i++)
                 {
@@ -50,7 +47,7 @@ namespace MyCouch.Testing
 
             if (type.IsSimpleType())
             {
-                Assert.AreEqual(a, b);
+                Assert.Equal(a, b);
                 return;
             }
 #if !NETFX_CORE
@@ -62,7 +59,7 @@ namespace MyCouch.Testing
 
                 var isSimpleType = propertyType.IsSimpleType();
                 if (isSimpleType)
-                    Assert.AreEqual(valueForA, valueForB, "Values in property '{0}' doesn't match.", propertyInfo.Name);
+                    valueForA.Should().Be(valueForB, "Values in property '{0}' doesn't match.", propertyInfo.Name);
                 else
                     AreValueEqual(propertyType, valueForA, valueForB);
             }
@@ -75,7 +72,7 @@ namespace MyCouch.Testing
 
                 var isSimpleType = propertyType.IsSimpleType();
                 if (isSimpleType)
-                    Assert.AreEqual(valueForA, valueForB, "Values in property '{0}' doesn't match.", propertyInfo.Name);
+                    valueForA.Should().Be(valueForB, "Values in property '{0}' doesn't match.", propertyInfo.Name);
                 else
                     AreValueEqual(propertyType, valueForA, valueForB);
             }

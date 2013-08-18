@@ -1,24 +1,25 @@
 ﻿using MyCouch.Testing;
-#if !NETFX_CORE
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-#else
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-#endif
-using MyCouch.Extensions;
 
 namespace MyCouch.IntegrationTests
 {
-    [TestClass]
     public abstract class IntegrationTestsOf<T> : TestsOf<T> where T : class
     {
-        protected IClient Client;
+        protected IClient Client { get; private set; }
 
         protected IntegrationTestsOf()
         {
-            Client = IntegrationTestsRuntime.Client;
+            Client = IntegrationTestsRuntime.CreateClient();
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+
+            if(!(this is IPreserveStatePerFixture)) 
+                Client.ClearAllDocuments();
+
+            Client.Dispose();
+            Client = null;
         }
     }
-
-    [TestClass]
-    public abstract class IntegrationTestsOf : TestsOf { }
 }

@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BC0E74F4-F02A-45FF-B1A0-AF91BCC7F7D4}</ProjectGuid>
+    <ProjectGuid>{ADC6AC03-747D-444C-A204-CAB1624429C7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MyCouch.Testing</RootNamespace>
@@ -33,13 +33,15 @@
     <Reference Include="FluentAssertions">
       <HintPath>..\..\packages\FluentAssertions.2.0.1\lib\net45\FluentAssertions.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="xunit">
+      <HintPath>..\..\packages\xunit.1.9.1\lib\net20\xunit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\SharedAssemblyInfo.cs">
@@ -48,17 +50,17 @@
     <Compile Include="..\MyCouch.Testing\CustomAsserts.cs">
       <Link>CustomAsserts.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Testing\GlobalTestConstants.cs">
-      <Link>GlobalTestConstants.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Testing\JsonTestData.cs">
       <Link>JsonTestData.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.testing\model\Artist.cs">
+    <Compile Include="..\MyCouch.Testing\Model\Artist.cs">
       <Link>Model\Artist.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Testing\Shoulds.cs">
       <Link>Shoulds.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Testing\TestConstants.cs">
+      <Link>TestConstants.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Testing\TestData.cs">
       <Link>TestData.cs</Link>
@@ -72,11 +74,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\mycouch.testing\jsontestdatafiles\ViewQueryAlbums.json">
+    <Content Include="..\MyCouch.Testing\JsonTestDataFiles\ViewQueryAlbums.json">
       <Link>JsonTestDataFiles\ViewQueryAlbums.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\mycouch.testing\jsontestdatafiles\ViewQueryAllDocsResult.json">
+    <Content Include="..\MyCouch.Testing\JsonTestDataFiles\ViewQueryAllDocsResult.json">
       <Link>JsonTestDataFiles\ViewQueryAllDocsResult.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

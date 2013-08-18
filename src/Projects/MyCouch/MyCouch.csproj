@@ -81,6 +81,7 @@
     <Compile Include="Commands\PutAttachmentCommand.cs" />
     <Compile Include="Commands\ReplaceDocumentCommand.cs" />
     <Compile Include="ISystemViewQuery.cs" />
+    <Compile Include="Now.cs" />
     <Compile Include="Schemes\Reflections\DynamicStringGetter.cs" />
     <Compile Include="Schemes\Reflections\DynamicStringSetter.cs" />
     <Compile Include="Schemes\Reflections\IDynamicPropertyFactory.cs" />
