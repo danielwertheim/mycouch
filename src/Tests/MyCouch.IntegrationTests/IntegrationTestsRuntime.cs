@@ -9,7 +9,7 @@ namespace MyCouch.IntegrationTests
         {
             using (var client = CreateClient())
             {
-                //client.Database.Put();
+                //client.Database.PutAsync().Wait();
                 client.ClearAllDocuments();
             }
 

@@ -18,24 +18,9 @@ namespace MyCouch
             Client = client;
         }
 
-        public virtual EntityResponse<T> Get<T>(string id, string rev = null) where T : class
-        {
-            return Get<T>(new GetEntityCommand(id, rev));
-        }
-
         public virtual Task<EntityResponse<T>> GetAsync<T>(string id, string rev = null) where T : class
         {
             return GetAsync<T>(new GetEntityCommand(id, rev));
-        }
-
-        public virtual EntityResponse<T> Get<T>(GetEntityCommand cmd) where T : class
-        {
-            Ensure.That(cmd, "cmd").IsNotNull();
-
-            var req = CreateRequest(cmd);
-            var res = Send(req);
-
-            return ProcessEntityResponse<T>(cmd, res);
         }
 
         public virtual async Task<EntityResponse<T>> GetAsync<T>(GetEntityCommand cmd) where T : class
@@ -48,24 +33,9 @@ namespace MyCouch
             return ProcessEntityResponse<T>(cmd, await res.ForAwait());
         }
 
-        public virtual EntityResponse<T> Post<T>(T entity) where T : class
-        {
-            return Post(new PostEntityCommand<T>(entity));
-        }
-
         public virtual Task<EntityResponse<T>> PostAsync<T>(T entity) where T : class
         {
             return PostAsync(new PostEntityCommand<T>(entity));
-        }
-
-        public virtual EntityResponse<T> Post<T>(PostEntityCommand<T> cmd) where T : class
-        {
-            Ensure.That(cmd, "cmd").IsNotNull();
-
-            var req = CreateRequest(cmd);
-            var res = Send(req);
-
-            return ProcessEntityResponse(cmd, res);
         }
 
         public virtual async Task<EntityResponse<T>> PostAsync<T>(PostEntityCommand<T> cmd) where T : class
@@ -78,24 +48,9 @@ namespace MyCouch
             return ProcessEntityResponse(cmd, await res.ForAwait());
         }
 
-        public virtual EntityResponse<T> Put<T>(T entity) where T : class
-        {
-            return Put(new PutEntityCommand<T>(entity));
-        }
-
         public virtual Task<EntityResponse<T>> PutAsync<T>(T entity) where T : class
         {
             return PutAsync(new PutEntityCommand<T>(entity));
-        }
-
-        public virtual EntityResponse<T> Put<T>(PutEntityCommand<T> cmd) where T : class
-        {
-            Ensure.That(cmd, "cmd").IsNotNull();
-
-            var req = CreateRequest(cmd);
-            var res = Send(req);
-
-            return ProcessEntityResponse(cmd, res);
         }
 
         public virtual async Task<EntityResponse<T>> PutAsync<T>(PutEntityCommand<T> cmd) where T : class
@@ -108,24 +63,9 @@ namespace MyCouch
             return ProcessEntityResponse(cmd, await res.ForAwait());
         }
 
-        public virtual EntityResponse<T> Delete<T>(T entity) where T : class
-        {
-            return Delete(new DeleteEntityCommand<T>(entity));
-        }
-
         public virtual Task<EntityResponse<T>> DeleteAsync<T>(T entity) where T : class
         {
             return DeleteAsync(new DeleteEntityCommand<T>(entity));
-        }
-
-        public virtual EntityResponse<T> Delete<T>(DeleteEntityCommand<T> cmd) where T : class
-        {
-            Ensure.That(cmd, "cmd").IsNotNull();
-
-            var req = CreateRequest(cmd);
-            var res = Send(req);
-
-            return ProcessEntityResponse(cmd, res);
         }
 
         public virtual async Task<EntityResponse<T>> DeleteAsync<T>(DeleteEntityCommand<T> cmd) where T : class
@@ -136,11 +76,6 @@ namespace MyCouch
             var res = SendAsync(req);
             
             return ProcessEntityResponse(cmd, await res.ForAwait());
-        }
-
-        protected virtual HttpResponseMessage Send(HttpRequestMessage request)
-        {
-            return Client.Connection.Send(request);
         }
 
         protected virtual Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)

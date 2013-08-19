@@ -18,16 +18,6 @@ namespace MyCouch
             Client = client;
         }
 
-        public virtual AttachmentResponse Get(string docId, string attachmentName)
-        {
-            return Get(new GetAttachmentCommand(docId, attachmentName));
-        }
-
-        public virtual AttachmentResponse Get(string docId, string docRev, string attachmentName)
-        {
-            return Get(new GetAttachmentCommand(docId, docRev, attachmentName));
-        }
-
         public virtual Task<AttachmentResponse> GetAsync(string docId, string attachmentName)
         {
             return GetAsync(new GetAttachmentCommand(docId, attachmentName));
@@ -36,16 +26,6 @@ namespace MyCouch
         public virtual Task<AttachmentResponse> GetAsync(string docId, string docRev, string attachmentName)
         {
             return GetAsync(new GetAttachmentCommand(docId, docRev, attachmentName));
-        }
-
-        public virtual AttachmentResponse Get(GetAttachmentCommand cmd)
-        {
-            Ensure.That(cmd, "cmd").IsNotNull();
-
-            var req = CreateRequest(cmd);
-            var res = Send(req);
-
-            return ProcessAttachmentResponse(res);
         }
 
         public virtual async Task<AttachmentResponse> GetAsync(GetAttachmentCommand cmd)
@@ -58,16 +38,6 @@ namespace MyCouch
             return ProcessAttachmentResponse(await res.ForAwait());
         }
 
-        public virtual DocumentHeaderResponse Put(PutAttachmentCommand cmd)
-        {
-            Ensure.That(cmd, "cmd").IsNotNull();
-
-            var req = CreateRequest(cmd);
-            var res = Send(req);
-
-            return ProcessDocumentHeaderResponse(res);
-        }
-
         public virtual async Task<DocumentHeaderResponse> PutAsync(PutAttachmentCommand cmd)
         {
             Ensure.That(cmd, "cmd").IsNotNull();
@@ -78,24 +48,9 @@ namespace MyCouch
             return ProcessDocumentHeaderResponse(await res.ForAwait());
         }
 
-        public virtual DocumentHeaderResponse Delete(string docId, string docRev, string attachmentName)
-        {
-            return Delete(new DeleteAttachmentCommand(docId, docRev, attachmentName));
-        }
-
         public virtual Task<DocumentHeaderResponse> DeleteAsync(string docId, string docRev, string attachmentName)
         {
             return DeleteAsync(new DeleteAttachmentCommand(docId, docRev, attachmentName));
-        }
-
-        public virtual DocumentHeaderResponse Delete(DeleteAttachmentCommand cmd)
-        {
-            Ensure.That(cmd, "cmd").IsNotNull();
-
-            var req = CreateRequest(cmd);
-            var res = Send(req);
-
-            return ProcessDocumentHeaderResponse(res);
         }
 
         public virtual async Task<DocumentHeaderResponse> DeleteAsync(DeleteAttachmentCommand cmd)
@@ -143,11 +98,6 @@ namespace MyCouch
                 docId,
                 attachmentName,
                 docRev == null ? string.Empty : string.Concat("?rev=", docRev));
-        }
-
-        protected virtual HttpResponseMessage Send(HttpRequestMessage request)
-        {
-            return Client.Connection.Send(request);
         }
 
         protected virtual Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)

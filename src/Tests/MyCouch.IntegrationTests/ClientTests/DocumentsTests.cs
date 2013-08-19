@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using FluentAssertions;
 using MyCouch.Testing;
 using Xunit;
@@ -15,7 +16,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         [Fact]
         public void When_exists_of_non_existing_document_The_response_is_empty()
         {
-            var response = SUT.Exists("fooId");
+            var response = SUT.ExistsAsync("fooId").Result;
 
             response.Should().BeHead404("fooId");
         }
@@ -23,9 +24,9 @@ namespace MyCouch.IntegrationTests.ClientTests
         [Fact]
         public void When_exists_using_not_matching_rev_The_response_is_empty()
         {
-            var postResponse = SUT.Post(TestData.Artists.Artist1Json);
+            var postResponse = SUT.PostAsync(TestData.Artists.Artist1Json).Result;
 
-            var response = SUT.Exists(postResponse.Id, "1-795258d03c3bdb58fffc409e153c5d45");
+            var response = SUT.ExistsAsync(postResponse.Id, "1-795258d03c3bdb58fffc409e153c5d45").Result;
 
             response.Should().BeHead404(postResponse.Id);
         }
@@ -33,9 +34,9 @@ namespace MyCouch.IntegrationTests.ClientTests
         [Fact]
         public void When_exists_using_matching_id_The_response_is_ok()
         {
-            var postResponse = SUT.Post(TestData.Artists.Artist1Json);
+            var postResponse = SUT.PostAsync(TestData.Artists.Artist1Json).Result;
 
-            var response = SUT.Exists(postResponse.Id);
+            var response = SUT.ExistsAsync(postResponse.Id).Result;
 
             response.Should().BeHead200(postResponse.Id, postResponse.Rev);
         }
@@ -43,9 +44,9 @@ namespace MyCouch.IntegrationTests.ClientTests
         [Fact]
         public void When_exists_using_matching_id_and_rev_The_response_is_ok()
         {
-            var postResponse = SUT.Post(TestData.Artists.Artist1Json);
+            var postResponse = SUT.PostAsync(TestData.Artists.Artist1Json).Result;
 
-            var response = SUT.Exists(postResponse.Id, postResponse.Rev);
+            var response = SUT.ExistsAsync(postResponse.Id, postResponse.Rev).Result;
 
             response.Should().BeHead200(postResponse.Id, postResponse.Rev);
         }
@@ -53,7 +54,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         [Fact]
         public void When_post_of_new_document_The_document_is_persisted()
         {
-            var response = SUT.Post(TestData.Artists.Artist1Json);
+            var response = SUT.PostAsync(TestData.Artists.Artist1Json).Result;
 
             response.Should().BeSuccessfulPost(TestData.Artists.Artist1Id);
         }
@@ -61,7 +62,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         [Fact]
         public void When_put_of_new_document_The_document_is_replaced()
         {
-            var response = SUT.Put(TestData.Artists.Artist1Id, TestData.Artists.Artist1Json);
+            var response = SUT.PutAsync(TestData.Artists.Artist1Id, TestData.Artists.Artist1Json).Result;
 
             response.Should().BeSuccessfulPutOfNew(TestData.Artists.Artist1Id);
         }
@@ -69,10 +70,10 @@ namespace MyCouch.IntegrationTests.ClientTests
         [Fact]
         public void When_put_of_existing_document_The_document_is_replaced()
         {
-            var postResponse = SUT.Post(TestData.Artists.Artist1Json);
-            var getResponse = SUT.Get(postResponse.Id);
+            var postResponse = SUT.PostAsync(TestData.Artists.Artist1Json).Result;
+            var getResponse = SUT.GetAsync(postResponse.Id).Result;
 
-            var response = SUT.Put(getResponse.Id, getResponse.Content);
+            var response = SUT.PutAsync(getResponse.Id, getResponse.Content).Result;
 
             response.Should().BeSuccessfulPut(TestData.Artists.Artist1Id);
         }
@@ -80,9 +81,9 @@ namespace MyCouch.IntegrationTests.ClientTests
         [Fact]
         public void When_put_of_existing_document_Using_wrong_rev_A_conflict_is_detected()
         {
-            var postResponse = SUT.Post(TestData.Artists.Artist1Json);
+            var postResponse = SUT.PostAsync(TestData.Artists.Artist1Json).Result;
 
-            var response = SUT.Put(postResponse.Id, "2-179d36174ee192594c63b8e8d8f09345", TestData.Artists.Artist1Json);
+            var response = SUT.PutAsync(postResponse.Id, "2-179d36174ee192594c63b8e8d8f09345", TestData.Artists.Artist1Json).Result;
 
             response.Should().Be409Put(TestData.Artists.Artist1Id);
         }
@@ -90,9 +91,9 @@ namespace MyCouch.IntegrationTests.ClientTests
         [Fact]
         public void When_delete_of_existing_document_Using_id_and_rev_The_document_is_deleted()
         {
-            var r = SUT.Post(TestData.Artists.Artist1Json);
+            var r = SUT.PostAsync(TestData.Artists.Artist1Json).Result;
 
-            var response = SUT.Delete(r.Id, r.Rev);
+            var response = SUT.DeleteAsync(r.Id, r.Rev).Result;
 
             response.Should().BeSuccessfulDelete(TestData.Artists.Artist1Id);
         }
@@ -100,15 +101,15 @@ namespace MyCouch.IntegrationTests.ClientTests
         [Fact]
         public void When_copying_using_srcId_The_document_is_copied()
         {
-            var artistPost = SUT.Post(TestData.Artists.Artist1Json);
-            var srcArtist = SUT.Get(artistPost.Id);
+            var artistPost = SUT.PostAsync(TestData.Artists.Artist1Json).Result;
+            var srcArtist = SUT.GetAsync(artistPost.Id).Result;
             var newCopyId = "copyTest:1";
 
-            var copyResponse = SUT.Copy(artistPost.Id, newCopyId);
+            var copyResponse = SUT.CopyAsync(artistPost.Id, newCopyId).Result;
 
             copyResponse.Id.Should().Be(newCopyId);
 
-            var copied = SUT.Get(newCopyId);
+            var copied = SUT.GetAsync(newCopyId).Result;
             copied.Content.Should().Be(srcArtist.Content
                 .Replace("\"_id\":\"" + srcArtist.Id + "\"", "\"_id\":\"" + copyResponse.Id + "\"")
                 .Replace("\"_rev\":\"" + srcArtist.Rev + "\"", "\"_rev\":\"" + copyResponse.Rev + "\""));
@@ -117,16 +118,17 @@ namespace MyCouch.IntegrationTests.ClientTests
         [Fact]
         public void When_copying_using_srcId_and_srcRev_The_document_is_copied()
         {
-            var artistPost1 = SUT.Post(TestData.Artists.Artist1Json);
-            var srcArtist = SUT.Get(artistPost1.Id);
-            var artistPost2 = SUT.Put(srcArtist.Id, srcArtist.Content);
-            var newCopyId = "copyTest:1";
+            var artistPost1 = SUT.PostAsync(TestData.Artists.Artist1Json).Result;
+            var srcArtist = SUT.GetAsync(artistPost1.Id).Result;
+            const string newCopyId = "copyTest:1";
 
-            var copyResponse = SUT.Copy(artistPost1.Id, artistPost1.Rev, newCopyId);
+            SUT.PutAsync(srcArtist.Id, srcArtist.Content).Wait();
+            
+            var copyResponse = SUT.CopyAsync(artistPost1.Id, artistPost1.Rev, newCopyId).Result;
 
             copyResponse.Id.Should().Be(newCopyId);
 
-            var copied = SUT.Get(newCopyId);
+            var copied = SUT.GetAsync(newCopyId).Result;
             copied.Content.Should().Be(srcArtist.Content
                 .Replace("\"_id\":\"" + srcArtist.Id + "\"", "\"_id\":\"" + copyResponse.Id + "\"")
                 .Replace("\"_rev\":\"" + srcArtist.Rev + "\"", "\"_rev\":\"" + copyResponse.Rev + "\""));
@@ -135,15 +137,15 @@ namespace MyCouch.IntegrationTests.ClientTests
         [Fact]
         public void When_replacing_using_srcId_The_document_is_replacing_target()
         {
-            var artist1Post = SUT.Post(TestData.Artists.Artist1Json);
-            var artist2Post = SUT.Post(TestData.Artists.Artist2Json);
-            var srcArtist1 = SUT.Get(artist1Post.Id);
+            var artist1Post = SUT.PostAsync(TestData.Artists.Artist1Json).Result;
+            var artist2Post = SUT.PostAsync(TestData.Artists.Artist2Json).Result;
+            var srcArtist1 = SUT.GetAsync(artist1Post.Id).Result;
 
-            var replaceResponse = SUT.Replace(artist1Post.Id, artist2Post.Id, artist2Post.Rev);
+            var replaceResponse = SUT.ReplaceAsync(artist1Post.Id, artist2Post.Id, artist2Post.Rev).Result;
 
             replaceResponse.Id.Should().Be(artist2Post.Id);
 
-            var replaced = SUT.Get(artist2Post.Id);
+            var replaced = SUT.GetAsync(artist2Post.Id).Result;
             replaced.Content.Should().Be(srcArtist1.Content
                 .Replace("\"_id\":\"" + srcArtist1.Id + "\"", "\"_id\":\"" + replaceResponse.Id + "\"")
                 .Replace("\"_rev\":\"" + srcArtist1.Rev + "\"", "\"_rev\":\"" + replaceResponse.Rev + "\""));
@@ -152,15 +154,15 @@ namespace MyCouch.IntegrationTests.ClientTests
         [Fact]
         public void When_replacing_using_srcId_and_srcRev_The_document_is_replacing_target()
         {
-            var artist1Post = SUT.Post(TestData.Artists.Artist1Json);
-            var artist2Post = SUT.Post(TestData.Artists.Artist2Json);
-            var srcArtist1 = SUT.Get(artist1Post.Id);
+            var artist1Post = SUT.PostAsync(TestData.Artists.Artist1Json).Result;
+            var artist2Post = SUT.PostAsync(TestData.Artists.Artist2Json).Result;
+            var srcArtist1 = SUT.GetAsync(artist1Post.Id).Result;
 
-            var replaceResponse = SUT.Replace(artist1Post.Id, artist1Post.Rev, artist2Post.Id, artist2Post.Rev);
+            var replaceResponse = SUT.ReplaceAsync(artist1Post.Id, artist1Post.Rev, artist2Post.Id, artist2Post.Rev).Result;
 
             replaceResponse.Id.Should().Be(artist2Post.Id);
 
-            var replaced = SUT.Get(artist2Post.Id);
+            var replaced = SUT.GetAsync(artist2Post.Id).Result;
             replaced.Content.Should().Be(srcArtist1.Content
                 .Replace("\"_id\":\"" + srcArtist1.Id + "\"", "\"_id\":\"" + replaceResponse.Id + "\"")
                 .Replace("\"_rev\":\"" + srcArtist1.Rev + "\"", "\"_rev\":\"" + replaceResponse.Rev + "\""));
@@ -170,36 +172,39 @@ namespace MyCouch.IntegrationTests.ClientTests
         public void Flow_tests()
         {
             var post1 = SUT.PostAsync(TestData.Artists.Artist1Json);
-            var post2 = SUT.Post(TestData.Artists.Artist2Json);
+            var post2 = SUT.PostAsync(TestData.Artists.Artist2Json);
 
-            post1.Result.Should().BeSuccessfulPost(TestData.Artists.Artist1Id);
-            post2.Should().BeSuccessfulPost(TestData.Artists.Artist2Id);
+            post1.ContinueWith(t => t.Result.Should().BeSuccessfulPost(TestData.Artists.Artist1Id));
+            post2.ContinueWith(t => t.Result.Should().BeSuccessfulPost(TestData.Artists.Artist2Id));
+            Task.WaitAll(post1, post2);
 
             var get1 = SUT.GetAsync(post1.Result.Id);
-            var get2 = SUT.Get(post2.Id);
+            var get2 = SUT.GetAsync(post2.Result.Id);
 
-            get1.Result.Should().BeSuccessfulGet(post1.Result.Id);
-            get2.Should().BeSuccessfulGet(post2.Id);
+            get1.ContinueWith(t => t.Result.Should().BeSuccessfulGet(post1.Result.Id));
+            get2.ContinueWith(t => t.Result.Should().BeSuccessfulGet(post2.Result.Id));
+            Task.WaitAll(get1, get2);
 
             var kv1 = Client.Serializer.Deserialize<IDictionary<string, dynamic>>(get1.Result.Content);
             kv1["year"] = 2000;
             var docUpd1 = Client.Serializer.Serialize(kv1);
-
             var put1 = SUT.PutAsync(get1.Result.Id, docUpd1);
 
-            var kv2 = Client.Serializer.Deserialize<IDictionary<string, dynamic>>(get2.Content);
+            var kv2 = Client.Serializer.Deserialize<IDictionary<string, dynamic>>(get2.Result.Content);
             kv2["year"] = 2001;
             var docUpd2 = Client.Serializer.Serialize(kv2);
-            var put2 = SUT.Put(get2.Id, docUpd2);
+            var put2 = SUT.PutAsync(get2.Result.Id, docUpd2);
 
-            put1.Result.Should().BeSuccessfulPut(get1.Result.Id);
-            put2.Should().BeSuccessfulPut(get2.Id);
+            put1.ContinueWith(t => t.Result.Should().BeSuccessfulPut(get1.Result.Id));
+            put2.ContinueWith(t => t.Result.Should().BeSuccessfulPut(get2.Result.Id));
+            Task.WaitAll(put1, put2);
 
             var delete1 = SUT.DeleteAsync(put1.Result.Id, put1.Result.Rev);
-            var delete2 = SUT.Delete(put2.Id, put2.Rev);
+            var delete2 = SUT.DeleteAsync(put2.Result.Id, put2.Result.Rev);
 
-            delete1.Result.Should().BeSuccessfulDelete(put1.Result.Id);
-            delete2.Should().BeSuccessfulDelete(put2.Id);
+            delete1.ContinueWith(t => t.Result.Should().BeSuccessfulDelete(put1.Result.Id));
+            delete2.ContinueWith(t => t.Result.Should().BeSuccessfulDelete(put2.Result.Id));
+            Task.WaitAll(delete1, delete2);
         }
     }
 }

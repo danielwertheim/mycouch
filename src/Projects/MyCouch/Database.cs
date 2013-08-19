@@ -17,28 +17,12 @@ namespace MyCouch
             Client = client;
         }
 
-        public virtual DatabaseResponse Put()
-        {
-            var req = CreateRequest(HttpMethod.Put);
-            var res = Send(req);
-
-            return ProcessResponse(res);
-        }
-
         public virtual async Task<DatabaseResponse> PutAsync()
         {
             var req = CreateRequest(HttpMethod.Put);
             var res = SendAsync(req);
 
             return ProcessResponse(await res.ForAwait());
-        }
-
-        public virtual DatabaseResponse Delete()
-        {
-            var req = CreateRequest(HttpMethod.Delete);
-            var res = Send(req);
-
-            return ProcessResponse(res);
         }
 
         public virtual async Task<DatabaseResponse> DeleteAsync()
@@ -57,11 +41,6 @@ namespace MyCouch
         protected virtual string GenerateRequestUrl()
         {
             return Client.Connection.Address.ToString();
-        }
-
-        protected virtual HttpResponseMessage Send(HttpRequestMessage request)
-        {
-            return Client.Connection.Send(request);
         }
 
         protected virtual Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)

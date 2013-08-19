@@ -7,14 +7,16 @@ namespace MyCouch.IntegrationTests
         internal static void ClearAllDocuments(this IClient client)
         {
             var query = new SystemViewQuery("_all_docs");
-            var response = client.Views.RunQuery<dynamic>(query);
+            var response = client.Views.RunQueryAsync<dynamic>(query).Result;
 
             if (!response.IsEmpty)
             {
                 var bulkCmd = new BulkCommand();
+
                 foreach (var row in response.Rows)
                     bulkCmd.Delete(row.Id, row.Value.rev.ToString());
-                client.Documents.Bulk(bulkCmd);
+                
+                client.Documents.BulkAsync(bulkCmd).Wait();
             }
         }
     }
