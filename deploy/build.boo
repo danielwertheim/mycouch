@@ -39,17 +39,16 @@ target test, (test40, test45, testnetcore45):
     pass
 
 target test40:
-    myvstest(
-        tool_path: "C:/Program Files (x86)/Microsoft Visual Studio 11.0/Common7/IDE/CommonExtensions/Microsoft/TestWindow/vstest.console.exe",
+    myxunitclr4(
         assembly: "${solution_dir_path}/Tests/${project_name}.Net40.UnitTests/bin/${build_config}/${project_name}.Net40.UnitTests.dll")
 
 target test45:
-    myvstest(
-        tool_path: "C:/Program Files (x86)/Microsoft Visual Studio 11.0/Common7/IDE/CommonExtensions/Microsoft/TestWindow/vstest.console.exe",
+    myxunitclr4(
         assembly: "${solution_dir_path}/Tests/${project_name}.Net45.UnitTests/bin/${build_config}/${project_name}.Net45.UnitTests.dll")
 
 target testnetcore45:
-    print "Sorry. But this has to be done from within VS2012 for now. Switching to xUnit as soon has I have time over."
+    myxunitclr4(
+        assembly: "${solution_dir_path}/Tests/${project_name}.NetCore45.UnitTests/bin/${build_config}/${project_name}.NetCore45.UnitTests.dll")
 
 target zip:
     zip(build_dir_path, "${builds_dir_path}/${build_name}.zip")
