@@ -1,5 +1,3 @@
-import MyPhantom
-
 solution_name = "MyCouch-All"
 solution_dir_path = "../src"
 project_name = "MyCouch"
@@ -8,6 +6,8 @@ build_version = "0.9.1"
 build_config = "Release"
 build_name = "${project_name}-v${build_version}-${build_config}"
 build_dir_path = "${builds_dir_path}/${build_name}"
+testrunner = "xunit.console.clr4.exe"
+nuget = "nuget.exe"
 
 target default, (clean, compile, copy, test, zip, nuget_pack):
     pass
@@ -39,20 +39,16 @@ target test, (test40, test45, testnetcore45):
     pass
 
 target test40:
-    myxunitclr4(
-        assembly: "${solution_dir_path}/Tests/${project_name}.Net40.UnitTests/bin/${build_config}/${project_name}.Net40.UnitTests.dll")
+    exec(testrunner, "${solution_dir_path}/Tests/${project_name}.Net40.UnitTests/bin/${build_config}/${project_name}.Net40.UnitTests.dll")
 
 target test45:
-    myxunitclr4(
-        assembly: "${solution_dir_path}/Tests/${project_name}.Net45.UnitTests/bin/${build_config}/${project_name}.Net45.UnitTests.dll")
+    exec(testrunner, "${solution_dir_path}/Tests/${project_name}.Net45.UnitTests/bin/${build_config}/${project_name}.Net45.UnitTests.dll")
 
 target testnetcore45:
-    myxunitclr4(
-        assembly: "${solution_dir_path}/Tests/${project_name}.NetCore45.UnitTests/bin/${build_config}/${project_name}.NetCore45.UnitTests.dll")
+    exec(testrunner, "${solution_dir_path}/Tests/${project_name}.NetCore45.UnitTests/bin/${build_config}/${project_name}.NetCore45.UnitTests.dll")
 
 target zip:
     zip(build_dir_path, "${builds_dir_path}/${build_name}.zip")
     
 target nuget_pack:
-    mynuget(
-        options: "pack ${project_name}.nuspec -version ${build_version} -basepath ${build_dir_path} -outputdirectory ${builds_dir_path}")
+    exec(nuget, "pack ${project_name}.nuspec -version ${build_version} -basepath ${build_dir_path} -outputdirectory ${builds_dir_path}")
