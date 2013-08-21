@@ -1,5 +1,5 @@
 # MyCouch #
-Simple asynchronous CouchDb client for .Net - builds on top of the asynchronous HTTP client and uses JSON.Net to provide flexible serialization behavior. It tries to keep the domain language of CouchDb instead of bringing in generic repositories and other confusing stuff. MyCouch lets you work with raw JSON and/or entities/POCOS without requiring any implementation of interfaces, baseclasses etc. MyCouch provides you with some model conventions like injection of $doctype to the document. It is plug-gable. If you don't like some piece, then hook in your implementation instead.
+The asynchronous CouchDb client for .Net - builds on top of the asynchronous HTTP client and uses JSON.Net to provide flexible serialization behaviour. It tries to keep the domain language of CouchDb instead of bringing in generic repositories and other confusing stuff. MyCouch lets you work with raw JSON and/or entities/POCOS without requiring any implementation of interfaces, baseclasses etc. MyCouch provides you with some model conventions like injection of $doctype to the document. It is plug-gable. If you don't like some piece, then hook in your implementation instead.
 
 ## NuGet ##
 MyCouch is distributed via NuGet. You can [find the package here](https://nuget.org/packages/MyCouch/).
@@ -20,14 +20,18 @@ or
 
 For the script to work, you need to have [the NuGet command line](http://nuget.codeplex.com/releases) `(NuGet.exe) registrered in the environment path`, or you need to tweak the script so it knows where it will find your NuGet.exe.
 
+## A word about the integration tests ##
+They are written using xUnit. To get started you need to create a database `mycouchtests` and one user `mycouchtester` with password `p@ssword`. The user also must be allowed to create views in the database.
+
+You can configure your own connection in the class: `IntegrationTestsRuntime`.
+
+*Please note*, that if you run the tests using the `xUnit plugin` for `ReSharper` or using the `xUnit console`, you will get a couple of failing UnitTests for the Windows store project. This is a *bug with xUnit*. It does not load and execute the Windows store test project in its own app-container as it does when you execute them via Visual Studios test explorer.
+
 ## How-to Contribute ##
 This is described in the wiki, under: ["How-to Contribute"](https://github.com/danielwertheim/mycouch/wiki/how-to-contribute).
 
 ## Issues, questions, etc ##
 So you have issues or questions... Great! That means someone is using it. Use the issues function here at the project page or contact me via mail: firstname@lastname.se; or Twitter: [@danielwertheim](https://twitter.com/danielwertheim)
-
-## A word about the integration tests ##
-They are written using MSTest (to be able to easily test the WinRT lib, supporting Windows Store apps). To get started you need to create a database `mycouchtests` and one user `mycouchtester` with password `p@ssword`. The user also must be allowed to create views in the database.
 
 ## License ##
 The MIT License (MIT)
