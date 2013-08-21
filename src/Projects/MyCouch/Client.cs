@@ -1,8 +1,6 @@
 ﻿using System;
 using EnsureThat;
 using MyCouch.Net;
-using MyCouch.Schemes;
-using MyCouch.Schemes.Reflections;
 using MyCouch.Serialization;
 
 namespace MyCouch
@@ -12,10 +10,8 @@ namespace MyCouch
         public IConnection Connection { get; protected set; }
         public ISerializer Serializer { get; set; }
         public IResponseFactory ResponseFactory { get; set; }
-        public IEntityReflector EntityReflector { get; set; }
         public IDatabase Database { get; protected set; }
         public IDocuments Documents { get; protected set; }
-        public IEntities Entities { get; protected set; }
         public IAttachments Attachments { get; protected set; }
         public IViews Views { get; protected set; }
 
@@ -28,16 +24,10 @@ namespace MyCouch
             Ensure.That(connection, "connection").IsNotNull();
 
             Connection = connection;
-#if !NETFX_CORE
-            EntityReflector = new EntityReflector(new IlDynamicPropertyFactory());
-#else
-            EntityReflector = new EntityReflector(new LambdaDynamicPropertyFactory());
-#endif
-            Serializer = new MyCouchSerializer(() => EntityReflector);
-            ResponseFactory = new ResponseFactory(this);
+            Serializer = new DefaultSerializer();
+            ResponseFactory = new ResponseFactory(Serializer);
             Database = new Database(this);
             Documents = new Documents(this);
-            Entities = new Entities(this);
             Attachments = new Attachments(this);
             Views = new Views(this);
         }

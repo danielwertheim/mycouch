@@ -3,18 +3,19 @@ using System.IO;
 using System.Net.Http;
 using EnsureThat;
 using MyCouch.Net;
+using MyCouch.Serialization;
 
 namespace MyCouch
 {
     public class ResponseFactory : IResponseFactory
     {
-        protected readonly IClient Client;
+        protected readonly ISerializer Serializer;
 
-        public ResponseFactory(IClient client)
+        public ResponseFactory(ISerializer serializer)
         {
-            Ensure.That(client, "client").IsNotNull();
+            Ensure.That(serializer, "serializer").IsNotNull();
 
-            Client = client;
+            Serializer = serializer;
         }
 
         public virtual DatabaseResponse CreateDatabaseResponse(HttpResponseMessage response)
@@ -35,11 +36,6 @@ namespace MyCouch
         public virtual DocumentResponse CreateDocumentResponse(HttpResponseMessage response)
         {
             return CreateResponse<DocumentResponse>(response, OnSuccessfulDocumentResponseContentMaterializer, OnFailedResponseContentMaterializer);
-        }
-
-        public virtual EntityResponse<T> CreateEntityResponse<T>(HttpResponseMessage response) where T : class
-        {
-            return CreateResponse<EntityResponse<T>>(response, OnSuccessfulEntityResponseContentMaterializer, OnFailedEntityResponseContentMaterializer);
         }
 
         public virtual AttachmentResponse CreateAttachmentResponse(HttpResponseMessage response)
@@ -79,7 +75,7 @@ namespace MyCouch
         protected virtual void OnSuccessfulBulkResponseContentMaterializer(HttpResponseMessage response, BulkResponse result)
         {
             using (var content = response.Content.ReadAsStream())
-                Client.Serializer.PopulateBulkResponse(result, content);
+                Serializer.PopulateBulkResponse(result, content);
         }
 
         protected virtual void OnSuccessfulDocumentHeaderResponseContentMaterializer(HttpResponseMessage response, DocumentHeaderResponse result)
@@ -93,7 +89,7 @@ namespace MyCouch
             }
 
             using (var content = response.Content.ReadAsStream())
-                Client.Serializer.PopulateDocumentHeaderResponse(result, content);
+                Serializer.PopulateDocumentHeaderResponse(result, content);
         }
 
         protected virtual void OnSuccessfulDocumentResponseContentMaterializer(HttpResponseMessage response, DocumentResponse result)
@@ -101,7 +97,7 @@ namespace MyCouch
             using (var content = response.Content.ReadAsStream())
             {
                 if (ContentShouldHaveIdAndRev(response.RequestMessage))
-                    Client.Serializer.PopulateDocumentHeaderResponse(result, content);
+                    Serializer.PopulateDocumentHeaderResponse(result, content);
                 else
                 {
                     AssignMissingIdFromRequestUri(response, result);
@@ -112,26 +108,6 @@ namespace MyCouch
                 using (var reader = new StreamReader(content, MyCouchRuntime.DefaultEncoding))
                 {
                     result.Content = reader.ReadToEnd();
-                }
-            }
-        }
-
-        protected virtual void OnSuccessfulEntityResponseContentMaterializer<T>(HttpResponseMessage response, EntityResponse<T> result) where T : class
-        {
-            using (var content = response.Content.ReadAsStream())
-            {
-                if (ContentShouldHaveIdAndRev(response.RequestMessage))
-                    Client.Serializer.PopulateDocumentHeaderResponse(result, content);
-                else
-                {
-                    AssignMissingIdFromRequestUri(response, result);
-                    AssignMissingRevFromRequestHeaders(response, result);
-                }
-
-                if (result.RequestMethod == HttpMethod.Get)
-                {
-                    content.Position = 0;
-                    result.Entity = Client.Serializer.Deserialize<T>(content);
                 }
             }
         }
@@ -155,13 +131,13 @@ namespace MyCouch
         protected virtual void OnSuccessfulViewQueryResponseContentMaterializer<T>(HttpResponseMessage response, ViewQueryResponse<T> result) where T : class
         {
             using(var content = response.Content.ReadAsStream())
-                Client.Serializer.PopulateViewQueryResponse(result, content);
+                Serializer.PopulateViewQueryResponse(result, content);
         }
 
         protected virtual void OnFailedResponseContentMaterializer<T>(HttpResponseMessage response, T result) where T : IResponse
         {
             using (var content = response.Content.ReadAsStream())
-                Client.Serializer.PopulateFailedResponse(result, content);
+                Serializer.PopulateFailedResponse(result, content);
         }
 
         protected virtual void OnFailedDocumentHeaderResponseContentMaterializer(HttpResponseMessage response, DocumentHeaderResponse result)
@@ -169,11 +145,6 @@ namespace MyCouch
             OnFailedResponseContentMaterializer(response, result);
 
             AssignMissingIdFromRequestUri(response, result);
-        }
-
-        protected virtual void OnFailedEntityResponseContentMaterializer<T>(HttpResponseMessage response, EntityResponse<T> result) where T : class 
-        {
-            OnFailedDocumentHeaderResponseContentMaterializer(response, result);
         }
 
         protected virtual bool ContentShouldHaveIdAndRev(HttpRequestMessage request)

@@ -3,7 +3,7 @@ using System.IO;
 using MyCouch.Serialization.Conventions;
 using Newtonsoft.Json;
 
-namespace MyCouch.Serialization
+namespace MyCouch.Rich.Serialization
 {
     public class SerializationJsonWriter : JsonTextWriter
     {

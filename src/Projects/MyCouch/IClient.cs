@@ -1,6 +1,5 @@
 ﻿using System;
 using MyCouch.Net;
-using MyCouch.Schemes;
 using MyCouch.Serialization;
 
 namespace MyCouch
@@ -25,12 +24,6 @@ namespace MyCouch
         IResponseFactory ResponseFactory { get; set; }
 
         /// <summary>
-        /// Used to get and set specific members of entities when you are using the
-        /// typed API.
-        /// </summary>
-        IEntityReflector EntityReflector { get; set; }
-
-        /// <summary>
         /// Database oriented API operations.
         /// </summary>
         IDatabase Database { get; }
@@ -39,11 +32,6 @@ namespace MyCouch
         /// Document oriented API operations, for accessing and managing RAW documents.
         /// </summary>
         IDocuments Documents { get; }
-
-        /// <summary>
-        /// Entity oriented API operations, for accessing and managing documents as entities.
-        /// </summary>
-        IEntities Entities { get; }
 
         /// <summary>
         /// Attachment oriented API operations, for accessing and managing attachments to documents.

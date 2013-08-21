@@ -1,13 +1,12 @@
 ﻿using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Threading.Tasks;
 
 namespace MyCouch.Net
 {
-    internal static class HttpExtensions
+    public static class HttpExtensions
     {
-        internal static string GetUriSegmentByRightOffset(this HttpRequestMessage request, int offset = 0)
+        public static string GetUriSegmentByRightOffset(this HttpRequestMessage request, int offset = 0)
         {
             var segments = request.RequestUri.Segments;
             var val = segments[segments.Length - (1 + offset)];
@@ -17,14 +16,14 @@ namespace MyCouch.Net
                 : val;
         }
 
-        internal static string GetETag(this HttpResponseHeaders headers)
+        public static string GetETag(this HttpResponseHeaders headers)
         {
             return headers.ETag == null || headers.ETag.Tag == null
                 ? string.Empty
                 : headers.ETag.Tag.Substring(1, headers.ETag.Tag.Length - 2);
         }
 
-        internal static Stream ReadAsStream(this HttpContent content)
+        public static Stream ReadAsStream(this HttpContent content)
         {
             return content.ReadAsStreamAsync().Result;
         }

@@ -14,7 +14,7 @@ namespace MyCouch.UnitTests.Serialization
         public MyCouchSerializerWithLambdaPropertyFactoryTests()
         {
             var entityReflector = new EntityReflector(new LambdaDynamicPropertyFactory());
-            SUT = new MyCouchSerializer(() => entityReflector);
+            SUT = new DefaultSerializer(() => entityReflector);
         }
     }
 #if !NETFX_CORE
@@ -23,11 +23,11 @@ namespace MyCouch.UnitTests.Serialization
         public MyCouchSerializerWithIlPropertyFactoryTests()
         {
             var entityReflector = new EntityReflector(new IlDynamicPropertyFactory());
-            SUT = new MyCouchSerializer(() => entityReflector);
+            SUT = new DefaultSerializer(() => entityReflector);
         }
     }
 #endif
-    public abstract class MyCouchSerializerTests : UnitTestsOf<MyCouchSerializer>
+    public abstract class MyCouchSerializerTests : UnitTestsOf<DefaultSerializer>
     {
         [Fact]
         public void When_serializing_entity_It_will_inject_document_header_in_json()
