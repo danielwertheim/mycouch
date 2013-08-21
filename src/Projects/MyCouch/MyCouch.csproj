@@ -85,7 +85,7 @@
     <Compile Include="Responses\ResponseMaterializer.cs" />
     <Compile Include="SystemViewQuery.cs" />
     <Compile Include="Response.cs" />
-    <Compile Include="Net\HttpExtensions.cs" />
+    <Compile Include="Extensions\HttpExtensions.cs" />
     <Compile Include="Responses\ResponseFactory.cs" />
     <Compile Include="IResponseFactory.cs" />
     <Compile Include="Net\HttpRequest.cs" />

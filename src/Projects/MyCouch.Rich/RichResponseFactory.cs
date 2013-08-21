@@ -1,5 +1,6 @@
 ﻿using System.Net.Http;
 using EnsureThat;
+using MyCouch.Extensions;
 using MyCouch.Net;
 using MyCouch.Serialization;
 
