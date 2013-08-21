@@ -13,13 +13,13 @@ namespace MyCouch.Rich.Serialization
 {
     public class RichSerializationContractResolver : SerializationContractResolver
     {
-        protected readonly Func<IEntityReflector> EntityReflectorFn;
+        protected readonly IEntityReflector EntityReflector;
 
-        public RichSerializationContractResolver(Func<IEntityReflector> entityReflectorFn)
+        public RichSerializationContractResolver(IEntityReflector entityReflector)
         {
-            Ensure.That(entityReflectorFn, "entityReflectorFn").IsNotNull();
+            Ensure.That(entityReflector, "entityReflector").IsNotNull();
 
-            EntityReflectorFn = entityReflectorFn;
+            EntityReflector = entityReflector;
         }
 
         protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
@@ -32,7 +32,7 @@ namespace MyCouch.Rich.Serialization
             if (type == typeof(BulkResponse.Row) || (type.GetTypeInfo().IsGenericType && typeof(ViewQueryResponse<>.Row) == type.GetGenericTypeDefinition()))
                 return base.CreateProperties(type, memberSerialization);
 #endif
-            var entityReflector = EntityReflectorFn();
+            var entityReflector = EntityReflector;
             var props = base.CreateProperties(type, memberSerialization);
             int? idRank = null, revRank = null;
             JsonProperty id = null, rev = null;

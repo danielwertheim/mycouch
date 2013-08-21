@@ -12,7 +12,6 @@ namespace MyCouch.Rich
     {
         public new IRichSerializer Serializer { get; private set; }
         public new IRichResponseFactory ResponseFactory { get; private set; }
-        protected IEntityReflector EntityReflector { get; set; }
         public IEntities Entities { get; protected set; }
 
         public RichClient(string url) : this(new Uri(url)) { }
@@ -22,13 +21,13 @@ namespace MyCouch.Rich
         public RichClient(IConnection connection) : base(connection)
         {
 #if !NETFX_CORE
-            EntityReflector = new EntityReflector(new IlDynamicPropertyFactory());
+            var entityReflector = new EntityReflector(new IlDynamicPropertyFactory());
 #else
-            EntityReflector = new EntityReflector(new LambdaDynamicPropertyFactory());
+            var entityReflector = new EntityReflector(new LambdaDynamicPropertyFactory());
 #endif
-            Serializer = new RichSerializer(new RichSerializationContractResolver(() => EntityReflector));
+            Serializer = new RichSerializer(new RichSerializationContractResolver(entityReflector));
             ResponseFactory = new RichResponseFactory(new DefaultResponseMaterializer(), Serializer);
-            Entities = new Entities(Connection, ResponseFactory, Serializer, EntityReflector);
+            Entities = new Entities(Connection, ResponseFactory, Serializer, entityReflector);
         }
     }
 }

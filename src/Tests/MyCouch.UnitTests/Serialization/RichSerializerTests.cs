@@ -12,7 +12,7 @@ namespace MyCouch.UnitTests.Serialization
         public RichSerializerWithLambdaPropertyFactoryTests()
         {
             var entityReflector = new EntityReflector(new LambdaDynamicPropertyFactory());
-            SUT = new RichSerializer(new RichSerializationContractResolver(() => entityReflector));
+            SUT = new RichSerializer(new RichSerializationContractResolver(entityReflector));
         }
     }
 #if !NETFX_CORE
@@ -21,7 +21,7 @@ namespace MyCouch.UnitTests.Serialization
         public RichSerializerWithIlPropertyFactoryTests()
         {
             var entityReflector = new EntityReflector(new IlDynamicPropertyFactory());
-            SUT = new RichSerializer(new RichSerializationContractResolver(() => entityReflector));
+            SUT = new RichSerializer(new RichSerializationContractResolver(entityReflector));
         }
     }
 #endif
