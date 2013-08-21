@@ -72,7 +72,7 @@ namespace MyCouch.UnitTests.Serialization
 
             var json = SUT.Serialize(model);
 
-            json.Should().Be("{\"$doctype\":\"modelwithidinwrongorder\",\"id\":\"abc\",\"modelWithIdInWrongOrderId\":\"def\",\"value\":\"ghi\"}");
+            json.Should().Be("{\"id\":\"abc\",\"modelWithIdInWrongOrderId\":\"def\",\"value\":\"ghi\"}");
         }
     }
 }
