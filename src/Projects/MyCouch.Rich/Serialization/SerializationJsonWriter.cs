@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using MyCouch.Serialization.Conventions;
+using MyCouch.Rich.Serialization.Conventions;
 using Newtonsoft.Json;
 
 namespace MyCouch.Rich.Serialization

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MyCouch
+namespace MyCouch.Rich
 {
 #if !NETFX_CORE
     [Serializable]

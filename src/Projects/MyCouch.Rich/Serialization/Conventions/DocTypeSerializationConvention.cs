@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MyCouch.Serialization.Conventions
+namespace MyCouch.Rich.Serialization.Conventions
 {
     public class DocTypeSerializationConvention : IDocTypeSerializationConvention
     {

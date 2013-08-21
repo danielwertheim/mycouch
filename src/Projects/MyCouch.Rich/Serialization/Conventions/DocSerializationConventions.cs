@@ -1,4 +1,4 @@
-﻿namespace MyCouch.Serialization.Conventions
+﻿namespace MyCouch.Rich.Serialization.Conventions
 {
     public class DocSerializationConventions
     {
