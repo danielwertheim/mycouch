@@ -9,9 +9,9 @@ namespace MyCouch.Rich
 {
     public class RichClient : Client, IRichClient
     {
-        public IRichSerializer Serializer { get; set; }
-        public IRichResponseFactory ResponseFactory { get; set; }
-        public IEntityReflector EntityReflector { get; set; }
+        public new IRichSerializer Serializer { get; private set; }
+        public new IRichResponseFactory ResponseFactory { get; private set; }
+        protected IEntityReflector EntityReflector { get; set; }
         public IEntities Entities { get; protected set; }
 
         public RichClient(string url) : this(new Uri(url)) { }
@@ -25,9 +25,9 @@ namespace MyCouch.Rich
 #else
             EntityReflector = new EntityReflector(new LambdaDynamicPropertyFactory());
 #endif
-            Serializer = new RichSerializer(() => EntityReflector);
+            Serializer = new RichSerializer(new RichSerializationContractResolver(() => EntityReflector));
             ResponseFactory = new RichResponseFactory(new ResponseMaterializer(), Serializer);
-            Entities = new Entities(this);
+            Entities = new Entities(Connection, ResponseFactory, Serializer, EntityReflector);
         }
     }
 }

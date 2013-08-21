@@ -36,6 +36,9 @@
     <Reference Include="FluentAssertions">
       <HintPath>..\..\packages\FluentAssertions.2.0.1\lib\net45\FluentAssertions.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
@@ -61,6 +64,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Projects\MyCouch.Rich\MyCouch.Rich.csproj">
+      <Project>{de56d411-d53d-498a-933c-d8db34df0a41}</Project>
+      <Name>MyCouch.Rich</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Projects\MyCouch\MyCouch.csproj">
       <Project>{f721c24f-162e-4505-9d5e-f7565ca16886}</Project>
       <Name>MyCouch</Name>

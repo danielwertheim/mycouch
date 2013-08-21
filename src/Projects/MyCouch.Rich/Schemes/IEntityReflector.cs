@@ -1,5 +1,9 @@
 namespace MyCouch.Schemes
 {
+    /// <summary>
+    /// Used to get and set specific members of entities when you are using the
+    /// typed API.
+    /// </summary>
     public interface IEntityReflector 
     {
         IEntityMember IdMember { get; set; }

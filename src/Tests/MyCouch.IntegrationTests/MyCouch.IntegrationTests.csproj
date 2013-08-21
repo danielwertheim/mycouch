@@ -33,6 +33,10 @@
     <Reference Include="FluentAssertions">
       <HintPath>..\..\packages\FluentAssertions.2.0.1\lib\net45\FluentAssertions.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,14 +53,21 @@
     <Compile Include="ClientExtensions.cs" />
     <Compile Include="ClientTests\AttachmentsTests.cs" />
     <Compile Include="ClientTests\DocumentsTests.cs" />
-    <Compile Include="ClientTests\EntitiesTests.cs" />
+    <Compile Include="IntegrationTests.cs" />
+    <Compile Include="RichClientTests\RichClientTestsOf.cs" />
+    <Compile Include="RichClientTests\EntitiesTests.cs" />
     <Compile Include="ClientTests\ViewsTests.cs" />
-    <Compile Include="IntegrationTestsOf.cs" />
+    <Compile Include="ClientTests\ClientTestsOf.cs" />
     <Compile Include="IntegrationTestsRuntime.cs" />
     <Compile Include="IPreserveStatePerFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RichClientTests\ViewsTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Projects\MyCouch.Rich\MyCouch.Rich.csproj">
+      <Project>{de56d411-d53d-498a-933c-d8db34df0a41}</Project>
+      <Name>MyCouch.Rich</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Projects\MyCouch\MyCouch.csproj">
       <Project>{f721c24f-162e-4505-9d5e-f7565ca16886}</Project>
       <Name>MyCouch</Name>

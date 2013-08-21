@@ -1,15 +1,14 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Text;
-using MyCouch.Schemes;
 using MyCouch.Serialization;
+using Newtonsoft.Json.Serialization;
 
 namespace MyCouch.Rich.Serialization
 {
     public class RichSerializer : DefaultSerializer, IRichSerializer
     {
-        public RichSerializer(Func<IEntityReflector> entityReflectorFn) 
-            : base(new RichSerializationContractResolver(entityReflectorFn))
+        public RichSerializer(IContractResolver contractResolver) 
+            : base(contractResolver)
         {
         }
 

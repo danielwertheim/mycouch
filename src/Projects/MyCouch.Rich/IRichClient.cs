@@ -1,5 +1,4 @@
 ﻿using MyCouch.Rich.Serialization;
-using MyCouch.Schemes;
 
 namespace MyCouch.Rich
 {
@@ -10,18 +9,7 @@ namespace MyCouch.Rich
         /// to serialize or deserialize using the same behavior that the provider
         /// has.
         /// </summary>
-        IRichSerializer Serializer { get; set; }
-
-        /// <summary>
-        /// Factory used to build <see cref="IResponse"/>.
-        /// </summary>
-        IRichResponseFactory ResponseFactory { get; set; }
-
-        /// <summary>
-        /// Used to get and set specific members of entities when you are using the
-        /// typed API.
-        /// </summary>
-        IEntityReflector EntityReflector { get; set; }
+        new IRichSerializer Serializer { get; }
 
         /// <summary>
         /// Entity oriented API operations, for accessing and managing documents as entities.

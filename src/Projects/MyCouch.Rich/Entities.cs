@@ -4,18 +4,29 @@ using EnsureThat;
 using MyCouch.Commands;
 using MyCouch.Extensions;
 using MyCouch.Net;
+using MyCouch.Rich.Serialization;
+using MyCouch.Schemes;
 
 namespace MyCouch.Rich
 {
     public class Entities : IEntities
     {
-        protected readonly IRichClient Client;
+        protected readonly IConnection Connection;
+        protected readonly IRichResponseFactory ResponseFactory;
+        protected readonly IRichSerializer Serializer;
+        protected readonly IEntityReflector EntityReflector;
 
-        public Entities(IRichClient client)
+        public Entities(IConnection connection, IRichResponseFactory responseFactory, IRichSerializer serializer, IEntityReflector entityReflector)
         {
-            Ensure.That(client, "Client").IsNotNull();
+            Ensure.That(connection, "connection").IsNotNull();
+            Ensure.That(responseFactory, "responseFactory").IsNotNull();
+            Ensure.That(serializer, "serializer").IsNotNull();
+            Ensure.That(entityReflector, "entityReflector").IsNotNull();
 
-            Client = client;
+            Connection = connection;
+            ResponseFactory = responseFactory;
+            Serializer = serializer;
+            EntityReflector = entityReflector;
         }
 
         public virtual Task<EntityResponse<T>> GetAsync<T>(string id, string rev = null) where T : class
@@ -80,17 +91,17 @@ namespace MyCouch.Rich
 
         protected virtual Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
         {
-            return Client.Connection.SendAsync(request);
+            return Connection.SendAsync(request);
         }
 
         protected virtual string SerializeEntity<T>(T entity) where T : class
         {
-            return Client.Serializer.SerializeEntity(entity);
+            return Serializer.SerializeEntity(entity);
         }
 
         protected virtual T DeserializeEntity<T>(string data) where T : class
         {
-            return Client.Serializer.Deserialize<T>(data);
+            return Serializer.Deserialize<T>(data);
         }
 
         protected virtual HttpRequestMessage CreateRequest(GetEntityCommand cmd)
@@ -113,8 +124,8 @@ namespace MyCouch.Rich
 
         protected virtual HttpRequestMessage CreateRequest<T>(PutEntityCommand<T> cmd) where T : class
         {
-            var id = Client.EntityReflector.IdMember.GetValueFrom(cmd.Entity);
-            var rev = Client.EntityReflector.RevMember.GetValueFrom(cmd.Entity);
+            var id = EntityReflector.IdMember.GetValueFrom(cmd.Entity);
+            var rev = EntityReflector.RevMember.GetValueFrom(cmd.Entity);
             var req = new HttpRequest(HttpMethod.Put, GenerateRequestUrl(id, rev));
 
             req.SetIfMatch(rev);
@@ -125,8 +136,8 @@ namespace MyCouch.Rich
 
         protected virtual HttpRequestMessage CreateRequest<T>(DeleteEntityCommand<T> cmd) where T : class
         {
-            var id = Client.EntityReflector.IdMember.GetValueFrom(cmd.Entity);
-            var rev = Client.EntityReflector.RevMember.GetValueFrom(cmd.Entity);
+            var id = EntityReflector.IdMember.GetValueFrom(cmd.Entity);
+            var rev = EntityReflector.RevMember.GetValueFrom(cmd.Entity);
             var req = new HttpRequest(HttpMethod.Delete, GenerateRequestUrl(id, rev));
 
             req.SetIfMatch(rev);
@@ -137,25 +148,25 @@ namespace MyCouch.Rich
         protected virtual string GenerateRequestUrl(string id = null, string rev = null)
         {
             return string.Format("{0}/{1}{2}",
-                Client.Connection.Address,
+                Connection.Address,
                 id ?? string.Empty,
                 rev == null ? string.Empty : string.Concat("?rev=", rev));
         }
 
         protected virtual EntityResponse<T> ProcessEntityResponse<T>(GetEntityCommand cmd, HttpResponseMessage response) where T : class
         {
-            return Client.ResponseFactory.CreateEntityResponse<T>(response);
+            return ResponseFactory.CreateEntityResponse<T>(response);
         }
 
         protected virtual EntityResponse<T> ProcessEntityResponse<T>(PostEntityCommand<T> cmd, HttpResponseMessage response) where T : class
         {
-            var entityResponse = Client.ResponseFactory.CreateEntityResponse<T>(response);
+            var entityResponse = ResponseFactory.CreateEntityResponse<T>(response);
             entityResponse.Entity = cmd.Entity;
 
             if (entityResponse.IsSuccess)
             {
-                Client.EntityReflector.IdMember.SetValueTo(entityResponse.Entity, entityResponse.Id);
-                Client.EntityReflector.RevMember.SetValueTo(entityResponse.Entity, entityResponse.Rev);
+                EntityReflector.IdMember.SetValueTo(entityResponse.Entity, entityResponse.Id);
+                EntityReflector.RevMember.SetValueTo(entityResponse.Entity, entityResponse.Rev);
             }
 
             return entityResponse;
@@ -163,22 +174,22 @@ namespace MyCouch.Rich
 
         protected virtual EntityResponse<T> ProcessEntityResponse<T>(PutEntityCommand<T> cmd, HttpResponseMessage response) where T : class
         {
-            var entityResponse = Client.ResponseFactory.CreateEntityResponse<T>(response);
+            var entityResponse = ResponseFactory.CreateEntityResponse<T>(response);
             entityResponse.Entity = cmd.Entity;
 
             if (entityResponse.IsSuccess)
-                Client.EntityReflector.RevMember.SetValueTo(entityResponse.Entity, entityResponse.Rev);
+                EntityReflector.RevMember.SetValueTo(entityResponse.Entity, entityResponse.Rev);
 
             return entityResponse;
         }
 
         protected virtual EntityResponse<T> ProcessEntityResponse<T>(DeleteEntityCommand<T> cmd, HttpResponseMessage response) where T : class
         {
-            var entityResponse = Client.ResponseFactory.CreateEntityResponse<T>(response);
+            var entityResponse = ResponseFactory.CreateEntityResponse<T>(response);
             entityResponse.Entity = cmd.Entity;
 
             if (entityResponse.IsSuccess)
-                Client.EntityReflector.RevMember.SetValueTo(entityResponse.Entity, entityResponse.Rev);
+                EntityReflector.RevMember.SetValueTo(entityResponse.Entity, entityResponse.Rev);
 
             return entityResponse;
         }

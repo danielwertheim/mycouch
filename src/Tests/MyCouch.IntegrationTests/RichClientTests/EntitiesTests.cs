@@ -1,0 +1,106 @@
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using MyCouch.Rich;
+using MyCouch.Testing;
+using MyCouch.Testing.Model;
+using Xunit;
+
+namespace MyCouch.IntegrationTests.RichClientTests
+{
+    public class EntitiesTests : RichClientTestsOf<IEntities>
+    {
+        public EntitiesTests()
+        {
+            SUT = Client.Entities;
+        }
+
+        [Fact]
+        public void When_post_of_new_document_Using_an_entity_The_document_is_persisted()
+        {
+            var artist = TestData.Artists.CreateArtist();
+            var initialId = artist.ArtistId;
+
+            var response = SUT.PostAsync(artist).Result;
+
+            response.Should().BeSuccessfulPost(initialId, e => e.ArtistId, e => e.ArtistRev);
+        }
+
+        [Fact]
+        public void When_put_of_new_document_Using_an_entity_The_document_is_replaced()
+        {
+            var artist = TestData.Artists.CreateArtist();
+            var initialId = artist.ArtistId;
+
+            var response = SUT.PutAsync(artist).Result;
+
+            response.Should().BeSuccessfulPutOfNew(initialId, e => e.ArtistId, e => e.ArtistRev);
+        }
+
+        [Fact]
+        public void When_put_of_existing_document_Using_an_entity_The_document_is_replaced()
+        {
+            var artist = TestData.Artists.CreateArtist();
+            var initialId = artist.ArtistId;
+            SUT.PostAsync(artist).Wait();
+
+            var response = SUT.PutAsync(artist).Result;
+
+            response.Should().BeSuccessfulPut(initialId, e => e.ArtistId, e => e.ArtistRev);
+        }
+
+        [Fact]
+        public void When_put_of_existing_document_Using_wrong_rev_A_conflict_is_detected()
+        {
+            var postResponse = SUT.PostAsync(TestData.Artists.Artist1).Result;
+
+            postResponse.Entity.ArtistRev = "2-179d36174ee192594c63b8e8d8f09345";
+            var response = SUT.PutAsync(TestData.Artists.Artist1).Result;
+
+            response.Should().Be409Put(TestData.Artists.Artist1Id);
+        }
+
+        [Fact]
+        public void When_delete_of_existing_document_Using_an_entity_The_document_is_deleted()
+        {
+            var artist = TestData.Artists.CreateArtist();
+            var initialId = artist.ArtistId;
+            SUT.PostAsync(artist).Wait();
+
+            var response = SUT.DeleteAsync(artist).Result;
+
+            response.Should().BeSuccessfulDelete(initialId, e => e.ArtistId, e => e.ArtistRev);
+        }
+
+        [Fact]
+        public void Flow_tests()
+        {
+            var artists = TestData.Artists.CreateArtists(2);
+            var artist1 = artists[0];
+            var artist2 = artists[1];
+
+            var post1 = SUT.PostAsync(artist1);
+            var post2 = SUT.PostAsync(artist2);
+
+            post1.ContinueWith(t => t.Result.Should().BeSuccessfulPost(artist1.ArtistId, e => e.ArtistId, e => e.ArtistRev));
+            post2.ContinueWith(t => t.Result.Should().BeSuccessfulPost(artist2.ArtistId, e => e.ArtistId, e => e.ArtistRev));
+            Task.WaitAll(post1, post2);
+
+            var get1 = SUT.GetAsync<Artist>(post1.Result.Id);
+            var get2 = SUT.GetAsync<Artist>(post2.Result.Id);
+
+            get1.ContinueWith(t => t.Result.Should().BeSuccessfulGet(post1.Result.Id));
+            get2.ContinueWith(t => t.Result.Should().BeSuccessfulGet(post2.Result.Id));
+            Task.WaitAll(get1, get2);
+
+            get1.Result.Entity.Albums = new List<Album>(get1.Result.Entity.Albums) { new Album { Name = "Test" } }.ToArray();
+            get2.Result.Entity.Albums = new List<Album>(get2.Result.Entity.Albums) { new Album { Name = "Test" } }.ToArray();
+
+            var put1 = SUT.PutAsync(get1.Result.Entity);
+            var put2 = SUT.PutAsync(get2.Result.Entity);
+
+            put1.ContinueWith(t => SUT.DeleteAsync(t.Result.Entity).Result.Should().BeSuccessfulDelete(put1.Result.Id, e => e.ArtistId, e => e.ArtistRev));
+            put2.ContinueWith(t => SUT.DeleteAsync(t.Result.Entity).Result.Should().BeSuccessfulDelete(put1.Result.Id, e => e.ArtistId, e => e.ArtistRev));
+            Task.WaitAll(put1, put2);
+        }
+    }
+}
