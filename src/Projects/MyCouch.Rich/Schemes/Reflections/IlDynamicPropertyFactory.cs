@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using EnsureThat;
 
-namespace MyCouch.Schemes.Reflections
+namespace MyCouch.Rich.Schemes.Reflections
 {
     public class IlDynamicPropertyFactory : IDynamicPropertyFactory
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using FluentAssertions;
-using MyCouch.Schemes;
-using MyCouch.Schemes.Reflections;
+using MyCouch.Rich.Schemes;
+using MyCouch.Rich.Schemes.Reflections;
 using MyCouch.Serialization;
 using MyCouch.Testing;
 using MyCouch.Testing.Model;

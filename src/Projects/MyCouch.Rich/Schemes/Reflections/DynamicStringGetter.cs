@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MyCouch.Schemes.Reflections
+namespace MyCouch.Rich.Schemes.Reflections
 {
     public class DynamicStringGetter
     {

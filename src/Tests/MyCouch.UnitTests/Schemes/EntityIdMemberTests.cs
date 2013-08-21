@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
-using MyCouch.Schemes;
-using MyCouch.Schemes.Reflections;
+using MyCouch.Rich.Schemes;
+using MyCouch.Rich.Schemes.Reflections;
 using Xunit;
 
 namespace MyCouch.UnitTests.Schemes

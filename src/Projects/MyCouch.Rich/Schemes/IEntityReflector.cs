@@ -1,4 +1,4 @@
-namespace MyCouch.Schemes
+namespace MyCouch.Rich.Schemes
 {
     /// <summary>
     /// Used to get and set specific members of entities when you are using the

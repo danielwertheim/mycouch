@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Reflection;
 #endif
 using EnsureThat;
-using MyCouch.Schemes;
+using MyCouch.Rich.Schemes;
 using MyCouch.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
