@@ -8,13 +8,16 @@ namespace MyCouch
 {
     public class Database : IDatabase 
     {
-        protected readonly IClient Client;
+        protected readonly IConnection Connection;
+        protected readonly IResponseFactory ResponseFactory;
 
-        public Database(IClient client)
+        public Database(IConnection connection, IResponseFactory responseFactory)
         {
-            Ensure.That(client, "Client").IsNotNull();
+            Ensure.That(connection, "connection").IsNotNull();
+            Ensure.That(responseFactory, "responseFactory").IsNotNull();
 
-            Client = client;
+            Connection = connection;
+            ResponseFactory = responseFactory;
         }
 
         public virtual async Task<DatabaseResponse> PutAsync()
@@ -40,17 +43,17 @@ namespace MyCouch
 
         protected virtual string GenerateRequestUrl()
         {
-            return Client.Connection.Address.ToString();
+            return Connection.Address.ToString();
         }
 
         protected virtual Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
         {
-            return Client.Connection.SendAsync(request);
+            return Connection.SendAsync(request);
         }
 
         protected virtual DatabaseResponse ProcessResponse(HttpResponseMessage response)
         {
-            return Client.ResponseFactory.CreateDatabaseResponse(response);
+            return ResponseFactory.CreateDatabaseResponse(response);
         }
     }
 }

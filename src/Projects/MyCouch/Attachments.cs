@@ -9,13 +9,16 @@ namespace MyCouch
 {
     public class Attachments : IAttachments
     {
-        protected readonly IClient Client;
+        protected readonly IConnection Connection;
+        protected readonly IResponseFactory ResponseFactory;
 
-        public Attachments(IClient client)
+        public Attachments(IConnection connection, IResponseFactory responseFactory)
         {
-            Ensure.That(client, "Client").IsNotNull();
+            Ensure.That(connection, "connection").IsNotNull();
+            Ensure.That(responseFactory, "responseFactory").IsNotNull();
 
-            Client = client;
+            Connection = connection;
+            ResponseFactory = responseFactory;
         }
 
         public virtual Task<AttachmentResponse> GetAsync(string docId, string attachmentName)
@@ -94,7 +97,7 @@ namespace MyCouch
         protected virtual string GenerateRequestUrl(string docId, string docRev, string attachmentName)
         {
             return string.Format("{0}/{1}/{2}{3}",
-                Client.Connection.Address,
+                Connection.Address,
                 docId,
                 attachmentName,
                 docRev == null ? string.Empty : string.Concat("?rev=", docRev));
@@ -102,17 +105,17 @@ namespace MyCouch
 
         protected virtual Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
         {
-            return Client.Connection.SendAsync(request);
+            return Connection.SendAsync(request);
         }
 
         protected virtual AttachmentResponse ProcessAttachmentResponse(HttpResponseMessage response)
         {
-            return Client.ResponseFactory.CreateAttachmentResponse(response);
+            return ResponseFactory.CreateAttachmentResponse(response);
         }
 
         protected virtual DocumentHeaderResponse ProcessDocumentHeaderResponse(HttpResponseMessage response)
         {
-            return Client.ResponseFactory.CreateDocumentHeaderResponse(response);
+            return ResponseFactory.CreateDocumentHeaderResponse(response);
         }
     }
 }

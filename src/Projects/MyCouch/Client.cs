@@ -7,13 +7,13 @@ namespace MyCouch
 {
     public class Client : IClient
     {
-        public IConnection Connection { get; protected set; }
-        public ISerializer Serializer { get; set; }
-        public IResponseFactory ResponseFactory { get; set; }
-        public IDatabase Database { get; protected set; }
-        public IDocuments Documents { get; protected set; }
-        public IAttachments Attachments { get; protected set; }
-        public IViews Views { get; protected set; }
+        public IConnection Connection { get; private set; }
+        public ISerializer Serializer { get; private set; }
+        protected IResponseFactory ResponseFactory { get; private set; }
+        public IDatabase Database { get; private set; }
+        public IDocuments Documents { get; private set; }
+        public IAttachments Attachments { get; private set; }
+        public IViews Views { get; private set; }
 
         public Client(string url) : this(new Uri(url)) { }
 
@@ -25,11 +25,11 @@ namespace MyCouch
 
             Connection = connection;
             Serializer = new DefaultSerializer();
-            ResponseFactory = new ResponseFactory(Serializer);
-            Database = new Database(this);
-            Documents = new Documents(this);
-            Attachments = new Attachments(this);
-            Views = new Views(this);
+            ResponseFactory = new ResponseFactory(new ResponseMaterializer());
+            Database = new Database(Connection, ResponseFactory);
+            Documents = new Documents(Connection, ResponseFactory);
+            Attachments = new Attachments(Connection, ResponseFactory);
+            Views = new Views(Connection, ResponseFactory);
         }
 
         public virtual void Dispose()

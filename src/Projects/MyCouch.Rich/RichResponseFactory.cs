@@ -1,12 +1,21 @@
 ﻿using System.Net.Http;
+using EnsureThat;
 using MyCouch.Net;
-using MyCouch.Rich.Serialization;
+using MyCouch.Serialization;
 
 namespace MyCouch.Rich
 {
     public class RichResponseFactory : ResponseFactory, IRichResponseFactory
     {
-        public RichResponseFactory(IRichSerializer serializer) : base(serializer) { }
+        protected readonly ISerializer Serializer;
+
+        public RichResponseFactory(IResponseMaterializer responseMaterializer, ISerializer serializer)
+            : base(responseMaterializer)
+        {
+            Ensure.That(serializer, "serializer").IsNotNull();
+
+            Serializer = serializer;
+        }
 
         public virtual EntityResponse<T> CreateEntityResponse<T>(HttpResponseMessage response) where T : class
         {
@@ -18,7 +27,7 @@ namespace MyCouch.Rich
             using (var content = response.Content.ReadAsStream())
             {
                 if (ContentShouldHaveIdAndRev(response.RequestMessage))
-                    Serializer.PopulateDocumentHeaderResponse(result, content);
+                    ResponseMaterializer.PopulateDocumentHeaderResponse(result, content);
                 else
                 {
                     AssignMissingIdFromRequestUri(response, result);

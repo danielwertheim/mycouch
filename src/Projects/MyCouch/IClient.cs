@@ -16,12 +16,7 @@ namespace MyCouch
         /// to serialize or deserialize using the same behavior that the provider
         /// has.
         /// </summary>
-        ISerializer Serializer { get; set; }
-
-        /// <summary>
-        /// Factory used to build <see cref="IResponse"/>.
-        /// </summary>
-        IResponseFactory ResponseFactory { get; set; }
+        ISerializer Serializer { get; }
 
         /// <summary>
         /// Database oriented API operations.

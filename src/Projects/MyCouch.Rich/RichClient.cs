@@ -3,6 +3,7 @@ using MyCouch.Net;
 using MyCouch.Rich.Serialization;
 using MyCouch.Schemes;
 using MyCouch.Schemes.Reflections;
+using MyCouch.Serialization;
 
 namespace MyCouch.Rich
 {
@@ -25,7 +26,7 @@ namespace MyCouch.Rich
             EntityReflector = new EntityReflector(new LambdaDynamicPropertyFactory());
 #endif
             Serializer = new RichSerializer(() => EntityReflector);
-            ResponseFactory = new RichResponseFactory(Serializer);
+            ResponseFactory = new RichResponseFactory(new ResponseMaterializer(), Serializer);
             Entities = new Entities(this);
         }
     }

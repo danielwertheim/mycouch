@@ -9,13 +9,16 @@ namespace MyCouch
 {
     public class Documents : IDocuments
     {
-        protected readonly IClient Client;
+        protected readonly IConnection Connection;
+        protected readonly IResponseFactory ResponseFactory;
 
-        public Documents(IClient client)
+        public Documents(IConnection connection, IResponseFactory responseFactory)
         {
-            Ensure.That(client, "Client").IsNotNull();
+            Ensure.That(connection, "connection").IsNotNull();
+            Ensure.That(responseFactory, "responseFactory").IsNotNull();
 
-            Client = client;
+            Connection = connection;
+            ResponseFactory = responseFactory;
         }
 
         public virtual async Task<BulkResponse> BulkAsync(BulkCommand cmd)
@@ -150,7 +153,7 @@ namespace MyCouch
 
         protected virtual Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
         {
-            return Client.Connection.SendAsync(request);
+            return Connection.SendAsync(request);
         }
 
         protected virtual HttpRequestMessage CreateRequest(BulkCommand cmd)
@@ -228,30 +231,30 @@ namespace MyCouch
 
         protected virtual string GenerateRequestUrl(BulkCommand cmd)
         {
-            return string.Format("{0}/_bulk_docs", Client.Connection.Address);
+            return string.Format("{0}/_bulk_docs", Connection.Address);
         }
 
         protected virtual string GenerateRequestUrl(string id = null, string rev = null)
         {
             return string.Format("{0}/{1}{2}",
-                Client.Connection.Address,
+                Connection.Address,
                 id ?? string.Empty,
                 rev == null ? string.Empty : string.Concat("?rev=", rev));
         }
 
         protected virtual BulkResponse ProcessBulkResponse(HttpResponseMessage response)
         {
-            return Client.ResponseFactory.CreateBulkResponse(response);
+            return ResponseFactory.CreateBulkResponse(response);
         }
 
         protected virtual DocumentHeaderResponse ProcessDocumentHeaderResponse(HttpResponseMessage response)
         {
-            return Client.ResponseFactory.CreateDocumentHeaderResponse(response);
+            return ResponseFactory.CreateDocumentHeaderResponse(response);
         }
 
         protected virtual DocumentResponse ProcessDocumentResponse(HttpResponseMessage response)
         {
-            return Client.ResponseFactory.CreateDocumentResponse(response);
+            return ResponseFactory.CreateDocumentResponse(response);
         }
     }
 }

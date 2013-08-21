@@ -80,11 +80,13 @@
     <Compile Include="Commands\ReplaceDocumentCommand.cs" />
     <Compile Include="ISystemViewQuery.cs" />
     <Compile Include="Now.cs" />
+    <Compile Include="Responses\IResponseMaterializer.cs" />
     <Compile Include="Serialization\DeserializationJsonWriter.cs" />
+    <Compile Include="Responses\ResponseMaterializer.cs" />
     <Compile Include="SystemViewQuery.cs" />
     <Compile Include="Response.cs" />
     <Compile Include="Net\HttpExtensions.cs" />
-    <Compile Include="ResponseFactory.cs" />
+    <Compile Include="Responses\ResponseFactory.cs" />
     <Compile Include="IResponseFactory.cs" />
     <Compile Include="Net\HttpRequest.cs" />
     <Compile Include="IResponse.cs" />
@@ -119,6 +121,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
