@@ -25,7 +25,7 @@ They are written using xUnit. To get started you need to create a database `myco
 
 You can configure your own connection in the class: `IntegrationTestsRuntime`.
 
-*Please note*, that if you run the tests using the `xUnit plugin` for `ReSharper` or using the `xUnit console`, you will get a couple of failing UnitTests for the Windows store project. This is a *bug with xUnit*. It does not load and execute the Windows store test project in its own app-container as it does when you execute them via Visual Studios test explorer.
+**Please note**, that if you run the tests using the `xUnit plugin` for `ReSharper` or using the `xUnit console`, you will get a couple of failing UnitTests for the Windows store project. This is a **bug with xUnit**. It does not load and execute the Windows store test project in its own app-container as it does when you execute them via Visual Studios test explorer.
 
 ## How-to Contribute ##
 This is described in the wiki, under: ["How-to Contribute"](https://github.com/danielwertheim/mycouch/wiki/how-to-contribute).
