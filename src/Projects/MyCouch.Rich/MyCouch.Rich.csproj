@@ -69,7 +69,6 @@
     <Compile Include="Serialization\Conventions\DocSerializationConventions.cs" />
     <Compile Include="Serialization\Conventions\DocTypeSerializationConvention.cs" />
     <Compile Include="Serialization\Conventions\IDocTypeSerializationConvention.cs" />
-    <Compile Include="Serialization\DeserializationJsonWriter.cs" />
     <Compile Include="Serialization\IRichSerializer.cs" />
     <Compile Include="Serialization\RichSerializer.cs" />
     <Compile Include="Serialization\RichSerializationContractResolver.cs" />
