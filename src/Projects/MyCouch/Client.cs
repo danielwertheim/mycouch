@@ -1,6 +1,7 @@
 ﻿using System;
 using EnsureThat;
 using MyCouch.Net;
+using MyCouch.Responses;
 using MyCouch.Serialization;
 
 namespace MyCouch
@@ -25,7 +26,7 @@ namespace MyCouch
 
             Connection = connection;
             Serializer = new DefaultSerializer();
-            ResponseFactory = new ResponseFactory(new ResponseMaterializer());
+            ResponseFactory = new ResponseFactory(new DefaultResponseMaterializer());
             Database = new Database(Connection, ResponseFactory);
             Documents = new Documents(Connection, ResponseFactory);
             Attachments = new Attachments(Connection, ResponseFactory);

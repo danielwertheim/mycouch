@@ -3,10 +3,8 @@ using System.IO;
 using System.Net.Http;
 using EnsureThat;
 using MyCouch.Extensions;
-using MyCouch.Net;
-using MyCouch.Serialization;
 
-namespace MyCouch
+namespace MyCouch.Responses
 {
     public class ResponseFactory : IResponseFactory
     {

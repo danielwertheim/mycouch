@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace MyCouch.Serialization
+namespace MyCouch.Responses
 {
     public interface IResponseMaterializer
     {

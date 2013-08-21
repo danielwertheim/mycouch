@@ -4,19 +4,20 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using EnsureThat;
+using MyCouch.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace MyCouch.Serialization
+namespace MyCouch.Responses
 {
-    public class ResponseMaterializer : IResponseMaterializer
+    public class DefaultResponseMaterializer : IResponseMaterializer
     {
         protected readonly JsonSerializerSettings Settings;
         protected readonly JsonSerializer InternalSerializer;
 
-        public ResponseMaterializer() : this(new SerializationContractResolver()) { }
+        public DefaultResponseMaterializer() : this(new SerializationContractResolver()) { }
 
-        protected ResponseMaterializer(IContractResolver contractResolver)
+        protected DefaultResponseMaterializer(IContractResolver contractResolver)
         {
             Ensure.That(contractResolver, "contractResolver").IsNotNull();
 

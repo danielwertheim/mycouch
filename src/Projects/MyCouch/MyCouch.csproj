@@ -82,7 +82,7 @@
     <Compile Include="Now.cs" />
     <Compile Include="Responses\IResponseMaterializer.cs" />
     <Compile Include="Serialization\DeserializationJsonWriter.cs" />
-    <Compile Include="Responses\ResponseMaterializer.cs" />
+    <Compile Include="Responses\DefaultResponseMaterializer.cs" />
     <Compile Include="SystemViewQuery.cs" />
     <Compile Include="Response.cs" />
     <Compile Include="Extensions\HttpExtensions.cs" />
