@@ -13,6 +13,50 @@ namespace MyCouch.UnitTests.Serialization
         }
 
         [Fact]
+        public void When_deserializing_to_entity_with_Id_It_should_not_map_from__id()
+        {
+            var json = "{\"$doctype\":\"modelone\",\"_id\":\"abc\",\"value\":\"def\"}";
+
+            var model = SUT.Deserialize<ModelOne>(json);
+
+            model.Should().NotBeNull();
+            model.Id.Should().BeNull();
+        }
+
+        [Fact]
+        public void When_deserializing_to_entity_with_EntityId_It_should_not_map_from__id()
+        {
+            var json = "{\"$doctype\":\"modeltwo\",\"_id\":\"abc\",\"value\":\"def\"}";
+
+            var model = SUT.Deserialize<ModelTwo>(json);
+
+            model.Should().NotBeNull();
+            model.EntityId.Should().BeNull();
+        }
+
+        [Fact]
+        public void When_deserializing_to_entity_with_DocumentId_It_should_not_map_from__id()
+        {
+            var json = "{\"$doctype\":\"modelthree\",\"_id\":\"abc\",\"value\":\"def\"}";
+
+            var model = SUT.Deserialize<ModelThree>(json);
+
+            model.Should().NotBeNull();
+            model.DocumentId.Should().BeNull();
+        }
+
+        [Fact]
+        public void When_deserializing_to_entity_with_ModelId_It_should_not_map_from__id()
+        {
+            var json = "{\"$doctype\":\"modelfour\",\"_id\":\"abc\",\"value\":\"def\"}";
+
+            var model = SUT.Deserialize<ModelFour>(json);
+
+            model.Should().NotBeNull();
+            model.ModelFourId.Should().BeNull();
+        }
+
+        [Fact]
         public void When_serializing_entity_It_will_not_inject_document_header_in_json()
         {
             var model = TestData.Artists.CreateArtist();
