@@ -51,9 +51,8 @@
     <Compile Include="EntityResponse.cs" />
     <Compile Include="IRichClient.cs" />
     <Compile Include="IEntities.cs" />
-    <Compile Include="IRichResponseFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Responses\RichResponseFactory.cs" />
+    <Compile Include="Responses\EntityResponseFactory.cs" />
     <Compile Include="Schemes\EntityIdMember.cs" />
     <Compile Include="Schemes\EntityMember.cs" />
     <Compile Include="Schemes\EntityReflector.cs" />

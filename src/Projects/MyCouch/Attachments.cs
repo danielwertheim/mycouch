@@ -4,21 +4,25 @@ using EnsureThat;
 using MyCouch.Commands;
 using MyCouch.Extensions;
 using MyCouch.Net;
+using MyCouch.Responses;
 
 namespace MyCouch
 {
     public class Attachments : IAttachments
     {
         protected readonly IConnection Connection;
-        protected readonly IResponseFactory ResponseFactory;
+        protected readonly AttachmentResponseFactory AttachmentResponseFactory;
+        protected readonly DocumentHeaderResponseFactory DocumentHeaderResponseFactory;
 
-        public Attachments(IConnection connection, IResponseFactory responseFactory)
+        public Attachments(IConnection connection, AttachmentResponseFactory attachmentResponseFactory, DocumentHeaderResponseFactory documentHeaderResponseFactory)
         {
             Ensure.That(connection, "connection").IsNotNull();
-            Ensure.That(responseFactory, "responseFactory").IsNotNull();
+            Ensure.That(attachmentResponseFactory, "attachmentResponseFactory").IsNotNull();
+            Ensure.That(documentHeaderResponseFactory, "documentHeaderResponseFactory").IsNotNull();
 
             Connection = connection;
-            ResponseFactory = responseFactory;
+            AttachmentResponseFactory = attachmentResponseFactory;
+            DocumentHeaderResponseFactory = documentHeaderResponseFactory;
         }
 
         public virtual Task<AttachmentResponse> GetAsync(string docId, string attachmentName)
@@ -110,12 +114,12 @@ namespace MyCouch
 
         protected virtual AttachmentResponse ProcessAttachmentResponse(HttpResponseMessage response)
         {
-            return ResponseFactory.CreateAttachmentResponse(response);
+            return AttachmentResponseFactory.Create(response);
         }
 
         protected virtual DocumentHeaderResponse ProcessDocumentHeaderResponse(HttpResponseMessage response)
         {
-            return ResponseFactory.CreateDocumentHeaderResponse(response);
+            return DocumentHeaderResponseFactory.Create(response);
         }
     }
 }

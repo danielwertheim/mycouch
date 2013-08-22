@@ -4,6 +4,7 @@ using EnsureThat;
 using MyCouch.Commands;
 using MyCouch.Extensions;
 using MyCouch.Net;
+using MyCouch.Rich.Responses;
 using MyCouch.Rich.Schemes;
 using MyCouch.Rich.Serialization;
 
@@ -12,19 +13,19 @@ namespace MyCouch.Rich
     public class Entities : IEntities
     {
         protected readonly IConnection Connection;
-        protected readonly IRichResponseFactory ResponseFactory;
+        protected readonly EntityResponseFactory EntityResponseFactory;
         protected readonly IRichSerializer Serializer;
         protected readonly IEntityReflector EntityReflector;
 
-        public Entities(IConnection connection, IRichResponseFactory responseFactory, IRichSerializer serializer, IEntityReflector entityReflector)
+        public Entities(IConnection connection, EntityResponseFactory entityResponseFactory, IRichSerializer serializer, IEntityReflector entityReflector)
         {
             Ensure.That(connection, "connection").IsNotNull();
-            Ensure.That(responseFactory, "responseFactory").IsNotNull();
+            Ensure.That(entityResponseFactory, "entityResponseFactory").IsNotNull();
             Ensure.That(serializer, "serializer").IsNotNull();
             Ensure.That(entityReflector, "entityReflector").IsNotNull();
 
             Connection = connection;
-            ResponseFactory = responseFactory;
+            EntityResponseFactory = entityResponseFactory;
             Serializer = serializer;
             EntityReflector = entityReflector;
         }
@@ -155,12 +156,12 @@ namespace MyCouch.Rich
 
         protected virtual EntityResponse<T> ProcessEntityResponse<T>(GetEntityCommand cmd, HttpResponseMessage response) where T : class
         {
-            return ResponseFactory.CreateEntityResponse<T>(response);
+            return EntityResponseFactory.Create<T>(response);
         }
 
         protected virtual EntityResponse<T> ProcessEntityResponse<T>(PostEntityCommand<T> cmd, HttpResponseMessage response) where T : class
         {
-            var entityResponse = ResponseFactory.CreateEntityResponse<T>(response);
+            var entityResponse = EntityResponseFactory.Create<T>(response);
             entityResponse.Entity = cmd.Entity;
 
             if (entityResponse.IsSuccess)
@@ -174,7 +175,7 @@ namespace MyCouch.Rich
 
         protected virtual EntityResponse<T> ProcessEntityResponse<T>(PutEntityCommand<T> cmd, HttpResponseMessage response) where T : class
         {
-            var entityResponse = ResponseFactory.CreateEntityResponse<T>(response);
+            var entityResponse = EntityResponseFactory.Create<T>(response);
             entityResponse.Entity = cmd.Entity;
 
             if (entityResponse.IsSuccess)
@@ -185,7 +186,7 @@ namespace MyCouch.Rich
 
         protected virtual EntityResponse<T> ProcessEntityResponse<T>(DeleteEntityCommand<T> cmd, HttpResponseMessage response) where T : class
         {
-            var entityResponse = ResponseFactory.CreateEntityResponse<T>(response);
+            var entityResponse = EntityResponseFactory.Create<T>(response);
             entityResponse.Entity = cmd.Entity;
 
             if (entityResponse.IsSuccess)

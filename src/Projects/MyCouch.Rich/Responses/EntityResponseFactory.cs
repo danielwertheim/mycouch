@@ -6,11 +6,11 @@ using MyCouch.Serialization;
 
 namespace MyCouch.Rich.Responses
 {
-    public class RichResponseFactory : ResponseFactory, IRichResponseFactory
+    public class EntityResponseFactory : DocumentHeaderResponseFactoryBase
     {
         protected readonly ISerializer Serializer;
 
-        public RichResponseFactory(IResponseMaterializer responseMaterializer, ISerializer serializer)
+        public EntityResponseFactory(IResponseMaterializer responseMaterializer, ISerializer serializer)
             : base(responseMaterializer)
         {
             Ensure.That(serializer, "serializer").IsNotNull();
@@ -18,7 +18,7 @@ namespace MyCouch.Rich.Responses
             Serializer = serializer;
         }
 
-        public virtual EntityResponse<T> CreateEntityResponse<T>(HttpResponseMessage response) where T : class
+        public virtual EntityResponse<T> Create<T>(HttpResponseMessage response) where T : class
         {
             return CreateResponse<EntityResponse<T>>(response, OnSuccessfulEntityResponseContentMaterializer, OnFailedEntityResponseContentMaterializer);
         }

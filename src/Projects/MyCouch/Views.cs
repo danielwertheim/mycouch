@@ -5,21 +5,25 @@ using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Extensions;
 using MyCouch.Net;
+using MyCouch.Responses;
 
 namespace MyCouch
 {
     public class Views : IViews
     {
         protected readonly IConnection Connection;
-        protected readonly IResponseFactory ResponseFactory;
+        protected readonly JsonViewQueryResponseFactory JsonViewQueryResponseFactory;
+        protected readonly ViewQueryResponseFactory ViewQueryResponseFactory;
 
-        public Views(IConnection connection, IResponseFactory responseFactory)
+        public Views(IConnection connection, JsonViewQueryResponseFactory jsonViewQueryResponseFactory, ViewQueryResponseFactory viewQueryResponseFactory)
         {
             Ensure.That(connection, "connection").IsNotNull();
-            Ensure.That(responseFactory, "responseFactory").IsNotNull();
+            Ensure.That(jsonViewQueryResponseFactory, "jsonViewQueryResponseFactory").IsNotNull();
+            Ensure.That(viewQueryResponseFactory, "viewQueryResponseFactory").IsNotNull();
 
             Connection = connection;
-            ResponseFactory = responseFactory;
+            JsonViewQueryResponseFactory = jsonViewQueryResponseFactory;
+            ViewQueryResponseFactory = viewQueryResponseFactory;
         }
 
         public virtual async Task<JsonViewQueryResponse> RunQueryAsync(IViewQuery query)
@@ -112,12 +116,12 @@ namespace MyCouch
 
         protected virtual JsonViewQueryResponse ProcessHttpResponse(HttpResponseMessage response)
         {
-            return ResponseFactory.CreateJsonViewQueryResponse(response);
+            return JsonViewQueryResponseFactory.Create(response);
         }
 
         protected virtual ViewQueryResponse<T> ProcessHttpResponse<T>(HttpResponseMessage response) where T : class
         {
-            return ResponseFactory.CreateViewQueryResponse<T>(response);
+            return ViewQueryResponseFactory.Create<T>(response);
         }
     }
 }
