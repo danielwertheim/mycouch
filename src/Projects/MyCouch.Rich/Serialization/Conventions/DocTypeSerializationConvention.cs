@@ -2,7 +2,7 @@
 
 namespace MyCouch.Rich.Serialization.Conventions
 {
-    public class DocTypeSerializationConvention : IDocTypeSerializationConvention
+    public class DocTypeSerializationConvention : ISerializationConvention
     {
         public string PropertyName
         {

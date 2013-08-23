@@ -65,10 +65,9 @@
     <Compile Include="Schemes\Reflections\IDynamicPropertyFactory.cs" />
     <Compile Include="Schemes\Reflections\IlDynamicPropertyFactory.cs" />
     <Compile Include="Schemes\Reflections\LambdaDynamicPropertyFactory.cs" />
-    <Compile Include="Serialization\Conventions\DocSerializationConventions.cs" />
+    <Compile Include="Serialization\Conventions\SerializationConventions.cs" />
     <Compile Include="Serialization\Conventions\DocTypeSerializationConvention.cs" />
-    <Compile Include="Serialization\Conventions\IDocTypeSerializationConvention.cs" />
-    <Compile Include="Serialization\IRichSerializer.cs" />
+    <Compile Include="Serialization\Conventions\ISerializationConvention.cs" />
     <Compile Include="Serialization\RichSerializer.cs" />
     <Compile Include="Serialization\RichSerializationContractResolver.cs" />
     <Compile Include="Serialization\SerializationJsonWriter.cs" />

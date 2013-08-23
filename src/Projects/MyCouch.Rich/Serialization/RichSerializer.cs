@@ -5,22 +5,22 @@ using Newtonsoft.Json.Serialization;
 
 namespace MyCouch.Rich.Serialization
 {
-    public class RichSerializer : DefaultSerializer, IRichSerializer
+    public class RichSerializer : DefaultSerializer
     {
         public RichSerializer(IContractResolver contractResolver) 
             : base(contractResolver)
         {
         }
 
-        public virtual string SerializeEntity<T>(T entity) where T : class
+        public override string Serialize<T>(T item)
         {
             var content = new StringBuilder();
             using (var stringWriter = new StringWriter(content))
             {
                 using (var jsonWriter = ConfigureJsonWriter(new SerializationJsonWriter(stringWriter)))
                 {
-                    jsonWriter.WriteDocHeaderFor(entity);
-                    InternalSerializer.Serialize(jsonWriter, entity);
+                    jsonWriter.WriteDocHeaderFor(item);
+                    InternalSerializer.Serialize(jsonWriter, item);
                 }
             }
             return content.ToString();

@@ -10,12 +10,12 @@ namespace MyCouch.Rich.Serialization
         protected bool HasWrittenDocHeader = false;
         protected bool ShouldSkipOneStartObjectWrite = false;
 
-        public DocSerializationConventions Conventions { get; set; }
+        public SerializationConventions Conventions { get; set; }
 
         public SerializationJsonWriter(TextWriter textWriter)
             : base(textWriter)
         {
-            Conventions = new DocSerializationConventions();
+            Conventions = new SerializationConventions();
         }
 
         public virtual void WriteDocHeaderFor<T>(T doc)

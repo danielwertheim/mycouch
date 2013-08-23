@@ -6,7 +6,7 @@ using MyCouch.Extensions;
 using MyCouch.Net;
 using MyCouch.Rich.Responses;
 using MyCouch.Rich.Schemes;
-using MyCouch.Rich.Serialization;
+using MyCouch.Serialization;
 
 namespace MyCouch.Rich
 {
@@ -14,10 +14,10 @@ namespace MyCouch.Rich
     {
         protected readonly IConnection Connection;
         protected readonly EntityResponseFactory EntityResponseFactory;
-        protected readonly IRichSerializer Serializer;
+        protected readonly ISerializer Serializer;
         protected readonly IEntityReflector EntityReflector;
 
-        public Entities(IConnection connection, EntityResponseFactory entityResponseFactory, IRichSerializer serializer, IEntityReflector entityReflector)
+        public Entities(IConnection connection, EntityResponseFactory entityResponseFactory, ISerializer serializer, IEntityReflector entityReflector)
         {
             Ensure.That(connection, "connection").IsNotNull();
             Ensure.That(entityResponseFactory, "entityResponseFactory").IsNotNull();
@@ -97,12 +97,7 @@ namespace MyCouch.Rich
 
         protected virtual string SerializeEntity<T>(T entity) where T : class
         {
-            return Serializer.SerializeEntity(entity);
-        }
-
-        protected virtual T DeserializeEntity<T>(string data) where T : class
-        {
-            return Serializer.Deserialize<T>(data);
+            return Serializer.Serialize(entity);
         }
 
         protected virtual HttpRequestMessage CreateRequest(GetEntityCommand cmd)

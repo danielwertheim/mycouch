@@ -9,7 +9,6 @@ namespace MyCouch.Rich
 {
     public class RichClient : Client, IRichClient
     {
-        public new IRichSerializer Serializer { get; private set; }
         public IEntities Entities { get; protected set; }
 
         public RichClient(string url) : this(new Uri(url)) { }
