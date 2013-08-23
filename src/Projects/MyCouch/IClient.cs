@@ -12,7 +12,7 @@ namespace MyCouch
         IConnection Connection { get; }
         
         /// <summary>
-        /// The Serializer associated with this client instance. Use this is you want
+        /// The Serializer associated with this client instance. Use this if you want
         /// to serialize or deserialize using the same behavior that the provider
         /// has.
         /// </summary>
