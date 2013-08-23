@@ -7,8 +7,7 @@ namespace MyCouch.Rich.Serialization
 {
     public class RichSerializer : DefaultSerializer
     {
-        public RichSerializer(IContractResolver contractResolver) 
-            : base(contractResolver)
+        public RichSerializer(IContractResolver contractResolver = null) : base(contractResolver)
         {
         }
 

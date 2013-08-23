@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using System.Text;
-using EnsureThat;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -11,13 +10,9 @@ namespace MyCouch.Serialization
         protected readonly JsonSerializerSettings Settings;
         protected readonly JsonSerializer InternalSerializer;
 
-        public DefaultSerializer() : this(new SerializationContractResolver()) { }
-
-        protected DefaultSerializer(IContractResolver contractResolver)
+        public DefaultSerializer(IContractResolver contractResolver = null)
         {
-            Ensure.That(contractResolver, "contractResolver").IsNotNull();
-
-            Settings = CreateDefaultSettings(contractResolver);
+            Settings = CreateDefaultSettings(contractResolver ?? new SerializationContractResolver());
             InternalSerializer = JsonSerializer.Create(Settings);
         }
 
