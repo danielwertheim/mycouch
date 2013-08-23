@@ -5,7 +5,7 @@ using MyCouch.Commands;
 using MyCouch.Extensions;
 using MyCouch.Net;
 using MyCouch.Rich.Responses;
-using MyCouch.Rich.Schemes;
+using MyCouch.Rich.EntitySchemes;
 using MyCouch.Serialization;
 
 namespace MyCouch.Rich

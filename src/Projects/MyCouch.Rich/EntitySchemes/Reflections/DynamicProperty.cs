@@ -1,4 +1,4 @@
-﻿namespace MyCouch.Rich.Schemes.Reflections
+﻿namespace MyCouch.Rich.EntitySchemes.Reflections
 {
     public class DynamicProperty
     {

@@ -1,8 +1,8 @@
 ﻿using System;
 using MyCouch.Net;
+using MyCouch.Rich.EntitySchemes;
+using MyCouch.Rich.EntitySchemes.Reflections;
 using MyCouch.Rich.Responses;
-using MyCouch.Rich.Schemes;
-using MyCouch.Rich.Schemes.Reflections;
 using MyCouch.Rich.Serialization;
 
 namespace MyCouch.Rich

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MyCouch.Rich.Schemes
+namespace MyCouch.Rich.EntitySchemes
 {
     public interface IEntityMember
     {

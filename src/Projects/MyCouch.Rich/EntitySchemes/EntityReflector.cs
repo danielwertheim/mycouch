@@ -1,6 +1,6 @@
-using MyCouch.Rich.Schemes.Reflections;
+using MyCouch.Rich.EntitySchemes.Reflections;
 
-namespace MyCouch.Rich.Schemes
+namespace MyCouch.Rich.EntitySchemes
 {
     public class EntityReflector : IEntityReflector
     {
