@@ -2,11 +2,13 @@
 using MyCouch.Net;
 using MyCouch.ResponseFactories;
 using MyCouch.Serialization;
+using Newtonsoft.Json.Serialization;
 
 namespace MyCouch
 {
     public class LightClientBootsraper
     {
+        public Func<IContractResolver> ContractResolver { get; set; }
         public Func<SerializationConfiguration> SerializationConfigurationResolver { get; set; }
         public Func<IResponseMaterializer> ResponseMaterializerResolver { get; set; }
         public Func<ISerializer> SerializerResolver { get; set; }
@@ -17,6 +19,7 @@ namespace MyCouch
 
         public LightClientBootsraper()
         {
+            ConfigureContractResolver();
             ConfigureSerializationConfigurationResolver();
             ConfigureResponseMaterializerResolver();
             ConfigureSerializerResolver();
@@ -26,21 +29,28 @@ namespace MyCouch
             ConfigureViewsResolver();
         }
 
+        private void ConfigureContractResolver()
+        {
+            var contractResolver = new Lazy<IContractResolver>(() => new SerializationContractResolver());
+            ContractResolver = () => contractResolver.Value;
+        }
+
         private void ConfigureSerializationConfigurationResolver()
         {
-            var serializationConfiguration = new SerializationConfiguration(new SerializationContractResolver());
-            SerializationConfigurationResolver = () => serializationConfiguration;
+            var serializationConfiguration = new Lazy<SerializationConfiguration>(() => new SerializationConfiguration(ContractResolver()));
+            SerializationConfigurationResolver = () => serializationConfiguration.Value;
         }
 
         private void ConfigureResponseMaterializerResolver()
         {
-            var materializer = new DefaultResponseMaterializer(SerializationConfigurationResolver());
-            ResponseMaterializerResolver = () => materializer;
+            var materializer = new Lazy<DefaultResponseMaterializer>(() => new DefaultResponseMaterializer(SerializationConfigurationResolver()));
+            ResponseMaterializerResolver = () => materializer.Value;
         }
 
         private void ConfigureSerializerResolver()
         {
-            SerializerResolver = () => new DefaultSerializer(SerializationConfigurationResolver());
+            var serializer = new Lazy<DefaultSerializer>(() => new DefaultSerializer(SerializationConfigurationResolver()));
+            SerializerResolver = () => serializer.Value;
         }
 
         private void ConfigureAttachmentsResolver()

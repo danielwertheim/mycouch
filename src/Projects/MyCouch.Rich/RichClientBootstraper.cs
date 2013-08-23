@@ -5,6 +5,7 @@ using MyCouch.Rich.EntitySchemes.Reflections;
 using MyCouch.Rich.ResponseFactories;
 using MyCouch.Rich.Serialization;
 using MyCouch.Serialization;
+using Newtonsoft.Json.Serialization;
 
 namespace MyCouch.Rich
 {
@@ -17,28 +18,34 @@ namespace MyCouch.Rich
         {
             ConfigureEntitiesResolver();
             ConfigureEntityReflectorResolver();
-            ConfigureSerializationConfigurationResolver();
+            ConfigureContractResolver();
+            ConfigureSerializer();
         }
 
         private void ConfigureEntityReflectorResolver()
         {
 #if !NETFX_CORE
-            var entityReflector = new EntityReflector(new IlDynamicPropertyFactory());
+            var entityReflector = new Lazy<EntityReflector>(() => new EntityReflector(new IlDynamicPropertyFactory()));
 #else
-            var entityReflector = new EntityReflector(new LambdaDynamicPropertyFactory());
+            var entityReflector = new Lazy<EntityReflector>(() => new EntityReflector(new LambdaDynamicPropertyFactory()));
 #endif
-            EntityReflectorResolver = () => entityReflector;
+            EntityReflectorResolver = () => entityReflector.Value;
         }
 
-        private void ConfigureSerializationConfigurationResolver()
+        private void ConfigureContractResolver()
         {
-            var serializationConfiguration = new SerializationConfiguration(new RichSerializationContractResolver(EntityReflectorResolver()));
-            SerializationConfigurationResolver = () => serializationConfiguration;
+            var contractResolver = new Lazy<IContractResolver>(() => new RichSerializationContractResolver(EntityReflectorResolver()));
+            ContractResolver = () => contractResolver.Value;
+        }
+
+        private void ConfigureSerializer()
+        {
+            var serializer = new Lazy<ISerializer>(() => new EntityEnabledSerializer(SerializationConfigurationResolver()));
+            SerializerResolver = () => serializer.Value;
         }
 
         private void ConfigureEntitiesResolver()
         {
-
             EntitiesResolver = cn => new Entities(cn,
                 new EntityResponseFactory(ResponseMaterializerResolver(), SerializerResolver()),
                 SerializerResolver(),
