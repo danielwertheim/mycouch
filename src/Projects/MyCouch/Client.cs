@@ -1,7 +1,6 @@
 ﻿using System;
 using EnsureThat;
 using MyCouch.Net;
-using MyCouch.ResponseFactories;
 using MyCouch.Serialization;
 
 namespace MyCouch
@@ -21,18 +20,20 @@ namespace MyCouch
 
         public Client(Uri uri) : this(new BasicHttpClientConnection(uri)) { }
 
-        public Client(IConnection connection)
+        public Client(IConnection connection, LightClientBootsraper bootstraper = null)
         {
             Ensure.That(connection, "connection").IsNotNull();
 
-            ResponseMaterializer = new DefaultResponseMaterializer();
-
             Connection = connection;
-            Serializer = new DefaultSerializer();
-            Databases = new Databases(Connection, new DatabaseResponseFactory(ResponseMaterializer));
-            Documents = new Documents(Connection, new DocumentResponseFactory(ResponseMaterializer), new DocumentHeaderResponseFactory(ResponseMaterializer), new BulkResponseFactory(ResponseMaterializer));
-            Attachments = new Attachments(Connection, new AttachmentResponseFactory(ResponseMaterializer), new DocumentHeaderResponseFactory(ResponseMaterializer));
-            Views = new Views(Connection, new JsonViewQueryResponseFactory(ResponseMaterializer), new ViewQueryResponseFactory(ResponseMaterializer));
+
+            bootstraper = bootstraper ?? new LightClientBootsraper();
+
+            ResponseMaterializer = bootstraper.ResponseMaterializerResolver();
+            Serializer = bootstraper.SerializerResolver();
+            Attachments = bootstraper.AttachmentsResolver(Connection);
+            Databases = bootstraper.DatabasesResolver(Connection);
+            Documents = bootstraper.DocumentsResolver(Connection);
+            Views = bootstraper.ViewsResolver(Connection);
         }
 
         public virtual void Dispose()

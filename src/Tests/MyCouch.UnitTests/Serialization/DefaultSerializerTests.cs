@@ -9,7 +9,7 @@ namespace MyCouch.UnitTests.Serialization
     {
         public DefaultSerializerTests()
         {
-            SUT = new DefaultSerializer();
+            SUT = new DefaultSerializer(new SerializationConfiguration(new SerializationContractResolver()));
         }
 
         [Fact]

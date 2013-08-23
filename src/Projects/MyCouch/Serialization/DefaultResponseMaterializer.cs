@@ -4,41 +4,21 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using EnsureThat;
-using MyCouch.Serialization;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
-namespace MyCouch.ResponseFactories
+namespace MyCouch.Serialization
 {
     public class DefaultResponseMaterializer : IResponseMaterializer
     {
-        protected readonly JsonSerializerSettings Settings;
+        protected readonly SerializationConfiguration Configuration;
         protected readonly JsonSerializer InternalSerializer;
 
-        public DefaultResponseMaterializer() : this(new SerializationContractResolver()) { }
-
-        protected DefaultResponseMaterializer(IContractResolver contractResolver)
+        public DefaultResponseMaterializer(SerializationConfiguration configuration)
         {
-            Ensure.That(contractResolver, "contractResolver").IsNotNull();
+            Ensure.That(configuration, "configuration").IsNotNull();
 
-            Settings = CreateDefaultSettings(contractResolver);
-            InternalSerializer = JsonSerializer.Create(Settings);
-        }
-
-        protected JsonSerializerSettings CreateDefaultSettings(IContractResolver contractResolver)
-        {
-            return new JsonSerializerSettings
-            {
-                TypeNameHandling = TypeNameHandling.None,
-                ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor,
-                ContractResolver = contractResolver,
-                DateFormatHandling = DateFormatHandling.IsoDateFormat,
-                DateTimeZoneHandling = DateTimeZoneHandling.RoundtripKind,
-                Formatting = Formatting.None,
-                DefaultValueHandling = DefaultValueHandling.Include,
-                MissingMemberHandling = MissingMemberHandling.Ignore,
-                NullValueHandling = NullValueHandling.Ignore
-            };
+            Configuration = configuration;
+            InternalSerializer = JsonSerializer.Create(Configuration.Settings);
         }
 
         public virtual void PopulateFailedResponse<T>(T response, Stream data) where T : IResponse
@@ -55,7 +35,7 @@ namespace MyCouch.ResponseFactories
         {
             using (var sr = new StreamReader(data))
             {
-                using (var jr = ConfigureJsonReader(new JsonTextReader(sr)))
+                using (var jr = Configuration.ApplyToReader(new JsonTextReader(sr)))
                 {
                     response.Rows = InternalSerializer.Deserialize<BulkResponse.Row[]>(jr);
                 }
@@ -98,7 +78,7 @@ namespace MyCouch.ResponseFactories
 
             using (var sr = new StreamReader(data))
             {
-                using (var jr = ConfigureJsonReader(new JsonTextReader(sr)))
+                using (var jr = Configuration.ApplyToReader(new JsonTextReader(sr)))
                 {
                     while (jr.Read())
                     {
@@ -114,7 +94,7 @@ namespace MyCouch.ResponseFactories
 
                         if (!jr.Read())
                             break;
-                        
+
                         mappings[propName](jr);
 
                         numOfHandlersProcessed++;
@@ -126,7 +106,7 @@ namespace MyCouch.ResponseFactories
         protected virtual IEnumerable<ViewQueryResponse<string>.Row> YieldViewQueryRowsOfString(JsonReader jr)
         {
             return YieldViewQueryRows<string>(
-                jr, 
+                jr,
                 (row, jw, sb) =>
                 {
                     jw.WriteToken(jr, true);
@@ -144,7 +124,7 @@ namespace MyCouch.ResponseFactories
             var rowValues = new List<string>();
 
             return YieldViewQueryRows<string[]>(
-                jr, 
+                jr,
                 (row, jw, sb) =>
                 {
                     if (jr.TokenType != JsonToken.StartArray)
@@ -182,7 +162,7 @@ namespace MyCouch.ResponseFactories
         }
 
         protected virtual IEnumerable<ViewQueryResponse<T>.Row> YieldViewQueryRows<T>(
-            JsonReader jr, 
+            JsonReader jr,
             Action<ViewQueryResponse<T>.Row, JsonTextWriter, StringBuilder> onVisitValue,
             Action<ViewQueryResponse<T>.Row, JsonTextWriter, StringBuilder> onVisitDoc = null) where T : class
         {
@@ -206,7 +186,7 @@ namespace MyCouch.ResponseFactories
 
             using (var sw = new StringWriter(sb))
             {
-                using (var jw = ConfigureJsonWriter(new DeserializationJsonWriter(sw)))
+                using (var jw = Configuration.ApplyToWriter(new DeserializationJsonWriter(sw)))
                 {
                     while (jr.Read() && !(jr.TokenType == JsonToken.EndArray && jr.Depth == startDepth))
                     {
@@ -273,30 +253,6 @@ namespace MyCouch.ResponseFactories
                         yield return row;
                 }
             }
-        }
-
-        protected virtual T ConfigureJsonWriter<T>(T writer) where T : JsonTextWriter
-        {
-            writer.Culture = Settings.Culture;
-            writer.DateFormatHandling = Settings.DateFormatHandling;
-            writer.DateFormatString = Settings.DateFormatString;
-            writer.DateTimeZoneHandling = Settings.DateTimeZoneHandling;
-            writer.FloatFormatHandling = Settings.FloatFormatHandling;
-            writer.Formatting = Settings.Formatting;
-            writer.StringEscapeHandling = Settings.StringEscapeHandling;
-
-            return writer;
-        }
-
-        protected virtual T ConfigureJsonReader<T>(T reader) where T : JsonTextReader
-        {
-            reader.Culture = Settings.Culture;
-            reader.DateParseHandling = Settings.DateParseHandling;
-            reader.DateTimeZoneHandling = Settings.DateTimeZoneHandling;
-            reader.FloatParseHandling = Settings.FloatParseHandling;
-            reader.MaxDepth = Settings.MaxDepth;
-            
-            return reader;
         }
     }
 }

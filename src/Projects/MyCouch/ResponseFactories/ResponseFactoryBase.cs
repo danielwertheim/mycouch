@@ -2,6 +2,7 @@
 using System.Net.Http;
 using EnsureThat;
 using MyCouch.Extensions;
+using MyCouch.Serialization;
 
 namespace MyCouch.ResponseFactories
 {
@@ -16,7 +17,10 @@ namespace MyCouch.ResponseFactories
             ResponseMaterializer = responseMaterializer;
         }
 
-        protected virtual T CreateResponse<T>(HttpResponseMessage response, Action<HttpResponseMessage, T> onSuccessfulResponseContentMaterializer, Action<HttpResponseMessage, T> onFailedResponseContentMaterializer) where T : Response, new()
+        protected virtual T CreateResponse<T>(
+            HttpResponseMessage response,
+            Action<HttpResponseMessage, T> onSuccessfulResponseContentMaterializer,
+            Action<HttpResponseMessage, T> onFailedResponseContentMaterializer) where T : Response, new()
         {
             var result = new T
             {

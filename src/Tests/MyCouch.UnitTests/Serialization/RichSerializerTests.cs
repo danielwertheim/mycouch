@@ -2,6 +2,7 @@
 using MyCouch.Rich.EntitySchemes;
 using MyCouch.Rich.EntitySchemes.Reflections;
 using MyCouch.Rich.Serialization;
+using MyCouch.Serialization;
 using MyCouch.Testing;
 using Xunit;
 
@@ -12,7 +13,7 @@ namespace MyCouch.UnitTests.Serialization
         public RichSerializerWithLambdaPropertyFactoryTests()
         {
             var entityReflector = new EntityReflector(new LambdaDynamicPropertyFactory());
-            SUT = new RichSerializer(new RichSerializationContractResolver(entityReflector));
+            SUT = new EntityEnabledSerializer(new SerializationConfiguration(new RichSerializationContractResolver(entityReflector)));
         }
     }
 #if !NETFX_CORE
@@ -21,12 +22,12 @@ namespace MyCouch.UnitTests.Serialization
         public RichSerializerWithIlPropertyFactoryTests()
         {
             var entityReflector = new EntityReflector(new IlDynamicPropertyFactory());
-            SUT = new RichSerializer(new RichSerializationContractResolver(entityReflector));
+            SUT = new EntityEnabledSerializer(new SerializationConfiguration(new RichSerializationContractResolver(entityReflector)));
         }
     }
 #endif
 
-    public abstract class RichSerializerTests : SerializerTests<RichSerializer>
+    public abstract class RichSerializerTests : SerializerTests<EntityEnabledSerializer>
     {
         [Fact]
         public void When_deserializing_to_entity_with_Id_It_should_map_from__id()
@@ -77,7 +78,7 @@ namespace MyCouch.UnitTests.Serialization
         {
             var model = TestData.Artists.CreateArtist();
 
-            var json = SUT.SerializeEntity(model);
+            var json = SUT.Serialize(model);
 
             json.Should().Contain("\"$doctype\":\"artist\"");
         }
@@ -87,7 +88,7 @@ namespace MyCouch.UnitTests.Serialization
         {
             var model = new ModelOne { Id = "abc", Value = "def" };
 
-            var json = SUT.SerializeEntity(model);
+            var json = SUT.Serialize(model);
 
             json.Should().Contain("\"_id\":\"abc\"");
         }
@@ -97,7 +98,7 @@ namespace MyCouch.UnitTests.Serialization
         {
             var model = new ModelTwo { EntityId = "abc", Value = "def" };
 
-            var json = SUT.SerializeEntity(model);
+            var json = SUT.Serialize(model);
 
             json.Should().Contain("\"_id\":\"abc\"");
             json.Should().NotContain("\"entityId\":\"abc\"");
@@ -108,7 +109,7 @@ namespace MyCouch.UnitTests.Serialization
         {
             var model = new ModelThree { DocumentId = "abc", Value = "def" };
 
-            var json = SUT.SerializeEntity(model);
+            var json = SUT.Serialize(model);
 
             json.Should().Contain("\"_id\":\"abc\"");
             json.Should().NotContain("\"documentId\":\"abc\"");
@@ -119,7 +120,7 @@ namespace MyCouch.UnitTests.Serialization
         {
             var model = new ModelFour { ModelFourId = "abc", Value = "def" };
 
-            var json = SUT.SerializeEntity(model);
+            var json = SUT.Serialize(model);
 
             json.Should().Contain("\"_id\":\"abc\"");
             json.Should().NotContain("\"modelFourId\":\"abc\"");
@@ -130,7 +131,7 @@ namespace MyCouch.UnitTests.Serialization
         {
             var model = new ModelWithIdInWrongOrder { Id = "abc", ModelWithIdInWrongOrderId = "def", Value = "ghi" };
 
-            var json = SUT.SerializeEntity(model);
+            var json = SUT.Serialize(model);
 
             json.Should().Be("{\"$doctype\":\"modelwithidinwrongorder\",\"id\":\"abc\",\"_id\":\"def\",\"value\":\"ghi\"}");
         }

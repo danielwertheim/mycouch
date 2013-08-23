@@ -46,6 +46,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="RichClient.cs" />
+    <Compile Include="RichClientBootstraper.cs" />
     <Compile Include="RichClientExecuteExtensions.cs" />
     <Compile Include="Entities.cs" />
     <Compile Include="EntityResponse.cs" />
@@ -68,7 +69,7 @@
     <Compile Include="Serialization\Conventions\SerializationConventions.cs" />
     <Compile Include="Serialization\Conventions\DocTypeSerializationConvention.cs" />
     <Compile Include="Serialization\Conventions\ISerializationConvention.cs" />
-    <Compile Include="Serialization\RichSerializer.cs" />
+    <Compile Include="Serialization\EntityEnabledSerializer.cs" />
     <Compile Include="Serialization\RichSerializationContractResolver.cs" />
     <Compile Include="Serialization\SerializationJsonWriter.cs" />
   </ItemGroup>

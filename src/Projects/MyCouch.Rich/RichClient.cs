@@ -1,9 +1,5 @@
 ﻿using System;
 using MyCouch.Net;
-using MyCouch.Rich.EntitySchemes;
-using MyCouch.Rich.EntitySchemes.Reflections;
-using MyCouch.Rich.ResponseFactories;
-using MyCouch.Rich.Serialization;
 
 namespace MyCouch.Rich
 {
@@ -15,15 +11,11 @@ namespace MyCouch.Rich
 
         public RichClient(Uri uri) : this(new BasicHttpClientConnection(uri)) { }
 
-        public RichClient(IConnection connection) : base(connection)
+        public RichClient(IConnection connection) : this(connection, new RichClientBootstraper()) { }
+
+        public RichClient(IConnection connection, RichClientBootstraper bootstraper) : base(connection, bootstraper)
         {
-#if !NETFX_CORE
-            var entityReflector = new EntityReflector(new IlDynamicPropertyFactory());
-#else
-            var entityReflector = new EntityReflector(new LambdaDynamicPropertyFactory());
-#endif
-            Serializer = new RichSerializer(new RichSerializationContractResolver(entityReflector));
-            Entities = new Entities(Connection, new EntityResponseFactory(ResponseMaterializer, Serializer), Serializer, entityReflector);
+            Entities = bootstraper.EntitiesResolver(Connection);
         }
     }
 }

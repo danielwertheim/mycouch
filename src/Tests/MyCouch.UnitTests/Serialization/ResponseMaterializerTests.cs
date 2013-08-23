@@ -1,19 +1,45 @@
 ﻿using System.Collections.Generic;
 using FluentAssertions;
-using MyCouch.ResponseFactories;
+using MyCouch.Rich.EntitySchemes;
+using MyCouch.Rich.EntitySchemes.Reflections;
+using MyCouch.Rich.Serialization;
+using MyCouch.Serialization;
 using MyCouch.Testing;
 using MyCouch.Testing.Model;
 using Xunit;
 
-namespace MyCouch.UnitTests.Responses
+namespace MyCouch.UnitTests.Serialization
 {
-    public class DefaultResponseMaterializerTests : UnitTestsOf<DefaultResponseMaterializer>
+    public class DefaultResponseMaterializerWithSimpleContractResolverTests : ResponseMaterializerTests
     {
-        public DefaultResponseMaterializerTests()
+        public DefaultResponseMaterializerWithSimpleContractResolverTests()
         {
-            SUT = new DefaultResponseMaterializer();
+            SUT = new DefaultResponseMaterializer(new SerializationConfiguration(new SerializationContractResolver()));
         }
+    }
 
+    public class DefaultResponseMaterializerWithRichContractResolverUsingLambdasTests : ResponseMaterializerTests
+    {
+        public DefaultResponseMaterializerWithRichContractResolverUsingLambdasTests()
+        {
+            var entityReflector = new EntityReflector(new LambdaDynamicPropertyFactory());
+            SUT = new DefaultResponseMaterializer(new SerializationConfiguration(new RichSerializationContractResolver(entityReflector)));
+        }
+    }
+
+#if !NETFX_CORE
+    public class DefaultResponseMaterializerWithRichContractResolverUsingIlTests : ResponseMaterializerTests
+    {
+        public DefaultResponseMaterializerWithRichContractResolverUsingIlTests()
+        {
+            var entityReflector = new EntityReflector(new IlDynamicPropertyFactory());
+            SUT = new DefaultResponseMaterializer(new SerializationConfiguration(new RichSerializationContractResolver(entityReflector)));
+        }
+    }
+#endif
+
+    public abstract class ResponseMaterializerTests : UnitTestsOf<DefaultResponseMaterializer>
+    {
         [Fact]
         public void It_can_populate_an_all_docs_view_query_response_of_string()
         {

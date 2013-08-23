@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using MyCouch.Serialization;
 
 namespace MyCouch.ResponseFactories
 {

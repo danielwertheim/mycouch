@@ -73,6 +73,7 @@
     <Compile Include="IAttachments.cs" />
     <Compile Include="IDatabases.cs" />
     <Compile Include="IViewIdentity.cs" />
+    <Compile Include="LightClientBootsraper.cs" />
     <Compile Include="MyCouchRuntime.cs" />
     <Compile Include="Net\AttachmentContent.cs" />
     <Compile Include="Commands\PutAttachmentCommand.cs" />
@@ -87,9 +88,10 @@
     <Compile Include="ResponseFactories\DocumentResponseFactory.cs" />
     <Compile Include="ResponseFactories\DocumentHeaderResponseFactory.cs" />
     <Compile Include="ResponseFactories\DatabaseResponseFactory.cs" />
-    <Compile Include="ResponseFactories\IResponseMaterializer.cs" />
+    <Compile Include="Serialization\IResponseMaterializer.cs" />
     <Compile Include="Serialization\DeserializationJsonWriter.cs" />
-    <Compile Include="ResponseFactories\DefaultResponseMaterializer.cs" />
+    <Compile Include="Serialization\DefaultResponseMaterializer.cs" />
+    <Compile Include="Serialization\SerializationConfiguration.cs" />
     <Compile Include="SystemViewQuery.cs" />
     <Compile Include="Response.cs" />
     <Compile Include="Extensions\HttpExtensions.cs" />
