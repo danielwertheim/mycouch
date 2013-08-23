@@ -86,7 +86,7 @@ namespace MyCouch.ResponseFactories
                     else if (response is ViewQueryResponse<string[]>)
                         response.Rows = YieldViewQueryRowsOfStrings(jr).ToArray() as ViewQueryResponse<T>.Row[];
                     else
-                        response.Rows = InternalSerializer.Deserialize<ViewQueryResponse<T>.Row[]>(jr);
+                        response.Rows = InternalSerializer.Deserialize<ViewQueryResponse<T>.Row[]>(jr); //TODO: Do as with string[]
                 }},
             };
             Map(data, mappings);
