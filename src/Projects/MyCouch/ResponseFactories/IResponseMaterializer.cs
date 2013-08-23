@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace MyCouch.Responses
+namespace MyCouch.ResponseFactories
 {
     public interface IResponseMaterializer
     {

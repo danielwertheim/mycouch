@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using FluentAssertions;
-using MyCouch.Responses;
+using MyCouch.ResponseFactories;
 using MyCouch.Testing;
 using MyCouch.Testing.Model;
 using Xunit;

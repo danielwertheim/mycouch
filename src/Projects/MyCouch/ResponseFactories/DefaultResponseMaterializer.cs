@@ -8,7 +8,7 @@ using MyCouch.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace MyCouch.Responses
+namespace MyCouch.ResponseFactories
 {
     public class DefaultResponseMaterializer : IResponseMaterializer
     {

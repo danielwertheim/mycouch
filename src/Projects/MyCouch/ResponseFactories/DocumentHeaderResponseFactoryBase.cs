@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
 using MyCouch.Extensions;
 
-namespace MyCouch.Responses
+namespace MyCouch.ResponseFactories
 {
     public abstract class DocumentHeaderResponseFactoryBase : ResponseFactoryBase
     {

@@ -4,7 +4,7 @@ using EnsureThat;
 using MyCouch.Commands;
 using MyCouch.Extensions;
 using MyCouch.Net;
-using MyCouch.Responses;
+using MyCouch.ResponseFactories;
 
 namespace MyCouch
 {

@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 
-namespace MyCouch.Responses
+namespace MyCouch.ResponseFactories
 {
     public class DocumentHeaderResponseFactory : DocumentHeaderResponseFactoryBase
     {

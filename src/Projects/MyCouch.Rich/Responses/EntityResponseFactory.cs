@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
 using EnsureThat;
 using MyCouch.Extensions;
-using MyCouch.Responses;
+using MyCouch.ResponseFactories;
 using MyCouch.Serialization;
 
 namespace MyCouch.Rich.Responses

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Extensions;
 using MyCouch.Net;
-using MyCouch.Responses;
+using MyCouch.ResponseFactories;
 
 namespace MyCouch
 {

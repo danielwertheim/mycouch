@@ -3,7 +3,7 @@ using System.IO;
 using System.Net.Http;
 using MyCouch.Extensions;
 
-namespace MyCouch.Responses
+namespace MyCouch.ResponseFactories
 {
     public class AttachmentResponseFactory : ResponseFactoryBase
     {

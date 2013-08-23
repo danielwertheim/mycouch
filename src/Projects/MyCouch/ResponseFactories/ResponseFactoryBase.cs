@@ -3,7 +3,7 @@ using System.Net.Http;
 using EnsureThat;
 using MyCouch.Extensions;
 
-namespace MyCouch.Responses
+namespace MyCouch.ResponseFactories
 {
     public abstract class ResponseFactoryBase
     {

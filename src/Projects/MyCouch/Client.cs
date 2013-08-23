@@ -1,7 +1,7 @@
 ﻿using System;
 using EnsureThat;
 using MyCouch.Net;
-using MyCouch.Responses;
+using MyCouch.ResponseFactories;
 using MyCouch.Serialization;
 
 namespace MyCouch
