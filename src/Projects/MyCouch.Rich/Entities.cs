@@ -4,8 +4,8 @@ using EnsureThat;
 using MyCouch.Commands;
 using MyCouch.Extensions;
 using MyCouch.Net;
-using MyCouch.Rich.Responses;
 using MyCouch.Rich.EntitySchemes;
+using MyCouch.Rich.ResponseFactories;
 using MyCouch.Serialization;
 
 namespace MyCouch.Rich

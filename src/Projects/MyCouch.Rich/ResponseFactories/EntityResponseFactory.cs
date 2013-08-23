@@ -4,7 +4,7 @@ using MyCouch.Extensions;
 using MyCouch.ResponseFactories;
 using MyCouch.Serialization;
 
-namespace MyCouch.Rich.Responses
+namespace MyCouch.Rich.ResponseFactories
 {
     public class EntityResponseFactory : DocumentHeaderResponseFactoryBase
     {
