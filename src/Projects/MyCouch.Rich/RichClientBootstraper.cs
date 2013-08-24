@@ -11,7 +11,7 @@ namespace MyCouch.Rich
 {
     public class RichClientBootstraper : LightClientBootsraper
     {
-        public Func<IEntityReflector> EntityReflectorResolver { get; set; }
+        public Func<EntityReflector> EntityReflectorResolver { get; set; }
         public Func<IConnection, IEntities> EntitiesResolver { get; set; }
 
         public RichClientBootstraper()
@@ -19,7 +19,7 @@ namespace MyCouch.Rich
             ConfigureEntitiesResolver();
             ConfigureEntityReflectorResolver();
             ConfigureContractResolver();
-            ConfigureSerializer();
+            //ConfigureSerializer();
         }
 
         private void ConfigureEntityReflectorResolver()
@@ -38,17 +38,18 @@ namespace MyCouch.Rich
             ContractResolver = () => contractResolver.Value;
         }
 
-        private void ConfigureSerializer()
-        {
-            var serializer = new Lazy<ISerializer>(() => new EntityEnabledSerializer(SerializationConfigurationResolver()));
-            SerializerResolver = () => serializer.Value;
-        }
+        //private void ConfigureSerializer()
+        //{
+        //    var serializer = new Lazy<ISerializer>(() => new EntityEnabledSerializer(SerializationConfigurationResolver()));
+        //    SerializerResolver = () => serializer.Value;
+        //}
 
         private void ConfigureEntitiesResolver()
         {
-            EntitiesResolver = cn => new Entities(cn,
+            EntitiesResolver = cn => new Entities(
+                cn,
                 new EntityResponseFactory(ResponseMaterializerResolver(), SerializerResolver()),
-                SerializerResolver(),
+                new EntityEnabledSerializer(SerializationConfigurationResolver()), 
                 EntityReflectorResolver());
         }
     }

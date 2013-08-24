@@ -59,7 +59,6 @@
     <Compile Include="EntitySchemes\EntityReflector.cs" />
     <Compile Include="EntitySchemes\EntityRevMember.cs" />
     <Compile Include="EntitySchemes\IEntityMember.cs" />
-    <Compile Include="EntitySchemes\IEntityReflector.cs" />
     <Compile Include="EntitySchemes\Reflections\DynamicProperty.cs" />
     <Compile Include="EntitySchemes\Reflections\DynamicStringGetter.cs" />
     <Compile Include="EntitySchemes\Reflections\DynamicStringSetter.cs" />
