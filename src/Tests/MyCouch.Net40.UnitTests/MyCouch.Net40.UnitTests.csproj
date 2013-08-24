@@ -42,6 +42,9 @@
     <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop">
       <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.16\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\packages\Newtonsoft.Json.5.0.6\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
@@ -91,8 +94,17 @@
     <Compile Include="..\mycouch.unittests\schemes\EntityRevMemberTests.cs">
       <Link>Schemes\EntityRevMemberTests.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.unittests\serialization\MyCouchSerializerTests.cs">
-      <Link>Serialization\MyCouchSerializerTests.cs</Link>
+    <Compile Include="..\MyCouch.UnitTests\Serialization\DefaultSerializationTests.cs">
+      <Link>Serialization\DefaultSerializationTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.UnitTests\Serialization\EntitySerializationTests.cs">
+      <Link>Serialization\EntitySerializationTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.UnitTests\Serialization\ResponseMaterializerTests.cs">
+      <Link>Serialization\ResponseMaterializerTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.UnitTests\Serialization\SerializerTests.cs">
+      <Link>Serialization\SerializerTests.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.UnitTests\UnitTestsOf.cs">
       <Link>UnitTestsOf.cs</Link>

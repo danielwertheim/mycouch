@@ -42,6 +42,10 @@
     <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop">
       <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.16\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Newtonsoft.Json.5.0.6\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
@@ -85,6 +89,9 @@
     <Compile Include="..\mycouch.integrationtests\clienttests\AttachmentsTests.cs">
       <Link>ClientTests\AttachmentsTests.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.IntegrationTests\ClientTests\ClientTestsOf.cs">
+      <Link>ClientTests\ClientTestsOf.cs</Link>
+    </Compile>
     <Compile Include="..\mycouch.integrationtests\clienttests\DocumentsTests.cs">
       <Link>ClientTests\DocumentsTests.cs</Link>
     </Compile>
@@ -94,8 +101,8 @@
     <Compile Include="..\mycouch.integrationtests\clienttests\ViewsTests.cs">
       <Link>ClientTests\ViewsTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests\IntegrationTestsOf.cs">
-      <Link>IntegrationTestsOf.cs</Link>
+    <Compile Include="..\MyCouch.IntegrationTests\IntegrationTests.cs">
+      <Link>IntegrationTests.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.IntegrationTests\IntegrationTestsRuntime.cs">
       <Link>IntegrationTestsRuntime.cs</Link>

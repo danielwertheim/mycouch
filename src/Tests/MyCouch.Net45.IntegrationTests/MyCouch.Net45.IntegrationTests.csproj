@@ -34,6 +34,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\FluentAssertions.2.0.1\lib\net45\FluentAssertions.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
@@ -54,6 +58,9 @@
     <Compile Include="..\MyCouch.IntegrationTests\ClientTests\AttachmentsTests.cs">
       <Link>ClientTests\AttachmentsTests.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.IntegrationTests\ClientTests\ClientTestsOf.cs">
+      <Link>ClientTests\ClientTestsOf.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.IntegrationTests\ClientTests\DocumentsTests.cs">
       <Link>ClientTests\DocumentsTests.cs</Link>
     </Compile>
@@ -63,8 +70,8 @@
     <Compile Include="..\MyCouch.IntegrationTests\ClientTests\ViewsTests.cs">
       <Link>ClientTests\ViewsTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests\IntegrationTestsOf.cs">
-      <Link>IntegrationTestsOf.cs</Link>
+    <Compile Include="..\MyCouch.IntegrationTests\IntegrationTests.cs">
+      <Link>IntegrationTests.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.IntegrationTests\IntegrationTestsRuntime.cs">
       <Link>IntegrationTestsRuntime.cs</Link>
