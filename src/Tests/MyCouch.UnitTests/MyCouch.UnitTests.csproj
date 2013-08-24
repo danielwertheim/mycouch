@@ -58,8 +58,8 @@
     <Compile Include="Serialization\ResponseMaterializerTests.cs" />
     <Compile Include="Schemes\EntityIdMemberTests.cs" />
     <Compile Include="Schemes\EntityRevMemberTests.cs" />
-    <Compile Include="Serialization\DefaultSerializerTests.cs" />
-    <Compile Include="Serialization\RichSerializerTests.cs" />
+    <Compile Include="Serialization\DefaultSerializationTests.cs" />
+    <Compile Include="Serialization\EntitySerializationTests.cs" />
     <Compile Include="Serialization\SerializerTests.cs" />
     <Compile Include="UnitTestsOf.cs" />
   </ItemGroup>

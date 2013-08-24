@@ -11,11 +11,16 @@ using Newtonsoft.Json.Serialization;
 
 namespace MyCouch.Rich.Serialization
 {
-    public class RichSerializationContractResolver : SerializationContractResolver
+    /// <summary>
+    /// When deserializing and serializing with this contract resolver,
+    /// Id and Rev members will be mapped according to conventions registrered
+    /// in members of the <see cref="EntityReflector"/>.
+    /// </summary>
+    public class EntitySerializationContractResolver : SerializationContractResolver
     {
         protected readonly EntityReflector EntityReflector;
 
-        public RichSerializationContractResolver(EntityReflector entityReflector)
+        public EntitySerializationContractResolver(EntityReflector entityReflector)
         {
             Ensure.That(entityReflector, "entityReflector").IsNotNull();
 
@@ -32,14 +37,13 @@ namespace MyCouch.Rich.Serialization
             if (type == typeof(BulkResponse.Row) || (type.GetTypeInfo().IsGenericType && typeof(ViewQueryResponse<>.Row) == type.GetGenericTypeDefinition()))
                 return base.CreateProperties(type, memberSerialization);
 #endif
-            var entityReflector = EntityReflector;
             var props = base.CreateProperties(type, memberSerialization);
             int? idRank = null, revRank = null;
             JsonProperty id = null, rev = null;
 
             foreach (var prop in props)
             {
-                var tmpRank = entityReflector.IdMember.GetMemberRankingIndex(type, prop.PropertyName);
+                var tmpRank = EntityReflector.IdMember.GetMemberRankingIndex(type, prop.PropertyName);
                 if (tmpRank != null)
                 {
                     if (idRank == null || tmpRank < idRank)
@@ -51,7 +55,7 @@ namespace MyCouch.Rich.Serialization
                     continue;
                 }
 
-                tmpRank = entityReflector.RevMember.GetMemberRankingIndex(type, prop.PropertyName);
+                tmpRank = EntityReflector.RevMember.GetMemberRankingIndex(type, prop.PropertyName);
                 if (tmpRank != null)
                 {
                     if (revRank == null || tmpRank < revRank)

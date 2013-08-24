@@ -2,13 +2,11 @@
 using MyCouch.Net;
 using MyCouch.ResponseFactories;
 using MyCouch.Serialization;
-using Newtonsoft.Json.Serialization;
 
 namespace MyCouch
 {
     public class LightClientBootsraper
     {
-        public Func<IContractResolver> ContractResolver { get; set; }
         public Func<SerializationConfiguration> SerializationConfigurationResolver { get; set; }
         public Func<IResponseMaterializer> ResponseMaterializerResolver { get; set; }
         public Func<ISerializer> SerializerResolver { get; set; }
@@ -19,7 +17,6 @@ namespace MyCouch
 
         public LightClientBootsraper()
         {
-            ConfigureContractResolver();
             ConfigureSerializationConfigurationResolver();
             ConfigureResponseMaterializerResolver();
             ConfigureSerializerResolver();
@@ -29,15 +26,9 @@ namespace MyCouch
             ConfigureViewsResolver();
         }
 
-        private void ConfigureContractResolver()
-        {
-            var contractResolver = new Lazy<IContractResolver>(() => new SerializationContractResolver());
-            ContractResolver = () => contractResolver.Value;
-        }
-
         private void ConfigureSerializationConfigurationResolver()
         {
-            var serializationConfiguration = new Lazy<SerializationConfiguration>(() => new SerializationConfiguration(ContractResolver()));
+            var serializationConfiguration = new Lazy<SerializationConfiguration>(() => new SerializationConfiguration(new SerializationContractResolver()));
             SerializationConfigurationResolver = () => serializationConfiguration.Value;
         }
 

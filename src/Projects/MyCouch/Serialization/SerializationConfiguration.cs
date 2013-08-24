@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using EnsureThat;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -12,10 +11,8 @@ namespace MyCouch.Serialization
         public JsonReaderFactory ReaderFactory { get; set; }
         public JsonWriterFactory WriterFactory { get; set; }
 
-        public SerializationConfiguration(IContractResolver contractResolver)
+        public SerializationConfiguration(IContractResolver contractResolver = null)
         {
-            Ensure.That(contractResolver, "contractResolver").IsNotNull();
-
             ReaderFactory = DefaultReaderFactory;
             WriterFactory = DefaultWriterFactory;
 
@@ -23,7 +20,7 @@ namespace MyCouch.Serialization
             {
                 TypeNameHandling = TypeNameHandling.None,
                 ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor,
-                ContractResolver = contractResolver,
+                ContractResolver = contractResolver ?? new SerializationContractResolver(),
                 DateFormatHandling = DateFormatHandling.IsoDateFormat,
                 DateTimeZoneHandling = DateTimeZoneHandling.RoundtripKind,
                 Formatting = Formatting.None,

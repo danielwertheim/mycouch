@@ -23,7 +23,7 @@ namespace MyCouch.UnitTests.Serialization
         public DefaultResponseMaterializerWithRichContractResolverUsingLambdasTests()
         {
             var entityReflector = new EntityReflector(new LambdaDynamicPropertyFactory());
-            SUT = new DefaultResponseMaterializer(new SerializationConfiguration(new RichSerializationContractResolver(entityReflector)));
+            SUT = new DefaultResponseMaterializer(new SerializationConfiguration(new EntitySerializationContractResolver(entityReflector)));
         }
     }
 
@@ -33,7 +33,7 @@ namespace MyCouch.UnitTests.Serialization
         public DefaultResponseMaterializerWithRichContractResolverUsingIlTests()
         {
             var entityReflector = new EntityReflector(new IlDynamicPropertyFactory());
-            SUT = new DefaultResponseMaterializer(new SerializationConfiguration(new RichSerializationContractResolver(entityReflector)));
+            SUT = new DefaultResponseMaterializer(new SerializationConfiguration(new EntitySerializationContractResolver(entityReflector)));
         }
     }
 #endif

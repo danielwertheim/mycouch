@@ -8,18 +8,18 @@ using Xunit;
 
 namespace MyCouch.UnitTests.Serialization
 {
-    public class RichSerializerWithLambdaPropertyFactoryTests : RichSerializerTests
+    public class EntitySerializationWithLambdaPropertyFactoryTests : EntitySerializationTests
     {
-        public RichSerializerWithLambdaPropertyFactoryTests()
+        public EntitySerializationWithLambdaPropertyFactoryTests()
         {
             var entityReflector = new EntityReflector(new LambdaDynamicPropertyFactory());
             SUT = new DefaultSerializer(CreateSerializationConfiguration(entityReflector));
         }
     }
 #if !NETFX_CORE
-    public class RichSerializerWithIlPropertyFactoryTests : RichSerializerTests
+    public class EntitySerializationWithIlPropertyFactoryTests : EntitySerializationTests
     {
-        public RichSerializerWithIlPropertyFactoryTests()
+        public EntitySerializationWithIlPropertyFactoryTests()
         {
             var entityReflector = new EntityReflector(new IlDynamicPropertyFactory());
             SUT = new DefaultSerializer(CreateSerializationConfiguration(entityReflector));
@@ -27,13 +27,13 @@ namespace MyCouch.UnitTests.Serialization
     }
 #endif
 
-    public abstract class RichSerializerTests : SerializerTests<DefaultSerializer>
+    public abstract class EntitySerializationTests : SerializerTests<DefaultSerializer>
     {
         protected SerializationConfiguration CreateSerializationConfiguration(EntityReflector entityReflector)
         {
-            return new SerializationConfiguration(new RichSerializationContractResolver(entityReflector))
+            return new SerializationConfiguration(new EntitySerializationContractResolver(entityReflector))
             {
-                WriterFactory = (t, w) => new SerializationJsonWriter(t, w)
+                WriterFactory = (t, w) => new EntityJsonWriter(t, w)
             };
         }
         [Fact]

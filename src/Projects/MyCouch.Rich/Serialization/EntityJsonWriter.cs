@@ -6,14 +6,19 @@ using Newtonsoft.Json;
 
 namespace MyCouch.Rich.Serialization
 {
-    public class SerializationJsonWriter : JsonTextWriter
+    /// <summary>
+    /// When serializing entities, this writer will use
+    /// conventions found in <see cref="Conventions"/>,
+    /// which by default will e.g. inject info about doctype.
+    /// </summary>
+    public class EntityJsonWriter : JsonTextWriter
     {
         protected readonly Type DocType;
         protected bool HasWrittenDocHeader = false;
 
         public SerializationConventions Conventions { get; protected set; }
 
-        public SerializationJsonWriter(Type docType, TextWriter textWriter)
+        public EntityJsonWriter(Type docType, TextWriter textWriter)
             : base(textWriter)
         {
             Ensure.That(docType, "docType").IsNotNull();
