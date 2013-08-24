@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using MyCouch.Rich;
 using MyCouch.Testing;
 using MyCouch.Testing.Model;
 using Xunit;
 
-namespace MyCouch.IntegrationTests.RichClientTests
+namespace MyCouch.IntegrationTests.ClientTests
 {
-    public class EntitiesTests : RichClientTestsOf<IEntities>
+    public class EntitiesTests : ClientTestsOf<IEntities>
     {
         public EntitiesTests()
         {

@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-#if NETFX_CORE
+﻿#if NETFX_CORE
 using System.Reflection;
 #endif
+using System;
+using System.Collections.Generic;
 using EnsureThat;
-using MyCouch.Rich.EntitySchemes;
-using MyCouch.Serialization;
+using MyCouch.EntitySchemes;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace MyCouch.Rich.Serialization
+namespace MyCouch.Serialization
 {
     /// <summary>
     /// When deserializing and serializing with this contract resolver,

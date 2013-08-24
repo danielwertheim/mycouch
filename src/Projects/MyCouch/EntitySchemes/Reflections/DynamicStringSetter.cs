@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MyCouch.Rich.EntitySchemes.Reflections
+namespace MyCouch.EntitySchemes.Reflections
 {
     public class DynamicStringSetter
     {

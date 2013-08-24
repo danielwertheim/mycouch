@@ -1,7 +1,7 @@
 ﻿using System;
-using MyCouch.Rich.EntitySchemes.Reflections;
+using MyCouch.EntitySchemes.Reflections;
 
-namespace MyCouch.Rich.EntitySchemes
+namespace MyCouch.EntitySchemes
 {
     public class EntityRevMember : EntityMember 
     {

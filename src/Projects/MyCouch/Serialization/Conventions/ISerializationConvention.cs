@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MyCouch.Rich.Serialization.Conventions
+namespace MyCouch.Serialization.Conventions
 {
     public interface ISerializationConvention
     {

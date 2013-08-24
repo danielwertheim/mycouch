@@ -2,13 +2,13 @@
 using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Commands;
+using MyCouch.EntitySchemes;
 using MyCouch.Extensions;
 using MyCouch.Net;
-using MyCouch.Rich.EntitySchemes;
-using MyCouch.Rich.ResponseFactories;
+using MyCouch.ResponseFactories;
 using MyCouch.Serialization;
 
-namespace MyCouch.Rich
+namespace MyCouch
 {
     public class Entities : IEntities
     {

@@ -19,6 +19,11 @@ namespace MyCouch
         ISerializer Serializer { get; }
 
         /// <summary>
+        /// Attachment oriented API operations, for accessing and managing attachments to documents.
+        /// </summary>
+        IAttachments Attachments { get; }
+
+        /// <summary>
         /// Database oriented API operations.
         /// </summary>
         IDatabases Databases { get; }
@@ -29,10 +34,10 @@ namespace MyCouch
         IDocuments Documents { get; }
 
         /// <summary>
-        /// Attachment oriented API operations, for accessing and managing attachments to documents.
+        /// Entity oriented API operations, for accessing and managing documents as entities.
         /// </summary>
-        IAttachments Attachments { get; }
-        
+        IEntities Entities { get; }
+
         /// <summary>
         /// View oriented API operations, for accessing and managing views.
         /// </summary>

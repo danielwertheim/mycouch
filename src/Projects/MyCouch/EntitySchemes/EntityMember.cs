@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using EnsureThat;
-using MyCouch.Rich.EntitySchemes.Reflections;
+using MyCouch.EntitySchemes.Reflections;
 
-namespace MyCouch.Rich.EntitySchemes
+namespace MyCouch.EntitySchemes
 {
     public abstract class EntityMember : IEntityMember 
     {

@@ -1,10 +1,9 @@
 ﻿using System.Net.Http;
 using EnsureThat;
 using MyCouch.Extensions;
-using MyCouch.ResponseFactories;
 using MyCouch.Serialization;
 
-namespace MyCouch.Rich.ResponseFactories
+namespace MyCouch.ResponseFactories
 {
     public class EntityResponseFactory : DocumentHeaderResponseFactoryBase
     {

@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using FluentAssertions;
-using MyCouch.Rich.EntitySchemes;
-using MyCouch.Rich.EntitySchemes.Reflections;
-using MyCouch.Rich.Serialization;
+using MyCouch.EntitySchemes;
+using MyCouch.EntitySchemes.Reflections;
 using MyCouch.Serialization;
 using MyCouch.Testing;
 using MyCouch.Testing.Model;
@@ -18,9 +17,9 @@ namespace MyCouch.UnitTests.Serialization
         }
     }
 
-    public class DefaultResponseMaterializerWithRichContractResolverUsingLambdasTests : ResponseMaterializerTests
+    public class DefaultResponseMaterializerWithEntityContractResolverUsingLambdasTests : ResponseMaterializerTests
     {
-        public DefaultResponseMaterializerWithRichContractResolverUsingLambdasTests()
+        public DefaultResponseMaterializerWithEntityContractResolverUsingLambdasTests()
         {
             var entityReflector = new EntityReflector(new LambdaDynamicPropertyFactory());
             SUT = new DefaultResponseMaterializer(new SerializationConfiguration(new EntitySerializationContractResolver(entityReflector)));
@@ -28,9 +27,9 @@ namespace MyCouch.UnitTests.Serialization
     }
 
 #if !NETFX_CORE
-    public class DefaultResponseMaterializerWithRichContractResolverUsingIlTests : ResponseMaterializerTests
+    public class DefaultResponseMaterializerWithEntityContractResolverUsingIlTests : ResponseMaterializerTests
     {
-        public DefaultResponseMaterializerWithRichContractResolverUsingIlTests()
+        public DefaultResponseMaterializerWithEntityContractResolverUsingIlTests()
         {
             var entityReflector = new EntityReflector(new IlDynamicPropertyFactory());
             SUT = new DefaultResponseMaterializer(new SerializationConfiguration(new EntitySerializationContractResolver(entityReflector)));

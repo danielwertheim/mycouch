@@ -1,10 +1,10 @@
 ﻿using System;
 using System.IO;
 using EnsureThat;
-using MyCouch.Rich.Serialization.Conventions;
+using MyCouch.Serialization.Conventions;
 using Newtonsoft.Json;
 
-namespace MyCouch.Rich.Serialization
+namespace MyCouch.Serialization
 {
     /// <summary>
     /// When serializing entities, this writer will use

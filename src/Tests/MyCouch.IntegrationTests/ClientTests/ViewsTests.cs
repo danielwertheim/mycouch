@@ -35,7 +35,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             for (var i = 0; i < response.RowCount; i++)
             {
                 response.Rows[i].Value.Should().BeNull();
-                response.Rows[i].Doc.Should().NotBeNullOrEmpty();
+                CustomAsserts.AreValueEqual(Artists[i], Client.Entities.Serializer.Deserialize<Artist>(response.Rows[i].Doc));
             }
         }
 
@@ -50,7 +50,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             for (var i = 0; i < response.RowCount; i++)
             {
                 response.Rows[i].Value.Should().BeNull();
-                response.Rows[i].Doc.Should().NotBeNull();
+                CustomAsserts.AreValueEqual(Artists[i], response.Rows[i].Doc);
             }
         }
 
@@ -291,7 +291,7 @@ namespace MyCouch.IntegrationTests.ClientTests
 
             public ViewsFixture()
             {
-                using (var client = IntegrationTestsRuntime.CreateRichClient())
+                using (var client = IntegrationTestsRuntime.CreateClient())
                 {
                     Artists = TestData.Artists.CreateArtists(10);
 

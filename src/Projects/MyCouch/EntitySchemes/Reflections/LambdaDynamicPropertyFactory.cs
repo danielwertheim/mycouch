@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace MyCouch.Rich.EntitySchemes.Reflections
+namespace MyCouch.EntitySchemes.Reflections
 {
     public class LambdaDynamicPropertyFactory : IDynamicPropertyFactory
     {

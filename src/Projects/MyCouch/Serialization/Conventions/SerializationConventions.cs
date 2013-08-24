@@ -1,4 +1,4 @@
-﻿namespace MyCouch.Rich.Serialization.Conventions
+﻿namespace MyCouch.Serialization.Conventions
 {
     public class SerializationConventions
     {

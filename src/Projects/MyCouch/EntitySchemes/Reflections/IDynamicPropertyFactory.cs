@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace MyCouch.Rich.EntitySchemes.Reflections
+namespace MyCouch.EntitySchemes.Reflections
 {
     public interface IDynamicPropertyFactory
     {

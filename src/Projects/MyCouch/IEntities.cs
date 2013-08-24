@@ -2,7 +2,7 @@
 using MyCouch.Commands;
 using MyCouch.Serialization;
 
-namespace MyCouch.Rich
+namespace MyCouch
 {
     /// <summary>
     /// Used to access and manage documents as entities.

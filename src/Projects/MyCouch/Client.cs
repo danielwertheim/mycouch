@@ -9,28 +9,30 @@ namespace MyCouch
     {
         public IConnection Connection { get; private set; }
         public ISerializer Serializer { get; private set; }
+        public IAttachments Attachments { get; private set; }
         public IDatabases Databases { get; private set; }
         public IDocuments Documents { get; private set; }
-        public IAttachments Attachments { get; private set; }
+        public IEntities Entities { get; protected set; }
         public IViews Views { get; private set; }
 
         public Client(string url) : this(new Uri(url)) { }
 
         public Client(Uri uri) : this(new BasicHttpClientConnection(uri)) { }
 
-        public Client(IConnection connection, LightClientBootsraper bootstraper = null)
+        public Client(IConnection connection, ClientBootsraper bootstraper = null)
         {
             Ensure.That(connection, "connection").IsNotNull();
 
             Connection = connection;
 
-            bootstraper = bootstraper ?? new LightClientBootsraper();
+            bootstraper = bootstraper ?? new ClientBootsraper();
 
-            Serializer = bootstraper.SerializerResolver();
-            Attachments = bootstraper.AttachmentsResolver(Connection);
-            Databases = bootstraper.DatabasesResolver(Connection);
-            Documents = bootstraper.DocumentsResolver(Connection);
-            Views = bootstraper.ViewsResolver(Connection);
+            Serializer = bootstraper.SerializerFn();
+            Attachments = bootstraper.AttachmentsFn(Connection);
+            Databases = bootstraper.DatabasesFn(Connection);
+            Documents = bootstraper.DocumentsFn(Connection);
+            Entities = bootstraper.EntitiesFn(Connection);
+            Views = bootstraper.ViewsFn(Connection);
         }
 
         public virtual void Dispose()

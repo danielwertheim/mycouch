@@ -59,5 +59,10 @@ namespace MyCouch
         {
             return client.Attachments.DeleteAsync(cmd);
         }
+
+        public static Task<EntityResponse<T>> ExecuteAsync<T>(this IClient client, GetEntityCommand cmd) where T : class
+        {
+            return client.Entities.GetAsync<T>(cmd);
+        }
     }
 }

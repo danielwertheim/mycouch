@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
-using MyCouch.Rich.EntitySchemes;
-using MyCouch.Rich.EntitySchemes.Reflections;
-using MyCouch.Rich.Serialization;
+using MyCouch.EntitySchemes;
+using MyCouch.EntitySchemes.Reflections;
 using MyCouch.Serialization;
 using MyCouch.Testing;
 using Xunit;
