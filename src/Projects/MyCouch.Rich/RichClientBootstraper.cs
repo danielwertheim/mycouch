@@ -16,7 +16,7 @@ namespace MyCouch.Rich
 
         public RichClientBootstraper()
         {
-            ConfigureEntitiesResolver();
+            ConfigureEntityReflectorResolver();
             ConfigureViewsResolver();
             ConfigureEntitiesResolver();
         }
