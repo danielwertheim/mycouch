@@ -14,8 +14,9 @@ namespace MyCouch.Rich
     {
         protected readonly IConnection Connection;
         protected readonly EntityResponseFactory EntityResponseFactory;
-        protected readonly ISerializer Serializer;
         protected readonly EntityReflector EntityReflector;
+
+        public ISerializer Serializer { get; private set; }
 
         public Entities(IConnection connection, EntityResponseFactory entityResponseFactory, ISerializer serializer, EntityReflector entityReflector)
         {

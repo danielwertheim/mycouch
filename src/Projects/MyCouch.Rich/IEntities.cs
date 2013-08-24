@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using MyCouch.Commands;
+using MyCouch.Serialization;
 
 namespace MyCouch.Rich
 {
@@ -8,6 +9,13 @@ namespace MyCouch.Rich
     /// </summary>
     public interface IEntities
     {
+        /// <summary>
+        /// The Serializer associated with this <see cref="IEntities"/> instance. Use this if you want
+        /// to serialize or deserialize using the same behavior.
+        /// </summary>
+        /// <remarks>If you want the native, non conventionbased serializer, chech <see cref="IClient.Serializer"/></remarks>
+        ISerializer Serializer { get; }
+
         /// <summary>
         /// Gets typed entity-response (<see cref="EntityResponse{T}"/> of <typeparamref name="T"/>)
         /// representation of the document.
