@@ -35,7 +35,7 @@ namespace MyCouch.Serialization
         {
             using (var sr = new StreamReader(data))
             {
-                using (var jr = Configuration.ApplyToReader(new JsonTextReader(sr)))
+                using (var jr = Configuration.ReaderFactory(typeof(BulkResponse.Row[]), sr))
                 {
                     response.Rows = InternalSerializer.Deserialize<BulkResponse.Row[]>(jr);
                 }
@@ -78,7 +78,7 @@ namespace MyCouch.Serialization
 
             using (var sr = new StreamReader(data))
             {
-                using (var jr = Configuration.ApplyToReader(new JsonTextReader(sr)))
+                using (var jr = Configuration.ApplyConfigToReader(new JsonTextReader(sr)))
                 {
                     while (jr.Read())
                     {
@@ -186,7 +186,7 @@ namespace MyCouch.Serialization
 
             using (var sw = new StringWriter(sb))
             {
-                using (var jw = Configuration.ApplyToWriter(new DeserializationJsonWriter(sw)))
+                using (var jw = Configuration.ApplyConfigToWriter(new MaterializerJsonWriter(sw)))
                 {
                     while (jr.Read() && !(jr.TokenType == JsonToken.EndArray && jr.Depth == startDepth))
                     {
@@ -252,6 +252,16 @@ namespace MyCouch.Serialization
                     if (hasMappedSomething())
                         yield return row;
                 }
+            }
+        }
+
+        protected class MaterializerJsonWriter : JsonTextWriter
+        {
+            public MaterializerJsonWriter(TextWriter textWriter) : base(textWriter) { }
+
+            public override void WriteNull()
+            {
+                base.WriteRaw(string.Empty);
             }
         }
     }

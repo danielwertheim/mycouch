@@ -89,8 +89,9 @@
     <Compile Include="ResponseFactories\DocumentHeaderResponseFactory.cs" />
     <Compile Include="ResponseFactories\DatabaseResponseFactory.cs" />
     <Compile Include="Serialization\IResponseMaterializer.cs" />
-    <Compile Include="Serialization\DeserializationJsonWriter.cs" />
     <Compile Include="Serialization\DefaultResponseMaterializer.cs" />
+    <Compile Include="Serialization\JsonReaderFactory.cs" />
+    <Compile Include="Serialization\JsonWriterFactory.cs" />
     <Compile Include="Serialization\SerializationConfiguration.cs" />
     <Compile Include="SystemViewQuery.cs" />
     <Compile Include="Response.cs" />

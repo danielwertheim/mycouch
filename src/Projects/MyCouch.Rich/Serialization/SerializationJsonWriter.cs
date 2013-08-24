@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using EnsureThat;
 using MyCouch.Rich.Serialization.Conventions;
 using Newtonsoft.Json;
 
@@ -7,38 +8,27 @@ namespace MyCouch.Rich.Serialization
 {
     public class SerializationJsonWriter : JsonTextWriter
     {
+        protected readonly Type DocType;
         protected bool HasWrittenDocHeader = false;
-        protected bool ShouldSkipOneStartObjectWrite = false;
 
-        public SerializationConventions Conventions { get; set; }
+        public SerializationConventions Conventions { get; protected set; }
 
-        public SerializationJsonWriter(TextWriter textWriter)
+        public SerializationJsonWriter(Type docType, TextWriter textWriter)
             : base(textWriter)
         {
+            Ensure.That(docType, "docType").IsNotNull();
+
+            DocType = docType;
             Conventions = new SerializationConventions();
-        }
-
-        public virtual void WriteDocHeaderFor<T>(T doc)
-        {
-            if(HasWrittenDocHeader)
-                return;
-
-            WriteStartObject();
-            WriteDocType(typeof (T));
-
-            HasWrittenDocHeader = true;
-            ShouldSkipOneStartObjectWrite = true;
         }
 
         public override void WriteStartObject()
         {
-            if (HasWrittenDocHeader && ShouldSkipOneStartObjectWrite)
-            {
-                ShouldSkipOneStartObjectWrite = false;
-                return;
-            }
-
             base.WriteStartObject();
+
+            if (HasWrittenDocHeader) return;
+            HasWrittenDocHeader = true;
+            WriteDocType(DocType);
         }
 
         protected virtual void WriteDocType(Type docType)

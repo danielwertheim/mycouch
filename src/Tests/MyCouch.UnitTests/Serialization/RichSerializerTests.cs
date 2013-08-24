@@ -13,7 +13,7 @@ namespace MyCouch.UnitTests.Serialization
         public RichSerializerWithLambdaPropertyFactoryTests()
         {
             var entityReflector = new EntityReflector(new LambdaDynamicPropertyFactory());
-            SUT = new EntityEnabledSerializer(new SerializationConfiguration(new RichSerializationContractResolver(entityReflector)));
+            SUT = new DefaultSerializer(CreateSerializationConfiguration(entityReflector));
         }
     }
 #if !NETFX_CORE
@@ -22,13 +22,20 @@ namespace MyCouch.UnitTests.Serialization
         public RichSerializerWithIlPropertyFactoryTests()
         {
             var entityReflector = new EntityReflector(new IlDynamicPropertyFactory());
-            SUT = new EntityEnabledSerializer(new SerializationConfiguration(new RichSerializationContractResolver(entityReflector)));
+            SUT = new DefaultSerializer(CreateSerializationConfiguration(entityReflector));
         }
     }
 #endif
 
-    public abstract class RichSerializerTests : SerializerTests<EntityEnabledSerializer>
+    public abstract class RichSerializerTests : SerializerTests<DefaultSerializer>
     {
+        protected SerializationConfiguration CreateSerializationConfiguration(EntityReflector entityReflector)
+        {
+            return new SerializationConfiguration(new RichSerializationContractResolver(entityReflector))
+            {
+                WriterFactory = (t, w) => new SerializationJsonWriter(t, w)
+            };
+        }
         [Fact]
         public void When_deserializing_to_entity_with_Id_It_should_map_from__id()
         {

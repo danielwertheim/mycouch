@@ -68,7 +68,6 @@
     <Compile Include="Serialization\Conventions\SerializationConventions.cs" />
     <Compile Include="Serialization\Conventions\DocTypeSerializationConvention.cs" />
     <Compile Include="Serialization\Conventions\ISerializationConvention.cs" />
-    <Compile Include="Serialization\EntityEnabledSerializer.cs" />
     <Compile Include="Serialization\RichSerializationContractResolver.cs" />
     <Compile Include="Serialization\SerializationJsonWriter.cs" />
   </ItemGroup>

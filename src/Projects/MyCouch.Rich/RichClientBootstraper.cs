@@ -19,7 +19,7 @@ namespace MyCouch.Rich
             ConfigureEntitiesResolver();
             ConfigureEntityReflectorResolver();
             ConfigureContractResolver();
-            //ConfigureSerializer();
+            ConfigureSerializationConfigurationResolver();
         }
 
         private void ConfigureEntityReflectorResolver()
@@ -38,18 +38,21 @@ namespace MyCouch.Rich
             ContractResolver = () => contractResolver.Value;
         }
 
-        //private void ConfigureSerializer()
-        //{
-        //    var serializer = new Lazy<ISerializer>(() => new EntityEnabledSerializer(SerializationConfigurationResolver()));
-        //    SerializerResolver = () => serializer.Value;
-        //}
+        private void ConfigureSerializationConfigurationResolver()
+        {
+            var serializationConfiguration = new Lazy<SerializationConfiguration>(() => new SerializationConfiguration(ContractResolver())
+            {
+                WriterFactory = (t, w) => new SerializationJsonWriter(t, w)
+            });
+            SerializationConfigurationResolver = () => serializationConfiguration.Value;
+        }
 
         private void ConfigureEntitiesResolver()
         {
             EntitiesResolver = cn => new Entities(
                 cn,
                 new EntityResponseFactory(ResponseMaterializerResolver(), SerializerResolver()),
-                new EntityEnabledSerializer(SerializationConfigurationResolver()), 
+                SerializerResolver(),
                 EntityReflectorResolver());
         }
     }

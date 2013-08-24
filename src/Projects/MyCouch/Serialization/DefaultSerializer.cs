@@ -23,7 +23,7 @@ namespace MyCouch.Serialization
             var content = new StringBuilder();
             using (var stringWriter = new StringWriter(content))
             {
-                using (var jsonWriter = Configuration.ApplyToWriter(new JsonTextWriter(stringWriter)))
+                using (var jsonWriter = Configuration.WriterFactory(typeof(T), stringWriter))
                 {
                     InternalSerializer.Serialize(jsonWriter, item);
                 }
@@ -38,7 +38,7 @@ namespace MyCouch.Serialization
 
             using (var reader = new StringReader(data))
             {
-                using (var jsonReader = Configuration.ApplyToReader(new JsonTextReader(reader)))
+                using (var jsonReader = Configuration.ReaderFactory(typeof(T), reader))
                 {
                     return InternalSerializer.Deserialize<T>(jsonReader);
                 }
@@ -52,7 +52,7 @@ namespace MyCouch.Serialization
 
             using (var reader = new StreamReader(data, MyCouchRuntime.DefaultEncoding))
             {
-                using (var jsonReader = Configuration.ApplyToReader(new JsonTextReader(reader)))
+                using (var jsonReader = Configuration.ReaderFactory(typeof(T), reader))
                 {
                     return InternalSerializer.Deserialize<T>(jsonReader);
                 }
