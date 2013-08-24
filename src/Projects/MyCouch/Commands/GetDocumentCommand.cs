@@ -6,7 +6,7 @@ namespace MyCouch.Commands
 #if !NETFX_CORE
     [Serializable]
 #endif
-    public class GetDocumentCommand : IMyCouchCommand
+    public class GetDocumentCommand
     {
         public string Id { get; private set; }
         public string Rev { get; private set; }

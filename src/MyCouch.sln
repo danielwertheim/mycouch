@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCouch.UnitTests", "Tests\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCouch.IntegrationTests", "Tests\MyCouch.IntegrationTests\MyCouch.IntegrationTests.csproj", "{5E950673-CB60-4C03-AD8C-F6AE3DD234CE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{09338640-5185-4285-9E0C-8C70EC089E76}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,5 +61,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{790FB1FC-DDCC-439C-B4E9-F768B5528C8F} = {09338640-5185-4285-9E0C-8C70EC089E76}
+		{5E950673-CB60-4C03-AD8C-F6AE3DD234CE} = {09338640-5185-4285-9E0C-8C70EC089E76}
+		{BB2C365E-91AC-42B0-BDFA-3A9F626482B8} = {09338640-5185-4285-9E0C-8C70EC089E76}
 	EndGlobalSection
 EndGlobal

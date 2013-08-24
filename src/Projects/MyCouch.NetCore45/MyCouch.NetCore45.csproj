@@ -116,6 +116,9 @@
     <Compile Include="..\MyCouch\Client.cs">
       <Link>Client.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch\ClientBootsraper.cs">
+      <Link>ClientBootsraper.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch\ClientExecuteExtensions.cs">
       <Link>ClientExecuteExtensions.cs</Link>
     </Compile>
@@ -146,9 +149,6 @@
     <Compile Include="..\mycouch\commands\GetEntityCommand.cs">
       <Link>Commands\GetEntityCommand.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\commands\IMyCouchCommand.cs">
-      <Link>Commands\IMyCouchCommand.cs</Link>
-    </Compile>
     <Compile Include="..\mycouch\commands\PostDocumentCommand.cs">
       <Link>Commands\PostDocumentCommand.cs</Link>
     </Compile>
@@ -167,11 +167,11 @@
     <Compile Include="..\mycouch\commands\ReplaceDocumentCommand.cs">
       <Link>Commands\ReplaceDocumentCommand.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Database.cs">
-      <Link>Database.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch\DatabaseResponse.cs">
       <Link>DatabaseResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Databases.cs">
+      <Link>Databases.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch\DocumentHeaderResponse.cs">
       <Link>DocumentHeaderResponse.cs</Link>
@@ -188,8 +188,44 @@
     <Compile Include="..\MyCouch\EntityResponse.cs">
       <Link>EntityResponse.cs</Link>
     </Compile>
+    <Compile Include="..\mycouch\entityschemes\EntityIdMember.cs">
+      <Link>EntitySchemes\EntityIdMember.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\entityschemes\EntityMember.cs">
+      <Link>EntitySchemes\EntityMember.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\entityschemes\EntityReflector.cs">
+      <Link>EntitySchemes\EntityReflector.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\entityschemes\EntityRevMember.cs">
+      <Link>EntitySchemes\EntityRevMember.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\entityschemes\IEntityMember.cs">
+      <Link>EntitySchemes\IEntityMember.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\entityschemes\reflections\DynamicProperty.cs">
+      <Link>EntitySchemes\Reflections\DynamicProperty.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\entityschemes\reflections\DynamicStringGetter.cs">
+      <Link>EntitySchemes\Reflections\DynamicStringGetter.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\entityschemes\reflections\DynamicStringSetter.cs">
+      <Link>EntitySchemes\Reflections\DynamicStringSetter.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\entityschemes\reflections\IDynamicPropertyFactory.cs">
+      <Link>EntitySchemes\Reflections\IDynamicPropertyFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\entityschemes\reflections\IlDynamicPropertyFactory.cs">
+      <Link>EntitySchemes\Reflections\IlDynamicPropertyFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\entityschemes\reflections\LambdaDynamicPropertyFactory.cs">
+      <Link>EntitySchemes\Reflections\LambdaDynamicPropertyFactory.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch\ExceptionStrings.cs">
       <Link>ExceptionStrings.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\extensions\HttpExtensions.cs">
+      <Link>Extensions\HttpExtensions.cs</Link>
     </Compile>
     <Compile Include="..\mycouch\extensions\StringExtensions.cs">
       <Link>Extensions\StringExtensions.cs</Link>
@@ -203,8 +239,8 @@
     <Compile Include="..\MyCouch\IClient.cs">
       <Link>IClient.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\IDatabase.cs">
-      <Link>IDatabase.cs</Link>
+    <Compile Include="..\MyCouch\IDatabases.cs">
+      <Link>IDatabases.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch\IDocuments.cs">
       <Link>IDocuments.cs</Link>
@@ -214,9 +250,6 @@
     </Compile>
     <Compile Include="..\MyCouch\IResponse.cs">
       <Link>IResponse.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch\IResponseFactory.cs">
-      <Link>IResponseFactory.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch\ISystemViewQuery.cs">
       <Link>ISystemViewQuery.cs</Link>
@@ -251,9 +284,6 @@
     <Compile Include="..\mycouch\net\HttpContentTypes.cs">
       <Link>Net\HttpContentTypes.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\net\HttpExtensions.cs">
-      <Link>Net\HttpExtensions.cs</Link>
-    </Compile>
     <Compile Include="..\mycouch\net\HttpRequest.cs">
       <Link>Net\HttpRequest.cs</Link>
     </Compile>
@@ -278,68 +308,74 @@
     <Compile Include="..\MyCouch\Response.cs">
       <Link>Response.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\ResponseFactory.cs">
-      <Link>ResponseFactory.cs</Link>
+    <Compile Include="..\mycouch\responsefactories\AttachmentResponseFactory.cs">
+      <Link>ResponseFactories\AttachmentResponseFactory.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\schemes\EntityIdMember.cs">
-      <Link>Schemes\EntityIdMember.cs</Link>
+    <Compile Include="..\mycouch\responsefactories\BulkResponseFactory.cs">
+      <Link>ResponseFactories\BulkResponseFactory.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\schemes\EntityMember.cs">
-      <Link>Schemes\EntityMember.cs</Link>
+    <Compile Include="..\mycouch\responsefactories\DatabaseResponseFactory.cs">
+      <Link>ResponseFactories\DatabaseResponseFactory.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\schemes\EntityReflector.cs">
-      <Link>Schemes\EntityReflector.cs</Link>
+    <Compile Include="..\mycouch\responsefactories\DocumentHeaderResponseFactory.cs">
+      <Link>ResponseFactories\DocumentHeaderResponseFactory.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\schemes\EntityRevMember.cs">
-      <Link>Schemes\EntityRevMember.cs</Link>
+    <Compile Include="..\mycouch\responsefactories\DocumentHeaderResponseFactoryBase.cs">
+      <Link>ResponseFactories\DocumentHeaderResponseFactoryBase.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\schemes\IEntityMember.cs">
-      <Link>Schemes\IEntityMember.cs</Link>
+    <Compile Include="..\mycouch\responsefactories\DocumentResponseFactory.cs">
+      <Link>ResponseFactories\DocumentResponseFactory.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\schemes\IEntityReflector.cs">
-      <Link>Schemes\IEntityReflector.cs</Link>
+    <Compile Include="..\mycouch\responsefactories\EntityResponseFactory.cs">
+      <Link>ResponseFactories\EntityResponseFactory.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\schemes\reflections\DynamicProperty.cs">
-      <Link>Schemes\Reflections\DynamicProperty.cs</Link>
+    <Compile Include="..\mycouch\responsefactories\JsonViewQueryResponseFactory.cs">
+      <Link>ResponseFactories\JsonViewQueryResponseFactory.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\schemes\reflections\DynamicStringGetter.cs">
-      <Link>Schemes\Reflections\DynamicStringGetter.cs</Link>
+    <Compile Include="..\mycouch\responsefactories\ResponseFactoryBase.cs">
+      <Link>ResponseFactories\ResponseFactoryBase.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\schemes\reflections\DynamicStringSetter.cs">
-      <Link>Schemes\Reflections\DynamicStringSetter.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch\schemes\reflections\IDynamicPropertyFactory.cs">
-      <Link>Schemes\Reflections\IDynamicPropertyFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch\schemes\reflections\IlDynamicPropertyFactory.cs">
-      <Link>Schemes\Reflections\IlDynamicPropertyFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch\schemes\reflections\LambdaDynamicPropertyFactory.cs">
-      <Link>Schemes\Reflections\LambdaDynamicPropertyFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch\Serialization\Conventions\DocSerializationConventions.cs">
-      <Link>Serialization\Conventions\DocSerializationConventions.cs</Link>
+    <Compile Include="..\mycouch\responsefactories\ViewQueryResponseFactory.cs">
+      <Link>ResponseFactories\ViewQueryResponseFactory.cs</Link>
     </Compile>
     <Compile Include="..\mycouch\serialization\conventions\DocTypeSerializationConvention.cs">
       <Link>Serialization\Conventions\DocTypeSerializationConvention.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\serialization\conventions\IDocTypeSerializationConvention.cs">
-      <Link>Serialization\Conventions\IDocTypeSerializationConvention.cs</Link>
+    <Compile Include="..\mycouch\serialization\conventions\ISerializationConvention.cs">
+      <Link>Serialization\Conventions\ISerializationConvention.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Serialization\DeserializationJsonWriter.cs">
-      <Link>Serialization\DeserializationJsonWriter.cs</Link>
+    <Compile Include="..\mycouch\serialization\conventions\SerializationConventions.cs">
+      <Link>Serialization\Conventions\SerializationConventions.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\serialization\DefaultResponseMaterializer.cs">
+      <Link>Serialization\DefaultResponseMaterializer.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\serialization\DefaultSerializer.cs">
+      <Link>Serialization\DefaultSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\serialization\EntityJsonWriter.cs">
+      <Link>Serialization\EntityJsonWriter.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\serialization\EntitySerializationContractResolver.cs">
+      <Link>Serialization\EntitySerializationContractResolver.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\serialization\IResponseMaterializer.cs">
+      <Link>Serialization\IResponseMaterializer.cs</Link>
     </Compile>
     <Compile Include="..\mycouch\serialization\ISerializer.cs">
       <Link>Serialization\ISerializer.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\serialization\MyCouchSerializer.cs">
-      <Link>Serialization\MyCouchSerializer.cs</Link>
+    <Compile Include="..\mycouch\serialization\JsonReaderFactory.cs">
+      <Link>Serialization\JsonReaderFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\serialization\JsonWriterFactory.cs">
+      <Link>Serialization\JsonWriterFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\serialization\SerializationConfiguration.cs">
+      <Link>Serialization\SerializationConfiguration.cs</Link>
     </Compile>
     <Compile Include="..\mycouch\serialization\SerializationContractResolver.cs">
       <Link>Serialization\SerializationContractResolver.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch\Serialization\SerializationJsonWriter.cs">
-      <Link>Serialization\SerializationJsonWriter.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch\SystemViewQuery.cs">
       <Link>SystemViewQuery.cs</Link>

@@ -126,8 +126,17 @@
     <Compile Include="..\mycouch.unittests\schemes\EntityRevMemberTests.cs">
       <Link>Schemes\EntityRevMemberTests.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.unittests\serialization\MyCouchSerializerTests.cs">
-      <Link>Serialization\MyCouchSerializerTests.cs</Link>
+    <Compile Include="..\MyCouch.UnitTests\Serialization\DefaultSerializationTests.cs">
+      <Link>Serialization\DefaultSerializationTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.UnitTests\Serialization\EntitySerializationTests.cs">
+      <Link>Serialization\EntitySerializationTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.UnitTests\Serialization\ResponseMaterializerTests.cs">
+      <Link>Serialization\ResponseMaterializerTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.UnitTests\Serialization\SerializerTests.cs">
+      <Link>Serialization\SerializerTests.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.UnitTests\UnitTestsOf.cs">
       <Link>UnitTestsOf.cs</Link>
@@ -158,6 +167,9 @@
   <ItemGroup>
     <Reference Include="FluentAssertions">
       <HintPath>..\..\packages\FluentAssertions.2.0.1\lib\winrt45\FluentAssertions.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\packages\Newtonsoft.Json.5.0.6\lib\netcore45\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

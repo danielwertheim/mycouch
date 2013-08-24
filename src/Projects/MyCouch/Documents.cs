@@ -4,18 +4,28 @@ using EnsureThat;
 using MyCouch.Commands;
 using MyCouch.Extensions;
 using MyCouch.Net;
+using MyCouch.ResponseFactories;
 
 namespace MyCouch
 {
     public class Documents : IDocuments
     {
-        protected readonly IClient Client;
+        protected readonly IConnection Connection;
+        protected readonly DocumentResponseFactory DocumentReponseFactory;
+        protected readonly DocumentHeaderResponseFactory DocumentHeaderReponseFactory;
+        protected readonly BulkResponseFactory BulkReponseFactory;
 
-        public Documents(IClient client)
+        public Documents(IConnection connection, DocumentResponseFactory documentReponseFactory, DocumentHeaderResponseFactory documentHeaderResponseFactory, BulkResponseFactory bulkResponseFactory)
         {
-            Ensure.That(client, "Client").IsNotNull();
+            Ensure.That(connection, "connection").IsNotNull();
+            Ensure.That(documentReponseFactory, "documentReponseFactory").IsNotNull();
+            Ensure.That(documentHeaderResponseFactory, "documentHeaderResponseFactory").IsNotNull();
+            Ensure.That(bulkResponseFactory, "bulkResponseFactory").IsNotNull();
 
-            Client = client;
+            Connection = connection;
+            DocumentReponseFactory = documentReponseFactory;
+            DocumentHeaderReponseFactory = documentHeaderResponseFactory;
+            BulkReponseFactory = bulkResponseFactory;
         }
 
         public virtual async Task<BulkResponse> BulkAsync(BulkCommand cmd)
@@ -150,7 +160,7 @@ namespace MyCouch
 
         protected virtual Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
         {
-            return Client.Connection.SendAsync(request);
+            return Connection.SendAsync(request);
         }
 
         protected virtual HttpRequestMessage CreateRequest(BulkCommand cmd)
@@ -228,30 +238,30 @@ namespace MyCouch
 
         protected virtual string GenerateRequestUrl(BulkCommand cmd)
         {
-            return string.Format("{0}/_bulk_docs", Client.Connection.Address);
+            return string.Format("{0}/_bulk_docs", Connection.Address);
         }
 
         protected virtual string GenerateRequestUrl(string id = null, string rev = null)
         {
             return string.Format("{0}/{1}{2}",
-                Client.Connection.Address,
+                Connection.Address,
                 id ?? string.Empty,
                 rev == null ? string.Empty : string.Concat("?rev=", rev));
         }
 
         protected virtual BulkResponse ProcessBulkResponse(HttpResponseMessage response)
         {
-            return Client.ResponseFactory.CreateBulkResponse(response);
+            return BulkReponseFactory.Create(response);
         }
 
         protected virtual DocumentHeaderResponse ProcessDocumentHeaderResponse(HttpResponseMessage response)
         {
-            return Client.ResponseFactory.CreateDocumentHeaderResponse(response);
+            return DocumentHeaderReponseFactory.Create(response);
         }
 
         protected virtual DocumentResponse ProcessDocumentResponse(HttpResponseMessage response)
         {
-            return Client.ResponseFactory.CreateDocumentResponse(response);
+            return DocumentReponseFactory.Create(response);
         }
     }
 }

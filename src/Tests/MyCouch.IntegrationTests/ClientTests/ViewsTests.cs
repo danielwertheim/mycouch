@@ -10,7 +10,7 @@ using Xunit;
 
 namespace MyCouch.IntegrationTests.ClientTests
 {
-    public class ViewsTests : IntegrationTestsOf<IViews>, IPreserveStatePerFixture, IUseFixture<ViewsTests.ViewsFixture>
+    public class ViewsTests : ClientTestsOf<IViews>, IPreserveStatePerFixture, IUseFixture<ViewsTests.ViewsFixture>
     {
         protected Artist[] Artists { get; set; }
 
@@ -18,12 +18,12 @@ namespace MyCouch.IntegrationTests.ClientTests
         {
             SUT = Client.Views;
         }
-        
+
         public void SetFixture(ViewsFixture data)
         {
             Artists = data.Artists;
         }
-        
+
         [Fact]
         public void When_IncludeDocs_and_no_value_is_returned_for_string_response_Then_the_included_docs_are_extracted()
         {
@@ -35,7 +35,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             for (var i = 0; i < response.RowCount; i++)
             {
                 response.Rows[i].Value.Should().BeNull();
-                CustomAsserts.AreValueEqual(Artists[i], Client.Serializer.Deserialize<Artist>(response.Rows[i].Doc));
+                CustomAsserts.AreValueEqual(Artists[i], Client.Entities.Serializer.Deserialize<Artist>(response.Rows[i].Doc));
             }
         }
 
@@ -165,7 +165,7 @@ namespace MyCouch.IntegrationTests.ClientTests
 
             var response = SUT.RunQueryAsync<Album[]>(query).Result;
 
-            response.Should().BeSuccessfulGet(new [] { artist.Albums });
+            response.Should().BeSuccessfulGet(new[] { artist.Albums });
         }
 
         [Fact]
@@ -305,7 +305,7 @@ namespace MyCouch.IntegrationTests.ClientTests
 
                     var touchView1 = new ViewQuery(TestData.Views.ArtistsAlbumsViewId).Configure(q => q.Stale(Stale.UpdateAfter));
                     var touchView2 = new ViewQuery(TestData.Views.ArtistsNameNoValueViewId).Configure(q => q.Stale(Stale.UpdateAfter));
-                    
+
                     Task.WaitAll(
                         client.Views.RunQueryAsync(touchView1),
                         client.Views.RunQueryAsync(touchView2));

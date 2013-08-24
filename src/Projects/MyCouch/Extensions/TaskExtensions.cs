@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace MyCouch.Extensions
 {
-    internal static class TaskExtensions
+    public static class TaskExtensions
     {
-        internal static ConfiguredTaskAwaitable<T> ForAwait<T>(this Task<T> t)
+        public static ConfiguredTaskAwaitable<T> ForAwait<T>(this Task<T> t)
         {
             return t.ConfigureAwait(false);
         }

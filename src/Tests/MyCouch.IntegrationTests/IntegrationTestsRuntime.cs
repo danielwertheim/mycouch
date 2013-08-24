@@ -14,6 +14,7 @@ namespace MyCouch.IntegrationTests
             }
 
         }
+
         internal static IClient CreateClient()
         {
             return new Client("http://mycouchtester:" + Uri.EscapeDataString("p@ssword") + "@localhost:5984/" + TestConstants.TestDbName + "/");

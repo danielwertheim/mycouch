@@ -36,6 +36,9 @@
     <Reference Include="FluentAssertions">
       <HintPath>..\..\packages\FluentAssertions.2.0.1\lib\net45\FluentAssertions.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,9 +55,12 @@
     <Compile Include="BulkCommandTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Querying\ViewQueryOptionsTests.cs" />
+    <Compile Include="Serialization\ResponseMaterializerTests.cs" />
     <Compile Include="Schemes\EntityIdMemberTests.cs" />
     <Compile Include="Schemes\EntityRevMemberTests.cs" />
-    <Compile Include="Serialization\MyCouchSerializerTests.cs" />
+    <Compile Include="Serialization\DefaultSerializationTests.cs" />
+    <Compile Include="Serialization\EntitySerializationTests.cs" />
+    <Compile Include="Serialization\SerializerTests.cs" />
     <Compile Include="UnitTestsOf.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +76,7 @@
       <Name>MyCouch.Testing</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

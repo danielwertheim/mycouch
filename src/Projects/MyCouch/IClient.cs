@@ -1,6 +1,5 @@
 ﻿using System;
 using MyCouch.Net;
-using MyCouch.Schemes;
 using MyCouch.Serialization;
 
 namespace MyCouch
@@ -13,27 +12,22 @@ namespace MyCouch
         IConnection Connection { get; }
         
         /// <summary>
-        /// The Serializer associated with this client instance. Use this is you want
+        /// The Serializer associated with this client instance. Use this if you want
         /// to serialize or deserialize using the same behavior that the provider
         /// has.
         /// </summary>
-        ISerializer Serializer { get; set; }
+        /// <remarks>If you want a serializer that supports entity conventions, check <see cref="IEntities.Serializer"/></remarks>
+        ISerializer Serializer { get; }
 
         /// <summary>
-        /// Factory used to build <see cref="IResponse"/>.
+        /// Attachment oriented API operations, for accessing and managing attachments to documents.
         /// </summary>
-        IResponseFactory ResponseFactory { get; set; }
-
-        /// <summary>
-        /// Used to get and set specific members of entities when you are using the
-        /// typed API.
-        /// </summary>
-        IEntityReflector EntityReflector { get; set; }
+        IAttachments Attachments { get; }
 
         /// <summary>
         /// Database oriented API operations.
         /// </summary>
-        IDatabase Database { get; }
+        IDatabases Databases { get; }
 
         /// <summary>
         /// Document oriented API operations, for accessing and managing RAW documents.
@@ -45,11 +39,6 @@ namespace MyCouch
         /// </summary>
         IEntities Entities { get; }
 
-        /// <summary>
-        /// Attachment oriented API operations, for accessing and managing attachments to documents.
-        /// </summary>
-        IAttachments Attachments { get; }
-        
         /// <summary>
         /// View oriented API operations, for accessing and managing views.
         /// </summary>

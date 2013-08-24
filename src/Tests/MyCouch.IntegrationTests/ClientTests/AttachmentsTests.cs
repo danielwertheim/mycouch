@@ -5,7 +5,7 @@ using Xunit;
 
 namespace MyCouch.IntegrationTests.ClientTests
 {
-    public class AttachmentsTests : IntegrationTestsOf<IAttachments>
+    public class AttachmentsTests : ClientTestsOf<IAttachments>
     {
         public AttachmentsTests()
         {

@@ -5,18 +5,25 @@ using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Extensions;
 using MyCouch.Net;
+using MyCouch.ResponseFactories;
 
 namespace MyCouch
 {
     public class Views : IViews
     {
-        protected readonly IClient Client;
+        protected readonly IConnection Connection;
+        protected readonly JsonViewQueryResponseFactory JsonViewQueryResponseFactory;
+        protected readonly ViewQueryResponseFactory ViewQueryResponseFactory;
 
-        public Views(IClient client)
+        public Views(IConnection connection, JsonViewQueryResponseFactory jsonViewQueryResponseFactory, ViewQueryResponseFactory viewQueryResponseFactory)
         {
-            Ensure.That(client, "Client").IsNotNull();
+            Ensure.That(connection, "connection").IsNotNull();
+            Ensure.That(jsonViewQueryResponseFactory, "jsonViewQueryResponseFactory").IsNotNull();
+            Ensure.That(viewQueryResponseFactory, "viewQueryResponseFactory").IsNotNull();
 
-            Client = client;
+            Connection = connection;
+            JsonViewQueryResponseFactory = jsonViewQueryResponseFactory;
+            ViewQueryResponseFactory = viewQueryResponseFactory;
         }
 
         public virtual async Task<JsonViewQueryResponse> RunQueryAsync(IViewQuery query)
@@ -85,13 +92,13 @@ namespace MyCouch
             if (query is ISystemViewQuery)
             {
                 return string.Format("{0}/{1}?{2}",
-                    Client.Connection.Address,
+                    Connection.Address,
                     query.View.Name,
                     GenerateQueryStringParams(query.Options));
             }
 
             return string.Format("{0}/_design/{1}/_view/{2}?{3}",
-                Client.Connection.Address,
+                Connection.Address,
                 query.View.DesignDocument,
                 query.View.Name,
                 GenerateQueryStringParams(query.Options));
@@ -104,17 +111,17 @@ namespace MyCouch
 
         protected virtual Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
         {
-            return Client.Connection.SendAsync(request);
+            return Connection.SendAsync(request);
         }
 
         protected virtual JsonViewQueryResponse ProcessHttpResponse(HttpResponseMessage response)
         {
-            return Client.ResponseFactory.CreateJsonViewQueryResponse(response);
+            return JsonViewQueryResponseFactory.Create(response);
         }
 
         protected virtual ViewQueryResponse<T> ProcessHttpResponse<T>(HttpResponseMessage response) where T : class
         {
-            return Client.ResponseFactory.CreateViewQueryResponse<T>(response);
+            return ViewQueryResponseFactory.Create<T>(response);
         }
     }
 }

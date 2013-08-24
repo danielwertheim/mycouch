@@ -6,7 +6,7 @@ using Xunit;
 
 namespace MyCouch.IntegrationTests.ClientTests
 {
-    public class DocumentsTests : IntegrationTestsOf<IDocuments>
+    public class DocumentsTests : ClientTestsOf<IDocuments>
     {
         public DocumentsTests()
         {
