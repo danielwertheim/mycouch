@@ -7,8 +7,6 @@ namespace MyCouch
 {
     public class Client : IClient
     {
-        protected readonly IResponseMaterializer ResponseMaterializer;
-
         public IConnection Connection { get; private set; }
         public ISerializer Serializer { get; private set; }
         public IDatabases Databases { get; private set; }
@@ -28,7 +26,6 @@ namespace MyCouch
 
             bootstraper = bootstraper ?? new LightClientBootsraper();
 
-            ResponseMaterializer = bootstraper.ResponseMaterializerResolver();
             Serializer = bootstraper.SerializerResolver();
             Attachments = bootstraper.AttachmentsResolver(Connection);
             Databases = bootstraper.DatabasesResolver(Connection);
