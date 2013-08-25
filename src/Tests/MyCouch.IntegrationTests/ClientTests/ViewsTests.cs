@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
+using MyCouch.Commands;
 using MyCouch.Querying;
 using MyCouch.Testing;
 using MyCouch.Testing.Model;
@@ -293,22 +294,19 @@ namespace MyCouch.IntegrationTests.ClientTests
             {
                 using (var client = IntegrationTestsRuntime.CreateClient())
                 {
+                    //We need the order, and bulk seems to mess up order.
+
                     Artists = TestData.Artists.CreateArtists(10);
+                    foreach (var artist in Artists)
+                        client.Entities.PostAsync(artist).Wait();
 
-                    var tasks = new List<Task>();
-                    tasks.AddRange(Artists.Select(item => client.Entities.PostAsync(item)));
-                    Task.WaitAll(tasks.ToArray());
-
-                    tasks.Clear();
-                    tasks.Add(client.Documents.PostAsync(TestData.Views.Artists));
-                    Task.WaitAll(tasks.ToArray());
+                    client.Documents.PostAsync(TestData.Views.Artists).Wait();
 
                     var touchView1 = new ViewQuery(TestData.Views.ArtistsAlbumsViewId).Configure(q => q.Stale(Stale.UpdateAfter));
                     var touchView2 = new ViewQuery(TestData.Views.ArtistsNameNoValueViewId).Configure(q => q.Stale(Stale.UpdateAfter));
 
-                    Task.WaitAll(
-                        client.Views.RunQueryAsync(touchView1),
-                        client.Views.RunQueryAsync(touchView2));
+                    client.Views.RunQueryAsync(touchView1).Wait();
+                    client.Views.RunQueryAsync(touchView2).Wait();
                 }
             }
 
