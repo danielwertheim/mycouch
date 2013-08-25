@@ -15,7 +15,7 @@
     <licenseUrl>https://github.com/danielwertheim/MyCouch#license</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <releaseNotes>Can be found on project site: https://github.com/danielwertheim/mycouch/wiki/release-notes</releaseNotes>
-    <tags>couchdb nosql json document-db documents poco async asynchronous</tags>
+    <tags>couchdb cloudant nosql json document-db documents poco async asynchronous</tags>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System.Net.Http" targetFramework="net45" />
     </frameworkAssemblies>
