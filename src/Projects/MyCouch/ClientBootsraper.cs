@@ -11,7 +11,7 @@ namespace MyCouch
     {
         public Func<SerializationConfiguration> SerializationConfigurationFn { get; set; }
         public Func<SerializationConfiguration> EntitySerializationConfigurationFn { get; set; }
-        public Func<EntityReflector> EntityReflectorFn { get; set; }
+        public Func<IEntityReflector> EntityReflectorFn { get; set; }
         public Func<IResponseMaterializer> ResponseMaterializerFn { get; set; }
         public Func<IResponseMaterializer> EntityResponseMaterializerFn { get; set; }
 
@@ -110,9 +110,9 @@ namespace MyCouch
         private void ConfigureEntityReflectorFn()
         {
 #if !NETFX_CORE
-            var entityReflector = new Lazy<EntityReflector>(() => new EntityReflector(new IlDynamicPropertyFactory()));
+            var entityReflector = new Lazy<IEntityReflector>(() => new EntityReflector(new IlDynamicPropertyFactory()));
 #else
-            var entityReflector = new Lazy<EntityReflector>(() => new EntityReflector(new LambdaDynamicPropertyFactory()));
+            var entityReflector = new Lazy<IEntityReflector>(() => new EntityReflector(new LambdaDynamicPropertyFactory()));
 #endif
             EntityReflectorFn = () => entityReflector.Value;
         }

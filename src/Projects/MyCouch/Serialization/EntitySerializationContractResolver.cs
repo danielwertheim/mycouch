@@ -17,9 +17,9 @@ namespace MyCouch.Serialization
     /// </summary>
     public class EntitySerializationContractResolver : SerializationContractResolver
     {
-        protected readonly EntityReflector EntityReflector;
+        protected readonly IEntityReflector EntityReflector;
 
-        public EntitySerializationContractResolver(EntityReflector entityReflector)
+        public EntitySerializationContractResolver(IEntityReflector entityReflector)
         {
             Ensure.That(entityReflector, "entityReflector").IsNotNull();
 

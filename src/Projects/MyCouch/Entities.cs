@@ -14,11 +14,12 @@ namespace MyCouch
     {
         protected readonly IConnection Connection;
         protected readonly EntityResponseFactory EntityResponseFactory;
-        protected readonly EntityReflector EntityReflector;
+        protected readonly IEntityReflector EntityReflector;
 
         public ISerializer Serializer { get; private set; }
+        public IEntityReflector Reflector { get { return EntityReflector; } }
 
-        public Entities(IConnection connection, EntityResponseFactory entityResponseFactory, ISerializer serializer, EntityReflector entityReflector)
+        public Entities(IConnection connection, EntityResponseFactory entityResponseFactory, ISerializer serializer, IEntityReflector entityReflector)
         {
             Ensure.That(connection, "connection").IsNotNull();
             Ensure.That(entityResponseFactory, "entityResponseFactory").IsNotNull();
@@ -121,8 +122,8 @@ namespace MyCouch
 
         protected virtual HttpRequestMessage CreateRequest<T>(PutEntityCommand<T> cmd) where T : class
         {
-            var id = EntityReflector.IdMember.GetValueFrom(cmd.Entity);
-            var rev = EntityReflector.RevMember.GetValueFrom(cmd.Entity);
+            var id = Reflector.IdMember.GetValueFrom(cmd.Entity);
+            var rev = Reflector.RevMember.GetValueFrom(cmd.Entity);
             var req = new HttpRequest(HttpMethod.Put, GenerateRequestUrl(id, rev));
 
             req.SetIfMatch(rev);
@@ -133,8 +134,8 @@ namespace MyCouch
 
         protected virtual HttpRequestMessage CreateRequest<T>(DeleteEntityCommand<T> cmd) where T : class
         {
-            var id = EntityReflector.IdMember.GetValueFrom(cmd.Entity);
-            var rev = EntityReflector.RevMember.GetValueFrom(cmd.Entity);
+            var id = Reflector.IdMember.GetValueFrom(cmd.Entity);
+            var rev = Reflector.RevMember.GetValueFrom(cmd.Entity);
             var req = new HttpRequest(HttpMethod.Delete, GenerateRequestUrl(id, rev));
 
             req.SetIfMatch(rev);
@@ -162,8 +163,8 @@ namespace MyCouch
 
             if (entityResponse.IsSuccess)
             {
-                EntityReflector.IdMember.SetValueTo(entityResponse.Entity, entityResponse.Id);
-                EntityReflector.RevMember.SetValueTo(entityResponse.Entity, entityResponse.Rev);
+                Reflector.IdMember.SetValueTo(entityResponse.Entity, entityResponse.Id);
+                Reflector.RevMember.SetValueTo(entityResponse.Entity, entityResponse.Rev);
             }
 
             return entityResponse;
@@ -175,7 +176,7 @@ namespace MyCouch
             entityResponse.Entity = cmd.Entity;
 
             if (entityResponse.IsSuccess)
-                EntityReflector.RevMember.SetValueTo(entityResponse.Entity, entityResponse.Rev);
+                Reflector.RevMember.SetValueTo(entityResponse.Entity, entityResponse.Rev);
 
             return entityResponse;
         }
@@ -186,7 +187,7 @@ namespace MyCouch
             entityResponse.Entity = cmd.Entity;
 
             if (entityResponse.IsSuccess)
-                EntityReflector.RevMember.SetValueTo(entityResponse.Entity, entityResponse.Rev);
+                Reflector.RevMember.SetValueTo(entityResponse.Entity, entityResponse.Rev);
 
             return entityResponse;
         }

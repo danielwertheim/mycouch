@@ -2,10 +2,10 @@ using MyCouch.EntitySchemes.Reflections;
 
 namespace MyCouch.EntitySchemes
 {
-    public class EntityReflector
+    public class EntityReflector : IEntityReflector
     {
-        public IEntityMember IdMember { get; set; }
-        public IEntityMember RevMember { get; set; }
+        public IEntityMember IdMember { get; protected set; }
+        public IEntityMember RevMember { get; protected set; }
 
         public EntityReflector(IDynamicPropertyFactory dynamicPropertyFactory)
         {

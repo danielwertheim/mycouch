@@ -86,6 +86,7 @@
     <Compile Include="IAttachments.cs" />
     <Compile Include="IDatabases.cs" />
     <Compile Include="IEntities.cs" />
+    <Compile Include="EntitySchemes\IEntityReflector.cs" />
     <Compile Include="IViewIdentity.cs" />
     <Compile Include="ClientBootsraper.cs" />
     <Compile Include="MyCouchRuntime.cs" />

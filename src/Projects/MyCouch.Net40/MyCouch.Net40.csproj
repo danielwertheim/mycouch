@@ -178,6 +178,9 @@
     <Compile Include="..\MyCouch\EntitySchemes\IEntityMember.cs">
       <Link>EntitySchemes\IEntityMember.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch\EntitySchemes\IEntityReflector.cs">
+      <Link>EntitySchemes\IEntityReflector.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch\EntitySchemes\Reflections\DynamicProperty.cs">
       <Link>EntitySchemes\Reflections\DynamicProperty.cs</Link>
     </Compile>

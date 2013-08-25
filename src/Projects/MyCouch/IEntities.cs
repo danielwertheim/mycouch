@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using MyCouch.Commands;
+using MyCouch.EntitySchemes;
 using MyCouch.Serialization;
 
 namespace MyCouch
@@ -15,6 +16,12 @@ namespace MyCouch
         /// </summary>
         /// <remarks>If you want the native, non convention based serializer, check <see cref="IClient.Serializer"/></remarks>
         ISerializer Serializer { get; }
+
+        /// <summary>
+        /// Used to get and set specific members of entities when you are using the
+        /// typed API.
+        /// </summary>
+        IEntityReflector Reflector { get; }
 
         /// <summary>
         /// Gets typed entity-response (<see cref="EntityResponse{T}"/> of <typeparamref name="T"/>)
