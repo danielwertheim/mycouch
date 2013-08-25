@@ -292,13 +292,20 @@ namespace MyCouch.IntegrationTests.ClientTests
 
             public ViewsFixture()
             {
+                Artists = TestData.Artists.CreateArtists(10);
+
                 using (var client = IntegrationTestsRuntime.CreateClient())
                 {
-                    //We need the order, and bulk seems to mess up order.
+                    var bulk = new BulkCommand();
+                    bulk.Include(Artists.Select(i => client.Entities.Serializer.Serialize(i)).ToArray());
+                    
+                    var bulkResponse = client.Documents.BulkAsync(bulk);
 
-                    Artists = TestData.Artists.CreateArtists(10);
-                    foreach (var artist in Artists)
-                        client.Entities.PostAsync(artist).Wait();
+                    foreach (var row in bulkResponse.Result.Rows)
+                    {
+                        var artist = Artists.Single(i => i.ArtistId == row.Id);
+                        client.Entities.Reflector.RevMember.SetValueTo(artist, row.Rev);
+                    }
 
                     client.Documents.PostAsync(TestData.Views.Artists).Wait();
 
