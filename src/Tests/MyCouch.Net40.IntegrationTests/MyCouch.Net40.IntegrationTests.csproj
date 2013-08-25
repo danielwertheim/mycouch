@@ -103,14 +103,17 @@
     <Compile Include="..\mycouch.integrationtests\clienttests\ViewsTests.cs">
       <Link>ClientTests\ViewsTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests\IntegrationTests.cs">
-      <Link>IntegrationTests.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.IntegrationTests\IntegrationTestsRuntime.cs">
       <Link>IntegrationTestsRuntime.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.IntegrationTests\IPreserveStatePerFixture.cs">
       <Link>IPreserveStatePerFixture.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.IntegrationTests\TestFixtures\ClientFixture.cs">
+      <Link>TestFixtures\ClientFixture.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.IntegrationTests\TestFixtures\ViewsFixture.cs">
+      <Link>TestFixtures\ViewsFixture.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -127,6 +130,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets')" />
   <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">

@@ -70,14 +70,17 @@
     <Compile Include="..\MyCouch.IntegrationTests\ClientTests\ViewsTests.cs">
       <Link>ClientTests\ViewsTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests\IntegrationTests.cs">
-      <Link>IntegrationTests.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.IntegrationTests\IntegrationTestsRuntime.cs">
       <Link>IntegrationTestsRuntime.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.IntegrationTests\IPreserveStatePerFixture.cs">
       <Link>IPreserveStatePerFixture.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.IntegrationTests\TestFixtures\ClientFixture.cs">
+      <Link>TestFixtures\ClientFixture.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.IntegrationTests\TestFixtures\ViewsFixture.cs">
+      <Link>TestFixtures\ViewsFixture.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -94,6 +97,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

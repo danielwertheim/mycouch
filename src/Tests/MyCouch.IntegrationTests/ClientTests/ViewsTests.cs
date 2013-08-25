@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using FluentAssertions;
-using MyCouch.Commands;
-using MyCouch.Querying;
+using MyCouch.IntegrationTests.TestFixtures;
 using MyCouch.Testing;
 using MyCouch.Testing.Model;
 using Xunit;
 
 namespace MyCouch.IntegrationTests.ClientTests
 {
-    public class ViewsTests : ClientTestsOf<IViews>, IPreserveStatePerFixture, IUseFixture<ViewsTests.ViewsFixture>
+    public class ViewsTests : ClientTestsOf<IViews>, IPreserveStatePerFixture, IUseFixture<ViewsFixture>
     {
         protected Artist[] Artists { get; set; }
 
-        public ViewsTests()
+        protected override void OnTestInit()
         {
             SUT = Client.Views;
         }
@@ -284,46 +280,6 @@ namespace MyCouch.IntegrationTests.ClientTests
             var response = SUT.RunQueryAsync<Album[]>(query).Result;
 
             response.Should().BeSuccessfulGet(artists.Take(artists.Length - 1).Select(a => a.Albums).ToArray());
-        }
-
-        public class ViewsFixture : IDisposable
-        {
-            public Artist[] Artists { get; protected set; }
-
-            public ViewsFixture()
-            {
-                Artists = TestData.Artists.CreateArtists(10);
-
-                using (var client = IntegrationTestsRuntime.CreateClient())
-                {
-                    var bulk = new BulkCommand();
-                    bulk.Include(Artists.Select(i => client.Entities.Serializer.Serialize(i)).ToArray());
-                    
-                    var bulkResponse = client.Documents.BulkAsync(bulk);
-
-                    foreach (var row in bulkResponse.Result.Rows)
-                    {
-                        var artist = Artists.Single(i => i.ArtistId == row.Id);
-                        client.Entities.Reflector.RevMember.SetValueTo(artist, row.Rev);
-                    }
-
-                    client.Documents.PostAsync(TestData.Views.Artists).Wait();
-
-                    var touchView1 = new ViewQuery(TestData.Views.ArtistsAlbumsViewId).Configure(q => q.Stale(Stale.UpdateAfter));
-                    var touchView2 = new ViewQuery(TestData.Views.ArtistsNameNoValueViewId).Configure(q => q.Stale(Stale.UpdateAfter));
-
-                    client.Views.RunQueryAsync(touchView1).Wait();
-                    client.Views.RunQueryAsync(touchView2).Wait();
-                }
-            }
-
-            public virtual void Dispose()
-            {
-                using (var client = IntegrationTestsRuntime.CreateClient())
-                {
-                    client.ClearAllDocuments();
-                }
-            }
         }
     }
 }

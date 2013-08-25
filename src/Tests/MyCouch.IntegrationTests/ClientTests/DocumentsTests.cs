@@ -8,7 +8,7 @@ namespace MyCouch.IntegrationTests.ClientTests
 {
     public class DocumentsTests : ClientTestsOf<IDocuments>
     {
-        public DocumentsTests()
+        protected override void OnTestInit()
         {
             SUT = Client.Documents;
         }

@@ -7,7 +7,7 @@ namespace MyCouch.IntegrationTests.ClientTests
 {
     public class AttachmentsTests : ClientTestsOf<IAttachments>
     {
-        public AttachmentsTests()
+        protected override void OnTestInit()
         {
             SUT = Client.Attachments;
         }

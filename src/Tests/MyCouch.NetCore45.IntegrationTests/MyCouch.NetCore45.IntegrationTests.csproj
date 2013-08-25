@@ -132,14 +132,17 @@
     <Compile Include="..\mycouch.integrationtests\clienttests\ViewsTests.cs">
       <Link>ClientTests\ViewsTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests\IntegrationTests.cs">
-      <Link>IntegrationTests.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.IntegrationTests\IntegrationTestsRuntime.cs">
       <Link>IntegrationTestsRuntime.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.IntegrationTests\IPreserveStatePerFixture.cs">
       <Link>IPreserveStatePerFixture.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.IntegrationTests\TestFixtures\ClientFixture.cs">
+      <Link>TestFixtures\ClientFixture.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.IntegrationTests\TestFixtures\ViewsFixture.cs">
+      <Link>TestFixtures\ViewsFixture.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -184,6 +187,7 @@
       <HintPath>..\..\packages\Newtonsoft.Json.5.0.6\lib\netcore45\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
   </PropertyGroup>
