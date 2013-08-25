@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{41274A50-68B3-4278-A64D-F94BD0939D1F}</ProjectGuid>
+    <ProjectGuid>{2D5A620A-FD35-44D0-AFAD-F239CECBAEFE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MyCouch.UnitTests</RootNamespace>
@@ -105,8 +105,10 @@
   </PropertyGroup>
   <ItemGroup>
     <!--A reference to the entire .Net Framework and Windows SDK are automatically included-->
-    <SDKReference Include="MSTestFramework, Version=11.0" />
     <SDKReference Include="TestPlatform, Version=11.0" />
+    <SDKReference Include="XUnit, Version=2.0">
+      <Name>XUnit for Managed Projects</Name>
+    </SDKReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\SharedAssemblyInfo.cs">
@@ -124,8 +126,17 @@
     <Compile Include="..\mycouch.unittests\schemes\EntityRevMemberTests.cs">
       <Link>Schemes\EntityRevMemberTests.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.unittests\serialization\MyCouchSerializerTests.cs">
-      <Link>Serialization\MyCouchSerializerTests.cs</Link>
+    <Compile Include="..\MyCouch.UnitTests\Serialization\DefaultSerializationTests.cs">
+      <Link>Serialization\DefaultSerializationTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.UnitTests\Serialization\EntitySerializationTests.cs">
+      <Link>Serialization\EntitySerializationTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.UnitTests\Serialization\ResponseMaterializerTests.cs">
+      <Link>Serialization\ResponseMaterializerTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.UnitTests\Serialization\SerializerTests.cs">
+      <Link>Serialization\SerializerTests.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.UnitTests\UnitTestsOf.cs">
       <Link>UnitTestsOf.cs</Link>
@@ -154,24 +165,31 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="FluentAssertions, Version=2.1.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\FluentAssertions.2.1.0.0\lib\winrt45\FluentAssertions.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\packages\Newtonsoft.Json.5.0.6\lib\netcore45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\Projects\MyCouch.NetCore45\MyCouch.NetCore45.csproj">
       <Project>{07fea184-bce6-4224-a9d7-b8d3ff5bb439}</Project>
       <Name>MyCouch.NetCore45</Name>
     </ProjectReference>
     <ProjectReference Include="..\MyCouch.NetCore45.Testing\MyCouch.NetCore45.Testing.csproj">
-      <Project>{9dd736f7-178a-4c14-aaa8-4221da19e684}</Project>
+      <Project>{a47b5c4d-01be-4c95-9896-1b0a984879ae}</Project>
       <Name>MyCouch.NetCore45.Testing</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="FluentAssertions">
-      <HintPath>..\..\packages\FluentAssertions.2.0.1\lib\winrt45\FluentAssertions.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <PropertyGroup>
+    <SDKReferenceDirectoryRoot>$(SolutionDir)\libs;$(SDKReferenceDirectoryRoot)</SDKReferenceDirectoryRoot>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

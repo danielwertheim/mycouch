@@ -91,6 +91,9 @@
     <Compile Include="..\MyCouch\Client.cs">
       <Link>Client.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch\ClientBootsraper.cs">
+      <Link>ClientBootsraper.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch\ClientExecuteExtensions.cs">
       <Link>ClientExecuteExtensions.cs</Link>
     </Compile>
@@ -121,9 +124,6 @@
     <Compile Include="..\MyCouch\Commands\GetEntityCommand.cs">
       <Link>Commands\GetEntityCommand.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Commands\IMyCouchCommand.cs">
-      <Link>Commands\IMyCouchCommand.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch\Commands\PostDocumentCommand.cs">
       <Link>Commands\PostDocumentCommand.cs</Link>
     </Compile>
@@ -142,11 +142,11 @@
     <Compile Include="..\MyCouch\Commands\ReplaceDocumentCommand.cs">
       <Link>Commands\ReplaceDocumentCommand.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Database.cs">
-      <Link>Database.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch\DatabaseResponse.cs">
       <Link>DatabaseResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Databases.cs">
+      <Link>Databases.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch\DocumentHeaderResponse.cs">
       <Link>DocumentHeaderResponse.cs</Link>
@@ -163,8 +163,47 @@
     <Compile Include="..\MyCouch\EntityResponse.cs">
       <Link>EntityResponse.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch\EntitySchemes\EntityIdMember.cs">
+      <Link>EntitySchemes\EntityIdMember.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\EntitySchemes\EntityMember.cs">
+      <Link>EntitySchemes\EntityMember.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\EntitySchemes\EntityReflector.cs">
+      <Link>EntitySchemes\EntityReflector.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\EntitySchemes\EntityRevMember.cs">
+      <Link>EntitySchemes\EntityRevMember.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\EntitySchemes\IEntityMember.cs">
+      <Link>EntitySchemes\IEntityMember.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\EntitySchemes\IEntityReflector.cs">
+      <Link>EntitySchemes\IEntityReflector.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\EntitySchemes\Reflections\DynamicProperty.cs">
+      <Link>EntitySchemes\Reflections\DynamicProperty.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\EntitySchemes\Reflections\DynamicStringGetter.cs">
+      <Link>EntitySchemes\Reflections\DynamicStringGetter.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\EntitySchemes\Reflections\DynamicStringSetter.cs">
+      <Link>EntitySchemes\Reflections\DynamicStringSetter.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\EntitySchemes\Reflections\IDynamicPropertyFactory.cs">
+      <Link>EntitySchemes\Reflections\IDynamicPropertyFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\EntitySchemes\Reflections\IlDynamicPropertyFactory.cs">
+      <Link>EntitySchemes\Reflections\IlDynamicPropertyFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\EntitySchemes\Reflections\LambdaDynamicPropertyFactory.cs">
+      <Link>EntitySchemes\Reflections\LambdaDynamicPropertyFactory.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch\ExceptionStrings.cs">
       <Link>ExceptionStrings.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Extensions\HttpExtensions.cs">
+      <Link>Extensions\HttpExtensions.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch\Extensions\StringExtensions.cs">
       <Link>Extensions\StringExtensions.cs</Link>
@@ -178,8 +217,8 @@
     <Compile Include="..\MyCouch\IClient.cs">
       <Link>IClient.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\IDatabase.cs">
-      <Link>IDatabase.cs</Link>
+    <Compile Include="..\MyCouch\IDatabases.cs">
+      <Link>IDatabases.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch\IDocuments.cs">
       <Link>IDocuments.cs</Link>
@@ -189,9 +228,6 @@
     </Compile>
     <Compile Include="..\MyCouch\IResponse.cs">
       <Link>IResponse.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch\IResponseFactory.cs">
-      <Link>IResponseFactory.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch\ISystemViewQuery.cs">
       <Link>ISystemViewQuery.cs</Link>
@@ -226,9 +262,6 @@
     <Compile Include="..\MyCouch\Net\HttpContentTypes.cs">
       <Link>Net\HttpContentTypes.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Net\HttpExtensions.cs">
-      <Link>Net\HttpExtensions.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch\Net\HttpRequest.cs">
       <Link>Net\HttpRequest.cs</Link>
     </Compile>
@@ -237,6 +270,9 @@
     </Compile>
     <Compile Include="..\MyCouch\Net\JsonContent.cs">
       <Link>Net\JsonContent.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Now.cs">
+      <Link>Now.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch\Querying\Stale.cs">
       <Link>Querying\Stale.cs</Link>
@@ -250,68 +286,74 @@
     <Compile Include="..\MyCouch\Response.cs">
       <Link>Response.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\ResponseFactory.cs">
-      <Link>ResponseFactory.cs</Link>
+    <Compile Include="..\MyCouch\ResponseFactories\AttachmentResponseFactory.cs">
+      <Link>ResponseFactories\AttachmentResponseFactory.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Schemes\EntityIdMember.cs">
-      <Link>Schemes\EntityIdMember.cs</Link>
+    <Compile Include="..\MyCouch\ResponseFactories\BulkResponseFactory.cs">
+      <Link>ResponseFactories\BulkResponseFactory.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Schemes\EntityMember.cs">
-      <Link>Schemes\EntityMember.cs</Link>
+    <Compile Include="..\MyCouch\ResponseFactories\DatabaseResponseFactory.cs">
+      <Link>ResponseFactories\DatabaseResponseFactory.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Schemes\EntityReflector.cs">
-      <Link>Schemes\EntityReflector.cs</Link>
+    <Compile Include="..\MyCouch\ResponseFactories\DocumentHeaderResponseFactory.cs">
+      <Link>ResponseFactories\DocumentHeaderResponseFactory.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Schemes\EntityRevMember.cs">
-      <Link>Schemes\EntityRevMember.cs</Link>
+    <Compile Include="..\MyCouch\ResponseFactories\DocumentHeaderResponseFactoryBase.cs">
+      <Link>ResponseFactories\DocumentHeaderResponseFactoryBase.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Schemes\IEntityMember.cs">
-      <Link>Schemes\IEntityMember.cs</Link>
+    <Compile Include="..\MyCouch\ResponseFactories\DocumentResponseFactory.cs">
+      <Link>ResponseFactories\DocumentResponseFactory.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Schemes\IEntityReflector.cs">
-      <Link>Schemes\IEntityReflector.cs</Link>
+    <Compile Include="..\MyCouch\ResponseFactories\EntityResponseFactory.cs">
+      <Link>ResponseFactories\EntityResponseFactory.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Schemes\Reflections\DynamicProperty.cs">
-      <Link>Schemes\Reflections\DynamicProperty.cs</Link>
+    <Compile Include="..\MyCouch\ResponseFactories\JsonViewQueryResponseFactory.cs">
+      <Link>ResponseFactories\JsonViewQueryResponseFactory.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Schemes\Reflections\DynamicStringGetter.cs">
-      <Link>Schemes\Reflections\DynamicStringGetter.cs</Link>
+    <Compile Include="..\MyCouch\ResponseFactories\ResponseFactoryBase.cs">
+      <Link>ResponseFactories\ResponseFactoryBase.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Schemes\Reflections\DynamicStringSetter.cs">
-      <Link>Schemes\Reflections\DynamicStringSetter.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch\Schemes\Reflections\IDynamicPropertyFactory.cs">
-      <Link>Schemes\Reflections\IDynamicPropertyFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch\Schemes\Reflections\IlDynamicPropertyFactory.cs">
-      <Link>Schemes\Reflections\IlDynamicPropertyFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch\Schemes\Reflections\LambdaDynamicPropertyFactory.cs">
-      <Link>Schemes\Reflections\LambdaDynamicPropertyFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch\Serialization\Conventions\DocSerializationConventions.cs">
-      <Link>Serialization\Conventions\DocSerializationConventions.cs</Link>
+    <Compile Include="..\MyCouch\ResponseFactories\ViewQueryResponseFactory.cs">
+      <Link>ResponseFactories\ViewQueryResponseFactory.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch\Serialization\Conventions\DocTypeSerializationConvention.cs">
       <Link>Serialization\Conventions\DocTypeSerializationConvention.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Serialization\Conventions\IDocTypeSerializationConvention.cs">
-      <Link>Serialization\Conventions\IDocTypeSerializationConvention.cs</Link>
+    <Compile Include="..\MyCouch\Serialization\Conventions\ISerializationConvention.cs">
+      <Link>Serialization\Conventions\ISerializationConvention.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Serialization\DeserializationJsonWriter.cs">
-      <Link>Serialization\DeserializationJsonWriter.cs</Link>
+    <Compile Include="..\MyCouch\Serialization\Conventions\SerializationConventions.cs">
+      <Link>Serialization\Conventions\SerializationConventions.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Serialization\DefaultResponseMaterializer.cs">
+      <Link>Serialization\DefaultResponseMaterializer.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Serialization\DefaultSerializer.cs">
+      <Link>Serialization\DefaultSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Serialization\EntityJsonWriter.cs">
+      <Link>Serialization\EntityJsonWriter.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Serialization\EntitySerializationContractResolver.cs">
+      <Link>Serialization\EntitySerializationContractResolver.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Serialization\IResponseMaterializer.cs">
+      <Link>Serialization\IResponseMaterializer.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch\Serialization\ISerializer.cs">
       <Link>Serialization\ISerializer.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Serialization\MyCouchSerializer.cs">
-      <Link>Serialization\MyCouchSerializer.cs</Link>
+    <Compile Include="..\MyCouch\Serialization\JsonReaderFactory.cs">
+      <Link>Serialization\JsonReaderFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Serialization\JsonWriterFactory.cs">
+      <Link>Serialization\JsonWriterFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Serialization\SerializationConfiguration.cs">
+      <Link>Serialization\SerializationConfiguration.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch\Serialization\SerializationContractResolver.cs">
       <Link>Serialization\SerializationContractResolver.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch\Serialization\SerializationJsonWriter.cs">
-      <Link>Serialization\SerializationJsonWriter.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch\SystemViewQuery.cs">
       <Link>SystemViewQuery.cs</Link>
@@ -335,7 +377,11 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.8\tools\Microsoft.Bcl.Build.targets" />
+  <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

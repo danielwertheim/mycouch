@@ -6,10 +6,10 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{36B1E42E-36BD-461B-8CB4-487395C6D931}</ProjectGuid>
+    <ProjectGuid>{11A46453-9068-48AF-8251-F47DE632A3BB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MyCouch.NetCore45.IntegrationTests</RootNamespace>
+    <RootNamespace>MyCouch.IntegrationTests</RootNamespace>
     <AssemblyName>MyCouch.NetCore45.IntegrationTests</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
@@ -105,18 +105,23 @@
   </PropertyGroup>
   <ItemGroup>
     <!--A reference to the entire .Net Framework and Windows SDK are automatically included-->
-    <SDKReference Include="MSTestFramework, Version=11.0" />
     <SDKReference Include="TestPlatform, Version=11.0" />
+    <SDKReference Include="XUnit, Version=2.0">
+      <Name>XUnit for Managed Projects</Name>
+    </SDKReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests\AssemblyInitializer.cs">
-      <Link>AssemblyInitializer.cs</Link>
+    <Compile Include="..\MyCouch.IntegrationTests\ClientExtensions.cs">
+      <Link>ClientExtensions.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.integrationtests\clienttests\AttachmentsTests.cs">
       <Link>ClientTests\AttachmentsTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.IntegrationTests\ClientTests\ClientTestsOf.cs">
+      <Link>ClientTests\ClientTestsOf.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.integrationtests\clienttests\DocumentsTests.cs">
       <Link>ClientTests\DocumentsTests.cs</Link>
@@ -127,17 +132,17 @@
     <Compile Include="..\mycouch.integrationtests\clienttests\ViewsTests.cs">
       <Link>ClientTests\ViewsTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests\IntegrationTestsOf.cs">
-      <Link>IntegrationTestsOf.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.IntegrationTests\IntegrationTestsRuntime.cs">
       <Link>IntegrationTestsRuntime.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests\TestClientFactory.cs">
-      <Link>TestClientFactory.cs</Link>
+    <Compile Include="..\MyCouch.IntegrationTests\IPreserveStatePerFixture.cs">
+      <Link>IPreserveStatePerFixture.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests\TestConstants.cs">
-      <Link>TestConstants.cs</Link>
+    <Compile Include="..\MyCouch.IntegrationTests\TestFixtures\ClientFixture.cs">
+      <Link>TestFixtures\ClientFixture.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.IntegrationTests\TestFixtures\ViewsFixture.cs">
+      <Link>TestFixtures\ViewsFixture.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -168,19 +173,28 @@
       <Name>MyCouch.NetCore45</Name>
     </ProjectReference>
     <ProjectReference Include="..\MyCouch.NetCore45.Testing\MyCouch.NetCore45.Testing.csproj">
-      <Project>{9dd736f7-178a-4c14-aaa8-4221da19e684}</Project>
+      <Project>{a47b5c4d-01be-4c95-9896-1b0a984879ae}</Project>
       <Name>MyCouch.NetCore45.Testing</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="FluentAssertions">
-      <HintPath>..\..\packages\FluentAssertions.2.0.1\lib\winrt45\FluentAssertions.dll</HintPath>
+    <Reference Include="FluentAssertions, Version=2.1.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\FluentAssertions.2.1.0.0\lib\winrt45\FluentAssertions.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Newtonsoft.Json.5.0.6\lib\netcore45\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <PropertyGroup>
+    <SDKReferenceDirectoryRoot>$(SolutionDir)\libs;$(SDKReferenceDirectoryRoot)</SDKReferenceDirectoryRoot>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

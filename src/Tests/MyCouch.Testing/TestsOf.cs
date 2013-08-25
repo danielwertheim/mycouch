@@ -1,38 +1,22 @@
 ﻿using System;
-#if !NETFX_CORE
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-#else
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-#endif
 
 namespace MyCouch.Testing
 {
-    [TestClass]
     public abstract class TestsOf<T> : TestsOf where T : class
     {
         protected T SUT { get; set; }
     }
 
-    [TestClass]
-    public abstract class TestsOf
+    public abstract class TestsOf : IDisposable
     {
-        protected Action OnTestInitialize { get; set; }
-        protected Action OnTestFinalize { get; set; }
-
-        [TestInitialize]
-        public void TestInitializer()
+        protected TestsOf()
         {
-            //Now.ValueFn = () => TestConstants.FixedDateTime;
-            if(OnTestInitialize != null)
-                OnTestInitialize();
+            Now.ValueGenerator = () => TestConstants.FixedDateTime;
         }
 
-        [TestCleanup]
-        public void TestFinalizer()
+        public virtual void Dispose()
         {
-            if (OnTestFinalize != null)
-                OnTestFinalize();
-            //Now.ValueFn = () => TestConstants.FixedDateTime;
+            Now.ValueGenerator = () => TestConstants.FixedDateTime;
         }
     }
 }
