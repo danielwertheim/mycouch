@@ -141,6 +141,9 @@
     <Compile Include="..\MyCouch.UnitTests\UnitTestsOf.cs">
       <Link>UnitTestsOf.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.UnitTests\UriBuilderTests.cs">
+      <Link>UriBuilderTests.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

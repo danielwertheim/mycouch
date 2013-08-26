@@ -64,6 +64,7 @@
     <Compile Include="Serialization\EntitySerializationTests.cs" />
     <Compile Include="Serialization\SerializerTests.cs" />
     <Compile Include="UnitTestsOf.cs" />
+    <Compile Include="UriBuilderTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
