@@ -1,5 +1,4 @@
-﻿using System;
-using MyCouch.Testing;
+﻿using MyCouch.Testing;
 
 namespace MyCouch.IntegrationTests
 {
@@ -17,7 +16,11 @@ namespace MyCouch.IntegrationTests
 
         internal static IClient CreateClient()
         {
-            return new Client("http://mycouchtester:" + Uri.EscapeDataString("p@ssword") + "@localhost:5984/" + TestConstants.TestDbName + "/");
+            var uriBuilder = new MyCouchUriBuilder("http://localhost:5984/")
+                .SetDbName(TestConstants.TestDbName)
+                .SetBasicCredentials("mycouchtester", "p@ssword");
+
+            return new Client(uriBuilder.Build());
         }
     }
 }

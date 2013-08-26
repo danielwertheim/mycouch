@@ -253,6 +253,9 @@
     <Compile Include="..\MyCouch\MyCouchRuntime.cs">
       <Link>MyCouchRuntime.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch\MyCouchUriBuilder.cs">
+      <Link>MyCouchUriBuilder.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch\Net\AttachmentContent.cs">
       <Link>Net\AttachmentContent.cs</Link>
     </Compile>

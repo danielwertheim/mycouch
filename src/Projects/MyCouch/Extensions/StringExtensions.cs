@@ -10,6 +10,22 @@ namespace MyCouch.Extensions
             return Convert.ToBase64String(MyCouchRuntime.DefaultEncoding.GetBytes(value));
         }
 
+        public static string RemoveStarting(this string value, string starting)
+        {
+            while (value.StartsWith(starting))
+                value = value.Substring(starting.Length);
+
+            return value;
+        }
+
+        public static string RemoveTrailing(this string value, string ending)
+        {
+            while (value.EndsWith(ending))
+                value = value.Substring(0, value.Length - ending.Length);
+
+            return value;
+        }
+
         public static string ToCamelCase(this string s)
         {
             if (string.IsNullOrWhiteSpace(s))
@@ -32,6 +48,6 @@ namespace MyCouch.Extensions
             }
 
             return sb.ToString();
-        } 
+        }
     }
 }

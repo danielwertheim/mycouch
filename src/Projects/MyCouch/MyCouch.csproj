@@ -141,6 +141,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\TaskExtensions.cs" />
+    <Compile Include="MyCouchUriBuilder.cs" />
     <Compile Include="ViewIdentity.cs" />
     <Compile Include="ViewQuery.cs" />
     <Compile Include="Querying\ViewQueryConfigurator.cs" />
