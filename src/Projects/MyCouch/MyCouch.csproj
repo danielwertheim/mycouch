@@ -41,6 +41,7 @@
       <HintPath>..\..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Net.Http" />
@@ -64,6 +65,7 @@
     <Compile Include="Commands\PostEntityCommand.cs" />
     <Compile Include="Commands\PutDocumentCommand.cs" />
     <Compile Include="Commands\PutEntityCommand.cs" />
+    <Compile Include="Configurations\ConnectionString.cs" />
     <Compile Include="DatabaseResponse.cs" />
     <Compile Include="Databases.cs" />
     <Compile Include="Commands\DeleteAttachmentCommand.cs" />

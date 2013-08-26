@@ -48,6 +48,7 @@
       <HintPath>..\..\packages\Newtonsoft.Json.5.0.6\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.IO">
@@ -141,6 +142,9 @@
     </Compile>
     <Compile Include="..\MyCouch\Commands\ReplaceDocumentCommand.cs">
       <Link>Commands\ReplaceDocumentCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Configurations\ConnectionString.cs">
+      <Link>Configurations\ConnectionString.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch\DatabaseResponse.cs">
       <Link>DatabaseResponse.cs</Link>

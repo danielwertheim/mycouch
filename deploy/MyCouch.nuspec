@@ -17,6 +17,8 @@
     <releaseNotes>Can be found on project site: https://github.com/danielwertheim/mycouch/wiki/release-notes</releaseNotes>
     <tags>couchdb cloudant nosql json document-db documents poco async asynchronous</tags>
     <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.Configuration" targetFramework="net40" />
+      <frameworkAssembly assemblyName="System.Configuration" targetFramework="net45" />
       <frameworkAssembly assemblyName="System.Net.Http" targetFramework="net45" />
     </frameworkAssemblies>
     <dependencies>

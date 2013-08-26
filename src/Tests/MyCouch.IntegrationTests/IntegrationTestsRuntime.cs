@@ -1,4 +1,5 @@
-﻿using MyCouch.Testing;
+﻿using MyCouch.Configurations;
+using MyCouch.Testing;
 
 namespace MyCouch.IntegrationTests
 {
@@ -16,7 +17,8 @@ namespace MyCouch.IntegrationTests
 
         internal static IClient CreateClient()
         {
-            var uriBuilder = new MyCouchUriBuilder("http://localhost:5984/")
+            var cnString = ConnectionString.Get("mycouchtests");
+            var uriBuilder = new MyCouchUriBuilder(cnString)
                 .SetDbName(TestConstants.TestDbName)
                 .SetBasicCredentials("mycouchtester", "p@ssword");
 
