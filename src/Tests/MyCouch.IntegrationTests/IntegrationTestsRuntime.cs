@@ -1,4 +1,6 @@
-﻿using MyCouch.Configurations;
+﻿#if !NETFX_CORE
+using MyCouch.Configurations;
+#endif
 using MyCouch.Testing;
 
 namespace MyCouch.IntegrationTests
@@ -12,13 +14,16 @@ namespace MyCouch.IntegrationTests
                 //client.Database.PutAsync().Wait();
                 client.ClearAllDocuments();
             }
-
         }
 
         internal static IClient CreateClient()
         {
-            var cnString = ConnectionString.Get("mycouchtests");
-            var uriBuilder = new MyCouchUriBuilder(cnString)
+#if !NETFX_CORE
+            var url = ConnectionString.Get("mycouchtests");
+#else
+            var url = "http://localhost:5984";
+#endif
+            var uriBuilder = new MyCouchUriBuilder(url)
                 .SetDbName(TestConstants.TestDbName)
                 .SetBasicCredentials("mycouchtester", "p@ssword");
 

@@ -167,6 +167,9 @@
     <Compile Include="..\mycouch\commands\ReplaceDocumentCommand.cs">
       <Link>Commands\ReplaceDocumentCommand.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch\Configurations\ConnectionString.cs">
+      <Link>Configurations\ConnectionString.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch\DatabaseResponse.cs">
       <Link>DatabaseResponse.cs</Link>
     </Compile>

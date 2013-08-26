@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !NETFX_CORE
+using System;
 using System.Configuration;
 using EnsureThat;
 
@@ -20,3 +21,4 @@ namespace MyCouch.Configurations
         }
     }
 }
+#endif
