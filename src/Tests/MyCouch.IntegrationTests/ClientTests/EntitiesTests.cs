@@ -80,16 +80,14 @@ namespace MyCouch.IntegrationTests.ClientTests
             var post1 = SUT.PostAsync(artist1);
             var post2 = SUT.PostAsync(artist2);
 
-            post1.ContinueWith(t => t.Result.Should().BeSuccessfulPost(artist1.ArtistId, e => e.ArtistId, e => e.ArtistRev));
-            post2.ContinueWith(t => t.Result.Should().BeSuccessfulPost(artist2.ArtistId, e => e.ArtistId, e => e.ArtistRev));
-            Task.WaitAll(post1, post2);
+            post1.Result.Should().BeSuccessfulPost(artist1.ArtistId, e => e.ArtistId, e => e.ArtistRev);
+            post2.Result.Should().BeSuccessfulPost(artist2.ArtistId, e => e.ArtistId, e => e.ArtistRev);
 
             var get1 = SUT.GetAsync<Artist>(post1.Result.Id);
             var get2 = SUT.GetAsync<Artist>(post2.Result.Id);
 
-            get1.ContinueWith(t => t.Result.Should().BeSuccessfulGet(post1.Result.Id));
-            get2.ContinueWith(t => t.Result.Should().BeSuccessfulGet(post2.Result.Id));
-            Task.WaitAll(get1, get2);
+            get1.Result.Should().BeSuccessfulGet(post1.Result.Id);
+            get2.Result.Should().BeSuccessfulGet(post2.Result.Id);
 
             get1.Result.Entity.Albums = new List<Album>(get1.Result.Entity.Albums) { new Album { Name = "Test" } }.ToArray();
             get2.Result.Entity.Albums = new List<Album>(get2.Result.Entity.Albums) { new Album { Name = "Test" } }.ToArray();
@@ -97,9 +95,11 @@ namespace MyCouch.IntegrationTests.ClientTests
             var put1 = SUT.PutAsync(get1.Result.Entity);
             var put2 = SUT.PutAsync(get2.Result.Entity);
 
-            put1.ContinueWith(t => SUT.DeleteAsync(t.Result.Entity).Result.Should().BeSuccessfulDelete(put1.Result.Id, e => e.ArtistId, e => e.ArtistRev));
-            put2.ContinueWith(t => SUT.DeleteAsync(t.Result.Entity).Result.Should().BeSuccessfulDelete(put1.Result.Id, e => e.ArtistId, e => e.ArtistRev));
-            Task.WaitAll(put1, put2);
+            put1.Result.Should().BeSuccessfulPut(get1.Result.Id, i => i.ArtistId, i => i.ArtistRev);
+            put2.Result.Should().BeSuccessfulPut(get2.Result.Id, i => i.ArtistId, i => i.ArtistRev);
+
+            SUT.DeleteAsync(put1.Result.Entity).Result.Should().BeSuccessfulDelete(put1.Result.Id, e => e.ArtistId, e => e.ArtistRev);
+            SUT.DeleteAsync(put2.Result.Entity).Result.Should().BeSuccessfulDelete(put2.Result.Id, e => e.ArtistId, e => e.ArtistRev);
         }
     }
 }

@@ -174,16 +174,14 @@ namespace MyCouch.IntegrationTests.ClientTests
             var post1 = SUT.PostAsync(TestData.Artists.Artist1Json);
             var post2 = SUT.PostAsync(TestData.Artists.Artist2Json);
 
-            post1.ContinueWith(t => t.Result.Should().BeSuccessfulPost(TestData.Artists.Artist1Id));
-            post2.ContinueWith(t => t.Result.Should().BeSuccessfulPost(TestData.Artists.Artist2Id));
-            Task.WaitAll(post1, post2);
+            post1.Result.Should().BeSuccessfulPost(TestData.Artists.Artist1Id);
+            post2.Result.Should().BeSuccessfulPost(TestData.Artists.Artist2Id);
 
             var get1 = SUT.GetAsync(post1.Result.Id);
             var get2 = SUT.GetAsync(post2.Result.Id);
 
-            get1.ContinueWith(t => t.Result.Should().BeSuccessfulGet(post1.Result.Id));
-            get2.ContinueWith(t => t.Result.Should().BeSuccessfulGet(post2.Result.Id));
-            Task.WaitAll(get1, get2);
+            get1.Result.Should().BeSuccessfulGet(post1.Result.Id);
+            get2.Result.Should().BeSuccessfulGet(post2.Result.Id);
 
             var kv1 = Client.Serializer.Deserialize<IDictionary<string, dynamic>>(get1.Result.Content);
             kv1["year"] = 2000;
@@ -195,16 +193,14 @@ namespace MyCouch.IntegrationTests.ClientTests
             var docUpd2 = Client.Serializer.Serialize(kv2);
             var put2 = SUT.PutAsync(get2.Result.Id, docUpd2);
 
-            put1.ContinueWith(t => t.Result.Should().BeSuccessfulPut(get1.Result.Id));
-            put2.ContinueWith(t => t.Result.Should().BeSuccessfulPut(get2.Result.Id));
-            Task.WaitAll(put1, put2);
+            put1.Result.Should().BeSuccessfulPut(get1.Result.Id);
+            put2.Result.Should().BeSuccessfulPut(get2.Result.Id);
 
             var delete1 = SUT.DeleteAsync(put1.Result.Id, put1.Result.Rev);
             var delete2 = SUT.DeleteAsync(put2.Result.Id, put2.Result.Rev);
 
-            delete1.ContinueWith(t => t.Result.Should().BeSuccessfulDelete(put1.Result.Id));
-            delete2.ContinueWith(t => t.Result.Should().BeSuccessfulDelete(put2.Result.Id));
-            Task.WaitAll(delete1, delete2);
+            delete1.Result.Should().BeSuccessfulDelete(put1.Result.Id);
+            delete2.Result.Should().BeSuccessfulDelete(put2.Result.Id);
         }
     }
 }
