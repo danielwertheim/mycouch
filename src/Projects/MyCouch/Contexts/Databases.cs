@@ -6,7 +6,7 @@ using MyCouch.Net;
 using MyCouch.Responses;
 using MyCouch.Responses.ResponseFactories;
 
-namespace MyCouch
+namespace MyCouch.Contexts
 {
     public class Databases : IDatabases 
     {

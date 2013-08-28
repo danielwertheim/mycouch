@@ -1,4 +1,5 @@
 ﻿using System;
+using MyCouch.Contexts;
 using MyCouch.EntitySchemes;
 using MyCouch.EntitySchemes.Reflections;
 using MyCouch.Net;

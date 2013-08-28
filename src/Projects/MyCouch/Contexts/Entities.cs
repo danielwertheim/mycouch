@@ -9,7 +9,7 @@ using MyCouch.Responses;
 using MyCouch.Responses.ResponseFactories;
 using MyCouch.Serialization;
 
-namespace MyCouch
+namespace MyCouch.Contexts
 {
     public class Entities : IEntities
     {
