@@ -51,15 +51,6 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\AttachmentResponse.cs">
-      <Link>AttachmentResponse.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch\Attachments.cs">
-      <Link>Attachments.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch\BulkResponse.cs">
-      <Link>BulkResponse.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch\Client.cs">
       <Link>Client.cs</Link>
     </Compile>
@@ -117,26 +108,20 @@
     <Compile Include="..\mycouch\configurations\ConnectionString.cs">
       <Link>Configurations\ConnectionString.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\DatabaseResponse.cs">
-      <Link>DatabaseResponse.cs</Link>
+    <Compile Include="..\mycouch\contexts\Attachments.cs">
+      <Link>Contexts\Attachments.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Databases.cs">
-      <Link>Databases.cs</Link>
+    <Compile Include="..\mycouch\contexts\Databases.cs">
+      <Link>Contexts\Databases.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\DocumentHeaderResponse.cs">
-      <Link>DocumentHeaderResponse.cs</Link>
+    <Compile Include="..\mycouch\contexts\Documents.cs">
+      <Link>Contexts\Documents.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\DocumentResponse.cs">
-      <Link>DocumentResponse.cs</Link>
+    <Compile Include="..\mycouch\contexts\Entities.cs">
+      <Link>Contexts\Entities.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Documents.cs">
-      <Link>Documents.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch\Entities.cs">
-      <Link>Entities.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch\EntityResponse.cs">
-      <Link>EntityResponse.cs</Link>
+    <Compile Include="..\mycouch\contexts\Views.cs">
+      <Link>Contexts\Views.cs</Link>
     </Compile>
     <Compile Include="..\mycouch\entityschemes\EntityIdMember.cs">
       <Link>EntitySchemes\EntityIdMember.cs</Link>
@@ -222,9 +207,6 @@
     <Compile Include="..\MyCouch\IViews.cs">
       <Link>IViews.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\JsonViewQueryResponse.cs">
-      <Link>JsonViewQueryResponse.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch\MyCouchRuntime.cs">
       <Link>MyCouchRuntime.cs</Link>
     </Compile>
@@ -261,38 +243,62 @@
     <Compile Include="..\mycouch\querying\ViewQueryOptions.cs">
       <Link>Querying\ViewQueryOptions.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Response.cs">
-      <Link>Response.cs</Link>
+    <Compile Include="..\mycouch\responses\AttachmentResponse.cs">
+      <Link>Responses\AttachmentResponse.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\responsefactories\AttachmentResponseFactory.cs">
-      <Link>ResponseFactories\AttachmentResponseFactory.cs</Link>
+    <Compile Include="..\mycouch\responses\BulkResponse.cs">
+      <Link>Responses\BulkResponse.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\responsefactories\BulkResponseFactory.cs">
-      <Link>ResponseFactories\BulkResponseFactory.cs</Link>
+    <Compile Include="..\mycouch\responses\DatabaseResponse.cs">
+      <Link>Responses\DatabaseResponse.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\responsefactories\DatabaseResponseFactory.cs">
-      <Link>ResponseFactories\DatabaseResponseFactory.cs</Link>
+    <Compile Include="..\mycouch\responses\DocumentHeaderResponse.cs">
+      <Link>Responses\DocumentHeaderResponse.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\responsefactories\DocumentHeaderResponseFactory.cs">
-      <Link>ResponseFactories\DocumentHeaderResponseFactory.cs</Link>
+    <Compile Include="..\mycouch\responses\DocumentResponse.cs">
+      <Link>Responses\DocumentResponse.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\responsefactories\DocumentHeaderResponseFactoryBase.cs">
-      <Link>ResponseFactories\DocumentHeaderResponseFactoryBase.cs</Link>
+    <Compile Include="..\mycouch\responses\EntityResponse.cs">
+      <Link>Responses\EntityResponse.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\responsefactories\DocumentResponseFactory.cs">
-      <Link>ResponseFactories\DocumentResponseFactory.cs</Link>
+    <Compile Include="..\mycouch\responses\factories\AttachmentResponseFactory.cs">
+      <Link>Responses\Factories\AttachmentResponseFactory.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\responsefactories\EntityResponseFactory.cs">
-      <Link>ResponseFactories\EntityResponseFactory.cs</Link>
+    <Compile Include="..\mycouch\responses\factories\BulkResponseFactory.cs">
+      <Link>Responses\Factories\BulkResponseFactory.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\responsefactories\JsonViewQueryResponseFactory.cs">
-      <Link>ResponseFactories\JsonViewQueryResponseFactory.cs</Link>
+    <Compile Include="..\mycouch\responses\factories\DatabaseResponseFactory.cs">
+      <Link>Responses\Factories\DatabaseResponseFactory.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\responsefactories\ResponseFactoryBase.cs">
-      <Link>ResponseFactories\ResponseFactoryBase.cs</Link>
+    <Compile Include="..\mycouch\responses\factories\DocumentHeaderResponseFactory.cs">
+      <Link>Responses\Factories\DocumentHeaderResponseFactory.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\responsefactories\ViewQueryResponseFactory.cs">
-      <Link>ResponseFactories\ViewQueryResponseFactory.cs</Link>
+    <Compile Include="..\mycouch\responses\factories\DocumentHeaderResponseFactoryBase.cs">
+      <Link>Responses\Factories\DocumentHeaderResponseFactoryBase.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\responses\factories\DocumentResponseFactory.cs">
+      <Link>Responses\Factories\DocumentResponseFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\responses\factories\EntityResponseFactory.cs">
+      <Link>Responses\Factories\EntityResponseFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\responses\factories\JsonViewQueryResponseFactory.cs">
+      <Link>Responses\Factories\JsonViewQueryResponseFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\responses\factories\ResponseFactoryBase.cs">
+      <Link>Responses\Factories\ResponseFactoryBase.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\responses\factories\ViewQueryResponseFactory.cs">
+      <Link>Responses\Factories\ViewQueryResponseFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\responses\JsonViewQueryResponse.cs">
+      <Link>Responses\JsonViewQueryResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\responses\Response.cs">
+      <Link>Responses\Response.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\responses\ViewQueryResponse.cs">
+      <Link>Responses\ViewQueryResponse.cs</Link>
     </Compile>
     <Compile Include="..\mycouch\serialization\conventions\DocTypeSerializationConvention.cs">
       <Link>Serialization\Conventions\DocTypeSerializationConvention.cs</Link>
@@ -341,12 +347,6 @@
     </Compile>
     <Compile Include="..\MyCouch\ViewQuery.cs">
       <Link>ViewQuery.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch\ViewQueryResponse.cs">
-      <Link>ViewQueryResponse.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch\Views.cs">
-      <Link>Views.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -3,7 +3,7 @@ using EnsureThat;
 using MyCouch.Extensions;
 using MyCouch.Serialization;
 
-namespace MyCouch.Responses.ResponseFactories
+namespace MyCouch.Responses.Factories
 {
     public class EntityResponseFactory : DocumentHeaderResponseFactoryBase
     {

@@ -4,7 +4,7 @@ using EnsureThat;
 using MyCouch.Extensions;
 using MyCouch.Net;
 using MyCouch.Responses;
-using MyCouch.Responses.ResponseFactories;
+using MyCouch.Responses.Factories;
 using MyCouch.Serialization;
 
 namespace MyCouch.Contexts

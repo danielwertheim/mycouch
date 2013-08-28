@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
 using MyCouch.Serialization;
 
-namespace MyCouch.Responses.ResponseFactories
+namespace MyCouch.Responses.Factories
 {
     public class DatabaseResponseFactory : ResponseFactoryBase
     {

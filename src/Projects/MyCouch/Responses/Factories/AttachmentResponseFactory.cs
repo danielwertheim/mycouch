@@ -4,7 +4,7 @@ using System.Net.Http;
 using MyCouch.Extensions;
 using MyCouch.Serialization;
 
-namespace MyCouch.Responses.ResponseFactories
+namespace MyCouch.Responses.Factories
 {
     public class AttachmentResponseFactory : ResponseFactoryBase
     {
