@@ -7,6 +7,7 @@ using MyCouch.Extensions;
 using MyCouch.Net;
 using MyCouch.Responses;
 using MyCouch.Responses.ResponseFactories;
+using MyCouch.Serialization;
 
 namespace MyCouch.Contexts
 {
@@ -16,15 +17,16 @@ namespace MyCouch.Contexts
         protected readonly JsonViewQueryResponseFactory JsonViewQueryResponseFactory;
         protected readonly ViewQueryResponseFactory ViewQueryResponseFactory;
 
-        public Views(IConnection connection, JsonViewQueryResponseFactory jsonViewQueryResponseFactory, ViewQueryResponseFactory viewQueryResponseFactory)
+        public Views(IConnection connection, SerializationConfiguration serializationConfiguration)
         {
             Ensure.That(connection, "connection").IsNotNull();
-            Ensure.That(jsonViewQueryResponseFactory, "jsonViewQueryResponseFactory").IsNotNull();
-            Ensure.That(viewQueryResponseFactory, "viewQueryResponseFactory").IsNotNull();
+            Ensure.That(serializationConfiguration, "serializationConfiguration").IsNotNull();
 
             Connection = connection;
-            JsonViewQueryResponseFactory = jsonViewQueryResponseFactory;
-            ViewQueryResponseFactory = viewQueryResponseFactory;
+
+            var materializer = new DefaultResponseMaterializer(serializationConfiguration);
+            JsonViewQueryResponseFactory = new JsonViewQueryResponseFactory(materializer);
+            ViewQueryResponseFactory = new ViewQueryResponseFactory(materializer);
         }
 
         public virtual async Task<JsonViewQueryResponse> RunQueryAsync(IViewQuery query)

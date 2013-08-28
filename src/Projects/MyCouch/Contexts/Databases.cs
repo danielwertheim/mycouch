@@ -5,6 +5,7 @@ using MyCouch.Extensions;
 using MyCouch.Net;
 using MyCouch.Responses;
 using MyCouch.Responses.ResponseFactories;
+using MyCouch.Serialization;
 
 namespace MyCouch.Contexts
 {
@@ -13,13 +14,13 @@ namespace MyCouch.Contexts
         protected readonly IConnection Connection;
         protected readonly DatabaseResponseFactory DatabaseResponseFactory;
 
-        public Databases(IConnection connection, DatabaseResponseFactory databaseResponseFactory)
+        public Databases(IConnection connection, SerializationConfiguration serializationConfiguration)
         {
             Ensure.That(connection, "connection").IsNotNull();
-            Ensure.That(databaseResponseFactory, "DatabaseResponseFactory").IsNotNull();
+            Ensure.That(serializationConfiguration, "serializationConfiguration").IsNotNull();
 
             Connection = connection;
-            DatabaseResponseFactory = databaseResponseFactory;
+            DatabaseResponseFactory = new DatabaseResponseFactory(new DefaultResponseMaterializer(serializationConfiguration));
         }
 
         public virtual async Task<DatabaseResponse> PutAsync()

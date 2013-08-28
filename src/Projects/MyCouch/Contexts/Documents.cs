@@ -6,6 +6,7 @@ using MyCouch.Extensions;
 using MyCouch.Net;
 using MyCouch.Responses;
 using MyCouch.Responses.ResponseFactories;
+using MyCouch.Serialization;
 
 namespace MyCouch.Contexts
 {
@@ -16,17 +17,17 @@ namespace MyCouch.Contexts
         protected readonly DocumentHeaderResponseFactory DocumentHeaderReponseFactory;
         protected readonly BulkResponseFactory BulkReponseFactory;
 
-        public Documents(IConnection connection, DocumentResponseFactory documentReponseFactory, DocumentHeaderResponseFactory documentHeaderResponseFactory, BulkResponseFactory bulkResponseFactory)
+        public Documents(IConnection connection, SerializationConfiguration serializationConfiguration)
         {
             Ensure.That(connection, "connection").IsNotNull();
-            Ensure.That(documentReponseFactory, "documentReponseFactory").IsNotNull();
-            Ensure.That(documentHeaderResponseFactory, "documentHeaderResponseFactory").IsNotNull();
-            Ensure.That(bulkResponseFactory, "bulkResponseFactory").IsNotNull();
+            Ensure.That(serializationConfiguration, "serializationConfiguration").IsNotNull();
 
             Connection = connection;
-            DocumentReponseFactory = documentReponseFactory;
-            DocumentHeaderReponseFactory = documentHeaderResponseFactory;
-            BulkReponseFactory = bulkResponseFactory;
+
+            var materializer = new DefaultResponseMaterializer(serializationConfiguration);
+            DocumentReponseFactory = new DocumentResponseFactory(materializer);
+            DocumentHeaderReponseFactory = new DocumentHeaderResponseFactory(materializer);
+            BulkReponseFactory = new BulkResponseFactory(materializer);
         }
 
         public virtual async Task<BulkResponse> BulkAsync(BulkCommand cmd)

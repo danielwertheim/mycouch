@@ -20,16 +20,15 @@ namespace MyCouch.Contexts
         public ISerializer Serializer { get; private set; }
         public IEntityReflector Reflector { get { return EntityReflector; } }
 
-        public Entities(IConnection connection, EntityResponseFactory entityResponseFactory, ISerializer serializer, IEntityReflector entityReflector)
+        public Entities(IConnection connection, SerializationConfiguration serializationConfiguration, IEntityReflector entityReflector)
         {
             Ensure.That(connection, "connection").IsNotNull();
-            Ensure.That(entityResponseFactory, "entityResponseFactory").IsNotNull();
-            Ensure.That(serializer, "serializer").IsNotNull();
+            Ensure.That(serializationConfiguration, "serializationConfiguration").IsNotNull();
             Ensure.That(entityReflector, "entityReflector").IsNotNull();
 
             Connection = connection;
-            EntityResponseFactory = entityResponseFactory;
-            Serializer = serializer;
+            Serializer = new DefaultSerializer(serializationConfiguration);
+            EntityResponseFactory = new EntityResponseFactory(new DefaultResponseMaterializer(serializationConfiguration), Serializer);
             EntityReflector = entityReflector;
         }
 

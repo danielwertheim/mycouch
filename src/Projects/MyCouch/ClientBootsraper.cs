@@ -3,7 +3,6 @@ using MyCouch.Contexts;
 using MyCouch.EntitySchemes;
 using MyCouch.EntitySchemes.Reflections;
 using MyCouch.Net;
-using MyCouch.Responses.ResponseFactories;
 using MyCouch.Serialization;
 
 namespace MyCouch
@@ -13,11 +12,8 @@ namespace MyCouch
         public Func<SerializationConfiguration> SerializationConfigurationFn { get; set; }
         public Func<SerializationConfiguration> EntitySerializationConfigurationFn { get; set; }
         public Func<IEntityReflector> EntityReflectorFn { get; set; }
-        public Func<IResponseMaterializer> ResponseMaterializerFn { get; set; }
-        public Func<IResponseMaterializer> EntityResponseMaterializerFn { get; set; }
 
         public Func<ISerializer> SerializerFn { get; set; }
-        public Func<ISerializer> EntitySerializerFn { get; set; }
         public Func<IConnection, IAttachments> AttachmentsFn { get; set; }
         public Func<IConnection, IDatabases> DatabasesFn { get; set; }
         public Func<IConnection, IDocuments> DocumentsFn { get; set; }
@@ -36,76 +32,35 @@ namespace MyCouch
             ConfigureEntitySerializationConfigurationFn();
          
             ConfigureSerializerFn();
-            ConfigureEntitySerializerFn();
             ConfigureEntityReflectorFn();
-            ConfigureResponseMaterializerFn();
-            ConfigureEntityResponseMaterializerFn();
         }
 
         private void ConfigureAttachmentsFn()
         {
-            AttachmentsFn = cn =>
-            {
-                var responseMaterializer = ResponseMaterializerFn();
-                
-                return new Attachments(
-                    cn,
-                    new AttachmentResponseFactory(responseMaterializer),
-                    new DocumentHeaderResponseFactory(responseMaterializer));
-            };
+            AttachmentsFn = cn => new Attachments(cn, SerializationConfigurationFn());
         }
 
         private void ConfigureDatabasesFn()
         {
-            DatabasesFn = cn =>
-            {
-                var responseMaterializer = ResponseMaterializerFn();
-                
-                return new Databases(
-                    cn,
-                    new DatabaseResponseFactory(responseMaterializer));
-            };
+            DatabasesFn = cn => new Databases(cn, SerializationConfigurationFn());
         }
 
         private void ConfigureDocumentsFn()
         {
-            DocumentsFn = cn =>
-            {
-                var responseMaterializer = ResponseMaterializerFn();
-
-                return new Documents(
-                    cn,
-                    new DocumentResponseFactory(responseMaterializer),
-                    new DocumentHeaderResponseFactory(responseMaterializer),
-                    new BulkResponseFactory(responseMaterializer));
-            };
+            DocumentsFn = cn => new Documents(cn, SerializationConfigurationFn());
         }
 
         private void ConfigureEntitiesFn()
         {
-            EntitiesFn = cn =>
-            {
-                var responseMaterializer = EntityResponseMaterializerFn();
-
-                return new Entities(
-                    cn,
-                    new EntityResponseFactory(responseMaterializer, EntitySerializerFn()),
-                    EntitySerializerFn(),
-                    EntityReflectorFn());
-            };
+            EntitiesFn = cn => new Entities(
+                cn,
+                EntitySerializationConfigurationFn(),
+                EntityReflectorFn());
         }
 
         private void ConfigureViewsFn()
         {
-            ViewsFn = cn =>
-            {
-                var responseMaterializer = EntityResponseMaterializerFn();
-
-                return new Views(
-                    cn,
-                    new JsonViewQueryResponseFactory(responseMaterializer),
-                    new ViewQueryResponseFactory(responseMaterializer));
-            };
+            ViewsFn = cn => new Views(cn, EntitySerializationConfigurationFn());
         }
 
         private void ConfigureEntityReflectorFn()
@@ -149,26 +104,6 @@ namespace MyCouch
         {
             var serializer = new Lazy<DefaultSerializer>(() => new DefaultSerializer(SerializationConfigurationFn()));
             SerializerFn = () => serializer.Value;
-        }
-
-        private void ConfigureEntitySerializerFn()
-        {
-            var serializer = new Lazy<DefaultSerializer>(() => new DefaultSerializer(EntitySerializationConfigurationFn()));
-            EntitySerializerFn = () => serializer.Value;
-        }
-
-        private void ConfigureResponseMaterializerFn()
-        {
-            var responseMaterializer = new Lazy<IResponseMaterializer>(() => new DefaultResponseMaterializer(SerializationConfigurationFn()));
-
-            ResponseMaterializerFn = () => responseMaterializer.Value;
-        }
-
-        private void ConfigureEntityResponseMaterializerFn()
-        {
-            var responseMaterializer = new Lazy<IResponseMaterializer>(() => new DefaultResponseMaterializer(EntitySerializationConfigurationFn()));
-
-            EntityResponseMaterializerFn = () => responseMaterializer.Value;
         }
     }
 }

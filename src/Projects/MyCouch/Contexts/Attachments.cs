@@ -6,6 +6,7 @@ using MyCouch.Extensions;
 using MyCouch.Net;
 using MyCouch.Responses;
 using MyCouch.Responses.ResponseFactories;
+using MyCouch.Serialization;
 
 namespace MyCouch.Contexts
 {
@@ -15,15 +16,16 @@ namespace MyCouch.Contexts
         protected readonly AttachmentResponseFactory AttachmentResponseFactory;
         protected readonly DocumentHeaderResponseFactory DocumentHeaderResponseFactory;
 
-        public Attachments(IConnection connection, AttachmentResponseFactory attachmentResponseFactory, DocumentHeaderResponseFactory documentHeaderResponseFactory)
+        public Attachments(IConnection connection, SerializationConfiguration serializationConfiguration)
         {
             Ensure.That(connection, "connection").IsNotNull();
-            Ensure.That(attachmentResponseFactory, "attachmentResponseFactory").IsNotNull();
-            Ensure.That(documentHeaderResponseFactory, "documentHeaderResponseFactory").IsNotNull();
+            Ensure.That(serializationConfiguration, "serializationConfiguration").IsNotNull();
 
             Connection = connection;
-            AttachmentResponseFactory = attachmentResponseFactory;
-            DocumentHeaderResponseFactory = documentHeaderResponseFactory;
+
+            var materializer = new DefaultResponseMaterializer(serializationConfiguration);
+            AttachmentResponseFactory = new AttachmentResponseFactory(materializer);
+            DocumentHeaderResponseFactory = new DocumentHeaderResponseFactory(materializer);
         }
 
         public virtual Task<AttachmentResponse> GetAsync(string docId, string attachmentName)
