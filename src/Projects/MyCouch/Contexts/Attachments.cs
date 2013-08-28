@@ -10,18 +10,14 @@ using MyCouch.Serialization;
 
 namespace MyCouch.Contexts
 {
-    public class Attachments : IAttachments
+    public class Attachments : ApiContextBase, IAttachments
     {
-        protected readonly IConnection Connection;
         protected readonly AttachmentResponseFactory AttachmentResponseFactory;
         protected readonly DocumentHeaderResponseFactory DocumentHeaderResponseFactory;
 
-        public Attachments(IConnection connection, SerializationConfiguration serializationConfiguration)
+        public Attachments(IConnection connection, SerializationConfiguration serializationConfiguration) : base(connection)
         {
-            Ensure.That(connection, "connection").IsNotNull();
             Ensure.That(serializationConfiguration, "serializationConfiguration").IsNotNull();
-
-            Connection = connection;
 
             var materializer = new DefaultResponseMaterializer(serializationConfiguration);
             AttachmentResponseFactory = new AttachmentResponseFactory(materializer);
@@ -108,11 +104,6 @@ namespace MyCouch.Contexts
                 docId,
                 attachmentName,
                 docRev == null ? string.Empty : string.Concat("?rev=", docRev));
-        }
-
-        protected virtual Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
-        {
-            return Connection.SendAsync(request);
         }
 
         protected virtual AttachmentResponse ProcessAttachmentResponse(HttpResponseMessage response)

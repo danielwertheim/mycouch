@@ -11,18 +11,14 @@ using MyCouch.Serialization;
 
 namespace MyCouch.Contexts
 {
-    public class Views : IViews
+    public class Views : ApiContextBase, IViews
     {
-        protected readonly IConnection Connection;
         protected readonly JsonViewQueryResponseFactory JsonViewQueryResponseFactory;
         protected readonly ViewQueryResponseFactory ViewQueryResponseFactory;
 
-        public Views(IConnection connection, SerializationConfiguration serializationConfiguration)
+        public Views(IConnection connection, SerializationConfiguration serializationConfiguration) : base(connection)
         {
-            Ensure.That(connection, "connection").IsNotNull();
             Ensure.That(serializationConfiguration, "serializationConfiguration").IsNotNull();
-
-            Connection = connection;
 
             var materializer = new DefaultResponseMaterializer(serializationConfiguration);
             JsonViewQueryResponseFactory = new JsonViewQueryResponseFactory(materializer);
@@ -110,11 +106,6 @@ namespace MyCouch.Contexts
         protected virtual string GenerateQueryStringParams(IViewQueryOptions options)
         {
             return string.Join("&", options.ToKeyValues().Select(kv => string.Format("{0}={1}", kv.Key, Uri.EscapeDataString(kv.Value))));
-        }
-
-        protected virtual Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
-        {
-            return Connection.SendAsync(request);
         }
 
         protected virtual JsonViewQueryResponse ProcessHttpResponse(HttpResponseMessage response)

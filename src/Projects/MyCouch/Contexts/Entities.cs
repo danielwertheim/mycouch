@@ -11,22 +11,19 @@ using MyCouch.Serialization;
 
 namespace MyCouch.Contexts
 {
-    public class Entities : IEntities
+    public class Entities : ApiContextBase, IEntities
     {
-        protected readonly IConnection Connection;
         protected readonly EntityResponseFactory EntityResponseFactory;
         protected readonly IEntityReflector EntityReflector;
 
         public ISerializer Serializer { get; private set; }
         public IEntityReflector Reflector { get { return EntityReflector; } }
 
-        public Entities(IConnection connection, SerializationConfiguration serializationConfiguration, IEntityReflector entityReflector)
+        public Entities(IConnection connection, SerializationConfiguration serializationConfiguration, IEntityReflector entityReflector) : base(connection)
         {
-            Ensure.That(connection, "connection").IsNotNull();
             Ensure.That(serializationConfiguration, "serializationConfiguration").IsNotNull();
             Ensure.That(entityReflector, "entityReflector").IsNotNull();
 
-            Connection = connection;
             Serializer = new DefaultSerializer(serializationConfiguration);
             EntityResponseFactory = new EntityResponseFactory(new DefaultResponseMaterializer(serializationConfiguration), Serializer);
             EntityReflector = entityReflector;
@@ -90,11 +87,6 @@ namespace MyCouch.Contexts
             var res = SendAsync(req);
             
             return ProcessEntityResponse(cmd, await res.ForAwait());
-        }
-
-        protected virtual Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
-        {
-            return Connection.SendAsync(request);
         }
 
         protected virtual string SerializeEntity<T>(T entity) where T : class

@@ -10,19 +10,15 @@ using MyCouch.Serialization;
 
 namespace MyCouch.Contexts
 {
-    public class Documents : IDocuments
+    public class Documents : ApiContextBase, IDocuments
     {
-        protected readonly IConnection Connection;
         protected readonly DocumentResponseFactory DocumentReponseFactory;
         protected readonly DocumentHeaderResponseFactory DocumentHeaderReponseFactory;
         protected readonly BulkResponseFactory BulkReponseFactory;
 
-        public Documents(IConnection connection, SerializationConfiguration serializationConfiguration)
+        public Documents(IConnection connection, SerializationConfiguration serializationConfiguration) : base(connection)
         {
-            Ensure.That(connection, "connection").IsNotNull();
             Ensure.That(serializationConfiguration, "serializationConfiguration").IsNotNull();
-
-            Connection = connection;
 
             var materializer = new DefaultResponseMaterializer(serializationConfiguration);
             DocumentReponseFactory = new DocumentResponseFactory(materializer);
@@ -158,11 +154,6 @@ namespace MyCouch.Contexts
             var res = SendAsync(req);
 
             return ProcessDocumentHeaderResponse(await res.ForAwait());
-        }
-
-        protected virtual Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
-        {
-            return Connection.SendAsync(request);
         }
 
         protected virtual HttpRequestMessage CreateRequest(BulkCommand cmd)

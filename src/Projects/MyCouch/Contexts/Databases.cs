@@ -9,17 +9,14 @@ using MyCouch.Serialization;
 
 namespace MyCouch.Contexts
 {
-    public class Databases : IDatabases 
+    public class Databases : ApiContextBase, IDatabases
     {
-        protected readonly IConnection Connection;
         protected readonly DatabaseResponseFactory DatabaseResponseFactory;
 
-        public Databases(IConnection connection, SerializationConfiguration serializationConfiguration)
+        public Databases(IConnection connection, SerializationConfiguration serializationConfiguration) : base(connection)
         {
-            Ensure.That(connection, "connection").IsNotNull();
             Ensure.That(serializationConfiguration, "serializationConfiguration").IsNotNull();
 
-            Connection = connection;
             DatabaseResponseFactory = new DatabaseResponseFactory(new DefaultResponseMaterializer(serializationConfiguration));
         }
 
@@ -47,11 +44,6 @@ namespace MyCouch.Contexts
         protected virtual string GenerateRequestUrl()
         {
             return Connection.Address.ToString();
-        }
-
-        protected virtual Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
-        {
-            return Connection.SendAsync(request);
         }
 
         protected virtual DatabaseResponse ProcessResponse(HttpResponseMessage response)
