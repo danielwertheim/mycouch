@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MyCouch
+namespace MyCouch.Responses
 {
 #if !NETFX_CORE
     [Serializable]

@@ -5,7 +5,8 @@ using MyCouch.Commands;
 using MyCouch.EntitySchemes;
 using MyCouch.Extensions;
 using MyCouch.Net;
-using MyCouch.ResponseFactories;
+using MyCouch.Responses;
+using MyCouch.Responses.ResponseFactories;
 using MyCouch.Serialization;
 
 namespace MyCouch

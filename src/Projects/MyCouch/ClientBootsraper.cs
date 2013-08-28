@@ -2,7 +2,7 @@
 using MyCouch.EntitySchemes;
 using MyCouch.EntitySchemes.Reflections;
 using MyCouch.Net;
-using MyCouch.ResponseFactories;
+using MyCouch.Responses.ResponseFactories;
 using MyCouch.Serialization;
 
 namespace MyCouch

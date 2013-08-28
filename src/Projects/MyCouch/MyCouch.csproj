@@ -50,11 +50,11 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="AttachmentResponse.cs" />
+    <Compile Include="Responses\AttachmentResponse.cs" />
     <Compile Include="Attachments.cs" />
     <Compile Include="ClientExecuteExtensions.cs" />
     <Compile Include="Commands\BulkCommand.cs" />
-    <Compile Include="BulkResponse.cs" />
+    <Compile Include="Responses\BulkResponse.cs" />
     <Compile Include="Commands\CopyDocumentCommand.cs" />
     <Compile Include="Commands\DeleteDocumentCommand.cs" />
     <Compile Include="Commands\DeleteEntityCommand.cs" />
@@ -66,13 +66,13 @@
     <Compile Include="Commands\PutDocumentCommand.cs" />
     <Compile Include="Commands\PutEntityCommand.cs" />
     <Compile Include="Configurations\ConnectionString.cs" />
-    <Compile Include="DatabaseResponse.cs" />
+    <Compile Include="Responses\DatabaseResponse.cs" />
     <Compile Include="Databases.cs" />
     <Compile Include="Commands\DeleteAttachmentCommand.cs" />
-    <Compile Include="DocumentHeaderResponse.cs" />
+    <Compile Include="Responses\DocumentHeaderResponse.cs" />
     <Compile Include="Commands\GetAttachmentCommand.cs" />
     <Compile Include="Entities.cs" />
-    <Compile Include="EntityResponse.cs" />
+    <Compile Include="Responses\EntityResponse.cs" />
     <Compile Include="EntitySchemes\EntityIdMember.cs" />
     <Compile Include="EntitySchemes\EntityMember.cs" />
     <Compile Include="EntitySchemes\EntityReflector.cs" />
@@ -97,15 +97,15 @@
     <Compile Include="Commands\ReplaceDocumentCommand.cs" />
     <Compile Include="ISystemViewQuery.cs" />
     <Compile Include="Now.cs" />
-    <Compile Include="ResponseFactories\BulkResponseFactory.cs" />
-    <Compile Include="ResponseFactories\AttachmentResponseFactory.cs" />
-    <Compile Include="ResponseFactories\DocumentHeaderResponseFactoryBase.cs" />
-    <Compile Include="ResponseFactories\EntityResponseFactory.cs" />
-    <Compile Include="ResponseFactories\JsonViewQueryResponseFactory.cs" />
-    <Compile Include="ResponseFactories\ViewQueryResponseFactory.cs" />
-    <Compile Include="ResponseFactories\DocumentResponseFactory.cs" />
-    <Compile Include="ResponseFactories\DocumentHeaderResponseFactory.cs" />
-    <Compile Include="ResponseFactories\DatabaseResponseFactory.cs" />
+    <Compile Include="Responses\ResponseFactories\BulkResponseFactory.cs" />
+    <Compile Include="Responses\ResponseFactories\AttachmentResponseFactory.cs" />
+    <Compile Include="Responses\ResponseFactories\DocumentHeaderResponseFactoryBase.cs" />
+    <Compile Include="Responses\ResponseFactories\EntityResponseFactory.cs" />
+    <Compile Include="Responses\ResponseFactories\JsonViewQueryResponseFactory.cs" />
+    <Compile Include="Responses\ResponseFactories\ViewQueryResponseFactory.cs" />
+    <Compile Include="Responses\ResponseFactories\DocumentResponseFactory.cs" />
+    <Compile Include="Responses\ResponseFactories\DocumentHeaderResponseFactory.cs" />
+    <Compile Include="Responses\ResponseFactories\DatabaseResponseFactory.cs" />
     <Compile Include="Serialization\Conventions\DocTypeSerializationConvention.cs" />
     <Compile Include="Serialization\Conventions\ISerializationConvention.cs" />
     <Compile Include="Serialization\Conventions\SerializationConventions.cs" />
@@ -117,16 +117,16 @@
     <Compile Include="Serialization\JsonWriterFactory.cs" />
     <Compile Include="Serialization\SerializationConfiguration.cs" />
     <Compile Include="SystemViewQuery.cs" />
-    <Compile Include="Response.cs" />
+    <Compile Include="Responses\Response.cs" />
     <Compile Include="Extensions\HttpExtensions.cs" />
-    <Compile Include="ResponseFactories\ResponseFactoryBase.cs" />
+    <Compile Include="Responses\ResponseFactories\ResponseFactoryBase.cs" />
     <Compile Include="Net\HttpRequest.cs" />
     <Compile Include="IResponse.cs" />
     <Compile Include="Net\HttpContentTypes.cs" />
     <Compile Include="Net\BasicHttpClientConnection.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="Documents.cs" />
-    <Compile Include="DocumentResponse.cs" />
+    <Compile Include="Responses\DocumentResponse.cs" />
     <Compile Include="Net\IConnection.cs" />
     <Compile Include="IClient.cs" />
     <Compile Include="IDocuments.cs" />
@@ -135,7 +135,7 @@
     <Compile Include="IViewQueryOptions.cs" />
     <Compile Include="IViews.cs" />
     <Compile Include="Querying\Stale.cs" />
-    <Compile Include="JsonViewQueryResponse.cs" />
+    <Compile Include="Responses\JsonViewQueryResponse.cs" />
     <Compile Include="Serialization\SerializationContractResolver.cs" />
     <Compile Include="Serialization\ISerializer.cs" />
     <Compile Include="Net\JsonContent.cs" />
@@ -148,7 +148,7 @@
     <Compile Include="ViewQuery.cs" />
     <Compile Include="Querying\ViewQueryConfigurator.cs" />
     <Compile Include="Querying\ViewQueryOptions.cs" />
-    <Compile Include="ViewQueryResponse.cs" />
+    <Compile Include="Responses\ViewQueryResponse.cs" />
     <Compile Include="Views.cs" />
   </ItemGroup>
   <ItemGroup>

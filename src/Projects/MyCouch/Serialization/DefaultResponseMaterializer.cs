@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using EnsureThat;
+using MyCouch.Responses;
 using Newtonsoft.Json;
 
 namespace MyCouch.Serialization

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using EnsureThat;
 using MyCouch.EntitySchemes;
+using MyCouch.Responses;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 

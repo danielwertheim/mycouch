@@ -4,7 +4,7 @@ using EnsureThat;
 using MyCouch.Extensions;
 using MyCouch.Serialization;
 
-namespace MyCouch.ResponseFactories
+namespace MyCouch.Responses.ResponseFactories
 {
     public abstract class ResponseFactoryBase
     {

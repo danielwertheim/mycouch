@@ -2,6 +2,7 @@
 using FluentAssertions;
 using MyCouch.EntitySchemes;
 using MyCouch.EntitySchemes.Reflections;
+using MyCouch.Responses;
 using MyCouch.Serialization;
 using MyCouch.Testing;
 using MyCouch.Testing.Model;

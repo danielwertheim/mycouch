@@ -1,4 +1,5 @@
 using System.IO;
+using MyCouch.Responses;
 
 namespace MyCouch.Serialization
 {
