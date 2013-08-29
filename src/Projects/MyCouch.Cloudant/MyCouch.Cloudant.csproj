@@ -47,6 +47,11 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="CloudantClient.cs" />
+    <Compile Include="CloudantClientBootstraper.cs" />
+    <Compile Include="Contexts\Search.cs" />
+    <Compile Include="ICloudantClient.cs" />
+    <Compile Include="ISearch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
