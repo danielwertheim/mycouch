@@ -1,12 +1,9 @@
-﻿#if !NETFX_CORE
-using MyCouch.Configurations;
-#endif
-using MyCouch.Testing;
-
-namespace MyCouch.IntegrationTests
+﻿namespace MyCouch.IntegrationTests
 {
     internal static class IntegrationTestsRuntime
     {
+        private const string ServerUrl = "http://localhost:5984";
+
         static IntegrationTestsRuntime()
         {
             using (var client = CreateClient())
@@ -18,13 +15,17 @@ namespace MyCouch.IntegrationTests
 
         internal static IClient CreateClient()
         {
-#if !NETFX_CORE
-            var url = ConnectionString.Get("mycouchtests");
-#else
-            var url = "http://localhost:5984";
-#endif
-            var uriBuilder = new MyCouchUriBuilder(url)
-                .SetDbName(TestConstants.TestDbName)
+            var uriBuilder = new MyCouchUriBuilder(ServerUrl)
+                .SetDbName("mycouchtests")
+                .SetBasicCredentials("mycouchtester", "p@ssword");
+
+            return new Client(uriBuilder.Build());
+        }
+
+        internal static IClient CreateCloudantClient()
+        {
+            var uriBuilder = new MyCouchUriBuilder(ServerUrl)
+                .SetDbName("mycouchcloudanttests")
                 .SetBasicCredentials("mycouchtester", "p@ssword");
 
             return new Client(uriBuilder.Build());

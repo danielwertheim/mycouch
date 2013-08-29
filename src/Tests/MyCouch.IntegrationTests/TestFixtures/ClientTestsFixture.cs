@@ -2,11 +2,11 @@
 
 namespace MyCouch.IntegrationTests.TestFixtures
 {
-    public class ClientFixture : IDisposable
+    public class ClientTestsFixture : IDisposable
     {
         public IClient Client { get; protected set; }
 
-        public ClientFixture()
+        public ClientTestsFixture()
         {
             Client = IntegrationTestsRuntime.CreateClient();
         }

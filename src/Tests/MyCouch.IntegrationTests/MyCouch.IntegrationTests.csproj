@@ -58,10 +58,12 @@
     <Compile Include="ClientTests\EntitiesTests.cs" />
     <Compile Include="ClientTests\ViewsTests.cs" />
     <Compile Include="ClientTests\ClientTestsOf.cs" />
+    <Compile Include="CloudantTests\CloudantTestsOf.cs" />
     <Compile Include="IntegrationTestsRuntime.cs" />
     <Compile Include="IPreserveStatePerFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestFixtures\ClientFixture.cs" />
+    <Compile Include="TestFixtures\ClientTestsFixture.cs" />
+    <Compile Include="TestFixtures\CloudantTestsFixture.cs" />
     <Compile Include="TestFixtures\ViewsFixture.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -79,7 +81,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
