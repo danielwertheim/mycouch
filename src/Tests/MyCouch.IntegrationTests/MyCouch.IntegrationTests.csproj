@@ -65,6 +65,10 @@
     <Compile Include="TestFixtures\ViewsFixture.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Projects\MyCouch.Cloudant\MyCouch.Cloudant.csproj">
+      <Project>{7029ef6d-37d0-4971-b993-94f97c4e0e4d}</Project>
+      <Name>MyCouch.Cloudant</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Projects\MyCouch\MyCouch.csproj">
       <Project>{f721c24f-162e-4505-9d5e-f7565ca16886}</Project>
       <Name>MyCouch</Name>
