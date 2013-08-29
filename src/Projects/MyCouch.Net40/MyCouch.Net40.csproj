@@ -137,6 +137,9 @@
     <Compile Include="..\MyCouch\Configurations\ConnectionString.cs">
       <Link>Configurations\ConnectionString.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch\Contexts\ApiContextBase.cs">
+      <Link>Contexts\ApiContextBase.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch\Contexts\Attachments.cs">
       <Link>Contexts\Attachments.cs</Link>
     </Compile>

@@ -161,20 +161,23 @@
     <Compile Include="..\MyCouch\Configurations\ConnectionString.cs">
       <Link>Configurations\ConnectionString.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Contexts\Attachments.cs">
-      <Link>Attachments.cs</Link>
+    <Compile Include="..\MyCouch\Contexts\ApiContextBase.cs">
+      <Link>Contexts\ApiContextBase.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Contexts\Databases.cs">
-      <Link>Databases.cs</Link>
+    <Compile Include="..\mycouch\contexts\Attachments.cs">
+      <Link>Contexts\Attachments.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Contexts\Documents.cs">
-      <Link>Documents.cs</Link>
+    <Compile Include="..\mycouch\contexts\Databases.cs">
+      <Link>Contexts\Databases.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Contexts\Entities.cs">
-      <Link>Entities.cs</Link>
+    <Compile Include="..\mycouch\contexts\Documents.cs">
+      <Link>Contexts\Documents.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Contexts\Views.cs">
-      <Link>Views.cs</Link>
+    <Compile Include="..\mycouch\contexts\Entities.cs">
+      <Link>Contexts\Entities.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\contexts\Views.cs">
+      <Link>Contexts\Views.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch\EntitySchemes\EntityIdMember.cs">
       <Link>EntitySchemes\EntityIdMember.cs</Link>
