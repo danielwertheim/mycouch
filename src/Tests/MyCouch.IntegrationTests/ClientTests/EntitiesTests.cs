@@ -16,7 +16,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         [Fact]
         public void When_post_of_new_document_Using_an_entity_The_document_is_persisted()
         {
-            var artist = TestData.Artists.CreateArtist();
+            var artist = ClientTestData.Artists.CreateArtist();
             var initialId = artist.ArtistId;
 
             var response = SUT.PostAsync(artist).Result;
@@ -27,7 +27,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         [Fact]
         public void When_put_of_new_document_Using_an_entity_The_document_is_replaced()
         {
-            var artist = TestData.Artists.CreateArtist();
+            var artist = ClientTestData.Artists.CreateArtist();
             var initialId = artist.ArtistId;
 
             var response = SUT.PutAsync(artist).Result;
@@ -38,7 +38,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         [Fact]
         public void When_put_of_existing_document_Using_an_entity_The_document_is_replaced()
         {
-            var artist = TestData.Artists.CreateArtist();
+            var artist = ClientTestData.Artists.CreateArtist();
             var initialId = artist.ArtistId;
             SUT.PostAsync(artist).Wait();
 
@@ -50,18 +50,18 @@ namespace MyCouch.IntegrationTests.ClientTests
         [Fact]
         public void When_put_of_existing_document_Using_wrong_rev_A_conflict_is_detected()
         {
-            var postResponse = SUT.PostAsync(TestData.Artists.Artist1).Result;
+            var postResponse = SUT.PostAsync(ClientTestData.Artists.Artist1).Result;
 
             postResponse.Entity.ArtistRev = "2-179d36174ee192594c63b8e8d8f09345";
-            var response = SUT.PutAsync(TestData.Artists.Artist1).Result;
+            var response = SUT.PutAsync(ClientTestData.Artists.Artist1).Result;
 
-            response.Should().Be409Put(TestData.Artists.Artist1Id);
+            response.Should().Be409Put(ClientTestData.Artists.Artist1Id);
         }
 
         [Fact]
         public void When_delete_of_existing_document_Using_an_entity_The_document_is_deleted()
         {
-            var artist = TestData.Artists.CreateArtist();
+            var artist = ClientTestData.Artists.CreateArtist();
             var initialId = artist.ArtistId;
             SUT.PostAsync(artist).Wait();
 
@@ -73,7 +73,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         [Fact]
         public void Flow_tests()
         {
-            var artists = TestData.Artists.CreateArtists(2);
+            var artists = ClientTestData.Artists.CreateArtists(2);
             var artist1 = artists[0];
             var artist2 = artists[1];
 

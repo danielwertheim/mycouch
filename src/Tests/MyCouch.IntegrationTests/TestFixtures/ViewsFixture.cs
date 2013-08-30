@@ -15,7 +15,7 @@ namespace MyCouch.IntegrationTests.TestFixtures
 
         public ViewsFixture()
         {
-            Artists = TestData.Artists.CreateArtists(10);
+            Artists = ClientTestData.Artists.CreateArtists(10);
 
             _client = IntegrationTestsRuntime.CreateClient();
 
@@ -30,10 +30,10 @@ namespace MyCouch.IntegrationTests.TestFixtures
                 _client.Entities.Reflector.RevMember.SetValueTo(artist, row.Rev);
             }
 
-            _client.Documents.PostAsync(TestData.Views.Artists).Wait();
+            _client.Documents.PostAsync(ClientTestData.Views.Artists).Wait();
 
-            var touchView1 = new ViewQuery(TestData.Views.ArtistsAlbumsViewId).Configure(q => q.Stale(Stale.UpdateAfter));
-            var touchView2 = new ViewQuery(TestData.Views.ArtistsNameNoValueViewId).Configure(q => q.Stale(Stale.UpdateAfter));
+            var touchView1 = new ViewQuery(ClientTestData.Views.ArtistsAlbumsViewId).Configure(q => q.Stale(Stale.UpdateAfter));
+            var touchView2 = new ViewQuery(ClientTestData.Views.ArtistsNameNoValueViewId).Configure(q => q.Stale(Stale.UpdateAfter));
 
             _client.Views.RunQueryAsync(touchView1).Wait();
             _client.Views.RunQueryAsync(touchView2).Wait();

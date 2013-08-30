@@ -24,7 +24,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         [Fact]
         public void When_IncludeDocs_and_no_value_is_returned_for_string_response_Then_the_included_docs_are_extracted()
         {
-            var query = new ViewQuery(TestData.Views.ArtistsNameNoValueViewId).Configure(cfg => cfg.IncludeDocs(true));
+            var query = new ViewQuery(ClientTestData.Views.ArtistsNameNoValueViewId).Configure(cfg => cfg.IncludeDocs(true));
 
             var response = SUT.RunQueryAsync(query).Result;
 
@@ -39,7 +39,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         [Fact]
         public void When_IncludeDocs_and_no_value_is_returned_for_entity_response_Then_the_included_docs_are_extracted()
         {
-            var query = new ViewQuery(TestData.Views.ArtistsNameNoValueViewId).Configure(cfg => cfg.IncludeDocs(true));
+            var query = new ViewQuery(ClientTestData.Views.ArtistsNameNoValueViewId).Configure(cfg => cfg.IncludeDocs(true));
 
             var response = SUT.RunQueryAsync<Artist>(query).Result;
 
@@ -54,7 +54,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         [Fact]
         public void When_IncludeDocs_and_no_value_is_returned_but_non_array_doc_is_included_Then_the_included_docs_are_not_extracted()
         {
-            var query = new ViewQuery(TestData.Views.ArtistsNameNoValueViewId).Configure(cfg => cfg.IncludeDocs(true));
+            var query = new ViewQuery(ClientTestData.Views.ArtistsNameNoValueViewId).Configure(cfg => cfg.IncludeDocs(true));
 
             var response = SUT.RunQueryAsync<string[]>(query).Result;
 
@@ -70,7 +70,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         public void When_Skipping_2_of_10_using_json_Then_8_rows_are_returned()
         {
             var artists = Artists.Skip(2);
-            var query = new ViewQuery(TestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Skip(2));
+            var query = new ViewQuery(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Skip(2));
 
             var response = SUT.RunQueryAsync(query).Result;
 
@@ -81,7 +81,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         public void When_Skipping_2_of_10_using_json_array_Then_8_rows_are_returned()
         {
             var artists = Artists.Skip(2);
-            var query = new ViewQuery(TestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Skip(2));
+            var query = new ViewQuery(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Skip(2));
 
             var response = SUT.RunQueryAsync<string[]>(query).Result;
 
@@ -92,7 +92,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         public void When_Skipping_2_of_10_using_entities_Then_8_rows_are_returned()
         {
             var artists = Artists.Skip(2);
-            var query = new ViewQuery(TestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Skip(2));
+            var query = new ViewQuery(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Skip(2));
 
             var response = SUT.RunQueryAsync<Album[]>(query).Result;
 
@@ -103,7 +103,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         public void When_Limit_to_2_using_json_Then_2_rows_are_returned()
         {
             var artists = Artists.Take(2);
-            var query = new ViewQuery(TestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Limit(2));
+            var query = new ViewQuery(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Limit(2));
 
             var response = SUT.RunQueryAsync(query).Result;
 
@@ -114,7 +114,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         public void When_Limit_to_2_using_json_array_Then_2_rows_are_returned()
         {
             var artists = Artists.Take(2);
-            var query = new ViewQuery(TestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Limit(2));
+            var query = new ViewQuery(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Limit(2));
 
             var response = SUT.RunQueryAsync<string[]>(query).Result;
 
@@ -125,7 +125,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         public void When_Limit_to_2_using_entities_Then_2_rows_are_returned()
         {
             var artists = Artists.Take(2);
-            var query = new ViewQuery(TestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Limit(2));
+            var query = new ViewQuery(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Limit(2));
 
             var response = SUT.RunQueryAsync<Album[]>(query).Result;
 
@@ -136,7 +136,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         public void When_Key_is_specified_using_json_Then_matching_row_is_returned()
         {
             var artist = Artists[2];
-            var query = new ViewQuery(TestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Key(artist.Name));
+            var query = new ViewQuery(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Key(artist.Name));
 
             var response = SUT.RunQueryAsync(query).Result;
 
@@ -147,7 +147,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         public void When_Key_is_specified_using_json_array_Then_matching_row_is_returned()
         {
             var artist = Artists[2];
-            var query = new ViewQuery(TestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Key(artist.Name));
+            var query = new ViewQuery(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Key(artist.Name));
 
             var response = SUT.RunQueryAsync<string[]>(query).Result;
 
@@ -158,7 +158,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         public void When_Key_is_specified_using_entities_Then_matching_row_is_returned()
         {
             var artist = Artists[2];
-            var query = new ViewQuery(TestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Key(artist.Name));
+            var query = new ViewQuery(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Key(artist.Name));
 
             var response = SUT.RunQueryAsync<Album[]>(query).Result;
 
@@ -170,7 +170,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         {
             var artists = Artists.Skip(2).Take(3).ToArray();
             var keys = artists.Select(a => a.Name).ToArray();
-            var query = new ViewQuery(TestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Keys(keys));
+            var query = new ViewQuery(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Keys(keys));
 
             var response = SUT.RunQueryAsync(query).Result;
 
@@ -182,7 +182,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         {
             var artists = Artists.Skip(2).Take(3).ToArray();
             var keys = artists.Select(a => a.Name).ToArray();
-            var query = new ViewQuery(TestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Keys(keys));
+            var query = new ViewQuery(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Keys(keys));
 
             var response = SUT.RunQueryAsync<string[]>(query).Result;
 
@@ -194,7 +194,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         {
             var artists = Artists.Skip(2).Take(3).ToArray();
             var keys = artists.Select(a => a.Name).ToArray();
-            var query = new ViewQuery(TestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Keys(keys));
+            var query = new ViewQuery(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Keys(keys));
 
             var response = SUT.RunQueryAsync<Album[]>(query).Result;
 
@@ -205,7 +205,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         public void When_StartKey_and_EndKey_are_specified_using_json_Then_matching_rows_are_returned()
         {
             var artists = Artists.Skip(2).Take(5).ToArray();
-            var query = new ViewQuery(TestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg
+            var query = new ViewQuery(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg
                 .StartKey(artists.First().Name)
                 .EndKey(artists.Last().Name));
 
@@ -218,7 +218,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         public void When_StartKey_and_EndKey_are_specified_using_json_array_Then_matching_rows_are_returned()
         {
             var artists = Artists.Skip(2).Take(5).ToArray();
-            var query = new ViewQuery(TestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg
+            var query = new ViewQuery(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg
                 .StartKey(artists.First().Name)
                 .EndKey(artists.Last().Name));
 
@@ -231,7 +231,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         public void When_StartKey_and_EndKey_are_specified_using_entities_Then_matching_rows_are_returned()
         {
             var artists = Artists.Skip(2).Take(5).ToArray();
-            var query = new ViewQuery(TestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg
+            var query = new ViewQuery(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg
                 .StartKey(artists.First().Name)
                 .EndKey(artists.Last().Name));
 
@@ -244,7 +244,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         public void When_StartKey_and_EndKey_with_non_inclusive_end_are_specified_using_json_Then_matching_rows_are_returned()
         {
             var artists = Artists.Skip(2).Take(5).ToArray();
-            var query = new ViewQuery(TestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg
+            var query = new ViewQuery(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg
                 .StartKey(artists.First().Name)
                 .EndKey(artists.Last().Name)
                 .InclusiveEnd(false));
@@ -258,7 +258,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         public void When_StartKey_and_EndKey_with_non_inclusive_end_are_specified_using_json_array_Then_matching_rows_are_returned()
         {
             var artists = Artists.Skip(2).Take(5).ToArray();
-            var query = new ViewQuery(TestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg
+            var query = new ViewQuery(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg
                 .StartKey(artists.First().Name)
                 .EndKey(artists.Last().Name)
                 .InclusiveEnd(false));
@@ -272,7 +272,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         public void When_StartKey_and_EndKey_with_non_inclusive_end_are_specified_using_entities_Then_matching_rows_are_returned()
         {
             var artists = Artists.Skip(2).Take(5).ToArray();
-            var query = new ViewQuery(TestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg
+            var query = new ViewQuery(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg
                 .StartKey(artists.First().Name)
                 .EndKey(artists.Last().Name)
                 .InclusiveEnd(false));

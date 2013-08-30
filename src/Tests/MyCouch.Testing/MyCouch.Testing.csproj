@@ -53,13 +53,14 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="CloudantClientTestData.cs" />
     <Compile Include="CustomAsserts.cs" />
     <Compile Include="JsonTestData.cs" />
     <Compile Include="Model\Artist.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shoulds.cs" />
     <Compile Include="TestConstants.cs" />
-    <Compile Include="TestData.cs" />
+    <Compile Include="ClientTestData.cs" />
     <Compile Include="TestsOf.cs" />
     <Compile Include="TypeExtensions.cs" />
   </ItemGroup>

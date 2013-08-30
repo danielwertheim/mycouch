@@ -23,7 +23,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         [Fact]
         public void When_exists_using_not_matching_rev_The_response_is_empty()
         {
-            var postResponse = SUT.PostAsync(TestData.Artists.Artist1Json).Result;
+            var postResponse = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
 
             var response = SUT.ExistsAsync(postResponse.Id, "1-795258d03c3bdb58fffc409e153c5d45").Result;
 
@@ -33,7 +33,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         [Fact]
         public void When_exists_using_matching_id_The_response_is_ok()
         {
-            var postResponse = SUT.PostAsync(TestData.Artists.Artist1Json).Result;
+            var postResponse = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
 
             var response = SUT.ExistsAsync(postResponse.Id).Result;
 
@@ -43,7 +43,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         [Fact]
         public void When_exists_using_matching_id_and_rev_The_response_is_ok()
         {
-            var postResponse = SUT.PostAsync(TestData.Artists.Artist1Json).Result;
+            var postResponse = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
 
             var response = SUT.ExistsAsync(postResponse.Id, postResponse.Rev).Result;
 
@@ -53,54 +53,54 @@ namespace MyCouch.IntegrationTests.ClientTests
         [Fact]
         public void When_post_of_new_document_The_document_is_persisted()
         {
-            var response = SUT.PostAsync(TestData.Artists.Artist1Json).Result;
+            var response = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
 
-            response.Should().BeSuccessfulPost(TestData.Artists.Artist1Id);
+            response.Should().BeSuccessfulPost(ClientTestData.Artists.Artist1Id);
         }
 
         [Fact]
         public void When_put_of_new_document_The_document_is_replaced()
         {
-            var response = SUT.PutAsync(TestData.Artists.Artist1Id, TestData.Artists.Artist1Json).Result;
+            var response = SUT.PutAsync(ClientTestData.Artists.Artist1Id, ClientTestData.Artists.Artist1Json).Result;
 
-            response.Should().BeSuccessfulPutOfNew(TestData.Artists.Artist1Id);
+            response.Should().BeSuccessfulPutOfNew(ClientTestData.Artists.Artist1Id);
         }
         
         [Fact]
         public void When_put_of_existing_document_The_document_is_replaced()
         {
-            var postResponse = SUT.PostAsync(TestData.Artists.Artist1Json).Result;
+            var postResponse = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
             var getResponse = SUT.GetAsync(postResponse.Id).Result;
 
             var response = SUT.PutAsync(getResponse.Id, getResponse.Content).Result;
 
-            response.Should().BeSuccessfulPut(TestData.Artists.Artist1Id);
+            response.Should().BeSuccessfulPut(ClientTestData.Artists.Artist1Id);
         }
 
         [Fact]
         public void When_put_of_existing_document_Using_wrong_rev_A_conflict_is_detected()
         {
-            var postResponse = SUT.PostAsync(TestData.Artists.Artist1Json).Result;
+            var postResponse = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
 
-            var response = SUT.PutAsync(postResponse.Id, "2-179d36174ee192594c63b8e8d8f09345", TestData.Artists.Artist1Json).Result;
+            var response = SUT.PutAsync(postResponse.Id, "2-179d36174ee192594c63b8e8d8f09345", ClientTestData.Artists.Artist1Json).Result;
 
-            response.Should().Be409Put(TestData.Artists.Artist1Id);
+            response.Should().Be409Put(ClientTestData.Artists.Artist1Id);
         }
 
         [Fact]
         public void When_delete_of_existing_document_Using_id_and_rev_The_document_is_deleted()
         {
-            var r = SUT.PostAsync(TestData.Artists.Artist1Json).Result;
+            var r = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
 
             var response = SUT.DeleteAsync(r.Id, r.Rev).Result;
 
-            response.Should().BeSuccessfulDelete(TestData.Artists.Artist1Id);
+            response.Should().BeSuccessfulDelete(ClientTestData.Artists.Artist1Id);
         }
 
         [Fact]
         public void When_copying_using_srcId_The_document_is_copied()
         {
-            var artistPost = SUT.PostAsync(TestData.Artists.Artist1Json).Result;
+            var artistPost = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
             var srcArtist = SUT.GetAsync(artistPost.Id).Result;
             var newCopyId = "copyTest:1";
 
@@ -117,7 +117,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         [Fact]
         public void When_copying_using_srcId_and_srcRev_The_document_is_copied()
         {
-            var artistPost1 = SUT.PostAsync(TestData.Artists.Artist1Json).Result;
+            var artistPost1 = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
             var srcArtist = SUT.GetAsync(artistPost1.Id).Result;
             const string newCopyId = "copyTest:1";
 
@@ -136,8 +136,8 @@ namespace MyCouch.IntegrationTests.ClientTests
         [Fact]
         public void When_replacing_using_srcId_The_document_is_replacing_target()
         {
-            var artist1Post = SUT.PostAsync(TestData.Artists.Artist1Json).Result;
-            var artist2Post = SUT.PostAsync(TestData.Artists.Artist2Json).Result;
+            var artist1Post = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
+            var artist2Post = SUT.PostAsync(ClientTestData.Artists.Artist2Json).Result;
             var srcArtist1 = SUT.GetAsync(artist1Post.Id).Result;
 
             var replaceResponse = SUT.ReplaceAsync(artist1Post.Id, artist2Post.Id, artist2Post.Rev).Result;
@@ -153,8 +153,8 @@ namespace MyCouch.IntegrationTests.ClientTests
         [Fact]
         public void When_replacing_using_srcId_and_srcRev_The_document_is_replacing_target()
         {
-            var artist1Post = SUT.PostAsync(TestData.Artists.Artist1Json).Result;
-            var artist2Post = SUT.PostAsync(TestData.Artists.Artist2Json).Result;
+            var artist1Post = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
+            var artist2Post = SUT.PostAsync(ClientTestData.Artists.Artist2Json).Result;
             var srcArtist1 = SUT.GetAsync(artist1Post.Id).Result;
 
             var replaceResponse = SUT.ReplaceAsync(artist1Post.Id, artist1Post.Rev, artist2Post.Id, artist2Post.Rev).Result;
@@ -170,11 +170,11 @@ namespace MyCouch.IntegrationTests.ClientTests
         [Fact]
         public void Flow_tests()
         {
-            var post1 = SUT.PostAsync(TestData.Artists.Artist1Json);
-            var post2 = SUT.PostAsync(TestData.Artists.Artist2Json);
+            var post1 = SUT.PostAsync(ClientTestData.Artists.Artist1Json);
+            var post2 = SUT.PostAsync(ClientTestData.Artists.Artist2Json);
 
-            post1.Result.Should().BeSuccessfulPost(TestData.Artists.Artist1Id);
-            post2.Result.Should().BeSuccessfulPost(TestData.Artists.Artist2Id);
+            post1.Result.Should().BeSuccessfulPost(ClientTestData.Artists.Artist1Id);
+            post2.Result.Should().BeSuccessfulPost(ClientTestData.Artists.Artist2Id);
 
             var get1 = SUT.GetAsync(post1.Result.Id);
             var get2 = SUT.GetAsync(post2.Result.Id);

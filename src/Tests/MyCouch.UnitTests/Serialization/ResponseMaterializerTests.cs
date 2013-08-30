@@ -166,22 +166,22 @@ namespace MyCouch.UnitTests.Serialization
             response.Rows[0].Id.Should().Be("1");
             response.Rows[0].Key.Should().Be("Fake artist 1");
             response.Rows[0].Value.Length.Should().Be(1);
-            CustomAsserts.AreValueEqual(TestData.Artists.Artist1.Albums, response.Rows[0].Value);
+            CustomAsserts.AreValueEqual(ClientTestData.Artists.Artist1.Albums, response.Rows[0].Value);
 
             response.Rows[1].Id.Should().Be("2");
             response.Rows[1].Key.Should().Be("Fake artist 2");
             response.Rows[1].Value.Length.Should().Be(2);
-            CustomAsserts.AreValueEqual(TestData.Artists.Artist2.Albums, response.Rows[1].Value);
+            CustomAsserts.AreValueEqual(ClientTestData.Artists.Artist2.Albums, response.Rows[1].Value);
 
             response.Rows[2].Id.Should().Be("3");
             response.Rows[2].Key.Should().Be("Fake artist 3");
             response.Rows[2].Value.Length.Should().Be(3);
-            CustomAsserts.AreValueEqual(TestData.Artists.Artist3.Albums, response.Rows[2].Value);
+            CustomAsserts.AreValueEqual(ClientTestData.Artists.Artist3.Albums, response.Rows[2].Value);
 
             response.Rows[3].Id.Should().Be("4");
             response.Rows[3].Key.Should().Be("Fake artist 4");
             response.Rows[3].Value.Length.Should().Be(4);
-            CustomAsserts.AreValueEqual(TestData.Artists.Artist4.Albums, response.Rows[3].Value);
+            CustomAsserts.AreValueEqual(ClientTestData.Artists.Artist4.Albums, response.Rows[3].Value);
         }
     }
 }

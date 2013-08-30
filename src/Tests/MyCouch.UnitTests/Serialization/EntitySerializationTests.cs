@@ -82,7 +82,7 @@ namespace MyCouch.UnitTests.Serialization
         [Fact]
         public void When_serializing_entity_It_will_inject_document_header_in_json()
         {
-            var model = TestData.Artists.CreateArtist();
+            var model = ClientTestData.Artists.CreateArtist();
 
             var json = SUT.Serialize(model);
 
