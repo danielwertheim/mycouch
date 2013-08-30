@@ -103,7 +103,7 @@ namespace MyCouch.Testing
 
         public static class Views
         {
-            public const string Artists =
+            public const string ArtistsViews =
                 "{" +
                     "\"_id\": \"_design/artists\"," +
                     "\"language\": \"javascript\"," +
