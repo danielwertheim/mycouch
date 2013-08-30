@@ -1,10 +1,11 @@
 ﻿using System;
+using MyCouch.Cloudant;
 
 namespace MyCouch.IntegrationTests.TestFixtures
 {
     public class CloudantTestsFixture : IDisposable
     {
-        public IClient Client { get; protected set; }
+        public ICloudantClient Client { get; protected set; }
 
         public CloudantTestsFixture()
         {

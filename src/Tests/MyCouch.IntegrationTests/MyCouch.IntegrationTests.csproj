@@ -59,6 +59,7 @@
     <Compile Include="ClientTests\ViewsTests.cs" />
     <Compile Include="ClientTests\ClientTestsOf.cs" />
     <Compile Include="CloudantTests\CloudantTestsOf.cs" />
+    <Compile Include="CloudantTests\SearchTests.cs" />
     <Compile Include="IntegrationTestsRuntime.cs" />
     <Compile Include="IPreserveStatePerFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
