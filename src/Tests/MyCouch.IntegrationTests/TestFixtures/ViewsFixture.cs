@@ -22,9 +22,9 @@ namespace MyCouch.IntegrationTests.TestFixtures
             var bulk = new BulkCommand();
             bulk.Include(Artists.Select(i => _client.Entities.Serializer.Serialize(i)).ToArray());
 
-            var bulkResponse = _client.Documents.BulkAsync(bulk);
+            var bulkResponse = _client.Documents.BulkAsync(bulk).Result;
 
-            foreach (var row in bulkResponse.Result.Rows)
+            foreach (var row in bulkResponse.Rows)
             {
                 var artist = Artists.Single(i => i.ArtistId == row.Id);
                 _client.Entities.Reflector.RevMember.SetValueTo(artist, row.Rev);
