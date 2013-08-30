@@ -199,18 +199,18 @@ namespace MyCouch.Testing
                     "\"language\": \"javascript\"," +
                     "\"views\": {" +
                         "\"latin_name_jssum\": {" +
-                            "\"map\": \"function(doc) {\n  if(doc.latin_name){\n    emit(doc.latin_name, doc.latin_name.length);\n  }\n}\"," +
+                            "\"map\": \"function(doc) {\n  if(doc.latinName){\n    emit(doc.latinName, doc.latinName.length);\n  }\n}\"," +
                             "\"reduce\": \"function (key, values, rereduce){\n  return sum(values);\n}\"" +
                         "}," +
                         "\"latin_name\": {" +
-                            "\"map\": \"function(doc) {\n  if(doc.latin_name){\n    emit(doc.latin_name, doc.latin_name.length);\n  }\n}\"" +
+                            "\"map\": \"function(doc) {\n  if(doc.latinName){\n    emit(doc.latinName, doc.latinName.length);\n  }\n}\"" +
                         "}," +
                         "\"diet_sum\": {" +
                             "\"map\": \"function(doc) {\n  if(doc.diet){\n    emit(doc.diet, 1);\n  }\n}\"," +
                             "\"reduce\": \"_sum\"" +
                         "}," +
                         "\"diet_count\": {" +
-                            "\"map\": \"function(doc) {\n  if(doc.diet && doc.latin_name){\n    emit(doc.diet, doc.latin_name);\n  }\n}\"," +
+                            "\"map\": \"function(doc) {\n  if(doc.diet && doc.latinName){\n    emit(doc.diet, doc.latinName);\n  }\n}\"," +
                             "\"reduce\": \"_count\"" +
                         "}," +
                         "\"complex_count\": {" +
@@ -221,7 +221,7 @@ namespace MyCouch.Testing
                             "\"map\": \"function(doc) {\n  if(doc.diet){\n    emit(doc.diet, 1);\n  }\n}\"" +
                         "}," +
                         "\"complex_latin_name_count\": {" +
-                            "\"map\": \"function(doc){\n  if(doc.latin_name){\n    emit([doc.class, doc.diet, doc.latin_name], doc.latin_name.length)\n  }\n}\"," +
+                            "\"map\": \"function(doc){\n  if(doc.latinName){\n    emit([doc.class, doc.diet, doc.latinName], doc.latinName.length)\n  }\n}\"," +
                             "\"reduce\": \"_count\"" +
                         "}," +
                         "\"diet_jscount\": {" +
@@ -229,11 +229,11 @@ namespace MyCouch.Testing
                             "\"reduce\": \"function (key, values, rereduce){\n  return values.length;\n}\"" +
                         "}," +
                         "\"latin_name_count\": {" +
-                            "\"map\": \"function(doc) {\n  if(doc.latin_name){\n    emit(doc.latin_name, doc.latin_name.length);\n  }\n}\"," +
+                            "\"map\": \"function(doc) {\n  if(doc.latinName){\n    emit(doc.latinName, doc.latinName.length);\n  }\n}\"," +
                             "\"reduce\": \"_count\"" +
                         "}," +
                         "\"latin_name_sum\": {" +
-                            "\"map\": \"function(doc) {\n  if(doc.latin_name){\n    emit(doc.latin_name, doc.latin_name.length);\n  }\n}\"," +
+                            "\"map\": \"function(doc) {\n  if(doc.latinName){\n    emit(doc.latinName, doc.latinName.length);\n  }\n}\"," +
                             "\"reduce\": \"_sum\"" +
                         "}," +
                     "}," +
@@ -241,14 +241,14 @@ namespace MyCouch.Testing
                         "\"animals\": {" +
                             "\"index\": \"function(doc){\n" +
                                 "  index(\"default\", doc._id);\n" +
-                                "  if(doc.min_length){\n" +
-                                "    index(\"min_length\", doc.min_length, {\"store\": \"yes\"});\n" +
+                                "  if(doc.minLength){\n" +
+                                "    index(\"minLength\", doc.minLength, {\"store\": \"yes\"});\n" +
                                 "  }\n" +
                                 "  if(doc.diet){\n" +
                                 "    index(\"diet\", doc.diet, {\"store\": \"yes\"});\n" +
                                 "  }\n" +
-                                "  if (doc.latin_name){\n" +
-                                "    index(\"latin_name\", doc.latin_name, {\"store\": \"yes\"});\n" +
+                                "  if (doc.latinName){\n" +
+                                "    index(\"latinName\", doc.latinName, {\"store\": \"yes\"});\n" +
                                 "  }\n" +
                                 "  if (doc['class']){\n" +
                                 "    index(\"class\", doc['class'], {\"store\": \"yes\"});\n" +
