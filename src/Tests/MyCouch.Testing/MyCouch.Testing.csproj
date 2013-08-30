@@ -53,9 +53,10 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="CloudantClientTestData.cs" />
+    <Compile Include="CloudantTestData.cs" />
     <Compile Include="CustomAsserts.cs" />
     <Compile Include="JsonTestData.cs" />
+    <Compile Include="Model\Animal.cs" />
     <Compile Include="Model\Artist.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shoulds.cs" />
