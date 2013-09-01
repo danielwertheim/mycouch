@@ -4,10 +4,11 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Cloudant.Querying;
+using MyCouch.Cloudant.Responses;
+using MyCouch.Cloudant.Responses.Factories;
 using MyCouch.Contexts;
 using MyCouch.Extensions;
 using MyCouch.Net;
-using MyCouch.Responses;
 using MyCouch.Responses.Factories;
 using MyCouch.Serialization;
 
@@ -15,18 +16,18 @@ namespace MyCouch.Cloudant.Contexts
 {
     public class Searches : ApiContextBase, ISearches
     {
-        protected readonly JsonViewQueryResponseFactory JsonViewQueryResponseFactory;
-        protected readonly ViewQueryResponseFactory ViewQueryResponseFactory;
+        protected readonly JsonIndexQueryResponseFactory JsonIndexQueryResponseFactory;
+        protected readonly IndexQueryResponseFactory IndexQueryResponseFactory;
 
         public Searches(IConnection connection, SerializationConfiguration serializationConfiguration) 
             : base(connection)
         {
             var materializer = new DefaultResponseMaterializer(serializationConfiguration);
-            JsonViewQueryResponseFactory = new JsonViewQueryResponseFactory(materializer);
-            ViewQueryResponseFactory = new ViewQueryResponseFactory(materializer);
+            JsonIndexQueryResponseFactory = new JsonIndexQueryResponseFactory(materializer);
+            IndexQueryResponseFactory = new IndexQueryResponseFactory(materializer);
         }
 
-        public virtual async Task<JsonViewQueryResponse> RunQueryAsync(IndexQuery query)
+        public virtual async Task<JsonIndexQueryResponse> RunQueryAsync(IndexQuery query)
         {
             Ensure.That(query, "query").IsNotNull();
 
@@ -36,7 +37,7 @@ namespace MyCouch.Cloudant.Contexts
             return ProcessHttpResponse(await res.ForAwait());
         }
 
-        public virtual Task<ViewQueryResponse<T>> RunQueryAsync<T>(IndexQuery query) where T : class
+        public virtual Task<IndexQueryResponse<T>> RunQueryAsync<T>(IndexQuery query) where T : class
         {
             Ensure.That(query, "query").IsNotNull();
 
@@ -67,14 +68,14 @@ namespace MyCouch.Cloudant.Contexts
             return string.Join("&", options.ToKeyValues().Select(kv => string.Format("{0}={1}", kv.Key, Uri.EscapeDataString(kv.Value))));
         }
 
-        protected virtual JsonViewQueryResponse ProcessHttpResponse(HttpResponseMessage response)
+        protected virtual JsonIndexQueryResponse ProcessHttpResponse(HttpResponseMessage response)
         {
-            return JsonViewQueryResponseFactory.Create(response);
+            return JsonIndexQueryResponseFactory.Create(response);
         }
 
-        protected virtual ViewQueryResponse<T> ProcessHttpResponse<T>(HttpResponseMessage response) where T : class
+        protected virtual IndexQueryResponse<T> ProcessHttpResponse<T>(HttpResponseMessage response) where T : class
         {
-            return ViewQueryResponseFactory.Create<T>(response);
+            return IndexQueryResponseFactory.Create<T>(response);
         }
     }
 }

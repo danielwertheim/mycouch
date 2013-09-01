@@ -57,6 +57,10 @@
     <Compile Include="IndexIdentity.cs" />
     <Compile Include="IndexQuery.cs" />
     <Compile Include="Querying\IndexQueryOptions.cs" />
+    <Compile Include="Responses\Factories\JsonIndexQueryResponseFactory.cs" />
+    <Compile Include="Responses\Factories\IndexQueryResponseFactory.cs" />
+    <Compile Include="Responses\IndexQueryResponse.cs" />
+    <Compile Include="Responses\JsonViewQueryResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MyCouch\MyCouch.csproj">
@@ -67,9 +71,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Responses\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

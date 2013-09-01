@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using MyCouch.Responses;
+using MyCouch.Cloudant.Responses;
 
 namespace MyCouch.Cloudant
 {
@@ -7,18 +7,18 @@ namespace MyCouch.Cloudant
     {
         /// <summary>
         /// Lets you run a <see cref="IndexQuery"/>.
-        /// The resulting <see cref="JsonViewQueryResponse"/> will consist of
+        /// The resulting <see cref="JsonIndexQueryResponse"/> will consist of
         /// Rows being JSON-strings.
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        Task<JsonViewQueryResponse> RunQueryAsync(IndexQuery query);
+        Task<JsonIndexQueryResponse> RunQueryAsync(IndexQuery query);
 
         /// <summary>
         /// Lets you run a <see cref="IndexQuery"/>.
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        Task<ViewQueryResponse<T>> RunQueryAsync<T>(IndexQuery query) where T : class;
+        Task<IndexQueryResponse<T>> RunQueryAsync<T>(IndexQuery query) where T : class;
     }
 }
