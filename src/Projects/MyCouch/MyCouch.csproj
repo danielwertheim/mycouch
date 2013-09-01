@@ -90,13 +90,11 @@
     <Compile Include="IDatabases.cs" />
     <Compile Include="IEntities.cs" />
     <Compile Include="EntitySchemes\IEntityReflector.cs" />
-    <Compile Include="IViewIdentity.cs" />
     <Compile Include="ClientBootsraper.cs" />
     <Compile Include="MyCouchRuntime.cs" />
     <Compile Include="Net\AttachmentContent.cs" />
     <Compile Include="Commands\PutAttachmentCommand.cs" />
     <Compile Include="Commands\ReplaceDocumentCommand.cs" />
-    <Compile Include="ISystemViewQuery.cs" />
     <Compile Include="Now.cs" />
     <Compile Include="Responses\Factories\BulkResponseFactory.cs" />
     <Compile Include="Responses\Factories\AttachmentResponseFactory.cs" />
@@ -130,9 +128,6 @@
     <Compile Include="Net\IConnection.cs" />
     <Compile Include="IClient.cs" />
     <Compile Include="IDocuments.cs" />
-    <Compile Include="IViewQuery.cs" />
-    <Compile Include="IViewQueryConfigurator.cs" />
-    <Compile Include="IViewQueryOptions.cs" />
     <Compile Include="IViews.cs" />
     <Compile Include="Querying\Stale.cs" />
     <Compile Include="Responses\JsonViewQueryResponse.cs" />

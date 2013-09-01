@@ -175,7 +175,7 @@ namespace MyCouch.Testing
 
         public static class Views
         {
-            public static readonly IViewIdentity[] AllViewIds;
+            public static readonly ViewIdentity[] AllViewIds;
 
             static Views()
             {
@@ -249,16 +249,16 @@ namespace MyCouch.Testing
                         "}" +
                     "}" +
                 "}";
-            public static readonly IViewIdentity Views101LatinNameJsSumId = new ViewIdentity("views101", "latin_name_jssum");
-            public static readonly IViewIdentity Views101LatinNameId = new ViewIdentity("views101", "latin_name");
-            public static readonly IViewIdentity Views101DietSumId = new ViewIdentity("views101", "diet_sum");
-            public static readonly IViewIdentity Views101DietCountId = new ViewIdentity("views101", "diet_count");
-            public static readonly IViewIdentity Views101ComplexCountId = new ViewIdentity("views101", "complex_count");
-            public static readonly IViewIdentity Views101DietId = new ViewIdentity("views101", "diet");
-            public static readonly IViewIdentity Views101ComplexLatinNameCountId = new ViewIdentity("views101", "complex_latin_name_count");
-            public static readonly IViewIdentity Views101DietJsCountId = new ViewIdentity("views101", "diet_jscount");
-            public static readonly IViewIdentity Views101LatinNameCountId = new ViewIdentity("views101", "latin_name_count");
-            public static readonly IViewIdentity Views101LatinNameSumId = new ViewIdentity("views101", "latin_name_sum");
+            public static readonly ViewIdentity Views101LatinNameJsSumId = new ViewIdentity("views101", "latin_name_jssum");
+            public static readonly ViewIdentity Views101LatinNameId = new ViewIdentity("views101", "latin_name");
+            public static readonly ViewIdentity Views101DietSumId = new ViewIdentity("views101", "diet_sum");
+            public static readonly ViewIdentity Views101DietCountId = new ViewIdentity("views101", "diet_count");
+            public static readonly ViewIdentity Views101ComplexCountId = new ViewIdentity("views101", "complex_count");
+            public static readonly ViewIdentity Views101DietId = new ViewIdentity("views101", "diet");
+            public static readonly ViewIdentity Views101ComplexLatinNameCountId = new ViewIdentity("views101", "complex_latin_name_count");
+            public static readonly ViewIdentity Views101DietJsCountId = new ViewIdentity("views101", "diet_jscount");
+            public static readonly ViewIdentity Views101LatinNameCountId = new ViewIdentity("views101", "latin_name_count");
+            public static readonly ViewIdentity Views101LatinNameSumId = new ViewIdentity("views101", "latin_name_sum");
             public static readonly IndexIdentity Views101AnimalsIndexId = new IndexIdentity("views101", "animals");
         }
     }

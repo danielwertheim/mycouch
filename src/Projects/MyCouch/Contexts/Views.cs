@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Extensions;
 using MyCouch.Net;
+using MyCouch.Querying;
 using MyCouch.Responses;
 using MyCouch.Responses.Factories;
 using MyCouch.Serialization;
@@ -26,7 +27,7 @@ namespace MyCouch.Contexts
             ViewQueryResponseFactory = new ViewQueryResponseFactory(materializer);
         }
 
-        public virtual async Task<JsonViewQueryResponse> RunQueryAsync(IViewQuery query)
+        public virtual async Task<JsonViewQueryResponse> RunQueryAsync(ViewQuery query)
         {
             Ensure.That(query, "query").IsNotNull();
 
@@ -36,7 +37,7 @@ namespace MyCouch.Contexts
             return ProcessHttpResponse(await res.ForAwait());
         }
 
-        public virtual async Task<ViewQueryResponse<T>> RunQueryAsync<T>(IViewQuery query) where T : class
+        public virtual async Task<ViewQueryResponse<T>> RunQueryAsync<T>(ViewQuery query) where T : class
         {
             Ensure.That(query, "query").IsNotNull();
 
@@ -46,7 +47,7 @@ namespace MyCouch.Contexts
             return ProcessHttpResponse<T>(await res.ForAwait());
         }
 
-        public virtual Task<JsonViewQueryResponse> QueryAsync(string designDocument, string viewname, Action<IViewQueryConfigurator> configurator)
+        public virtual Task<JsonViewQueryResponse> QueryAsync(string designDocument, string viewname, Action<ViewQueryConfigurator> configurator)
         {
             Ensure.That(designDocument, "designDocument").IsNotNullOrWhiteSpace();
             Ensure.That(viewname, "viewname").IsNotNullOrWhiteSpace();
@@ -59,7 +60,7 @@ namespace MyCouch.Contexts
             return RunQueryAsync(query);
         }
 
-        public virtual Task<ViewQueryResponse<T>> QueryAsync<T>(string designDocument, string viewname, Action<IViewQueryConfigurator> configurator) where T : class
+        public virtual Task<ViewQueryResponse<T>> QueryAsync<T>(string designDocument, string viewname, Action<ViewQueryConfigurator> configurator) where T : class
         {
             Ensure.That(designDocument, "designDocument").IsNotNullOrWhiteSpace();
             Ensure.That(viewname, "viewname").IsNotNullOrWhiteSpace();
@@ -72,19 +73,19 @@ namespace MyCouch.Contexts
             return RunQueryAsync<T>(query);
         }
 
-        protected virtual IViewQuery CreateQuery(string designDocument, string viewname)
+        protected virtual ViewQuery CreateQuery(string designDocument, string viewname)
         {
             return new ViewQuery(designDocument, viewname);
         }
         
-        protected virtual HttpRequestMessage CreateRequest(IViewQuery query)
+        protected virtual HttpRequestMessage CreateRequest(ViewQuery query)
         {
             return new HttpRequest(HttpMethod.Get, GenerateRequestUrl(query));
         }
 
-        protected virtual string GenerateRequestUrl(IViewQuery query)
+        protected virtual string GenerateRequestUrl(ViewQuery query)
         {
-            if (query is ISystemViewQuery)
+            if (query is SystemViewQuery)
             {
                 return string.Format("{0}/{1}?{2}",
                     Connection.Address,
@@ -99,7 +100,7 @@ namespace MyCouch.Contexts
                 GenerateQueryStringParams(query.Options));
         }
 
-        protected virtual string GenerateQueryStringParams(IViewQueryOptions options)
+        protected virtual string GenerateQueryStringParams(ViewQueryOptions options)
         {
             return string.Join("&", options.ToKeyValues().Select(kv => string.Format("{0}={1}", kv.Key, Uri.EscapeDataString(kv.Value))));
         }

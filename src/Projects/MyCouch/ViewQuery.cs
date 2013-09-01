@@ -7,14 +7,15 @@ namespace MyCouch
 #if !NETFX_CORE
     [Serializable]
 #endif
-    public class ViewQuery : IViewQuery
+    public class ViewQuery
     {
-        public IViewIdentity View { get; private set; }
-        public IViewQueryOptions Options { get; private set; }
+        public ViewIdentity View { get; private set; }
+        public ViewQueryOptions Options { get; private set; }
 
-        public ViewQuery(string designDocument, string viewName) : this(new ViewIdentity(designDocument, viewName)) { }
+        public ViewQuery(string designDocument, string viewName)
+            : this(new ViewIdentity(designDocument, viewName)) { }
 
-        public ViewQuery(IViewIdentity viewIdentity)
+        public ViewQuery(ViewIdentity viewIdentity)
         {
             Ensure.That(viewIdentity, "viewIdentity").IsNotNull();
 
@@ -22,7 +23,7 @@ namespace MyCouch
             Options = new ViewQueryOptions();
         }
 
-        public virtual IViewQuery Configure(Action<IViewQueryConfigurator> configurator)
+        public virtual ViewQuery Configure(Action<ViewQueryConfigurator> configurator)
         {
             configurator(new ViewQueryConfigurator(Options));
 

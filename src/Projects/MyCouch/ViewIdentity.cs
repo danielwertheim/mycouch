@@ -6,7 +6,7 @@ namespace MyCouch
 #if !NETFX_CORE
     [Serializable]
 #endif
-    public class ViewIdentity : IViewIdentity
+    public class ViewIdentity
     {
         public string DesignDocument { get; private set; }
         public string Name { get; private set; }

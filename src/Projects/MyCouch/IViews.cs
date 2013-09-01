@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using MyCouch.Querying;
 using MyCouch.Responses;
 
 namespace MyCouch
@@ -10,23 +11,23 @@ namespace MyCouch
     public interface IViews
     {
         /// <summary>
-        /// Lets you run an <see cref="IViewQuery"/>.
+        /// Lets you run an <see cref="ViewQuery"/>.
         /// The resulting <see cref="JsonViewQueryResponse"/> will consist of
         /// Rows being JSON-strings.
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        Task<JsonViewQueryResponse> RunQueryAsync(IViewQuery query);
+        Task<JsonViewQueryResponse> RunQueryAsync(ViewQuery query);
 
         /// <summary>
-        /// Lets you run an <see cref="IViewQuery"/>.
+        /// Lets you run an <see cref="ViewQuery"/>.
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        Task<ViewQueryResponse<T>> RunQueryAsync<T>(IViewQuery query) where T : class;
+        Task<ViewQueryResponse<T>> RunQueryAsync<T>(ViewQuery query) where T : class;
 
         /// <summary>
-        /// Creates and executes an <see cref="IViewQuery"/> on the fly.
+        /// Creates and executes an <see cref="ViewQuery"/> on the fly.
         /// The resulting <see cref="JsonViewQueryResponse"/> will consist of
         /// Rows being JSON-strings.
         /// </summary>
@@ -34,15 +35,15 @@ namespace MyCouch
         /// <param name="viewname"></param>
         /// <param name="configurator"></param>
         /// <returns></returns>
-        Task<JsonViewQueryResponse> QueryAsync(string designDocument, string viewname, Action<IViewQueryConfigurator> configurator);
+        Task<JsonViewQueryResponse> QueryAsync(string designDocument, string viewname, Action<ViewQueryConfigurator> configurator);
 
         /// <summary>
-        /// Creates and executes an <see cref="IViewQuery"/> on the fly.
+        /// Creates and executes an <see cref="ViewQuery"/> on the fly.
         /// </summary>
         /// <param name="designDocument"></param>
         /// <param name="viewname"></param>
         /// <param name="configurator"></param>
         /// <returns></returns>
-        Task<ViewQueryResponse<T>> QueryAsync<T>(string designDocument, string viewname, Action<IViewQueryConfigurator> configurator) where T : class;
+        Task<ViewQueryResponse<T>> QueryAsync<T>(string designDocument, string viewname, Action<ViewQueryConfigurator> configurator) where T : class;
     }
 }

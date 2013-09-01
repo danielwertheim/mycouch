@@ -116,8 +116,8 @@ namespace MyCouch.Testing
                         "}" +
                     "}" +
                 "}";
-            public static readonly IViewIdentity ArtistsAlbumsViewId = new ViewIdentity("artists", "albums");
-            public static readonly IViewIdentity ArtistsNameNoValueViewId = new ViewIdentity("artists", "name_no_value");
+            public static readonly ViewIdentity ArtistsAlbumsViewId = new ViewIdentity("artists", "albums");
+            public static readonly ViewIdentity ArtistsNameNoValueViewId = new ViewIdentity("artists", "name_no_value");
         }
 
         public static class Attachments
