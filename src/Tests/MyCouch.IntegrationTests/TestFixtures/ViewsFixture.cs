@@ -9,7 +9,7 @@ namespace MyCouch.IntegrationTests.TestFixtures
 {
     public class ViewsFixture : IDisposable
     {
-        private IClient _client;
+        protected IClient Client;
 
         public Artist[] Artists { get; protected set; }
 
@@ -17,33 +17,33 @@ namespace MyCouch.IntegrationTests.TestFixtures
         {
             Artists = ClientTestData.Artists.CreateArtists(10);
 
-            _client = IntegrationTestsRuntime.CreateClient();
+            Client = IntegrationTestsRuntime.CreateClient();
 
             var bulk = new BulkCommand();
-            bulk.Include(Artists.Select(i => _client.Entities.Serializer.Serialize(i)).ToArray());
+            bulk.Include(Artists.Select(i => Client.Entities.Serializer.Serialize(i)).ToArray());
 
-            var bulkResponse = _client.Documents.BulkAsync(bulk).Result;
+            var bulkResponse = Client.Documents.BulkAsync(bulk).Result;
 
             foreach (var row in bulkResponse.Rows)
             {
                 var artist = Artists.Single(i => i.ArtistId == row.Id);
-                _client.Entities.Reflector.RevMember.SetValueTo(artist, row.Rev);
+                Client.Entities.Reflector.RevMember.SetValueTo(artist, row.Rev);
             }
 
-            _client.Documents.PostAsync(ClientTestData.Views.ArtistsViews).Wait();
+            Client.Documents.PostAsync(ClientTestData.Views.ArtistsViews).Wait();
 
             var touchView1 = new ViewQuery(ClientTestData.Views.ArtistsAlbumsViewId).Configure(q => q.Stale(Stale.UpdateAfter));
             var touchView2 = new ViewQuery(ClientTestData.Views.ArtistsNameNoValueViewId).Configure(q => q.Stale(Stale.UpdateAfter));
 
-            _client.Views.RunQueryAsync(touchView1).Wait();
-            _client.Views.RunQueryAsync(touchView2).Wait();
+            Client.Views.RunQueryAsync(touchView1).Wait();
+            Client.Views.RunQueryAsync(touchView2).Wait();
         }
 
         public virtual void Dispose()
         {
-            _client.ClearAllDocuments();
-            _client.Dispose();
-            _client = null;
+            Client.ClearAllDocuments();
+            Client.Dispose();
+            Client = null;
         }
     }
 }

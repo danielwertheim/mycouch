@@ -15,6 +15,12 @@ namespace MyCouch.IntegrationTests
                 //client.Database.PutAsync().Wait();
                 client.ClearAllDocuments();
             }
+
+            using (var client = CreateCloudantClient())
+            {
+                //client.Database.PutAsync().Wait();
+                client.ClearAllDocuments();
+            }
         }
 
         internal static IClient CreateClient()
@@ -29,7 +35,7 @@ namespace MyCouch.IntegrationTests
         internal static ICloudantClient CreateCloudantClient()
         {
             var uriBuilder = new MyCouchUriBuilder(ServerUrl)
-                .SetDbName("mycouchcloudanttests")
+                .SetDbName("mycouchtests")
                 .SetBasicCredentials(TesterAccount, TesterPassword);
 
             return new CloudantClient(uriBuilder.Build());

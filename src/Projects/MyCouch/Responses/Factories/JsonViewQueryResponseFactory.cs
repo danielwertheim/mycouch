@@ -12,6 +12,7 @@ namespace MyCouch.Responses.Factories
         {
             return CreateResponse<JsonViewQueryResponse>(response, OnSuccessfulViewQueryResponseContentMaterializer, OnFailedResponseContentMaterializer);
         }
+
         protected virtual void OnSuccessfulViewQueryResponseContentMaterializer<T>(HttpResponseMessage response, ViewQueryResponse<T> result) where T : class
         {
             using (var content = response.Content.ReadAsStream())

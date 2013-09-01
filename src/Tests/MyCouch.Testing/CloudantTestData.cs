@@ -1,4 +1,5 @@
-﻿using MyCouch.Testing.Model;
+﻿using MyCouch.Cloudant;
+using MyCouch.Testing.Model;
 
 namespace MyCouch.Testing
 {
@@ -199,62 +200,53 @@ namespace MyCouch.Testing
                     "\"language\": \"javascript\"," +
                     "\"views\": {" +
                         "\"latin_name_jssum\": {" +
-                            "\"map\": \"function(doc) {\n  if(doc.latinName){\n    emit(doc.latinName, doc.latinName.length);\n  }\n}\"," +
-                            "\"reduce\": \"function (key, values, rereduce){\n  return sum(values);\n}\"" +
+                            "\"map\": \"function(doc) {\\n  if(doc.latinName){\\n    emit(doc.latinName, doc.latinName.length);\\n  }\\n}\"," +
+                            "\"reduce\": \"function (key, values, rereduce){\\n  return sum(values);\\n}\"" +
                         "}," +
                         "\"latin_name\": {" +
-                            "\"map\": \"function(doc) {\n  if(doc.latinName){\n    emit(doc.latinName, doc.latinName.length);\n  }\n}\"" +
+                            "\"map\": \"function(doc) {\\n  if(doc.latinName){\\n    emit(doc.latinName, doc.latinName.length);\\n  }\\n}\"" +
                         "}," +
                         "\"diet_sum\": {" +
-                            "\"map\": \"function(doc) {\n  if(doc.diet){\n    emit(doc.diet, 1);\n  }\n}\"," +
+                            "\"map\": \"function(doc) {\\n  if(doc.diet){\\n    emit(doc.diet, 1);\\n  }\\n}\"," +
                             "\"reduce\": \"_sum\"" +
                         "}," +
                         "\"diet_count\": {" +
-                            "\"map\": \"function(doc) {\n  if(doc.diet && doc.latinName){\n    emit(doc.diet, doc.latinName);\n  }\n}\"," +
+                            "\"map\": \"function(doc) {\\n  if(doc.diet && doc.latinName){\\n    emit(doc.diet, doc.latinName);\\n  }\\n}\"," +
                             "\"reduce\": \"_count\"" +
                         "}," +
                         "\"complex_count\": {" +
-                            "\"map\": \"function(doc){\n  if(doc.class && doc.diet){\n    emit([doc.class, doc.diet], 1);\n  }\n}\"," +
-                            "\"reduce\": \"AAA\"" +
+                            "\"map\": \"function(doc){\\n  if(doc.class && doc.diet){\\n    emit([doc.class, doc.diet], 1);\\n  }\\n}\"," +
+                            "\"reduce\": \"_count\"" +
                         "}," +
                         "\"diet\": {" +
-                            "\"map\": \"function(doc) {\n  if(doc.diet){\n    emit(doc.diet, 1);\n  }\n}\"" +
+                            "\"map\": \"function(doc) {\\n  if(doc.diet){\\n    emit(doc.diet, 1);\\n  }\\n}\"" +
                         "}," +
                         "\"complex_latin_name_count\": {" +
-                            "\"map\": \"function(doc){\n  if(doc.latinName){\n    emit([doc.class, doc.diet, doc.latinName], doc.latinName.length)\n  }\n}\"," +
+                            "\"map\": \"function(doc){\\n  if(doc.latinName){\\n    emit([doc.class, doc.diet, doc.latinName], doc.latinName.length)\\n  }\\n}\"," +
                             "\"reduce\": \"_count\"" +
                         "}," +
                         "\"diet_jscount\": {" +
-                            "\"map\": \"function(doc) {\n  if(doc.diet){\n    emit(doc.diet, 1);\n  }\n}\"," +
-                            "\"reduce\": \"function (key, values, rereduce){\n  return values.length;\n}\"" +
+                            "\"map\": \"function(doc) {\\n  if(doc.diet){\\n    emit(doc.diet, 1);\\n  }\\n}\"," +
+                            "\"reduce\": \"function (key, values, rereduce){\\n  return values.length;\\n}\"" +
                         "}," +
                         "\"latin_name_count\": {" +
-                            "\"map\": \"function(doc) {\n  if(doc.latinName){\n    emit(doc.latinName, doc.latinName.length);\n  }\n}\"," +
+                            "\"map\": \"function(doc) {\\n  if(doc.latinName){\\n    emit(doc.latinName, doc.latinName.length);\\n  }\\n}\"," +
                             "\"reduce\": \"_count\"" +
                         "}," +
                         "\"latin_name_sum\": {" +
-                            "\"map\": \"function(doc) {\n  if(doc.latinName){\n    emit(doc.latinName, doc.latinName.length);\n  }\n}\"," +
+                            "\"map\": \"function(doc) {\\n  if(doc.latinName){\\n    emit(doc.latinName, doc.latinName.length);\\n  }\\n}\"," +
                             "\"reduce\": \"_sum\"" +
-                        "}," +
+                        "}" +
                     "}," +
                     "\"indexes\": {" +
                         "\"animals\": {" +
-                            "\"index\": \"function(doc){\n" +
-                                "  index(\"default\", doc._id);\n" +
-                                "  if(doc.minLength){\n" +
-                                "    index(\"minLength\", doc.minLength, {\"store\": \"yes\"});\n" +
-                                "  }\n" +
-                                "  if(doc.diet){\n" +
-                                "    index(\"diet\", doc.diet, {\"store\": \"yes\"});\n" +
-                                "  }\n" +
-                                "  if (doc.latinName){\n" +
-                                "    index(\"latinName\", doc.latinName, {\"store\": \"yes\"});\n" +
-                                "  }\n" +
-                                "  if (doc['class']){\n" +
-                                "    index(\"class\", doc['class'], {\"store\": \"yes\"});\n" +
-                                "  }\n" +
-                                "}\"" +
-                        "}," +
+                            "\"index\": \"function(doc){\\n" +
+                            "  index('default', doc._id);\\n" +
+                            "  if(doc.min_length){\\n    index('min_length', doc.min_length, {\\\"store\\\": \\\"yes\\\"});\\n  }\\n" +
+                            "  if(doc.diet){\\n    index('diet', doc.diet, {\\\"store\\\": \\\"yes\\\"});\\n  }\\n" +
+                            "  if (doc.latin_name){\\n    index('latin_name', doc.latin_name, {\\\"store\\\": \\\"yes\\\"});\\n  }\\n" +
+                            "  if (doc['class']){\\n    index('class', doc['class'], {\\\"store\\\": \\\"yes\\\"});\\n  }\\n}\"" +
+                        "}" +
                     "}" +
                 "}";
             public static readonly IViewIdentity Views101LatinNameJsSumId = new ViewIdentity("views101", "latin_name_jssum");
@@ -267,6 +259,7 @@ namespace MyCouch.Testing
             public static readonly IViewIdentity Views101DietJsCountId = new ViewIdentity("views101", "diet_jscount");
             public static readonly IViewIdentity Views101LatinNameCountId = new ViewIdentity("views101", "latin_name_count");
             public static readonly IViewIdentity Views101LatinNameSumId = new ViewIdentity("views101", "latin_name_sum");
+            public static readonly IndexIdentity Views101AnimalsIndexId = new IndexIdentity("views101", "animals");
         }
     }
 }

@@ -6,16 +6,16 @@ namespace MyCouch.Cloudant
 {
     public class CloudantClientBootstraper : ClientBootsraper
     {
-        public Func<IConnection, ISearch> SearchFn { get; set; }
+        public Func<IConnection, ISearches> SearchesFn { get; set; }
 
         public CloudantClientBootstraper()
         {
-            ConfigureSearchFn();
+            ConfigureSearchesFn();
         }
 
-        private void ConfigureSearchFn()
+        private void ConfigureSearchesFn()
         {
-            SearchFn = cn => new Search(cn);
+            SearchesFn = cn => new Searches(cn, EntitySerializationConfigurationFn());
         }
     }
 }
