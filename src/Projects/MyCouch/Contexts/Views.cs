@@ -16,7 +16,8 @@ namespace MyCouch.Contexts
         protected readonly JsonViewQueryResponseFactory JsonViewQueryResponseFactory;
         protected readonly ViewQueryResponseFactory ViewQueryResponseFactory;
 
-        public Views(IConnection connection, SerializationConfiguration serializationConfiguration) : base(connection)
+        public Views(IConnection connection, SerializationConfiguration serializationConfiguration)
+            : base(connection)
         {
             Ensure.That(serializationConfiguration, "serializationConfiguration").IsNotNull();
 
@@ -27,7 +28,7 @@ namespace MyCouch.Contexts
 
         public virtual async Task<JsonViewQueryResponse> RunQueryAsync(IViewQuery query)
         {
-            EnsureValidQuery(query);
+            Ensure.That(query, "query").IsNotNull();
 
             var req = CreateRequest(query);
             var res = SendAsync(req);
@@ -37,7 +38,7 @@ namespace MyCouch.Contexts
 
         public virtual async Task<ViewQueryResponse<T>> RunQueryAsync<T>(IViewQuery query) where T : class
         {
-            EnsureValidQuery(query);
+            Ensure.That(query, "query").IsNotNull();
 
             var req = CreateRequest(query);
             var res = SendAsync(req);
@@ -69,11 +70,6 @@ namespace MyCouch.Contexts
             query.Configure(configurator);
 
             return RunQueryAsync<T>(query);
-        }
-
-        protected virtual void EnsureValidQuery(IViewQuery query)
-        {
-            Ensure.That(query, "query").IsNotNull();
         }
 
         protected virtual IViewQuery CreateQuery(string designDocument, string viewname)

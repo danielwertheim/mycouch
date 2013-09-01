@@ -9,14 +9,15 @@ namespace MyCouch
 #endif
     public class ViewQuery : IViewQuery
     {
-        public IViewQueryOptions Options { get; private set; }
         public IViewIdentity View { get; private set; }
+        public IViewQueryOptions Options { get; private set; }
 
         public ViewQuery(string designDocument, string viewName) : this(new ViewIdentity(designDocument, viewName)) { }
 
         public ViewQuery(IViewIdentity viewIdentity)
         {
             Ensure.That(viewIdentity, "viewIdentity").IsNotNull();
+
             View = viewIdentity;
             Options = new ViewQueryOptions();
         }

@@ -19,7 +19,7 @@ namespace MyCouch
         IViewQueryConfigurator Stale(Stale value);
 
         /// <summary>
-        ///  Include the full content of the documents in the return;
+        /// Include the full content of the documents in the return;
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>

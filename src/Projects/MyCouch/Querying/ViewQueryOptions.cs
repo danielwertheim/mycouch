@@ -39,7 +39,7 @@ namespace MyCouch.Querying
             Group = false;
         }
 
-        public IEnumerable<KeyValuePair<string, string>> ToKeyValues()
+        public virtual IEnumerable<KeyValuePair<string, string>> ToKeyValues()
         {
             if (IncludeDocs)
                 yield return new KeyValuePair<string, string>("include_docs", IncludeDocs.ToString().ToLower());
@@ -90,27 +90,27 @@ namespace MyCouch.Querying
                 yield return new KeyValuePair<string, string>("skip", Skip.ToString());
         }
 
-        private static bool HasValue(string value)
+        protected virtual bool HasValue(string value)
         {
             return value != null;
         }
 
-        private static bool HasValue(IEnumerable<string> value)
+        protected virtual bool HasValue(IEnumerable<string> value)
         {
             return value != null && value.Any();
         }
 
-        private static bool HasValue(int value)
+        protected virtual bool HasValue(int value)
         {
             return value > 0;
         }
 
-        private static string FormatValue(string value)
+        protected virtual string FormatValue(string value)
         {
             return string.Format("\"{0}\"", value);
         }
 
-        private static string FormatValue(IEnumerable<string> value)
+        protected virtual string FormatValue(IEnumerable<string> value)
         {
             return string.Format("[{0}]", string.Join(",", value.Select(v => string.Format("\"{0}\"", v))));
         }
