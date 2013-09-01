@@ -7,7 +7,7 @@ namespace MyCouch.Responses
 #if !NETFX_CORE
     [Serializable]
 #endif
-    public abstract class Response : IResponse
+    public abstract class Response
     {
         public HttpStatusCode StatusCode { get; set; }
         public bool IsSuccess

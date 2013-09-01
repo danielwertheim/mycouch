@@ -122,7 +122,6 @@
     <Compile Include="Extensions\HttpExtensions.cs" />
     <Compile Include="Responses\Factories\ResponseFactoryBase.cs" />
     <Compile Include="Net\HttpRequest.cs" />
-    <Compile Include="IResponse.cs" />
     <Compile Include="Net\HttpContentTypes.cs" />
     <Compile Include="Net\BasicHttpClientConnection.cs" />
     <Compile Include="Client.cs" />

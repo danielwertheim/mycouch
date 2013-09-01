@@ -37,7 +37,7 @@ namespace MyCouch.Responses.Factories
             return result;
         }
 
-        protected virtual void OnFailedResponseContentMaterializer<T>(HttpResponseMessage response, T result) where T : IResponse
+        protected virtual void OnFailedResponseContentMaterializer<T>(HttpResponseMessage response, T result) where T : Response
         {
             using (var content = response.Content.ReadAsStream())
                 ResponseMaterializer.PopulateFailedResponse(result, content);

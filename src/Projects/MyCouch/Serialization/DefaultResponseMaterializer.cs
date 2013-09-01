@@ -22,7 +22,7 @@ namespace MyCouch.Serialization
             InternalSerializer = JsonSerializer.Create(Configuration.Settings);
         }
 
-        public virtual void PopulateFailedResponse<T>(T response, Stream data) where T : IResponse
+        public virtual void PopulateFailedResponse<T>(T response, Stream data) where T : Response
         {
             var mappings = new Dictionary<string, Action<JsonTextReader>>
             {
