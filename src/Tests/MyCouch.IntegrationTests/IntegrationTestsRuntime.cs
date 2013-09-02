@@ -1,15 +1,26 @@
-﻿using MyCouch.Cloudant;
+﻿using System.Net.Http;
+using MyCouch.Cloudant;
+using Newtonsoft.Json;
 
 namespace MyCouch.IntegrationTests
 {
     internal static class IntegrationTestsRuntime
     {
-        private const string ServerUrl = "http://localhost:5984";
-        private const string TesterAccount = "mycouchtester";
-        private const string TesterPassword = "p@ssword";
+        private const string TestEnvironmentsBaseUrl = "http://localhost:8991/testenvironments/";
+        private static readonly TestEnvironment LocalEnvironment;
+        private static readonly TestEnvironment CloudantEnvironment;
 
         static IntegrationTestsRuntime()
         {
+            using (var c = new HttpClient())
+            {
+                LocalEnvironment = JsonConvert.DeserializeObject<TestEnvironment>(
+                    c.GetStringAsync(TestEnvironmentsBaseUrl + "local").Result);
+
+                CloudantEnvironment = JsonConvert.DeserializeObject<TestEnvironment>(
+                    c.GetStringAsync(TestEnvironmentsBaseUrl + "cloudant").Result);
+            }
+
             using (var client = CreateClient())
             {
                 //client.Database.PutAsync().Wait();
@@ -25,20 +36,39 @@ namespace MyCouch.IntegrationTests
 
         internal static IClient CreateClient()
         {
-            var uriBuilder = new MyCouchUriBuilder(ServerUrl)
-                .SetDbName("mycouchtests")
-                .SetBasicCredentials(TesterAccount, TesterPassword);
+            var cfg = LocalEnvironment.Client;
+            var uriBuilder = new MyCouchUriBuilder(cfg.ServerUrl)
+                .SetDbName(LocalEnvironment.Client.DbName)
+                .SetBasicCredentials(cfg.User, cfg.Password);
 
             return new Client(uriBuilder.Build());
         }
 
         internal static ICloudantClient CreateCloudantClient()
         {
-            var uriBuilder = new MyCouchUriBuilder(ServerUrl)
-                .SetDbName("mycouchtests")
-                .SetBasicCredentials(TesterAccount, TesterPassword);
+            var cfg = CloudantEnvironment.Client;
+            var uriBuilder = new MyCouchUriBuilder(cfg.ServerUrl)
+                .SetDbName(LocalEnvironment.Client.DbName)
+                .SetBasicCredentials(cfg.User, cfg.Password);
 
             return new CloudantClient(uriBuilder.Build());
+        }
+
+        private class TestEnvironment
+        {
+            public ClientConfig Client { get; set; }
+
+            public TestEnvironment()
+            {
+                Client = new ClientConfig();
+            }
+        }
+        private class ClientConfig
+        {
+            public string ServerUrl { get; set; }
+            public string DbName { get; set; }
+            public string User { get; set; }
+            public string Password { get; set; }
         }
     }
 }
