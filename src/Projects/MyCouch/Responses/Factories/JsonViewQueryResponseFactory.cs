@@ -6,12 +6,12 @@ namespace MyCouch.Responses.Factories
 {
     public class JsonViewQueryResponseFactory : ResponseFactoryBase
     {
-        protected readonly ViewQueryResponseMaterializer ResponseMaterializer;
+        protected readonly QueryResponseMaterializer ResponseMaterializer;
 
         public JsonViewQueryResponseFactory(SerializationConfiguration serializationConfiguration)
             : base(serializationConfiguration)
         {
-            ResponseMaterializer = new ViewQueryResponseMaterializer(SerializationConfiguration);
+            ResponseMaterializer = new QueryResponseMaterializer(SerializationConfiguration);
         }
 
         public virtual JsonViewQueryResponse Create(HttpResponseMessage response)
@@ -19,7 +19,7 @@ namespace MyCouch.Responses.Factories
             return CreateResponse<JsonViewQueryResponse>(response, OnSuccessfulResponse, OnFailedResponse);
         }
 
-        protected virtual void OnSuccessfulResponse<T>(HttpResponseMessage response, ViewQueryResponse<T> result) where T : class
+        protected virtual void OnSuccessfulResponse(HttpResponseMessage response, JsonViewQueryResponse result)
         {
             using (var content = response.Content.ReadAsStream())
                 ResponseMaterializer.Populate(result, content);

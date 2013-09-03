@@ -7,12 +7,12 @@ namespace MyCouch.Cloudant.Responses.Factories
 {
     public class JsonIndexQueryResponseFactory : ResponseFactoryBase
     {
-        protected readonly IndexQueryResponseMaterializer ResponseMaterializer;
+        protected readonly QueryResponseMaterializer ResponseMaterializer;
 
         public JsonIndexQueryResponseFactory(SerializationConfiguration serializationConfiguration)
             : base(serializationConfiguration)
         {
-            ResponseMaterializer = new IndexQueryResponseMaterializer(SerializationConfiguration);
+            ResponseMaterializer = new QueryResponseMaterializer(SerializationConfiguration);
         }
 
         public virtual JsonIndexQueryResponse Create(HttpResponseMessage response)
@@ -20,7 +20,7 @@ namespace MyCouch.Cloudant.Responses.Factories
             return CreateResponse<JsonIndexQueryResponse>(response, OnSuccessfulResponse, OnFailedResponse);
         }
 
-        protected virtual void OnSuccessfulResponse<T>(HttpResponseMessage response, IndexQueryResponse<T> result) where T : class
+        protected virtual void OnSuccessfulResponse(HttpResponseMessage response, JsonIndexQueryResponse result)
         {
             using (var content = response.Content.ReadAsStream())
                 ResponseMaterializer.Populate(result, content);

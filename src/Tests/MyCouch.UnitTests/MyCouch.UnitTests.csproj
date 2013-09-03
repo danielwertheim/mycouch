@@ -57,7 +57,7 @@
     <Compile Include="BulkCommandTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Querying\ViewQueryOptionsTests.cs" />
-    <Compile Include="Serialization\ResponseMaterializerTests.cs" />
+    <Compile Include="Serialization\QueryResponseMaterializerTests.cs" />
     <Compile Include="Schemes\EntityIdMemberTests.cs" />
     <Compile Include="Schemes\EntityRevMemberTests.cs" />
     <Compile Include="Serialization\DefaultSerializationTests.cs" />

@@ -4,18 +4,21 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using EnsureThat;
-using MyCouch.Serialization;
+using MyCouch.Responses;
 using Newtonsoft.Json;
 
-namespace MyCouch.Responses.Factories
+namespace MyCouch.Serialization
 {
-    public class ViewQueryResponseMaterializer
+    /// <summary>
+    /// Traverses JSON and populates members of passed <see cref="QueryResponse{T}"/> response.
+    /// </summary>
+    public class QueryResponseMaterializer
     {
         protected readonly SerializationConfiguration Configuration;
         protected readonly JsonSerializer InternalSerializer;
         protected readonly JsonResponseMapper JsonMapper;
 
-        public ViewQueryResponseMaterializer(SerializationConfiguration configuration)
+        public QueryResponseMaterializer(SerializationConfiguration configuration)
         {
             Ensure.That(configuration, "configuration").IsNotNull();
 
@@ -24,106 +27,113 @@ namespace MyCouch.Responses.Factories
             JsonMapper = new JsonResponseMapper(Configuration);
         }
 
-        public virtual void Populate<T>(ViewQueryResponse<T> response, Stream data) where T : class
+        public virtual void Populate<T>(QueryResponse<T> response, Stream data) where T : class
         {
             var mappings = new JsonResponseMappings
             {
-                {JsonResponseMappings.FieldNames.TotalRows, jr => response.TotalRows = (long) jr.Value},
-                {JsonResponseMappings.FieldNames.UpdateSeq, jr => response.UpdateSeq = (long) jr.Value},
-                {JsonResponseMappings.FieldNames.Offset, jr => response.OffSet = (long) jr.Value},
-                {
-                    JsonResponseMappings.FieldNames.Rows, jr =>
-                    {
-                        if (response is ViewQueryResponse<string>)
-                            response.Rows = YieldViewQueryRowsOfString(jr).ToArray() as ViewQueryResponse<T>.Row[];
-                        else if (response is ViewQueryResponse<string[]>)
-                            response.Rows = YieldViewQueryRowsOfStrings(jr).ToArray() as ViewQueryResponse<T>.Row[];
-                        else
-                            response.Rows = InternalSerializer.Deserialize<ViewQueryResponse<T>.Row[]>(jr); //TODO: Do as with string[]
-                    }
-                }
+                {JsonResponseMappings.FieldNames.TotalRows, jr => OnPopulateTotalRows(jr, response)},
+                {JsonResponseMappings.FieldNames.UpdateSeq, jr => OnPopulateUpdateSeq(jr, response)},
+                {JsonResponseMappings.FieldNames.Offset, jr => OnPopulateOffset(jr, response)},
+                {JsonResponseMappings.FieldNames.Rows, jr => OnPopulateRows(jr, response)}
             };
             JsonMapper.Map(data, mappings);
         }
 
-        protected virtual IEnumerable<ViewQueryResponse<string>.Row> YieldViewQueryRowsOfString(JsonReader jr)
+        protected virtual void OnPopulateTotalRows<T>(JsonReader jr, QueryResponse<T> response) where T : class
         {
-            return YieldViewQueryRows<string>(
-                jr,
-                (row, jw, sb) =>
-                {
-                    jw.WriteToken(jr, true);
-                    row.Value = sb.Length > 0 ? sb.ToString() : null;
-                },
-                (row, jw, sb) =>
-                {
-                    jw.WriteToken(jr, true);
-                    row.Doc = sb.Length > 0 ? sb.ToString() : null;
-                });
+            response.TotalRows = (long) jr.Value;
         }
 
-        protected virtual IEnumerable<ViewQueryResponse<string[]>.Row> YieldViewQueryRowsOfStrings(JsonReader jr)
+        protected virtual void OnPopulateUpdateSeq<T>(JsonReader jr, QueryResponse<T> response) where T : class
+        {
+            response.UpdateSeq = (long)jr.Value;
+        }
+
+        protected virtual void OnPopulateOffset<T>(JsonReader jr, QueryResponse<T> response) where T : class
+        {
+            response.OffSet = (long)jr.Value;
+        }
+
+        protected virtual void OnPopulateRows<T>(JsonReader jr, QueryResponse<T> response) where T : class
+        {
+            if (response is QueryResponse<string>)
+                response.Rows = YieldQueryRowsOfString(jr).ToArray() as QueryResponse<T>.Row[];
+            else if (response is QueryResponse<string[]>)
+                response.Rows = YieldQueryRowsOfStrings(jr).ToArray() as QueryResponse<T>.Row[];
+            else
+                response.Rows = InternalSerializer.Deserialize<QueryResponse<T>.Row[]>(jr); //TODO: Do as with string[]
+        }
+
+        protected virtual IEnumerable<QueryResponse<string>.Row> YieldQueryRowsOfString(JsonReader jr)
+        {
+            return YieldQueryRows<string>(
+                jr,
+                (row, jw, sb) => OnPopulateStringIfNotEmpty(jr, jw, sb, s => row.Value = s),
+                (row, jw, sb) => OnPopulateStringIfNotEmpty(jr, jw, sb, s => row.Doc = s));
+        }
+
+        protected virtual IEnumerable<QueryResponse<string[]>.Row> YieldQueryRowsOfStrings(JsonReader jr)
+        {
+            return YieldQueryRows<string[]>(
+                jr,
+                (row, jw, sb) => OnPopulateStringsIfNotEmpty(jr, jw, sb, strings => row.Value = strings),
+                (row, jw, sb) => OnPopulateStringsIfNotEmpty(jr, jw, sb, strings => row.Doc = strings));
+        }
+
+        protected virtual void OnPopulateStringIfNotEmpty(JsonReader jr, JsonWriter jw, StringBuilder sb, Action<string> map)
+        {
+            jw.WriteToken(jr, true);
+
+            if(sb.Length > 0) map(sb.ToString());
+        }
+
+        protected virtual void OnPopulateStringsIfNotEmpty(JsonReader jr, JsonWriter jw, StringBuilder sb, Action<string[]> map)
+        {
+            var strings = ReadStrings(jr, jw, sb);
+
+            if (strings.Any()) map(strings.ToArray());
+        }
+
+        protected virtual IList<string> ReadStrings(JsonReader jr, JsonWriter jw, StringBuilder sb)
         {
             var rowValues = new List<string>();
 
-            return YieldViewQueryRows<string[]>(
-                jr,
-                (row, jw, sb) =>
-                {
-                    if (jr.TokenType != JsonToken.StartArray)
-                        return;
+            if (jr.TokenType != JsonToken.StartArray)
+                return rowValues;
 
-                    var valueStartDepth = jr.Depth;
+            var valueStartDepth = jr.Depth;
 
-                    while (jr.Read() && !(jr.TokenType == JsonToken.EndArray && jr.Depth == valueStartDepth))
-                    {
-                        jw.WriteToken(jr, true);
-                        rowValues.Add(sb.ToString());
-                        sb.Clear();
-                    }
+            while (jr.Read() && !(jr.TokenType == JsonToken.EndArray && jr.Depth == valueStartDepth))
+            {
+                jw.WriteToken(jr, true);
+                rowValues.Add(sb.ToString());
+                sb.Clear();
+            }
 
-                    row.Value = rowValues.ToArray();
-                    rowValues.Clear();
-                },
-                (row, jw, sb) =>
-                {
-                    if (jr.TokenType != JsonToken.StartArray)
-                        return;
-
-                    var valueStartDepth = jr.Depth;
-
-                    while (jr.Read() && !(jr.TokenType == JsonToken.EndArray && jr.Depth == valueStartDepth))
-                    {
-                        jw.WriteToken(jr, true);
-                        rowValues.Add(sb.ToString());
-                        sb.Clear();
-                    }
-
-                    row.Doc = rowValues.ToArray();
-                    rowValues.Clear();
-                });
+            return rowValues;
         }
 
-        protected virtual IEnumerable<ViewQueryResponse<T>.Row> YieldViewQueryRows<T>(
+        //TODO: Give some love and split it up. Remove the Ifs
+        protected virtual IEnumerable<QueryResponse<T>.Row> YieldQueryRows<T>(
             JsonReader jr,
-            Action<ViewQueryResponse<T>.Row, JsonTextWriter, StringBuilder> onVisitValue,
-            Action<ViewQueryResponse<T>.Row, JsonTextWriter, StringBuilder> onVisitDoc) where T : class
+            Action<QueryResponse<T>.Row, JsonTextWriter, StringBuilder> onVisitValue,
+            Action<QueryResponse<T>.Row, JsonTextWriter, StringBuilder> onVisitDoc) where T : class
         {
             if (jr.TokenType != JsonToken.StartArray)
                 yield break;
 
-            var row = new ViewQueryResponse<T>.Row();
+            var row = new QueryResponse<T>.Row();
             var startDepth = jr.Depth;
             var sb = new StringBuilder();
             var hasMappedId = false;
             var hasMappedKey = false;
             var hasMappedValue = false;
             var hasMappedDoc = false;
-            var shouldTryAndMapDoc = onVisitDoc != null; //TODO: I want info about the query here so that I know if include_docs = true
+            var shouldTryAndMapIncludedDoc = onVisitDoc != null;
             Action reset = () =>
             {
                 hasMappedId = hasMappedKey = hasMappedValue = hasMappedDoc = false;
-                row = new ViewQueryResponse<T>.Row();
+                row = new QueryResponse<T>.Row();
             };
             Func<bool> hasMappedSomething = () => hasMappedId || hasMappedKey || hasMappedValue || hasMappedDoc;
 
@@ -151,6 +161,7 @@ namespace MyCouch.Responses.Factories
                         {
                             if (!jr.Read())
                                 break;
+
                             row.Id = jr.Value.ToString();
                             hasMappedId = true;
                         }
@@ -158,6 +169,7 @@ namespace MyCouch.Responses.Factories
                         {
                             if (!jr.Read())
                                 break;
+
                             row.Key = jr.Value.ToString();
                             hasMappedKey = true;
                         }
@@ -170,7 +182,7 @@ namespace MyCouch.Responses.Factories
                             sb.Clear();
                             hasMappedValue = true;
                         }
-                        else if (shouldTryAndMapDoc && propName == "doc")
+                        else if (shouldTryAndMapIncludedDoc && propName == "doc")
                         {
                             if (!jr.Read())
                                 break;
@@ -184,7 +196,7 @@ namespace MyCouch.Responses.Factories
 
                         if (hasMappedId && hasMappedKey && hasMappedValue)
                         {
-                            if(shouldTryAndMapDoc && !hasMappedDoc)
+                            if(shouldTryAndMapIncludedDoc && !hasMappedDoc)
                                 continue;
 
                             yield return row;

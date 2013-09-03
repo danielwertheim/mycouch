@@ -11,35 +11,35 @@ using Xunit;
 
 namespace MyCouch.UnitTests.Serialization
 {
-    public class DefaultResponseMaterializerWithSimpleContractResolverTests : ResponseMaterializerTests
+    public class QueryResponseMaterializerWithSimpleContractResolverTests : QueryResponseMaterializerTests
     {
-        public DefaultResponseMaterializerWithSimpleContractResolverTests()
+        public QueryResponseMaterializerWithSimpleContractResolverTests()
         {
-            SUT = new ViewQueryResponseMaterializer(new SerializationConfiguration(new SerializationContractResolver()));
+            SUT = new QueryResponseMaterializer(new SerializationConfiguration(new SerializationContractResolver()));
         }
     }
 
-    public class DefaultResponseMaterializerWithEntityContractResolverUsingLambdasTests : ResponseMaterializerTests
+    public class QueryResponseMaterializerWithEntityContractResolverUsingLambdasTests : QueryResponseMaterializerTests
     {
-        public DefaultResponseMaterializerWithEntityContractResolverUsingLambdasTests()
+        public QueryResponseMaterializerWithEntityContractResolverUsingLambdasTests()
         {
             var entityReflector = new EntityReflector(new LambdaDynamicPropertyFactory());
-            SUT = new ViewQueryResponseMaterializer(new SerializationConfiguration(new EntityContractResolver(entityReflector)));
+            SUT = new QueryResponseMaterializer(new SerializationConfiguration(new EntityContractResolver(entityReflector)));
         }
     }
 
 #if !NETFX_CORE
-    public class DefaultResponseMaterializerWithEntityContractResolverUsingIlTests : ResponseMaterializerTests
+    public class QueryResponseMaterializerWithEntityContractResolverUsingIlTests : QueryResponseMaterializerTests
     {
-        public DefaultResponseMaterializerWithEntityContractResolverUsingIlTests()
+        public QueryResponseMaterializerWithEntityContractResolverUsingIlTests()
         {
             var entityReflector = new EntityReflector(new IlDynamicPropertyFactory());
-            SUT = new ViewQueryResponseMaterializer(new SerializationConfiguration(new EntityContractResolver(entityReflector)));
+            SUT = new QueryResponseMaterializer(new SerializationConfiguration(new EntityContractResolver(entityReflector)));
         }
     }
 #endif
 
-    public abstract class ResponseMaterializerTests : UnitTestsOf<ViewQueryResponseMaterializer>
+    public abstract class QueryResponseMaterializerTests : UnitTestsOf<QueryResponseMaterializer>
     {
         [Fact]
         public void It_can_populate_an_all_docs_view_query_response_of_string()

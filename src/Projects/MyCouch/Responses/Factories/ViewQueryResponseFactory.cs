@@ -6,12 +6,12 @@ namespace MyCouch.Responses.Factories
 {
     public class ViewQueryResponseFactory : ResponseFactoryBase
     {
-        protected readonly ViewQueryResponseMaterializer ResponseMaterializer;
+        protected readonly QueryResponseMaterializer ResponseMaterializer;
 
         public ViewQueryResponseFactory(SerializationConfiguration serializationConfiguration)
             : base(serializationConfiguration)
         {
-            ResponseMaterializer = new ViewQueryResponseMaterializer(SerializationConfiguration);
+            ResponseMaterializer = new QueryResponseMaterializer(SerializationConfiguration);
         }
 
         public virtual ViewQueryResponse<T> Create<T>(HttpResponseMessage response) where T : class
