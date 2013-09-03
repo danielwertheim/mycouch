@@ -19,9 +19,8 @@ namespace MyCouch.Contexts
         {
             Ensure.That(serializationConfiguration, "serializationConfiguration").IsNotNull();
 
-            var materializer = new DefaultResponseMaterializer(serializationConfiguration);
-            AttachmentResponseFactory = new AttachmentResponseFactory(materializer);
-            DocumentHeaderResponseFactory = new DocumentHeaderResponseFactory(materializer);
+            AttachmentResponseFactory = new AttachmentResponseFactory(serializationConfiguration);
+            DocumentHeaderResponseFactory = new DocumentHeaderResponseFactory(serializationConfiguration);
         }
 
         public virtual Task<AttachmentResponse> GetAsync(string docId, string attachmentName)

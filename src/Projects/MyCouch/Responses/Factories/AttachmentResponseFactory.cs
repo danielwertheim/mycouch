@@ -8,14 +8,15 @@ namespace MyCouch.Responses.Factories
 {
     public class AttachmentResponseFactory : ResponseFactoryBase
     {
-        public AttachmentResponseFactory(IResponseMaterializer responseMaterializer) : base(responseMaterializer) { }
+        public AttachmentResponseFactory(SerializationConfiguration serializationConfiguration)
+            : base(serializationConfiguration) { }
 
         public virtual AttachmentResponse Create(HttpResponseMessage response)
         {
-            return CreateResponse<AttachmentResponse>(response, OnSuccessfulAttachmentResponseContentMaterializer, OnFailedResponseContentMaterializer);
+            return CreateResponse<AttachmentResponse>(response, OnSuccessfulResponse, OnFailedResponse);
         }
 
-        protected virtual void OnSuccessfulAttachmentResponseContentMaterializer(HttpResponseMessage response, AttachmentResponse result)
+        protected virtual void OnSuccessfulResponse(HttpResponseMessage response, AttachmentResponse result)
         {
             using (var content = response.Content.ReadAsStream())
             {

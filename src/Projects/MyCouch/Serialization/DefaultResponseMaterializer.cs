@@ -13,6 +13,7 @@ namespace MyCouch.Serialization
     {
         protected readonly SerializationConfiguration Configuration;
         protected readonly JsonSerializer InternalSerializer;
+        protected readonly JsonResponseMapper JsonMapper;
 
         public DefaultResponseMaterializer(SerializationConfiguration configuration)
         {
@@ -20,88 +21,29 @@ namespace MyCouch.Serialization
 
             Configuration = configuration;
             InternalSerializer = JsonSerializer.Create(Configuration.Settings);
-        }
-
-        public virtual void PopulateFailedResponse<T>(T response, Stream data) where T : Response
-        {
-            var mappings = new Dictionary<string, Action<JsonTextReader>>
-            {
-                {"error", jr => response.Error = jr.Value.ToString()},
-                {"reason", jr => response.Reason = jr.Value.ToString()}
-            };
-            Map(data, mappings);
-        }
-
-        public virtual void PopulateBulkResponse(BulkResponse response, Stream data)
-        {
-            using (var sr = new StreamReader(data))
-            {
-                using (var jr = Configuration.ReaderFactory(typeof(BulkResponse.Row[]), sr))
-                {
-                    response.Rows = InternalSerializer.Deserialize<BulkResponse.Row[]>(jr);
-                }
-            }
-        }
-
-        public virtual void PopulateDocumentHeaderResponse(DocumentHeaderResponse response, Stream data)
-        {
-            var mappings = new Dictionary<string, Action<JsonTextReader>>
-            {
-                {"id", jr => response.Id = jr.Value.ToString()},
-                {"rev", jr => response.Rev = jr.Value.ToString()}
-            };
-            Map(data, mappings);
+            JsonMapper = new JsonResponseMapper(Configuration);
         }
 
         public virtual void PopulateViewQueryResponse<T>(ViewQueryResponse<T> response, Stream data) where T : class
         {
-            var mappings = new Dictionary<string, Action<JsonTextReader>>
+            var mappings = new JsonResponseMappings
             {
-                {"total_rows", jr => response.TotalRows = (long)jr.Value},
-                {"update_seq", jr => response.UpdateSeq = (long)jr.Value},
-                {"offset", jr => response.OffSet = (long)jr.Value},
-                {"rows", jr =>
+                {JsonResponseMappings.FieldNames.TotalRows, jr => response.TotalRows = (long) jr.Value},
+                {JsonResponseMappings.FieldNames.UpdateSeq, jr => response.UpdateSeq = (long) jr.Value},
+                {JsonResponseMappings.FieldNames.Offset, jr => response.OffSet = (long) jr.Value},
                 {
-                    if (response is ViewQueryResponse<string>)
-                        response.Rows = YieldViewQueryRowsOfString(jr).ToArray() as ViewQueryResponse<T>.Row[];
-                    else if (response is ViewQueryResponse<string[]>)
-                        response.Rows = YieldViewQueryRowsOfStrings(jr).ToArray() as ViewQueryResponse<T>.Row[];
-                    else
-                        response.Rows = InternalSerializer.Deserialize<ViewQueryResponse<T>.Row[]>(jr); //TODO: Do as with string[]
-                }},
-            };
-            Map(data, mappings);
-        }
-
-        protected virtual void Map(Stream data, IDictionary<string, Action<JsonTextReader>> mappings)
-        {
-            var numOfHandlersProcessed = 0;
-
-            using (var sr = new StreamReader(data))
-            {
-                using (var jr = Configuration.ApplyConfigToReader(new JsonTextReader(sr)))
-                {
-                    while (jr.Read())
+                    JsonResponseMappings.FieldNames.Rows, jr =>
                     {
-                        if(numOfHandlersProcessed == mappings.Count)
-                            break;
-
-                        if (jr.TokenType != JsonToken.PropertyName)
-                            continue;
-
-                        var propName = jr.Value.ToString();
-                        if (!mappings.ContainsKey(propName))
-                            continue;
-
-                        if (!jr.Read())
-                            break;
-
-                        mappings[propName](jr);
-
-                        numOfHandlersProcessed++;
+                        if (response is ViewQueryResponse<string>)
+                            response.Rows = YieldViewQueryRowsOfString(jr).ToArray() as ViewQueryResponse<T>.Row[];
+                        else if (response is ViewQueryResponse<string[]>)
+                            response.Rows = YieldViewQueryRowsOfStrings(jr).ToArray() as ViewQueryResponse<T>.Row[];
+                        else
+                            response.Rows = InternalSerializer.Deserialize<ViewQueryResponse<T>.Row[]>(jr); //TODO: Do as with string[]
                     }
                 }
-            }
+            };
+            JsonMapper.Map(data, mappings);
         }
 
         protected virtual IEnumerable<ViewQueryResponse<string>.Row> YieldViewQueryRowsOfString(JsonReader jr)

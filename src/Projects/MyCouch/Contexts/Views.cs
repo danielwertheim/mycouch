@@ -22,9 +22,8 @@ namespace MyCouch.Contexts
         {
             Ensure.That(serializationConfiguration, "serializationConfiguration").IsNotNull();
 
-            var materializer = new DefaultResponseMaterializer(serializationConfiguration);
-            JsonViewQueryResponseFactory = new JsonViewQueryResponseFactory(materializer);
-            ViewQueryResponseFactory = new ViewQueryResponseFactory(materializer);
+            JsonViewQueryResponseFactory = new JsonViewQueryResponseFactory(serializationConfiguration);
+            ViewQueryResponseFactory = new ViewQueryResponseFactory(serializationConfiguration);
         }
 
         public virtual async Task<JsonViewQueryResponse> RunQueryAsync(ViewQuery query)

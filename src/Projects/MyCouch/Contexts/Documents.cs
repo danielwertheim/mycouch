@@ -20,10 +20,9 @@ namespace MyCouch.Contexts
         {
             Ensure.That(serializationConfiguration, "serializationConfiguration").IsNotNull();
 
-            var materializer = new DefaultResponseMaterializer(serializationConfiguration);
-            DocumentReponseFactory = new DocumentResponseFactory(materializer);
-            DocumentHeaderReponseFactory = new DocumentHeaderResponseFactory(materializer);
-            BulkReponseFactory = new BulkResponseFactory(materializer);
+            DocumentReponseFactory = new DocumentResponseFactory(serializationConfiguration);
+            DocumentHeaderReponseFactory = new DocumentHeaderResponseFactory(serializationConfiguration);
+            BulkReponseFactory = new BulkResponseFactory(serializationConfiguration);
         }
 
         public virtual async Task<BulkResponse> BulkAsync(BulkCommand cmd)

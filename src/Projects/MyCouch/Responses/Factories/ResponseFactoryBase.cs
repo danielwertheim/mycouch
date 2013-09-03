@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Net.Http;
 using EnsureThat;
 using MyCouch.Extensions;
@@ -8,13 +9,15 @@ namespace MyCouch.Responses.Factories
 {
     public abstract class ResponseFactoryBase
     {
-        protected readonly IResponseMaterializer ResponseMaterializer;
+        protected readonly SerializationConfiguration SerializationConfiguration;
+        protected readonly JsonResponseMapper JsonMapper;
 
-        protected ResponseFactoryBase(IResponseMaterializer responseMaterializer)
+        protected ResponseFactoryBase(SerializationConfiguration serializationConfiguration)
         {
-            Ensure.That(responseMaterializer, "responseMaterializer").IsNotNull();
+            Ensure.That(serializationConfiguration, "serializationConfiguration").IsNotNull();
 
-            ResponseMaterializer = responseMaterializer;
+            SerializationConfiguration = serializationConfiguration;
+            JsonMapper = new JsonResponseMapper(SerializationConfiguration);
         }
 
         protected virtual T CreateResponse<T>(
@@ -37,10 +40,20 @@ namespace MyCouch.Responses.Factories
             return result;
         }
 
-        protected virtual void OnFailedResponseContentMaterializer<T>(HttpResponseMessage response, T result) where T : Response
+        protected virtual void OnFailedResponse(HttpResponseMessage response, Response result)
         {
             using (var content = response.Content.ReadAsStream())
-                ResponseMaterializer.PopulateFailedResponse(result, content);
+                PopulateFailedResponse(result, content);
+        }
+
+        protected virtual void PopulateFailedResponse(Response result, Stream content)
+        {
+            var mappings = new JsonResponseMappings
+            {
+                {JsonResponseMappings.FieldNames.Error, jr => result.Error = jr.Value.ToString()},
+                {JsonResponseMappings.FieldNames.Reason, jr => result.Reason = jr.Value.ToString()}
+            };
+            JsonMapper.Map(content, mappings);
         }
 
         protected virtual bool ContentShouldHaveIdAndRev(HttpRequestMessage request)

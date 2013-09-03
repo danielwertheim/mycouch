@@ -25,7 +25,7 @@ namespace MyCouch.Contexts
             Ensure.That(entityReflector, "entityReflector").IsNotNull();
 
             Serializer = new DefaultSerializer(serializationConfiguration);
-            EntityResponseFactory = new EntityResponseFactory(new DefaultResponseMaterializer(serializationConfiguration), Serializer);
+            EntityResponseFactory = new EntityResponseFactory(serializationConfiguration, Serializer);
             EntityReflector = entityReflector;
         }
 

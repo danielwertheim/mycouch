@@ -5,13 +5,14 @@ namespace MyCouch.Responses.Factories
 {
     public class DatabaseResponseFactory : ResponseFactoryBase
     {
-        public DatabaseResponseFactory(IResponseMaterializer responseMaterializer) : base(responseMaterializer) { }
+        public DatabaseResponseFactory(SerializationConfiguration serializationConfiguration)
+            : base(serializationConfiguration) { }
 
         public virtual DatabaseResponse Create(HttpResponseMessage response)
         {
-            return CreateResponse<DatabaseResponse>(response, OnSuccessfulDatabaseResponseContentMaterializer, OnFailedResponseContentMaterializer);
+            return CreateResponse<DatabaseResponse>(response, OnSuccessfulResponse, OnFailedResponse);
         }
 
-        protected virtual void OnSuccessfulDatabaseResponseContentMaterializer(HttpResponseMessage response, DatabaseResponse result) { }
+        protected virtual void OnSuccessfulResponse(HttpResponseMessage response, DatabaseResponse result) { }
     }
 }

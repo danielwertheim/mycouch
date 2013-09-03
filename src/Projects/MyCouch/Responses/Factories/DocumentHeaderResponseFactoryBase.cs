@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System.IO;
+using System.Net.Http;
 using MyCouch.Extensions;
 using MyCouch.Serialization;
 
@@ -6,9 +7,10 @@ namespace MyCouch.Responses.Factories
 {
     public abstract class DocumentHeaderResponseFactoryBase : ResponseFactoryBase
     {
-        protected DocumentHeaderResponseFactoryBase(IResponseMaterializer responseMaterializer) : base(responseMaterializer) { }
+        protected DocumentHeaderResponseFactoryBase(SerializationConfiguration serializationConfiguration)
+            : base(serializationConfiguration) { }
 
-        protected virtual void OnSuccessfulDocumentHeaderResponseContentMaterializer(HttpResponseMessage response, DocumentHeaderResponse result)
+        protected virtual void OnSuccessfulResponse(HttpResponseMessage response, DocumentHeaderResponse result)
         {
             if (response.RequestMessage.Method == HttpMethod.Head)
             {
@@ -19,12 +21,22 @@ namespace MyCouch.Responses.Factories
             }
 
             using (var content = response.Content.ReadAsStream())
-                ResponseMaterializer.PopulateDocumentHeaderResponse(result, content);
+                PopulateDocumentHeaderResponse(result, content);
         }
 
-        protected virtual void OnFailedDocumentHeaderResponseContentMaterializer(HttpResponseMessage response, DocumentHeaderResponse result)
+        protected virtual void PopulateDocumentHeaderResponse(DocumentHeaderResponse result, Stream content)
         {
-            OnFailedResponseContentMaterializer(response, result);
+            var mappings = new JsonResponseMappings
+            {
+                {JsonResponseMappings.FieldNames.Id, jr => result.Error = jr.Value.ToString()},
+                {JsonResponseMappings.FieldNames.Rev, jr => result.Reason = jr.Value.ToString()}
+            };
+            JsonMapper.Map(content, mappings);
+        }
+
+        protected virtual void OnFailedResponse(HttpResponseMessage response, DocumentHeaderResponse result)
+        {
+            base.OnFailedResponse(response, result);
 
             AssignMissingIdFromRequestUri(response, result);
         }

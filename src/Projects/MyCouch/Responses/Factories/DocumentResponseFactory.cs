@@ -5,21 +5,22 @@ using MyCouch.Serialization;
 
 namespace MyCouch.Responses.Factories
 {
-    public class DocumentResponseFactory : ResponseFactoryBase
+    public class DocumentResponseFactory : DocumentHeaderResponseFactoryBase
     {
-        public DocumentResponseFactory(IResponseMaterializer responseMaterializer) : base(responseMaterializer) { }
+        public DocumentResponseFactory(SerializationConfiguration serializationConfiguration)
+            : base(serializationConfiguration) { }
 
         public virtual DocumentResponse Create(HttpResponseMessage response)
         {
-            return CreateResponse<DocumentResponse>(response, OnSuccessfulDocumentResponseContentMaterializer, OnFailedResponseContentMaterializer);
+            return CreateResponse<DocumentResponse>(response, OnSuccessfulResponse, OnFailedResponse);
         }
 
-        protected virtual void OnSuccessfulDocumentResponseContentMaterializer(HttpResponseMessage response, DocumentResponse result)
+        protected virtual void OnSuccessfulResponse(HttpResponseMessage response, DocumentResponse result)
         {
             using (var content = response.Content.ReadAsStream())
             {
                 if (ContentShouldHaveIdAndRev(response.RequestMessage))
-                    ResponseMaterializer.PopulateDocumentHeaderResponse(result, content);
+                    PopulateDocumentHeaderResponse(result, content);
                 else
                 {
                     AssignMissingIdFromRequestUri(response, result);

@@ -22,9 +22,8 @@ namespace MyCouch.Cloudant.Contexts
         public Searches(IConnection connection, SerializationConfiguration serializationConfiguration) 
             : base(connection)
         {
-            var materializer = new DefaultResponseMaterializer(serializationConfiguration);
-            JsonIndexQueryResponseFactory = new JsonIndexQueryResponseFactory(materializer);
-            IndexQueryResponseFactory = new IndexQueryResponseFactory(materializer);
+            JsonIndexQueryResponseFactory = new JsonIndexQueryResponseFactory(serializationConfiguration);
+            IndexQueryResponseFactory = new IndexQueryResponseFactory(serializationConfiguration);
         }
 
         public virtual async Task<JsonIndexQueryResponse> RunQueryAsync(IndexQuery query)

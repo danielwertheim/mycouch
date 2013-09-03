@@ -17,7 +17,7 @@ namespace MyCouch.Contexts
         {
             Ensure.That(serializationConfiguration, "serializationConfiguration").IsNotNull();
 
-            DatabaseResponseFactory = new DatabaseResponseFactory(new DefaultResponseMaterializer(serializationConfiguration));
+            DatabaseResponseFactory = new DatabaseResponseFactory(serializationConfiguration);
         }
 
         public virtual async Task<DatabaseResponse> PutAsync()

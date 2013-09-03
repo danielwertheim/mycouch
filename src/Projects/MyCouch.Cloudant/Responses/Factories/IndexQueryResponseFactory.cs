@@ -7,14 +7,20 @@ namespace MyCouch.Cloudant.Responses.Factories
 {
     public class IndexQueryResponseFactory : ResponseFactoryBase
     {
-        public IndexQueryResponseFactory(IResponseMaterializer responseMaterializer) : base(responseMaterializer) { }
+        protected readonly IResponseMaterializer ResponseMaterializer;
+
+        public IndexQueryResponseFactory(SerializationConfiguration serializationConfiguration)
+            : base(serializationConfiguration)
+        {
+            ResponseMaterializer = new DefaultResponseMaterializer(SerializationConfiguration);
+        }
 
         public virtual IndexQueryResponse<T> Create<T>(HttpResponseMessage response) where T : class
         {
-            return CreateResponse<IndexQueryResponse<T>>(response, OnSuccessfulViewQueryResponseContentMaterializer, OnFailedResponseContentMaterializer);
+            return CreateResponse<IndexQueryResponse<T>>(response, OnSuccessfulResponse, OnFailedResponse);
         }
 
-        protected virtual void OnSuccessfulViewQueryResponseContentMaterializer<T>(HttpResponseMessage response, IndexQueryResponse<T> result) where T : class
+        protected virtual void OnSuccessfulResponse<T>(HttpResponseMessage response, IndexQueryResponse<T> result) where T : class
         {
             using (var content = response.Content.ReadAsStream())
                 ResponseMaterializer.PopulateViewQueryResponse(result, content);
