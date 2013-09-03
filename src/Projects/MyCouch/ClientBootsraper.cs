@@ -89,7 +89,7 @@ namespace MyCouch
         {
             var serializationConfiguration = new Lazy<SerializationConfiguration>(() =>
             {
-                var contractResolver = new EntitySerializationContractResolver(EntityReflectorFn());
+                var contractResolver = new EntityContractResolver(EntityReflectorFn());
 
                 return new SerializationConfiguration(contractResolver)
                 {

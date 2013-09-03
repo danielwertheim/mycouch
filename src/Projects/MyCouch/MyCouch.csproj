@@ -109,7 +109,7 @@
     <Compile Include="Serialization\Conventions\ISerializationConvention.cs" />
     <Compile Include="Serialization\Conventions\SerializationConventions.cs" />
     <Compile Include="Serialization\EntityJsonWriter.cs" />
-    <Compile Include="Serialization\EntitySerializationContractResolver.cs" />
+    <Compile Include="Serialization\EntityContractResolver.cs" />
     <Compile Include="Serialization\IResponseMaterializer.cs" />
     <Compile Include="Serialization\DefaultResponseMaterializer.cs" />
     <Compile Include="Serialization\JsonReaderFactory.cs" />

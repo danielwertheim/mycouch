@@ -16,11 +16,11 @@ namespace MyCouch.Serialization
     /// Id and Rev members will be mapped according to conventions registrered
     /// in members of the <see cref="EntityReflector"/>.
     /// </summary>
-    public class EntitySerializationContractResolver : SerializationContractResolver
+    public class EntityContractResolver : SerializationContractResolver
     {
         protected readonly IEntityReflector EntityReflector;
 
-        public EntitySerializationContractResolver(IEntityReflector entityReflector)
+        public EntityContractResolver(IEntityReflector entityReflector)
         {
             Ensure.That(entityReflector, "entityReflector").IsNotNull();
 

@@ -30,7 +30,7 @@ namespace MyCouch.UnitTests.Serialization
     {
         protected SerializationConfiguration CreateSerializationConfiguration(EntityReflector entityReflector)
         {
-            return new SerializationConfiguration(new EntitySerializationContractResolver(entityReflector))
+            return new SerializationConfiguration(new EntityContractResolver(entityReflector))
             {
                 WriterFactory = (t, w) => new EntityJsonWriter(t, w)
             };
