@@ -7,12 +7,12 @@ namespace MyCouch.Cloudant.Responses.Factories
 {
     public class IndexQueryResponseFactory : ResponseFactoryBase
     {
-        protected readonly IResponseMaterializer ResponseMaterializer;
+        protected readonly IQyeryResponseMaterializer ResponseMaterializer;
 
         public IndexQueryResponseFactory(SerializationConfiguration serializationConfiguration)
             : base(serializationConfiguration)
         {
-            ResponseMaterializer = new DefaultResponseMaterializer(SerializationConfiguration);
+            ResponseMaterializer = new ViewQueryResponseMaterializer(SerializationConfiguration);
         }
 
         public virtual IndexQueryResponse<T> Create<T>(HttpResponseMessage response) where T : class
@@ -23,7 +23,7 @@ namespace MyCouch.Cloudant.Responses.Factories
         protected virtual void OnSuccessfulResponse<T>(HttpResponseMessage response, IndexQueryResponse<T> result) where T : class
         {
             using (var content = response.Content.ReadAsStream())
-                ResponseMaterializer.PopulateViewQueryResponse(result, content);
+                ResponseMaterializer.Populate(result, content);
         }
     }
 }

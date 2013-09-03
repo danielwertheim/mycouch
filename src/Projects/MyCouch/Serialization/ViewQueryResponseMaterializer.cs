@@ -9,13 +9,13 @@ using Newtonsoft.Json;
 
 namespace MyCouch.Serialization
 {
-    public class DefaultResponseMaterializer : IResponseMaterializer
+    public class ViewQueryResponseMaterializer : IQyeryResponseMaterializer
     {
         protected readonly SerializationConfiguration Configuration;
         protected readonly JsonSerializer InternalSerializer;
         protected readonly JsonResponseMapper JsonMapper;
 
-        public DefaultResponseMaterializer(SerializationConfiguration configuration)
+        public ViewQueryResponseMaterializer(SerializationConfiguration configuration)
         {
             Ensure.That(configuration, "configuration").IsNotNull();
 
@@ -24,7 +24,7 @@ namespace MyCouch.Serialization
             JsonMapper = new JsonResponseMapper(Configuration);
         }
 
-        public virtual void PopulateViewQueryResponse<T>(ViewQueryResponse<T> response, Stream data) where T : class
+        public virtual void Populate<T>(ViewQueryResponse<T> response, Stream data) where T : class
         {
             var mappings = new JsonResponseMappings
             {
@@ -107,7 +107,7 @@ namespace MyCouch.Serialization
         protected virtual IEnumerable<ViewQueryResponse<T>.Row> YieldViewQueryRows<T>(
             JsonReader jr,
             Action<ViewQueryResponse<T>.Row, JsonTextWriter, StringBuilder> onVisitValue,
-            Action<ViewQueryResponse<T>.Row, JsonTextWriter, StringBuilder> onVisitDoc = null) where T : class
+            Action<ViewQueryResponse<T>.Row, JsonTextWriter, StringBuilder> onVisitDoc) where T : class
         {
             if (jr.TokenType != JsonToken.StartArray)
                 yield break;
@@ -198,6 +198,10 @@ namespace MyCouch.Serialization
             }
         }
 
+        /// <summary>
+        /// When deserializing Query responses, data that is NULL should be empty
+        /// instead of having a text stating null.
+        /// </summary>
         protected class MaterializerJsonWriter : JsonTextWriter
         {
             public MaterializerJsonWriter(TextWriter textWriter) : base(textWriter) { }

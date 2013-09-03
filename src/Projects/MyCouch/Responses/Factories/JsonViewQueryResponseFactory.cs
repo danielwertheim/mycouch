@@ -6,12 +6,12 @@ namespace MyCouch.Responses.Factories
 {
     public class JsonViewQueryResponseFactory : ResponseFactoryBase
     {
-        protected readonly IResponseMaterializer ResponseMaterializer;
+        protected readonly IQyeryResponseMaterializer ResponseMaterializer;
 
         public JsonViewQueryResponseFactory(SerializationConfiguration serializationConfiguration)
             : base(serializationConfiguration)
         {
-            ResponseMaterializer = new DefaultResponseMaterializer(SerializationConfiguration);
+            ResponseMaterializer = new ViewQueryResponseMaterializer(SerializationConfiguration);
         }
 
         public virtual JsonViewQueryResponse Create(HttpResponseMessage response)
@@ -22,7 +22,7 @@ namespace MyCouch.Responses.Factories
         protected virtual void OnSuccessfulResponse<T>(HttpResponseMessage response, ViewQueryResponse<T> result) where T : class
         {
             using (var content = response.Content.ReadAsStream())
-                ResponseMaterializer.PopulateViewQueryResponse(result, content);
+                ResponseMaterializer.Populate(result, content);
         }
     }
 }

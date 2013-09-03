@@ -14,7 +14,7 @@ namespace MyCouch.UnitTests.Serialization
     {
         public DefaultResponseMaterializerWithSimpleContractResolverTests()
         {
-            SUT = new DefaultResponseMaterializer(new SerializationConfiguration(new SerializationContractResolver()));
+            SUT = new ViewQueryResponseMaterializer(new SerializationConfiguration(new SerializationContractResolver()));
         }
     }
 
@@ -23,7 +23,7 @@ namespace MyCouch.UnitTests.Serialization
         public DefaultResponseMaterializerWithEntityContractResolverUsingLambdasTests()
         {
             var entityReflector = new EntityReflector(new LambdaDynamicPropertyFactory());
-            SUT = new DefaultResponseMaterializer(new SerializationConfiguration(new EntityContractResolver(entityReflector)));
+            SUT = new ViewQueryResponseMaterializer(new SerializationConfiguration(new EntityContractResolver(entityReflector)));
         }
     }
 
@@ -33,19 +33,19 @@ namespace MyCouch.UnitTests.Serialization
         public DefaultResponseMaterializerWithEntityContractResolverUsingIlTests()
         {
             var entityReflector = new EntityReflector(new IlDynamicPropertyFactory());
-            SUT = new DefaultResponseMaterializer(new SerializationConfiguration(new EntityContractResolver(entityReflector)));
+            SUT = new ViewQueryResponseMaterializer(new SerializationConfiguration(new EntityContractResolver(entityReflector)));
         }
     }
 #endif
 
-    public abstract class ResponseMaterializerTests : UnitTestsOf<DefaultResponseMaterializer>
+    public abstract class ResponseMaterializerTests : UnitTestsOf<ViewQueryResponseMaterializer>
     {
         [Fact]
         public void It_can_populate_an_all_docs_view_query_response_of_string()
         {
             var response = new ViewQueryResponse<string>();
 
-            SUT.PopulateViewQueryResponse(response, JsonTestData.ViewQueryAllDocsResult.AsStream());
+            SUT.Populate(response, JsonTestData.ViewQueryAllDocsResult.AsStream());
 
             response.RowCount.Should().Be(2);
             response.Rows[0].Id.Should().Be("1");
@@ -62,7 +62,7 @@ namespace MyCouch.UnitTests.Serialization
         {
             var response = new ViewQueryResponse<dynamic>();
 
-            SUT.PopulateViewQueryResponse(response, JsonTestData.ViewQueryAllDocsResult.AsStream());
+            SUT.Populate(response, JsonTestData.ViewQueryAllDocsResult.AsStream());
 
             response.RowCount.Should().Be(2);
             response.Rows[0].Id.Should().Be("1");
@@ -81,7 +81,7 @@ namespace MyCouch.UnitTests.Serialization
         {
             var response = new ViewQueryResponse<IDictionary<string, object>>();
 
-            SUT.PopulateViewQueryResponse(response, JsonTestData.ViewQueryAllDocsResult.AsStream());
+            SUT.Populate(response, JsonTestData.ViewQueryAllDocsResult.AsStream());
 
             response.RowCount.Should().Be(2);
             response.Rows[0].Id.Should().Be("1");
@@ -100,7 +100,7 @@ namespace MyCouch.UnitTests.Serialization
         {
             var response = new ViewQueryResponse<string>();
 
-            SUT.PopulateViewQueryResponse(response, JsonTestData.ViewQueryAlbums.AsStream());
+            SUT.Populate(response, JsonTestData.ViewQueryAlbums.AsStream());
 
             response.RowCount.Should().Be(4);
             response.Rows[0].Id.Should().Be("1");
@@ -125,7 +125,7 @@ namespace MyCouch.UnitTests.Serialization
         {
             var response = new ViewQueryResponse<string[]>();
 
-            SUT.PopulateViewQueryResponse(response, JsonTestData.ViewQueryAlbums.AsStream());
+            SUT.Populate(response, JsonTestData.ViewQueryAlbums.AsStream());
 
             response.RowCount.Should().Be(4);
             response.Rows[0].Id.Should().Be("1");
@@ -160,7 +160,7 @@ namespace MyCouch.UnitTests.Serialization
         {
             var response = new ViewQueryResponse<Album[]>();
 
-            SUT.PopulateViewQueryResponse(response, JsonTestData.ViewQueryAlbums.AsStream());
+            SUT.Populate(response, JsonTestData.ViewQueryAlbums.AsStream());
 
             response.RowCount.Should().Be(4);
             response.Rows[0].Id.Should().Be("1");

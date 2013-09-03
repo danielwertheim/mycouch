@@ -61,7 +61,7 @@
     <Compile Include="Responses\Factories\JsonIndexQueryResponseFactory.cs" />
     <Compile Include="Responses\Factories\IndexQueryResponseFactory.cs" />
     <Compile Include="Responses\IndexQueryResponse.cs" />
-    <Compile Include="Responses\JsonViewQueryResponse.cs" />
+    <Compile Include="Responses\JsonIndexQueryResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MyCouch\MyCouch.csproj">
