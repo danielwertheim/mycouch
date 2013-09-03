@@ -4,12 +4,12 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using EnsureThat;
-using MyCouch.Responses;
+using MyCouch.Serialization;
 using Newtonsoft.Json;
 
-namespace MyCouch.Serialization
+namespace MyCouch.Responses.Factories
 {
-    public class ViewQueryResponseMaterializer : IQyeryResponseMaterializer
+    public class ViewQueryResponseMaterializer
     {
         protected readonly SerializationConfiguration Configuration;
         protected readonly JsonSerializer InternalSerializer;

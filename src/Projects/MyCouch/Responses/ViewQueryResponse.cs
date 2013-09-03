@@ -11,11 +11,11 @@ namespace MyCouch.Responses
         public long RowCount { get { return IsEmpty ? 0 : Rows.Length; } }
         public long UpdateSeq { get; set; }
         public long OffSet { get; set; }
+        public Row[] Rows { get; set; }
         public bool IsEmpty
         {
             get { return Rows == null || Rows.Length == 0; }
         }
-        public Row[] Rows { get; set; }
 
         public override string GenerateToStringDebugVersion()
         {

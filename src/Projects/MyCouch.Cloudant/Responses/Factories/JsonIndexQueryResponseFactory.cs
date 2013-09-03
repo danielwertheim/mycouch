@@ -7,12 +7,12 @@ namespace MyCouch.Cloudant.Responses.Factories
 {
     public class JsonIndexQueryResponseFactory : ResponseFactoryBase
     {
-        protected readonly IQyeryResponseMaterializer ResponseMaterializer;
+        protected readonly IndexQueryResponseMaterializer ResponseMaterializer;
 
         public JsonIndexQueryResponseFactory(SerializationConfiguration serializationConfiguration)
             : base(serializationConfiguration)
         {
-            ResponseMaterializer = new ViewQueryResponseMaterializer(SerializationConfiguration);
+            ResponseMaterializer = new IndexQueryResponseMaterializer(SerializationConfiguration);
         }
 
         public virtual JsonIndexQueryResponse Create(HttpResponseMessage response)

@@ -60,6 +60,7 @@
     <Compile Include="Querying\IndexQueryOptions.cs" />
     <Compile Include="Responses\Factories\JsonIndexQueryResponseFactory.cs" />
     <Compile Include="Responses\Factories\IndexQueryResponseFactory.cs" />
+    <Compile Include="Responses\Factories\IndexQueryResponseMaterializer.cs" />
     <Compile Include="Responses\IndexQueryResponse.cs" />
     <Compile Include="Responses\JsonIndexQueryResponse.cs" />
   </ItemGroup>

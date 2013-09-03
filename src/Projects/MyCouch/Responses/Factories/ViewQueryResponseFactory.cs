@@ -6,7 +6,7 @@ namespace MyCouch.Responses.Factories
 {
     public class ViewQueryResponseFactory : ResponseFactoryBase
     {
-        protected readonly IQyeryResponseMaterializer ResponseMaterializer;
+        protected readonly ViewQueryResponseMaterializer ResponseMaterializer;
 
         public ViewQueryResponseFactory(SerializationConfiguration serializationConfiguration)
             : base(serializationConfiguration)

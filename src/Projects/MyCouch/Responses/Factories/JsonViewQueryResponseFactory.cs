@@ -6,7 +6,7 @@ namespace MyCouch.Responses.Factories
 {
     public class JsonViewQueryResponseFactory : ResponseFactoryBase
     {
-        protected readonly IQyeryResponseMaterializer ResponseMaterializer;
+        protected readonly ViewQueryResponseMaterializer ResponseMaterializer;
 
         public JsonViewQueryResponseFactory(SerializationConfiguration serializationConfiguration)
             : base(serializationConfiguration)
