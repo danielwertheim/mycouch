@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 namespace MyCouch.Serialization
 {
     /// <summary>
-    /// High level traversing of JSON, with callbacks per field names
+    /// High level traversing of JSON representing a Response Uses callbacks per field names
     /// passed as mappings in <see cref="Map"/>.
     /// </summary>
     public class JsonResponseMapper

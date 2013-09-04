@@ -66,10 +66,10 @@
     <Compile Include="TypeExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="JsonTestDataFiles\ViewQueryAlbums.json">
+    <Content Include="JsonTestDataFiles\ViewQueryAlbumRows.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="JsonTestDataFiles\ViewQueryAllDocsResult.json">
+    <Content Include="JsonTestDataFiles\ViewQueryAllDocRows.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />

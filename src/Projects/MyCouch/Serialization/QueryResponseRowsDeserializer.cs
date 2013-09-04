@@ -5,67 +5,42 @@ using System.Linq;
 using System.Text;
 using EnsureThat;
 using MyCouch.Responses;
-using MyCouch.Responses.Meta;
 using Newtonsoft.Json;
 
 namespace MyCouch.Serialization
 {
     /// <summary>
-    /// Traverses JSON and populates members of passed <see cref="QueryResponse{T}"/> response.
+    /// Traverses JSON and deserializes it to Rows for use with e.g. <see cref="QueryResponse{T}.Rows"/>.
     /// </summary>
-    public class QueryResponseMaterializer
+    public class QueryResponseRowsDeserializer
     {
         protected readonly SerializationConfiguration Configuration;
         protected readonly JsonSerializer InternalSerializer;
-        protected readonly JsonResponseMapper JsonMapper;
 
-        public QueryResponseMaterializer(SerializationConfiguration configuration)
+        public QueryResponseRowsDeserializer(SerializationConfiguration configuration)
         {
             Ensure.That(configuration, "configuration").IsNotNull();
 
             Configuration = configuration;
             InternalSerializer = JsonSerializer.Create(Configuration.Settings);
-            JsonMapper = new JsonResponseMapper(Configuration);
         }
 
-        public virtual void Populate<T>(QueryResponse<T> response, Stream data) where T : class
+        public virtual IEnumerable<QueryResponse<T>.Row> Deserialize<T>(JsonReader jr) where T : class
         {
-            var mappings = new JsonResponseMappings
-            {
-                {ResponseMeta.Scheme.Queries.TotalRows, jr => OnPopulateTotalRows(jr, response)},
-                {ResponseMeta.Scheme.Queries.UpdateSeq, jr => OnPopulateUpdateSeq(jr, response)},
-                {ResponseMeta.Scheme.Queries.Offset, jr => OnPopulateOffset(jr, response)},
-                {ResponseMeta.Scheme.Queries.Rows, jr => OnPopulateRows(jr, response)}
-            };
-            JsonMapper.Map(data, mappings);
+            if(jr.TokenType != JsonToken.StartArray)
+                throw new MyCouchException(ExceptionStrings.QueryResponseRowsDeserializerNeedsJsonArray);
+
+            var type = typeof (T);
+
+            if (type == typeof(string))
+                return DeserializeRowsOfString(jr) as IEnumerable<QueryResponse<T>.Row>;
+            if (type == typeof(string[]))
+                return DeserializeRowsOfStrings(jr) as IEnumerable<QueryResponse<T>.Row>;
+
+            return InternalSerializer.Deserialize<IEnumerable<QueryResponse<T>.Row>>(jr); //TODO: Do as with string[]
         }
 
-        protected virtual void OnPopulateTotalRows<T>(JsonReader jr, QueryResponse<T> response) where T : class
-        {
-            response.TotalRows = (long) jr.Value;
-        }
-
-        protected virtual void OnPopulateUpdateSeq<T>(JsonReader jr, QueryResponse<T> response) where T : class
-        {
-            response.UpdateSeq = (long)jr.Value;
-        }
-
-        protected virtual void OnPopulateOffset<T>(JsonReader jr, QueryResponse<T> response) where T : class
-        {
-            response.OffSet = (long)jr.Value;
-        }
-
-        protected virtual void OnPopulateRows<T>(JsonReader jr, QueryResponse<T> response) where T : class
-        {
-            if (response is QueryResponse<string>)
-                response.Rows = YieldQueryRowsOfString(jr).ToArray() as QueryResponse<T>.Row[];
-            else if (response is QueryResponse<string[]>)
-                response.Rows = YieldQueryRowsOfStrings(jr).ToArray() as QueryResponse<T>.Row[];
-            else
-                response.Rows = InternalSerializer.Deserialize<QueryResponse<T>.Row[]>(jr); //TODO: Do as with string[]
-        }
-
-        protected virtual IEnumerable<QueryResponse<string>.Row> YieldQueryRowsOfString(JsonReader jr)
+        protected virtual IEnumerable<QueryResponse<string>.Row> DeserializeRowsOfString(JsonReader jr)
         {
             return YieldQueryRows<string>(
                 jr,
@@ -73,7 +48,7 @@ namespace MyCouch.Serialization
                 (row, jw, sb) => OnPopulateStringIfNotEmpty(jr, jw, sb, s => row.Doc = s));
         }
 
-        protected virtual IEnumerable<QueryResponse<string[]>.Row> YieldQueryRowsOfStrings(JsonReader jr)
+        protected virtual IEnumerable<QueryResponse<string[]>.Row> DeserializeRowsOfStrings(JsonReader jr)
         {
             return YieldQueryRows<string[]>(
                 jr,
