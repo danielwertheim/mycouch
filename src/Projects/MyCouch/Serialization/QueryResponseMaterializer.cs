@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using EnsureThat;
 using MyCouch.Responses;
+using MyCouch.Responses.Meta;
 using Newtonsoft.Json;
 
 namespace MyCouch.Serialization
@@ -31,10 +32,10 @@ namespace MyCouch.Serialization
         {
             var mappings = new JsonResponseMappings
             {
-                {JsonResponseMappings.FieldNames.TotalRows, jr => OnPopulateTotalRows(jr, response)},
-                {JsonResponseMappings.FieldNames.UpdateSeq, jr => OnPopulateUpdateSeq(jr, response)},
-                {JsonResponseMappings.FieldNames.Offset, jr => OnPopulateOffset(jr, response)},
-                {JsonResponseMappings.FieldNames.Rows, jr => OnPopulateRows(jr, response)}
+                {ResponseMeta.Scheme.Queries.TotalRows, jr => OnPopulateTotalRows(jr, response)},
+                {ResponseMeta.Scheme.Queries.UpdateSeq, jr => OnPopulateUpdateSeq(jr, response)},
+                {ResponseMeta.Scheme.Queries.Offset, jr => OnPopulateOffset(jr, response)},
+                {ResponseMeta.Scheme.Queries.Rows, jr => OnPopulateRows(jr, response)}
             };
             JsonMapper.Map(data, mappings);
         }

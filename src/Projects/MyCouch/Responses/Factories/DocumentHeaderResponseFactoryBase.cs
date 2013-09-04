@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Net.Http;
 using MyCouch.Extensions;
+using MyCouch.Responses.Meta;
 using MyCouch.Serialization;
 
 namespace MyCouch.Responses.Factories
@@ -28,8 +29,8 @@ namespace MyCouch.Responses.Factories
         {
             var mappings = new JsonResponseMappings
             {
-                {JsonResponseMappings.FieldNames.Id, jr => result.Error = jr.Value.ToString()},
-                {JsonResponseMappings.FieldNames.Rev, jr => result.Reason = jr.Value.ToString()}
+                {ResponseMeta.Scheme.Id, jr => result.Error = jr.Value.ToString()},
+                {ResponseMeta.Scheme.Rev, jr => result.Reason = jr.Value.ToString()}
             };
             JsonMapper.Map(content, mappings);
         }
