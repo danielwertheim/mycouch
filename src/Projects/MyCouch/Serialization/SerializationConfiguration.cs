@@ -7,6 +7,9 @@ namespace MyCouch.Serialization
 {
     public class SerializationConfiguration
     {
+        public delegate JsonTextReader JsonReaderFactory(Type docType, TextReader writer);
+        public delegate JsonTextWriter JsonWriterFactory(Type docType, TextWriter writer);
+
         public JsonSerializerSettings Settings { get; protected set; }
         public JsonReaderFactory ReaderFactory { get; set; }
         public JsonWriterFactory WriterFactory { get; set; }

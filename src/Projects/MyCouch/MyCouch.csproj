@@ -112,10 +112,8 @@
     <Compile Include="Serialization\EntityJsonWriter.cs" />
     <Compile Include="Serialization\EntityContractResolver.cs" />
     <Compile Include="Serialization\QueryResponseMaterializer.cs" />
-    <Compile Include="Serialization\JsonReaderFactory.cs" />
     <Compile Include="Serialization\JsonResponseMapper.cs" />
     <Compile Include="Serialization\JsonResponseMappings.cs" />
-    <Compile Include="Serialization\JsonWriterFactory.cs" />
     <Compile Include="Serialization\SerializationConfiguration.cs" />
     <Compile Include="SystemViewQuery.cs" />
     <Compile Include="Responses\Response.cs" />
