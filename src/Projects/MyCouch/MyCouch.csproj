@@ -51,6 +51,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Contexts\ApiContextBase.cs" />
+    <Compile Include="MyCouchException.cs" />
     <Compile Include="Responses\AttachmentResponse.cs" />
     <Compile Include="Contexts\Attachments.cs" />
     <Compile Include="ClientExecuteExtensions.cs" />
