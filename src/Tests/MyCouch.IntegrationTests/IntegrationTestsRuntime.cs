@@ -1,4 +1,6 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net;
+using System.Net.Http;
 using MyCouch.Cloudant;
 using Newtonsoft.Json;
 
@@ -14,28 +16,46 @@ namespace MyCouch.IntegrationTests
         {
             using (var c = new HttpClient())
             {
-                LocalEnvironment = JsonConvert.DeserializeObject<TestEnvironment>(
-                    c.GetStringAsync(TestEnvironmentsBaseUrl + "local").Result);
-
-                CloudantEnvironment = JsonConvert.DeserializeObject<TestEnvironment>(
-                    c.GetStringAsync(TestEnvironmentsBaseUrl + "cloudant").Result);
+                LocalEnvironment = GetTestEnvironment(c, "local");
+                CloudantEnvironment = GetTestEnvironment(c, "cloudant");
             }
 
-            using (var client = CreateClient())
+            if (LocalEnvironment != null)
             {
-                //client.Database.PutAsync().Wait();
-                client.ClearAllDocuments();
+                using (var client = CreateClient())
+                {
+                    //client.Database.PutAsync().Wait();
+                    client.ClearAllDocuments();
+                }
             }
 
-            using (var client = CreateCloudantClient())
+            if (CloudantEnvironment != null)
             {
-                //client.Database.PutAsync().Wait();
-                client.ClearAllDocuments();
+                using (var client = CreateCloudantClient())
+                {
+                    //client.Database.PutAsync().Wait();
+                    client.ClearAllDocuments();
+                }
             }
+        }
+
+        private static TestEnvironment GetTestEnvironment(HttpClient client, string envName)
+        {
+            var r = client.GetAsync(TestEnvironmentsBaseUrl + envName).Result;
+            if (r.StatusCode == HttpStatusCode.NotFound)
+                return null;
+
+            if(!r.IsSuccessStatusCode)
+                throw new Exception("Could not load test environment settings for: " + TestEnvironmentsBaseUrl + envName);
+
+            return JsonConvert.DeserializeObject<TestEnvironment>(r.Content.ReadAsStringAsync().Result);
         }
 
         internal static IClient CreateClient()
         {
+            if(LocalEnvironment == null)
+                throw new Exception("Can not create client for Local test environmet. Missing configuration.");
+
             var cfg = LocalEnvironment.Client;
             var uriBuilder = new MyCouchUriBuilder(cfg.ServerUrl)
                 .SetDbName(LocalEnvironment.Client.DbName)
@@ -46,6 +66,9 @@ namespace MyCouch.IntegrationTests
 
         internal static ICloudantClient CreateCloudantClient()
         {
+            if (LocalEnvironment == null)
+                throw new Exception("Can not create client for Cloudant test environmet. Missing configuration.");
+
             var cfg = CloudantEnvironment.Client;
             var uriBuilder = new MyCouchUriBuilder(cfg.ServerUrl)
                 .SetDbName(LocalEnvironment.Client.DbName)
