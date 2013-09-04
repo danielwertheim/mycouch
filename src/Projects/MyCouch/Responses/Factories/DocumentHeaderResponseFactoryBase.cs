@@ -29,8 +29,8 @@ namespace MyCouch.Responses.Factories
         {
             var mappings = new JsonResponseMappings
             {
-                {ResponseMeta.Scheme.Id, jr => result.Error = jr.Value.ToString()},
-                {ResponseMeta.Scheme.Rev, jr => result.Reason = jr.Value.ToString()}
+                {ResponseMeta.Scheme.Id, jr => result.Id = jr.Value.ToString()},
+                {ResponseMeta.Scheme.Rev, jr => result.Rev = jr.Value.ToString()}
             };
             JsonMapper.Map(content, mappings);
         }
