@@ -14,15 +14,15 @@ namespace MyCouch.Serialization
     /// </summary>
     public class QueryResponseRowsDeserializer
     {
-        protected readonly SerializationConfiguration Configuration;
         protected readonly JsonSerializer InternalSerializer;
+        protected readonly JsonArrayItemVisitor JsonRowArrayVisitor;
 
         public QueryResponseRowsDeserializer(SerializationConfiguration configuration)
         {
             Ensure.That(configuration, "configuration").IsNotNull();
 
-            Configuration = configuration;
-            InternalSerializer = JsonSerializer.Create(Configuration.Settings);
+            InternalSerializer = JsonSerializer.Create(configuration.Settings);
+            JsonRowArrayVisitor = new JsonArrayItemVisitor(configuration);
         }
 
         /// <summary>
@@ -99,12 +99,10 @@ namespace MyCouch.Serialization
 
         protected virtual IEnumerable<QueryResponse<T>.Row> YieldQueryRows<T>(
             JsonReader jsonReader, 
-            JsonArrayItemVisitor<QueryResponse<T>.Row>.OnVisitMember onVisitValueMember, 
-            JsonArrayItemVisitor<QueryResponse<T>.Row>.OnVisitMember onVisitDocMember) where T : class
+            JsonArrayItemVisitor.OnVisitMember<QueryResponse<T>.Row> onVisitValueMember,
+            JsonArrayItemVisitor.OnVisitMember<QueryResponse<T>.Row> onVisitDocMember) where T : class
         {
-            var v = new JsonArrayItemVisitor<QueryResponse<T>.Row>(Configuration);
-
-            var memberHandlers = new Dictionary<string, JsonArrayItemVisitor<QueryResponse<T>.Row>.OnVisitMember>
+            var memberHandlers = new Dictionary<string, JsonArrayItemVisitor.OnVisitMember<QueryResponse<T>.Row>>
             {
                 {
                     "id", (item, jr, jw, sb) =>
@@ -144,10 +142,11 @@ namespace MyCouch.Serialization
                 }
             };
 
-            Func<QueryResponse<T>.Row> onVisitStartNode = () => new QueryResponse<T>.Row();
-            Func<QueryResponse<T>.Row, QueryResponse<T>.Row> onVisitEndNode = i => i;
-
-            return v.Visit(jsonReader, onVisitStartNode, onVisitEndNode, memberHandlers);
-        } 
+            return JsonRowArrayVisitor.Visit(
+                jsonReader,
+                () => new QueryResponse<T>.Row(),
+                i => i,
+                memberHandlers);
+        }
     }
 }

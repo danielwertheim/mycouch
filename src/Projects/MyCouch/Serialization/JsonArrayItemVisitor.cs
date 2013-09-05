@@ -8,9 +8,9 @@ using Newtonsoft.Json;
 
 namespace MyCouch.Serialization
 {
-    public class JsonArrayItemVisitor<T> where T : class
+    public class JsonArrayItemVisitor
     {
-        public delegate void OnVisitMember(T item, JsonReader jr, JsonWriter jw, StringBuilder sb);
+        public delegate void OnVisitMember<in T>(T item, JsonReader jr, JsonWriter jw, StringBuilder sb) where T : class;
 
         protected readonly SerializationConfiguration Configuration;
 
@@ -21,7 +21,7 @@ namespace MyCouch.Serialization
             Configuration = configuration;
         }
 
-        public virtual IEnumerable<T> Visit(JsonReader jsonReader, Func<T> onVisitStartNode, Func<T, T> onVisitEndNode, IDictionary<string, OnVisitMember> memberHandlers)
+        public virtual IEnumerable<T> Visit<T>(JsonReader jsonReader, Func<T> onVisitStartNode, Func<T, T> onVisitEndNode, IDictionary<string, OnVisitMember<T>> memberHandlers) where T : class
         {
             Ensure.That(jsonReader, "jsonReader").IsNotNull();
             Ensure.That(jsonReader.TokenType == JsonToken.StartArray, "jsonReader").WithExtraMessageOf(
