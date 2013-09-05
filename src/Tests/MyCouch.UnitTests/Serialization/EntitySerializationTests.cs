@@ -2,6 +2,7 @@
 using MyCouch.EntitySchemes;
 using MyCouch.EntitySchemes.Reflections;
 using MyCouch.Serialization;
+using MyCouch.Serialization.Writers;
 using MyCouch.Testing;
 using Xunit;
 

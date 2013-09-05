@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using MyCouch.Serialization.Writers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -40,7 +41,7 @@ namespace MyCouch.Serialization
 
         protected virtual JsonTextWriter DefaultWriterFactory(Type docType, TextWriter writer)
         {
-            return ApplyConfigToWriter(new JsonTextWriter(writer));
+            return ApplyConfigToWriter(new MyCouchJsonWriter(writer));
         }
 
         public virtual T ApplyConfigToWriter<T>(T writer) where T : JsonTextWriter

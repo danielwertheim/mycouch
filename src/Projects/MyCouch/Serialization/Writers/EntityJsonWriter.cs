@@ -2,16 +2,15 @@
 using System.IO;
 using EnsureThat;
 using MyCouch.Serialization.Conventions;
-using Newtonsoft.Json;
 
-namespace MyCouch.Serialization
+namespace MyCouch.Serialization.Writers
 {
     /// <summary>
     /// When serializing entities, this writer will use
     /// conventions found in <see cref="Conventions"/>,
     /// which by default will e.g. inject info about doctype.
     /// </summary>
-    public class EntityJsonWriter : JsonTextWriter
+    public class EntityJsonWriter : MyCouchJsonWriter
     {
         protected readonly Type DocType;
         protected bool HasWrittenDocHeader = false;

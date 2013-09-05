@@ -4,6 +4,7 @@ using MyCouch.EntitySchemes;
 using MyCouch.EntitySchemes.Reflections;
 using MyCouch.Net;
 using MyCouch.Serialization;
+using MyCouch.Serialization.Writers;
 
 namespace MyCouch
 {
