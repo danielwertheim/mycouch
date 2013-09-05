@@ -12,8 +12,8 @@ namespace MyCouch.Contexts
 {
     public class Attachments : ApiContextBase, IAttachments
     {
-        protected readonly AttachmentResponseFactory AttachmentResponseFactory;
-        protected readonly DocumentHeaderResponseFactory DocumentHeaderResponseFactory;
+        protected AttachmentResponseFactory AttachmentResponseFactory { get; set; }
+        protected DocumentHeaderResponseFactory DocumentHeaderResponseFactory { get; set; }
 
         public Attachments(IConnection connection, SerializationConfiguration serializationConfiguration) : base(connection)
         {

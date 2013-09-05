@@ -12,9 +12,9 @@ namespace MyCouch.Contexts
 {
     public class Documents : ApiContextBase, IDocuments
     {
-        protected readonly DocumentResponseFactory DocumentReponseFactory;
-        protected readonly DocumentHeaderResponseFactory DocumentHeaderReponseFactory;
-        protected readonly BulkResponseFactory BulkReponseFactory;
+        protected DocumentResponseFactory DocumentReponseFactory { get; set; }
+        protected DocumentHeaderResponseFactory DocumentHeaderReponseFactory { get; set; }
+        protected BulkResponseFactory BulkReponseFactory { get; set; }
 
         public Documents(IConnection connection, SerializationConfiguration serializationConfiguration) : base(connection)
         {

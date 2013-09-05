@@ -14,8 +14,8 @@ namespace MyCouch.Contexts
 {
     public class Views : ApiContextBase, IViews
     {
-        protected readonly JsonViewQueryResponseFactory JsonViewQueryResponseFactory;
-        protected readonly ViewQueryResponseFactory ViewQueryResponseFactory;
+        protected JsonViewQueryResponseFactory JsonViewQueryResponseFactory { get; set; }
+        protected ViewQueryResponseFactory ViewQueryResponseFactory { get; set; }
 
         public Views(IConnection connection, SerializationConfiguration serializationConfiguration)
             : base(connection)
