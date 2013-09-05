@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using EnsureThat;
+using MyCouch.Serialization.Readers;
 using Newtonsoft.Json;
 
 namespace MyCouch.Serialization
@@ -28,7 +29,7 @@ namespace MyCouch.Serialization
 
             using (var sr = new StreamReader(jsonData))
             {
-                using (var jr = Configuration.ApplyConfigToReader(new JsonTextReader(sr)))
+                using (var jr = Configuration.ApplyConfigToReader(new MyCouchJsonReader(sr)))
                 {
                     while (jr.Read())
                     {

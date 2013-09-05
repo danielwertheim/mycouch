@@ -2,6 +2,7 @@
 using System.Net.Http;
 using MyCouch.Extensions;
 using MyCouch.Serialization;
+using MyCouch.Serialization.Readers;
 using Newtonsoft.Json;
 
 namespace MyCouch.Responses.Factories
@@ -27,7 +28,7 @@ namespace MyCouch.Responses.Factories
             {
                 using (var sr = new StreamReader(content))
                 {
-                    using (var jr = SerializationConfiguration.ApplyConfigToReader(new JsonTextReader(sr)))
+                    using (var jr = SerializationConfiguration.ApplyConfigToReader(new MyCouchJsonReader(sr)))
                     {
                         result.Rows = Serializer.Deserialize<BulkResponse.Row[]>(jr);
                     }

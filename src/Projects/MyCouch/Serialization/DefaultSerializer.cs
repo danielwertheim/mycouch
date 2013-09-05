@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Text;
 using EnsureThat;
+using MyCouch.Serialization.Readers;
 using MyCouch.Serialization.Writers;
 using Newtonsoft.Json;
 
@@ -44,7 +45,7 @@ namespace MyCouch.Serialization
 
             using (var sr = new StringReader(data))
             {
-                using (var jsonReader = Configuration.ApplyConfigToReader(new JsonTextReader(sr)))
+                using (var jsonReader = Configuration.ApplyConfigToReader(CreateReaderFor<T>(sr)))
                 {
                     return InternalSerializer.Deserialize<T>(jsonReader);
                 }
@@ -58,7 +59,7 @@ namespace MyCouch.Serialization
 
             using (var sr = new StreamReader(data, MyCouchRuntime.DefaultEncoding))
             {
-                using (var jsonReader = Configuration.ApplyConfigToReader(new JsonTextReader(sr)))
+                using (var jsonReader = Configuration.ApplyConfigToReader(CreateReaderFor<T>(sr)))
                 {
                     return InternalSerializer.Deserialize<T>(jsonReader);
                 }
@@ -67,7 +68,7 @@ namespace MyCouch.Serialization
 
         protected virtual JsonTextReader CreateReaderFor<T>(TextReader r)
         {
-            return new JsonTextReader(r);
+            return new MyCouchJsonReader(r);
         }
     }
 }

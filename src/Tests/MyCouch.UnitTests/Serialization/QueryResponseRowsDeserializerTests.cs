@@ -6,6 +6,7 @@ using MyCouch.EntitySchemes;
 using MyCouch.EntitySchemes.Reflections;
 using MyCouch.Responses;
 using MyCouch.Serialization;
+using MyCouch.Serialization.Readers;
 using MyCouch.Testing;
 using MyCouch.Testing.Model;
 using Newtonsoft.Json;
@@ -194,7 +195,7 @@ namespace MyCouch.UnitTests.Serialization
         private QueryResponse<T>.Row[] Deserialize<T>(string jsonRows) where T : class
         {
             using (var sr = new StreamReader(jsonRows.AsStream()))
-            using (var jr = SerializationConfiguration.ApplyConfigToReader(new JsonTextReader(sr)))
+            using (var jr = SerializationConfiguration.ApplyConfigToReader(new MyCouchJsonReader(sr)))
             {
                 if (jr.Read())
                     return SUT.Deserialize<T>(jr).ToArray();
