@@ -126,11 +126,15 @@ namespace MyCouch.Contexts
 
         protected virtual HttpRequestMessage CreateRequest<T>(DeleteEntityCommand<T> cmd) where T : class
         {
-            var id = Reflector.IdMember.GetValueFrom(cmd.Entity);
-            var rev = Reflector.RevMember.GetValueFrom(cmd.Entity);
-            var req = new HttpRequest(HttpMethod.Delete, GenerateRequestUrl(id, rev));
+            var entityId = Reflector.IdMember.GetValueFrom(cmd.Entity);
+            Ensure.That(entityId, "entityId").IsNotNullOrWhiteSpace();
 
-            req.SetIfMatch(rev);
+            var entityRev = Reflector.RevMember.GetValueFrom(cmd.Entity);
+            Ensure.That(entityRev, "entityRev").IsNotNullOrWhiteSpace();
+
+            var req = new HttpRequest(HttpMethod.Delete, GenerateRequestUrl(entityId, entityRev));
+
+            req.SetIfMatch(entityRev);
 
             return req;
         }
