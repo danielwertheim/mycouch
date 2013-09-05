@@ -116,6 +116,7 @@
     <Compile Include="Serialization\Conventions\SerializationConventions.cs" />
     <Compile Include="Serialization\Writers\EntityJsonWriter.cs" />
     <Compile Include="Serialization\EntityContractResolver.cs" />
+    <Compile Include="Serialization\JsonArrayItemVisitor.cs" />
     <Compile Include="Serialization\Writers\MyCouchJsonWriter.cs" />
     <Compile Include="Serialization\QueryResponseRowsDeserializer.cs" />
     <Compile Include="Serialization\JsonResponseMapper.cs" />

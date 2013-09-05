@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using EnsureThat;
@@ -11,7 +10,7 @@ namespace MyCouch.Serialization
 {
     /// <summary>
     /// Traverses and deserializes JSON-arrays, which should represent Rows.
-    /// For use with e.g. <see cref="QueryResponse{T}.Rows"/>.
+    /// For use with <see cref="QueryResponse{T}.Rows"/>.
     /// </summary>
     public class QueryResponseRowsDeserializer
     {
@@ -36,8 +35,8 @@ namespace MyCouch.Serialization
         /// <returns></returns>
         public virtual IEnumerable<QueryResponse<T>.Row> Deserialize<T>(JsonReader jr) where T : class
         {
-            if (jr.TokenType != JsonToken.StartArray)
-                throw new MyCouchException(ExceptionStrings.QueryResponseRowsDeserializerNeedsJsonArray);
+            Ensure.That(jr.TokenType == JsonToken.StartArray, "jr").WithExtraMessageOf(
+                () => ExceptionStrings.QueryResponseRowsDeserializerNeedsJsonArray);
 
             var type = typeof(T);
 
@@ -46,23 +45,23 @@ namespace MyCouch.Serialization
             if (type == typeof(string[]))
                 return DeserializeRowsOfStrings(jr) as IEnumerable<QueryResponse<T>.Row>;
 
-            return InternalSerializer.Deserialize<IEnumerable<QueryResponse<T>.Row>>(jr); //TODO: Do as with string[]
+            return InternalSerializer.Deserialize<IEnumerable<QueryResponse<T>.Row>>(jr);
         }
 
         protected virtual IEnumerable<QueryResponse<string>.Row> DeserializeRowsOfString(JsonReader jsonReader)
         {
             return YieldQueryRows<string>(
                 jsonReader,
-                (jr, jw, sb, row) => ConsumeStringIfNotEmpty(jr, jw, sb, s => row.Value = s),
-                (jr, jw, sb, row) => ConsumeStringIfNotEmpty(jr, jw, sb, s => row.Doc = s));
+                (row, jr, jw, sb) => ConsumeStringIfNotEmpty(jr, jw, sb, s => row.Value = s),
+                (row, jr, jw, sb) => ConsumeStringIfNotEmpty(jr, jw, sb, s => row.Doc = s));
         }
 
         protected virtual IEnumerable<QueryResponse<string[]>.Row> DeserializeRowsOfStrings(JsonReader jsonReader)
         {
             return YieldQueryRows<string[]>(
                 jsonReader,
-                (jr, jw, sb, row) => ConsumeStringsIfNotEmpty(jr, jw, sb, strings => row.Value = strings),
-                (jr, jw, sb, row) => ConsumeStringsIfNotEmpty(jr, jw, sb, strings => row.Doc = strings));
+                (row, jr, jw, sb) => ConsumeStringsIfNotEmpty(jr, jw, sb, strings => row.Value = strings),
+                (row, jr, jw, sb) => ConsumeStringsIfNotEmpty(jr, jw, sb, strings => row.Doc = strings));
         }
 
         protected virtual void ConsumeStringIfNotEmpty(JsonReader jr, JsonWriter jw, StringBuilder sb, Action<string> map)
@@ -98,115 +97,57 @@ namespace MyCouch.Serialization
             return rowValues;
         }
 
-        //TODO: Give some love and split it up. Remove the Ifs
         protected virtual IEnumerable<QueryResponse<T>.Row> YieldQueryRows<T>(
-            JsonReader jr,
-            Action<JsonReader, JsonWriter, StringBuilder, QueryResponse<T>.Row> onVisitValue,
-            Action<JsonReader, JsonWriter, StringBuilder, QueryResponse<T>.Row> onVisitDoc) where T : class
+            JsonReader jsonReader, 
+            JsonArrayItemVisitor<QueryResponse<T>.Row>.OnVisitMember onVisitValueMember, 
+            JsonArrayItemVisitor<QueryResponse<T>.Row>.OnVisitMember onVisitDocMember) where T : class
         {
-            if (jr.TokenType != JsonToken.StartArray)
-                yield break;
+            var v = new JsonArrayItemVisitor<QueryResponse<T>.Row>(Configuration);
 
-            var row = new QueryResponse<T>.Row();
-            var startDepth = jr.Depth;
-            var sb = new StringBuilder();
-            var hasMappedId = false;
-            var hasMappedKey = false;
-            var hasMappedValue = false;
-            var hasMappedDoc = false;
-            var shouldTryAndMapIncludedDoc = onVisitDoc != null;
-            Action reset = () =>
+            var memberHandlers = new Dictionary<string, JsonArrayItemVisitor<QueryResponse<T>.Row>.OnVisitMember>
             {
-                hasMappedId = hasMappedKey = hasMappedValue = hasMappedDoc = false;
-                row = new QueryResponse<T>.Row();
-            };
-            Func<bool> hasMappedSomething = () => hasMappedId || hasMappedKey || hasMappedValue || hasMappedDoc;
-
-            using (var sw = new StringWriter(sb))
-            {
-                using (var jw = Configuration.ApplyConfigToWriter(new MaterializerJsonWriter(sw)))
                 {
-                    while (jr.Read() && !(jr.TokenType == JsonToken.EndArray && jr.Depth == startDepth))
+                    "id", (item, jr, jw, sb) =>
                     {
-                        if (jr.TokenType == JsonToken.EndObject)
-                        {
-                            if (hasMappedSomething())
-                            {
-                                yield return row;
-                                reset();
-                            }
-                            continue;
-                        }
+                        if (!jr.Read())
+                            return;
 
-                        if (jr.TokenType != JsonToken.PropertyName)
-                            continue;
-
-                        var propName = jr.Value.ToString().ToLower();
-                        if (propName == "id")
-                        {
-                            if (!jr.Read())
-                                break;
-
-                            row.Id = jr.Value.ToString();
-                            hasMappedId = true;
-                        }
-                        else if (propName == "key")
-                        {
-                            if (!jr.Read())
-                                break;
-
-                            row.Key = jr.Value.ToString();
-                            hasMappedKey = true;
-                        }
-                        else if (propName == "value")
-                        {
-                            if (!jr.Read())
-                                break;
-
-                            onVisitValue(jr, jw, sb, row);
-                            sb.Clear();
-                            hasMappedValue = true;
-                        }
-                        else if (shouldTryAndMapIncludedDoc && propName == "doc")
-                        {
-                            if (!jr.Read())
-                                break;
-
-                            onVisitDoc(jr, jw, sb, row);
-                            sb.Clear();
-                            hasMappedDoc = true;
-                        }
-                        else
-                            continue;
-
-                        if (hasMappedId && hasMappedKey && hasMappedValue)
-                        {
-                            if (shouldTryAndMapIncludedDoc && !hasMappedDoc)
-                                continue;
-
-                            yield return row;
-                            reset();
-                        }
+                        item.Id = jr.Value.ToString();
                     }
+                },
+                {
+                    "key", (item, jr, jw, sb) =>
+                    {
+                        if (!jr.Read())
+                            return;
 
-                    if (hasMappedSomething())
-                        yield return row;
+                        item.Key = jr.Value.ToString();
+                    }
+                },
+                {
+                    "value", (item, jr, jw, sb) =>
+                    {
+                        if (!jr.Read())
+                            return;
+
+                        onVisitValueMember(item, jr, jw, sb);
+                    }
+                },
+                {
+                    "doc", (item, jr, jw, sb) =>
+                    {
+                        if (!jr.Read())
+                            return;
+
+                        onVisitDocMember(item, jr, jw, sb);
+                    }
                 }
-            }
-        }
+            };
 
-        /// <summary>
-        /// When deserializing Query responses, data that is NULL should be empty
-        /// instead of having a text stating null.
-        /// </summary>
-        protected class MaterializerJsonWriter : JsonTextWriter
-        {
-            public MaterializerJsonWriter(TextWriter textWriter) : base(textWriter) { }
+            Func<QueryResponse<T>.Row> onVisitStartNode = () => new QueryResponse<T>.Row();
+            Func<QueryResponse<T>.Row, QueryResponse<T>.Row> onVisitEndNode = i => i;
 
-            public override void WriteNull()
-            {
-                base.WriteRaw(string.Empty);
-            }
-        }
+            return v.Visit(jsonReader, onVisitStartNode, onVisitEndNode, memberHandlers);
+        } 
     }
 }
