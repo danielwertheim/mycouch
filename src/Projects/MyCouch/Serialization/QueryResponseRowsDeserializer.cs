@@ -10,7 +10,8 @@ using Newtonsoft.Json;
 namespace MyCouch.Serialization
 {
     /// <summary>
-    /// Traverses JSON and deserializes it to Rows for use with e.g. <see cref="QueryResponse{T}.Rows"/>.
+    /// Traverses and deserializes JSON-arrays, which should represent Rows.
+    /// For use with e.g. <see cref="QueryResponse{T}.Rows"/>.
     /// </summary>
     public class QueryResponseRowsDeserializer
     {
@@ -25,12 +26,20 @@ namespace MyCouch.Serialization
             InternalSerializer = JsonSerializer.Create(Configuration.Settings);
         }
 
+        /// <summary>
+        /// Takes a <see cref="JsonReader"/>, which should point to a node being
+        /// an array. Traverses the tree and yields <see cref="QueryResponse{T}.Row"/>
+        /// from it.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="jr"></param>
+        /// <returns></returns>
         public virtual IEnumerable<QueryResponse<T>.Row> Deserialize<T>(JsonReader jr) where T : class
         {
-            if(jr.TokenType != JsonToken.StartArray)
+            if (jr.TokenType != JsonToken.StartArray)
                 throw new MyCouchException(ExceptionStrings.QueryResponseRowsDeserializerNeedsJsonArray);
 
-            var type = typeof (T);
+            var type = typeof(T);
 
             if (type == typeof(string))
                 return DeserializeRowsOfString(jr) as IEnumerable<QueryResponse<T>.Row>;
@@ -40,30 +49,30 @@ namespace MyCouch.Serialization
             return InternalSerializer.Deserialize<IEnumerable<QueryResponse<T>.Row>>(jr); //TODO: Do as with string[]
         }
 
-        protected virtual IEnumerable<QueryResponse<string>.Row> DeserializeRowsOfString(JsonReader jr)
+        protected virtual IEnumerable<QueryResponse<string>.Row> DeserializeRowsOfString(JsonReader jsonReader)
         {
             return YieldQueryRows<string>(
-                jr,
-                (row, jw, sb) => OnPopulateStringIfNotEmpty(jr, jw, sb, s => row.Value = s),
-                (row, jw, sb) => OnPopulateStringIfNotEmpty(jr, jw, sb, s => row.Doc = s));
+                jsonReader,
+                (jr, jw, sb, row) => ConsumeStringIfNotEmpty(jr, jw, sb, s => row.Value = s),
+                (jr, jw, sb, row) => ConsumeStringIfNotEmpty(jr, jw, sb, s => row.Doc = s));
         }
 
-        protected virtual IEnumerable<QueryResponse<string[]>.Row> DeserializeRowsOfStrings(JsonReader jr)
+        protected virtual IEnumerable<QueryResponse<string[]>.Row> DeserializeRowsOfStrings(JsonReader jsonReader)
         {
             return YieldQueryRows<string[]>(
-                jr,
-                (row, jw, sb) => OnPopulateStringsIfNotEmpty(jr, jw, sb, strings => row.Value = strings),
-                (row, jw, sb) => OnPopulateStringsIfNotEmpty(jr, jw, sb, strings => row.Doc = strings));
+                jsonReader,
+                (jr, jw, sb, row) => ConsumeStringsIfNotEmpty(jr, jw, sb, strings => row.Value = strings),
+                (jr, jw, sb, row) => ConsumeStringsIfNotEmpty(jr, jw, sb, strings => row.Doc = strings));
         }
 
-        protected virtual void OnPopulateStringIfNotEmpty(JsonReader jr, JsonWriter jw, StringBuilder sb, Action<string> map)
+        protected virtual void ConsumeStringIfNotEmpty(JsonReader jr, JsonWriter jw, StringBuilder sb, Action<string> map)
         {
             jw.WriteToken(jr, true);
 
-            if(sb.Length > 0) map(sb.ToString());
+            if (sb.Length > 0) map(sb.ToString());
         }
 
-        protected virtual void OnPopulateStringsIfNotEmpty(JsonReader jr, JsonWriter jw, StringBuilder sb, Action<string[]> map)
+        protected virtual void ConsumeStringsIfNotEmpty(JsonReader jr, JsonWriter jw, StringBuilder sb, Action<string[]> map)
         {
             var strings = ReadStrings(jr, jw, sb);
 
@@ -92,8 +101,8 @@ namespace MyCouch.Serialization
         //TODO: Give some love and split it up. Remove the Ifs
         protected virtual IEnumerable<QueryResponse<T>.Row> YieldQueryRows<T>(
             JsonReader jr,
-            Action<QueryResponse<T>.Row, JsonTextWriter, StringBuilder> onVisitValue,
-            Action<QueryResponse<T>.Row, JsonTextWriter, StringBuilder> onVisitDoc) where T : class
+            Action<JsonReader, JsonWriter, StringBuilder, QueryResponse<T>.Row> onVisitValue,
+            Action<JsonReader, JsonWriter, StringBuilder, QueryResponse<T>.Row> onVisitDoc) where T : class
         {
             if (jr.TokenType != JsonToken.StartArray)
                 yield break;
@@ -154,7 +163,7 @@ namespace MyCouch.Serialization
                             if (!jr.Read())
                                 break;
 
-                            onVisitValue(row, jw, sb);
+                            onVisitValue(jr, jw, sb, row);
                             sb.Clear();
                             hasMappedValue = true;
                         }
@@ -163,7 +172,7 @@ namespace MyCouch.Serialization
                             if (!jr.Read())
                                 break;
 
-                            onVisitDoc(row, jw, sb);
+                            onVisitDoc(jr, jw, sb, row);
                             sb.Clear();
                             hasMappedDoc = true;
                         }
@@ -172,7 +181,7 @@ namespace MyCouch.Serialization
 
                         if (hasMappedId && hasMappedKey && hasMappedValue)
                         {
-                            if(shouldTryAndMapIncludedDoc && !hasMappedDoc)
+                            if (shouldTryAndMapIncludedDoc && !hasMappedDoc)
                                 continue;
 
                             yield return row;
