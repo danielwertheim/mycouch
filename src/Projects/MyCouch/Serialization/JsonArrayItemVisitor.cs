@@ -8,6 +8,9 @@ using Newtonsoft.Json;
 
 namespace MyCouch.Serialization
 {
+    /// <summary>
+    /// Used to read a JSON tree representing array items.
+    /// </summary>
     public class JsonArrayItemVisitor
     {
         public delegate void OnVisitMember<in T>(T item, JsonReader jr, JsonWriter jw, StringBuilder sb) where T : class;
@@ -21,6 +24,16 @@ namespace MyCouch.Serialization
             Configuration = configuration;
         }
 
+        /// <summary>
+        /// Traverses JSON-array items of sent <paramref name="jsonReader"/>, and invokes visitor
+        /// callbacks depending on what nodes that are being found in the tree.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="jsonReader"></param>
+        /// <param name="onVisitStartNode"></param>
+        /// <param name="onVisitEndNode"></param>
+        /// <param name="memberHandlers"></param>
+        /// <returns></returns>
         public virtual IEnumerable<T> Visit<T>(JsonReader jsonReader, Func<T> onVisitStartNode, Func<T, T> onVisitEndNode, IDictionary<string, OnVisitMember<T>> memberHandlers) where T : class
         {
             Ensure.That(jsonReader, "jsonReader").IsNotNull();
