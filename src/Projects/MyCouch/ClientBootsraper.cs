@@ -4,7 +4,6 @@ using MyCouch.EntitySchemes;
 using MyCouch.EntitySchemes.Reflections;
 using MyCouch.Net;
 using MyCouch.Serialization;
-using MyCouch.Serialization.Writers;
 
 namespace MyCouch
 {
@@ -92,10 +91,7 @@ namespace MyCouch
             {
                 var contractResolver = new EntityContractResolver(EntityReflectorFn());
 
-                return new SerializationConfiguration(contractResolver)
-                {
-                    WriterFactory = (t, w) => new EntityJsonWriter(t, w)
-                };
+                return new SerializationConfiguration(contractResolver);
             });
 
             EntitySerializationConfigurationFn = () => serializationConfiguration.Value;

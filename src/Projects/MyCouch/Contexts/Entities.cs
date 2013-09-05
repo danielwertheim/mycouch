@@ -13,20 +13,19 @@ namespace MyCouch.Contexts
 {
     public class Entities : ApiContextBase, IEntities
     {
-        protected readonly EntityResponseFactory EntityResponseFactory;
-        protected readonly IEntityReflector EntityReflector;
+        public ISerializer Serializer { get; protected set; }
+        public IEntityReflector Reflector { get; protected set;}
+        protected EntityResponseFactory EntityResponseFactory { get; set; }
 
-        public ISerializer Serializer { get; private set; }
-        public IEntityReflector Reflector { get { return EntityReflector; } }
-
-        public Entities(IConnection connection, SerializationConfiguration serializationConfiguration, IEntityReflector entityReflector) : base(connection)
+        public Entities(IConnection connection, SerializationConfiguration serializationConfiguration, IEntityReflector entityReflector)
+            : base(connection)
         {
             Ensure.That(serializationConfiguration, "serializationConfiguration").IsNotNull();
             Ensure.That(entityReflector, "entityReflector").IsNotNull();
 
-            Serializer = new DefaultSerializer(serializationConfiguration);
+            Serializer = new EntitySerializer(serializationConfiguration);
             EntityResponseFactory = new EntityResponseFactory(serializationConfiguration, Serializer);
-            EntityReflector = entityReflector;
+            Reflector = entityReflector;
         }
 
         public virtual Task<EntityResponse<T>> GetAsync<T>(string id, string rev = null) where T : class

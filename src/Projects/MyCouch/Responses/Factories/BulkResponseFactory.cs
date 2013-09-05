@@ -27,7 +27,7 @@ namespace MyCouch.Responses.Factories
             {
                 using (var sr = new StreamReader(content))
                 {
-                    using (var jr = SerializationConfiguration.ReaderFactory(typeof(BulkResponse.Row[]), sr))
+                    using (var jr = SerializationConfiguration.ApplyConfigToReader(new JsonTextReader(sr)))
                     {
                         result.Rows = Serializer.Deserialize<BulkResponse.Row[]>(jr);
                     }

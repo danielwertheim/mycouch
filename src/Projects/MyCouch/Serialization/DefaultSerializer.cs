@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Text;
 using EnsureThat;
+using MyCouch.Serialization.Writers;
 using Newtonsoft.Json;
 
 namespace MyCouch.Serialization
@@ -23,7 +24,7 @@ namespace MyCouch.Serialization
             var content = new StringBuilder();
             using (var stringWriter = new StringWriter(content))
             {
-                using (var jsonWriter = Configuration.WriterFactory(typeof(T), stringWriter))
+                using (var jsonWriter = Configuration.ApplyConfigToWriter(CreateWriterFor<T>(stringWriter)))
                 {
                     InternalSerializer.Serialize(jsonWriter, item);
                 }
@@ -31,14 +32,19 @@ namespace MyCouch.Serialization
             return content.ToString();
         }
 
+        protected virtual JsonTextWriter CreateWriterFor<T>(TextWriter w)
+        {
+            return new MyCouchJsonWriter(w);
+        }
+
         public virtual T Deserialize<T>(string data) where T : class
         {
             if (string.IsNullOrWhiteSpace(data))
                 return null;
 
-            using (var reader = new StringReader(data))
+            using (var sr = new StringReader(data))
             {
-                using (var jsonReader = Configuration.ReaderFactory(typeof(T), reader))
+                using (var jsonReader = Configuration.ApplyConfigToReader(new JsonTextReader(sr)))
                 {
                     return InternalSerializer.Deserialize<T>(jsonReader);
                 }
@@ -50,13 +56,18 @@ namespace MyCouch.Serialization
             if (data == null || data.Length < 1)
                 return null;
 
-            using (var reader = new StreamReader(data, MyCouchRuntime.DefaultEncoding))
+            using (var sr = new StreamReader(data, MyCouchRuntime.DefaultEncoding))
             {
-                using (var jsonReader = Configuration.ReaderFactory(typeof(T), reader))
+                using (var jsonReader = Configuration.ApplyConfigToReader(new JsonTextReader(sr)))
                 {
                     return InternalSerializer.Deserialize<T>(jsonReader);
                 }
             }
+        }
+
+        protected virtual JsonTextReader CreateReaderFor<T>(TextReader r)
+        {
+            return new JsonTextReader(r);
         }
     }
 }

@@ -114,6 +114,7 @@
     <Compile Include="Serialization\Conventions\DocTypeSerializationConvention.cs" />
     <Compile Include="Serialization\Conventions\ISerializationConvention.cs" />
     <Compile Include="Serialization\Conventions\SerializationConventions.cs" />
+    <Compile Include="Serialization\EntitySerializer.cs" />
     <Compile Include="Serialization\Writers\EntityJsonWriter.cs" />
     <Compile Include="Serialization\EntityContractResolver.cs" />
     <Compile Include="Serialization\JsonArrayItemVisitor.cs" />

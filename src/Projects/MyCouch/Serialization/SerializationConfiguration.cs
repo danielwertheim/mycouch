@@ -1,6 +1,3 @@
-using System;
-using System.IO;
-using MyCouch.Serialization.Writers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -8,18 +5,10 @@ namespace MyCouch.Serialization
 {
     public class SerializationConfiguration
     {
-        public delegate JsonTextReader JsonReaderFactory(Type docType, TextReader writer);
-        public delegate JsonTextWriter JsonWriterFactory(Type docType, TextWriter writer);
-
         public JsonSerializerSettings Settings { get; protected set; }
-        public JsonReaderFactory ReaderFactory { get; set; }
-        public JsonWriterFactory WriterFactory { get; set; }
 
         public SerializationConfiguration(IContractResolver contractResolver = null)
         {
-            ReaderFactory = DefaultReaderFactory;
-            WriterFactory = DefaultWriterFactory;
-
             Settings = new JsonSerializerSettings
             {
                 TypeNameHandling = TypeNameHandling.None,
@@ -34,17 +23,7 @@ namespace MyCouch.Serialization
             };
         }
 
-        protected virtual JsonTextReader DefaultReaderFactory(Type docType, TextReader reader)
-        {
-            return ApplyConfigToReader(new JsonTextReader(reader));
-        }
-
-        protected virtual JsonTextWriter DefaultWriterFactory(Type docType, TextWriter writer)
-        {
-            return ApplyConfigToWriter(new MyCouchJsonWriter(writer));
-        }
-
-        public virtual T ApplyConfigToWriter<T>(T writer) where T : JsonTextWriter
+        public virtual T ApplyConfigToWriter<T>(T writer) where T : JsonWriter
         {
             writer.Culture = Settings.Culture;
             writer.DateFormatHandling = Settings.DateFormatHandling;
@@ -57,7 +36,7 @@ namespace MyCouch.Serialization
             return writer;
         }
 
-        public virtual T ApplyConfigToReader<T>(T reader) where T : JsonTextReader
+        public virtual T ApplyConfigToReader<T>(T reader) where T : JsonReader
         {
             reader.Culture = Settings.Culture;
             reader.DateParseHandling = Settings.DateParseHandling;
