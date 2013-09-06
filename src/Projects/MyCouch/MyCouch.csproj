@@ -134,7 +134,7 @@
     <Compile Include="Client.cs" />
     <Compile Include="Contexts\Documents.cs" />
     <Compile Include="Responses\DocumentResponse.cs" />
-    <Compile Include="Net\IConnection.cs" />
+    <Compile Include="IConnection.cs" />
     <Compile Include="IClient.cs" />
     <Compile Include="IDocuments.cs" />
     <Compile Include="IViews.cs" />
