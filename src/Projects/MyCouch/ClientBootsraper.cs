@@ -60,7 +60,9 @@ namespace MyCouch
 
         private void ConfigureViewsFn()
         {
-            ViewsFn = cn => new Views(cn, EntitySerializationConfigurationFn());
+            ViewsFn = cn => new Views(
+                cn,
+                EntitySerializationConfigurationFn());
         }
 
         private void ConfigureEntityReflectorFn()
