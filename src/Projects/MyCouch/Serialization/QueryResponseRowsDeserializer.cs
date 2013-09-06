@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using EnsureThat;
 using MyCouch.Responses;
+using MyCouch.Responses.Meta;
 using Newtonsoft.Json;
 
 namespace MyCouch.Serialization
@@ -105,7 +106,7 @@ namespace MyCouch.Serialization
             var memberHandlers = new Dictionary<string, JsonArrayItemVisitor.OnVisitMember<QueryResponse<T>.Row>>
             {
                 {
-                    "id", (item, jr, jw, sb) =>
+                    ResponseMeta.Scheme.Queries.RowId, (item, jr, jw, sb) =>
                     {
                         if (!jr.Read())
                             return;
@@ -114,7 +115,7 @@ namespace MyCouch.Serialization
                     }
                 },
                 {
-                    "key", (item, jr, jw, sb) =>
+                    ResponseMeta.Scheme.Queries.RowKey, (item, jr, jw, sb) =>
                     {
                         if (!jr.Read())
                             return;
@@ -123,7 +124,7 @@ namespace MyCouch.Serialization
                     }
                 },
                 {
-                    "value", (item, jr, jw, sb) =>
+                    ResponseMeta.Scheme.Queries.RowValue, (item, jr, jw, sb) =>
                     {
                         if (!jr.Read())
                             return;
@@ -132,7 +133,7 @@ namespace MyCouch.Serialization
                     }
                 },
                 {
-                    "doc", (item, jr, jw, sb) =>
+                    ResponseMeta.Scheme.Queries.RowDoc, (item, jr, jw, sb) =>
                     {
                         if (!jr.Read())
                             return;

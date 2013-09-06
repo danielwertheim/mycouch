@@ -6,6 +6,10 @@ namespace MyCouch.Responses.Meta
         public string UpdateSeq { get; private set; }
         public string Offset { get; private set; }
         public string Rows { get; private set; }
+        public string RowId { get; private set; }
+        public string RowKey { get; private set; }
+        public string RowValue { get; private set; }
+        public string RowDoc { get; private set; }
 
         public QueriesScheme()
         {
@@ -13,6 +17,10 @@ namespace MyCouch.Responses.Meta
             UpdateSeq = "update_seq";
             Offset = "offset";
             Rows = "rows";
+            RowId = "id";
+            RowKey = "key";
+            RowValue = "value";
+            RowDoc = "doc";
         }
     }
 }
