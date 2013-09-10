@@ -22,13 +22,13 @@ namespace MyCouch.Responses
         public override string ToString()
         {
 #if DEBUG
-            return GenerateToStringDebugVersion();
+            return ToStringDebugVersion();
 #else
             return base.ToString();
 #endif
         }
 
-        public virtual string GenerateToStringDebugVersion()
+        public virtual string ToStringDebugVersion()
         {
             return string.Format("RequestUri: {1}{0}RequestMethod: {2}{0}Status: {3}({4}){0}Error:{5}{0}Reason: {6}",
                 Environment.NewLine,

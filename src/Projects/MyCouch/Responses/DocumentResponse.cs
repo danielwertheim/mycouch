@@ -16,11 +16,11 @@ namespace MyCouch.Responses
             get { return string.IsNullOrWhiteSpace(Content); }
         }
 
-        public override string GenerateToStringDebugVersion()
+        public override string ToStringDebugVersion()
         {
             return string.Format("{0}{1}{0}IsEmpty: {2}{0}Content: {3}",
                 Environment.NewLine, 
-                base.GenerateToStringDebugVersion(),
+                base.ToStringDebugVersion(),
                 IsEmpty, 
                 Content ?? "<NULL>");
         }

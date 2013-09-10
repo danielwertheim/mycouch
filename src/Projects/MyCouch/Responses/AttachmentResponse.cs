@@ -17,11 +17,11 @@ namespace MyCouch.Responses
             get { return Content == null || Content.Length < 1; }
         }
 
-        public override string GenerateToStringDebugVersion()
+        public override string ToStringDebugVersion()
         {
             return string.Format("{0}{1}{0}IsEmpty: {2}{0}Content: {3}",
                 Environment.NewLine, 
-                base.GenerateToStringDebugVersion(),
+                base.ToStringDebugVersion(),
                 IsEmpty,
                 IsEmpty ? "<NULL>" : Convert.ToBase64String(Content));
         }
