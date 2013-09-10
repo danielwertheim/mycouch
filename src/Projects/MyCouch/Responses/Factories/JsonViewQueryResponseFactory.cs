@@ -12,7 +12,7 @@ namespace MyCouch.Responses.Factories
 
         public virtual JsonViewQueryResponse Create(HttpResponseMessage response)
         {
-            return CreateResponse<JsonViewQueryResponse>(response, OnSuccessfulResponse, OnFailedResponse);
+            return BuildResponse(new JsonViewQueryResponse(), response, OnSuccessfulResponse, OnFailedResponse);
         }
     }
 }

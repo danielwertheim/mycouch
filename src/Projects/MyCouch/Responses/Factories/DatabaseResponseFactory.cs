@@ -10,7 +10,7 @@ namespace MyCouch.Responses.Factories
 
         public virtual DatabaseResponse Create(HttpResponseMessage response)
         {
-            return CreateResponse<DatabaseResponse>(response, OnSuccessfulResponse, OnFailedResponse);
+            return BuildResponse(new DatabaseResponse(), response, OnSuccessfulResponse, OnFailedResponse);
         }
 
         protected virtual void OnSuccessfulResponse(HttpResponseMessage response, DatabaseResponse result) { }

@@ -12,7 +12,7 @@ namespace MyCouch.Responses.Factories
 
         public virtual ViewQueryResponse<T> Create<T>(HttpResponseMessage response) where T : class
         {
-            return CreateResponse<ViewQueryResponse<T>>(response, OnSuccessfulResponse, OnFailedResponse);
+            return BuildResponse(new ViewQueryResponse<T>(), response, OnSuccessfulResponse, OnFailedResponse);
         }
     }
 }

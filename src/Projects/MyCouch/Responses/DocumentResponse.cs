@@ -5,8 +5,10 @@ namespace MyCouch.Responses
 #if !NETFX_CORE
     [Serializable]
 #endif
-    public class DocumentResponse : DocumentHeaderResponse
+    public class DocumentResponse : Response, IContainDocumentHeader
     {
+        public string Id { get; set; }
+        public string Rev { get; set; }
         public string Content { get; set; }
 
         public bool IsEmpty

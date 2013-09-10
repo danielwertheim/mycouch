@@ -13,7 +13,7 @@ namespace MyCouch.Cloudant.Responses.Factories
 
         public virtual IndexQueryResponse<T> Create<T>(HttpResponseMessage response) where T : class
         {
-            return CreateResponse<IndexQueryResponse<T>>(response, OnSuccessfulResponse, OnFailedResponse);
+            return BuildResponse(new IndexQueryResponse<T>(), response, OnSuccessfulResponse, OnFailedResponse);
         }
     }
 }

@@ -5,7 +5,7 @@ using MyCouch.Serialization;
 
 namespace MyCouch.Responses.Factories
 {
-    public class EntityResponseFactory : DocumentHeaderResponseFactoryBase
+    public class EntityResponseFactory : ResponseFactoryBase
     {
         protected readonly ISerializer Serializer;
 
@@ -19,7 +19,7 @@ namespace MyCouch.Responses.Factories
 
         public virtual EntityResponse<T> Create<T>(HttpResponseMessage response) where T : class
         {
-            return CreateResponse<EntityResponse<T>>(response, OnSuccessfulResponse, OnFailedResponse);
+            return BuildResponse(new EntityResponse<T>(), response, OnSuccessfulResponse, OnFailedResponse);
         }
 
         protected virtual void OnSuccessfulResponse<T>(HttpResponseMessage response, EntityResponse<T> result) where T : class
@@ -45,6 +45,8 @@ namespace MyCouch.Responses.Factories
         protected virtual void OnFailedResponse<T>(HttpResponseMessage response, EntityResponse<T> result) where T : class 
         {
             base.OnFailedResponse(response, result);
+
+            AssignMissingIdFromRequestUri(response, result);
         }
     }
 }

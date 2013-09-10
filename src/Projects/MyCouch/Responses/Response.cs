@@ -10,14 +10,14 @@ namespace MyCouch.Responses
     public abstract class Response
     {
         public HttpStatusCode StatusCode { get; set; }
-        public bool IsSuccess
-        {
-            get { return (int)StatusCode >= 200 && (int)StatusCode < 300; }
-        }
         public Uri RequestUri { get; set; }
         public HttpMethod RequestMethod { get; set; }
         public string Error { get; set; }
         public string Reason { get; set; }
+        public bool IsSuccess
+        {
+            get { return (int)StatusCode >= 200 && (int)StatusCode < 300; }
+        }
 
         public override string ToString()
         {

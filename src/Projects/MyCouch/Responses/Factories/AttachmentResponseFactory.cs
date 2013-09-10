@@ -13,7 +13,7 @@ namespace MyCouch.Responses.Factories
 
         public virtual AttachmentResponse Create(HttpResponseMessage response)
         {
-            return CreateResponse<AttachmentResponse>(response, OnSuccessfulResponse, OnFailedResponse);
+            return BuildResponse(new AttachmentResponse(), response, OnSuccessfulResponse, OnFailedResponse);
         }
 
         protected virtual void OnSuccessfulResponse(HttpResponseMessage response, AttachmentResponse result)
@@ -30,6 +30,18 @@ namespace MyCouch.Responses.Factories
                     result.Content = Convert.FromBase64String(reader.ReadToEnd());
                 }
             }
+        }
+
+        protected virtual void AssignMissingIdFromRequestUri(HttpResponseMessage response, AttachmentResponse result)
+        {
+            if (string.IsNullOrWhiteSpace(result.Id))
+                result.Id = response.RequestMessage.GetUriSegmentByRightOffset(1);
+        }
+
+        protected virtual void AssignMissingNameFromRequestUri(HttpResponseMessage response, AttachmentResponse result)
+        {
+            if (string.IsNullOrWhiteSpace(result.Name))
+                result.Name = response.RequestMessage.GetUriSegmentByRightOffset();
         }
     }
 }

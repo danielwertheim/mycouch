@@ -13,7 +13,7 @@ namespace MyCouch.Cloudant.Responses.Factories
 
         public virtual JsonIndexQueryResponse Create(HttpResponseMessage response)
         {
-            return CreateResponse<JsonIndexQueryResponse>(response, OnSuccessfulResponse, OnFailedResponse);
+            return BuildResponse(new JsonIndexQueryResponse(), response, OnSuccessfulResponse, OnFailedResponse);
         }
     }
 }

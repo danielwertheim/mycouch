@@ -19,7 +19,7 @@ namespace MyCouch.Responses.Factories
 
         public virtual BulkResponse Create(HttpResponseMessage response)
         {
-            return CreateResponse<BulkResponse>(response, OnSuccessfulResponse, OnFailedResponse);
+            return BuildResponse(new BulkResponse(), response, OnSuccessfulResponse, OnFailedResponse);
         }
 
         protected virtual void OnSuccessfulResponse(HttpResponseMessage response, BulkResponse result)

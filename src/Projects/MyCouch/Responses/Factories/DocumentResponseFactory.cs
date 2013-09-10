@@ -5,14 +5,14 @@ using MyCouch.Serialization;
 
 namespace MyCouch.Responses.Factories
 {
-    public class DocumentResponseFactory : DocumentHeaderResponseFactoryBase
+    public class DocumentResponseFactory : ResponseFactoryBase
     {
         public DocumentResponseFactory(SerializationConfiguration serializationConfiguration)
             : base(serializationConfiguration) { }
 
         public virtual DocumentResponse Create(HttpResponseMessage response)
         {
-            return CreateResponse<DocumentResponse>(response, OnSuccessfulResponse, OnFailedResponse);
+            return BuildResponse(new DocumentResponse(), response, OnSuccessfulResponse, OnFailedResponse);
         }
 
         protected virtual void OnSuccessfulResponse(HttpResponseMessage response, DocumentResponse result)

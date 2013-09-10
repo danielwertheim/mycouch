@@ -21,17 +21,15 @@ namespace MyCouch.Responses.Factories
             JsonMapper = new JsonResponseMapper(SerializationConfiguration);
         }
 
-        protected virtual T CreateResponse<T>(
+        protected virtual T BuildResponse<T>(
+            T result,
             HttpResponseMessage response,
             Action<HttpResponseMessage, T> onSuccessfulResponseContentMaterializer,
-            Action<HttpResponseMessage, T> onFailedResponseContentMaterializer) where T : Response, new()
+            Action<HttpResponseMessage, T> onFailedResponseContentMaterializer) where T : Response
         {
-            var result = new T
-            {
-                RequestUri = response.RequestMessage.RequestUri,
-                StatusCode = response.StatusCode,
-                RequestMethod = response.RequestMessage.Method
-            };
+            result.RequestUri = response.RequestMessage.RequestUri;
+            result.StatusCode = response.StatusCode;
+            result.RequestMethod = response.RequestMessage.Method;
 
             if (result.IsSuccess)
                 onSuccessfulResponseContentMaterializer(response, result);
@@ -57,6 +55,16 @@ namespace MyCouch.Responses.Factories
             JsonMapper.Map(content, mappings);
         }
 
+        protected virtual void PopulateDocumentHeaderResponse(IContainDocumentHeader result, Stream content)
+        {
+            var mappings = new JsonResponseMappings
+            {
+                {ResponseMeta.Scheme.Id, jr => result.Id = jr.Value.ToString()},
+                {ResponseMeta.Scheme.Rev, jr => result.Rev = jr.Value.ToString()}
+            };
+            JsonMapper.Map(content, mappings);
+        }
+
         protected virtual bool ContentShouldHaveIdAndRev(HttpRequestMessage request)
         {
             return
@@ -65,25 +73,13 @@ namespace MyCouch.Responses.Factories
                 request.Method == HttpMethod.Delete;
         }
 
-        protected virtual void AssignMissingIdFromRequestUri(HttpResponseMessage response, DocumentHeaderResponse result)
+        protected virtual void AssignMissingIdFromRequestUri(HttpResponseMessage response, IContainDocumentHeader result)
         {
             if (string.IsNullOrWhiteSpace(result.Id))
                 result.Id = response.RequestMessage.GetUriSegmentByRightOffset();
         }
 
-        protected virtual void AssignMissingIdFromRequestUri(HttpResponseMessage response, AttachmentResponse result)
-        {
-            if (string.IsNullOrWhiteSpace(result.Id))
-                result.Id = response.RequestMessage.GetUriSegmentByRightOffset(1);
-        }
-
-        protected virtual void AssignMissingNameFromRequestUri(HttpResponseMessage response, AttachmentResponse result)
-        {
-            if (string.IsNullOrWhiteSpace(result.Name))
-                result.Name = response.RequestMessage.GetUriSegmentByRightOffset();
-        }
-
-        protected virtual void AssignMissingRevFromRequestHeaders(HttpResponseMessage response, DocumentHeaderResponse result)
+        protected virtual void AssignMissingRevFromRequestHeaders(HttpResponseMessage response, IContainDocumentHeader result)
         {
             if (string.IsNullOrWhiteSpace(result.Rev))
                 result.Rev = response.Headers.GetETag();
