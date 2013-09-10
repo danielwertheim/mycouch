@@ -35,7 +35,7 @@ namespace MyCouch.IntegrationTests.TestFixtures
 
             var queries = CloudantTestData.Views.AllViewIds.Select(id => new ViewQuery(id).Configure(q => q.Stale(Stale.UpdateAfter)));
             foreach (var query in queries)
-                Client.Views.RunQueryAsync(query).Wait();
+                Client.Views.QueryAsync(query).Wait();
         }
 
         public virtual void Dispose()

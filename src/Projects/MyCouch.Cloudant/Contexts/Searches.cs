@@ -26,7 +26,7 @@ namespace MyCouch.Cloudant.Contexts
             IndexQueryResponseFactory = new IndexQueryResponseFactory(serializationConfiguration);
         }
 
-        public virtual async Task<JsonIndexQueryResponse> RunQueryAsync(IndexQuery query)
+        public virtual async Task<JsonIndexQueryResponse> QueryAsync(IndexQuery query)
         {
             Ensure.That(query, "query").IsNotNull();
 
@@ -36,7 +36,7 @@ namespace MyCouch.Cloudant.Contexts
             return ProcessHttpResponse(await res.ForAwait());
         }
 
-        public virtual Task<IndexQueryResponse<T>> RunQueryAsync<T>(IndexQuery query) where T : class
+        public virtual Task<IndexQueryResponse<T>> QueryAsync<T>(IndexQuery query) where T : class
         {
             Ensure.That(query, "query").IsNotNull();
 

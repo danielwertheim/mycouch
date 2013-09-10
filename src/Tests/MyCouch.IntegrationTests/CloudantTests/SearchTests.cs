@@ -25,7 +25,7 @@ namespace MyCouch.IntegrationTests.CloudantTests
         {
             //var iq = new IndexQuery(CloudantTestData.Views.Views101AnimalsIndexId).Configure(q => q.Expression("kookaburra"));
 
-            //var response = SUT.RunQueryAsync(iq).Result;
+            //var response = SUT.QueryAsync(iq).Result;
         }
     }
 }

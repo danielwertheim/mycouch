@@ -17,14 +17,14 @@ namespace MyCouch
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        Task<JsonViewQueryResponse> RunQueryAsync(ViewQuery query);
+        Task<JsonViewQueryResponse> QueryAsync(ViewQuery query);
 
         /// <summary>
         /// Lets you run an <see cref="ViewQuery"/>.
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        Task<ViewQueryResponse<T>> RunQueryAsync<T>(ViewQuery query) where T : class;
+        Task<ViewQueryResponse<T>> QueryAsync<T>(ViewQuery query) where T : class;
 
         /// <summary>
         /// Creates and executes an <see cref="ViewQuery"/> on the fly.

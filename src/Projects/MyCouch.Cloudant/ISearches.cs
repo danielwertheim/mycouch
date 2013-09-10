@@ -12,13 +12,13 @@ namespace MyCouch.Cloudant
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        Task<JsonIndexQueryResponse> RunQueryAsync(IndexQuery query);
+        Task<JsonIndexQueryResponse> QueryAsync(IndexQuery query);
 
         /// <summary>
         /// Lets you run a <see cref="IndexQuery"/>.
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        Task<IndexQueryResponse<T>> RunQueryAsync<T>(IndexQuery query) where T : class;
+        Task<IndexQueryResponse<T>> QueryAsync<T>(IndexQuery query) where T : class;
     }
 }

@@ -26,7 +26,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         {
             var query = new ViewQuery(ClientTestData.Views.ArtistsNameNoValueViewId).Configure(cfg => cfg.IncludeDocs(true));
 
-            var response = SUT.RunQueryAsync(query).Result;
+            var response = SUT.QueryAsync(query).Result;
 
             response.Should().BeSuccessfulGet(Artists.Length);
             for (var i = 0; i < response.RowCount; i++)
@@ -41,7 +41,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         {
             var query = new ViewQuery(ClientTestData.Views.ArtistsNameNoValueViewId).Configure(cfg => cfg.IncludeDocs(true));
 
-            var response = SUT.RunQueryAsync<Artist>(query).Result;
+            var response = SUT.QueryAsync<Artist>(query).Result;
 
             response.Should().BeSuccessfulGet(Artists.Length);
             for (var i = 0; i < response.RowCount; i++)
@@ -56,7 +56,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         {
             var query = new ViewQuery(ClientTestData.Views.ArtistsNameNoValueViewId).Configure(cfg => cfg.IncludeDocs(true));
 
-            var response = SUT.RunQueryAsync<string[]>(query).Result;
+            var response = SUT.QueryAsync<string[]>(query).Result;
 
             response.Should().BeSuccessfulGet(Artists.Length);
             for (var i = 0; i < response.RowCount; i++)
@@ -72,7 +72,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             var artists = Artists.Skip(2);
             var query = new ViewQuery(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Skip(2));
 
-            var response = SUT.RunQueryAsync(query).Result;
+            var response = SUT.QueryAsync(query).Result;
 
             response.Should().BeSuccessfulGet(artists.Select(a => Client.Serializer.Serialize(a.Albums)).ToArray());
         }
@@ -83,7 +83,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             var artists = Artists.Skip(2);
             var query = new ViewQuery(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Skip(2));
 
-            var response = SUT.RunQueryAsync<string[]>(query).Result;
+            var response = SUT.QueryAsync<string[]>(query).Result;
 
             response.Should().BeSuccessfulGet(artists.Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray());
         }
@@ -94,7 +94,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             var artists = Artists.Skip(2);
             var query = new ViewQuery(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Skip(2));
 
-            var response = SUT.RunQueryAsync<Album[]>(query).Result;
+            var response = SUT.QueryAsync<Album[]>(query).Result;
 
             response.Should().BeSuccessfulGet(artists.Select(a => a.Albums).ToArray());
         }
@@ -105,7 +105,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             var artists = Artists.Take(2);
             var query = new ViewQuery(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Limit(2));
 
-            var response = SUT.RunQueryAsync(query).Result;
+            var response = SUT.QueryAsync(query).Result;
 
             response.Should().BeSuccessfulGet(artists.Select(a => Client.Serializer.Serialize(a.Albums)).ToArray());
         }
@@ -116,7 +116,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             var artists = Artists.Take(2);
             var query = new ViewQuery(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Limit(2));
 
-            var response = SUT.RunQueryAsync<string[]>(query).Result;
+            var response = SUT.QueryAsync<string[]>(query).Result;
 
             response.Should().BeSuccessfulGet(artists.Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray());
         }
@@ -127,7 +127,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             var artists = Artists.Take(2);
             var query = new ViewQuery(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Limit(2));
 
-            var response = SUT.RunQueryAsync<Album[]>(query).Result;
+            var response = SUT.QueryAsync<Album[]>(query).Result;
 
             response.Should().BeSuccessfulGet(artists.Select(a => a.Albums).ToArray());
         }
@@ -138,7 +138,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             var artist = Artists[2];
             var query = new ViewQuery(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Key(artist.Name));
 
-            var response = SUT.RunQueryAsync(query).Result;
+            var response = SUT.QueryAsync(query).Result;
 
             response.Should().BeSuccessfulGet(new[] { Client.Serializer.Serialize(artist.Albums) });
         }
@@ -149,7 +149,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             var artist = Artists[2];
             var query = new ViewQuery(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Key(artist.Name));
 
-            var response = SUT.RunQueryAsync<string[]>(query).Result;
+            var response = SUT.QueryAsync<string[]>(query).Result;
 
             response.Should().BeSuccessfulGet(new[] { artist.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray() });
         }
@@ -160,7 +160,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             var artist = Artists[2];
             var query = new ViewQuery(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Key(artist.Name));
 
-            var response = SUT.RunQueryAsync<Album[]>(query).Result;
+            var response = SUT.QueryAsync<Album[]>(query).Result;
 
             response.Should().BeSuccessfulGet(new[] { artist.Albums });
         }
@@ -172,7 +172,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             var keys = artists.Select(a => a.Name).ToArray();
             var query = new ViewQuery(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Keys(keys));
 
-            var response = SUT.RunQueryAsync(query).Result;
+            var response = SUT.QueryAsync(query).Result;
 
             response.Should().BeSuccessfulGet(artists.Select(a => Client.Serializer.Serialize(a.Albums)).ToArray());
         }
@@ -184,7 +184,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             var keys = artists.Select(a => a.Name).ToArray();
             var query = new ViewQuery(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Keys(keys));
 
-            var response = SUT.RunQueryAsync<string[]>(query).Result;
+            var response = SUT.QueryAsync<string[]>(query).Result;
 
             response.Should().BeSuccessfulGet(artists.Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray());
         }
@@ -196,7 +196,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             var keys = artists.Select(a => a.Name).ToArray();
             var query = new ViewQuery(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Keys(keys));
 
-            var response = SUT.RunQueryAsync<Album[]>(query).Result;
+            var response = SUT.QueryAsync<Album[]>(query).Result;
 
             response.Should().BeSuccessfulGet(artists.Select(a => a.Albums).ToArray());
         }
@@ -209,7 +209,7 @@ namespace MyCouch.IntegrationTests.ClientTests
                 .StartKey(artists.First().Name)
                 .EndKey(artists.Last().Name));
 
-            var response = SUT.RunQueryAsync(query).Result;
+            var response = SUT.QueryAsync(query).Result;
 
             response.Should().BeSuccessfulGet(artists.Select(a => Client.Serializer.Serialize(a.Albums)).ToArray());
         }
@@ -222,7 +222,7 @@ namespace MyCouch.IntegrationTests.ClientTests
                 .StartKey(artists.First().Name)
                 .EndKey(artists.Last().Name));
 
-            var response = SUT.RunQueryAsync<string[]>(query).Result;
+            var response = SUT.QueryAsync<string[]>(query).Result;
 
             response.Should().BeSuccessfulGet(artists.Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray());
         }
@@ -235,7 +235,7 @@ namespace MyCouch.IntegrationTests.ClientTests
                 .StartKey(artists.First().Name)
                 .EndKey(artists.Last().Name));
 
-            var response = SUT.RunQueryAsync<Album[]>(query).Result;
+            var response = SUT.QueryAsync<Album[]>(query).Result;
 
             response.Should().BeSuccessfulGet(artists.Select(a => a.Albums).ToArray());
         }
@@ -249,7 +249,7 @@ namespace MyCouch.IntegrationTests.ClientTests
                 .EndKey(artists.Last().Name)
                 .InclusiveEnd(false));
 
-            var response = SUT.RunQueryAsync(query).Result;
+            var response = SUT.QueryAsync(query).Result;
 
             response.Should().BeSuccessfulGet(artists.Take(artists.Length - 1).Select(a => Client.Serializer.Serialize(a.Albums)).ToArray());
         }
@@ -263,7 +263,7 @@ namespace MyCouch.IntegrationTests.ClientTests
                 .EndKey(artists.Last().Name)
                 .InclusiveEnd(false));
 
-            var response = SUT.RunQueryAsync<string[]>(query).Result;
+            var response = SUT.QueryAsync<string[]>(query).Result;
 
             response.Should().BeSuccessfulGet(artists.Take(artists.Length - 1).Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray());
         }
@@ -277,7 +277,7 @@ namespace MyCouch.IntegrationTests.ClientTests
                 .EndKey(artists.Last().Name)
                 .InclusiveEnd(false));
 
-            var response = SUT.RunQueryAsync<Album[]>(query).Result;
+            var response = SUT.QueryAsync<Album[]>(query).Result;
 
             response.Should().BeSuccessfulGet(artists.Take(artists.Length - 1).Select(a => a.Albums).ToArray());
         }
