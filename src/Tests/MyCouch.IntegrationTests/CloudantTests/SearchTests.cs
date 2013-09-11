@@ -23,7 +23,7 @@ namespace MyCouch.IntegrationTests.CloudantTests
         [Fact]
         public void When_running_unnamed_query_It_will_consume_the_default_index()
         {
-            //var iq = new IndexQuery(CloudantTestData.Views.Views101AnimalsIndexId).Configure(q => q.Expression("kookaburra"));
+            //var iq = new SearchQuery(CloudantTestData.Views.Views101AnimalsIndexId).Configure(q => q.Expression("kookaburra"));
 
             //var response = SUT.QueryAsync(iq).Result;
         }

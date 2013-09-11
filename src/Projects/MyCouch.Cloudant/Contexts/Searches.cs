@@ -9,24 +9,23 @@ using MyCouch.Cloudant.Responses.Factories;
 using MyCouch.Contexts;
 using MyCouch.Extensions;
 using MyCouch.Net;
-using MyCouch.Responses.Factories;
 using MyCouch.Serialization;
 
 namespace MyCouch.Cloudant.Contexts
 {
     public class Searches : ApiContextBase, ISearches
     {
-        protected readonly JsonIndexQueryResponseFactory JsonIndexQueryResponseFactory;
-        protected readonly IndexQueryResponseFactory IndexQueryResponseFactory;
+        protected readonly JsonSearchQueryResponseFactory JsonSearchQueryResponseFactory;
+        protected readonly SearchQueryResponseFactory SearchQueryResponseFactory;
 
         public Searches(IConnection connection, SerializationConfiguration serializationConfiguration) 
             : base(connection)
         {
-            JsonIndexQueryResponseFactory = new JsonIndexQueryResponseFactory(serializationConfiguration);
-            IndexQueryResponseFactory = new IndexQueryResponseFactory(serializationConfiguration);
+            JsonSearchQueryResponseFactory = new JsonSearchQueryResponseFactory(serializationConfiguration);
+            SearchQueryResponseFactory = new SearchQueryResponseFactory(serializationConfiguration);
         }
 
-        public virtual async Task<JsonIndexQueryResponse> QueryAsync(IndexQuery query)
+        public virtual async Task<JsonSearchQueryResponse> QueryAsync(SearchQuery query)
         {
             Ensure.That(query, "query").IsNotNull();
 
@@ -36,24 +35,24 @@ namespace MyCouch.Cloudant.Contexts
             return ProcessHttpResponse(await res.ForAwait());
         }
 
-        public virtual Task<IndexQueryResponse<T>> QueryAsync<T>(IndexQuery query) where T : class
+        public virtual Task<SearchQueryResponse<T>> QueryAsync<T>(SearchQuery query) where T : class
         {
             Ensure.That(query, "query").IsNotNull();
 
             throw new NotImplementedException();
         }
 
-        protected virtual IndexQuery CreateQuery(string designDocument, string viewname)
+        protected virtual SearchQuery CreateQuery(string designDocument, string viewname)
         {
-            return new IndexQuery(designDocument, viewname);
+            return new SearchQuery(designDocument, viewname);
         }
 
-        protected virtual HttpRequestMessage CreateRequest(IndexQuery query)
+        protected virtual HttpRequestMessage CreateRequest(SearchQuery query)
         {
             return new HttpRequest(HttpMethod.Get, GenerateRequestUrl(query));
         }
 
-        protected virtual string GenerateRequestUrl(IndexQuery query)
+        protected virtual string GenerateRequestUrl(SearchQuery query)
         {
             return string.Format("{0}/_design/{1}/_search/{2}?{3}",
                 Connection.Address,
@@ -67,14 +66,14 @@ namespace MyCouch.Cloudant.Contexts
             return string.Join("&", options.ToKeyValues().Select(kv => string.Format("{0}={1}", kv.Key, Uri.EscapeDataString(kv.Value))));
         }
 
-        protected virtual JsonIndexQueryResponse ProcessHttpResponse(HttpResponseMessage response)
+        protected virtual JsonSearchQueryResponse ProcessHttpResponse(HttpResponseMessage response)
         {
-            return JsonIndexQueryResponseFactory.Create(response);
+            return JsonSearchQueryResponseFactory.Create(response);
         }
 
-        protected virtual IndexQueryResponse<T> ProcessHttpResponse<T>(HttpResponseMessage response) where T : class
+        protected virtual SearchQueryResponse<T> ProcessHttpResponse<T>(HttpResponseMessage response) where T : class
         {
-            return IndexQueryResponseFactory.Create<T>(response);
+            return SearchQueryResponseFactory.Create<T>(response);
         }
     }
 }

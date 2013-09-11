@@ -10,15 +10,15 @@ namespace MyCouch.Cloudant
 #if !NETFX_CORE
     [Serializable]
 #endif
-    public class IndexQuery
+    public class SearchQuery
     {
         public IndexIdentity Index { get; private set; }
         public IndexQueryOptions Options { get; private set; }
 
-        public IndexQuery(string designDocument, string viewName)
+        public SearchQuery(string designDocument, string viewName)
             : this(new IndexIdentity(designDocument, viewName)) { }
 
-        public IndexQuery(IndexIdentity index)
+        public SearchQuery(IndexIdentity index)
         {
             Ensure.That(index, "index").IsNotNull();
 
@@ -26,7 +26,7 @@ namespace MyCouch.Cloudant
             Options = new IndexQueryOptions();
         }
 
-        public virtual IndexQuery Configure(Action<IndexQueryConfigurator> configurator)
+        public virtual SearchQuery Configure(Action<IndexQueryConfigurator> configurator)
         {
             configurator(new IndexQueryConfigurator(Options));
 

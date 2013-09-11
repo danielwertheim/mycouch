@@ -6,19 +6,19 @@ namespace MyCouch.Cloudant
     public interface ISearches
     {
         /// <summary>
-        /// Lets you run a <see cref="IndexQuery"/>.
-        /// The resulting <see cref="JsonIndexQueryResponse"/> will consist of
+        /// Lets you run a <see cref="SearchQuery"/>.
+        /// The resulting <see cref="JsonSearchQueryResponse"/> will consist of
         /// Rows being JSON-strings.
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        Task<JsonIndexQueryResponse> QueryAsync(IndexQuery query);
+        Task<JsonSearchQueryResponse> QueryAsync(SearchQuery query);
 
         /// <summary>
-        /// Lets you run a <see cref="IndexQuery"/>.
+        /// Lets you run a <see cref="SearchQuery"/>.
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        Task<IndexQueryResponse<T>> QueryAsync<T>(IndexQuery query) where T : class;
+        Task<SearchQueryResponse<T>> QueryAsync<T>(SearchQuery query) where T : class;
     }
 }

@@ -6,5 +6,5 @@ namespace MyCouch.Cloudant.Responses
 #if !NETFX_CORE
     [Serializable]
 #endif
-    public class IndexQueryResponse<T> : QueryResponse<T> where T : class { }
+    public class SearchQueryResponse<T> : QueryResponse<T> where T : class { }
 }
