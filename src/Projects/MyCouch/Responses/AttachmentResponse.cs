@@ -5,13 +5,10 @@ namespace MyCouch.Responses
 #if !NETFX_CORE
     [Serializable]
 #endif
-    public class AttachmentResponse : Response, IContainDocumentHeader
+    public class AttachmentResponse : DocumentHeaderResponse
     {
-        public string Id { get; set; }
-        public string Rev { get; set; }
         public string Name { get; set; }
         public byte[] Content { get; set; }
-
         public bool IsEmpty
         {
             get { return Content == null || Content.Length < 1; }

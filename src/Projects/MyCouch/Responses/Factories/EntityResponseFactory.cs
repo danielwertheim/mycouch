@@ -17,36 +17,36 @@ namespace MyCouch.Responses.Factories
             Serializer = serializer;
         }
 
-        public virtual EntityResponse<T> Create<T>(HttpResponseMessage response) where T : class
+        public virtual EntityResponse<T> Create<T>(HttpResponseMessage httpResponse) where T : class
         {
-            return BuildResponse(new EntityResponse<T>(), response, OnSuccessfulResponse, OnFailedResponse);
+            return Materialize(new EntityResponse<T>(), httpResponse, OnSuccessfulResponse, OnFailedResponse);
         }
 
-        protected virtual void OnSuccessfulResponse<T>(HttpResponseMessage response, EntityResponse<T> result) where T : class
+        protected virtual void OnSuccessfulResponse<T>(EntityResponse<T> response, HttpResponseMessage httpResponse) where T : class
         {
-            using (var content = response.Content.ReadAsStream())
+            using (var content = httpResponse.Content.ReadAsStream())
             {
-                if (ContentShouldHaveIdAndRev(response.RequestMessage))
-                    PopulateDocumentHeaderResponse(result, content);
+                if (ContentShouldHaveIdAndRev(httpResponse.RequestMessage))
+                    AssignDocumentHeaderFromResponseStream(response, content);
                 else
                 {
-                    AssignMissingIdFromRequestUri(response, result);
-                    AssignMissingRevFromRequestHeaders(response, result);
+                    AssignMissingIdFromRequestUri(response, httpResponse);
+                    AssignMissingRevFromRequestHeaders(response, httpResponse);
                 }
 
-                if (result.RequestMethod == HttpMethod.Get)
+                if (response.RequestMethod == HttpMethod.Get)
                 {
                     content.Position = 0;
-                    result.Entity = Serializer.Deserialize<T>(content);
+                    response.Entity = Serializer.Deserialize<T>(content);
                 }
             }
         }
 
-        protected virtual void OnFailedResponse<T>(HttpResponseMessage response, EntityResponse<T> result) where T : class 
+        protected virtual void OnFailedResponse<T>(EntityResponse<T> response, HttpResponseMessage httpResponse) where T : class
         {
-            base.OnFailedResponse(response, result);
+            base.OnFailedResponse(response, httpResponse);
 
-            AssignMissingIdFromRequestUri(response, result);
+            AssignMissingIdFromRequestUri(response, httpResponse);
         }
     }
 }

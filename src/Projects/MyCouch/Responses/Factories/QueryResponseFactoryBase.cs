@@ -20,12 +20,10 @@ namespace MyCouch.Responses.Factories
             RowsDeserializer = new QueryResponseRowsDeserializer(SerializationConfiguration);
         }
 
-        protected virtual void OnSuccessfulResponse<T>(HttpResponseMessage response, QueryResponse<T> result) where T : class
+        protected virtual void OnSuccessfulResponse<T>(QueryResponse<T> response, HttpResponseMessage httpResponse) where T : class
         {
-            using (var content = response.Content.ReadAsStream())
-            {
-                PopulateResponse(result, content);
-            }
+            using (var content = httpResponse.Content.ReadAsStream())
+                PopulateResponse(response, content);
         }
 
         protected virtual void PopulateResponse<T>(QueryResponse<T> response, Stream data) where T : class

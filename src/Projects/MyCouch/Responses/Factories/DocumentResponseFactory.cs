@@ -10,27 +10,27 @@ namespace MyCouch.Responses.Factories
         public DocumentResponseFactory(SerializationConfiguration serializationConfiguration)
             : base(serializationConfiguration) { }
 
-        public virtual DocumentResponse Create(HttpResponseMessage response)
+        public virtual DocumentResponse Create(HttpResponseMessage httpResponse)
         {
-            return BuildResponse(new DocumentResponse(), response, OnSuccessfulResponse, OnFailedResponse);
+            return Materialize(new DocumentResponse(), httpResponse, OnSuccessfulResponse, OnFailedResponse);
         }
 
-        protected virtual void OnSuccessfulResponse(HttpResponseMessage response, DocumentResponse result)
+        protected virtual void OnSuccessfulResponse(DocumentResponse response, HttpResponseMessage httpResponse)
         {
-            using (var content = response.Content.ReadAsStream())
+            using (var content = httpResponse.Content.ReadAsStream())
             {
-                if (ContentShouldHaveIdAndRev(response.RequestMessage))
-                    PopulateDocumentHeaderResponse(result, content);
+                if (ContentShouldHaveIdAndRev(httpResponse.RequestMessage))
+                    AssignDocumentHeaderFromResponseStream(response, content);
                 else
                 {
-                    AssignMissingIdFromRequestUri(response, result);
-                    AssignMissingRevFromRequestHeaders(response, result);
+                    AssignMissingIdFromRequestUri(response, httpResponse);
+                    AssignMissingRevFromRequestHeaders(response, httpResponse);
                 }
 
                 content.Position = 0;
                 using (var reader = new StreamReader(content, MyCouchRuntime.DefaultEncoding))
                 {
-                    result.Content = reader.ReadToEnd();
+                    response.Content = reader.ReadToEnd();
                 }
             }
         }

@@ -10,9 +10,9 @@ namespace MyCouch.Responses.Factories
         {
         }
 
-        public virtual JsonViewQueryResponse Create(HttpResponseMessage response)
+        public virtual JsonViewQueryResponse Create(HttpResponseMessage httpResponse)
         {
-            return BuildResponse(new JsonViewQueryResponse(), response, OnSuccessfulResponse, OnFailedResponse);
+            return Materialize(new JsonViewQueryResponse(), httpResponse, OnSuccessfulResponse, OnFailedResponse);
         }
     }
 }

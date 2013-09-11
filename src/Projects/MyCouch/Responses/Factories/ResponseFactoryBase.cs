@@ -21,48 +21,28 @@ namespace MyCouch.Responses.Factories
             JsonMapper = new JsonResponseMapper(SerializationConfiguration);
         }
 
-        protected virtual T BuildResponse<T>(
-            T result,
-            HttpResponseMessage response,
-            Action<HttpResponseMessage, T> onSuccessfulResponseContentMaterializer,
-            Action<HttpResponseMessage, T> onFailedResponseContentMaterializer) where T : Response
+        protected virtual T Materialize<T>(
+            T response,
+            HttpResponseMessage httpResponse,
+            Action<T, HttpResponseMessage> onSuccessfulResponseMaterializer,
+            Action<T, HttpResponseMessage> onFailedResponseMaterializer) where T : Response
         {
-            result.RequestUri = response.RequestMessage.RequestUri;
-            result.StatusCode = response.StatusCode;
-            result.RequestMethod = response.RequestMessage.Method;
+            response.RequestUri = httpResponse.RequestMessage.RequestUri;
+            response.StatusCode = httpResponse.StatusCode;
+            response.RequestMethod = httpResponse.RequestMessage.Method;
 
-            if (result.IsSuccess)
-                onSuccessfulResponseContentMaterializer(response, result);
+            if (response.IsSuccess)
+                onSuccessfulResponseMaterializer(response, httpResponse);
             else
-                onFailedResponseContentMaterializer(response, result);
+                onFailedResponseMaterializer(response, httpResponse);
 
-            return result;
+            return response;
         }
 
-        protected virtual void OnFailedResponse(HttpResponseMessage response, Response result)
+        protected virtual void OnFailedResponse(Response response, HttpResponseMessage httpResponse)
         {
-            using (var content = response.Content.ReadAsStream())
-                PopulateFailedResponse(result, content);
-        }
-
-        protected virtual void PopulateFailedResponse(Response result, Stream content)
-        {
-            var mappings = new JsonResponseMappings
-            {
-                {ResponseMeta.Scheme.Error, jr => result.Error = jr.Value.ToString()},
-                {ResponseMeta.Scheme.Reason, jr => result.Reason = jr.Value.ToString()}
-            };
-            JsonMapper.Map(content, mappings);
-        }
-
-        protected virtual void PopulateDocumentHeaderResponse(IContainDocumentHeader result, Stream content)
-        {
-            var mappings = new JsonResponseMappings
-            {
-                {ResponseMeta.Scheme.Id, jr => result.Id = jr.Value.ToString()},
-                {ResponseMeta.Scheme.Rev, jr => result.Rev = jr.Value.ToString()}
-            };
-            JsonMapper.Map(content, mappings);
+            using (var content = httpResponse.Content.ReadAsStream())
+                AssignFailedInfoFromResponseStream(response, content);
         }
 
         protected virtual bool ContentShouldHaveIdAndRev(HttpRequestMessage request)
@@ -73,16 +53,38 @@ namespace MyCouch.Responses.Factories
                 request.Method == HttpMethod.Delete;
         }
 
-        protected virtual void AssignMissingIdFromRequestUri(HttpResponseMessage response, IContainDocumentHeader result)
+        protected virtual void AssignFailedInfoFromResponseStream(Response response, Stream content)
         {
-            if (string.IsNullOrWhiteSpace(result.Id))
-                result.Id = response.RequestMessage.GetUriSegmentByRightOffset();
+            var mappings = new JsonResponseMappings
+            {
+                {ResponseMeta.Scheme.Error, jr => response.Error = jr.Value.ToString()},
+                {ResponseMeta.Scheme.Reason, jr => response.Reason = jr.Value.ToString()}
+            };
+            JsonMapper.Map(content, mappings);
         }
 
-        protected virtual void AssignMissingRevFromRequestHeaders(HttpResponseMessage response, IContainDocumentHeader result)
+        //TODO: Rem
+        protected virtual void AssignMissingIdFromRequestUri(DocumentHeaderResponse response, HttpResponseMessage httpResponse)
         {
-            if (string.IsNullOrWhiteSpace(result.Rev))
-                result.Rev = response.Headers.GetETag();
+            if (string.IsNullOrWhiteSpace(response.Id))
+                response.Id = httpResponse.RequestMessage.GetUriSegmentByRightOffset();
+        }
+
+        //TODO: Rem
+        protected virtual void AssignMissingRevFromRequestHeaders(DocumentHeaderResponse response, HttpResponseMessage httpResponse)
+        {
+            if (string.IsNullOrWhiteSpace(response.Rev))
+                response.Rev = httpResponse.Headers.GetETag();
+        }
+
+        protected virtual void AssignDocumentHeaderFromResponseStream(DocumentHeaderResponse response, Stream content)
+        {
+            var mappings = new JsonResponseMappings
+            {
+                {ResponseMeta.Scheme.Id, jr => response.Id = jr.Value.ToString()},
+                {ResponseMeta.Scheme.Rev, jr => response.Rev = jr.Value.ToString()}
+            };
+            JsonMapper.Map(content, mappings);
         }
     }
 }

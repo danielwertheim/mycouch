@@ -8,11 +8,11 @@ namespace MyCouch.Responses.Factories
         public DatabaseResponseFactory(SerializationConfiguration serializationConfiguration)
             : base(serializationConfiguration) { }
 
-        public virtual DatabaseResponse Create(HttpResponseMessage response)
+        public virtual DatabaseResponse Create(HttpResponseMessage httpResponse)
         {
-            return BuildResponse(new DatabaseResponse(), response, OnSuccessfulResponse, OnFailedResponse);
+            return Materialize(new DatabaseResponse(), httpResponse, OnSuccessfulResponse, OnFailedResponse);
         }
 
-        protected virtual void OnSuccessfulResponse(HttpResponseMessage response, DatabaseResponse result) { }
+        protected virtual void OnSuccessfulResponse(DatabaseResponse result, HttpResponseMessage response) { }
     }
 }

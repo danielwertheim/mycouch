@@ -17,20 +17,20 @@ namespace MyCouch.Responses.Factories
             Serializer = JsonSerializer.Create(SerializationConfiguration.Settings);
         }
 
-        public virtual BulkResponse Create(HttpResponseMessage response)
+        public virtual BulkResponse Create(HttpResponseMessage httpResponse)
         {
-            return BuildResponse(new BulkResponse(), response, OnSuccessfulResponse, OnFailedResponse);
+            return Materialize(new BulkResponse(), httpResponse, OnSuccessfulResponse, OnFailedResponse);
         }
 
-        protected virtual void OnSuccessfulResponse(HttpResponseMessage response, BulkResponse result)
+        protected virtual void OnSuccessfulResponse(BulkResponse response, HttpResponseMessage httpResponse)
         {
-            using (var content = response.Content.ReadAsStream())
+            using (var content = httpResponse.Content.ReadAsStream())
             {
                 using (var sr = new StreamReader(content))
                 {
                     using (var jr = SerializationConfiguration.ApplyConfigToReader(new MyCouchJsonReader(sr)))
                     {
-                        result.Rows = Serializer.Deserialize<BulkResponse.Row[]>(jr);
+                        response.Rows = Serializer.Deserialize<BulkResponse.Row[]>(jr);
                     }
                 }
             }

@@ -9,30 +9,30 @@ namespace MyCouch.Responses.Factories
         public DocumentHeaderResponseFactory(SerializationConfiguration serializationConfiguration)
             : base(serializationConfiguration) { }
 
-        public virtual DocumentHeaderResponse Create(HttpResponseMessage response)
+        public virtual DocumentHeaderResponse Create(HttpResponseMessage httpResponse)
         {
-            return BuildResponse(new DocumentHeaderResponse(), response, OnSuccessfulResponse, OnFailedResponse);
+            return Materialize(new DocumentHeaderResponse(), httpResponse, OnSuccessfulResponse, OnFailedResponse);
         }
 
-        protected virtual void OnSuccessfulResponse(HttpResponseMessage response, DocumentHeaderResponse result)
+        protected virtual void OnSuccessfulResponse(DocumentHeaderResponse response, HttpResponseMessage httpResponse)
         {
-            if (response.RequestMessage.Method == HttpMethod.Head)
+            if (httpResponse.RequestMessage.Method == HttpMethod.Head)
             {
-                AssignMissingIdFromRequestUri(response, result);
-                AssignMissingRevFromRequestHeaders(response, result);
+                AssignMissingIdFromRequestUri(response, httpResponse);
+                AssignMissingRevFromRequestHeaders(response, httpResponse);
 
                 return;
             }
 
-            using (var content = response.Content.ReadAsStream())
-                PopulateDocumentHeaderResponse(result, content);
+            using (var content = httpResponse.Content.ReadAsStream())
+                AssignDocumentHeaderFromResponseStream(response, content);
         }
 
-        protected virtual void OnFailedResponse(HttpResponseMessage response, DocumentHeaderResponse result)
+        protected virtual void OnFailedResponse(DocumentHeaderResponse response, HttpResponseMessage httpResponse)
         {
-            base.OnFailedResponse(response, result);
+            base.OnFailedResponse(response, httpResponse);
 
-            AssignMissingIdFromRequestUri(response, result);
+            AssignMissingIdFromRequestUri(response, httpResponse);
         }
     }
 }

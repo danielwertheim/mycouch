@@ -10,9 +10,9 @@ namespace MyCouch.Responses.Factories
         {
         }
 
-        public virtual ViewQueryResponse<T> Create<T>(HttpResponseMessage response) where T : class
+        public virtual ViewQueryResponse<T> Create<T>(HttpResponseMessage httpResponse) where T : class
         {
-            return BuildResponse(new ViewQueryResponse<T>(), response, OnSuccessfulResponse, OnFailedResponse);
+            return Materialize(new ViewQueryResponse<T>(), httpResponse, OnSuccessfulResponse, null);
         }
     }
 }

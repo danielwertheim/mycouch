@@ -9,39 +9,41 @@ namespace MyCouch.Responses.Factories
     public class AttachmentResponseFactory : ResponseFactoryBase
     {
         public AttachmentResponseFactory(SerializationConfiguration serializationConfiguration)
-            : base(serializationConfiguration) { }
-
-        public virtual AttachmentResponse Create(HttpResponseMessage response)
+            : base(serializationConfiguration)
         {
-            return BuildResponse(new AttachmentResponse(), response, OnSuccessfulResponse, OnFailedResponse);
         }
 
-        protected virtual void OnSuccessfulResponse(HttpResponseMessage response, AttachmentResponse result)
+        public virtual AttachmentResponse Create(HttpResponseMessage httpResponse)
         {
-            using (var content = response.Content.ReadAsStream())
+            return Materialize(new AttachmentResponse(), httpResponse, OnSuccessfulResponse, OnFailedResponse);
+        }
+
+        protected virtual void OnSuccessfulResponse(AttachmentResponse response, HttpResponseMessage httpResponse)
+        {
+            using (var content = httpResponse.Content.ReadAsStream())
             {
-                AssignMissingIdFromRequestUri(response, result);
-                AssignMissingNameFromRequestUri(response, result);
-                AssignMissingRevFromRequestHeaders(response, result);
+                AssignMissingIdFromRequestUri(response, httpResponse);
+                AssignMissingNameFromRequestUri(response, httpResponse);
+                AssignMissingRevFromRequestHeaders(response, httpResponse);
 
                 content.Position = 0;
                 using (var reader = new StreamReader(content, MyCouchRuntime.DefaultEncoding))
                 {
-                    result.Content = Convert.FromBase64String(reader.ReadToEnd());
+                    response.Content = Convert.FromBase64String(reader.ReadToEnd());
                 }
             }
         }
 
-        protected virtual void AssignMissingIdFromRequestUri(HttpResponseMessage response, AttachmentResponse result)
+        protected override void AssignMissingIdFromRequestUri(DocumentHeaderResponse response, HttpResponseMessage httpResponse)
         {
-            if (string.IsNullOrWhiteSpace(result.Id))
-                result.Id = response.RequestMessage.GetUriSegmentByRightOffset(1);
+            if (string.IsNullOrWhiteSpace(response.Id))
+                response.Id = httpResponse.RequestMessage.GetUriSegmentByRightOffset(1);
         }
 
-        protected virtual void AssignMissingNameFromRequestUri(HttpResponseMessage response, AttachmentResponse result)
+        protected virtual void AssignMissingNameFromRequestUri(AttachmentResponse response, HttpResponseMessage httpResponse)
         {
-            if (string.IsNullOrWhiteSpace(result.Name))
-                result.Name = response.RequestMessage.GetUriSegmentByRightOffset();
+            if (string.IsNullOrWhiteSpace(response.Name))
+                response.Name = httpResponse.RequestMessage.GetUriSegmentByRightOffset();
         }
     }
 }
