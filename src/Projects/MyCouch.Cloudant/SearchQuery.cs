@@ -13,7 +13,7 @@ namespace MyCouch.Cloudant
     public class SearchQuery
     {
         public IndexIdentity Index { get; private set; }
-        public IndexQueryOptions Options { get; private set; }
+        public SearchQueryOptions Options { get; private set; }
 
         public SearchQuery(string designDocument, string viewName)
             : this(new IndexIdentity(designDocument, viewName)) { }
@@ -23,12 +23,12 @@ namespace MyCouch.Cloudant
             Ensure.That(index, "index").IsNotNull();
 
             Index = index;
-            Options = new IndexQueryOptions();
+            Options = new SearchQueryOptions();
         }
 
-        public virtual SearchQuery Configure(Action<IndexQueryConfigurator> configurator)
+        public virtual SearchQuery Configure(Action<SearchQueryConfigurator> configurator)
         {
-            configurator(new IndexQueryConfigurator(Options));
+            configurator(new SearchQueryConfigurator(Options));
 
             return this;
         }

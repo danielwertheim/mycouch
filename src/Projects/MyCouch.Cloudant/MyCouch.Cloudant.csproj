@@ -54,10 +54,10 @@
     <Compile Include="ICloudantClient.cs" />
     <Compile Include="ISearches.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Querying\IndexQueryConfigurator.cs" />
+    <Compile Include="Querying\SearchQueryConfigurator.cs" />
     <Compile Include="IndexIdentity.cs" />
     <Compile Include="SearchQuery.cs" />
-    <Compile Include="Querying\IndexQueryOptions.cs" />
+    <Compile Include="Querying\SearchQueryOptions.cs" />
     <Compile Include="Responses\Factories\JsonSearchQueryResponseFactory.cs" />
     <Compile Include="Responses\Factories\SearchQueryResponseFactory.cs" />
     <Compile Include="Responses\SearchQueryResponse.cs" />

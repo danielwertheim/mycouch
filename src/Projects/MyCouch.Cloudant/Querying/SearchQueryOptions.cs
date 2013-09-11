@@ -6,7 +6,7 @@ namespace MyCouch.Cloudant.Querying
 #if !NETFX_CORE
     [Serializable]
 #endif
-    public class IndexQueryOptions
+    public class SearchQueryOptions
     {
         /// <summary>
         /// The Lucene expression that will be used to query the index.
@@ -29,7 +29,7 @@ namespace MyCouch.Cloudant.Querying
         /// </summary>
         public int Limit { get; set; }
 
-        public IndexQueryOptions()
+        public SearchQueryOptions()
         {
             //Set defaults according to docs:
             //http://docs.couchdb.org/en/latest/api/database.html#get-db-all-docs

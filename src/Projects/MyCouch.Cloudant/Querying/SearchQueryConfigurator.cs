@@ -1,15 +1,15 @@
 ﻿namespace MyCouch.Cloudant.Querying
 {
-    public class IndexQueryConfigurator
+    public class SearchQueryConfigurator
     {
-        protected readonly IndexQueryOptions Options;
+        protected readonly SearchQueryOptions Options;
 
-        public IndexQueryConfigurator(IndexQueryOptions options)
+        public SearchQueryConfigurator(SearchQueryOptions options)
         {
             Options = options;
         }
 
-        public virtual IndexQueryConfigurator Expression(string value)
+        public virtual SearchQueryConfigurator Expression(string value)
         {
             Options.Expression = value;
 
@@ -21,7 +21,7 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual IndexQueryConfigurator IncludeDocs(bool value)
+        public virtual SearchQueryConfigurator IncludeDocs(bool value)
         {
             Options.IncludeDocs = value;
 
@@ -33,7 +33,7 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual IndexQueryConfigurator Descending(bool value)
+        public virtual SearchQueryConfigurator Descending(bool value)
         {
             Options.Descending = value;
 
@@ -45,7 +45,7 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual IndexQueryConfigurator Skip(int value)
+        public virtual SearchQueryConfigurator Skip(int value)
         {
             Options.Skip = value;
 
@@ -57,7 +57,7 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual IndexQueryConfigurator Limit(int value)
+        public virtual SearchQueryConfigurator Limit(int value)
         {
             Options.Limit = value;
 

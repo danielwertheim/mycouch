@@ -61,7 +61,7 @@ namespace MyCouch.Cloudant.Contexts
                 GenerateQueryStringParams(query.Options));
         }
 
-        protected virtual string GenerateQueryStringParams(IndexQueryOptions options)
+        protected virtual string GenerateQueryStringParams(SearchQueryOptions options)
         {
             return string.Join("&", options.ToKeyValues().Select(kv => string.Format("{0}={1}", kv.Key, Uri.EscapeDataString(kv.Value))));
         }
