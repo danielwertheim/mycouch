@@ -9,7 +9,6 @@ using MyCouch.Serialization;
 using MyCouch.Serialization.Readers;
 using MyCouch.Testing;
 using MyCouch.Testing.Model;
-using Newtonsoft.Json;
 using Xunit;
 
 namespace MyCouch.UnitTests.Serialization
@@ -50,14 +49,14 @@ namespace MyCouch.UnitTests.Serialization
     }
 #endif
 
-    public abstract class QueryResponseRowsDeserializerTests : UnitTestsOf<QueryResponseRowsDeserializer>
+    public abstract class QueryResponseRowsDeserializerTests : UnitTestsOf<ViewQueryResponseRowsDeserializer>
     {
         protected readonly SerializationConfiguration SerializationConfiguration;
 
         protected QueryResponseRowsDeserializerTests(SerializationConfiguration serializationConfiguration)
         {
             SerializationConfiguration = serializationConfiguration;
-            SUT = new QueryResponseRowsDeserializer(SerializationConfiguration);
+            SUT = new ViewQueryResponseRowsDeserializer(SerializationConfiguration);
         }
 
         [Fact]
@@ -192,7 +191,7 @@ namespace MyCouch.UnitTests.Serialization
             CustomAsserts.AreValueEqual(ClientTestData.Artists.Artist4.Albums, rows[3].Value);
         }
 
-        private QueryResponse<T>.Row[] Deserialize<T>(string jsonRows) where T : class
+        private QueryResponseRow<T>[] Deserialize<T>(string jsonRows) where T : class
         {
             using (var sr = new StreamReader(jsonRows.AsStream()))
             using (var jr = SerializationConfiguration.ApplyConfigToReader(new MyCouchJsonReader(sr)))

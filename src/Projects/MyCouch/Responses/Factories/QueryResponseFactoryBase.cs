@@ -11,22 +11,22 @@ namespace MyCouch.Responses.Factories
     public abstract class QueryResponseFactoryBase : ResponseFactoryBase
     {
         protected readonly JsonSerializer Serializer;
-        protected readonly QueryResponseRowsDeserializer RowsDeserializer;
+        protected readonly ViewQueryResponseRowsDeserializer RowsDeserializer;
 
         protected QueryResponseFactoryBase(SerializationConfiguration serializationConfiguration)
             : base(serializationConfiguration)
         {
             Serializer = JsonSerializer.Create(SerializationConfiguration.Settings);
-            RowsDeserializer = new QueryResponseRowsDeserializer(SerializationConfiguration);
+            RowsDeserializer = new ViewQueryResponseRowsDeserializer(SerializationConfiguration);
         }
 
-        protected virtual void OnSuccessfulResponse<T>(QueryResponse<T> response, HttpResponseMessage httpResponse) where T : class
+        protected virtual void OnSuccessfulResponse<T>(QueryResponse<T> response, HttpResponseMessage httpResponse) where T : QueryResponseRow
         {
             using (var content = httpResponse.Content.ReadAsStream())
                 PopulateResponse(response, content);
         }
 
-        protected virtual void PopulateResponse<T>(QueryResponse<T> response, Stream data) where T : class
+        protected virtual void PopulateResponse<T>(QueryResponse<T> response, Stream data) where T : QueryResponseRow
         {
             var mappings = new JsonResponseMappings
             {
@@ -38,22 +38,22 @@ namespace MyCouch.Responses.Factories
             JsonMapper.Map(data, mappings);
         }
 
-        protected virtual void OnPopulateTotalRows<T>(QueryResponse<T> response, JsonReader jr) where T : class
+        protected virtual void OnPopulateTotalRows<T>(QueryResponse<T> response, JsonReader jr) where T : QueryResponseRow
         {
             response.TotalRows = (long)jr.Value;
         }
 
-        protected virtual void OnPopulateUpdateSeq<T>(QueryResponse<T> response, JsonReader jr) where T : class
+        protected virtual void OnPopulateUpdateSeq<T>(QueryResponse<T> response, JsonReader jr) where T : QueryResponseRow
         {
             response.UpdateSeq = (long)jr.Value;
         }
 
-        protected virtual void OnPopulateOffset<T>(QueryResponse<T> response, JsonReader jr) where T : class
+        protected virtual void OnPopulateOffset<T>(QueryResponse<T> response, JsonReader jr) where T : QueryResponseRow
         {
             response.OffSet = (long)jr.Value;
         }
 
-        protected virtual void OnPopulateRows<T>(QueryResponse<T> response, JsonReader jr) where T : class
+        protected virtual void OnPopulateRows<T>(QueryResponse<T> response, JsonReader jr) where T : QueryResponseRow
         {
             response.Rows = RowsDeserializer.Deserialize<T>(jr).ToArray();
         }

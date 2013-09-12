@@ -11,14 +11,14 @@ namespace MyCouch.Serialization
 {
     /// <summary>
     /// Traverses and deserializes JSON-arrays, which should represent Rows.
-    /// For use with <see cref="QueryResponse{T}.Rows"/>.
+    /// For use with <see cref="ViewQueryResponse{T}.Rows"/>.
     /// </summary>
-    public class QueryResponseRowsDeserializer
+    public class ViewQueryResponseRowsDeserializer
     {
         protected readonly JsonSerializer InternalSerializer;
         protected readonly JsonArrayItemVisitor JsonRowArrayVisitor;
 
-        public QueryResponseRowsDeserializer(SerializationConfiguration configuration)
+        public ViewQueryResponseRowsDeserializer(SerializationConfiguration configuration)
         {
             Ensure.That(configuration, "configuration").IsNotNull();
 
@@ -28,13 +28,13 @@ namespace MyCouch.Serialization
 
         /// <summary>
         /// Takes a <see cref="JsonReader"/>, which should point to a node being
-        /// an array. Traverses the tree and yields <see cref="QueryResponse{T}.Row"/>
+        /// an array. Traverses the tree and yields <see cref="ViewQueryResponse{T}.Row"/>
         /// from it.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="jr"></param>
         /// <returns></returns>
-        public virtual IEnumerable<QueryResponse<T>.Row> Deserialize<T>(JsonReader jr) where T : class
+        public virtual IEnumerable<ViewQueryResponse<T>.Row> Deserialize<T>(JsonReader jr) where T : class
         {
             Ensure.That(jr.TokenType == JsonToken.StartArray, "jr").WithExtraMessageOf(
                 () => ExceptionStrings.QueryResponseRowsDeserializerNeedsJsonArray);
@@ -42,14 +42,14 @@ namespace MyCouch.Serialization
             var type = typeof(T);
 
             if (type == typeof(string))
-                return DeserializeRowsOfString(jr) as IEnumerable<QueryResponse<T>.Row>;
+                return DeserializeRowsOfString(jr) as IEnumerable<ViewQueryResponse<T>.Row>;
             if (type == typeof(string[]))
-                return DeserializeRowsOfStrings(jr) as IEnumerable<QueryResponse<T>.Row>;
+                return DeserializeRowsOfStrings(jr) as IEnumerable<ViewQueryResponse<T>.Row>;
 
-            return InternalSerializer.Deserialize<IEnumerable<QueryResponse<T>.Row>>(jr);
+            return InternalSerializer.Deserialize<IEnumerable<ViewQueryResponse<T>.Row>>(jr);
         }
 
-        protected virtual IEnumerable<QueryResponse<string>.Row> DeserializeRowsOfString(JsonReader jsonReader)
+        protected virtual IEnumerable<ViewQueryResponse<string>.Row> DeserializeRowsOfString(JsonReader jsonReader)
         {
             return YieldQueryRows<string>(
                 jsonReader,
@@ -57,7 +57,7 @@ namespace MyCouch.Serialization
                 (row, jr, jw, sb) => ConsumeStringIfNotEmpty(jr, jw, sb, s => row.Doc = s));
         }
 
-        protected virtual IEnumerable<QueryResponse<string[]>.Row> DeserializeRowsOfStrings(JsonReader jsonReader)
+        protected virtual IEnumerable<ViewQueryResponse<string[]>.Row> DeserializeRowsOfStrings(JsonReader jsonReader)
         {
             return YieldQueryRows<string[]>(
                 jsonReader,
@@ -98,12 +98,12 @@ namespace MyCouch.Serialization
             return rowValues;
         }
 
-        protected virtual IEnumerable<QueryResponse<T>.Row> YieldQueryRows<T>(
-            JsonReader jsonReader, 
-            JsonArrayItemVisitor.OnVisitMember<QueryResponse<T>.Row> onVisitValueMember,
-            JsonArrayItemVisitor.OnVisitMember<QueryResponse<T>.Row> onVisitDocMember) where T : class
+        protected virtual IEnumerable<ViewQueryResponse<T>.Row> YieldQueryRows<T>(
+            JsonReader jsonReader,
+            JsonArrayItemVisitor.OnVisitMember<ViewQueryResponse<T>.Row> onVisitValueMember,
+            JsonArrayItemVisitor.OnVisitMember<ViewQueryResponse<T>.Row> onVisitDocMember) where T : class
         {
-            var memberHandlers = new Dictionary<string, JsonArrayItemVisitor.OnVisitMember<QueryResponse<T>.Row>>
+            var memberHandlers = new Dictionary<string, JsonArrayItemVisitor.OnVisitMember<ViewQueryResponse<T>.Row>>
             {
                 {
                     ResponseMeta.Scheme.Queries.RowId, (item, jr, jw, sb) =>
@@ -145,7 +145,7 @@ namespace MyCouch.Serialization
 
             return JsonRowArrayVisitor.Visit(
                 jsonReader,
-                () => new QueryResponse<T>.Row(),
+                () => new ViewQueryResponse<T>.Row(),
                 i => i,
                 memberHandlers);
         }

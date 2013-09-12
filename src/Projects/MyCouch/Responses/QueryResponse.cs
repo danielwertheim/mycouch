@@ -5,13 +5,13 @@ namespace MyCouch.Responses
 #if !NETFX_CORE
     [Serializable]
 #endif
-    public abstract class QueryResponse<T> : Response where T : class
+    public abstract class QueryResponse<TRow> : Response where TRow : QueryResponseRow
     {
         public long TotalRows { get; set; }
         public long RowCount { get { return IsEmpty ? 0 : Rows.Length; } }
         public long UpdateSeq { get; set; }
         public long OffSet { get; set; }
-        public Row[] Rows { get; set; }
+        public TRow[] Rows { get; set; }
         public bool IsEmpty
         {
             get { return Rows == null || Rows.Length == 0; }
@@ -28,16 +28,14 @@ namespace MyCouch.Responses
                 OffSet,
                 UpdateSeq);
         }
+    }
 
 #if !NETFX_CORE
-        [Serializable]
+    [Serializable]
 #endif
-        public class Row
-        {
-            public string Id { get; set; }
-            public string Key { get; set; }
-            public T Value { get; set; }
-            public T Doc { get; set; }
-        }
+    public abstract class QueryResponseRow
+    {
+        public string Id { get; set; }
+        public string Key { get; set; }
     }
 }

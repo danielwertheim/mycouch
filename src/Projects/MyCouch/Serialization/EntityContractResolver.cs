@@ -1,6 +1,6 @@
-﻿#if NETFX_CORE
-using System.Reflection;
-#endif
+﻿//#if NETFX_CORE
+//using System.Reflection;
+//#endif
 using System;
 using System.Collections.Generic;
 using EnsureThat;
@@ -29,14 +29,14 @@ namespace MyCouch.Serialization
 
         protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
         {
-#if !NETFX_CORE
-            if (type == typeof(BulkResponse.Row) || (type.IsGenericType && typeof(ViewQueryResponse<>.Row) == type.GetGenericTypeDefinition()))
+//#if !NETFX_CORE
+            if (type == typeof(BulkResponse.Row) || typeof (QueryResponseRow).IsAssignableFrom(type))
                 return base.CreateProperties(type, memberSerialization);
-#else
-            //TODO: Ensure perf for GetTypeInfo etc in WinRT
-            if (type == typeof(BulkResponse.Row) || (type.GetTypeInfo().IsGenericType && typeof(ViewQueryResponse<>.Row) == type.GetGenericTypeDefinition()))
-                return base.CreateProperties(type, memberSerialization);
-#endif
+//#else
+//            //TODO: Ensure perf for GetTypeInfo etc in WinRT
+//            if (type == typeof(BulkResponse.Row) || (type.GetTypeInfo().IsGenericType && typeof(ViewQueryResponse<>.Row) == type.GetGenericTypeDefinition()))
+//                return base.CreateProperties(type, memberSerialization);
+//#endif
             var props = base.CreateProperties(type, memberSerialization);
             int? idRank = null, revRank = null;
             JsonProperty id = null, rev = null;

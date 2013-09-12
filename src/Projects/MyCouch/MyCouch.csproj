@@ -120,7 +120,7 @@
     <Compile Include="Serialization\EntityContractResolver.cs" />
     <Compile Include="Serialization\JsonArrayItemVisitor.cs" />
     <Compile Include="Serialization\Writers\MyCouchJsonWriter.cs" />
-    <Compile Include="Serialization\QueryResponseRowsDeserializer.cs" />
+    <Compile Include="Serialization\ViewQueryResponseRowsDeserializer.cs" />
     <Compile Include="Serialization\JsonResponseMapper.cs" />
     <Compile Include="Serialization\JsonResponseMappings.cs" />
     <Compile Include="Serialization\SerializationConfiguration.cs" />

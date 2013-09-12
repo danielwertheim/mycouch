@@ -5,5 +5,15 @@ namespace MyCouch.Responses
 #if !NETFX_CORE
     [Serializable]
 #endif
-    public class ViewQueryResponse<T> : QueryResponse<T> where T : class { }
+    public class ViewQueryResponse<T> : QueryResponse<ViewQueryResponse<T>.Row> where T : class
+    {
+#if !NETFX_CORE
+        [Serializable]
+#endif
+        public class Row : QueryResponseRow
+        {
+            public T Value { get; set; }
+            public T Doc { get; set; }
+        }
+    }
 }
