@@ -2,22 +2,51 @@
 using MyCouch.Contexts;
 using MyCouch.EntitySchemes;
 using MyCouch.EntitySchemes.Reflections;
-using MyCouch.Net;
 using MyCouch.Serialization;
 
 namespace MyCouch
 {
     public class ClientBootsraper
     {
+        /// <summary>
+        /// Used e.g. for bootstraping components relying on serialization, e.g <see cref="ISerializer"/>
+        /// used in <see cref="IClient.Serializer"/>.
+        /// </summary>
+        /// <remarks>For entity serialization configuration, <see cref="EntitySerializationConfigurationFn"/>.</remarks>
         public Func<SerializationConfiguration> SerializationConfigurationFn { get; set; }
+        /// <summary>
+        /// Used e.g. for bootstraping components relying on entity serialization, e.g <see cref="ISerializer"/>
+        /// used in <see cref="IEntities.Serializer"/> used in <see cref="IClient.Entities"/>.
+        /// </summary>
         public Func<SerializationConfiguration> EntitySerializationConfigurationFn { get; set; }
+        /// <summary>
+        /// Used e.g. for boostraping components that needs to be able to read and set values
+        /// effectively to entities. Used e.g. in <see cref="IEntities.Reflector"/>.
+        /// </summary>
         public Func<IEntityReflector> EntityReflectorFn { get; set; }
-
+        /// <summary>
+        /// Used e.g. for bootstraping <see cref="IClient.Serializer"/>.
+        /// </summary>
         public Func<ISerializer> SerializerFn { get; set; }
+        /// <summary>
+        /// Used e.g. for bootstraping <see cref="IClient.Attachments"/>.
+        /// </summary>
         public Func<IConnection, IAttachments> AttachmentsFn { get; set; }
+        /// <summary>
+        /// Used e.g. for bootstraping <see cref="IClient.Databases"/>.
+        /// </summary>
         public Func<IConnection, IDatabases> DatabasesFn { get; set; }
+        /// <summary>
+        /// Used e.g. for bootstraping <see cref="IClient.Documents"/>.
+        /// </summary>
         public Func<IConnection, IDocuments> DocumentsFn { get; set; }
+        /// <summary>
+        /// Used e.g. for bootstraping <see cref="IClient.Entities"/>.
+        /// </summary>
         public Func<IConnection, IEntities> EntitiesFn { get; set; }
+        /// <summary>
+        /// Used e.g. for bootstraping <see cref="IClient.Views"/>.
+        /// </summary>
         public Func<IConnection, IViews> ViewsFn { get; set; }
 
         public ClientBootsraper()
