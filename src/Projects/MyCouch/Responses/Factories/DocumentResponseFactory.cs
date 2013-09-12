@@ -20,11 +20,11 @@ namespace MyCouch.Responses.Factories
             using (var content = httpResponse.Content.ReadAsStream())
             {
                 if (ContentShouldHaveIdAndRev(httpResponse.RequestMessage))
-                    AssignDocumentHeaderFromResponseStream(response, content);
+                    PopulateDocumentHeaderFromResponseStream(response, content);
                 else
                 {
-                    AssignMissingIdFromRequestUri(response, httpResponse);
-                    AssignMissingRevFromRequestHeaders(response, httpResponse);
+                    PopulateMissingIdFromRequestUri(response, httpResponse);
+                    PopulateMissingRevFromRequestHeaders(response, httpResponse);
                 }
 
                 content.Position = 0;

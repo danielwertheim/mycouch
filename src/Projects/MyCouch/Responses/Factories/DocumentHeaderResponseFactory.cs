@@ -18,21 +18,21 @@ namespace MyCouch.Responses.Factories
         {
             if (httpResponse.RequestMessage.Method == HttpMethod.Head)
             {
-                AssignMissingIdFromRequestUri(response, httpResponse);
-                AssignMissingRevFromRequestHeaders(response, httpResponse);
+                PopulateMissingIdFromRequestUri(response, httpResponse);
+                PopulateMissingRevFromRequestHeaders(response, httpResponse);
 
                 return;
             }
 
             using (var content = httpResponse.Content.ReadAsStream())
-                AssignDocumentHeaderFromResponseStream(response, content);
+                PopulateDocumentHeaderFromResponseStream(response, content);
         }
 
         protected virtual void OnFailedResponse(DocumentHeaderResponse response, HttpResponseMessage httpResponse)
         {
             base.OnFailedResponse(response, httpResponse);
 
-            AssignMissingIdFromRequestUri(response, httpResponse);
+            PopulateMissingIdFromRequestUri(response, httpResponse);
         }
     }
 }

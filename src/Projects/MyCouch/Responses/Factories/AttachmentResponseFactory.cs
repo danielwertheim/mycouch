@@ -22,9 +22,9 @@ namespace MyCouch.Responses.Factories
         {
             using (var content = httpResponse.Content.ReadAsStream())
             {
-                AssignMissingIdFromRequestUri(response, httpResponse);
-                AssignMissingNameFromRequestUri(response, httpResponse);
-                AssignMissingRevFromRequestHeaders(response, httpResponse);
+                PopulateMissingIdFromRequestUri(response, httpResponse);
+                PopulateMissingNameFromRequestUri(response, httpResponse);
+                PopulateMissingRevFromRequestHeaders(response, httpResponse);
 
                 content.Position = 0;
                 using (var reader = new StreamReader(content, MyCouchRuntime.DefaultEncoding))
@@ -34,13 +34,13 @@ namespace MyCouch.Responses.Factories
             }
         }
 
-        protected override void AssignMissingIdFromRequestUri(DocumentHeaderResponse response, HttpResponseMessage httpResponse)
+        protected override void PopulateMissingIdFromRequestUri(DocumentHeaderResponse response, HttpResponseMessage httpResponse)
         {
             if (string.IsNullOrWhiteSpace(response.Id))
                 response.Id = httpResponse.RequestMessage.GetUriSegmentByRightOffset(1);
         }
 
-        protected virtual void AssignMissingNameFromRequestUri(AttachmentResponse response, HttpResponseMessage httpResponse)
+        protected virtual void PopulateMissingNameFromRequestUri(AttachmentResponse response, HttpResponseMessage httpResponse)
         {
             if (string.IsNullOrWhiteSpace(response.Name))
                 response.Name = httpResponse.RequestMessage.GetUriSegmentByRightOffset();

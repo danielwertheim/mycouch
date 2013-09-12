@@ -42,7 +42,7 @@ namespace MyCouch.Responses.Factories
         protected virtual void OnFailedResponse(Response response, HttpResponseMessage httpResponse)
         {
             using (var content = httpResponse.Content.ReadAsStream())
-                AssignFailedInfoFromResponseStream(response, content);
+                PopulateFailedInfoFromResponseStream(response, content);
         }
 
         protected virtual bool ContentShouldHaveIdAndRev(HttpRequestMessage request)
@@ -53,7 +53,7 @@ namespace MyCouch.Responses.Factories
                 request.Method == HttpMethod.Delete;
         }
 
-        protected virtual void AssignFailedInfoFromResponseStream(Response response, Stream content)
+        protected virtual void PopulateFailedInfoFromResponseStream(Response response, Stream content)
         {
             var mappings = new JsonResponseMappings
             {
@@ -64,20 +64,20 @@ namespace MyCouch.Responses.Factories
         }
 
         //TODO: Rem
-        protected virtual void AssignMissingIdFromRequestUri(DocumentHeaderResponse response, HttpResponseMessage httpResponse)
+        protected virtual void PopulateMissingIdFromRequestUri(DocumentHeaderResponse response, HttpResponseMessage httpResponse)
         {
             if (string.IsNullOrWhiteSpace(response.Id))
                 response.Id = httpResponse.RequestMessage.GetUriSegmentByRightOffset();
         }
 
         //TODO: Rem
-        protected virtual void AssignMissingRevFromRequestHeaders(DocumentHeaderResponse response, HttpResponseMessage httpResponse)
+        protected virtual void PopulateMissingRevFromRequestHeaders(DocumentHeaderResponse response, HttpResponseMessage httpResponse)
         {
             if (string.IsNullOrWhiteSpace(response.Rev))
                 response.Rev = httpResponse.Headers.GetETag();
         }
 
-        protected virtual void AssignDocumentHeaderFromResponseStream(DocumentHeaderResponse response, Stream content)
+        protected virtual void PopulateDocumentHeaderFromResponseStream(DocumentHeaderResponse response, Stream content)
         {
             var mappings = new JsonResponseMappings
             {
