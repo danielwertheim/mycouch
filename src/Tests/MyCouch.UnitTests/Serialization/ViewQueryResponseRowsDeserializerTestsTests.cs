@@ -13,9 +13,9 @@ using Xunit;
 
 namespace MyCouch.UnitTests.Serialization
 {
-    public class QueryResponseRowsDeserializerWithSimpleContractResolverTests : QueryResponseRowsDeserializerTests
+    public class ViewQueryResponseRowsDeserializerWithSimpleContractResolverTests : ViewQueryResponseRowsDeserializerTests
     {
-        public QueryResponseRowsDeserializerWithSimpleContractResolverTests() : base(CreateSerializationConfiguration()) { }
+        public ViewQueryResponseRowsDeserializerWithSimpleContractResolverTests() : base(CreateSerializationConfiguration()) { }
 
         private static SerializationConfiguration CreateSerializationConfiguration()
         {
@@ -23,9 +23,9 @@ namespace MyCouch.UnitTests.Serialization
         }
     }
 
-    public class QueryResponseMaterializerWithEntityContractResolverUsingLambdasTests : QueryResponseRowsDeserializerTests
+    public class ViewQueryResponseRowsDeserializerWithEntityContractResolverUsingLambdasTests : ViewQueryResponseRowsDeserializerTests
     {
-        public QueryResponseMaterializerWithEntityContractResolverUsingLambdasTests() : base(CreateSerializationConfiguration()) { }
+        public ViewQueryResponseRowsDeserializerWithEntityContractResolverUsingLambdasTests() : base(CreateSerializationConfiguration()) { }
 
         private static SerializationConfiguration CreateSerializationConfiguration()
         {
@@ -36,9 +36,9 @@ namespace MyCouch.UnitTests.Serialization
     }
 
 #if !NETFX_CORE
-    public class QueryResponseRowsDeserializerWithEntityContractResolverUsingIlTests : QueryResponseRowsDeserializerTests
+    public class ViewQueryResponseRowsDeserializerWithEntityContractResolverUsingIlTests : ViewQueryResponseRowsDeserializerTests
     {
-        public QueryResponseRowsDeserializerWithEntityContractResolverUsingIlTests() : base(CreateSerializationConfiguration()) { }
+        public ViewQueryResponseRowsDeserializerWithEntityContractResolverUsingIlTests() : base(CreateSerializationConfiguration()) { }
 
         private static SerializationConfiguration CreateSerializationConfiguration()
         {
@@ -49,11 +49,11 @@ namespace MyCouch.UnitTests.Serialization
     }
 #endif
 
-    public abstract class QueryResponseRowsDeserializerTests : UnitTestsOf<ViewQueryResponseRowsDeserializer>
+    public abstract class ViewQueryResponseRowsDeserializerTests : UnitTestsOf<ViewQueryResponseRowsDeserializer>
     {
         protected readonly SerializationConfiguration SerializationConfiguration;
 
-        protected QueryResponseRowsDeserializerTests(SerializationConfiguration serializationConfiguration)
+        protected ViewQueryResponseRowsDeserializerTests(SerializationConfiguration serializationConfiguration)
         {
             SerializationConfiguration = serializationConfiguration;
             SUT = new ViewQueryResponseRowsDeserializer(SerializationConfiguration);
@@ -191,13 +191,13 @@ namespace MyCouch.UnitTests.Serialization
             CustomAsserts.AreValueEqual(ClientTestData.Artists.Artist4.Albums, rows[3].Value);
         }
 
-        private QueryResponseRow<T>[] Deserialize<T>(string jsonRows) where T : class
+        private ViewQueryResponse<T>.Row[] Deserialize<T>(string jsonRows) where T : class
         {
             using (var sr = new StreamReader(jsonRows.AsStream()))
             using (var jr = SerializationConfiguration.ApplyConfigToReader(new MyCouchJsonReader(sr)))
             {
                 if (jr.Read())
-                    return SUT.Deserialize<T>(jr).ToArray();
+                    return SUT.Deserialize<ViewQueryResponse<T>.Row>(jr).ToArray();
             }
 
             return null;

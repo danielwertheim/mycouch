@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Linq;
 using System.Net.Http;
 using MyCouch.Extensions;
 using MyCouch.Responses.Meta;
@@ -11,13 +10,11 @@ namespace MyCouch.Responses.Factories
     public abstract class QueryResponseFactoryBase : ResponseFactoryBase
     {
         protected readonly JsonSerializer Serializer;
-        protected readonly ViewQueryResponseRowsDeserializer RowsDeserializer;
 
         protected QueryResponseFactoryBase(SerializationConfiguration serializationConfiguration)
             : base(serializationConfiguration)
         {
             Serializer = JsonSerializer.Create(SerializationConfiguration.Settings);
-            RowsDeserializer = new ViewQueryResponseRowsDeserializer(SerializationConfiguration);
         }
 
         protected virtual void OnSuccessfulResponse<T>(QueryResponse<T> response, HttpResponseMessage httpResponse) where T : QueryResponseRow
@@ -53,9 +50,6 @@ namespace MyCouch.Responses.Factories
             response.OffSet = (long)jr.Value;
         }
 
-        protected virtual void OnPopulateRows<T>(QueryResponse<T> response, JsonReader jr) where T : QueryResponseRow
-        {
-            response.Rows = RowsDeserializer.Deserialize<T>(jr).ToArray();
-        }
+        protected abstract void OnPopulateRows<T>(QueryResponse<T> response, JsonReader jr) where T : QueryResponseRow;
     }
 }

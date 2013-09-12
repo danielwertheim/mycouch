@@ -11,9 +11,9 @@ namespace MyCouch.Serialization
 {
     /// <summary>
     /// Traverses and deserializes JSON-arrays, which should represent Rows.
-    /// For use with <see cref="ViewQueryResponse{T}.Rows"/>.
+    /// For use with e.g. <see cref="ViewQueryResponse{T}.Rows"/>.
     /// </summary>
-    public class ViewQueryResponseRowsDeserializer
+    public class ViewQueryResponseRowsDeserializer : IQueryResponseRowsDeserializer
     {
         protected readonly JsonSerializer InternalSerializer;
         protected readonly JsonArrayItemVisitor JsonRowArrayVisitor;
@@ -34,19 +34,19 @@ namespace MyCouch.Serialization
         /// <typeparam name="T"></typeparam>
         /// <param name="jr"></param>
         /// <returns></returns>
-        public virtual IEnumerable<ViewQueryResponse<T>.Row> Deserialize<T>(JsonReader jr) where T : class
+        public virtual IEnumerable<T> Deserialize<T>(JsonReader jr) where T : QueryResponseRow
         {
             Ensure.That(jr.TokenType == JsonToken.StartArray, "jr").WithExtraMessageOf(
                 () => ExceptionStrings.QueryResponseRowsDeserializerNeedsJsonArray);
 
             var type = typeof(T);
 
-            if (type == typeof(string))
-                return DeserializeRowsOfString(jr) as IEnumerable<ViewQueryResponse<T>.Row>;
-            if (type == typeof(string[]))
-                return DeserializeRowsOfStrings(jr) as IEnumerable<ViewQueryResponse<T>.Row>;
+            if (type == typeof(ViewQueryResponse<string>.Row))
+                return DeserializeRowsOfString(jr) as IEnumerable<T>;
+            if (type == typeof(ViewQueryResponse<string[]>.Row))
+                return DeserializeRowsOfStrings(jr) as IEnumerable<T>;
 
-            return InternalSerializer.Deserialize<IEnumerable<ViewQueryResponse<T>.Row>>(jr);
+            return InternalSerializer.Deserialize<IEnumerable<T>>(jr);
         }
 
         protected virtual IEnumerable<ViewQueryResponse<string>.Row> DeserializeRowsOfString(JsonReader jsonReader)

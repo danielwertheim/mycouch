@@ -111,10 +111,12 @@
     <Compile Include="Responses\Meta\ResponseMeta.cs" />
     <Compile Include="Responses\QueryResponse.cs" />
     <Compile Include="Responses\Meta\ResponseScheme.cs" />
+    <Compile Include="Responses\QueryResponseRow.cs" />
     <Compile Include="Serialization\Conventions\DocTypeSerializationConvention.cs" />
     <Compile Include="Serialization\Conventions\ISerializationConvention.cs" />
     <Compile Include="Serialization\Conventions\SerializationConventions.cs" />
     <Compile Include="Serialization\EntitySerializer.cs" />
+    <Compile Include="Serialization\IQueryResponseRowsDeserializer.cs" />
     <Compile Include="Serialization\Readers\MyCouchJsonReader.cs" />
     <Compile Include="Serialization\Writers\EntityJsonWriter.cs" />
     <Compile Include="Serialization\EntityContractResolver.cs" />
