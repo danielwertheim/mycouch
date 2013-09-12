@@ -111,7 +111,8 @@ namespace MyCouch.Serialization
                         if (!jr.Read())
                             return;
 
-                        item.Id = jr.Value.ToString();
+                        if (jr.Value != null)
+                            item.Id = jr.Value.ToString();
                     }
                 },
                 {
@@ -120,7 +121,8 @@ namespace MyCouch.Serialization
                         if (!jr.Read())
                             return;
 
-                        item.Key = jr.Value.ToString();
+                        if (jr.Value != null)
+                            item.Key = jr.Value.ToString();
                     }
                 },
                 {

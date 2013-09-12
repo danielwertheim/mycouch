@@ -35,9 +35,11 @@ namespace MyCouch.IntegrationTests.TestFixtures
 
             var touchView1 = new ViewQuery(ClientTestData.Views.ArtistsAlbumsViewId).Configure(q => q.Stale(Stale.UpdateAfter));
             var touchView2 = new ViewQuery(ClientTestData.Views.ArtistsNameNoValueViewId).Configure(q => q.Stale(Stale.UpdateAfter));
+            var touchView3 = new ViewQuery(ClientTestData.Views.ArtistsTotalNumOfAlbumsViewId).Configure(q => q.Stale(Stale.UpdateAfter));
 
             Client.Views.QueryAsync(touchView1).Wait();
             Client.Views.QueryAsync(touchView2).Wait();
+            Client.Views.QueryAsync(touchView3).Wait();
         }
 
         public virtual void Dispose()

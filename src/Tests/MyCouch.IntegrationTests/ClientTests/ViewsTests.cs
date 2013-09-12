@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Runtime.CompilerServices;
 using FluentAssertions;
 using MyCouch.IntegrationTests.TestFixtures;
 using MyCouch.Testing;
@@ -20,6 +21,30 @@ namespace MyCouch.IntegrationTests.ClientTests
         public void SetFixture(ViewsFixture data)
         {
             Artists = data.Artists;
+        }
+
+        [Fact]
+        public void When_no_key_with_sum_reduce_for_string_response_It_will_be_able_to_sum()
+        {
+            var expectedSum = Artists.Sum(a => a.Albums.Count());
+            var query = new ViewQuery(ClientTestData.Views.ArtistsTotalNumOfAlbumsViewId).Configure(cfg => cfg.Reduce(true));
+
+            var response = SUT.QueryAsync(query).Result;
+
+            response.Should().BeSuccessfulGet(numOfRows: 1);
+            response.Rows[0].Value = expectedSum.ToString();
+        }
+
+        [Fact]
+        public void When_no_key_with_sum_reduce_for_dynamic_response_It_will_be_able_to_sum()
+        {
+            var expectedSum = Artists.Sum(a => a.Albums.Count());
+            var query = new ViewQuery(ClientTestData.Views.ArtistsTotalNumOfAlbumsViewId).Configure(cfg => cfg.Reduce(true));
+
+            var response = SUT.QueryAsync<dynamic>(query).Result;
+
+            response.Should().BeSuccessfulGet(numOfRows: 1);
+            response.Rows[0].Value = expectedSum;
         }
 
         [Fact]
