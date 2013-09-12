@@ -15,7 +15,7 @@ namespace MyCouch.Responses.Factories
             RowsDeserializer = new ViewQueryResponseRowsDeserializer(serializationConfiguration);
         }
 
-        public virtual ViewQueryResponse<T> Create<T>(HttpResponseMessage httpResponse) where T : class
+        public virtual ViewQueryResponse<T> Create<T>(HttpResponseMessage httpResponse)
         {
             return Materialize(new ViewQueryResponse<T>(), httpResponse, OnSuccessfulResponse, OnFailedResponse);
         }

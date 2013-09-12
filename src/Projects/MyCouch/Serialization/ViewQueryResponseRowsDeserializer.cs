@@ -101,7 +101,7 @@ namespace MyCouch.Serialization
         protected virtual IEnumerable<ViewQueryResponse<T>.Row> YieldQueryRows<T>(
             JsonReader jsonReader,
             JsonArrayItemVisitor.OnVisitMember<ViewQueryResponse<T>.Row> onVisitValueMember,
-            JsonArrayItemVisitor.OnVisitMember<ViewQueryResponse<T>.Row> onVisitDocMember) where T : class
+            JsonArrayItemVisitor.OnVisitMember<ViewQueryResponse<T>.Row> onVisitDocMember)
         {
             var memberHandlers = new Dictionary<string, JsonArrayItemVisitor.OnVisitMember<ViewQueryResponse<T>.Row>>
             {

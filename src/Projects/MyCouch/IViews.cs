@@ -24,7 +24,7 @@ namespace MyCouch
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        Task<ViewQueryResponse<T>> QueryAsync<T>(ViewQuery query) where T : class;
+        Task<ViewQueryResponse<T>> QueryAsync<T>(ViewQuery query);
 
         /// <summary>
         /// Creates and executes an <see cref="ViewQuery"/> on the fly.
@@ -44,6 +44,6 @@ namespace MyCouch
         /// <param name="viewname"></param>
         /// <param name="configurator"></param>
         /// <returns></returns>
-        Task<ViewQueryResponse<T>> QueryAsync<T>(string designDocument, string viewname, Action<ViewQueryConfigurator> configurator) where T : class;
+        Task<ViewQueryResponse<T>> QueryAsync<T>(string designDocument, string viewname, Action<ViewQueryConfigurator> configurator);
     }
 }

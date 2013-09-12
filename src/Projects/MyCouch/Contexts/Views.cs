@@ -36,7 +36,7 @@ namespace MyCouch.Contexts
             return ProcessHttpResponse(await res.ForAwait());
         }
 
-        public virtual async Task<ViewQueryResponse<T>> QueryAsync<T>(ViewQuery query) where T : class
+        public virtual async Task<ViewQueryResponse<T>> QueryAsync<T>(ViewQuery query)
         {
             Ensure.That(query, "query").IsNotNull();
 
@@ -59,7 +59,7 @@ namespace MyCouch.Contexts
             return QueryAsync(query);
         }
 
-        public virtual Task<ViewQueryResponse<T>> QueryAsync<T>(string designDocument, string viewname, Action<ViewQueryConfigurator> configurator) where T : class
+        public virtual Task<ViewQueryResponse<T>> QueryAsync<T>(string designDocument, string viewname, Action<ViewQueryConfigurator> configurator)
         {
             Ensure.That(designDocument, "designDocument").IsNotNullOrWhiteSpace();
             Ensure.That(viewname, "viewname").IsNotNullOrWhiteSpace();
@@ -109,7 +109,7 @@ namespace MyCouch.Contexts
             return JsonViewQueryResponseFactory.Create(response);
         }
 
-        protected virtual ViewQueryResponse<T> ProcessHttpResponse<T>(HttpResponseMessage response) where T : class
+        protected virtual ViewQueryResponse<T> ProcessHttpResponse<T>(HttpResponseMessage response)
         {
             return ViewQueryResponseFactory.Create<T>(response);
         }

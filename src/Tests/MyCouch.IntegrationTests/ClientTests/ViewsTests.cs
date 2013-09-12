@@ -48,6 +48,18 @@ namespace MyCouch.IntegrationTests.ClientTests
         }
 
         [Fact]
+        public void When_no_key_with_sum_reduce_for_typed_response_It_will_be_able_to_sum()
+        {
+            var expectedSum = Artists.Sum(a => a.Albums.Count());
+            var query = new ViewQuery(ClientTestData.Views.ArtistsTotalNumOfAlbumsViewId).Configure(cfg => cfg.Reduce(true));
+
+            var response = SUT.QueryAsync<int>(query).Result;
+
+            response.Should().BeSuccessfulGet(numOfRows: 1);
+            response.Rows[0].Value = expectedSum;
+        }
+
+        [Fact]
         public void When_IncludeDocs_and_no_value_is_returned_for_string_response_Then_the_included_docs_are_extracted()
         {
             var query = new ViewQuery(ClientTestData.Views.ArtistsNameNoValueViewId).Configure(cfg => cfg.IncludeDocs(true));

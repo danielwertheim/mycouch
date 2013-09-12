@@ -15,7 +15,7 @@ namespace MyCouch.Testing
             return new ViewQueryResponseAssertions(response);
         }
 
-        public static ViewQueryResponseAssertions<T> Should<T>(this ViewQueryResponse<T> response) where T : class
+        public static ViewQueryResponseAssertions<T> Should<T>(this ViewQueryResponse<T> response)
         {
             return new ViewQueryResponseAssertions<T>(response);
         }
@@ -75,7 +75,7 @@ namespace MyCouch.Testing
         }
     }
 
-    public class ViewQueryResponseAssertions<T> where T : class
+    public class ViewQueryResponseAssertions<T>
     {
         protected readonly ViewQueryResponse<T> Response;
 
