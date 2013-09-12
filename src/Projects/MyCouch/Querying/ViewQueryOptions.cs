@@ -30,6 +30,13 @@ namespace MyCouch.Querying
         /// </summary>
         public string[] Keys { get; set; }
         /// <summary>
+        /// Indicates if any <see cref="Keys"/> has been specified.
+        /// </summary>
+        public bool HasKeys
+        {
+            get { return Keys != null && Keys.Any(); }
+        }
+        /// <summary>
         /// Return records starting with the specified key.
         /// </summary>
         public string StartKey { get; set; }
@@ -87,55 +94,73 @@ namespace MyCouch.Querying
             Group = false;
         }
 
-        public virtual IEnumerable<KeyValuePair<string, string>> ToKeyValues()
+        /// <summary>
+        /// Returns Keys as compatible JSON document for use e.g.
+        /// with POST of keys against views.
+        /// </summary>
+        /// <returns></returns>
+        public virtual string GetKeysAsJson()
         {
+            if (Keys == null || !Keys.Any())
+                return "{}";
+
+            return string.Format("{{\"keys\":[{0}]}}",
+                string.Join(",", Keys.Select(k => string.Format("\"{0}\"", k))));
+        }
+
+        public virtual IDictionary<string, string> ToKeyValues()
+        {
+            var kvs = new Dictionary<string, string>();
+
             if (IncludeDocs)
-                yield return new KeyValuePair<string, string>("include_docs", IncludeDocs.ToString().ToLower());
+                kvs.Add(KeyValues.IncludeDocs, IncludeDocs.ToString().ToLower());
 
             if (Descending)
-                yield return new KeyValuePair<string, string>("descending", Descending.ToString().ToLower());
+                kvs.Add(KeyValues.Descending, Descending.ToString().ToLower());
 
             if(!Reduce)
-                yield return new KeyValuePair<string, string>("reduce", Reduce.ToString().ToLower());
+                kvs.Add(KeyValues.Reduce, Reduce.ToString().ToLower());
 
             if (!InclusiveEnd)
-                yield return new KeyValuePair<string, string>("inclusive_end", InclusiveEnd.ToString().ToLower());
+                kvs.Add(KeyValues.InclusiveEnd, InclusiveEnd.ToString().ToLower());
 
             if (UpdateSeq)
-                yield return new KeyValuePair<string, string>("update_seq", UpdateSeq.ToString().ToLower());
+                kvs.Add(KeyValues.UpdateSeq, UpdateSeq.ToString().ToLower());
 
             if (Group)
-                yield return new KeyValuePair<string, string>("group", Group.ToString().ToLower());
+                kvs.Add(KeyValues.Group, Group.ToString().ToLower());
 
             if (HasValue(GroupLevel))
-                yield return new KeyValuePair<string, string>("group_level", GroupLevel.ToString());
+                kvs.Add(KeyValues.GroupLevel, GroupLevel.ToString(MyCouchRuntime.NumberFormat));
 
             if (HasValue(Stale))
-                yield return new KeyValuePair<string, string>("stale", FormatValue(Stale));
+                kvs.Add(KeyValues.Stale, FormatValue(Stale));
 
             if (HasValue(Key))
-                yield return new KeyValuePair<string, string>("key", FormatValue(Key));
+                kvs.Add(KeyValues.Key, FormatValue(Key));
 
             if (HasValue(Keys))
-                yield return new KeyValuePair<string, string>("keys", FormatValue(Keys));
+                kvs.Add(KeyValues.Keys, FormatValue(Keys));
 
             if(HasValue(StartKey))
-                yield return new KeyValuePair<string, string>("startkey", FormatValue(StartKey));
+                kvs.Add(KeyValues.StartKey, FormatValue(StartKey));
 
             if (HasValue(StartKeyDocId))
-                yield return new KeyValuePair<string, string>("startkey_docid", FormatValue(StartKeyDocId));
+                kvs.Add(KeyValues.StartKeyDocId, FormatValue(StartKeyDocId));
             
             if(HasValue(EndKey))
-                yield return new KeyValuePair<string, string>("endkey", FormatValue(EndKey));
+                kvs.Add(KeyValues.EndKey, FormatValue(EndKey));
 
             if (HasValue(EndKeyDocId))
-                yield return new KeyValuePair<string, string>("endkey_docid", FormatValue(EndKeyDocId));
+                kvs.Add(KeyValues.EndKeyDocId, FormatValue(EndKeyDocId));
             
             if(HasValue(Limit))
-                yield return new KeyValuePair<string, string>("limit", Limit.ToString());
+                kvs.Add(KeyValues.Limit, Limit.ToString(MyCouchRuntime.NumberFormat));
             
             if(HasValue(Skip))
-                yield return new KeyValuePair<string, string>("skip", Skip.ToString());
+                kvs.Add(KeyValues.Skip, Skip.ToString(MyCouchRuntime.NumberFormat));
+
+            return kvs;
         }
 
         protected virtual bool HasValue(string value)
@@ -161,6 +186,26 @@ namespace MyCouch.Querying
         protected virtual string FormatValue(IEnumerable<string> value)
         {
             return string.Format("[{0}]", string.Join(",", value.Select(v => string.Format("\"{0}\"", v))));
+        }
+
+        public static class KeyValues
+        {
+            public const string IncludeDocs = "include_docs";
+            public const string Descending = "descending";
+            public const string Reduce = "reduce";
+            public const string InclusiveEnd = "inclusive_end";
+            public const string UpdateSeq = "update_seq";
+            public const string Group = "group";
+            public const string GroupLevel = "group_level";
+            public const string Stale = "stale";
+            public const string Key = "key";
+            public const string Keys = "keys";
+            public const string StartKey = "startkey";
+            public const string StartKeyDocId = "startkey_docid";
+            public const string EndKey = "endkey";
+            public const string EndKeyDocId = "endkey_docid";
+            public const string Limit = "limit";
+            public const string Skip = "skip";
         }
     }
 }

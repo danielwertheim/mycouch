@@ -212,7 +212,7 @@ namespace MyCouch.IntegrationTests.ClientTests
 
             var response = SUT.QueryAsync(query).Result;
 
-            response.Should().BeSuccessfulGet(artists.Select(a => Client.Serializer.Serialize(a.Albums)).ToArray());
+            response.Should().BeSuccessfulPost(artists.Select(a => Client.Serializer.Serialize(a.Albums)).ToArray());
         }
 
         [Fact]
@@ -224,7 +224,7 @@ namespace MyCouch.IntegrationTests.ClientTests
 
             var response = SUT.QueryAsync<string[]>(query).Result;
 
-            response.Should().BeSuccessfulGet(artists.Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray());
+            response.Should().BeSuccessfulPost(artists.Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray());
         }
 
         [Fact]
@@ -236,7 +236,7 @@ namespace MyCouch.IntegrationTests.ClientTests
 
             var response = SUT.QueryAsync<Album[]>(query).Result;
 
-            response.Should().BeSuccessfulGet(artists.Select(a => a.Albums).ToArray());
+            response.Should().BeSuccessfulPost(artists.Select(a => a.Albums).ToArray());
         }
 
         [Fact]

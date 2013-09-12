@@ -79,7 +79,9 @@ namespace MyCouch.Contexts
         
         protected virtual HttpRequestMessage CreateRequest(ViewQuery query)
         {
-            return new HttpRequest(HttpMethod.Get, GenerateRequestUrl(query));
+            return query.Options.HasKeys
+                ? new HttpRequest(HttpMethod.Post, GenerateRequestUrl(query)).SetContent(query.Options.GetKeysAsJson())
+                : new HttpRequest(HttpMethod.Get, GenerateRequestUrl(query));
         }
 
         protected virtual string GenerateRequestUrl(ViewQuery query)
@@ -101,7 +103,9 @@ namespace MyCouch.Contexts
 
         protected virtual string GenerateQueryStringParams(ViewQueryOptions options)
         {
-            return string.Join("&", options.ToKeyValues().Select(kv => string.Format("{0}={1}", kv.Key, Uri.EscapeDataString(kv.Value))));
+            return string.Join("&", options.ToKeyValues()
+                .Where(kv => kv.Key != ViewQueryOptions.KeyValues.Keys)
+                .Select(kv => string.Format("{0}={1}", kv.Key, Uri.EscapeDataString(kv.Value))));
         }
 
         protected virtual JsonViewQueryResponse ProcessHttpResponse(HttpResponseMessage response)
