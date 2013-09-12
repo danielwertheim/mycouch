@@ -5,7 +5,7 @@ using System.Linq;
 using MyCouch.Net;
 using MyCouch.Testing.Model;
 
-namespace MyCouch.Testing
+namespace MyCouch.Testing.TestData
 {
     public static class ClientTestData
     {

@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using MyCouch.Serialization;
 using MyCouch.Testing;
+using MyCouch.Testing.TestData;
 using Xunit;
 
 namespace MyCouch.UnitTests.Serialization

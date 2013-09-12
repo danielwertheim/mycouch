@@ -9,6 +9,7 @@ using MyCouch.Serialization;
 using MyCouch.Serialization.Readers;
 using MyCouch.Testing;
 using MyCouch.Testing.Model;
+using MyCouch.Testing.TestData;
 using Xunit;
 
 namespace MyCouch.UnitTests.Serialization

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Concurrent;
 using System.IO;
+
 #if NETFX_CORE
 using System;
 using System.Linq;
@@ -9,7 +10,7 @@ using Windows.ApplicationModel;
 using Windows.Storage;
 #endif
 
-namespace MyCouch.Testing
+namespace MyCouch.Testing.TestData
 {
     public static class JsonTestData
     {

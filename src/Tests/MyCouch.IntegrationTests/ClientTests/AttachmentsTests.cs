@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using MyCouch.Commands;
 using MyCouch.Testing;
+using MyCouch.Testing.TestData;
 using Xunit;
 
 namespace MyCouch.IntegrationTests.ClientTests

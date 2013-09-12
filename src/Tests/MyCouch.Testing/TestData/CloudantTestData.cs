@@ -1,7 +1,7 @@
 ﻿using MyCouch.Cloudant;
 using MyCouch.Testing.Model;
 
-namespace MyCouch.Testing
+namespace MyCouch.Testing.TestData
 {
     public static class CloudantTestData
     {
