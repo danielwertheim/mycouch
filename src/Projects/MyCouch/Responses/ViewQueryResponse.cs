@@ -13,7 +13,7 @@ namespace MyCouch.Responses
         public class Row : QueryResponseRow
         {
             public T Value { get; set; }
-            public T Doc { get; set; }
+            public T IncludedDoc { get; set; }
         }
     }
 }

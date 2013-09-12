@@ -70,7 +70,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             for (var i = 0; i < response.RowCount; i++)
             {
                 response.Rows[i].Value.Should().BeNull();
-                CustomAsserts.AreValueEqual(Artists[i], Client.Entities.Serializer.Deserialize<Artist>(response.Rows[i].Doc));
+                CustomAsserts.AreValueEqual(Artists[i], Client.Entities.Serializer.Deserialize<Artist>(response.Rows[i].IncludedDoc));
             }
         }
 
@@ -85,7 +85,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             for (var i = 0; i < response.RowCount; i++)
             {
                 response.Rows[i].Value.Should().BeNull();
-                CustomAsserts.AreValueEqual(Artists[i], response.Rows[i].Doc);
+                CustomAsserts.AreValueEqual(Artists[i], response.Rows[i].IncludedDoc);
             }
         }
 
@@ -100,7 +100,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             for (var i = 0; i < response.RowCount; i++)
             {
                 response.Rows[i].Value.Should().BeNull();
-                response.Rows[i].Doc.Should().BeNull();
+                response.Rows[i].IncludedDoc.Should().BeNull();
             }
         }
 

@@ -54,7 +54,7 @@ namespace MyCouch.Serialization
             return YieldQueryRows<string>(
                 jsonReader,
                 (row, jr, jw, sb) => ConsumeStringIfNotEmpty(jr, jw, sb, s => row.Value = s),
-                (row, jr, jw, sb) => ConsumeStringIfNotEmpty(jr, jw, sb, s => row.Doc = s));
+                (row, jr, jw, sb) => ConsumeStringIfNotEmpty(jr, jw, sb, s => row.IncludedDoc = s));
         }
 
         protected virtual IEnumerable<ViewQueryResponse<string[]>.Row> DeserializeRowsOfStrings(JsonReader jsonReader)
@@ -62,7 +62,7 @@ namespace MyCouch.Serialization
             return YieldQueryRows<string[]>(
                 jsonReader,
                 (row, jr, jw, sb) => ConsumeStringsIfNotEmpty(jr, jw, sb, strings => row.Value = strings),
-                (row, jr, jw, sb) => ConsumeStringsIfNotEmpty(jr, jw, sb, strings => row.Doc = strings));
+                (row, jr, jw, sb) => ConsumeStringsIfNotEmpty(jr, jw, sb, strings => row.IncludedDoc = strings));
         }
 
         protected virtual void ConsumeStringIfNotEmpty(JsonReader jr, JsonWriter jw, StringBuilder sb, Action<string> map)
