@@ -12,7 +12,7 @@ namespace MyCouch.Serialization
     {
         /// <summary>
         /// Takes a <see cref="JsonReader"/>, which should point to a node being
-        /// an array. Traverses the tree and yields <typeparam name="T"></typeparam>
+        /// an array. Traverses the tree and yields T
         /// of <see cref="QueryResponseRow"/> from it.
         /// </summary>
         /// <typeparam name="T"></typeparam>

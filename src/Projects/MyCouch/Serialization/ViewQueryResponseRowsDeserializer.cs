@@ -11,7 +11,7 @@ namespace MyCouch.Serialization
 {
     /// <summary>
     /// Traverses and deserializes JSON-arrays, which should represent Rows.
-    /// For use with e.g. <see cref="ViewQueryResponse{T}.Rows"/>.
+    /// For use with e.g. <see cref="QueryResponse{T}.Rows"/>.
     /// </summary>
     public class ViewQueryResponseRowsDeserializer : IQueryResponseRowsDeserializer
     {
