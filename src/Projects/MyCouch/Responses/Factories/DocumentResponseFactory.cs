@@ -7,29 +7,30 @@ namespace MyCouch.Responses.Factories
 {
     public class DocumentResponseFactory : ResponseFactoryBase
     {
-        public DocumentResponseFactory(IResponseMaterializer responseMaterializer) : base(responseMaterializer) { }
+        public DocumentResponseFactory(SerializationConfiguration serializationConfiguration)
+            : base(serializationConfiguration) { }
 
-        public virtual DocumentResponse Create(HttpResponseMessage response)
+        public virtual DocumentResponse Create(HttpResponseMessage httpResponse)
         {
-            return CreateResponse<DocumentResponse>(response, OnSuccessfulDocumentResponseContentMaterializer, OnFailedResponseContentMaterializer);
+            return Materialize(new DocumentResponse(), httpResponse, OnSuccessfulResponse, OnFailedResponse);
         }
 
-        protected virtual void OnSuccessfulDocumentResponseContentMaterializer(HttpResponseMessage response, DocumentResponse result)
+        protected virtual void OnSuccessfulResponse(DocumentResponse response, HttpResponseMessage httpResponse)
         {
-            using (var content = response.Content.ReadAsStream())
+            using (var content = httpResponse.Content.ReadAsStream())
             {
-                if (ContentShouldHaveIdAndRev(response.RequestMessage))
-                    ResponseMaterializer.PopulateDocumentHeaderResponse(result, content);
+                if (ContentShouldHaveIdAndRev(httpResponse.RequestMessage))
+                    PopulateDocumentHeaderFromResponseStream(response, content);
                 else
                 {
-                    AssignMissingIdFromRequestUri(response, result);
-                    AssignMissingRevFromRequestHeaders(response, result);
+                    PopulateMissingIdFromRequestUri(response, httpResponse);
+                    PopulateMissingRevFromRequestHeaders(response, httpResponse);
                 }
 
                 content.Position = 0;
                 using (var reader = new StreamReader(content, MyCouchRuntime.DefaultEncoding))
                 {
-                    result.Content = reader.ReadToEnd();
+                    response.Content = reader.ReadToEnd();
                 }
             }
         }

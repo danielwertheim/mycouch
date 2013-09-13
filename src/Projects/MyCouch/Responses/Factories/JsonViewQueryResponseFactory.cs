@@ -1,21 +1,28 @@
-﻿using System.Net.Http;
-using MyCouch.Extensions;
+﻿using System.Linq;
+using System.Net.Http;
 using MyCouch.Serialization;
+using Newtonsoft.Json;
 
 namespace MyCouch.Responses.Factories
 {
-    public class JsonViewQueryResponseFactory : ResponseFactoryBase
+    public class JsonViewQueryResponseFactory : QueryResponseFactoryBase
     {
-        public JsonViewQueryResponseFactory(IResponseMaterializer responseMaterializer) : base(responseMaterializer) { }
+        protected IQueryResponseRowsDeserializer RowsDeserializer { get; set; }
 
-        public virtual JsonViewQueryResponse Create(HttpResponseMessage response)
+        public JsonViewQueryResponseFactory(SerializationConfiguration serializationConfiguration)
+            : base(serializationConfiguration)
         {
-            return CreateResponse<JsonViewQueryResponse>(response, OnSuccessfulViewQueryResponseContentMaterializer, OnFailedResponseContentMaterializer);
+            RowsDeserializer = new ViewQueryResponseRowsDeserializer(serializationConfiguration);
         }
-        protected virtual void OnSuccessfulViewQueryResponseContentMaterializer<T>(HttpResponseMessage response, ViewQueryResponse<T> result) where T : class
+
+        public virtual JsonViewQueryResponse Create(HttpResponseMessage httpResponse)
         {
-            using (var content = response.Content.ReadAsStream())
-                ResponseMaterializer.PopulateViewQueryResponse(result, content);
+            return Materialize(new JsonViewQueryResponse(), httpResponse, OnSuccessfulResponse, OnFailedResponse);
+        }
+
+        protected override void OnPopulateRows<T>(QueryResponse<T> response, JsonReader jr)
+        {
+            response.Rows = RowsDeserializer.Deserialize<T>(jr).ToArray();
         }
     }
 }

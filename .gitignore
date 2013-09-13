@@ -1,4 +1,4 @@
-# v2013-08-15.1
+# v2013-09-02.1
 # vs
 AppPackages/
 [Aa]pp_[Dd]ata/
@@ -16,6 +16,10 @@ AppPackages/
 # deploy
 deploy/build
 deploy/builds
+
+#env
+env/data/*
+!env/data/local.json
 
 # misc
 *~

@@ -12,18 +12,17 @@ namespace MyCouch.Contexts
 {
     public class Documents : ApiContextBase, IDocuments
     {
-        protected readonly DocumentResponseFactory DocumentReponseFactory;
-        protected readonly DocumentHeaderResponseFactory DocumentHeaderReponseFactory;
-        protected readonly BulkResponseFactory BulkReponseFactory;
+        protected DocumentResponseFactory DocumentReponseFactory { get; set; }
+        protected DocumentHeaderResponseFactory DocumentHeaderReponseFactory { get; set; }
+        protected BulkResponseFactory BulkReponseFactory { get; set; }
 
         public Documents(IConnection connection, SerializationConfiguration serializationConfiguration) : base(connection)
         {
             Ensure.That(serializationConfiguration, "serializationConfiguration").IsNotNull();
 
-            var materializer = new DefaultResponseMaterializer(serializationConfiguration);
-            DocumentReponseFactory = new DocumentResponseFactory(materializer);
-            DocumentHeaderReponseFactory = new DocumentHeaderResponseFactory(materializer);
-            BulkReponseFactory = new BulkResponseFactory(materializer);
+            DocumentReponseFactory = new DocumentResponseFactory(serializationConfiguration);
+            DocumentHeaderReponseFactory = new DocumentHeaderResponseFactory(serializationConfiguration);
+            BulkReponseFactory = new BulkResponseFactory(serializationConfiguration);
         }
 
         public virtual async Task<BulkResponse> BulkAsync(BulkCommand cmd)

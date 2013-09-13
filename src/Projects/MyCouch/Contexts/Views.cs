@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Extensions;
 using MyCouch.Net;
+using MyCouch.Querying;
 using MyCouch.Responses;
 using MyCouch.Responses.Factories;
 using MyCouch.Serialization;
@@ -13,21 +14,21 @@ namespace MyCouch.Contexts
 {
     public class Views : ApiContextBase, IViews
     {
-        protected readonly JsonViewQueryResponseFactory JsonViewQueryResponseFactory;
-        protected readonly ViewQueryResponseFactory ViewQueryResponseFactory;
+        protected JsonViewQueryResponseFactory JsonViewQueryResponseFactory { get; set; }
+        protected ViewQueryResponseFactory ViewQueryResponseFactory { get; set; }
 
-        public Views(IConnection connection, SerializationConfiguration serializationConfiguration) : base(connection)
+        public Views(IConnection connection, SerializationConfiguration serializationConfiguration)
+            : base(connection)
         {
             Ensure.That(serializationConfiguration, "serializationConfiguration").IsNotNull();
 
-            var materializer = new DefaultResponseMaterializer(serializationConfiguration);
-            JsonViewQueryResponseFactory = new JsonViewQueryResponseFactory(materializer);
-            ViewQueryResponseFactory = new ViewQueryResponseFactory(materializer);
+            JsonViewQueryResponseFactory = new JsonViewQueryResponseFactory(serializationConfiguration);
+            ViewQueryResponseFactory = new ViewQueryResponseFactory(serializationConfiguration);
         }
 
-        public virtual async Task<JsonViewQueryResponse> RunQueryAsync(IViewQuery query)
+        public virtual async Task<JsonViewQueryResponse> QueryAsync(ViewQuery query)
         {
-            EnsureValidQuery(query);
+            Ensure.That(query, "query").IsNotNull();
 
             var req = CreateRequest(query);
             var res = SendAsync(req);
@@ -35,9 +36,9 @@ namespace MyCouch.Contexts
             return ProcessHttpResponse(await res.ForAwait());
         }
 
-        public virtual async Task<ViewQueryResponse<T>> RunQueryAsync<T>(IViewQuery query) where T : class
+        public virtual async Task<ViewQueryResponse<T>> QueryAsync<T>(ViewQuery query)
         {
-            EnsureValidQuery(query);
+            Ensure.That(query, "query").IsNotNull();
 
             var req = CreateRequest(query);
             var res = SendAsync(req);
@@ -45,7 +46,7 @@ namespace MyCouch.Contexts
             return ProcessHttpResponse<T>(await res.ForAwait());
         }
 
-        public virtual Task<JsonViewQueryResponse> QueryAsync(string designDocument, string viewname, Action<IViewQueryConfigurator> configurator)
+        public virtual Task<JsonViewQueryResponse> QueryAsync(string designDocument, string viewname, Action<ViewQueryConfigurator> configurator)
         {
             Ensure.That(designDocument, "designDocument").IsNotNullOrWhiteSpace();
             Ensure.That(viewname, "viewname").IsNotNullOrWhiteSpace();
@@ -55,10 +56,10 @@ namespace MyCouch.Contexts
 
             query.Configure(configurator);
 
-            return RunQueryAsync(query);
+            return QueryAsync(query);
         }
 
-        public virtual Task<ViewQueryResponse<T>> QueryAsync<T>(string designDocument, string viewname, Action<IViewQueryConfigurator> configurator) where T : class
+        public virtual Task<ViewQueryResponse<T>> QueryAsync<T>(string designDocument, string viewname, Action<ViewQueryConfigurator> configurator)
         {
             Ensure.That(designDocument, "designDocument").IsNotNullOrWhiteSpace();
             Ensure.That(viewname, "viewname").IsNotNullOrWhiteSpace();
@@ -68,27 +69,24 @@ namespace MyCouch.Contexts
 
             query.Configure(configurator);
 
-            return RunQueryAsync<T>(query);
+            return QueryAsync<T>(query);
         }
 
-        protected virtual void EnsureValidQuery(IViewQuery query)
-        {
-            Ensure.That(query, "query").IsNotNull();
-        }
-
-        protected virtual IViewQuery CreateQuery(string designDocument, string viewname)
+        protected virtual ViewQuery CreateQuery(string designDocument, string viewname)
         {
             return new ViewQuery(designDocument, viewname);
         }
         
-        protected virtual HttpRequestMessage CreateRequest(IViewQuery query)
+        protected virtual HttpRequestMessage CreateRequest(ViewQuery query)
         {
-            return new HttpRequest(HttpMethod.Get, GenerateRequestUrl(query));
+            return query.Options.HasKeys
+                ? new HttpRequest(HttpMethod.Post, GenerateRequestUrl(query)).SetContent(query.Options.GetKeysAsJson())
+                : new HttpRequest(HttpMethod.Get, GenerateRequestUrl(query));
         }
 
-        protected virtual string GenerateRequestUrl(IViewQuery query)
+        protected virtual string GenerateRequestUrl(ViewQuery query)
         {
-            if (query is ISystemViewQuery)
+            if (query is SystemViewQuery)
             {
                 return string.Format("{0}/{1}?{2}",
                     Connection.Address,
@@ -103,9 +101,11 @@ namespace MyCouch.Contexts
                 GenerateQueryStringParams(query.Options));
         }
 
-        protected virtual string GenerateQueryStringParams(IViewQueryOptions options)
+        protected virtual string GenerateQueryStringParams(ViewQueryOptions options)
         {
-            return string.Join("&", options.ToKeyValues().Select(kv => string.Format("{0}={1}", kv.Key, Uri.EscapeDataString(kv.Value))));
+            return string.Join("&", options.ToKeyValues()
+                .Where(kv => kv.Key != ViewQueryOptions.KeyValues.Keys)
+                .Select(kv => string.Format("{0}={1}", kv.Key, Uri.EscapeDataString(kv.Value))));
         }
 
         protected virtual JsonViewQueryResponse ProcessHttpResponse(HttpResponseMessage response)
@@ -113,7 +113,7 @@ namespace MyCouch.Contexts
             return JsonViewQueryResponseFactory.Create(response);
         }
 
-        protected virtual ViewQueryResponse<T> ProcessHttpResponse<T>(HttpResponseMessage response) where T : class
+        protected virtual ViewQueryResponse<T> ProcessHttpResponse<T>(HttpResponseMessage response)
         {
             return ViewQueryResponseFactory.Create<T>(response);
         }

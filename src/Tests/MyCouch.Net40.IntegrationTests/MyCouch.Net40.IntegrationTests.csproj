@@ -109,8 +109,8 @@
     <Compile Include="..\MyCouch.IntegrationTests\IPreserveStatePerFixture.cs">
       <Link>IPreserveStatePerFixture.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests\TestFixtures\ClientFixture.cs">
-      <Link>TestFixtures\ClientFixture.cs</Link>
+    <Compile Include="..\MyCouch.IntegrationTests\TestFixtures\ClientTestsFixture.cs">
+      <Link>TestFixtures\ClientTestsFixture.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.IntegrationTests\TestFixtures\ViewsFixture.cs">
       <Link>TestFixtures\ViewsFixture.cs</Link>
@@ -128,9 +128,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\MyCouch.IntegrationTests\App.config">
-      <Link>App.config</Link>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

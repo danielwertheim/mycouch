@@ -11,13 +11,13 @@ namespace MyCouch.Contexts
 {
     public class Databases : ApiContextBase, IDatabases
     {
-        protected readonly DatabaseResponseFactory DatabaseResponseFactory;
+        protected DatabaseResponseFactory DatabaseResponseFactory { get; set; }
 
         public Databases(IConnection connection, SerializationConfiguration serializationConfiguration) : base(connection)
         {
             Ensure.That(serializationConfiguration, "serializationConfiguration").IsNotNull();
 
-            DatabaseResponseFactory = new DatabaseResponseFactory(new DefaultResponseMaterializer(serializationConfiguration));
+            DatabaseResponseFactory = new DatabaseResponseFactory(serializationConfiguration);
         }
 
         public virtual async Task<DatabaseResponse> PutAsync()

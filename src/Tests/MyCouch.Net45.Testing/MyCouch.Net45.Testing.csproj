@@ -56,10 +56,7 @@
     <Compile Include="..\MyCouch.Testing\CustomAsserts.cs">
       <Link>CustomAsserts.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Testing\JsonTestData.cs">
-      <Link>JsonTestData.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Testing\Model\Artist.cs">
+    <Compile Include="..\mycouch.testing\model\Artist.cs">
       <Link>Model\Artist.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Testing\Shoulds.cs">
@@ -68,8 +65,11 @@
     <Compile Include="..\MyCouch.Testing\TestConstants.cs">
       <Link>TestConstants.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Testing\TestData.cs">
-      <Link>TestData.cs</Link>
+    <Compile Include="..\mycouch.testing\testdata\ClientTestData.cs">
+      <Link>TestData\ClientTestData.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.testing\testdata\JsonTestData.cs">
+      <Link>TestData\JsonTestData.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Testing\TestsOf.cs">
       <Link>TestsOf.cs</Link>
@@ -80,12 +80,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\MyCouch.Testing\JsonTestDataFiles\ViewQueryAlbums.json">
-      <Link>JsonTestDataFiles\ViewQueryAlbums.json</Link>
+    <Content Include="..\mycouch.testing\jsontestdatafiles\ViewQueryAlbumRows.json">
+      <Link>JsonTestDataFiles\ViewQueryAlbumRows.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\MyCouch.Testing\JsonTestDataFiles\ViewQueryAllDocsResult.json">
-      <Link>JsonTestDataFiles\ViewQueryAllDocsResult.json</Link>
+    <Content Include="..\mycouch.testing\jsontestdatafiles\ViewQueryAllDocRows.json">
+      <Link>JsonTestDataFiles\ViewQueryAllDocRows.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />

@@ -20,16 +20,20 @@ namespace MyCouch.Net
                 Headers.TryAddWithoutValidation("If-Match", rev);
         }
 
-        public virtual void SetContent(string content)
+        public virtual HttpRequest SetContent(string content)
         {
             if(!string.IsNullOrWhiteSpace(content))
                 Content = new JsonContent(content);
+
+            return this;
         }
 
-        public virtual void SetContent(string contentType, byte[] content)
+        public virtual HttpRequest SetContent(string contentType, byte[] content)
         {
             if (content != null && content.Length > 0)
                 Content = new AttachmentContent(contentType, content);
+
+            return this;
         }
     }
 }

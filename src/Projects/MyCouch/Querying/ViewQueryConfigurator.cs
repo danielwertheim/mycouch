@@ -1,127 +1,196 @@
 ﻿namespace MyCouch.Querying
 {
-    public class ViewQueryConfigurator : IViewQueryConfigurator
+    public class ViewQueryConfigurator
     {
-        protected readonly IViewQueryOptions Options;
+        protected readonly ViewQueryOptions Options;
 
-        public ViewQueryConfigurator(IViewQueryOptions options)
+        public ViewQueryConfigurator(ViewQueryOptions options)
         {
             Options = options;
         }
 
-        public virtual IViewQueryConfigurator Stale(string value)
+        /// <summary>
+        /// Allow the results from a stale view to be used.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public virtual ViewQueryConfigurator Stale(string value)
         {
             Options.Stale = value;
 
             return this;
         }
-
-        public virtual IViewQueryConfigurator Stale(Stale value)
+        /// <summary>
+        /// Allow the results from a stale view to be used.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public virtual ViewQueryConfigurator Stale(Stale value)
         {
             Options.Stale = value;
 
             return this;
         }
-
-        public virtual IViewQueryConfigurator IncludeDocs(bool value)
+        /// <summary>
+        /// Include the full content of the documents in the return;
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public virtual ViewQueryConfigurator IncludeDocs(bool value)
         {
             Options.IncludeDocs = value;
 
             return this;
         }
-
-        public virtual IViewQueryConfigurator Descending(bool value)
+        /// <summary>
+        /// Return the documents in descending by key order.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public virtual ViewQueryConfigurator Descending(bool value)
         {
             Options.Descending = value;
 
             return this;
         }
-
-        public virtual IViewQueryConfigurator Key(string value)
+        /// <summary>
+        /// Return only documents that match the specified key.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public virtual ViewQueryConfigurator Key(string value)
         {
             Options.Key = value;
 
             return this;
         }
-
-        public virtual IViewQueryConfigurator Keys(params string[] value)
+        /// <summary>
+        /// Returns only documents that matches any of the specified keys.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public virtual ViewQueryConfigurator Keys(params string[] value)
         {
             Options.Keys = value;
 
             return this;
         }
-
-        public virtual IViewQueryConfigurator StartKey(string value)
+        /// <summary>
+        /// Return records starting with the specified key.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public virtual ViewQueryConfigurator StartKey(string value)
         {
             Options.StartKey = value;
 
             return this;
         }
-
-        public virtual IViewQueryConfigurator StartKeyDocId(string value)
+        /// <summary>
+        /// Return records starting with the specified document ID.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public virtual ViewQueryConfigurator StartKeyDocId(string value)
         {
             Options.StartKeyDocId = value;
 
             return this;
         }
-
-        public virtual IViewQueryConfigurator EndKey(string value)
+        /// <summary>
+        /// Stop returning records when the specified key is reached.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public virtual ViewQueryConfigurator EndKey(string value)
         {
             Options.EndKey = value;
 
             return this;
         }
-
-        public virtual IViewQueryConfigurator EndKeyDocId(string value)
+        /// <summary>
+        /// Stop returning records when the specified document ID is reached.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public virtual ViewQueryConfigurator EndKeyDocId(string value)
         {
             Options.EndKeyDocId = value;
 
             return this;
         }
-
-        public virtual IViewQueryConfigurator InclusiveEnd(bool value)
+        /// <summary>
+        /// Specifies whether the specified end key should be included in the result.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public virtual ViewQueryConfigurator InclusiveEnd(bool value)
         {
             Options.InclusiveEnd = value;
 
             return this;
         }
-
-        public virtual IViewQueryConfigurator Skip(int value)
+        /// <summary>
+        /// Skip this number of records before starting to return the results.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public virtual ViewQueryConfigurator Skip(int value)
         {
             Options.Skip = value;
 
             return this;
         }
-
-        public virtual IViewQueryConfigurator Limit(int value)
+        /// <summary>
+        /// Limit the number of the returned documents to the specified number.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public virtual ViewQueryConfigurator Limit(int value)
         {
             Options.Limit = value;
 
             return this;
         }
-
-        public virtual IViewQueryConfigurator Reduce(bool value)
+        /// <summary>
+        /// Use the reduction function.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public virtual ViewQueryConfigurator Reduce(bool value)
         {
             Options.Reduce = value;
             
             return this;
         }
-
-        public virtual IViewQueryConfigurator UpdateSeq(bool value)
+        /// <summary>
+        /// Include the update sequence in the generated results.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public virtual ViewQueryConfigurator UpdateSeq(bool value)
         {
             Options.UpdateSeq = value;
 
             return this;
         }
-
-        public virtual IViewQueryConfigurator Group(bool value)
+        /// <summary>
+        /// The group option controls whether the reduce function reduces to a set of distinct keys or to a single result row.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public virtual ViewQueryConfigurator Group(bool value)
         {
             Options.Group = value;
 
             return this;
         }
-
-        public virtual IViewQueryConfigurator GroupLevel(int value)
+        /// <summary>
+        /// Specify the group level to be used.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public virtual ViewQueryConfigurator GroupLevel(int value)
         {
             Options.GroupLevel = value;
 

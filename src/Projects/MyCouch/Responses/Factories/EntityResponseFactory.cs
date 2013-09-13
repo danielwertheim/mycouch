@@ -5,46 +5,48 @@ using MyCouch.Serialization;
 
 namespace MyCouch.Responses.Factories
 {
-    public class EntityResponseFactory : DocumentHeaderResponseFactoryBase
+    public class EntityResponseFactory : ResponseFactoryBase
     {
         protected readonly ISerializer Serializer;
 
-        public EntityResponseFactory(IResponseMaterializer responseMaterializer, ISerializer serializer)
-            : base(responseMaterializer)
+        public EntityResponseFactory(SerializationConfiguration serializationConfiguration, ISerializer serializer)
+            : base(serializationConfiguration)
         {
             Ensure.That(serializer, "serializer").IsNotNull();
 
             Serializer = serializer;
         }
 
-        public virtual EntityResponse<T> Create<T>(HttpResponseMessage response) where T : class
+        public virtual EntityResponse<T> Create<T>(HttpResponseMessage httpResponse) where T : class
         {
-            return CreateResponse<EntityResponse<T>>(response, OnSuccessfulEntityResponseContentMaterializer, OnFailedEntityResponseContentMaterializer);
+            return Materialize(new EntityResponse<T>(), httpResponse, OnSuccessfulResponse, OnFailedResponse);
         }
 
-        protected virtual void OnSuccessfulEntityResponseContentMaterializer<T>(HttpResponseMessage response, EntityResponse<T> result) where T : class
+        protected virtual void OnSuccessfulResponse<T>(EntityResponse<T> response, HttpResponseMessage httpResponse) where T : class
         {
-            using (var content = response.Content.ReadAsStream())
+            using (var content = httpResponse.Content.ReadAsStream())
             {
-                if (ContentShouldHaveIdAndRev(response.RequestMessage))
-                    ResponseMaterializer.PopulateDocumentHeaderResponse(result, content);
+                if (ContentShouldHaveIdAndRev(httpResponse.RequestMessage))
+                    PopulateDocumentHeaderFromResponseStream(response, content);
                 else
                 {
-                    AssignMissingIdFromRequestUri(response, result);
-                    AssignMissingRevFromRequestHeaders(response, result);
+                    PopulateMissingIdFromRequestUri(response, httpResponse);
+                    PopulateMissingRevFromRequestHeaders(response, httpResponse);
                 }
 
-                if (result.RequestMethod == HttpMethod.Get)
+                if (response.RequestMethod == HttpMethod.Get)
                 {
                     content.Position = 0;
-                    result.Entity = Serializer.Deserialize<T>(content);
+                    response.Entity = Serializer.Deserialize<T>(content);
                 }
             }
         }
 
-        protected virtual void OnFailedEntityResponseContentMaterializer<T>(HttpResponseMessage response, EntityResponse<T> result) where T : class 
+        protected virtual void OnFailedResponse<T>(EntityResponse<T> response, HttpResponseMessage httpResponse) where T : class
         {
-            OnFailedDocumentHeaderResponseContentMaterializer(response, result);
+            base.OnFailedResponse(response, httpResponse);
+
+            PopulateMissingIdFromRequestUri(response, httpResponse);
         }
     }
 }

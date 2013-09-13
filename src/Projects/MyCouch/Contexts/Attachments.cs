@@ -12,16 +12,15 @@ namespace MyCouch.Contexts
 {
     public class Attachments : ApiContextBase, IAttachments
     {
-        protected readonly AttachmentResponseFactory AttachmentResponseFactory;
-        protected readonly DocumentHeaderResponseFactory DocumentHeaderResponseFactory;
+        protected AttachmentResponseFactory AttachmentResponseFactory { get; set; }
+        protected DocumentHeaderResponseFactory DocumentHeaderResponseFactory { get; set; }
 
         public Attachments(IConnection connection, SerializationConfiguration serializationConfiguration) : base(connection)
         {
             Ensure.That(serializationConfiguration, "serializationConfiguration").IsNotNull();
 
-            var materializer = new DefaultResponseMaterializer(serializationConfiguration);
-            AttachmentResponseFactory = new AttachmentResponseFactory(materializer);
-            DocumentHeaderResponseFactory = new DocumentHeaderResponseFactory(materializer);
+            AttachmentResponseFactory = new AttachmentResponseFactory(serializationConfiguration);
+            DocumentHeaderResponseFactory = new DocumentHeaderResponseFactory(serializationConfiguration);
         }
 
         public virtual Task<AttachmentResponse> GetAsync(string docId, string attachmentName)

@@ -13,20 +13,19 @@ namespace MyCouch.Contexts
 {
     public class Entities : ApiContextBase, IEntities
     {
-        protected readonly EntityResponseFactory EntityResponseFactory;
-        protected readonly IEntityReflector EntityReflector;
+        public ISerializer Serializer { get; protected set; }
+        public IEntityReflector Reflector { get; protected set;}
+        protected EntityResponseFactory EntityResponseFactory { get; set; }
 
-        public ISerializer Serializer { get; private set; }
-        public IEntityReflector Reflector { get { return EntityReflector; } }
-
-        public Entities(IConnection connection, SerializationConfiguration serializationConfiguration, IEntityReflector entityReflector) : base(connection)
+        public Entities(IConnection connection, SerializationConfiguration serializationConfiguration, IEntityReflector entityReflector)
+            : base(connection)
         {
             Ensure.That(serializationConfiguration, "serializationConfiguration").IsNotNull();
             Ensure.That(entityReflector, "entityReflector").IsNotNull();
 
-            Serializer = new DefaultSerializer(serializationConfiguration);
-            EntityResponseFactory = new EntityResponseFactory(new DefaultResponseMaterializer(serializationConfiguration), Serializer);
-            EntityReflector = entityReflector;
+            Serializer = new EntitySerializer(serializationConfiguration);
+            EntityResponseFactory = new EntityResponseFactory(serializationConfiguration, Serializer);
+            Reflector = entityReflector;
         }
 
         public virtual Task<EntityResponse<T>> GetAsync<T>(string id, string rev = null) where T : class
@@ -126,11 +125,15 @@ namespace MyCouch.Contexts
 
         protected virtual HttpRequestMessage CreateRequest<T>(DeleteEntityCommand<T> cmd) where T : class
         {
-            var id = Reflector.IdMember.GetValueFrom(cmd.Entity);
-            var rev = Reflector.RevMember.GetValueFrom(cmd.Entity);
-            var req = new HttpRequest(HttpMethod.Delete, GenerateRequestUrl(id, rev));
+            var entityId = Reflector.IdMember.GetValueFrom(cmd.Entity);
+            Ensure.That(entityId, "entityId").IsNotNullOrWhiteSpace();
 
-            req.SetIfMatch(rev);
+            var entityRev = Reflector.RevMember.GetValueFrom(cmd.Entity);
+            Ensure.That(entityRev, "entityRev").IsNotNullOrWhiteSpace();
+
+            var req = new HttpRequest(HttpMethod.Delete, GenerateRequestUrl(entityId, entityRev));
+
+            req.SetIfMatch(entityRev);
 
             return req;
         }
