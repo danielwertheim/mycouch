@@ -3,6 +3,7 @@
 //#endif
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using EnsureThat;
 using MyCouch.EntitySchemes;
 using MyCouch.Responses;
@@ -29,14 +30,13 @@ namespace MyCouch.Serialization
 
         protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
         {
-//#if !NETFX_CORE
+#if !NETFX_CORE
             if (type == typeof(BulkResponse.Row) || typeof (QueryResponseRow).IsAssignableFrom(type))
                 return base.CreateProperties(type, memberSerialization);
-//#else
-//            //TODO: Ensure perf for GetTypeInfo etc in WinRT
-//            if (type == typeof(BulkResponse.Row) || (type.GetTypeInfo().IsGenericType && typeof(ViewQueryResponse<>.Row) == type.GetGenericTypeDefinition()))
-//                return base.CreateProperties(type, memberSerialization);
-//#endif
+#else
+            if (type == typeof(BulkResponse.Row) || QueryResponseRow.TypeInfo.IsAssignableFrom(type.GetTypeInfo()))
+                return base.CreateProperties(type, memberSerialization);
+#endif
             var props = base.CreateProperties(type, memberSerialization);
             int? idRank = null, revRank = null;
             JsonProperty id = null, rev = null;

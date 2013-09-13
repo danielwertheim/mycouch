@@ -17,8 +17,10 @@ namespace MyCouch
             : base(message, innerExceptions)
         { }
 
+#if !NETFX_CORE
         protected MyCouchException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         { }
+#endif
     }
 }

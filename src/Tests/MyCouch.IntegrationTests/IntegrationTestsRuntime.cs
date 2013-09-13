@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
-using MyCouch.Cloudant;
 using Newtonsoft.Json;
 
 namespace MyCouch.IntegrationTests
@@ -10,28 +9,17 @@ namespace MyCouch.IntegrationTests
     {
         private const string TestEnvironmentsBaseUrl = "http://localhost:8991/testenvironments/";
         private static readonly TestEnvironment LocalEnvironment;
-        private static readonly TestEnvironment CloudantEnvironment;
 
         static IntegrationTestsRuntime()
         {
             using (var c = new HttpClient())
             {
                 LocalEnvironment = GetTestEnvironment(c, "local");
-                CloudantEnvironment = GetTestEnvironment(c, "cloudant");
             }
 
             if (LocalEnvironment != null)
             {
                 using (var client = CreateClient())
-                {
-                    //client.Database.PutAsync().Wait();
-                    client.ClearAllDocuments();
-                }
-            }
-
-            if (CloudantEnvironment != null)
-            {
-                using (var client = CreateCloudantClient())
                 {
                     //client.Database.PutAsync().Wait();
                     client.ClearAllDocuments();
@@ -62,19 +50,6 @@ namespace MyCouch.IntegrationTests
                 .SetBasicCredentials(cfg.User, cfg.Password);
 
             return new Client(uriBuilder.Build());
-        }
-
-        internal static ICloudantClient CreateCloudantClient()
-        {
-            if (LocalEnvironment == null)
-                throw new Exception("Can not create client for Cloudant test environmet. Missing configuration.");
-
-            var cfg = CloudantEnvironment.Client;
-            var uriBuilder = new MyCouchUriBuilder(cfg.ServerUrl)
-                .SetDbName(LocalEnvironment.Client.DbName)
-                .SetBasicCredentials(cfg.User, cfg.Password);
-
-            return new CloudantClient(uriBuilder.Build());
         }
 
         private class TestEnvironment

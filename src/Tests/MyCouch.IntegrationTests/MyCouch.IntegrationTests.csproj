@@ -59,21 +59,13 @@
     <Compile Include="ClientTests\EntitiesTests.cs" />
     <Compile Include="ClientTests\ViewsTests.cs" />
     <Compile Include="ClientTests\ClientTestsOf.cs" />
-    <Compile Include="CloudantTests\CloudantTestsOf.cs" />
-    <Compile Include="CloudantTests\SearchTests.cs" />
     <Compile Include="IntegrationTestsRuntime.cs" />
     <Compile Include="IPreserveStatePerFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestFixtures\ClientTestsFixture.cs" />
-    <Compile Include="TestFixtures\CloudantTestsFixture.cs" />
-    <Compile Include="TestFixtures\SearchFixture.cs" />
     <Compile Include="TestFixtures\ViewsFixture.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Projects\MyCouch.Cloudant\MyCouch.Cloudant.csproj">
-      <Project>{7029ef6d-37d0-4971-b993-94f97c4e0e4d}</Project>
-      <Name>MyCouch.Cloudant</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Projects\MyCouch\MyCouch.csproj">
       <Project>{f721c24f-162e-4505-9d5e-f7565ca16886}</Project>
       <Name>MyCouch</Name>
