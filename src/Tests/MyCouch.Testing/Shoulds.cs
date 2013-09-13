@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
 using FluentAssertions;
+using MyCouch.Responses;
 
 namespace MyCouch.Testing
 {
@@ -14,7 +15,7 @@ namespace MyCouch.Testing
             return new ViewQueryResponseAssertions(response);
         }
 
-        public static ViewQueryResponseAssertions<T> Should<T>(this ViewQueryResponse<T> response) where T : class
+        public static ViewQueryResponseAssertions<T> Should<T>(this ViewQueryResponse<T> response)
         {
             return new ViewQueryResponseAssertions<T>(response);
         }
@@ -52,14 +53,34 @@ namespace MyCouch.Testing
 
         public void BeSuccessfulGet(string[] expected)
         {
-            BeSuccessfulGet(expected.Length);
+            BeSuccessful(HttpMethod.Get, expected);
+        }
+
+        public void BeSuccessfulPost(string[] expected)
+        {
+            BeSuccessful(HttpMethod.Post, expected);
+        }
+
+        private void BeSuccessful(HttpMethod method, string[] expected)
+        {
+            BeSuccessful(method, expected.Length);
             for (var i = 0; i < Response.RowCount; i++)
                 CustomAsserts.AreValueEqual(expected[i], Response.Rows[i].Value);
         }
 
         public void BeSuccessfulGet(int numOfRows)
         {
-            Response.RequestMethod.Should().Be(HttpMethod.Get);
+            BeSuccessful(HttpMethod.Get, numOfRows);
+        }
+
+        public void BeSuccessfulPost(int numOfRows)
+        {
+            BeSuccessful(HttpMethod.Get, numOfRows);
+        }
+
+        private void BeSuccessful(HttpMethod method, int numOfRows)
+        {
+            Response.RequestMethod.Should().Be(method);
             Response.IsSuccess.Should().BeTrue();
             Response.StatusCode.Should().Be(HttpStatusCode.OK);
             Response.Error.Should().BeNull();
@@ -74,7 +95,7 @@ namespace MyCouch.Testing
         }
     }
 
-    public class ViewQueryResponseAssertions<T> where T : class
+    public class ViewQueryResponseAssertions<T>
     {
         protected readonly ViewQueryResponse<T> Response;
 
@@ -86,14 +107,34 @@ namespace MyCouch.Testing
 
         public void BeSuccessfulGet(T[] expected)
         {
-            BeSuccessfulGet(expected.Length);
+            BeSuccessful(HttpMethod.Get, expected);
+        }
+
+        public void BeSuccessfulPost(T[] expected)
+        {
+            BeSuccessful(HttpMethod.Post, expected);
+        }
+
+        private void BeSuccessful(HttpMethod method, T[] expected)
+        {
+            BeSuccessful(method, expected.Length);
             for (var i = 0; i < Response.RowCount; i++)
                 CustomAsserts.AreValueEqual(expected[i], Response.Rows[i].Value);
         }
 
+        public void BeSuccessfulPost(int numOfRows)
+        {
+            BeSuccessful(HttpMethod.Post, numOfRows);
+        }
+
         public void BeSuccessfulGet(int numOfRows)
         {
-            Response.RequestMethod.Should().Be(HttpMethod.Get);
+            BeSuccessful(HttpMethod.Get, numOfRows);
+        }
+
+        private void BeSuccessful(HttpMethod method, int numOfRows)
+        {
+            Response.RequestMethod.Should().Be(method);
             Response.IsSuccess.Should().BeTrue();
             Response.StatusCode.Should().Be(HttpStatusCode.OK);
             Response.Error.Should().BeNull();

@@ -3,6 +3,7 @@ using MyCouch.EntitySchemes;
 using MyCouch.EntitySchemes.Reflections;
 using MyCouch.Serialization;
 using MyCouch.Testing;
+using MyCouch.Testing.TestData;
 using Xunit;
 
 namespace MyCouch.UnitTests.Serialization
@@ -12,7 +13,7 @@ namespace MyCouch.UnitTests.Serialization
         public EntitySerializationWithLambdaPropertyFactoryTests()
         {
             var entityReflector = new EntityReflector(new LambdaDynamicPropertyFactory());
-            SUT = new DefaultSerializer(CreateSerializationConfiguration(entityReflector));
+            SUT = new EntitySerializer(CreateSerializationConfiguration(entityReflector));
         }
     }
 #if !NETFX_CORE
@@ -21,7 +22,7 @@ namespace MyCouch.UnitTests.Serialization
         public EntitySerializationWithIlPropertyFactoryTests()
         {
             var entityReflector = new EntityReflector(new IlDynamicPropertyFactory());
-            SUT = new DefaultSerializer(CreateSerializationConfiguration(entityReflector));
+            SUT = new EntitySerializer(CreateSerializationConfiguration(entityReflector));
         }
     }
 #endif
@@ -30,11 +31,9 @@ namespace MyCouch.UnitTests.Serialization
     {
         protected SerializationConfiguration CreateSerializationConfiguration(EntityReflector entityReflector)
         {
-            return new SerializationConfiguration(new EntitySerializationContractResolver(entityReflector))
-            {
-                WriterFactory = (t, w) => new EntityJsonWriter(t, w)
-            };
+            return new SerializationConfiguration(new EntityContractResolver(entityReflector));
         }
+
         [Fact]
         public void When_deserializing_to_entity_with_Id_It_should_map_from__id()
         {
@@ -82,7 +81,7 @@ namespace MyCouch.UnitTests.Serialization
         [Fact]
         public void When_serializing_entity_It_will_inject_document_header_in_json()
         {
-            var model = TestData.Artists.CreateArtist();
+            var model = ClientTestData.Artists.CreateArtist();
 
             var json = SUT.Serialize(model);
 

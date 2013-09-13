@@ -5,13 +5,13 @@ using Xunit;
 namespace MyCouch.IntegrationTests.ClientTests
 {
     public abstract class ClientTestsOf<T>
-        : TestsOf<T>, IUseFixture<ClientFixture> where T : class
+        : TestsOf<T>, IUseFixture<ClientTestsFixture> where T : class
     {
         protected IClient Client { get; set; }
 
         protected abstract void OnTestInit();
 
-        public void SetFixture(ClientFixture data)
+        public void SetFixture(ClientTestsFixture data)
         {
             Client = data.Client;
             OnTestInit();

@@ -9,7 +9,7 @@ namespace MyCouch.Testing
 {
     public static class CustomAsserts
     {
-        public static void AreValueEqual<T>(T expected, T actual) where T : class
+        public static void AreValueEqual<T>(T expected, T actual)
         {
             AreValueEqual(typeof(T), expected, actual);
         }

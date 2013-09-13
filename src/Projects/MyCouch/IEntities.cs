@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using MyCouch.Commands;
 using MyCouch.EntitySchemes;
+using MyCouch.Responses;
 using MyCouch.Serialization;
 
 namespace MyCouch

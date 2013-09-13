@@ -102,11 +102,11 @@
     <Compile Include="..\MyCouch.UnitTests\Serialization\EntitySerializationTests.cs">
       <Link>Serialization\EntitySerializationTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.UnitTests\Serialization\ResponseMaterializerTests.cs">
-      <Link>Serialization\ResponseMaterializerTests.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.UnitTests\Serialization\SerializerTests.cs">
       <Link>Serialization\SerializerTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.UnitTests\Serialization\ViewQueryResponseRowsDeserializerTestsTests.cs">
+      <Link>Serialization\ViewQueryResponseRowsDeserializerTestsTests.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.UnitTests\UnitTestsOf.cs">
       <Link>UnitTestsOf.cs</Link>

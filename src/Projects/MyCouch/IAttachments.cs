@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using MyCouch.Commands;
+using MyCouch.Responses;
 
 namespace MyCouch
 {

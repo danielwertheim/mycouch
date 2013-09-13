@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using FluentAssertions;
 using MyCouch.Testing;
+using MyCouch.Testing.TestData;
 using Xunit;
 
 namespace MyCouch.IntegrationTests.ClientTests
@@ -24,7 +24,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         [Fact]
         public void When_exists_using_not_matching_rev_The_response_is_empty()
         {
-            var postResponse = SUT.PostAsync(TestData.Artists.Artist1Json).Result;
+            var postResponse = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
 
             var response = SUT.ExistsAsync(postResponse.Id, "1-795258d03c3bdb58fffc409e153c5d45").Result;
 
@@ -34,7 +34,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         [Fact]
         public void When_exists_using_matching_id_The_response_is_ok()
         {
-            var postResponse = SUT.PostAsync(TestData.Artists.Artist1Json).Result;
+            var postResponse = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
 
             var response = SUT.ExistsAsync(postResponse.Id).Result;
 
@@ -44,7 +44,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         [Fact]
         public void When_exists_using_matching_id_and_rev_The_response_is_ok()
         {
-            var postResponse = SUT.PostAsync(TestData.Artists.Artist1Json).Result;
+            var postResponse = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
 
             var response = SUT.ExistsAsync(postResponse.Id, postResponse.Rev).Result;
 
@@ -54,54 +54,54 @@ namespace MyCouch.IntegrationTests.ClientTests
         [Fact]
         public void When_post_of_new_document_The_document_is_persisted()
         {
-            var response = SUT.PostAsync(TestData.Artists.Artist1Json).Result;
+            var response = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
 
-            response.Should().BeSuccessfulPost(TestData.Artists.Artist1Id);
+            response.Should().BeSuccessfulPost(ClientTestData.Artists.Artist1Id);
         }
 
         [Fact]
         public void When_put_of_new_document_The_document_is_replaced()
         {
-            var response = SUT.PutAsync(TestData.Artists.Artist1Id, TestData.Artists.Artist1Json).Result;
+            var response = SUT.PutAsync(ClientTestData.Artists.Artist1Id, ClientTestData.Artists.Artist1Json).Result;
 
-            response.Should().BeSuccessfulPutOfNew(TestData.Artists.Artist1Id);
+            response.Should().BeSuccessfulPutOfNew(ClientTestData.Artists.Artist1Id);
         }
         
         [Fact]
         public void When_put_of_existing_document_The_document_is_replaced()
         {
-            var postResponse = SUT.PostAsync(TestData.Artists.Artist1Json).Result;
+            var postResponse = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
             var getResponse = SUT.GetAsync(postResponse.Id).Result;
 
             var response = SUT.PutAsync(getResponse.Id, getResponse.Content).Result;
 
-            response.Should().BeSuccessfulPut(TestData.Artists.Artist1Id);
+            response.Should().BeSuccessfulPut(ClientTestData.Artists.Artist1Id);
         }
 
         [Fact]
         public void When_put_of_existing_document_Using_wrong_rev_A_conflict_is_detected()
         {
-            var postResponse = SUT.PostAsync(TestData.Artists.Artist1Json).Result;
+            var postResponse = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
 
-            var response = SUT.PutAsync(postResponse.Id, "2-179d36174ee192594c63b8e8d8f09345", TestData.Artists.Artist1Json).Result;
+            var response = SUT.PutAsync(postResponse.Id, "2-179d36174ee192594c63b8e8d8f09345", ClientTestData.Artists.Artist1Json).Result;
 
-            response.Should().Be409Put(TestData.Artists.Artist1Id);
+            response.Should().Be409Put(ClientTestData.Artists.Artist1Id);
         }
 
         [Fact]
         public void When_delete_of_existing_document_Using_id_and_rev_The_document_is_deleted()
         {
-            var r = SUT.PostAsync(TestData.Artists.Artist1Json).Result;
+            var r = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
 
             var response = SUT.DeleteAsync(r.Id, r.Rev).Result;
 
-            response.Should().BeSuccessfulDelete(TestData.Artists.Artist1Id);
+            response.Should().BeSuccessfulDelete(ClientTestData.Artists.Artist1Id);
         }
 
         [Fact]
         public void When_copying_using_srcId_The_document_is_copied()
         {
-            var artistPost = SUT.PostAsync(TestData.Artists.Artist1Json).Result;
+            var artistPost = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
             var srcArtist = SUT.GetAsync(artistPost.Id).Result;
             var newCopyId = "copyTest:1";
 
@@ -118,7 +118,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         [Fact]
         public void When_copying_using_srcId_and_srcRev_The_document_is_copied()
         {
-            var artistPost1 = SUT.PostAsync(TestData.Artists.Artist1Json).Result;
+            var artistPost1 = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
             var srcArtist = SUT.GetAsync(artistPost1.Id).Result;
             const string newCopyId = "copyTest:1";
 
@@ -137,8 +137,8 @@ namespace MyCouch.IntegrationTests.ClientTests
         [Fact]
         public void When_replacing_using_srcId_The_document_is_replacing_target()
         {
-            var artist1Post = SUT.PostAsync(TestData.Artists.Artist1Json).Result;
-            var artist2Post = SUT.PostAsync(TestData.Artists.Artist2Json).Result;
+            var artist1Post = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
+            var artist2Post = SUT.PostAsync(ClientTestData.Artists.Artist2Json).Result;
             var srcArtist1 = SUT.GetAsync(artist1Post.Id).Result;
 
             var replaceResponse = SUT.ReplaceAsync(artist1Post.Id, artist2Post.Id, artist2Post.Rev).Result;
@@ -154,8 +154,8 @@ namespace MyCouch.IntegrationTests.ClientTests
         [Fact]
         public void When_replacing_using_srcId_and_srcRev_The_document_is_replacing_target()
         {
-            var artist1Post = SUT.PostAsync(TestData.Artists.Artist1Json).Result;
-            var artist2Post = SUT.PostAsync(TestData.Artists.Artist2Json).Result;
+            var artist1Post = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
+            var artist2Post = SUT.PostAsync(ClientTestData.Artists.Artist2Json).Result;
             var srcArtist1 = SUT.GetAsync(artist1Post.Id).Result;
 
             var replaceResponse = SUT.ReplaceAsync(artist1Post.Id, artist1Post.Rev, artist2Post.Id, artist2Post.Rev).Result;
@@ -171,19 +171,17 @@ namespace MyCouch.IntegrationTests.ClientTests
         [Fact]
         public void Flow_tests()
         {
-            var post1 = SUT.PostAsync(TestData.Artists.Artist1Json);
-            var post2 = SUT.PostAsync(TestData.Artists.Artist2Json);
+            var post1 = SUT.PostAsync(ClientTestData.Artists.Artist1Json);
+            var post2 = SUT.PostAsync(ClientTestData.Artists.Artist2Json);
 
-            post1.ContinueWith(t => t.Result.Should().BeSuccessfulPost(TestData.Artists.Artist1Id));
-            post2.ContinueWith(t => t.Result.Should().BeSuccessfulPost(TestData.Artists.Artist2Id));
-            Task.WaitAll(post1, post2);
+            post1.Result.Should().BeSuccessfulPost(ClientTestData.Artists.Artist1Id);
+            post2.Result.Should().BeSuccessfulPost(ClientTestData.Artists.Artist2Id);
 
             var get1 = SUT.GetAsync(post1.Result.Id);
             var get2 = SUT.GetAsync(post2.Result.Id);
 
-            get1.ContinueWith(t => t.Result.Should().BeSuccessfulGet(post1.Result.Id));
-            get2.ContinueWith(t => t.Result.Should().BeSuccessfulGet(post2.Result.Id));
-            Task.WaitAll(get1, get2);
+            get1.Result.Should().BeSuccessfulGet(post1.Result.Id);
+            get2.Result.Should().BeSuccessfulGet(post2.Result.Id);
 
             var kv1 = Client.Serializer.Deserialize<IDictionary<string, dynamic>>(get1.Result.Content);
             kv1["year"] = 2000;
@@ -195,16 +193,14 @@ namespace MyCouch.IntegrationTests.ClientTests
             var docUpd2 = Client.Serializer.Serialize(kv2);
             var put2 = SUT.PutAsync(get2.Result.Id, docUpd2);
 
-            put1.ContinueWith(t => t.Result.Should().BeSuccessfulPut(get1.Result.Id));
-            put2.ContinueWith(t => t.Result.Should().BeSuccessfulPut(get2.Result.Id));
-            Task.WaitAll(put1, put2);
+            put1.Result.Should().BeSuccessfulPut(get1.Result.Id);
+            put2.Result.Should().BeSuccessfulPut(get2.Result.Id);
 
             var delete1 = SUT.DeleteAsync(put1.Result.Id, put1.Result.Rev);
             var delete2 = SUT.DeleteAsync(put2.Result.Id, put2.Result.Rev);
 
-            delete1.ContinueWith(t => t.Result.Should().BeSuccessfulDelete(put1.Result.Id));
-            delete2.ContinueWith(t => t.Result.Should().BeSuccessfulDelete(put2.Result.Id));
-            Task.WaitAll(delete1, delete2);
+            delete1.Result.Should().BeSuccessfulDelete(put1.Result.Id);
+            delete2.Result.Should().BeSuccessfulDelete(put2.Result.Id);
         }
     }
 }

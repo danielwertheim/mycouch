@@ -7,23 +7,78 @@ namespace MyCouch.Querying
 #if !NETFX_CORE
     [Serializable]
 #endif
-    public class ViewQueryOptions : IViewQueryOptions
+    public class ViewQueryOptions
     {
+        /// <summary>
+        /// Allow the results from a stale view to be used.
+        /// </summary>
         public string Stale { get; set; }
+        /// <summary>
+        /// Include the full content of the documents in the return.
+        /// </summary>
         public bool IncludeDocs { get; set; }
+        /// <summary>
+        /// Return the documents in descending by key order.
+        /// </summary>
         public bool Descending { get; set; }
+        /// <summary>
+        /// Return only documents that match the specified key.
+        /// </summary>
         public string Key { get; set; }
+        /// <summary>
+        /// Returns only documents that matches any of the specified keys.
+        /// </summary>
         public string[] Keys { get; set; }
+        /// <summary>
+        /// Indicates if any <see cref="Keys"/> has been specified.
+        /// </summary>
+        public bool HasKeys
+        {
+            get { return Keys != null && Keys.Any(); }
+        }
+        /// <summary>
+        /// Return records starting with the specified key.
+        /// </summary>
         public string StartKey { get; set; }
+        /// <summary>
+        /// Return records starting with the specified document ID.
+        /// </summary>
         public string StartKeyDocId { get; set; }
+        /// <summary>
+        /// Stop returning records when the specified key is reached.
+        /// </summary>
         public string EndKey { get; set; }
+        /// <summary>
+        /// Stop returning records when the specified document ID is reached.
+        /// </summary>
         public string EndKeyDocId { get; set; }
+        /// <summary>
+        /// Specifies whether the specified end key should be included in the result.
+        /// </summary>
         public bool InclusiveEnd { get; set; }
+        /// <summary>
+        /// Skip this number of records before starting to return the results.
+        /// </summary>
         public int Skip { get; set; }
+        /// <summary>
+        /// Limit the number of the returned documents to the specified number.
+        /// </summary>
         public int Limit { get; set; }
+        /// <summary>
+        /// Use the reduction function.
+        /// </summary>
         public bool Reduce { get; set; }
+        /// <summary>
+        /// Include the update sequence in the generated results.
+        /// </summary>
         public bool UpdateSeq { get; set; }
+        /// <summary>
+        /// The group option controls whether the reduce function reduces to a set of distinct keys or to a single result row.
+        /// </summary>
         public bool Group { get; set; }
+        /// <summary>
+        /// Specify the group level to be used.
+        /// </summary>
         public int GroupLevel { get; set; }
 
         public ViewQueryOptions()
@@ -39,80 +94,118 @@ namespace MyCouch.Querying
             Group = false;
         }
 
-        public IEnumerable<KeyValuePair<string, string>> ToKeyValues()
+        /// <summary>
+        /// Returns Keys as compatible JSON document for use e.g.
+        /// with POST of keys against views.
+        /// </summary>
+        /// <returns></returns>
+        public virtual string GetKeysAsJson()
         {
-            if (IncludeDocs)
-                yield return new KeyValuePair<string, string>("include_docs", IncludeDocs.ToString().ToLower());
+            if (Keys == null || !Keys.Any())
+                return "{}";
 
-            if (Descending)
-                yield return new KeyValuePair<string, string>("descending", Descending.ToString().ToLower());
-
-            if(!Reduce)
-                yield return new KeyValuePair<string, string>("reduce", Reduce.ToString().ToLower());
-
-            if (!InclusiveEnd)
-                yield return new KeyValuePair<string, string>("inclusive_end", InclusiveEnd.ToString().ToLower());
-
-            if (UpdateSeq)
-                yield return new KeyValuePair<string, string>("update_seq", UpdateSeq.ToString().ToLower());
-
-            if (Group)
-                yield return new KeyValuePair<string, string>("group", Group.ToString().ToLower());
-
-            if (HasValue(GroupLevel))
-                yield return new KeyValuePair<string, string>("group_level", GroupLevel.ToString());
-
-            if (HasValue(Stale))
-                yield return new KeyValuePair<string, string>("stale", FormatValue(Stale));
-
-            if (HasValue(Key))
-                yield return new KeyValuePair<string, string>("key", FormatValue(Key));
-
-            if (HasValue(Keys))
-                yield return new KeyValuePair<string, string>("keys", FormatValue(Keys));
-
-            if(HasValue(StartKey))
-                yield return new KeyValuePair<string, string>("startkey", FormatValue(StartKey));
-
-            if (HasValue(StartKeyDocId))
-                yield return new KeyValuePair<string, string>("startkey_docid", FormatValue(StartKeyDocId));
-            
-            if(HasValue(EndKey))
-                yield return new KeyValuePair<string, string>("endkey", FormatValue(EndKey));
-
-            if (HasValue(EndKeyDocId))
-                yield return new KeyValuePair<string, string>("endkey_docid", FormatValue(EndKeyDocId));
-            
-            if(HasValue(Limit))
-                yield return new KeyValuePair<string, string>("limit", Limit.ToString());
-            
-            if(HasValue(Skip))
-                yield return new KeyValuePair<string, string>("skip", Skip.ToString());
+            return string.Format("{{\"keys\":[{0}]}}",
+                string.Join(",", Keys.Select(k => string.Format("\"{0}\"", k))));
         }
 
-        private static bool HasValue(string value)
+        public virtual IDictionary<string, string> ToKeyValues()
+        {
+            var kvs = new Dictionary<string, string>();
+
+            if (IncludeDocs)
+                kvs.Add(KeyValues.IncludeDocs, IncludeDocs.ToString().ToLower());
+
+            if (Descending)
+                kvs.Add(KeyValues.Descending, Descending.ToString().ToLower());
+
+            if(!Reduce)
+                kvs.Add(KeyValues.Reduce, Reduce.ToString().ToLower());
+
+            if (!InclusiveEnd)
+                kvs.Add(KeyValues.InclusiveEnd, InclusiveEnd.ToString().ToLower());
+
+            if (UpdateSeq)
+                kvs.Add(KeyValues.UpdateSeq, UpdateSeq.ToString().ToLower());
+
+            if (Group)
+                kvs.Add(KeyValues.Group, Group.ToString().ToLower());
+
+            if (HasValue(GroupLevel))
+                kvs.Add(KeyValues.GroupLevel, GroupLevel.ToString(MyCouchRuntime.NumberFormat));
+
+            if (HasValue(Stale))
+                kvs.Add(KeyValues.Stale, FormatValue(Stale));
+
+            if (HasValue(Key))
+                kvs.Add(KeyValues.Key, FormatValue(Key));
+
+            if (HasValue(Keys))
+                kvs.Add(KeyValues.Keys, FormatValue(Keys));
+
+            if(HasValue(StartKey))
+                kvs.Add(KeyValues.StartKey, FormatValue(StartKey));
+
+            if (HasValue(StartKeyDocId))
+                kvs.Add(KeyValues.StartKeyDocId, FormatValue(StartKeyDocId));
+            
+            if(HasValue(EndKey))
+                kvs.Add(KeyValues.EndKey, FormatValue(EndKey));
+
+            if (HasValue(EndKeyDocId))
+                kvs.Add(KeyValues.EndKeyDocId, FormatValue(EndKeyDocId));
+            
+            if(HasValue(Limit))
+                kvs.Add(KeyValues.Limit, Limit.ToString(MyCouchRuntime.NumberFormat));
+            
+            if(HasValue(Skip))
+                kvs.Add(KeyValues.Skip, Skip.ToString(MyCouchRuntime.NumberFormat));
+
+            return kvs;
+        }
+
+        protected virtual bool HasValue(string value)
         {
             return value != null;
         }
 
-        private static bool HasValue(IEnumerable<string> value)
+        protected virtual bool HasValue(IEnumerable<string> value)
         {
             return value != null && value.Any();
         }
 
-        private static bool HasValue(int value)
+        protected virtual bool HasValue(int value)
         {
             return value > 0;
         }
 
-        private static string FormatValue(string value)
+        protected virtual string FormatValue(string value)
         {
             return string.Format("\"{0}\"", value);
         }
 
-        private static string FormatValue(IEnumerable<string> value)
+        protected virtual string FormatValue(IEnumerable<string> value)
         {
             return string.Format("[{0}]", string.Join(",", value.Select(v => string.Format("\"{0}\"", v))));
+        }
+
+        public static class KeyValues
+        {
+            public const string IncludeDocs = "include_docs";
+            public const string Descending = "descending";
+            public const string Reduce = "reduce";
+            public const string InclusiveEnd = "inclusive_end";
+            public const string UpdateSeq = "update_seq";
+            public const string Group = "group";
+            public const string GroupLevel = "group_level";
+            public const string Stale = "stale";
+            public const string Key = "key";
+            public const string Keys = "keys";
+            public const string StartKey = "startkey";
+            public const string StartKeyDocId = "startkey_docid";
+            public const string EndKey = "endkey";
+            public const string EndKeyDocId = "endkey_docid";
+            public const string Limit = "limit";
+            public const string Skip = "skip";
         }
     }
 }

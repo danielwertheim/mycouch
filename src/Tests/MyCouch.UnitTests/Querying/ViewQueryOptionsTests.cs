@@ -21,6 +21,54 @@ namespace MyCouch.UnitTests.Querying
         }
 
         [Fact]
+        public void When_keys_are_null_It_returns_false_for_HasKeys()
+        {
+            SUT.Keys = null;
+
+            SUT.HasKeys.Should().BeFalse();
+        }
+
+        [Fact]
+        public void When_keys_are_empty_It_returns_false_for_HasKeys()
+        {
+            SUT.Keys = new string[0];
+
+            SUT.HasKeys.Should().BeFalse();
+        }
+
+        [Fact]
+        public void When_keys_are_specified_It_returns_true_for_HasKeys()
+        {
+            SUT.Keys = new[] { "fake_key" };
+
+            SUT.HasKeys.Should().BeTrue();
+        }
+
+        [Fact]
+        public void When_keys_are_null_It_returns_json_with_no_keys_member_for_GetKeysAsJson()
+        {
+            SUT.Keys = null;
+
+            SUT.GetKeysAsJson().Should().Be("{}");
+        }
+
+        [Fact]
+        public void When_keys_are_empty_It_returns_json_with_no_keys_member_for_GetKeysAsJson()
+        {
+            SUT.Keys = new string[0];
+
+            SUT.GetKeysAsJson().Should().Be("{}");
+        }
+
+        [Fact]
+        public void When_keys_are_specified_It_returns_json_with_the_keys_for_GetKeysAsJson()
+        {
+            SUT.Keys = new[] { "fake_key1", "fake_key2" };
+
+            SUT.GetKeysAsJson().Should().Be("{\"keys\":[\"fake_key1\",\"fake_key2\"]}");
+        }
+
+        [Fact]
         public void When_configured_It_yields_correct_key_values()
         {
             SUT.Stale = Stale.UpdateAfter;

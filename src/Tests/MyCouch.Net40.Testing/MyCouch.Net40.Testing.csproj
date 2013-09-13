@@ -88,9 +88,6 @@
     <Compile Include="..\MyCouch.Testing\CustomAsserts.cs">
       <Link>CustomAsserts.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Testing\JsonTestData.cs">
-      <Link>JsonTestData.cs</Link>
-    </Compile>
     <Compile Include="..\mycouch.testing\model\Artist.cs">
       <Link>Model\Artist.cs</Link>
     </Compile>
@@ -100,8 +97,11 @@
     <Compile Include="..\MyCouch.Testing\TestConstants.cs">
       <Link>TestConstants.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Testing\TestData.cs">
-      <Link>TestData.cs</Link>
+    <Compile Include="..\MyCouch.Testing\TestData\ClientTestData.cs">
+      <Link>TestData\ClientTestData.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Testing\TestData\JsonTestData.cs">
+      <Link>TestData\JsonTestData.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Testing\TestsOf.cs">
       <Link>TestsOf.cs</Link>
@@ -118,12 +118,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\mycouch.testing\jsontestdatafiles\ViewQueryAlbums.json">
-      <Link>JsonTestDataFiles\ViewQueryAlbums.json</Link>
+    <Content Include="..\MyCouch.Testing\JsonTestDataFiles\ViewQueryAlbumRows.json">
+      <Link>JsonTestDataFiles\ViewQueryAlbumRows.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\mycouch.testing\jsontestdatafiles\ViewQueryAllDocsResult.json">
-      <Link>JsonTestDataFiles\ViewQueryAllDocsResult.json</Link>
+    <Content Include="..\MyCouch.Testing\JsonTestDataFiles\ViewQueryAllDocRows.json">
+      <Link>JsonTestDataFiles\ViewQueryAllDocRows.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />

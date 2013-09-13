@@ -1,0 +1,6 @@
+{"Client":{
+    "ServerUrl":"http://localhost:5984",
+    "DbName":"mycouchtests",
+    "User":"mycouchtester",
+    "Password":"p@ssword"}
+}
