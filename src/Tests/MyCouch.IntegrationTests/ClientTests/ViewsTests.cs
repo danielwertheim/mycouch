@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Runtime.CompilerServices;
 using FluentAssertions;
 using MyCouch.IntegrationTests.TestFixtures;
 using MyCouch.Testing;
