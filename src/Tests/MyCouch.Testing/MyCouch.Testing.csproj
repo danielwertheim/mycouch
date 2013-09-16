@@ -54,6 +54,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="CustomAsserts.cs" />
+    <Compile Include="Model\Album.cs" />
     <Compile Include="TestData\JsonTestData.cs" />
     <Compile Include="Model\Artist.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
