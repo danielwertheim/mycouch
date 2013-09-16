@@ -99,6 +99,30 @@ namespace MyCouch.UnitTests.Schemes
             SUT.GetValueFrom(model).Should().Be(model._Id);
         }
 
+        [Fact]
+        public void When__id_is_defined_in_base_It_can_extract_the_id()
+        {
+            var model = new ModelInheritanceLowerCasedIdChild { _id = "ModelInheritanceLowerCasedIdChild:_id:1" };
+
+            SUT.GetValueFrom(model).Should().Be(model._id);
+        }
+
+        [Fact]
+        public void When__Id_is_defined_in_base_It_can_extract_the_id()
+        {
+            var model = new ModelInheritanceProperCasedIdChild { _Id = "ModelInheritanceProperCasedIdChild:_Id:1" };
+
+            SUT.GetValueFrom(model).Should().Be(model._Id);
+        }
+
+        [Fact]
+        public void When_DocumentId_is_defined_in_base_It_can_extract_the_id()
+        {
+            var model = new ModelInheritanceDocumentIdChild { DocumentId = "ModelInheritanceDocumentIdChild:DocumentId:1" };
+
+            SUT.GetValueFrom(model).Should().Be(model.DocumentId);
+        }
+
         private class ModelForMemberRanking
         {
             public string Id { get; set; }
@@ -132,6 +156,33 @@ namespace MyCouch.UnitTests.Schemes
         {
             public string _Id { get; set; }
             public string ModelFiveId { get; set; }
+        }
+
+        private class ModelInheritanceLowerCasedIdBase
+        {
+            public string _id { get; set; }
+        }
+
+        private class ModelInheritanceProperCasedIdBase
+        {
+            public string _Id { get; set; }
+        }
+
+        private class ModelInheritanceDocumentIdBase
+        {
+            public string DocumentId { get; set; }
+        }
+
+        private class ModelInheritanceLowerCasedIdChild : ModelInheritanceLowerCasedIdBase
+        {
+        }
+
+        private class ModelInheritanceProperCasedIdChild : ModelInheritanceProperCasedIdBase
+        {
+        }
+
+        private class ModelInheritanceDocumentIdChild : ModelInheritanceDocumentIdBase
+        {
         }
     }
 }
