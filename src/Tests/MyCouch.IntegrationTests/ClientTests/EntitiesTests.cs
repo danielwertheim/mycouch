@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using MyCouch.Testing;
 using MyCouch.Testing.Model;
 using MyCouch.Testing.TestData;
@@ -15,7 +14,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         }
 
         [Fact]
-        public void When_post_of_new_document_Using_an_entity_The_document_is_persisted()
+        public void When_post_of_a_new_entity_Then_the_document_is_created()
         {
             var artist = ClientTestData.Artists.CreateArtist();
             var initialId = artist.ArtistId;
@@ -26,7 +25,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         }
 
         [Fact]
-        public void When_put_of_new_document_Using_an_entity_The_document_is_replaced()
+        public void When_put_of_a_new_entity_Then_the_document_is_created()
         {
             var artist = ClientTestData.Artists.CreateArtist();
             var initialId = artist.ArtistId;
@@ -37,7 +36,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         }
 
         [Fact]
-        public void When_put_of_existing_document_Using_an_entity_The_document_is_replaced()
+        public void When_put_of_an_existing_entity_Then_the_document_is_replaced()
         {
             var artist = ClientTestData.Artists.CreateArtist();
             var initialId = artist.ArtistId;
@@ -49,7 +48,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         }
 
         [Fact]
-        public void When_put_of_existing_document_Using_wrong_rev_A_conflict_is_detected()
+        public void When_put_of_an_existing_entity_Using_wrong_rev_Then_a_conflict_is_detected()
         {
             var postResponse = SUT.PostAsync(ClientTestData.Artists.Artist1).Result;
 
@@ -60,7 +59,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         }
 
         [Fact]
-        public void When_delete_of_existing_document_Using_an_entity_The_document_is_deleted()
+        public void When_delete_of_an_existing_entity_Then_the_document_is_deleted()
         {
             var artist = ClientTestData.Artists.CreateArtist();
             var initialId = artist.ArtistId;
