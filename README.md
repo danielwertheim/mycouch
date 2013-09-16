@@ -23,9 +23,12 @@ For the script to work, you need to have [the NuGet command line](http://nuget.c
 ## A word about the integration tests ##
 They are written using xUnit. To get started you need to create a database `mycouchtests` and one user `mycouchtester` with password `p@ssword`. The user also must be allowed to create views in the database.
 
-You can configure your own connection in the class: `IntegrationTestsRuntime`.
-
 **Please note**, that if you run the tests using the `xUnit plugin` for `ReSharper` or using the `xUnit console`, you will get a couple of failing UnitTests for the Windows store project. This is a **bug with xUnit**. It does not load and execute the Windows store test project in its own app-container as it does when you execute them via Visual Studios test explorer.
+
+### Test environments ###
+There is an external dependency for getting up and running with the integration tests (not the unit tests). In the repo, there's a folder in the root named `env`. In there there's a [ScriptCS](http://scriptcs.net) script `server.csx`. It will start a NancyFX web server that serves the integration tests with test environment settings.
+
+The first time you set this up, ensure you have ScriptCS installed and then in the `env` folder just type: `scriptcs -install scriptcs.nancy`. When done, delete the generated `pacakges.config` file and just run the `start.bat` file. The actual configuration is specified in JSON-files under `env\data\[testenvironment].json`.
 
 ## How-to Contribute ##
 This is described in the wiki, under: ["How-to Contribute"](https://github.com/danielwertheim/mycouch/wiki/how-to-contribute).
