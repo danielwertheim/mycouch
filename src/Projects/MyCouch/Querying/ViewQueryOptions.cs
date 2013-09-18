@@ -101,7 +101,7 @@ namespace MyCouch.Querying
         /// <returns></returns>
         public virtual string GetKeysAsJson()
         {
-            if (Keys == null || !Keys.Any())
+            if (!HasKeys)
                 return "{}";
 
             return string.Format("{{\"keys\":[{0}]}}",
