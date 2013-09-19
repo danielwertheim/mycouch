@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using MyCouch.Extensions;
 
 namespace MyCouch.Querying
 {
@@ -24,7 +25,7 @@ namespace MyCouch.Querying
         /// <summary>
         /// Return only documents that match the specified key.
         /// </summary>
-        public string Key { get; set; }
+        public object Key { get; set; }
         /// <summary>
         /// Returns only documents that matches any of the specified keys.
         /// </summary>
@@ -150,6 +151,11 @@ namespace MyCouch.Querying
             return kvs;
         }
 
+        protected virtual bool HasValue(object value)
+        {
+            return value != null;
+        }
+
         protected virtual bool HasValue(string value)
         {
             return value != null;
@@ -158,6 +164,27 @@ namespace MyCouch.Querying
         protected virtual bool HasValue(IEnumerable<string> value)
         {
             return value != null && value.Any();
+        }
+
+        protected virtual string FormatValue(object value)
+        {
+            if (value is string)
+                return FormatValue(value as string);
+
+            var conv = value as IConvertible;
+            if (conv == null)
+                return value.ToString();
+
+            if (value.IsNumeric())
+                return conv.ToString(MyCouchRuntime.NumberFormat);
+
+            if (value.IsDateTime())
+                return conv.To<DateTime>().ToString(MyCouchRuntime.DateTimeFormatPattern);
+
+            if (value.IsBool())
+                return conv.ToString(MyCouchRuntime.GenericFormat).ToLower();
+
+            return value.ToString();
         }
 
         protected virtual string FormatValue(string value)

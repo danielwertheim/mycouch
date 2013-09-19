@@ -130,13 +130,53 @@ namespace MyCouch.UnitTests.Querying
         }
 
         [Fact]
-        public void When_Key_is_assigned_It_gets_included_in_the_key_values()
+        public void When_Key_of_string_is_assigned_It_gets_included_in_the_key_values()
         {
             SUT.Key = "Key1";
             SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Key].Should().Be("\"Key1\"");
 
             SUT.Key = "Key2";
             SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Key].Should().Be("\"Key2\"");
+        }
+
+        [Fact]
+        public void When_Key_of_int_is_assigned_It_gets_included_in_the_key_values()
+        {
+            SUT.Key = 1;
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Key].Should().Be("1");
+
+            SUT.Key = 2;
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Key].Should().Be("2");
+        }
+
+        [Fact]
+        public void When_Key_of_double_is_assigned_It_gets_included_in_the_key_values()
+        {
+            SUT.Key = 3.14;
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Key].Should().Be("3.14");
+
+            SUT.Key = 1.33;
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Key].Should().Be("1.33");
+        }
+
+        [Fact]
+        public void When_Key_of_bool_is_assigned_It_gets_included_in_the_key_values()
+        {
+            SUT.Key = true;
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Key].Should().Be("true");
+
+            SUT.Key = false;
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Key].Should().Be("false");
+        }
+
+        [Fact]
+        public void When_Key_of_datetime_is_assigned_It_gets_included_in_the_key_values()
+        {
+            SUT.Key = new DateTime(2008, 07, 17, 09, 21, 30, 50);
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Key].Should().Be("2008-07-17 09:21:30");
+
+            SUT.Key = new DateTime(2011, 06, 02, 22, 41, 40, 45);
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Key].Should().Be("2011-06-02 22:41:40");
         }
 
         [Fact]
