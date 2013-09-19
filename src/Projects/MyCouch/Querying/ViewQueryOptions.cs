@@ -48,7 +48,7 @@ namespace MyCouch.Querying
         /// <summary>
         /// Stop returning records when the specified key is reached.
         /// </summary>
-        public string EndKey { get; set; }
+        public object EndKey { get; set; }
         /// <summary>
         /// Stop returning records when the specified document ID is reached.
         /// </summary>

@@ -254,13 +254,53 @@ namespace MyCouch.UnitTests.Querying
         }
 
         [Fact]
-        public void When_EndKey_is_assigned_It_gets_included_in_the_key_values()
+        public void When_EndKey_of_string_is_assigned_It_gets_included_in_the_key_values()
         {
-            SUT.EndKey = "My end key 1";
-            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.EndKey].Should().Be("\"My end key 1\"");
+            SUT.EndKey = "Key1";
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.EndKey].Should().Be("\"Key1\"");
 
-            SUT.EndKey = "My end key 2";
-            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.EndKey].Should().Be("\"My end key 2\"");
+            SUT.EndKey = "Key2";
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.EndKey].Should().Be("\"Key2\"");
+        }
+
+        [Fact]
+        public void When_EndKey_of_int_is_assigned_It_gets_included_in_the_key_values()
+        {
+            SUT.EndKey = 1;
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.EndKey].Should().Be("1");
+
+            SUT.EndKey = 2;
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.EndKey].Should().Be("2");
+        }
+
+        [Fact]
+        public void When_EndKey_of_double_is_assigned_It_gets_included_in_the_key_values()
+        {
+            SUT.EndKey = 3.14;
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.EndKey].Should().Be("3.14");
+
+            SUT.EndKey = 1.33;
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.EndKey].Should().Be("1.33");
+        }
+
+        [Fact]
+        public void When_EndKey_of_bool_is_assigned_It_gets_included_in_the_key_values()
+        {
+            SUT.EndKey = true;
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.EndKey].Should().Be("true");
+
+            SUT.EndKey = false;
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.EndKey].Should().Be("false");
+        }
+
+        [Fact]
+        public void When_EndKey_of_datetime_is_assigned_It_gets_included_in_the_key_values()
+        {
+            SUT.EndKey = new DateTime(2008, 07, 17, 09, 21, 30, 50);
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.EndKey].Should().Be("\"2008-07-17 09:21:30\"");
+
+            SUT.EndKey = new DateTime(2011, 06, 02, 22, 41, 40, 45);
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.EndKey].Should().Be("\"2011-06-02 22:41:40\"");
         }
 
         [Fact]
