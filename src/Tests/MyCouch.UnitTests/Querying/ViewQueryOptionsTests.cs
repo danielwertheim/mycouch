@@ -24,7 +24,7 @@ namespace MyCouch.UnitTests.Querying
         [Fact]
         public void When_Keys_are_empty_It_returns_false_for_HasKeys()
         {
-            SUT.Keys = new string[0];
+            SUT.Keys = new object[0];
 
             SUT.HasKeys.Should().BeFalse();
         }
@@ -32,7 +32,7 @@ namespace MyCouch.UnitTests.Querying
         [Fact]
         public void When_Keys_are_specified_It_returns_true_for_HasKeys()
         {
-            SUT.Keys = new[] { "fake_key" };
+            SUT.Keys = new object[] { "fake_key" };
 
             SUT.HasKeys.Should().BeTrue();
         }
@@ -63,7 +63,7 @@ namespace MyCouch.UnitTests.Querying
         [Fact]
         public void When_Keys_are_empty_It_returns_json_with_no_keys_member_for_GetKeysAsJson()
         {
-            SUT.Keys = new string[0];
+            SUT.Keys = new object[0];
 
             SUT.GetKeysAsJsonObject().Should().Be("{}");
         }
@@ -350,7 +350,7 @@ namespace MyCouch.UnitTests.Querying
             SUT.IncludeDocs = true;
             SUT.Descending = true;
             SUT.Key = "Key1";
-            SUT.Keys = new[] { "Key1", "Key2" };
+            SUT.Keys = new object[] { "Key1", "Key2" };
             SUT.StartKey = "My start key";
             SUT.StartKeyDocId = "My start key doc id";
             SUT.EndKey = "My end key";
