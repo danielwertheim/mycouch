@@ -14,14 +14,6 @@ namespace MyCouch.UnitTests.Querying
         }
 
         [Fact]
-        public void When_not_configured_It_yields_no_key_values()
-        {
-            var kvs = SUT.ToJsonKeyValues().ToArray();
-
-            kvs.Length.Should().Be(0);
-        }
-
-        [Fact]
         public void When_Keys_are_null_It_returns_false_for_HasKeys()
         {
             SUT.Keys = null;
@@ -46,6 +38,21 @@ namespace MyCouch.UnitTests.Querying
         }
 
         [Fact]
+        public void When_Keys_are_specified_They_are_included_in_in_the_key_values()
+        {
+            SUT.Keys = new object[] {
+                "fake_key",
+                1,
+                3.14,
+                true,
+                false,
+                new DateTime(2008, 07, 17, 09, 21, 30, 50)
+            };
+
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Keys].Should().Be("[\"fake_key\",1,3.14,true,false,\"2008-07-17 09:21:30\"]");
+        }
+
+        [Fact]
         public void When_Keys_are_null_It_returns_json_with_no_keys_member_for_GetKeysAsJson()
         {
             SUT.Keys = null;
@@ -64,9 +71,16 @@ namespace MyCouch.UnitTests.Querying
         [Fact]
         public void When_Keys_are_specified_It_returns_json_with_the_keys_for_GetKeysAsJson()
         {
-            SUT.Keys = new[] { "fake_key1", "fake_key2" };
+            SUT.Keys = new object[] {
+                "fake_key",
+                1,
+                3.14,
+                true,
+                false,
+                new DateTime(2008, 07, 17, 09, 21, 30, 50)
+            };
 
-            SUT.GetKeysAsJsonObject().Should().Be("{\"keys\":[\"fake_key1\",\"fake_key2\"]}");
+            SUT.GetKeysAsJsonObject().Should().Be("{\"keys\":[\"fake_key\",1,3.14,true,false,\"2008-07-17 09:21:30\"]}");
         }
 
         [Fact]
@@ -173,20 +187,10 @@ namespace MyCouch.UnitTests.Querying
         public void When_Key_of_datetime_is_assigned_It_gets_included_in_the_key_values()
         {
             SUT.Key = new DateTime(2008, 07, 17, 09, 21, 30, 50);
-            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Key].Should().Be("2008-07-17 09:21:30");
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Key].Should().Be("\"2008-07-17 09:21:30\"");
 
             SUT.Key = new DateTime(2011, 06, 02, 22, 41, 40, 45);
-            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Key].Should().Be("2011-06-02 22:41:40");
-        }
-
-        [Fact]
-        public void When_Keys_is_assigned_It_gets_included_in_the_key_values()
-        {
-            SUT.Keys = new[] { "Key1", "Key2" };
-            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Keys].Should().Be("[\"Key1\",\"Key2\"]");
-
-            SUT.Keys = new[] { "Key1", "Key2", "Key3" };
-            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Keys].Should().Be("[\"Key1\",\"Key2\",\"Key3\"]");
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Key].Should().Be("\"2011-06-02 22:41:40\"");
         }
 
         [Fact]
@@ -298,6 +302,14 @@ namespace MyCouch.UnitTests.Querying
             kvs[ViewQueryOptions.KeyValues.UpdateSeq].Should().Be("true");
             kvs[ViewQueryOptions.KeyValues.Group].Should().Be("true");
             kvs[ViewQueryOptions.KeyValues.GroupLevel].Should().Be("3");
+        }
+
+        [Fact]
+        public void When_not_configured_It_yields_no_key_values()
+        {
+            var kvs = SUT.ToJsonKeyValues().ToArray();
+
+            kvs.Length.Should().Be(0);
         }
     }
 }

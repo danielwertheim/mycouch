@@ -29,7 +29,7 @@ namespace MyCouch.Querying
         /// <summary>
         /// Returns only documents that matches any of the specified keys.
         /// </summary>
-        public string[] Keys { get; set; }
+        public object[] Keys { get; set; }
         /// <summary>
         /// Indicates if any <see cref="Keys"/> has been specified.
         /// </summary>
@@ -93,7 +93,7 @@ namespace MyCouch.Querying
                 return "{}";
 
             return string.Format("{{\"keys\":[{0}]}}",
-                string.Join(",", Keys.Select(k => string.Format("\"{0}\"", k))));
+                string.Join(",", Keys.Select(k => FormatValue(k))));
         }
 
         public virtual IDictionary<string, string> ToJsonKeyValues()
@@ -179,7 +179,7 @@ namespace MyCouch.Querying
                 return conv.ToString(MyCouchRuntime.NumberFormat);
 
             if (value.IsDateTime())
-                return conv.To<DateTime>().ToString(MyCouchRuntime.DateTimeFormatPattern);
+                return FormatValue(conv.To<DateTime>().ToString(MyCouchRuntime.DateTimeFormatPattern));
 
             if (value.IsBool())
                 return conv.ToString(MyCouchRuntime.GenericFormat).ToLower();
@@ -192,9 +192,9 @@ namespace MyCouch.Querying
             return string.Format("\"{0}\"", value);
         }
 
-        protected virtual string FormatValue(IEnumerable<string> value)
+        protected virtual string FormatValue(object[] value)
         {
-            return string.Format("[{0}]", string.Join(",", value.Select(v => string.Format("\"{0}\"", v))));
+            return string.Format("[{0}]", string.Join(",", value.Select(v => FormatValue(v))));
         }
 
         public static class KeyValues
