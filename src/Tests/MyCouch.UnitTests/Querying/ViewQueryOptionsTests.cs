@@ -16,7 +16,7 @@ namespace MyCouch.UnitTests.Querying
         [Fact]
         public void When_not_configured_It_yields_no_key_values()
         {
-            var kvs = SUT.ToKeyValues().ToArray();
+            var kvs = SUT.ToJsonKeyValues().ToArray();
 
             kvs.Length.Should().Be(0);
         }
@@ -73,150 +73,150 @@ namespace MyCouch.UnitTests.Querying
         public void When_IncludeDocs_is_assigned_It_gets_included_in_the_key_values()
         {
             SUT.IncludeDocs = true;
-            SUT.ToKeyValues()[ViewQueryOptions.KeyValues.IncludeDocs].Should().Be("true");
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.IncludeDocs].Should().Be("true");
 
             SUT.IncludeDocs = false;
-            SUT.ToKeyValues()[ViewQueryOptions.KeyValues.IncludeDocs].Should().Be("false");
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.IncludeDocs].Should().Be("false");
         }
 
         [Fact]
         public void When_Descending_is_assigned_It_gets_included_in_the_key_values()
         {
             SUT.Descending = true;
-            SUT.ToKeyValues()[ViewQueryOptions.KeyValues.Descending].Should().Be("true");
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Descending].Should().Be("true");
 
             SUT.Descending = false;
-            SUT.ToKeyValues()[ViewQueryOptions.KeyValues.Descending].Should().Be("false");
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Descending].Should().Be("false");
         }
 
         [Fact]
         public void When_InclusiveEnd_is_assigned_It_gets_included_in_the_key_values()
         {
             SUT.InclusiveEnd = true;
-            SUT.ToKeyValues()[ViewQueryOptions.KeyValues.InclusiveEnd].Should().Be("true");
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.InclusiveEnd].Should().Be("true");
 
             SUT.InclusiveEnd = false;
-            SUT.ToKeyValues()[ViewQueryOptions.KeyValues.InclusiveEnd].Should().Be("false");
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.InclusiveEnd].Should().Be("false");
         }
 
         [Fact]
         public void When_Reduce_is_assigned_It_gets_included_in_the_key_values()
         {
             SUT.Reduce = true;
-            SUT.ToKeyValues()[ViewQueryOptions.KeyValues.Reduce].Should().Be("true");
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Reduce].Should().Be("true");
 
             SUT.Reduce = false;
-            SUT.ToKeyValues()[ViewQueryOptions.KeyValues.Reduce].Should().Be("false");
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Reduce].Should().Be("false");
         }
 
         [Fact]
         public void When_UpdateSeq_is_assigned_It_gets_included_in_the_key_values()
         {
             SUT.UpdateSeq = true;
-            SUT.ToKeyValues()[ViewQueryOptions.KeyValues.UpdateSeq].Should().Be("true");
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.UpdateSeq].Should().Be("true");
 
             SUT.UpdateSeq = false;
-            SUT.ToKeyValues()[ViewQueryOptions.KeyValues.UpdateSeq].Should().Be("false");
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.UpdateSeq].Should().Be("false");
         }
 
         [Fact]
         public void When_Group_is_assigned_It_gets_included_in_the_key_values()
         {
             SUT.Group = true;
-            SUT.ToKeyValues()[ViewQueryOptions.KeyValues.Group].Should().Be("true");
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Group].Should().Be("true");
 
             SUT.Group = false;
-            SUT.ToKeyValues()[ViewQueryOptions.KeyValues.Group].Should().Be("false");
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Group].Should().Be("false");
         }
 
         [Fact]
         public void When_Key_is_assigned_It_gets_included_in_the_key_values()
         {
             SUT.Key = "Key1";
-            SUT.ToKeyValues()[ViewQueryOptions.KeyValues.Key].Should().Be("\"Key1\"");
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Key].Should().Be("\"Key1\"");
 
             SUT.Key = "Key2";
-            SUT.ToKeyValues()[ViewQueryOptions.KeyValues.Key].Should().Be("\"Key2\"");
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Key].Should().Be("\"Key2\"");
         }
 
         [Fact]
         public void When_Keys_is_assigned_It_gets_included_in_the_key_values()
         {
             SUT.Keys = new[] { "Key1", "Key2" };
-            SUT.ToKeyValues()[ViewQueryOptions.KeyValues.Keys].Should().Be("[\"Key1\",\"Key2\"]");
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Keys].Should().Be("[\"Key1\",\"Key2\"]");
 
             SUT.Keys = new[] { "Key1", "Key2", "Key3" };
-            SUT.ToKeyValues()[ViewQueryOptions.KeyValues.Keys].Should().Be("[\"Key1\",\"Key2\",\"Key3\"]");
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Keys].Should().Be("[\"Key1\",\"Key2\",\"Key3\"]");
         }
 
         [Fact]
         public void When_StartKey_is_assigned_It_gets_included_in_the_key_values()
         {
             SUT.StartKey = "My start key 1";
-            SUT.ToKeyValues()[ViewQueryOptions.KeyValues.StartKey].Should().Be("\"My start key 1\"");
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.StartKey].Should().Be("\"My start key 1\"");
 
             SUT.StartKey = "My start key 2";
-            SUT.ToKeyValues()[ViewQueryOptions.KeyValues.StartKey].Should().Be("\"My start key 2\"");
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.StartKey].Should().Be("\"My start key 2\"");
         }
 
         [Fact]
         public void When_StartKeyDocId_is_assigned_It_gets_included_in_the_key_values()
         {
             SUT.StartKeyDocId = "My start key doc id 1";
-            SUT.ToKeyValues()[ViewQueryOptions.KeyValues.StartKeyDocId].Should().Be("\"My start key doc id 1\"");
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.StartKeyDocId].Should().Be("\"My start key doc id 1\"");
 
             SUT.StartKeyDocId = "My start key doc id 2";
-            SUT.ToKeyValues()[ViewQueryOptions.KeyValues.StartKeyDocId].Should().Be("\"My start key doc id 2\"");
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.StartKeyDocId].Should().Be("\"My start key doc id 2\"");
         }
 
         [Fact]
         public void When_EndKey_is_assigned_It_gets_included_in_the_key_values()
         {
             SUT.EndKey = "My end key 1";
-            SUT.ToKeyValues()[ViewQueryOptions.KeyValues.EndKey].Should().Be("\"My end key 1\"");
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.EndKey].Should().Be("\"My end key 1\"");
 
             SUT.EndKey = "My end key 2";
-            SUT.ToKeyValues()[ViewQueryOptions.KeyValues.EndKey].Should().Be("\"My end key 2\"");
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.EndKey].Should().Be("\"My end key 2\"");
         }
 
         [Fact]
         public void When_EndKeyDocId_is_assigned_It_gets_included_in_the_key_values()
         {
             SUT.EndKeyDocId = "My end key doc id 1";
-            SUT.ToKeyValues()[ViewQueryOptions.KeyValues.EndKeyDocId].Should().Be("\"My end key doc id 1\"");
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.EndKeyDocId].Should().Be("\"My end key doc id 1\"");
 
             SUT.EndKeyDocId = "My end key doc id 2";
-            SUT.ToKeyValues()[ViewQueryOptions.KeyValues.EndKeyDocId].Should().Be("\"My end key doc id 2\"");
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.EndKeyDocId].Should().Be("\"My end key doc id 2\"");
         }
 
         [Fact]
         public void When_Skip_is_assigned_It_gets_included_in_the_key_values()
         {
             SUT.Skip = 5;
-            SUT.ToKeyValues()[ViewQueryOptions.KeyValues.Skip].Should().Be("5");
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Skip].Should().Be("5");
 
             SUT.Skip = 17;
-            SUT.ToKeyValues()[ViewQueryOptions.KeyValues.Skip].Should().Be("17");
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Skip].Should().Be("17");
         }
 
         [Fact]
         public void When_Limit_is_assigned_It_gets_included_in_the_key_values()
         {
             SUT.Limit = 5;
-            SUT.ToKeyValues()[ViewQueryOptions.KeyValues.Limit].Should().Be("5");
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Limit].Should().Be("5");
 
             SUT.Limit = 17;
-            SUT.ToKeyValues()[ViewQueryOptions.KeyValues.Limit].Should().Be("17");
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Limit].Should().Be("17");
         }
 
         [Fact]
         public void When_GroupLevel_is_assigned_It_gets_included_in_the_key_values()
         {
             SUT.GroupLevel = 1;
-            SUT.ToKeyValues()[ViewQueryOptions.KeyValues.GroupLevel].Should().Be("1");
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.GroupLevel].Should().Be("1");
 
             SUT.GroupLevel = 3;
-            SUT.ToKeyValues()[ViewQueryOptions.KeyValues.GroupLevel].Should().Be("3");
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.GroupLevel].Should().Be("3");
         }
 
         [Fact]
@@ -239,7 +239,7 @@ namespace MyCouch.UnitTests.Querying
             SUT.Group = true;
             SUT.GroupLevel = 3;
 
-            var kvs = SUT.ToKeyValues();
+            var kvs = SUT.ToJsonKeyValues();
 
             kvs.Count.Should().Be(16);
             kvs[ViewQueryOptions.KeyValues.Stale].Should().Be("\"update_after\"");

@@ -95,7 +95,7 @@ namespace MyCouch.Querying
                 string.Join(",", Keys.Select(k => string.Format("\"{0}\"", k))));
         }
 
-        public virtual IDictionary<string, string> ToKeyValues()
+        public virtual IDictionary<string, string> ToJsonKeyValues()
         {
             var kvs = new Dictionary<string, string>();
 

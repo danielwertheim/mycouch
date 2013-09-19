@@ -103,7 +103,7 @@ namespace MyCouch.Contexts
 
         protected virtual string GenerateQueryStringParams(ViewQueryOptions options)
         {
-            return string.Join("&", options.ToKeyValues()
+            return string.Join("&", options.ToJsonKeyValues()
                 .Where(kv => kv.Key != ViewQueryOptions.KeyValues.Keys)
                 .Select(kv => string.Format("{0}={1}", kv.Key, Uri.EscapeDataString(kv.Value))));
         }
