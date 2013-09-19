@@ -80,7 +80,7 @@ namespace MyCouch.Contexts
         protected virtual HttpRequestMessage CreateRequest(ViewQuery query)
         {
             return query.Options.HasKeys
-                ? new HttpRequest(HttpMethod.Post, GenerateRequestUrl(query)).SetContent(query.Options.GetKeysAsJson())
+                ? new HttpRequest(HttpMethod.Post, GenerateRequestUrl(query)).SetContent(query.Options.GetKeysAsJsonObject())
                 : new HttpRequest(HttpMethod.Get, GenerateRequestUrl(query));
         }
 

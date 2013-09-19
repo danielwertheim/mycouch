@@ -50,7 +50,7 @@ namespace MyCouch.UnitTests.Querying
         {
             SUT.Keys = null;
 
-            SUT.GetKeysAsJson().Should().Be("{}");
+            SUT.GetKeysAsJsonObject().Should().Be("{}");
         }
 
         [Fact]
@@ -58,7 +58,7 @@ namespace MyCouch.UnitTests.Querying
         {
             SUT.Keys = new string[0];
 
-            SUT.GetKeysAsJson().Should().Be("{}");
+            SUT.GetKeysAsJsonObject().Should().Be("{}");
         }
 
         [Fact]
@@ -66,7 +66,7 @@ namespace MyCouch.UnitTests.Querying
         {
             SUT.Keys = new[] { "fake_key1", "fake_key2" };
 
-            SUT.GetKeysAsJson().Should().Be("{\"keys\":[\"fake_key1\",\"fake_key2\"]}");
+            SUT.GetKeysAsJsonObject().Should().Be("{\"keys\":[\"fake_key1\",\"fake_key2\"]}");
         }
 
         [Fact]

@@ -87,7 +87,7 @@ namespace MyCouch.Querying
         /// with POST of keys against views.
         /// </summary>
         /// <returns></returns>
-        public virtual string GetKeysAsJson()
+        public virtual string GetKeysAsJsonObject()
         {
             if (!HasKeys)
                 return "{}";
