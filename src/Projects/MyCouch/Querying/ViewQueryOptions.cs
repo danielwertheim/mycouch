@@ -40,7 +40,7 @@ namespace MyCouch.Querying
         /// <summary>
         /// Return records starting with the specified key.
         /// </summary>
-        public string StartKey { get; set; }
+        public object StartKey { get; set; }
         /// <summary>
         /// Return records starting with the specified document ID.
         /// </summary>
