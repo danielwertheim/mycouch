@@ -344,6 +344,22 @@ namespace MyCouch.UnitTests.Querying
         }
 
         [Fact]
+        public void When_not_configured_It_yields_no_key_values()
+        {
+            var kvs = SUT.ToJsonKeyValues().ToArray();
+
+            kvs.Length.Should().Be(0);
+        }
+
+        [Fact]
+        public void When_not_configured_It_yields_no_query_string_params()
+        {
+            var qs = SUT.GenerateQueryStringParams();
+
+            qs.Should().BeEmpty();
+        }
+
+        [Fact]
         public void When_all_options_are_configures_It_yields_a_key_value_dictionary_with_all_options()
         {
             SUT.Stale = Stale.UpdateAfter;
@@ -385,11 +401,33 @@ namespace MyCouch.UnitTests.Querying
         }
 
         [Fact]
-        public void When_not_configured_It_yields_no_key_values()
+        public void When_Keys_are_specified_It_yields_a_query_string_that_is_empty()
         {
-            var kvs = SUT.ToJsonKeyValues().ToArray();
+            SUT.Keys = new object[] { "A", 1, 2 };
 
-            kvs.Length.Should().Be(0);
+            SUT.GenerateQueryStringParams().Should().BeEmpty();
+        }
+
+        [Fact]
+        public void When_all_options_except_Keys_are_configures_It_yields_a_query_string_accordingly()
+        {
+            SUT.Stale = Stale.UpdateAfter;
+            SUT.IncludeDocs = true;
+            SUT.Descending = true;
+            SUT.Key = "Key1";
+            SUT.StartKey = "My start key";
+            SUT.StartKeyDocId = "My start key doc id";
+            SUT.EndKey = "My end key";
+            SUT.EndKeyDocId = "My end key doc id";
+            SUT.InclusiveEnd = false;
+            SUT.Skip = 5;
+            SUT.Limit = 10;
+            SUT.Reduce = false;
+            SUT.UpdateSeq = true;
+            SUT.Group = true;
+            SUT.GroupLevel = 3;
+
+            SUT.GenerateQueryStringParams().Should().Be("include_docs=true&descending=true&reduce=false&inclusive_end=false&update_seq=true&group=true&group_level=3&stale=%22update_after%22&key=%22Key1%22&startkey=%22My%20start%20key%22&startkey_docid=%22My%20start%20key%20doc%20id%22&endkey=%22My%20end%20key%22&endkey_docid=%22My%20end%20key%20doc%20id%22&limit=10&skip=5");
         }
     }
 }

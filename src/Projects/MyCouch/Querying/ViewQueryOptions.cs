@@ -96,6 +96,18 @@ namespace MyCouch.Querying
                 string.Join(",", Keys.Select(k => FormatValue(k))));
         }
 
+        /// <summary>
+        /// Generats configured values as querystring params.
+        /// </summary>
+        /// <remarks>Keys are not included in this string.</remarks>
+        /// <returns></returns>
+        public virtual string GenerateQueryStringParams()
+        {
+            return string.Join("&", ToJsonKeyValues()
+                .Where(kv => kv.Key != KeyValues.Keys)
+                .Select(kv => string.Format("{0}={1}", kv.Key, Uri.EscapeDataString(kv.Value))));
+        }
+
         public virtual IDictionary<string, string> ToJsonKeyValues()
         {
             var kvs = new Dictionary<string, string>();
