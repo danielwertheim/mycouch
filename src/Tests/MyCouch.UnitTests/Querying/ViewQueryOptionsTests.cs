@@ -46,10 +46,11 @@ namespace MyCouch.UnitTests.Querying
                 3.14,
                 true,
                 false,
-                new DateTime(2008, 07, 17, 09, 21, 30, 50)
+                new DateTime(2008, 07, 17, 09, 21, 30, 50),
+                new object[] {"complex1", 42}
             };
 
-            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Keys].Should().Be("[\"fake_key\",1,3.14,true,false,\"2008-07-17 09:21:30\"]");
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Keys].Should().Be("[\"fake_key\",1,3.14,true,false,\"2008-07-17 09:21:30\",[\"complex1\",42]]");
         }
 
         [Fact]
