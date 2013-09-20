@@ -144,6 +144,16 @@ namespace MyCouch.UnitTests.Querying
         }
 
         [Fact]
+        public void When_complex_Key_is_assigned_It_gets_included_in_the_key_values()
+        {
+            SUT.Key = new object[] { "Key1", 42 };
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Key].Should().Be("[\"Key1\",42]");
+
+            SUT.Key = new object[] { "Key2", 142 };
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Key].Should().Be("[\"Key2\",142]");
+        }
+
+        [Fact]
         public void When_Key_of_string_is_assigned_It_gets_included_in_the_key_values()
         {
             SUT.Key = "Key1";
