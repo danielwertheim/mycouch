@@ -264,6 +264,16 @@ namespace MyCouch.UnitTests.Querying
         }
 
         [Fact]
+        public void When_complex_EndKey_is_assigned_It_gets_included_in_the_key_values()
+        {
+            SUT.EndKey = new object[] { "Key1", 42 };
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.EndKey].Should().Be("[\"Key1\",42]");
+
+            SUT.EndKey = new object[] { "Key2", 142 };
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.EndKey].Should().Be("[\"Key2\",142]");
+        }
+
+        [Fact]
         public void When_EndKey_of_string_is_assigned_It_gets_included_in_the_key_values()
         {
             SUT.EndKey = "Key1";
