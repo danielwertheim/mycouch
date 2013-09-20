@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using MyCouch.Extensions;
@@ -182,6 +183,9 @@ namespace MyCouch.Querying
         {
             if (value is string)
                 return FormatValue(value as string);
+
+            if (value is Array)
+                return FormatValue(value as object[]);
 
             var conv = value as IConvertible;
             if (conv == null)

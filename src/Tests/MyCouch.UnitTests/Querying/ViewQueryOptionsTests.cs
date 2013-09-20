@@ -194,6 +194,16 @@ namespace MyCouch.UnitTests.Querying
         }
 
         [Fact]
+        public void When_complex_StartKey_is_assigned_It_gets_included_in_the_key_values()
+        {
+            SUT.StartKey = new object[] { "Key1", 42 };
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.StartKey].Should().Be("[\"Key1\",42]");
+
+            SUT.StartKey = new object[] { "Key2", 142 };
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.StartKey].Should().Be("[\"Key2\",142]");
+        }
+
+        [Fact]
         public void When_StartKey_of_string_is_assigned_It_gets_included_in_the_key_values()
         {
             SUT.StartKey = "Key1";
