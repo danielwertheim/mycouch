@@ -58,7 +58,18 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual ViewQueryConfigurator Key(string value)
+        public virtual ViewQueryConfigurator Key<T>(T value)
+        {
+            Options.Key = value;
+
+            return this;
+        }
+        /// <summary>
+        /// Return only documents that match the specified complex-key.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public virtual ViewQueryConfigurator Key<T>(T[] value)
         {
             Options.Key = value;
 
