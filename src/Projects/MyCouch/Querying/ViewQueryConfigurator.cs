@@ -124,7 +124,18 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual ViewQueryConfigurator EndKey(string value)
+        public virtual ViewQueryConfigurator EndKey<T>(T value)
+        {
+            Options.EndKey = value;
+
+            return this;
+        }
+        /// <summary>
+        /// Stop returning records when the specified complex-key is reached.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public virtual ViewQueryConfigurator EndKey<T>(T[] value)
         {
             Options.EndKey = value;
 
