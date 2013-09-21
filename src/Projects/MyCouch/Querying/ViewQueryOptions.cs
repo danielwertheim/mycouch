@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using MyCouch.Extensions;
@@ -109,6 +108,12 @@ namespace MyCouch.Querying
                 .Select(kv => string.Format("{0}={1}", kv.Key, Uri.EscapeDataString(kv.Value))));
         }
 
+        /// <summary>
+        /// Returns all configured options as key values. The possible keys
+        /// can be found in <see cref="KeyValues"/>.
+        /// The values are formatted to JSON-compatible strings.
+        /// </summary>
+        /// <returns></returns>
         public virtual IDictionary<string, string> ToJsonKeyValues()
         {
             var kvs = new Dictionary<string, string>();
