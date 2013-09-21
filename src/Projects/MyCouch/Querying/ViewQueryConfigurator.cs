@@ -80,9 +80,9 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual ViewQueryConfigurator Keys(params string[] value)
+        public virtual ViewQueryConfigurator Keys<T>(params T[] value)
         {
-            Options.Keys = value;
+            Options.Keys = value as object[];
 
             return this;
         }

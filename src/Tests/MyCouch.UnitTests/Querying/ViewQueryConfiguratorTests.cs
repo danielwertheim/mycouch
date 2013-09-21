@@ -49,7 +49,7 @@ namespace MyCouch.UnitTests.Querying
         [Fact]
         public void When_config_of_Key_of_date_It_configures_underlying_options_Key()
         {
-            var configuredValue = new DateTime(2008,07,17,09, 21, 30, 50);
+            var configuredValue = new DateTime(2008, 07, 17, 09, 21, 30, 50);
 
             SUT.Key(configuredValue);
 
@@ -212,6 +212,23 @@ namespace MyCouch.UnitTests.Querying
             SUT.EndKey(configuredValue);
 
             _viewQueryOptions.EndKey.Should().Be(configuredValue);
+        }
+
+        [Fact]
+        public void When_config_of_Keys_It_configures_underlying_options_Key()
+        {
+            var configuredValue = new object[] {
+                "fake key",
+                42,
+                3.14,
+                new DateTime(2008, 07, 17, 09, 21, 30, 50),
+                true,
+                new object[] {"complex1", 42}
+            };
+
+            SUT.Keys(configuredValue);
+
+            _viewQueryOptions.Keys.Should().BeEquivalentTo(configuredValue);
         }
     }
 }
