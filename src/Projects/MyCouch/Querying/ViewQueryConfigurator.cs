@@ -91,7 +91,18 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual ViewQueryConfigurator StartKey(string value)
+        public virtual ViewQueryConfigurator StartKey<T>(T value)
+        {
+            Options.StartKey = value;
+
+            return this;
+        }
+        /// <summary>
+        /// Return records starting with the specified complex-key.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public virtual ViewQueryConfigurator StartKey<T>(T[] value)
         {
             Options.StartKey = value;
 
