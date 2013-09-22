@@ -186,24 +186,47 @@ namespace MyCouch.Querying
 
         protected virtual string FormatValue(object value)
         {
+            //Since NetFX does not support IConvertible, we need to treat individual types
+            //as short, int, long..., ...
+
             if (value is string)
                 return FormatValue(value as string);
 
             if (value is Array)
                 return FormatValue(value as object[]);
 
-            var conv = value as IConvertible;
-            if (conv == null)
-                return value.ToString();
+            if (value is short)
+                return value.To<short>().ToString(MyCouchRuntime.NumberFormat);
 
-            if (value.IsNumeric())
-                return conv.ToString(MyCouchRuntime.NumberFormat);
+            if (value is int)
+                return value.To<int>().ToString(MyCouchRuntime.NumberFormat);
 
-            if (value.IsDateTime())
-                return FormatValue(conv.To<DateTime>().ToString(MyCouchRuntime.DateTimeFormatPattern));
+            if (value is long)
+                return value.To<long>().ToString(MyCouchRuntime.NumberFormat);
 
-            if (value.IsBool())
-                return conv.ToString(MyCouchRuntime.GenericFormat).ToLower();
+            if (value is float)
+                return value.To<float>().ToString(MyCouchRuntime.NumberFormat);
+
+            if (value is double)
+                return value.To<double>().ToString(MyCouchRuntime.NumberFormat);
+
+            if (value is decimal)
+                return value.To<decimal>().ToString(MyCouchRuntime.NumberFormat);
+
+            if (value is ushort)
+                return value.To<ushort>().ToString(MyCouchRuntime.NumberFormat);
+
+            if (value is uint)
+                return value.To<uint>().ToString(MyCouchRuntime.NumberFormat);
+
+            if (value is ulong)
+                return value.To<ulong>().ToString(MyCouchRuntime.NumberFormat);
+
+            if (value is DateTime)
+                return FormatValue(value.To<DateTime>().ToString(MyCouchRuntime.DateTimeFormatPattern));
+
+            if (value is bool)
+                return value.ToString().ToLower();
 
             return value.ToString();
         }

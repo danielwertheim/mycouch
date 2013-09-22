@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MyCouch.Extensions
+﻿namespace MyCouch.Extensions
 {
     public static class ObjectExtensions
     {
@@ -11,19 +9,9 @@ namespace MyCouch.Extensions
 
         public static bool IsNumeric(this object value)
         {
-            return value is IConvertible && (
+            return
                 value is short || value is int || value is long || value is ushort || value is uint || value is ulong ||
-                value is float || value is double || value is decimal);
-        }
-
-        public static bool IsBool(this object value)
-        {
-            return value is bool;
-        }
-
-        public static bool IsDateTime(this object value)
-        {
-            return value is DateTime;
+                value is float || value is double || value is decimal;
         }
     }
 }

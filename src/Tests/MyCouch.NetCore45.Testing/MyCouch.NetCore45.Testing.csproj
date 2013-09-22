@@ -119,6 +119,9 @@
     <Compile Include="..\MyCouch.Testing\CustomAsserts.cs">
       <Link>CustomAsserts.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Testing\Model\Album.cs">
+      <Link>Model\Album.cs</Link>
+    </Compile>
     <Compile Include="..\mycouch.testing\model\Artist.cs">
       <Link>Model\Artist.cs</Link>
     </Compile>

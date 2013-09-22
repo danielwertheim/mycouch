@@ -168,6 +168,9 @@
     <Compile Include="..\MyCouch\Extensions\HttpExtensions.cs">
       <Link>Extensions\HttpExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch\Extensions\ObjectExtensions.cs">
+      <Link>Extensions\ObjectExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch\Extensions\StringExtensions.cs">
       <Link>Extensions\StringExtensions.cs</Link>
     </Compile>
