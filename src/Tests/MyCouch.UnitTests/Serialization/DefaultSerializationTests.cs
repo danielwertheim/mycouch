@@ -1,7 +1,5 @@
 ﻿using FluentAssertions;
 using MyCouch.Serialization;
-using MyCouch.Testing;
-using MyCouch.Testing.TestData;
 using Xunit;
 
 namespace MyCouch.UnitTests.Serialization
@@ -60,11 +58,11 @@ namespace MyCouch.UnitTests.Serialization
         [Fact]
         public void When_serializing_entity_It_will_not_inject_document_header_in_json()
         {
-            var model = ClientTestData.Artists.CreateArtist();
+            var model = new ModelEntity { Id = "abc", Rev = "505e07eb-41a4-4bb1-8a4c-fb6453f9927d", Value = "Some value." };
 
             var json = SUT.Serialize(model);
 
-            json.Should().NotContain("\"$doctype\":\"artist\"");
+            json.Should().NotContain("\"$doctype\":\"modelentity\"");
         }
 
         [Fact]
