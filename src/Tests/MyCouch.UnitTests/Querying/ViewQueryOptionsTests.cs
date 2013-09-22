@@ -50,7 +50,7 @@ namespace MyCouch.UnitTests.Querying
                 new object[] {"complex1", 42}
             };
 
-            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Keys].Should().Be("[\"fake_key\",1,3.14,true,false,\"2008-07-17 09:21:30\",[\"complex1\",42]]");
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Keys].Should().Be("[\"fake_key\",1,3.14,true,false,\"2008-07-17T09:21:30\",[\"complex1\",42]]");
         }
 
         [Fact]
@@ -81,7 +81,7 @@ namespace MyCouch.UnitTests.Querying
                 new DateTime(2008, 07, 17, 09, 21, 30, 50)
             };
 
-            SUT.GetKeysAsJsonObject().Should().Be("{\"keys\":[\"fake_key\",1,3.14,true,false,\"2008-07-17 09:21:30\"]}");
+            SUT.GetKeysAsJsonObject().Should().Be("{\"keys\":[\"fake_key\",1,3.14,true,false,\"2008-07-17T09:21:30\"]}");
         }
 
         [Fact]
@@ -198,10 +198,10 @@ namespace MyCouch.UnitTests.Querying
         public void When_Key_of_datetime_is_assigned_It_gets_included_in_the_key_values()
         {
             SUT.Key = new DateTime(2008, 07, 17, 09, 21, 30, 50);
-            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Key].Should().Be("\"2008-07-17 09:21:30\"");
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Key].Should().Be("\"2008-07-17T09:21:30\"");
 
             SUT.Key = new DateTime(2011, 06, 02, 22, 41, 40, 45);
-            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Key].Should().Be("\"2011-06-02 22:41:40\"");
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.Key].Should().Be("\"2011-06-02T22:41:40\"");
         }
 
         [Fact]
@@ -258,10 +258,10 @@ namespace MyCouch.UnitTests.Querying
         public void When_StartKey_of_datetime_is_assigned_It_gets_included_in_the_key_values()
         {
             SUT.StartKey = new DateTime(2008, 07, 17, 09, 21, 30, 50);
-            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.StartKey].Should().Be("\"2008-07-17 09:21:30\"");
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.StartKey].Should().Be("\"2008-07-17T09:21:30\"");
 
             SUT.StartKey = new DateTime(2011, 06, 02, 22, 41, 40, 45);
-            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.StartKey].Should().Be("\"2011-06-02 22:41:40\"");
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.StartKey].Should().Be("\"2011-06-02T22:41:40\"");
         }
 
         [Fact]
@@ -328,10 +328,10 @@ namespace MyCouch.UnitTests.Querying
         public void When_EndKey_of_datetime_is_assigned_It_gets_included_in_the_key_values()
         {
             SUT.EndKey = new DateTime(2008, 07, 17, 09, 21, 30, 50);
-            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.EndKey].Should().Be("\"2008-07-17 09:21:30\"");
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.EndKey].Should().Be("\"2008-07-17T09:21:30\"");
 
             SUT.EndKey = new DateTime(2011, 06, 02, 22, 41, 40, 45);
-            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.EndKey].Should().Be("\"2011-06-02 22:41:40\"");
+            SUT.ToJsonKeyValues()[ViewQueryOptions.KeyValues.EndKey].Should().Be("\"2011-06-02T22:41:40\"");
         }
 
         [Fact]
