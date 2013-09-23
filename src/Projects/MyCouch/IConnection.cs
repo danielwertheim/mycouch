@@ -8,5 +8,6 @@ namespace MyCouch
     {
         Uri Address { get; }
         Task<HttpResponseMessage> SendAsync(HttpRequestMessage request);
+        Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, HttpCompletionOption completionOption);
     }
 }

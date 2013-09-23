@@ -73,5 +73,10 @@ namespace MyCouch.Net
         {
             return await HttpClient.SendAsync(request).ForAwait();
         }
+
+        public virtual async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, HttpCompletionOption completionOption)
+        {
+            return await HttpClient.SendAsync(request, completionOption).ForAwait();
+        }
     }
 }
