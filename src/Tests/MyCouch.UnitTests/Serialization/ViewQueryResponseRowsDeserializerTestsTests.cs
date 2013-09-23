@@ -130,6 +130,19 @@ namespace MyCouch.UnitTests.Serialization
         }
 
         [Fact]
+        public void It_can_populate_complex_keys_in_view_query_response_of_string()
+        {
+            var rows = Deserialize<string>(JsonTestData.ViewQueryComplexKeysRows);
+
+            rows.Length.Should().Be(2);
+            rows[0].Id.Should().Be("complex:1");
+            rows[0].Key.ShouldBeEquivalentTo(new object[] { "test1", (long)1, 3.14, new DateTime(2013, 09, 22, 22, 36, 00) });
+
+            rows[1].Id.Should().Be("complex:2");
+            rows[1].Key.ShouldBeEquivalentTo(new object[] { "test2", (long)3, 3.15, new DateTime(2013, 09, 22, 22, 37, 00) });
+        }
+
+        [Fact]
         public void It_can_populate_an_albums_view_query_response_of_string()
         {
             var rows = Deserialize<string>(JsonTestData.ViewQueryAlbumRows);

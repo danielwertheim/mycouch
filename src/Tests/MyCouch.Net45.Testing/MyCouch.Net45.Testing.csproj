@@ -91,6 +91,14 @@
       <Link>JsonTestDataFiles\ViewQueryAllDocRows.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\MyCouch.Testing\JsonTestDataFiles\ViewQueryComplexKeysRows.json">
+      <Link>JsonTestDataFiles\ViewQueryComplexKeysRows.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\MyCouch.Testing\JsonTestDataFiles\ViewQuerySingleValueKeysRows.json">
+      <Link>JsonTestDataFiles\ViewQuerySingleValueKeysRows.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

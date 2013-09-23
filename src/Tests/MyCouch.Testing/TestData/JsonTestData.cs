@@ -37,6 +37,14 @@ namespace MyCouch.Testing.TestData
             }
         }
 
+        public static string ViewQueryComplexKeysRows
+        {
+            get
+            {
+                return ReadFile("ViewQueryComplexKeysRows.json");
+            }
+        }
+
         public static string ViewQuerySingleValueKeysRows
         {
             get

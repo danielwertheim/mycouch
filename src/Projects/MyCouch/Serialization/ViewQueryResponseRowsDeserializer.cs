@@ -74,17 +74,17 @@ namespace MyCouch.Serialization
 
         protected virtual void ConsumeStringsIfNotEmpty(JsonReader jr, JsonWriter jw, StringBuilder sb, Action<string[]> map)
         {
-            var strings = ReadStrings(jr, jw, sb);
+            var strings = ReadAsStringArray(jr, jw, sb);
 
             if (strings.Any()) map(strings.ToArray());
         }
 
-        protected virtual IList<string> ReadStrings(JsonReader jr, JsonWriter jw, StringBuilder sb)
+        protected virtual string[] ReadAsStringArray(JsonReader jr, JsonWriter jw, StringBuilder sb)
         {
             var rowValues = new List<string>();
 
             if (jr.TokenType != JsonToken.StartArray)
-                return rowValues;
+                return rowValues.ToArray();
 
             var valueStartDepth = jr.Depth;
 
@@ -95,7 +95,24 @@ namespace MyCouch.Serialization
                 sb.Clear();
             }
 
-            return rowValues;
+            return rowValues.ToArray();
+        }
+
+        protected virtual object[] ReadAsObjectArray(JsonReader jr, JsonWriter jw, StringBuilder sb)
+        {
+            var rowValues = new List<object>();
+
+            if (jr.TokenType != JsonToken.StartArray)
+                return rowValues.ToArray();
+
+            var valueStartDepth = jr.Depth;
+
+            while (jr.Read() && !(jr.TokenType == JsonToken.EndArray && jr.Depth == valueStartDepth))
+            {
+                rowValues.Add(jr.Value);
+            }
+
+            return rowValues.ToArray();
         }
 
         protected virtual IEnumerable<ViewQueryResponse<T>.Row> YieldQueryRows<T>(
@@ -116,12 +133,13 @@ namespace MyCouch.Serialization
                     }
                 },
                 {
-                    ResponseMeta.Scheme.Queries.RowKey, (item, jr, jw, sb) =>
-                    {
-                        if (!jr.Read() || jr.Value == null)
+                    ResponseMeta.Scheme.Queries.RowKey, (item, jr, jw, sb) => {
+                        if (!jr.Read())
                             return;
 
-                        item.Key = jr.Value;
+                        item.Key = jr.TokenType == JsonToken.StartArray
+                            ? ReadAsObjectArray(jr, jw, sb)
+                            : jr.Value;
                     }
                 },
                 {
