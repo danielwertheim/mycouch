@@ -19,6 +19,6 @@ namespace MyCouch.Responses
         }
 #endif
         public string Id { get; set; }
-        public string Key { get; set; }
+        public object Key { get; set; }
     }
 }

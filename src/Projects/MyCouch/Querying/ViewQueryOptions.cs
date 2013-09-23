@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using MyCouch.Extensions;
 
 namespace MyCouch.Querying
 {
@@ -24,11 +25,11 @@ namespace MyCouch.Querying
         /// <summary>
         /// Return only documents that match the specified key.
         /// </summary>
-        public string Key { get; set; }
+        public object Key { get; set; }
         /// <summary>
         /// Returns only documents that matches any of the specified keys.
         /// </summary>
-        public string[] Keys { get; set; }
+        public object[] Keys { get; set; }
         /// <summary>
         /// Indicates if any <see cref="Keys"/> has been specified.
         /// </summary>
@@ -39,7 +40,7 @@ namespace MyCouch.Querying
         /// <summary>
         /// Return records starting with the specified key.
         /// </summary>
-        public string StartKey { get; set; }
+        public object StartKey { get; set; }
         /// <summary>
         /// Return records starting with the specified document ID.
         /// </summary>
@@ -47,7 +48,7 @@ namespace MyCouch.Querying
         /// <summary>
         /// Stop returning records when the specified key is reached.
         /// </summary>
-        public string EndKey { get; set; }
+        public object EndKey { get; set; }
         /// <summary>
         /// Stop returning records when the specified document ID is reached.
         /// </summary>
@@ -86,16 +87,34 @@ namespace MyCouch.Querying
         /// with POST of keys against views.
         /// </summary>
         /// <returns></returns>
-        public virtual string GetKeysAsJson()
+        public virtual string GetKeysAsJsonObject()
         {
             if (!HasKeys)
                 return "{}";
 
             return string.Format("{{\"keys\":[{0}]}}",
-                string.Join(",", Keys.Select(k => string.Format("\"{0}\"", k))));
+                string.Join(",", Keys.Select(k => FormatValue(k))));
         }
 
-        public virtual IDictionary<string, string> ToKeyValues()
+        /// <summary>
+        /// Generats configured values as querystring params.
+        /// </summary>
+        /// <remarks>Keys are not included in this string.</remarks>
+        /// <returns></returns>
+        public virtual string GenerateQueryStringParams()
+        {
+            return string.Join("&", ToJsonKeyValues()
+                .Where(kv => kv.Key != KeyValues.Keys)
+                .Select(kv => string.Format("{0}={1}", kv.Key, Uri.EscapeDataString(kv.Value))));
+        }
+
+        /// <summary>
+        /// Returns all configured options as key values. The possible keys
+        /// can be found in <see cref="KeyValues"/>.
+        /// The values are formatted to JSON-compatible strings.
+        /// </summary>
+        /// <returns></returns>
+        public virtual IDictionary<string, string> ToJsonKeyValues()
         {
             var kvs = new Dictionary<string, string>();
 
@@ -150,6 +169,11 @@ namespace MyCouch.Querying
             return kvs;
         }
 
+        protected virtual bool HasValue(object value)
+        {
+            return value != null;
+        }
+
         protected virtual bool HasValue(string value)
         {
             return value != null;
@@ -160,14 +184,61 @@ namespace MyCouch.Querying
             return value != null && value.Any();
         }
 
+        protected virtual string FormatValue(object value)
+        {
+            //Since NetFX does not support IConvertible, we need to treat individual types
+            //as short, int, long..., ...
+
+            if (value is string)
+                return FormatValue(value as string);
+
+            if (value is Array)
+                return FormatValue(value as object[]);
+
+            if (value is short)
+                return value.To<short>().ToString(MyCouchRuntime.NumberFormat);
+
+            if (value is int)
+                return value.To<int>().ToString(MyCouchRuntime.NumberFormat);
+
+            if (value is long)
+                return value.To<long>().ToString(MyCouchRuntime.NumberFormat);
+
+            if (value is float)
+                return value.To<float>().ToString(MyCouchRuntime.NumberFormat);
+
+            if (value is double)
+                return value.To<double>().ToString(MyCouchRuntime.NumberFormat);
+
+            if (value is decimal)
+                return value.To<decimal>().ToString(MyCouchRuntime.NumberFormat);
+
+            if (value is ushort)
+                return value.To<ushort>().ToString(MyCouchRuntime.NumberFormat);
+
+            if (value is uint)
+                return value.To<uint>().ToString(MyCouchRuntime.NumberFormat);
+
+            if (value is ulong)
+                return value.To<ulong>().ToString(MyCouchRuntime.NumberFormat);
+
+            if (value is DateTime)
+                return FormatValue(value.To<DateTime>().ToString(MyCouchRuntime.DateTimeFormatPattern));
+
+            if (value is bool)
+                return value.ToString().ToLower();
+
+            return value.ToString();
+        }
+
         protected virtual string FormatValue(string value)
         {
             return string.Format("\"{0}\"", value);
         }
 
-        protected virtual string FormatValue(IEnumerable<string> value)
+        protected virtual string FormatValue(object[] value)
         {
-            return string.Format("[{0}]", string.Join(",", value.Select(v => string.Format("\"{0}\"", v))));
+            return string.Format("[{0}]", string.Join(",", value.Select(v => FormatValue(v))));
         }
 
         public static class KeyValues

@@ -4,6 +4,13 @@ namespace MyCouch.UnitTests.Serialization
 {
     public abstract class SerializerTests<T> : UnitTestsOf<T> where T : class, ISerializer
     {
+        protected class ModelEntity
+        {
+            public string Id { get; set; }
+            public string Rev { get; set; }
+            public string Value { get; set; }
+        }
+
         protected class ModelWithIdInWrongOrder
         {
             public string Id { get; set; }
