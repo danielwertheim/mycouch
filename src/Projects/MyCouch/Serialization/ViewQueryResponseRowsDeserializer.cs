@@ -118,11 +118,10 @@ namespace MyCouch.Serialization
                 {
                     ResponseMeta.Scheme.Queries.RowKey, (item, jr, jw, sb) =>
                     {
-                        if (!jr.Read())
+                        if (!jr.Read() || jr.Value == null)
                             return;
 
-                        if (jr.Value != null)
-                            item.Key = jr.Value.ToString();
+                        item.Key = jr.Value;
                     }
                 },
                 {

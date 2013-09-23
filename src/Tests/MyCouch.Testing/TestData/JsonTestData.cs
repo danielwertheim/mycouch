@@ -37,6 +37,14 @@ namespace MyCouch.Testing.TestData
             }
         }
 
+        public static string ViewQuerySingleValueKeysRows
+        {
+            get
+            {
+                return ReadFile("ViewQuerySingleValueKeysRows.json");
+            }
+        }
+
         private static string ReadFile(string name)
         {
 #if !NETFX_CORE

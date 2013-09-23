@@ -71,6 +71,9 @@
     <Content Include="JsonTestDataFiles\ViewQueryAllDocRows.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="JsonTestDataFiles\ViewQuerySingleValueKeysRows.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
