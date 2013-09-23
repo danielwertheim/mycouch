@@ -6,7 +6,7 @@ using MyCouch.Responses;
 namespace MyCouch
 {
     /// <summary>
-    /// Used to query and manage views.
+    /// Used to query views.
     /// </summary>
     public interface IViews
     {
