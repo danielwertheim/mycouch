@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using FluentAssertions;
@@ -107,6 +108,38 @@ namespace MyCouch.UnitTests.Serialization
             rows[1].Key.Should().Be("2");
             string rev2 = rows[1].Value["rev"].ToString();
             rev2.Should().Be("42-e7620ba0ea71c48f6a11bacee4999d79");
+        }
+
+        [Fact]
+        public void It_can_populate_single_value_keys_in_view_query_response_of_string()
+        {
+            var rows = Deserialize<string>(JsonTestData.ViewQuerySingleValueKeysRows);
+
+            rows.Length.Should().Be(4);
+            rows[0].Id.Should().Be("integer:1");
+            rows[0].Key.Should().Be((long)1);
+
+            rows[1].Id.Should().Be("float:1");
+            rows[1].Key.Should().Be(3.14);
+
+            rows[2].Id.Should().Be("datetime:1");
+            rows[2].Key.Should().Be(new DateTime(2013, 09, 22, 22, 36, 00));
+
+            rows[3].Id.Should().Be("string:1");
+            rows[3].Key.Should().Be("test1");
+        }
+
+        [Fact]
+        public void It_can_populate_complex_keys_in_view_query_response_of_string()
+        {
+            var rows = Deserialize<string>(JsonTestData.ViewQueryComplexKeysRows);
+
+            rows.Length.Should().Be(2);
+            rows[0].Id.Should().Be("complex:1");
+            rows[0].Key.ShouldBeEquivalentTo(new object[] { "test1", (long)1, 3.14, new DateTime(2013, 09, 22, 22, 36, 00) });
+
+            rows[1].Id.Should().Be("complex:2");
+            rows[1].Key.ShouldBeEquivalentTo(new object[] { "test2", (long)3, 3.15, new DateTime(2013, 09, 22, 22, 37, 00) });
         }
 
         [Fact]

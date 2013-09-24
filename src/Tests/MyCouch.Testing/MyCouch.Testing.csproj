@@ -54,6 +54,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="CustomAsserts.cs" />
+    <Compile Include="Model\Album.cs" />
     <Compile Include="TestData\JsonTestData.cs" />
     <Compile Include="Model\Artist.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -68,6 +69,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="JsonTestDataFiles\ViewQueryAllDocRows.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JsonTestDataFiles\ViewQuerySingleValueKeysRows.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JsonTestDataFiles\ViewQueryComplexKeysRows.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />

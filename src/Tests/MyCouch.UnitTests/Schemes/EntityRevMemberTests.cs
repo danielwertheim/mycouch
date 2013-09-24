@@ -99,6 +99,30 @@ namespace MyCouch.UnitTests.Schemes
             SUT.GetValueFrom(model).Should().Be(model._Rev);
         }
 
+        [Fact]
+        public void When__rev_is_defined_in_base_It_can_extract_the_rev()
+        {
+            var model = new ModelInheritanceLowerCasedRevChild { _rev = "ModelInheritanceLowerCasedRevChild:_rev:1" };
+
+            SUT.GetValueFrom(model).Should().Be(model._rev);
+        }
+
+        [Fact]
+        public void When__Rev_is_defined_in_base_It_can_extract_the_rev()
+        {
+            var model = new ModelInheritanceProperCasedRevChild { _Rev = "ModelInheritanceProperCasedRevChild:_Rev:1" };
+
+            SUT.GetValueFrom(model).Should().Be(model._Rev);
+        }
+
+        [Fact]
+        public void When_DocumentId_is_defined_in_base_It_can_extract_the_id()
+        {
+            var model = new ModelInheritanceDocumentRevChild { DocumentRev = "ModelInheritanceDocumentRevChild:DocumentRev:1" };
+
+            SUT.GetValueFrom(model).Should().Be(model.DocumentRev);
+        }
+
         private class ModelForMemberRanking
         {
             public string Rev { get; set; }
@@ -132,6 +156,33 @@ namespace MyCouch.UnitTests.Schemes
         {
             public string _Rev { get; set; }
             public string ModelFiveRev { get; set; }
+        }
+
+        private class ModelInheritanceLowerCasedRevBase
+        {
+            public string _rev { get; set; }
+        }
+
+        private class ModelInheritanceProperCasedRevBase
+        {
+            public string _Rev { get; set; }
+        }
+
+        private class ModelInheritanceDocumentRevBase
+        {
+            public string DocumentRev { get; set; }
+        }
+
+        private class ModelInheritanceLowerCasedRevChild : ModelInheritanceLowerCasedRevBase
+        {
+        }
+
+        private class ModelInheritanceProperCasedRevChild : ModelInheritanceProperCasedRevBase
+        {
+        }
+
+        private class ModelInheritanceDocumentRevChild : ModelInheritanceDocumentRevBase
+        {
         }
     }
 }

@@ -117,6 +117,9 @@
     <Compile Include="..\MyCouch.UnitTests\BulkCommandTests.cs">
       <Link>BulkCommandTests.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.UnitTests\Querying\ViewQueryConfiguratorTests.cs">
+      <Link>Querying\ViewQueryConfiguratorTests.cs</Link>
+    </Compile>
     <Compile Include="..\mycouch.unittests\querying\ViewQueryOptionsTests.cs">
       <Link>Querying\ViewQueryOptionsTests.cs</Link>
     </Compile>

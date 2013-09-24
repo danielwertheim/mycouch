@@ -58,7 +58,18 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual ViewQueryConfigurator Key(string value)
+        public virtual ViewQueryConfigurator Key<T>(T value)
+        {
+            Options.Key = value;
+
+            return this;
+        }
+        /// <summary>
+        /// Return only documents that match the specified complex-key.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public virtual ViewQueryConfigurator Key<T>(T[] value)
         {
             Options.Key = value;
 
@@ -69,9 +80,9 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual ViewQueryConfigurator Keys(params string[] value)
+        public virtual ViewQueryConfigurator Keys<T>(params T[] value)
         {
-            Options.Keys = value;
+            Options.Keys = value as object[];
 
             return this;
         }
@@ -80,7 +91,18 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual ViewQueryConfigurator StartKey(string value)
+        public virtual ViewQueryConfigurator StartKey<T>(T value)
+        {
+            Options.StartKey = value;
+
+            return this;
+        }
+        /// <summary>
+        /// Return records starting with the specified complex-key.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public virtual ViewQueryConfigurator StartKey<T>(T[] value)
         {
             Options.StartKey = value;
 
@@ -102,7 +124,18 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual ViewQueryConfigurator EndKey(string value)
+        public virtual ViewQueryConfigurator EndKey<T>(T value)
+        {
+            Options.EndKey = value;
+
+            return this;
+        }
+        /// <summary>
+        /// Stop returning records when the specified complex-key is reached.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public virtual ViewQueryConfigurator EndKey<T>(T[] value)
         {
             Options.EndKey = value;
 

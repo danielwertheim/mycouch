@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using EnsureThat;
@@ -80,7 +79,7 @@ namespace MyCouch.Contexts
         protected virtual HttpRequestMessage CreateRequest(ViewQuery query)
         {
             return query.Options.HasKeys
-                ? new HttpRequest(HttpMethod.Post, GenerateRequestUrl(query)).SetContent(query.Options.GetKeysAsJson())
+                ? new HttpRequest(HttpMethod.Post, GenerateRequestUrl(query)).SetContent(query.Options.GetKeysAsJsonObject())
                 : new HttpRequest(HttpMethod.Get, GenerateRequestUrl(query));
         }
 
@@ -91,21 +90,14 @@ namespace MyCouch.Contexts
                 return string.Format("{0}/{1}?{2}",
                     Connection.Address,
                     query.View.Name,
-                    GenerateQueryStringParams(query.Options));
+                    query.Options.GenerateQueryStringParams());
             }
 
             return string.Format("{0}/_design/{1}/_view/{2}?{3}",
                 Connection.Address,
                 query.View.DesignDocument,
                 query.View.Name,
-                GenerateQueryStringParams(query.Options));
-        }
-
-        protected virtual string GenerateQueryStringParams(ViewQueryOptions options)
-        {
-            return string.Join("&", options.ToKeyValues()
-                .Where(kv => kv.Key != ViewQueryOptions.KeyValues.Keys)
-                .Select(kv => string.Format("{0}={1}", kv.Key, Uri.EscapeDataString(kv.Value))));
+                query.Options.GenerateQueryStringParams());
         }
 
         protected virtual JsonViewQueryResponse ProcessHttpResponse(HttpResponseMessage response)

@@ -1,0 +1,6 @@
+[
+    {"id":"integer:1","key":1,"value":null},
+    {"id":"float:1","key":3.14,"value":null},
+    {"id":"datetime:1","key":"2013-09-22T22:36:00","value":null},
+    {"id":"string:1","key":"test1","value":null}
+]

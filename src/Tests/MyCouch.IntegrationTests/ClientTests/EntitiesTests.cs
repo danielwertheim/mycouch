@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+using FluentAssertions;
 using MyCouch.Testing;
 using MyCouch.Testing.Model;
 using MyCouch.Testing.TestData;
@@ -15,7 +15,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         }
 
         [Fact]
-        public void When_post_of_new_document_Using_an_entity_The_document_is_persisted()
+        public void When_post_of_a_new_entity_Then_the_document_is_created()
         {
             var artist = ClientTestData.Artists.CreateArtist();
             var initialId = artist.ArtistId;
@@ -26,7 +26,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         }
 
         [Fact]
-        public void When_put_of_new_document_Using_an_entity_The_document_is_replaced()
+        public void When_put_of_a_new_entity_Then_the_document_is_created()
         {
             var artist = ClientTestData.Artists.CreateArtist();
             var initialId = artist.ArtistId;
@@ -37,7 +37,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         }
 
         [Fact]
-        public void When_put_of_existing_document_Using_an_entity_The_document_is_replaced()
+        public void When_put_of_an_existing_entity_Then_the_document_is_replaced()
         {
             var artist = ClientTestData.Artists.CreateArtist();
             var initialId = artist.ArtistId;
@@ -49,7 +49,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         }
 
         [Fact]
-        public void When_put_of_existing_document_Using_wrong_rev_A_conflict_is_detected()
+        public void When_put_of_an_existing_entity_Using_wrong_rev_Then_a_conflict_is_detected()
         {
             var postResponse = SUT.PostAsync(ClientTestData.Artists.Artist1).Result;
 
@@ -60,7 +60,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         }
 
         [Fact]
-        public void When_delete_of_existing_document_Using_an_entity_The_document_is_deleted()
+        public void When_delete_of_an_existing_entity_Then_the_document_is_deleted()
         {
             var artist = ClientTestData.Artists.CreateArtist();
             var initialId = artist.ArtistId;
@@ -101,6 +101,53 @@ namespace MyCouch.IntegrationTests.ClientTests
 
             SUT.DeleteAsync(put1.Result.Entity).Result.Should().BeSuccessfulDelete(put1.Result.Id, e => e.ArtistId, e => e.ArtistRev);
             SUT.DeleteAsync(put2.Result.Entity).Result.Should().BeSuccessfulDelete(put2.Result.Id, e => e.ArtistId, e => e.ArtistRev);
+        }
+
+        [Fact]
+        public void When_put_of_a_new_entity_extending_a_document_Then_the_entity_will_be_created()
+        {
+            var id = "956cba86-a20c-4a85-a8b4-a7039ba771c8";
+            var entity = new Inherited { _id = id, Value = "Test" };
+
+            var response = SUT.PutAsync(entity).Result;
+
+            response.Should().BeSuccessfulPutOfNew(id, i => i._id, i => i._rev);
+        }
+
+        [Fact]
+        public void When_put_of_an_existing_entity_extending_a_document_Then_the_entity_will_be_updated()
+        {
+            var id = "b638d1c5-772a-48f4-b6ee-f2c1f7d5e410";
+            var entity = new Inherited { _id = id, Value = "Test" };
+            SUT.PostAsync(entity).Wait();
+
+            var response = SUT.PutAsync(entity).Result;
+
+            response.Should().BeSuccessfulPut(id, i => i._id, i => i._rev);
+        }
+
+        [Fact]
+        public void When_put_of_a_new_and_then_a_put_of_an_existing_entity_extending_a_document_Then_the_entity_will_first_be_created_and_then_updated()
+        {
+            var id = "b638d1c5-772a-48f4-b6ee-f2c1f7d5e410";
+            var entity = new Inherited { _id = id, Value = "Test" };
+
+            var putResponse1 = SUT.PutAsync(entity).Result;
+            putResponse1.Should().BeSuccessfulPutOfNew(id, i => i._id, i => i._rev);
+
+            var putResponse2 = SUT.PutAsync(entity).Result;
+            putResponse2.Should().BeSuccessfulPut(id, i => i._id, i => i._rev);
+        }
+
+        private abstract class Document
+        {
+            public string _id { get; set; }
+            public string _rev { get; set; }
+        }
+
+        private class Inherited : Document
+        {
+            public string Value { get; set; }
         }
     }
 }

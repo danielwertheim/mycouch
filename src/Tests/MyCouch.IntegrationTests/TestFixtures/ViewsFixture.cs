@@ -2,7 +2,6 @@
 using System.Linq;
 using MyCouch.Commands;
 using MyCouch.Querying;
-using MyCouch.Testing;
 using MyCouch.Testing.Model;
 using MyCouch.Testing.TestData;
 
@@ -31,7 +30,7 @@ namespace MyCouch.IntegrationTests.TestFixtures
                 Client.Entities.Reflector.RevMember.SetValueTo(artist, row.Rev);
             }
 
-            Client.Documents.PostAsync(ClientTestData.Views.ArtistsViews).Wait();
+            var tmp = Client.Documents.PostAsync(ClientTestData.Views.ArtistsViews).Result;
 
             var touchView1 = new ViewQuery(ClientTestData.Views.ArtistsAlbumsViewId).Configure(q => q.Stale(Stale.UpdateAfter));
             var touchView2 = new ViewQuery(ClientTestData.Views.ArtistsNameNoValueViewId).Configure(q => q.Stale(Stale.UpdateAfter));

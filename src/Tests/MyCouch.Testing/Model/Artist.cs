@@ -12,9 +12,4 @@
 
         public Album[] Albums { get; set; }
     }
-
-    public class Album
-    {
-        public string Name { get; set; }
-    }
 }
