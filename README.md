@@ -1,11 +1,14 @@
 # MyCouch #
-The asynchronous CouchDb client for .Net - builds on top of the asynchronous HTTP client and uses JSON.Net to provide flexible serialization behaviour. It tries to keep the domain language of CouchDb instead of bringing in generic repositories and other confusing stuff. MyCouch lets you work with raw JSON and/or entities/POCOS without requiring any implementation of interfaces, baseclasses etc. MyCouch provides you with some model conventions like injection of $doctype to the document. It is plug-gable. If you don't like some piece, then hook in your implementation instead.
+The asynchronous CouchDb client for .Net - builds on top of the asynchronous HTTP client and uses JSON.Net to provide flexible serialization behaviour. It tries to keep the domain language of CouchDb instead of bringing in generic repositories and other confusing stuff. MyCouch lets you work with raw JSON and/or entities/POCOS without requiring any implementation of interfaces, baseclasses etc. MyCouch provides you with some model conventions like injection of `$doctype` to the document. It is plug-gable. If you don't like some piece, then hook in your implementation instead.
 
 ## NuGet ##
 MyCouch is distributed via NuGet. You can [find the package here](https://nuget.org/packages/MyCouch/).
 
 ## Documentation ##
 The documentation is contained in the [project wiki](https://github.com/danielwertheim/mycouch/wiki).
+
+## Trello board
+A [public Trello board](https://trello.com/b/wuDUldwD/mycouch-main) is used instead of a "roadmap".
 
 ## Get up and running with the source ##
 The Sample has been written using Visual Studio 2012, targeting multiple platforms (.Net40, .Net45, Windows Store apps). .Net45 is the mainstream project. .Net4.0 uses Microsofts various portable class library (PCL) for adding missing BCL capabilities, the async HttpClient etc. to .Net4.0.
