@@ -6,7 +6,7 @@ using MyCouch.Serialization;
 
 namespace MyCouch
 {
-    public class ClientBootsraper
+    public class ClientBootstraper
     {
         /// <summary>
         /// Used e.g. for bootstraping components relying on serialization, e.g <see cref="ISerializer"/>
@@ -49,7 +49,7 @@ namespace MyCouch
         /// </summary>
         public Func<IConnection, IViews> ViewsFn { get; set; }
 
-        public ClientBootsraper()
+        public ClientBootstraper()
         {
             ConfigureAttachmentsFn();
             ConfigureDatabasesFn();

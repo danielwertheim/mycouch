@@ -92,7 +92,7 @@
     <Compile Include="IDatabases.cs" />
     <Compile Include="IEntities.cs" />
     <Compile Include="EntitySchemes\IEntityReflector.cs" />
-    <Compile Include="ClientBootsraper.cs" />
+    <Compile Include="ClientBootstraper.cs" />
     <Compile Include="MyCouchRuntime.cs" />
     <Compile Include="Net\AttachmentContent.cs" />
     <Compile Include="Commands\PutAttachmentCommand.cs" />
