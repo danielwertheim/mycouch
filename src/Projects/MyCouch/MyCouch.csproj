@@ -50,8 +50,11 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Commands\GetContinousChangesCommand.cs" />
     <Compile Include="Contexts\ApiContextBase.cs" />
+    <Compile Include="Contexts\Changes.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
+    <Compile Include="IChanges.cs" />
     <Compile Include="MyCouchException.cs" />
     <Compile Include="Responses\AttachmentResponse.cs" />
     <Compile Include="Contexts\Attachments.cs" />
@@ -69,6 +72,7 @@
     <Compile Include="Commands\PutDocumentCommand.cs" />
     <Compile Include="Commands\PutEntityCommand.cs" />
     <Compile Include="Configurations\ConnectionString.cs" />
+    <Compile Include="Responses\ChangesResponse.cs" />
     <Compile Include="Responses\DatabaseResponse.cs" />
     <Compile Include="Contexts\Databases.cs" />
     <Compile Include="Commands\DeleteAttachmentCommand.cs" />

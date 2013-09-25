@@ -81,6 +81,9 @@
     <Compile Include="..\MyCouch\Commands\GetAttachmentCommand.cs">
       <Link>Commands\GetAttachmentCommand.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch\Commands\GetContinousChangesCommand.cs">
+      <Link>Commands\GetContinousChangesCommand.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch\Commands\GetDocumentCommand.cs">
       <Link>Commands\GetDocumentCommand.cs</Link>
     </Compile>
@@ -113,6 +116,9 @@
     </Compile>
     <Compile Include="..\MyCouch\Contexts\Attachments.cs">
       <Link>Contexts\Attachments.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Contexts\Changes.cs">
+      <Link>Contexts\Changes.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch\Contexts\Databases.cs">
       <Link>Contexts\Databases.cs</Link>
@@ -180,6 +186,9 @@
     <Compile Include="..\MyCouch\IAttachments.cs">
       <Link>IAttachments.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch\IChanges.cs">
+      <Link>IChanges.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch\IClient.cs">
       <Link>IClient.cs</Link>
     </Compile>
@@ -239,6 +248,9 @@
     </Compile>
     <Compile Include="..\MyCouch\Responses\BulkResponse.cs">
       <Link>Responses\BulkResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Responses\ChangesResponse.cs">
+      <Link>Responses\ChangesResponse.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch\Responses\DatabaseResponse.cs">
       <Link>Responses\DatabaseResponse.cs</Link>

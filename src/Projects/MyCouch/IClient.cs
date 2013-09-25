@@ -1,5 +1,4 @@
 ﻿using System;
-using MyCouch.Net;
 using MyCouch.Serialization;
 
 namespace MyCouch
@@ -18,6 +17,11 @@ namespace MyCouch
         /// </summary>
         /// <remarks>If you want a serializer that supports entity conventions, check <see cref="IEntities.Serializer"/></remarks>
         ISerializer Serializer { get; }
+
+        /// <summary>
+        /// Changes oriented API operations, for getting or subscribinh to changes in the database.
+        /// </summary>
+        IChanges Changes { get; }
 
         /// <summary>
         /// Attachment oriented API operations, for accessing and managing attachments to documents.
