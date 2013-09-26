@@ -37,10 +37,13 @@ namespace MyCouch.Contexts
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
-            var req = CreateRequest(cmd);
-            var res = SendAsync(req);
-
-            return ProcessEntityResponse<T>(cmd, await res.ForAwait());
+            using (var req = CreateRequest(cmd))
+            {
+                using (var res = await SendAsync(req).ForAwait())
+                {
+                    return ProcessEntityResponse<T>(cmd, res);
+                }
+            }
         }
 
         public virtual Task<EntityResponse<T>> PostAsync<T>(T entity) where T : class
@@ -52,10 +55,14 @@ namespace MyCouch.Contexts
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
-            var req = CreateRequest(cmd);
-            var res = SendAsync(req);
 
-            return ProcessEntityResponse(cmd, await res.ForAwait());
+            using (var req = CreateRequest(cmd))
+            {
+                using (var res = await SendAsync(req).ForAwait())
+                {
+                    return ProcessEntityResponse(cmd, res);
+                }
+            }
         }
 
         public virtual Task<EntityResponse<T>> PutAsync<T>(T entity) where T : class
@@ -67,10 +74,13 @@ namespace MyCouch.Contexts
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
-            var req = CreateRequest(cmd);
-            var res = SendAsync(req);
-
-            return ProcessEntityResponse(cmd, await res.ForAwait());
+            using (var req = CreateRequest(cmd))
+            {
+                using (var res = await SendAsync(req).ForAwait())
+                {
+                    return ProcessEntityResponse(cmd, res);
+                }
+            }
         }
 
         public virtual Task<EntityResponse<T>> DeleteAsync<T>(T entity) where T : class
@@ -82,10 +92,13 @@ namespace MyCouch.Contexts
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
-            var req = CreateRequest(cmd);
-            var res = SendAsync(req);
-            
-            return ProcessEntityResponse(cmd, await res.ForAwait());
+            using (var req = CreateRequest(cmd))
+            {
+                using (var res = await SendAsync(req).ForAwait())
+                {
+                    return ProcessEntityResponse(cmd, res);
+                }
+            }
         }
 
         protected virtual string SerializeEntity<T>(T entity) where T : class

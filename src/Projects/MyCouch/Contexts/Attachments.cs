@@ -37,20 +37,26 @@ namespace MyCouch.Contexts
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
-            var req = CreateRequest(cmd);
-            var res = SendAsync(req);
-
-            return ProcessAttachmentResponse(await res.ForAwait());
+            using (var req = CreateRequest(cmd))
+            {
+                using (var res = await SendAsync(req).ForAwait())
+                {
+                    return ProcessAttachmentResponse(res);
+                }
+            }
         }
 
         public virtual async Task<DocumentHeaderResponse> PutAsync(PutAttachmentCommand cmd)
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
-            var req = CreateRequest(cmd);
-            var res = SendAsync(req);
-
-            return ProcessDocumentHeaderResponse(await res.ForAwait());
+            using (var req = CreateRequest(cmd))
+            {
+                using (var res = await SendAsync(req).ForAwait())
+                {
+                    return ProcessDocumentHeaderResponse(res);
+                }
+            }
         }
 
         public virtual Task<DocumentHeaderResponse> DeleteAsync(string docId, string docRev, string attachmentName)
@@ -62,10 +68,13 @@ namespace MyCouch.Contexts
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
-            var req = CreateRequest(cmd);
-            var res = SendAsync(req);
-
-            return ProcessDocumentHeaderResponse(await res.ForAwait());
+            using (var req = CreateRequest(cmd))
+            {
+                using (var res = await SendAsync(req).ForAwait())
+                {
+                    return ProcessDocumentHeaderResponse(res);
+                }
+            }
         }
 
         protected virtual HttpRequestMessage CreateRequest(GetAttachmentCommand cmd)

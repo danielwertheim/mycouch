@@ -54,8 +54,8 @@
     <Compile Include="..\MyCouch\Client.cs">
       <Link>Client.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\ClientBootsraper.cs">
-      <Link>ClientBootsraper.cs</Link>
+    <Compile Include="..\MyCouch\ClientBootstraper.cs">
+      <Link>ClientBootstraper.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch\ClientExecuteExtensions.cs">
       <Link>ClientExecuteExtensions.cs</Link>

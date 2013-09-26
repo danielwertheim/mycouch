@@ -22,18 +22,24 @@ namespace MyCouch.Contexts
 
         public virtual async Task<DatabaseResponse> PutAsync()
         {
-            var req = CreateRequest(HttpMethod.Put);
-            var res = SendAsync(req);
-
-            return ProcessResponse(await res.ForAwait());
+            using (var req = CreateRequest(HttpMethod.Put))
+            {
+                using (var res = await SendAsync(req).ForAwait())
+                {
+                    return ProcessResponse(res);
+                }
+            }
         }
 
         public virtual async Task<DatabaseResponse> DeleteAsync()
         {
-            var req = CreateRequest(HttpMethod.Delete);
-            var res = SendAsync(req);
-
-            return ProcessResponse(await res.ForAwait());
+            using (var req = CreateRequest(HttpMethod.Delete))
+            {
+                using (var res = await SendAsync(req).ForAwait())
+                {
+                    return ProcessResponse(res);
+                }
+            }
         }
 
         protected virtual HttpRequestMessage CreateRequest(HttpMethod method)

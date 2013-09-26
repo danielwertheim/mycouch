@@ -19,13 +19,13 @@ namespace MyCouch
 
         public Client(Uri uri) : this(new BasicHttpClientConnection(uri)) { }
 
-        public Client(IConnection connection, ClientBootsraper bootstraper = null)
+        public Client(IConnection connection, ClientBootstraper bootstraper = null)
         {
             Ensure.That(connection, "connection").IsNotNull();
 
             Connection = connection;
 
-            bootstraper = bootstraper ?? new ClientBootsraper();
+            bootstraper = bootstraper ?? new ClientBootstraper();
 
             Serializer = bootstraper.SerializerFn();
             Attachments = bootstraper.AttachmentsFn(Connection);

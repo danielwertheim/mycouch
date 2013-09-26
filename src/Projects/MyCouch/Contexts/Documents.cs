@@ -29,10 +29,13 @@ namespace MyCouch.Contexts
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
-            var req = CreateRequest(cmd);
-            var res = SendAsync(req);
-
-            return ProcessBulkResponse(await res.ForAwait());
+            using (var req = CreateRequest(cmd))
+            {
+                using (var res = await SendAsync(req).ForAwait())
+                {
+                    return ProcessBulkResponse(res);
+                }
+            }
         }
 
         public virtual Task<DocumentHeaderResponse> CopyAsync(string srcId, string newId)
@@ -49,10 +52,13 @@ namespace MyCouch.Contexts
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
-            var req = CreateRequest(cmd);
-            var res = SendAsync(req);
-
-            return ProcessDocumentHeaderResponse(await res.ForAwait());
+            using (var req = CreateRequest(cmd))
+            {
+                using (var res = await SendAsync(req).ForAwait())
+                {
+                    return ProcessDocumentHeaderResponse(res);
+                }
+            }
         }
 
         public virtual Task<DocumentHeaderResponse> ReplaceAsync(string srcId, string trgId, string trgRev)
@@ -69,10 +75,13 @@ namespace MyCouch.Contexts
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
-            var req = CreateRequest(cmd);
-            var res = SendAsync(req);
-
-            return ProcessDocumentHeaderResponse(await res.ForAwait());
+            using (var req = CreateRequest(cmd))
+            {
+                using (var res = await SendAsync(req).ForAwait())
+                {
+                    return ProcessDocumentHeaderResponse(res);
+                }
+            }
         }
 
         public virtual Task<DocumentHeaderResponse> ExistsAsync(string id, string rev = null)
@@ -84,10 +93,13 @@ namespace MyCouch.Contexts
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
-            var req = CreateRequest(cmd);
-            var res = SendAsync(req);
-
-            return ProcessDocumentHeaderResponse(await res.ForAwait());
+            using (var req = CreateRequest(cmd))
+            {
+                using (var res = await SendAsync(req).ForAwait())
+                {
+                    return ProcessDocumentHeaderResponse(res);
+                }
+            }
         }
 
         public virtual Task<DocumentResponse> GetAsync(string id, string rev = null)
@@ -99,10 +111,13 @@ namespace MyCouch.Contexts
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
-            var req = CreateRequest(cmd);
-            var res = SendAsync(req);
-
-            return ProcessDocumentResponse(await res.ForAwait());
+            using (var req = CreateRequest(cmd))
+            {
+                using (var res = await SendAsync(req).ForAwait())
+                {
+                    return ProcessDocumentResponse(res);
+                }
+            }
         }
 
         public virtual Task<DocumentHeaderResponse> PostAsync(string doc)
@@ -114,10 +129,13 @@ namespace MyCouch.Contexts
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
-            var req = CreateRequest(cmd);
-            var res = SendAsync(req);
-
-            return ProcessDocumentHeaderResponse(await res.ForAwait());
+            using (var req = CreateRequest(cmd))
+            {
+                using (var res = await SendAsync(req).ForAwait())
+                {
+                    return ProcessDocumentHeaderResponse(res);
+                }
+            }
         }
 
         public virtual Task<DocumentHeaderResponse> PutAsync(string id, string doc)
@@ -134,10 +152,13 @@ namespace MyCouch.Contexts
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
-            var req = CreateRequest(cmd);
-            var res = SendAsync(req);
-
-            return ProcessDocumentHeaderResponse(await res.ForAwait());
+            using (var req = CreateRequest(cmd))
+            {
+                using (var res = await SendAsync(req).ForAwait())
+                {
+                    return ProcessDocumentHeaderResponse(res);
+                }
+            }
         }
 
         public virtual Task<DocumentHeaderResponse> DeleteAsync(string id, string rev)
@@ -149,10 +170,13 @@ namespace MyCouch.Contexts
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
-            var req = CreateRequest(cmd);
-            var res = SendAsync(req);
-
-            return ProcessDocumentHeaderResponse(await res.ForAwait());
+            using (var req = CreateRequest(cmd))
+            {
+                using (var res = await SendAsync(req).ForAwait())
+                {
+                    return ProcessDocumentHeaderResponse(res);
+                }
+            }
         }
 
         protected virtual HttpRequestMessage CreateRequest(BulkCommand cmd)
