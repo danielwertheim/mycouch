@@ -29,20 +29,26 @@ namespace MyCouch.Contexts
         {
             Ensure.That(query, "query").IsNotNull();
 
-            var req = CreateRequest(query);
-            var res = SendAsync(req);
-
-            return ProcessHttpResponse(await res.ForAwait());
+            using (var req = CreateRequest(query))
+            {
+                using (var res = await SendAsync(req).ForAwait())
+                {
+                    return ProcessHttpResponse(res);
+                }
+            }
         }
 
         public virtual async Task<ViewQueryResponse<T>> QueryAsync<T>(ViewQuery query)
         {
             Ensure.That(query, "query").IsNotNull();
 
-            var req = CreateRequest(query);
-            var res = SendAsync(req);
-            
-            return ProcessHttpResponse<T>(await res.ForAwait());
+            using (var req = CreateRequest(query))
+            {
+                using (var res = await SendAsync(req).ForAwait())
+                {
+                    return ProcessHttpResponse<T>(res);
+                }
+            }
         }
 
         public virtual Task<JsonViewQueryResponse> QueryAsync(string designDocument, string viewname, Action<ViewQueryConfigurator> configurator)
