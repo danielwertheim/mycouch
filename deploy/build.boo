@@ -2,7 +2,7 @@ solution_name = "MyCouch-All"
 solution_dir_path = "../src"
 project_name = "MyCouch"
 builds_dir_path = "builds"
-build_version = "0.13.0"
+build_version = "0.13.1"
 build_config = "Release"
 build_name = "${project_name}-v${build_version}-${build_config}"
 build_dir_path = "${builds_dir_path}/${build_name}"
@@ -20,7 +20,7 @@ target compile:
         file: "${solution_dir_path}/${solution_name}.sln",
         targets: ("Clean", "Build"),
         configuration: build_config)
-        
+
 target copy:
     with FileList("${solution_dir_path}/Projects/${project_name}.Net40/bin/${build_config}"):
         .Include("${project_name}.*.{dll,xml}")
@@ -49,6 +49,6 @@ target testnetcore45:
 
 target zip:
     zip(build_dir_path, "${builds_dir_path}/${build_name}.zip")
-    
+
 target nuget_pack:
     exec(nuget, "pack ${project_name}.nuspec -version ${build_version} -basepath ${build_dir_path} -outputdirectory ${builds_dir_path}")
