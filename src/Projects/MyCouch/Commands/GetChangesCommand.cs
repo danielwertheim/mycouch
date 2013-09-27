@@ -14,7 +14,7 @@ namespace MyCouch.Commands
         /// <summary>
         /// Start the results from the change immediately after the given sequence number.
         /// </summary>
-        public int? Since { get; set; }
+        public long? Since { get; set; }
         /// <summary>
         /// Limit number of result rows to the specified value.
         /// </summary>

@@ -252,6 +252,9 @@
     <Compile Include="..\MyCouch\Responses\BulkResponse.cs">
       <Link>Responses\BulkResponse.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch\Responses\Change.cs">
+      <Link>Responses\Change.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch\Responses\ChangesResponse.cs">
       <Link>Responses\ChangesResponse.cs</Link>
     </Compile>
