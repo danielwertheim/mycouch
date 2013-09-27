@@ -1,7 +1,9 @@
-﻿using System;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Commands;
+using MyCouch.Extensions;
+using MyCouch.Net;
 using MyCouch.Responses;
 
 namespace MyCouch.Contexts
@@ -10,20 +12,41 @@ namespace MyCouch.Contexts
     {
         public Changes(IConnection connection) : base(connection) { }
 
-        public Task<ChangesResponse> GetContinuouslyAsync(Action<GetContinousChangesCommand> cfg = null)
+        public virtual Task<ChangesResponse> GetAsync(ChangesFeed feed)
         {
-            var cmd = new GetContinousChangesCommand();
-
-            if (cfg != null) cfg(cmd);
-
-            return GetAsync(cmd);
+            return GetAsync(new GetChangesCommand(feed));
         }
 
-        public async Task<ChangesResponse> GetAsync(GetContinousChangesCommand cmd)
+        public virtual async Task<ChangesResponse> GetAsync(GetChangesCommand cmd)
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
-            throw new NotImplementedException();
+            using (var req = CreateRequest(cmd))
+            {
+                using (var res = await SendAsync(req).ForAwait())
+                {
+                    return ProcessHttpResponse(res);
+                }
+            }
+        }
+
+        protected virtual HttpRequestMessage CreateRequest(GetChangesCommand cmd)
+        {
+            return new HttpRequest(HttpMethod.Get, GenerateRequestUrl(cmd));
+        }
+
+        protected virtual string GenerateRequestUrl(GetChangesCommand cmd)
+        {
+            var querystring = "";
+
+            return string.Format("{0}/_changes?{1}",
+                Connection.Address,
+                querystring);
+        }
+
+        protected virtual ChangesResponse ProcessHttpResponse(HttpResponseMessage response)
+        {
+            return null;
         }
     }
 }

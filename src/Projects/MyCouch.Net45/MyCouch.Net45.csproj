@@ -51,6 +51,9 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch\ChangesFeed.cs">
+      <Link>ChangesFeed.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch\Client.cs">
       <Link>Client.cs</Link>
     </Compile>
@@ -81,8 +84,8 @@
     <Compile Include="..\MyCouch\Commands\GetAttachmentCommand.cs">
       <Link>Commands\GetAttachmentCommand.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Commands\GetContinousChangesCommand.cs">
-      <Link>Commands\GetContinousChangesCommand.cs</Link>
+    <Compile Include="..\MyCouch\Commands\GetChangesCommand.cs">
+      <Link>Commands\GetChangesCommand.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch\Commands\GetDocumentCommand.cs">
       <Link>Commands\GetDocumentCommand.cs</Link>

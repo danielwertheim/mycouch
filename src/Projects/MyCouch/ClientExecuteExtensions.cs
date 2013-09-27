@@ -6,6 +6,11 @@ namespace MyCouch
 {
     public static class ClientExecuteExtensions
     {
+        public static Task<ChangesResponse> ExecuteAsync(this IClient client, GetChangesCommand cmd)
+        {
+            return client.Changes.GetAsync(cmd);
+        }
+
         public static Task<BulkResponse> ExecuteAsync(this IClient client, BulkCommand cmd)
         {
             return client.Documents.BulkAsync(cmd);

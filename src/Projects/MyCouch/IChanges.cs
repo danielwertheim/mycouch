@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MyCouch.Commands;
 using MyCouch.Responses;
 
@@ -10,7 +9,15 @@ namespace MyCouch
     /// </summary>
     public interface IChanges
     {
-        Task<ChangesResponse> GetContinuouslyAsync(Action<GetContinousChangesCommand> cfg = null);
-        Task<ChangesResponse> GetAsync(GetContinousChangesCommand cmd);
+        /// <summary>
+        /// Lets you consume changes from the _changes stream.
+        /// Use the <paramref name="feed"/> param to define how
+        /// you want to consume it.
+        /// For more options, use the overload <see cref="GetAsync(GetChangesCommand)"/>.
+        /// </summary>
+        /// <param name="feed"></param>
+        /// <returns></returns>
+        Task<ChangesResponse> GetAsync(ChangesFeed feed);
+        Task<ChangesResponse> GetAsync(GetChangesCommand cmd);
     }
 }
