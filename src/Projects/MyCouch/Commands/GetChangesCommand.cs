@@ -5,7 +5,7 @@ namespace MyCouch.Commands
 #if !NETFX_CORE
     [Serializable]
 #endif
-    public class GetChangesCommand
+    public class GetChangesCommand : ICommand
     {
         /// <summary>
         /// Select the type of feed to consume.

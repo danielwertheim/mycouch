@@ -6,7 +6,7 @@ namespace MyCouch.Commands
 #if !NETFX_CORE
     [Serializable]
 #endif
-    public class PutEntityCommand<T> where T : class
+    public class PutEntityCommand<T> : ICommand where T : class
     {
         public T Entity { get; set; }
 

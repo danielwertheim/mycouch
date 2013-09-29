@@ -8,7 +8,7 @@ namespace MyCouch.Commands
 #if !NETFX_CORE
     [Serializable]
 #endif
-    public class BulkCommand
+    public class BulkCommand : ICommand
     {
         protected readonly List<string> Docs;
 

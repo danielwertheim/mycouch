@@ -1,5 +1,6 @@
 ﻿using System;
 using EnsureThat;
+using MyCouch.Commands;
 using MyCouch.Querying;
 
 namespace MyCouch
@@ -7,7 +8,7 @@ namespace MyCouch
 #if !NETFX_CORE
     [Serializable]
 #endif
-    public class ViewQuery
+    public class ViewQuery : ICommand
     {
         public ViewIdentity View { get; private set; }
         public ViewQueryOptions Options { get; private set; }

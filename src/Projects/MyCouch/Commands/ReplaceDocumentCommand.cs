@@ -6,7 +6,7 @@ namespace MyCouch.Commands
 #if !NETFX_CORE
     [Serializable]
 #endif
-    public class ReplaceDocumentCommand
+    public class ReplaceDocumentCommand : ICommand
     {
         /// <summary>
         /// The Id of the document to copy.

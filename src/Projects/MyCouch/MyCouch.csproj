@@ -52,6 +52,7 @@
     </Compile>
     <Compile Include="ChangesFeed.cs" />
     <Compile Include="Commands\GetChangesCommand.cs" />
+    <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Contexts\ApiContextBase.cs" />
     <Compile Include="Contexts\Changes.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
