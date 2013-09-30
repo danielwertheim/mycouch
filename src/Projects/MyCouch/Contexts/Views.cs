@@ -3,8 +3,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Extensions;
-using MyCouch.Net;
 using MyCouch.Querying;
+using MyCouch.Requests;
 using MyCouch.Responses;
 using MyCouch.Responses.Factories;
 using MyCouch.Serialization;
@@ -13,6 +13,7 @@ namespace MyCouch.Contexts
 {
     public class Views : ApiContextBase, IViews
     {
+        protected ViewQueryRequestBuilder RequestBuilder { get; set; }
         protected JsonViewQueryResponseFactory JsonViewQueryResponseFactory { get; set; }
         protected ViewQueryResponseFactory ViewQueryResponseFactory { get; set; }
 
@@ -21,6 +22,7 @@ namespace MyCouch.Contexts
         {
             Ensure.That(serializationConfiguration, "serializationConfiguration").IsNotNull();
 
+            RequestBuilder = new ViewQueryRequestBuilder(Connection);
             JsonViewQueryResponseFactory = new JsonViewQueryResponseFactory(serializationConfiguration);
             ViewQueryResponseFactory = new ViewQueryResponseFactory(serializationConfiguration);
         }
@@ -84,26 +86,7 @@ namespace MyCouch.Contexts
         
         protected virtual HttpRequestMessage CreateRequest(ViewQuery query)
         {
-            return query.Options.HasKeys
-                ? new HttpRequest(HttpMethod.Post, GenerateRequestUrl(query)).SetContent(query.Options.GetKeysAsJsonObject())
-                : new HttpRequest(HttpMethod.Get, GenerateRequestUrl(query));
-        }
-
-        protected virtual string GenerateRequestUrl(ViewQuery query)
-        {
-            if (query is SystemViewQuery)
-            {
-                return string.Format("{0}/{1}?{2}",
-                    Connection.Address,
-                    query.View.Name,
-                    query.Options.GenerateQueryStringParams());
-            }
-
-            return string.Format("{0}/_design/{1}/_view/{2}?{3}",
-                Connection.Address,
-                query.View.DesignDocument,
-                query.View.Name,
-                query.Options.GenerateQueryStringParams());
+            return RequestBuilder.Create(query);
         }
 
         protected virtual JsonViewQueryResponse ProcessHttpResponse(HttpResponseMessage response)

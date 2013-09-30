@@ -55,9 +55,12 @@
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Contexts\ApiContextBase.cs" />
     <Compile Include="Contexts\Changes.cs" />
+    <Compile Include="Requests\IRequestBuilder.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="IChanges.cs" />
     <Compile Include="MyCouchException.cs" />
+    <Compile Include="Requests\RequestBuilderBase.cs" />
+    <Compile Include="Requests\ViewQueryRequestBuilder.cs" />
     <Compile Include="Responses\AttachmentResponse.cs" />
     <Compile Include="Contexts\Attachments.cs" />
     <Compile Include="ClientExecuteExtensions.cs" />
