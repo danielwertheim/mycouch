@@ -5,6 +5,7 @@ using EnsureThat;
 using MyCouch.Extensions;
 using MyCouch.Querying;
 using MyCouch.Requests;
+using MyCouch.Requests.Builders;
 using MyCouch.Responses;
 using MyCouch.Responses.Factories;
 using MyCouch.Serialization;

@@ -6,7 +6,7 @@ using EnsureThat;
 using MyCouch.Net;
 using MyCouch.Querying;
 
-namespace MyCouch.Requests
+namespace MyCouch.Requests.Builders
 {
     public class ViewQueryRequestBuilder :
         RequestBuilderBase,

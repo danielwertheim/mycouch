@@ -2,6 +2,7 @@
 using System.Net.Http;
 using FluentAssertions;
 using MyCouch.Requests;
+using MyCouch.Requests.Builders;
 using MyCouch.UnitTests.Fakes;
 using Xunit;
 

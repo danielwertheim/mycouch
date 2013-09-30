@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MyCouch.Extensions;
 
-namespace MyCouch.Requests
+namespace MyCouch.Requests.Builders
 {
     public abstract class RequestBuilderBase
     {
