@@ -32,9 +32,9 @@ namespace MyCouch.IntegrationTests.TestFixtures
 
             var tmp = Client.Documents.PostAsync(ClientTestData.Views.ArtistsViews).Result;
 
-            var touchView1 = new ViewQuery(ClientTestData.Views.ArtistsAlbumsViewId).Configure(q => q.Stale(Stale.UpdateAfter));
-            var touchView2 = new ViewQuery(ClientTestData.Views.ArtistsNameNoValueViewId).Configure(q => q.Stale(Stale.UpdateAfter));
-            var touchView3 = new ViewQuery(ClientTestData.Views.ArtistsTotalNumOfAlbumsViewId).Configure(q => q.Stale(Stale.UpdateAfter));
+            var touchView1 = new QueryViewRequest(ClientTestData.Views.ArtistsAlbumsViewId).Configure(q => q.Stale(Stale.UpdateAfter));
+            var touchView2 = new QueryViewRequest(ClientTestData.Views.ArtistsNameNoValueViewId).Configure(q => q.Stale(Stale.UpdateAfter));
+            var touchView3 = new QueryViewRequest(ClientTestData.Views.ArtistsTotalNumOfAlbumsViewId).Configure(q => q.Stale(Stale.UpdateAfter));
 
             Client.Views.QueryAsync(touchView1).Wait();
             Client.Views.QueryAsync(touchView2).Wait();

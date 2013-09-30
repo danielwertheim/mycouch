@@ -8,24 +8,24 @@ using Xunit;
 
 namespace MyCouch.UnitTests.Requests
 {
-    public class ViewQueryRequestBuilderTests : UnitTestsOf<ViewQueryRequestBuilder>
+    public class QueryViewRequestBuilderTests : UnitTestsOf<QueryViewRequestBuilder>
     {
-        public ViewQueryRequestBuilderTests()
+        public QueryViewRequestBuilderTests()
         {
             var cnFake = new ConnectionFake(new Uri("https://cdb.foo.com:5984"));
 
-            SUT = new ViewQueryRequestBuilder(cnFake);
+            SUT = new QueryViewRequestBuilder(cnFake);
         }
 
-        protected virtual ViewQuery CreateQuery()
+        protected virtual QueryViewRequest CreateQuery()
         {
-            return new ViewQuery("foodesigndoc", "barviewname");
+            return new QueryViewRequest("foodesigndoc", "barviewname");
         }
 
-        protected virtual void WithRequestFor(ViewQuery query, Action<HttpRequestMessage> a)
+        protected virtual void WithRequestFor(QueryViewRequest query, Action<HttpRequestMessage> a)
         {
-            using (var request = SUT.Create(query))
-                a(request);
+            using (var req = SUT.Create(query))
+                a(req);
         }
 
         [Fact]

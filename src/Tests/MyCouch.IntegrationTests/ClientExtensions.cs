@@ -6,7 +6,7 @@ namespace MyCouch.IntegrationTests
     {
         internal static void ClearAllDocuments(this IClient client)
         {
-            var query = new SystemViewQuery("_all_docs");
+            var query = new QuerySystemViewRequest("_all_docs");
             var response = client.Views.QueryAsync<dynamic>(query).Result;
 
             if (!response.IsEmpty)

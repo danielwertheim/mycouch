@@ -51,7 +51,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ChangesFeed.cs" />
-    <Compile Include="Requests\Builders\ViewQueryRequestBuilder.cs" />
+    <Compile Include="Requests\Builders\QueryViewRequestBuilder.cs" />
     <Compile Include="Requests\GetChangesRequest.cs" />
     <Compile Include="Requests\IRequest.cs" />
     <Compile Include="Contexts\ApiContextBase.cs" />
@@ -137,7 +137,7 @@
     <Compile Include="Serialization\JsonResponseMapper.cs" />
     <Compile Include="Serialization\JsonResponseMappings.cs" />
     <Compile Include="Serialization\SerializationConfiguration.cs" />
-    <Compile Include="SystemViewQuery.cs" />
+    <Compile Include="Requests\QuerySystemViewRequest.cs" />
     <Compile Include="Responses\Response.cs" />
     <Compile Include="Extensions\HttpExtensions.cs" />
     <Compile Include="Net\HttpRequest.cs" />
@@ -161,7 +161,7 @@
     <Compile Include="Extensions\TaskExtensions.cs" />
     <Compile Include="MyCouchUriBuilder.cs" />
     <Compile Include="ViewIdentity.cs" />
-    <Compile Include="ViewQuery.cs" />
+    <Compile Include="Requests\QueryViewRequest.cs" />
     <Compile Include="Querying\ViewQueryConfigurator.cs" />
     <Compile Include="Querying\ViewQueryOptions.cs" />
     <Compile Include="Responses\ViewQueryResponse.cs" />

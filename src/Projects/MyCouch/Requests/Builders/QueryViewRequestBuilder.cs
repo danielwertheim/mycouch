@@ -8,20 +8,20 @@ using MyCouch.Querying;
 
 namespace MyCouch.Requests.Builders
 {
-    public class ViewQueryRequestBuilder :
+    public class QueryViewRequestBuilder :
         RequestBuilderBase,
-        IRequestBuilder<ViewQuery>
+        IRequestBuilder<QueryViewRequest>
     {
         protected readonly IConnection Connection;
 
-        public ViewQueryRequestBuilder(IConnection connection)
+        public QueryViewRequestBuilder(IConnection connection)
         {
             Ensure.That(connection, "connection").IsNotNull();
 
             Connection = connection;
         }
 
-        public virtual HttpRequestMessage Create(ViewQuery cmd)
+        public virtual HttpRequestMessage Create(QueryViewRequest cmd)
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
@@ -30,9 +30,9 @@ namespace MyCouch.Requests.Builders
                 : new HttpRequest(HttpMethod.Get, GenerateRequestUrl(cmd));
         }
 
-        protected virtual string GenerateRequestUrl(ViewQuery query)
+        protected virtual string GenerateRequestUrl(QueryViewRequest query)
         {
-            if (query is SystemViewQuery)
+            if (query is QuerySystemViewRequest)
             {
                 return string.Format("{0}/{1}?{2}",
                     Connection.Address,
@@ -52,7 +52,7 @@ namespace MyCouch.Requests.Builders
         /// with POST of keys against views.
         /// </summary>
         /// <returns></returns>
-        protected virtual string GetKeysAsJsonObject(ViewQuery query)
+        protected virtual string GetKeysAsJsonObject(QueryViewRequest query)
         {
             if (!query.Options.HasKeys)
                 return "{}";
@@ -66,7 +66,7 @@ namespace MyCouch.Requests.Builders
         /// </summary>
         /// <remarks><see cref="ViewQueryOptions.Keys"/> are not included in this string.</remarks>
         /// <returns></returns>
-        protected virtual string GenerateQueryStringParams(ViewQuery query)
+        protected virtual string GenerateQueryStringParams(QueryViewRequest query)
         {
             return string.Join("&", ToJsonKeyValues(query)
                 .Where(kv => kv.Key != KeyNames.Keys)
@@ -74,11 +74,11 @@ namespace MyCouch.Requests.Builders
         }
 
         /// <summary>
-        /// Returns all configured options of <see cref="ViewQuery.Options"/> as key values.
+        /// Returns all configured options of <see cref="QueryViewRequest.Options"/> as key values.
         /// The values are formatted to JSON-compatible strings.
         /// </summary>
         /// <returns></returns>
-        protected virtual IDictionary<string, string> ToJsonKeyValues(ViewQuery query)
+        protected virtual IDictionary<string, string> ToJsonKeyValues(QueryViewRequest query)
         {
             var kvs = new Dictionary<string, string>();
 

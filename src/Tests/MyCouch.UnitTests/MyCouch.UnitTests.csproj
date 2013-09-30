@@ -58,7 +58,7 @@
     <Compile Include="Requests\BulkRequestTests.cs" />
     <Compile Include="Fakes\ConnectionFake.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Requests\ViewQueryRequestBuilderTests.cs" />
+    <Compile Include="Requests\QueryViewRequestBuilderTests.cs" />
     <Compile Include="Querying\ViewQueryConfiguratorTests.cs" />
     <Compile Include="Querying\ViewQueryOptionsTests.cs" />
     <Compile Include="Serialization\ViewQueryResponseRowsDeserializerTestsTests.cs" />

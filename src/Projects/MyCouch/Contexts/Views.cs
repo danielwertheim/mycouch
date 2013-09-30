@@ -14,7 +14,7 @@ namespace MyCouch.Contexts
 {
     public class Views : ApiContextBase, IViews
     {
-        protected ViewQueryRequestBuilder RequestBuilder { get; set; }
+        protected QueryViewRequestBuilder RequestBuilder { get; set; }
         protected JsonViewQueryResponseFactory JsonViewQueryResponseFactory { get; set; }
         protected ViewQueryResponseFactory ViewQueryResponseFactory { get; set; }
 
@@ -23,12 +23,12 @@ namespace MyCouch.Contexts
         {
             Ensure.That(serializationConfiguration, "serializationConfiguration").IsNotNull();
 
-            RequestBuilder = new ViewQueryRequestBuilder(Connection);
+            RequestBuilder = new QueryViewRequestBuilder(Connection);
             JsonViewQueryResponseFactory = new JsonViewQueryResponseFactory(serializationConfiguration);
             ViewQueryResponseFactory = new ViewQueryResponseFactory(serializationConfiguration);
         }
 
-        public virtual async Task<JsonViewQueryResponse> QueryAsync(ViewQuery query)
+        public virtual async Task<JsonViewQueryResponse> QueryAsync(QueryViewRequest query)
         {
             Ensure.That(query, "query").IsNotNull();
 
@@ -41,7 +41,7 @@ namespace MyCouch.Contexts
             }
         }
 
-        public virtual async Task<ViewQueryResponse<T>> QueryAsync<T>(ViewQuery query)
+        public virtual async Task<ViewQueryResponse<T>> QueryAsync<T>(QueryViewRequest query)
         {
             Ensure.That(query, "query").IsNotNull();
 
@@ -80,12 +80,12 @@ namespace MyCouch.Contexts
             return QueryAsync<T>(query);
         }
 
-        protected virtual ViewQuery CreateQuery(string designDocument, string viewname)
+        protected virtual QueryViewRequest CreateQuery(string designDocument, string viewname)
         {
-            return new ViewQuery(designDocument, viewname);
+            return new QueryViewRequest(designDocument, viewname);
         }
         
-        protected virtual HttpRequestMessage CreateRequest(ViewQuery query)
+        protected virtual HttpRequestMessage CreateRequest(QueryViewRequest query)
         {
             return RequestBuilder.Create(query);
         }
