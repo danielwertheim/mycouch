@@ -1,10 +1,10 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 using EnsureThat;
-using MyCouch.Commands;
 using MyCouch.EntitySchemes;
 using MyCouch.Extensions;
 using MyCouch.Net;
+using MyCouch.Requests;
 using MyCouch.Responses;
 using MyCouch.Responses.Factories;
 using MyCouch.Serialization;
@@ -30,10 +30,10 @@ namespace MyCouch.Contexts
 
         public virtual Task<EntityResponse<T>> GetAsync<T>(string id, string rev = null) where T : class
         {
-            return GetAsync<T>(new GetEntityCommand(id, rev));
+            return GetAsync<T>(new GetEntityRequest(id, rev));
         }
 
-        public virtual async Task<EntityResponse<T>> GetAsync<T>(GetEntityCommand cmd) where T : class
+        public virtual async Task<EntityResponse<T>> GetAsync<T>(GetEntityRequest cmd) where T : class
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
@@ -48,10 +48,10 @@ namespace MyCouch.Contexts
 
         public virtual Task<EntityResponse<T>> PostAsync<T>(T entity) where T : class
         {
-            return PostAsync(new PostEntityCommand<T>(entity));
+            return PostAsync(new PostEntityRequest<T>(entity));
         }
 
-        public virtual async Task<EntityResponse<T>> PostAsync<T>(PostEntityCommand<T> cmd) where T : class
+        public virtual async Task<EntityResponse<T>> PostAsync<T>(PostEntityRequest<T> cmd) where T : class
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
@@ -67,10 +67,10 @@ namespace MyCouch.Contexts
 
         public virtual Task<EntityResponse<T>> PutAsync<T>(T entity) where T : class
         {
-            return PutAsync(new PutEntityCommand<T>(entity));
+            return PutAsync(new PutEntityRequest<T>(entity));
         }
 
-        public virtual async Task<EntityResponse<T>> PutAsync<T>(PutEntityCommand<T> cmd) where T : class
+        public virtual async Task<EntityResponse<T>> PutAsync<T>(PutEntityRequest<T> cmd) where T : class
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
@@ -85,10 +85,10 @@ namespace MyCouch.Contexts
 
         public virtual Task<EntityResponse<T>> DeleteAsync<T>(T entity) where T : class
         {
-            return DeleteAsync(new DeleteEntityCommand<T>(entity));
+            return DeleteAsync(new DeleteEntityRequest<T>(entity));
         }
 
-        public virtual async Task<EntityResponse<T>> DeleteAsync<T>(DeleteEntityCommand<T> cmd) where T : class
+        public virtual async Task<EntityResponse<T>> DeleteAsync<T>(DeleteEntityRequest<T> cmd) where T : class
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
@@ -106,7 +106,7 @@ namespace MyCouch.Contexts
             return Serializer.Serialize(entity);
         }
 
-        protected virtual HttpRequestMessage CreateRequest(GetEntityCommand cmd)
+        protected virtual HttpRequestMessage CreateRequest(GetEntityRequest cmd)
         {
             var req = new HttpRequest(HttpMethod.Get, GenerateRequestUrl(cmd.Id, cmd.Rev));
 
@@ -115,7 +115,7 @@ namespace MyCouch.Contexts
             return req;
         }
 
-        protected virtual HttpRequestMessage CreateRequest<T>(PostEntityCommand<T> cmd) where T : class
+        protected virtual HttpRequestMessage CreateRequest<T>(PostEntityRequest<T> cmd) where T : class
         {
             var req = new HttpRequest(HttpMethod.Post, GenerateRequestUrl());
 
@@ -124,7 +124,7 @@ namespace MyCouch.Contexts
             return req;
         }
 
-        protected virtual HttpRequestMessage CreateRequest<T>(PutEntityCommand<T> cmd) where T : class
+        protected virtual HttpRequestMessage CreateRequest<T>(PutEntityRequest<T> cmd) where T : class
         {
             var id = Reflector.IdMember.GetValueFrom(cmd.Entity);
             var rev = Reflector.RevMember.GetValueFrom(cmd.Entity);
@@ -136,7 +136,7 @@ namespace MyCouch.Contexts
             return req;
         }
 
-        protected virtual HttpRequestMessage CreateRequest<T>(DeleteEntityCommand<T> cmd) where T : class
+        protected virtual HttpRequestMessage CreateRequest<T>(DeleteEntityRequest<T> cmd) where T : class
         {
             var entityId = Reflector.IdMember.GetValueFrom(cmd.Entity);
             Ensure.That(entityId, "entityId").IsNotNullOrWhiteSpace();
@@ -159,12 +159,12 @@ namespace MyCouch.Contexts
                 rev == null ? string.Empty : string.Concat("?rev=", rev));
         }
 
-        protected virtual EntityResponse<T> ProcessEntityResponse<T>(GetEntityCommand cmd, HttpResponseMessage response) where T : class
+        protected virtual EntityResponse<T> ProcessEntityResponse<T>(GetEntityRequest cmd, HttpResponseMessage response) where T : class
         {
             return EntityResponseFactory.Create<T>(response);
         }
 
-        protected virtual EntityResponse<T> ProcessEntityResponse<T>(PostEntityCommand<T> cmd, HttpResponseMessage response) where T : class
+        protected virtual EntityResponse<T> ProcessEntityResponse<T>(PostEntityRequest<T> cmd, HttpResponseMessage response) where T : class
         {
             var entityResponse = EntityResponseFactory.Create<T>(response);
             entityResponse.Entity = cmd.Entity;
@@ -178,7 +178,7 @@ namespace MyCouch.Contexts
             return entityResponse;
         }
 
-        protected virtual EntityResponse<T> ProcessEntityResponse<T>(PutEntityCommand<T> cmd, HttpResponseMessage response) where T : class
+        protected virtual EntityResponse<T> ProcessEntityResponse<T>(PutEntityRequest<T> cmd, HttpResponseMessage response) where T : class
         {
             var entityResponse = EntityResponseFactory.Create<T>(response);
             entityResponse.Entity = cmd.Entity;
@@ -189,7 +189,7 @@ namespace MyCouch.Contexts
             return entityResponse;
         }
 
-        protected virtual EntityResponse<T> ProcessEntityResponse<T>(DeleteEntityCommand<T> cmd, HttpResponseMessage response) where T : class
+        protected virtual EntityResponse<T> ProcessEntityResponse<T>(DeleteEntityRequest<T> cmd, HttpResponseMessage response) where T : class
         {
             var entityResponse = EntityResponseFactory.Create<T>(response);
             entityResponse.Entity = cmd.Entity;

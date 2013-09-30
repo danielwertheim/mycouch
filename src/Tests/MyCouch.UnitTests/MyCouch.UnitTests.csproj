@@ -55,7 +55,7 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="BulkCommandTests.cs" />
+    <Compile Include="Requests\BulkRequestTests.cs" />
     <Compile Include="Fakes\ConnectionFake.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requests\ViewQueryRequestBuilderTests.cs" />

@@ -1,4 +1,4 @@
-﻿using MyCouch.Commands;
+﻿using MyCouch.Requests;
 
 namespace MyCouch.IntegrationTests
 {
@@ -11,7 +11,7 @@ namespace MyCouch.IntegrationTests
 
             if (!response.IsEmpty)
             {
-                var bulkCmd = new BulkCommand();
+                var bulkCmd = new BulkRequest();
 
                 foreach (var row in response.Rows)
                     bulkCmd.Delete(row.Id, row.Value.rev.ToString());

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
-using MyCouch.Commands;
 using MyCouch.EntitySchemes;
+using MyCouch.Requests;
 using MyCouch.Responses;
 using MyCouch.Serialization;
 
@@ -47,7 +47,7 @@ namespace MyCouch
         /// <typeparam name="T">The type you want the document deserialized as.</typeparam>
         /// <param name="cmd"></param>
         /// <returns></returns>
-        Task<EntityResponse<T>> GetAsync<T>(GetEntityCommand cmd) where T : class;
+        Task<EntityResponse<T>> GetAsync<T>(GetEntityRequest cmd) where T : class;
 
         /// <summary>
         /// Inserts sent entity. The resulting JSON that is inserted will have some additional
@@ -65,7 +65,7 @@ namespace MyCouch
         /// <typeparam name="T"></typeparam>
         /// <param name="cmd"></param>
         /// <returns></returns>
-        Task<EntityResponse<T>> PostAsync<T>(PostEntityCommand<T> cmd) where T : class;
+        Task<EntityResponse<T>> PostAsync<T>(PostEntityRequest<T> cmd) where T : class;
 
         /// <summary>
         /// Inserts or Updates sent entity and returns it in the response, and if successful, then with an
@@ -83,7 +83,7 @@ namespace MyCouch
         /// <typeparam name="T"></typeparam>
         /// <param name="cmd"></param>
         /// <returns></returns>
-        Task<EntityResponse<T>> PutAsync<T>(PutEntityCommand<T> cmd) where T : class;
+        Task<EntityResponse<T>> PutAsync<T>(PutEntityRequest<T> cmd) where T : class;
 
         /// <summary>
         /// Deletes the document that matches the values of the document _id and _rev extracted from <paramref name="entity"/>.

@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace MyCouch.Commands
+namespace MyCouch.Requests
 {
 #if !NETFX_CORE
     [Serializable]
 #endif
-    public class GetChangesCommand : ICommand
+    public class GetChangesRequest : IRequest
     {
         /// <summary>
         /// Select the type of feed to consume.
@@ -50,7 +50,7 @@ namespace MyCouch.Commands
         /// </summary>
         public string Filter { get; set; }
 
-        public GetChangesCommand(ChangesFeed feed)
+        public GetChangesRequest(ChangesFeed feed)
         {
             Feed = feed;
         }

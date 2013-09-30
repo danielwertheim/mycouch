@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using MyCouch.Commands;
+using MyCouch.Requests;
 using MyCouch.Responses;
 
 namespace MyCouch
@@ -31,14 +31,14 @@ namespace MyCouch
         /// </summary>
         /// <param name="cmd"></param>
         /// <returns></returns>
-        Task<AttachmentResponse> GetAsync(GetAttachmentCommand cmd);
+        Task<AttachmentResponse> GetAsync(GetAttachmentRequest cmd);
 
         /// <summary>
         /// Used to add an attachment to an existing document.
         /// </summary>
         /// <param name="cmd"></param>
         /// <returns></returns>
-        Task<DocumentHeaderResponse> PutAsync(PutAttachmentCommand cmd);
+        Task<DocumentHeaderResponse> PutAsync(PutAttachmentRequest cmd);
 
         /// <summary>
         /// Used to delete an existing attachment.
@@ -54,6 +54,6 @@ namespace MyCouch
         /// </summary>
         /// <param name="cmd"></param>
         /// <returns></returns>
-        Task<DocumentHeaderResponse> DeleteAsync(DeleteAttachmentCommand cmd);
+        Task<DocumentHeaderResponse> DeleteAsync(DeleteAttachmentRequest cmd);
     }
 }

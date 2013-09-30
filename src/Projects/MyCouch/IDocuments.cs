@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using MyCouch.Commands;
+using MyCouch.Requests;
 using MyCouch.Responses;
 
 namespace MyCouch
@@ -16,12 +16,12 @@ namespace MyCouch
         /// </summary>
         /// <param name="cmd"></param>
         /// <returns></returns>
-        Task<BulkResponse> BulkAsync(BulkCommand cmd);
+        Task<BulkResponse> BulkAsync(BulkRequest cmd);
 
         /// <summary>
         /// Copies the document having a document id matching <paramref name="srcId"/> to a new document
         /// with a new id being <paramref name="newId"/>.
-        /// For more options use <see cref="CopyAsync(CopyDocumentCommand)"/> instead.
+        /// For more options use <see cref="CopyAsync(CopyDocumentRequest)"/> instead.
         /// </summary>
         /// <param name="srcId"></param>
         /// <param name="newId"></param>
@@ -31,7 +31,7 @@ namespace MyCouch
         /// <summary>
         /// Copies the document having a document id matching <paramref name="srcId"/> and rev matching <paramref name="srcRev"/>
         /// to a new document with a new id being <paramref name="newId"/>.
-        /// For more options use <see cref="CopyAsync(CopyDocumentCommand)"/> instead.
+        /// For more options use <see cref="CopyAsync(CopyDocumentRequest)"/> instead.
         /// </summary>
         /// <param name="srcId"></param>
         /// <param name="srcRev"></param>
@@ -46,7 +46,7 @@ namespace MyCouch
         /// </summary>
         /// <param name="cmd"></param>
         /// <returns></returns>
-        Task<DocumentHeaderResponse> CopyAsync(CopyDocumentCommand cmd);
+        Task<DocumentHeaderResponse> CopyAsync(CopyDocumentRequest cmd);
 
         /// <summary>
         /// Replaces the document having a document id matching <paramref name="trgId"/> and rev <paramref name="trgRev"/>
@@ -76,7 +76,7 @@ namespace MyCouch
         /// </summary>
         /// <param name="cmd"></param>
         /// <returns></returns>
-        Task<DocumentHeaderResponse> ReplaceAsync(ReplaceDocumentCommand cmd);
+        Task<DocumentHeaderResponse> ReplaceAsync(ReplaceDocumentRequest cmd);
 
         /// <summary>
         /// Makes a simple HEAD request which doesn not include the actual JSON document,
@@ -94,7 +94,7 @@ namespace MyCouch
         /// </summary>
         /// <param name="cmd"></param>
         /// <returns></returns>
-        Task<DocumentHeaderResponse> ExistsAsync(DocumentExistsCommand cmd);
+        Task<DocumentHeaderResponse> ExistsAsync(DocumentExistsRequest cmd);
 
         /// <summary>
         /// Gets untyped response with the JSON representation of the document.
@@ -112,7 +112,7 @@ namespace MyCouch
         /// </summary>
         /// <param name="cmd"></param>
         /// <returns></returns>
-        Task<DocumentResponse> GetAsync(GetDocumentCommand cmd);
+        Task<DocumentResponse> GetAsync(GetDocumentRequest cmd);
 
         /// <summary>
         /// Inserts sent JSON document as it is. No additional metadata like doctype will be added.
@@ -126,7 +126,7 @@ namespace MyCouch
         /// </summary>
         /// <param name="cmd"></param>
         /// <returns></returns>
-        Task<DocumentHeaderResponse> PostAsync(PostDocumentCommand cmd);
+        Task<DocumentHeaderResponse> PostAsync(PostDocumentRequest cmd);
 
         /// <summary>
         /// Inserts or Updates. The document <paramref name="doc"/> needs to contain the _id and for updates also the _rev field.
@@ -151,7 +151,7 @@ namespace MyCouch
         /// </summary>
         /// <param name="cmd"></param>
         /// <returns></returns>
-        Task<DocumentHeaderResponse> PutAsync(PutDocumentCommand cmd);
+        Task<DocumentHeaderResponse> PutAsync(PutDocumentRequest cmd);
 
         /// <summary>
         /// Deletes the document that matches sent <paramref name="id"/> and <paramref name="rev"/>.
@@ -166,6 +166,6 @@ namespace MyCouch
         /// </summary>
         /// <param name="cmd"></param>
         /// <returns></returns>
-        Task<DocumentHeaderResponse> DeleteAsync(DeleteDocumentCommand cmd);
+        Task<DocumentHeaderResponse> DeleteAsync(DeleteDocumentRequest cmd);
     }
 }

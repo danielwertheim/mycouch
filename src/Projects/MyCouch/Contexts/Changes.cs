@@ -2,8 +2,8 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using EnsureThat;
-using MyCouch.Commands;
 using MyCouch.Extensions;
+using MyCouch.Requests;
 using MyCouch.Responses;
 
 namespace MyCouch.Contexts
@@ -14,10 +14,10 @@ namespace MyCouch.Contexts
 
         public virtual Task<ChangesResponse> GetAsync(ChangesFeed feed)
         {
-            return GetAsync(new GetChangesCommand(feed));
+            return GetAsync(new GetChangesRequest(feed));
         }
 
-        public virtual async Task<ChangesResponse> GetAsync(GetChangesCommand cmd)
+        public virtual async Task<ChangesResponse> GetAsync(GetChangesRequest cmd)
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
@@ -30,7 +30,7 @@ namespace MyCouch.Contexts
             }
         }
 
-        protected virtual HttpRequestMessage CreateRequest(GetChangesCommand cmd)
+        protected virtual HttpRequestMessage CreateRequest(GetChangesRequest cmd)
         {
             throw new NotImplementedException();
         }

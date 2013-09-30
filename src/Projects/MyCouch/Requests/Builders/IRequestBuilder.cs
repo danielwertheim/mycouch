@@ -1,9 +1,8 @@
 ﻿using System.Net.Http;
-using MyCouch.Commands;
 
 namespace MyCouch.Requests.Builders
 {
-    public interface IRequestBuilder<in T> where T : ICommand
+    public interface IRequestBuilder<in T> where T : IRequest
     {
         HttpRequestMessage Create(T cmd);
     }

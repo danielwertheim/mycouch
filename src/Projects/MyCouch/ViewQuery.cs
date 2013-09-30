@@ -1,14 +1,14 @@
 ﻿using System;
 using EnsureThat;
-using MyCouch.Commands;
 using MyCouch.Querying;
+using MyCouch.Requests;
 
 namespace MyCouch
 {
 #if !NETFX_CORE
     [Serializable]
 #endif
-    public class ViewQuery : ICommand
+    public class ViewQuery : IRequest
     {
         public ViewIdentity View { get; private set; }
         public ViewQueryOptions Options { get; private set; }

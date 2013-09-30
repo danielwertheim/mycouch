@@ -1,9 +1,9 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 using EnsureThat;
-using MyCouch.Commands;
 using MyCouch.Extensions;
 using MyCouch.Net;
+using MyCouch.Requests;
 using MyCouch.Responses;
 using MyCouch.Responses.Factories;
 using MyCouch.Serialization;
@@ -25,15 +25,15 @@ namespace MyCouch.Contexts
 
         public virtual Task<AttachmentResponse> GetAsync(string docId, string attachmentName)
         {
-            return GetAsync(new GetAttachmentCommand(docId, attachmentName));
+            return GetAsync(new GetAttachmentRequest(docId, attachmentName));
         }
 
         public virtual Task<AttachmentResponse> GetAsync(string docId, string docRev, string attachmentName)
         {
-            return GetAsync(new GetAttachmentCommand(docId, docRev, attachmentName));
+            return GetAsync(new GetAttachmentRequest(docId, docRev, attachmentName));
         }
 
-        public virtual async Task<AttachmentResponse> GetAsync(GetAttachmentCommand cmd)
+        public virtual async Task<AttachmentResponse> GetAsync(GetAttachmentRequest cmd)
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
@@ -46,7 +46,7 @@ namespace MyCouch.Contexts
             }
         }
 
-        public virtual async Task<DocumentHeaderResponse> PutAsync(PutAttachmentCommand cmd)
+        public virtual async Task<DocumentHeaderResponse> PutAsync(PutAttachmentRequest cmd)
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
@@ -61,10 +61,10 @@ namespace MyCouch.Contexts
 
         public virtual Task<DocumentHeaderResponse> DeleteAsync(string docId, string docRev, string attachmentName)
         {
-            return DeleteAsync(new DeleteAttachmentCommand(docId, docRev, attachmentName));
+            return DeleteAsync(new DeleteAttachmentRequest(docId, docRev, attachmentName));
         }
 
-        public virtual async Task<DocumentHeaderResponse> DeleteAsync(DeleteAttachmentCommand cmd)
+        public virtual async Task<DocumentHeaderResponse> DeleteAsync(DeleteAttachmentRequest cmd)
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
@@ -77,7 +77,7 @@ namespace MyCouch.Contexts
             }
         }
 
-        protected virtual HttpRequestMessage CreateRequest(GetAttachmentCommand cmd)
+        protected virtual HttpRequestMessage CreateRequest(GetAttachmentRequest cmd)
         {
             var req = new HttpRequest(HttpMethod.Get, GenerateRequestUrl(cmd.DocId, cmd.DocRev, cmd.Name));
 
@@ -86,7 +86,7 @@ namespace MyCouch.Contexts
             return req;
         }
 
-        protected virtual HttpRequestMessage CreateRequest(PutAttachmentCommand cmd)
+        protected virtual HttpRequestMessage CreateRequest(PutAttachmentRequest cmd)
         {
             var req = new HttpRequest(HttpMethod.Put, GenerateRequestUrl(cmd.DocId, cmd.DocRev, cmd.Name));
 
@@ -96,7 +96,7 @@ namespace MyCouch.Contexts
             return req;
         }
 
-        protected virtual HttpRequestMessage CreateRequest(DeleteAttachmentCommand cmd)
+        protected virtual HttpRequestMessage CreateRequest(DeleteAttachmentRequest cmd)
         {
             var req = new HttpRequest(HttpMethod.Delete, GenerateRequestUrl(cmd.DocId, cmd.DocRev, cmd.Name));
 

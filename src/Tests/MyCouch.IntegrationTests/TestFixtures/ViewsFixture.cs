@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
-using MyCouch.Commands;
 using MyCouch.Querying;
+using MyCouch.Requests;
 using MyCouch.Testing.Model;
 using MyCouch.Testing.TestData;
 
@@ -19,7 +19,7 @@ namespace MyCouch.IntegrationTests.TestFixtures
 
             Client = IntegrationTestsRuntime.CreateClient();
 
-            var bulk = new BulkCommand();
+            var bulk = new BulkRequest();
             bulk.Include(Artists.Select(i => Client.Entities.Serializer.Serialize(i)).ToArray());
 
             var bulkResponse = Client.Documents.BulkAsync(bulk).Result;
