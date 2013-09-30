@@ -147,7 +147,7 @@
     <Compile Include="IClient.cs" />
     <Compile Include="IDocuments.cs" />
     <Compile Include="IViews.cs" />
-    <Compile Include="Querying\Stale.cs" />
+    <Compile Include="Stale.cs" />
     <Compile Include="Responses\JsonViewQueryResponse.cs" />
     <Compile Include="Serialization\SerializationContractResolver.cs" />
     <Compile Include="Serialization\ISerializer.cs" />
