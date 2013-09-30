@@ -146,6 +146,9 @@
     <Compile Include="..\mycouch\commands\GetEntityCommand.cs">
       <Link>Commands\GetEntityCommand.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch\Commands\ICommand.cs">
+      <Link>Commands\ICommand.cs</Link>
+    </Compile>
     <Compile Include="..\mycouch\commands\PostDocumentCommand.cs">
       <Link>Commands\PostDocumentCommand.cs</Link>
     </Compile>
@@ -290,14 +293,20 @@
     <Compile Include="..\MyCouch\Now.cs">
       <Link>Now.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\querying\Stale.cs">
-      <Link>Querying\Stale.cs</Link>
-    </Compile>
     <Compile Include="..\mycouch\querying\ViewQueryConfigurator.cs">
       <Link>Querying\ViewQueryConfigurator.cs</Link>
     </Compile>
     <Compile Include="..\mycouch\querying\ViewQueryOptions.cs">
       <Link>Querying\ViewQueryOptions.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\requests\IRequestBuilder.cs">
+      <Link>Requests\IRequestBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\requests\RequestBuilderBase.cs">
+      <Link>Requests\RequestBuilderBase.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\requests\ViewQueryRequestBuilder.cs">
+      <Link>Requests\ViewQueryRequestBuilder.cs</Link>
     </Compile>
     <Compile Include="..\mycouch\responses\AttachmentResponse.cs">
       <Link>Responses\AttachmentResponse.cs</Link>
@@ -427,6 +436,9 @@
     </Compile>
     <Compile Include="..\mycouch\serialization\writers\MyCouchJsonWriter.cs">
       <Link>Serialization\Writers\MyCouchJsonWriter.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Stale.cs">
+      <Link>Stale.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch\SystemViewQuery.cs">
       <Link>SystemViewQuery.cs</Link>

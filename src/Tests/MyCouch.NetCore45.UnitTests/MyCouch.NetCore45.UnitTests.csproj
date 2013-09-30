@@ -123,6 +123,9 @@
     <Compile Include="..\mycouch.unittests\querying\ViewQueryOptionsTests.cs">
       <Link>Querying\ViewQueryOptionsTests.cs</Link>
     </Compile>
+    <Compile Include="..\mycouch.unittests\requests\ViewQueryRequestBuilderTests.cs">
+      <Link>Requests\ViewQueryRequestBuilderTests.cs</Link>
+    </Compile>
     <Compile Include="..\mycouch.unittests\schemes\EntityIdMemberTests.cs">
       <Link>Schemes\EntityIdMemberTests.cs</Link>
     </Compile>
