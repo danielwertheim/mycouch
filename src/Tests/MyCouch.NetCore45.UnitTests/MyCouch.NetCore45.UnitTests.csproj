@@ -117,6 +117,9 @@
     <Compile Include="..\MyCouch.UnitTests\BulkCommandTests.cs">
       <Link>BulkCommandTests.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.UnitTests\Fakes\ConnectionFake.cs">
+      <Link>Fakes\ConnectionFake.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.UnitTests\Querying\ViewQueryConfiguratorTests.cs">
       <Link>Querying\ViewQueryConfiguratorTests.cs</Link>
     </Compile>
@@ -192,6 +195,7 @@
       <Name>MyCouch.NetCore45.Testing</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
   </PropertyGroup>

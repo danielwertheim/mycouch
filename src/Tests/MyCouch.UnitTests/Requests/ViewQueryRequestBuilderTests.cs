@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Net.Http;
-using FakeItEasy;
 using FluentAssertions;
 using MyCouch.Requests;
+using MyCouch.UnitTests.Fakes;
 using Xunit;
 
 namespace MyCouch.UnitTests.Requests
@@ -11,8 +11,7 @@ namespace MyCouch.UnitTests.Requests
     {
         public ViewQueryRequestBuilderTests()
         {
-            var cnFake = A.Fake<IConnection>();
-            A.CallTo(() => cnFake.Address).Returns(new Uri("https://cdb.foo.com:5984"));
+            var cnFake = new ConnectionFake(new Uri("https://cdb.foo.com:5984"));
 
             SUT = new ViewQueryRequestBuilder(cnFake);
         }
