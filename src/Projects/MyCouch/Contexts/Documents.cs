@@ -29,7 +29,7 @@ namespace MyCouch.Contexts
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
-            using (var req = CreateRequest(cmd))
+            using (var req = CreateHttpRequest(cmd))
             {
                 using (var res = await SendAsync(req).ForAwait())
                 {
@@ -52,7 +52,7 @@ namespace MyCouch.Contexts
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
-            using (var req = CreateRequest(cmd))
+            using (var req = CreateHttpRequest(cmd))
             {
                 using (var res = await SendAsync(req).ForAwait())
                 {
@@ -75,7 +75,7 @@ namespace MyCouch.Contexts
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
-            using (var req = CreateRequest(cmd))
+            using (var req = CreateHttpRequest(cmd))
             {
                 using (var res = await SendAsync(req).ForAwait())
                 {
@@ -93,7 +93,7 @@ namespace MyCouch.Contexts
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
-            using (var req = CreateRequest(cmd))
+            using (var req = CreateHttpRequest(cmd))
             {
                 using (var res = await SendAsync(req).ForAwait())
                 {
@@ -111,7 +111,7 @@ namespace MyCouch.Contexts
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
-            using (var req = CreateRequest(cmd))
+            using (var req = CreateHttpRequest(cmd))
             {
                 using (var res = await SendAsync(req).ForAwait())
                 {
@@ -129,7 +129,7 @@ namespace MyCouch.Contexts
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
-            using (var req = CreateRequest(cmd))
+            using (var req = CreateHttpRequest(cmd))
             {
                 using (var res = await SendAsync(req).ForAwait())
                 {
@@ -152,7 +152,7 @@ namespace MyCouch.Contexts
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
-            using (var req = CreateRequest(cmd))
+            using (var req = CreateHttpRequest(cmd))
             {
                 using (var res = await SendAsync(req).ForAwait())
                 {
@@ -170,7 +170,7 @@ namespace MyCouch.Contexts
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
-            using (var req = CreateRequest(cmd))
+            using (var req = CreateHttpRequest(cmd))
             {
                 using (var res = await SendAsync(req).ForAwait())
                 {
@@ -179,7 +179,7 @@ namespace MyCouch.Contexts
             }
         }
 
-        protected virtual HttpRequestMessage CreateRequest(BulkRequest cmd)
+        protected virtual HttpRequest CreateHttpRequest(BulkRequest cmd)
         {
             var req = new HttpRequest(HttpMethod.Post, GenerateRequestUrl(cmd));
 
@@ -188,7 +188,7 @@ namespace MyCouch.Contexts
             return req;
         }
 
-        protected virtual HttpRequestMessage CreateRequest(CopyDocumentRequest cmd)
+        protected virtual HttpRequest CreateHttpRequest(CopyDocumentRequest cmd)
         {
             var req = new HttpRequest(new HttpMethod("COPY"), GenerateRequestUrl(cmd.SrcId, cmd.SrcRev));
 
@@ -197,7 +197,7 @@ namespace MyCouch.Contexts
             return req;
         }
 
-        protected virtual HttpRequestMessage CreateRequest(ReplaceDocumentRequest cmd)
+        protected virtual HttpRequest CreateHttpRequest(ReplaceDocumentRequest cmd)
         {
             var req = new HttpRequest(new HttpMethod("COPY"), GenerateRequestUrl(cmd.SrcId, cmd.SrcRev));
 
@@ -206,7 +206,7 @@ namespace MyCouch.Contexts
             return req;
         }
 
-        protected virtual HttpRequestMessage CreateRequest(DocumentExistsRequest cmd)
+        protected virtual HttpRequest CreateHttpRequest(DocumentExistsRequest cmd)
         {
             var req = new HttpRequest(HttpMethod.Head, GenerateRequestUrl(cmd.Id, cmd.Rev));
 
@@ -215,7 +215,7 @@ namespace MyCouch.Contexts
             return req;
         }
 
-        protected virtual HttpRequestMessage CreateRequest(GetDocumentRequest cmd)
+        protected virtual HttpRequest CreateHttpRequest(GetDocumentRequest cmd)
         {
             var req = new HttpRequest(HttpMethod.Get, GenerateRequestUrl(cmd.Id, cmd.Rev));
 
@@ -224,7 +224,7 @@ namespace MyCouch.Contexts
             return req;
         }
 
-        protected virtual HttpRequestMessage CreateRequest(DeleteDocumentRequest cmd)
+        protected virtual HttpRequest CreateHttpRequest(DeleteDocumentRequest cmd)
         {
             var req = new HttpRequest(HttpMethod.Delete, GenerateRequestUrl(cmd.Id, cmd.Rev));
 
@@ -233,7 +233,7 @@ namespace MyCouch.Contexts
             return req;
         }
 
-        protected virtual HttpRequestMessage CreateRequest(PutDocumentRequest cmd)
+        protected virtual HttpRequest CreateHttpRequest(PutDocumentRequest cmd)
         {
             var req = new HttpRequest(HttpMethod.Put, GenerateRequestUrl(cmd.Id, cmd.Rev));
 
@@ -243,7 +243,7 @@ namespace MyCouch.Contexts
             return req;
         }
 
-        protected virtual HttpRequestMessage CreateRequest(PostDocumentRequest cmd)
+        protected virtual HttpRequest CreateHttpRequest(PostDocumentRequest cmd)
         {
             var req = new HttpRequest(HttpMethod.Post, GenerateRequestUrl());
 

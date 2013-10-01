@@ -20,7 +20,7 @@ namespace MyCouch.Requests.Builders
             Connection = connection;
         }
 
-        public virtual HttpRequestMessage Create(QueryViewRequest request)
+        public virtual HttpRequest Create(QueryViewRequest request)
         {
             Ensure.That(request, "request").IsNotNull();
 

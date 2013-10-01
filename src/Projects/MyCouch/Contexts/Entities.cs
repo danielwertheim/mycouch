@@ -37,7 +37,7 @@ namespace MyCouch.Contexts
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
-            using (var req = CreateRequest(cmd))
+            using (var req = CreateHttpRequest(cmd))
             {
                 using (var res = await SendAsync(req).ForAwait())
                 {
@@ -106,7 +106,7 @@ namespace MyCouch.Contexts
             return Serializer.Serialize(entity);
         }
 
-        protected virtual HttpRequestMessage CreateRequest(GetEntityRequest cmd)
+        protected virtual HttpRequest CreateHttpRequest(GetEntityRequest cmd)
         {
             var req = new HttpRequest(HttpMethod.Get, GenerateRequestUrl(cmd.Id, cmd.Rev));
 

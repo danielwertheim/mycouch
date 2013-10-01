@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Extensions;
+using MyCouch.Net;
 using MyCouch.Requests;
 using MyCouch.Responses;
 
@@ -21,7 +22,7 @@ namespace MyCouch.Contexts
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
-            using (var req = CreateRequest(cmd))
+            using (var req = CreateHttpRequest(cmd))
             {
                 using (var res = await SendAsync(req).ForAwait())
                 {
@@ -30,7 +31,7 @@ namespace MyCouch.Contexts
             }
         }
 
-        protected virtual HttpRequestMessage CreateRequest(GetChangesRequest cmd)
+        protected virtual HttpRequest CreateHttpRequest(GetChangesRequest cmd)
         {
             throw new NotImplementedException();
         }

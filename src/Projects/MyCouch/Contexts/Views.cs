@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Extensions;
+using MyCouch.Net;
 using MyCouch.Requests;
 using MyCouch.Requests.Builders;
 using MyCouch.Requests.Configurators;
@@ -32,7 +33,7 @@ namespace MyCouch.Contexts
         {
             Ensure.That(query, "query").IsNotNull();
 
-            using (var req = CreateRequest(query))
+            using (var req = CreateHttpRequest(query))
             {
                 using (var res = await SendAsync(req).ForAwait())
                 {
@@ -45,7 +46,7 @@ namespace MyCouch.Contexts
         {
             Ensure.That(query, "query").IsNotNull();
 
-            using (var req = CreateRequest(query))
+            using (var req = CreateHttpRequest(query))
             {
                 using (var res = await SendAsync(req).ForAwait())
                 {
@@ -85,7 +86,7 @@ namespace MyCouch.Contexts
             return new QueryViewRequest(designDocument, viewname);
         }
         
-        protected virtual HttpRequestMessage CreateRequest(QueryViewRequest query)
+        protected virtual HttpRequest CreateHttpRequest(QueryViewRequest query)
         {
             return RequestBuilder.Create(query);
         }

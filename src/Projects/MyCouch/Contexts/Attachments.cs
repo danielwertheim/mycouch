@@ -37,7 +37,7 @@ namespace MyCouch.Contexts
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
-            using (var req = CreateRequest(cmd))
+            using (var req = CreateHttpRequest(cmd))
             {
                 using (var res = await SendAsync(req).ForAwait())
                 {
@@ -50,7 +50,7 @@ namespace MyCouch.Contexts
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
-            using (var req = CreateRequest(cmd))
+            using (var req = CreateHttpRequest(cmd))
             {
                 using (var res = await SendAsync(req).ForAwait())
                 {
@@ -68,7 +68,7 @@ namespace MyCouch.Contexts
         {
             Ensure.That(cmd, "cmd").IsNotNull();
 
-            using (var req = CreateRequest(cmd))
+            using (var req = CreateHttpRequest(cmd))
             {
                 using (var res = await SendAsync(req).ForAwait())
                 {
@@ -77,7 +77,7 @@ namespace MyCouch.Contexts
             }
         }
 
-        protected virtual HttpRequestMessage CreateRequest(GetAttachmentRequest cmd)
+        protected virtual HttpRequest CreateHttpRequest(GetAttachmentRequest cmd)
         {
             var req = new HttpRequest(HttpMethod.Get, GenerateRequestUrl(cmd.DocId, cmd.DocRev, cmd.Name));
 
@@ -86,7 +86,7 @@ namespace MyCouch.Contexts
             return req;
         }
 
-        protected virtual HttpRequestMessage CreateRequest(PutAttachmentRequest cmd)
+        protected virtual HttpRequest CreateHttpRequest(PutAttachmentRequest cmd)
         {
             var req = new HttpRequest(HttpMethod.Put, GenerateRequestUrl(cmd.DocId, cmd.DocRev, cmd.Name));
 
@@ -96,7 +96,7 @@ namespace MyCouch.Contexts
             return req;
         }
 
-        protected virtual HttpRequestMessage CreateRequest(DeleteAttachmentRequest cmd)
+        protected virtual HttpRequest CreateHttpRequest(DeleteAttachmentRequest cmd)
         {
             var req = new HttpRequest(HttpMethod.Delete, GenerateRequestUrl(cmd.DocId, cmd.DocRev, cmd.Name));
 
