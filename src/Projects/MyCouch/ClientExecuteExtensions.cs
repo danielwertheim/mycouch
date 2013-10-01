@@ -6,69 +6,69 @@ namespace MyCouch
 {
     public static class ClientExecuteExtensions
     {
-        public static Task<ChangesResponse> ExecuteAsync(this IClient client, GetChangesRequest cmd)
+        public static Task<ChangesResponse> ExecuteAsync(this IClient client, GetChangesRequest request)
         {
-            return client.Changes.GetAsync(cmd);
+            return client.Changes.GetAsync(request);
         }
 
-        public static Task<BulkResponse> ExecuteAsync(this IClient client, BulkRequest cmd)
+        public static Task<BulkResponse> ExecuteAsync(this IClient client, BulkRequest request)
         {
-            return client.Documents.BulkAsync(cmd);
+            return client.Documents.BulkAsync(request);
         }
 
-        public static Task<DocumentHeaderResponse> ExecuteAsync(this IClient client, CopyDocumentRequest cmd)
+        public static Task<DocumentHeaderResponse> ExecuteAsync(this IClient client, CopyDocumentRequest request)
         {
-            return client.Documents.CopyAsync(cmd);
+            return client.Documents.CopyAsync(request);
         }
 
-        public static Task<DocumentHeaderResponse> ExecuteAsync(this IClient client, ReplaceDocumentRequest cmd)
+        public static Task<DocumentHeaderResponse> ExecuteAsync(this IClient client, ReplaceDocumentRequest request)
         {
-            return client.Documents.ReplaceAsync(cmd);
+            return client.Documents.ReplaceAsync(request);
         }
 
-        public static Task<DocumentHeaderResponse> ExecuteAsync(this IClient client, DocumentExistsRequest cmd)
+        public static Task<DocumentHeaderResponse> ExecuteAsync(this IClient client, DocumentExistsRequest request)
         {
-            return client.Documents.ExistsAsync(cmd);
+            return client.Documents.ExistsAsync(request);
         }
 
-        public static Task<DocumentResponse> ExecuteAsync(this IClient client, GetDocumentRequest cmd)
+        public static Task<DocumentResponse> ExecuteAsync(this IClient client, GetDocumentRequest request)
         {
-            return client.Documents.GetAsync(cmd);
+            return client.Documents.GetAsync(request);
         }
 
-        public static Task<DocumentHeaderResponse> ExecuteAsync(this IClient client, PostDocumentRequest cmd)
+        public static Task<DocumentHeaderResponse> ExecuteAsync(this IClient client, PostDocumentRequest request)
         {
-            return client.Documents.PostAsync(cmd);
+            return client.Documents.PostAsync(request);
         }
 
-        public static Task<DocumentHeaderResponse> ExecuteAsync(this IClient client, PutDocumentRequest cmd)
+        public static Task<DocumentHeaderResponse> ExecuteAsync(this IClient client, PutDocumentRequest request)
         {
-            return client.Documents.PutAsync(cmd);
+            return client.Documents.PutAsync(request);
         }
 
-        public static Task<DocumentHeaderResponse> ExecuteAsync(this IClient client, DeleteDocumentRequest cmd)
+        public static Task<DocumentHeaderResponse> ExecuteAsync(this IClient client, DeleteDocumentRequest request)
         {
-            return client.Documents.DeleteAsync(cmd);
+            return client.Documents.DeleteAsync(request);
         }
 
-        public static Task<AttachmentResponse> ExecuteAsync(this IClient client, GetAttachmentRequest cmd)
+        public static Task<AttachmentResponse> ExecuteAsync(this IClient client, GetAttachmentRequest request)
         {
-            return client.Attachments.GetAsync(cmd);
+            return client.Attachments.GetAsync(request);
         }
 
-        public static Task<DocumentHeaderResponse> ExecuteAsync(this IClient client, PutAttachmentRequest cmd)
+        public static Task<DocumentHeaderResponse> ExecuteAsync(this IClient client, PutAttachmentRequest request)
         {
-            return client.Attachments.PutAsync(cmd);
+            return client.Attachments.PutAsync(request);
         }
 
-        public static Task<DocumentHeaderResponse> ExecuteAsync(this IClient client, DeleteAttachmentRequest cmd)
+        public static Task<DocumentHeaderResponse> ExecuteAsync(this IClient client, DeleteAttachmentRequest request)
         {
-            return client.Attachments.DeleteAsync(cmd);
+            return client.Attachments.DeleteAsync(request);
         }
 
-        public static Task<EntityResponse<T>> ExecuteAsync<T>(this IClient client, GetEntityRequest cmd) where T : class
+        public static Task<EntityResponse<T>> ExecuteAsync<T>(this IClient client, GetEntityRequest request) where T : class
         {
-            return client.Entities.GetAsync<T>(cmd);
+            return client.Entities.GetAsync<T>(request);
         }
     }
 }

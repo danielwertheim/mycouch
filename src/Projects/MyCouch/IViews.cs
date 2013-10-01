@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using MyCouch.Querying;
 using MyCouch.Requests;
+using MyCouch.Requests.Configurators;
 using MyCouch.Responses;
 
 namespace MyCouch
@@ -36,7 +36,7 @@ namespace MyCouch
         /// <param name="viewname"></param>
         /// <param name="configurator"></param>
         /// <returns></returns>
-        Task<JsonViewQueryResponse> QueryAsync(string designDocument, string viewname, Action<ViewQueryConfigurator> configurator);
+        Task<JsonViewQueryResponse> QueryAsync(string designDocument, string viewname, Action<QueryViewRequestConfigurator> configurator);
 
         /// <summary>
         /// Creates and executes an <see cref="QueryViewRequest"/> on the fly.
@@ -45,6 +45,6 @@ namespace MyCouch
         /// <param name="viewname"></param>
         /// <param name="configurator"></param>
         /// <returns></returns>
-        Task<ViewQueryResponse<T>> QueryAsync<T>(string designDocument, string viewname, Action<ViewQueryConfigurator> configurator);
+        Task<ViewQueryResponse<T>> QueryAsync<T>(string designDocument, string viewname, Action<QueryViewRequestConfigurator> configurator);
     }
 }

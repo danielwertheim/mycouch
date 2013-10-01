@@ -162,8 +162,7 @@
     <Compile Include="MyCouchUriBuilder.cs" />
     <Compile Include="ViewIdentity.cs" />
     <Compile Include="Requests\QueryViewRequest.cs" />
-    <Compile Include="Querying\ViewQueryConfigurator.cs" />
-    <Compile Include="Querying\ViewQueryOptions.cs" />
+    <Compile Include="Requests\Configurators\QueryViewRequestConfigurator.cs" />
     <Compile Include="Responses\ViewQueryResponse.cs" />
     <Compile Include="Contexts\Views.cs" />
   </ItemGroup>

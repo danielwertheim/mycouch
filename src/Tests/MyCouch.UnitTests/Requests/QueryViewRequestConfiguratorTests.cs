@@ -1,19 +1,20 @@
 ﻿using System;
 using FluentAssertions;
-using MyCouch.Querying;
+using MyCouch.Requests;
+using MyCouch.Requests.Configurators;
 using Xunit;
 
-namespace MyCouch.UnitTests.Querying
+namespace MyCouch.UnitTests.Requests
 {
-    public class ViewQueryConfiguratorTests : UnitTestsOf<ViewQueryConfigurator>
+    public class QueryViewRequestConfiguratorTests : UnitTestsOf<QueryViewRequestConfigurator>
     {
-        private readonly ViewQueryOptions _viewQueryOptions;
+        private readonly QueryViewRequest _request;
 
-        public ViewQueryConfiguratorTests()
+        public QueryViewRequestConfiguratorTests()
         {
-            _viewQueryOptions = new ViewQueryOptions();
+            _request = new QueryViewRequest("foodesigndocument", "barviewname");
 
-            SUT = new ViewQueryConfigurator(_viewQueryOptions);
+            SUT = new QueryViewRequestConfigurator(_request);
         }
 
         [Fact]
@@ -23,7 +24,7 @@ namespace MyCouch.UnitTests.Querying
 
             SUT.Key(configuredValue);
 
-            _viewQueryOptions.Key.Should().Be(configuredValue);
+            _request.Key.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -33,7 +34,7 @@ namespace MyCouch.UnitTests.Querying
 
             SUT.Key(configuredValue);
 
-            _viewQueryOptions.Key.Should().Be(configuredValue);
+            _request.Key.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -43,7 +44,7 @@ namespace MyCouch.UnitTests.Querying
 
             SUT.Key(configuredValue);
 
-            _viewQueryOptions.Key.Should().Be(configuredValue);
+            _request.Key.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -53,7 +54,7 @@ namespace MyCouch.UnitTests.Querying
 
             SUT.Key(configuredValue);
 
-            _viewQueryOptions.Key.Should().Be(configuredValue);
+            _request.Key.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -63,7 +64,7 @@ namespace MyCouch.UnitTests.Querying
 
             SUT.Key(configuredValue);
 
-            _viewQueryOptions.Key.Should().Be(configuredValue);
+            _request.Key.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -79,7 +80,7 @@ namespace MyCouch.UnitTests.Querying
 
             SUT.Key(configuredValue);
 
-            _viewQueryOptions.Key.Should().Be(configuredValue);
+            _request.Key.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -89,7 +90,7 @@ namespace MyCouch.UnitTests.Querying
 
             SUT.StartKey(configuredValue);
 
-            _viewQueryOptions.StartKey.Should().Be(configuredValue);
+            _request.StartKey.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -99,7 +100,7 @@ namespace MyCouch.UnitTests.Querying
 
             SUT.StartKey(configuredValue);
 
-            _viewQueryOptions.StartKey.Should().Be(configuredValue);
+            _request.StartKey.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -109,7 +110,7 @@ namespace MyCouch.UnitTests.Querying
 
             SUT.StartKey(configuredValue);
 
-            _viewQueryOptions.StartKey.Should().Be(configuredValue);
+            _request.StartKey.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -119,7 +120,7 @@ namespace MyCouch.UnitTests.Querying
 
             SUT.StartKey(configuredValue);
 
-            _viewQueryOptions.StartKey.Should().Be(configuredValue);
+            _request.StartKey.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -129,7 +130,7 @@ namespace MyCouch.UnitTests.Querying
 
             SUT.StartKey(configuredValue);
 
-            _viewQueryOptions.StartKey.Should().Be(configuredValue);
+            _request.StartKey.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -145,7 +146,7 @@ namespace MyCouch.UnitTests.Querying
 
             SUT.StartKey(configuredValue);
 
-            _viewQueryOptions.StartKey.Should().Be(configuredValue);
+            _request.StartKey.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -155,7 +156,7 @@ namespace MyCouch.UnitTests.Querying
 
             SUT.EndKey(configuredValue);
 
-            _viewQueryOptions.EndKey.Should().Be(configuredValue);
+            _request.EndKey.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -165,7 +166,7 @@ namespace MyCouch.UnitTests.Querying
 
             SUT.EndKey(configuredValue);
 
-            _viewQueryOptions.EndKey.Should().Be(configuredValue);
+            _request.EndKey.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -175,7 +176,7 @@ namespace MyCouch.UnitTests.Querying
 
             SUT.EndKey(configuredValue);
 
-            _viewQueryOptions.EndKey.Should().Be(configuredValue);
+            _request.EndKey.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -185,7 +186,7 @@ namespace MyCouch.UnitTests.Querying
 
             SUT.EndKey(configuredValue);
 
-            _viewQueryOptions.EndKey.Should().Be(configuredValue);
+            _request.EndKey.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -195,7 +196,7 @@ namespace MyCouch.UnitTests.Querying
 
             SUT.EndKey(configuredValue);
 
-            _viewQueryOptions.EndKey.Should().Be(configuredValue);
+            _request.EndKey.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -211,7 +212,7 @@ namespace MyCouch.UnitTests.Querying
 
             SUT.EndKey(configuredValue);
 
-            _viewQueryOptions.EndKey.Should().Be(configuredValue);
+            _request.EndKey.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -228,7 +229,7 @@ namespace MyCouch.UnitTests.Querying
 
             SUT.Keys(configuredValue);
 
-            _viewQueryOptions.Keys.Should().BeEquivalentTo(configuredValue);
+            _request.Keys.Should().BeEquivalentTo(configuredValue);
         }
     }
 }

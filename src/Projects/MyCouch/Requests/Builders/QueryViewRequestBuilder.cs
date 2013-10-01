@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net.Http;
 using EnsureThat;
 using MyCouch.Net;
-using MyCouch.Querying;
 
 namespace MyCouch.Requests.Builders
 {
@@ -21,13 +20,13 @@ namespace MyCouch.Requests.Builders
             Connection = connection;
         }
 
-        public virtual HttpRequestMessage Create(QueryViewRequest cmd)
+        public virtual HttpRequestMessage Create(QueryViewRequest request)
         {
-            Ensure.That(cmd, "cmd").IsNotNull();
+            Ensure.That(request, "request").IsNotNull();
 
-            return cmd.Options.HasKeys
-                ? new HttpRequest(HttpMethod.Post, GenerateRequestUrl(cmd)).SetContent(GetKeysAsJsonObject(cmd))
-                : new HttpRequest(HttpMethod.Get, GenerateRequestUrl(cmd));
+            return request.HasKeys
+                ? new HttpRequest(HttpMethod.Post, GenerateRequestUrl(request)).SetContent(GetKeysAsJsonObject(request))
+                : new HttpRequest(HttpMethod.Get, GenerateRequestUrl(request));
         }
 
         protected virtual string GenerateRequestUrl(QueryViewRequest query)
@@ -54,11 +53,11 @@ namespace MyCouch.Requests.Builders
         /// <returns></returns>
         protected virtual string GetKeysAsJsonObject(QueryViewRequest query)
         {
-            if (!query.Options.HasKeys)
+            if (!query.HasKeys)
                 return "{}";
 
             return string.Format("{{\"keys\":[{0}]}}",
-                string.Join(",", query.Options.Keys.Select(k => FormatValue(k))));
+                string.Join(",", query.Keys.Select(k => FormatValue(k))));
         }
 
         /// <summary>
@@ -82,53 +81,53 @@ namespace MyCouch.Requests.Builders
         {
             var kvs = new Dictionary<string, string>();
 
-            if (query.Options.IncludeDocs.HasValue)
-                kvs.Add(KeyNames.IncludeDocs, query.Options.IncludeDocs.Value.ToString().ToLower());
+            if (query.IncludeDocs.HasValue)
+                kvs.Add(KeyNames.IncludeDocs, query.IncludeDocs.Value.ToString().ToLower());
 
-            if (query.Options.Descending.HasValue)
-                kvs.Add(KeyNames.Descending, query.Options.Descending.Value.ToString().ToLower());
+            if (query.Descending.HasValue)
+                kvs.Add(KeyNames.Descending, query.Descending.Value.ToString().ToLower());
 
-            if (query.Options.Reduce.HasValue)
-                kvs.Add(KeyNames.Reduce, query.Options.Reduce.Value.ToString().ToLower());
+            if (query.Reduce.HasValue)
+                kvs.Add(KeyNames.Reduce, query.Reduce.Value.ToString().ToLower());
 
-            if (query.Options.InclusiveEnd.HasValue)
-                kvs.Add(KeyNames.InclusiveEnd, query.Options.InclusiveEnd.Value.ToString().ToLower());
+            if (query.InclusiveEnd.HasValue)
+                kvs.Add(KeyNames.InclusiveEnd, query.InclusiveEnd.Value.ToString().ToLower());
 
-            if (query.Options.UpdateSeq.HasValue)
-                kvs.Add(KeyNames.UpdateSeq, query.Options.UpdateSeq.Value.ToString().ToLower());
+            if (query.UpdateSeq.HasValue)
+                kvs.Add(KeyNames.UpdateSeq, query.UpdateSeq.Value.ToString().ToLower());
 
-            if (query.Options.Group.HasValue)
-                kvs.Add(KeyNames.Group, query.Options.Group.Value.ToString().ToLower());
+            if (query.Group.HasValue)
+                kvs.Add(KeyNames.Group, query.Group.Value.ToString().ToLower());
 
-            if (query.Options.GroupLevel.HasValue)
-                kvs.Add(KeyNames.GroupLevel, query.Options.GroupLevel.Value.ToString(MyCouchRuntime.NumberFormat));
+            if (query.GroupLevel.HasValue)
+                kvs.Add(KeyNames.GroupLevel, query.GroupLevel.Value.ToString(MyCouchRuntime.NumberFormat));
 
-            if (HasValue(query.Options.Stale))
-                kvs.Add(KeyNames.Stale, FormatValue(query.Options.Stale));
+            if (HasValue(query.Stale))
+                kvs.Add(KeyNames.Stale, FormatValue(query.Stale));
 
-            if (HasValue(query.Options.Key))
-                kvs.Add(KeyNames.Key, FormatValue(query.Options.Key));
+            if (HasValue(query.Key))
+                kvs.Add(KeyNames.Key, FormatValue(query.Key));
 
-            if (HasValue(query.Options.Keys))
-                kvs.Add(KeyNames.Keys, FormatValue(query.Options.Keys));
+            if (HasValue(query.Keys))
+                kvs.Add(KeyNames.Keys, FormatValue(query.Keys));
 
-            if (HasValue(query.Options.StartKey))
-                kvs.Add(KeyNames.StartKey, FormatValue(query.Options.StartKey));
+            if (HasValue(query.StartKey))
+                kvs.Add(KeyNames.StartKey, FormatValue(query.StartKey));
 
-            if (HasValue(query.Options.StartKeyDocId))
-                kvs.Add(KeyNames.StartKeyDocId, FormatValue(query.Options.StartKeyDocId));
+            if (HasValue(query.StartKeyDocId))
+                kvs.Add(KeyNames.StartKeyDocId, FormatValue(query.StartKeyDocId));
 
-            if (HasValue(query.Options.EndKey))
-                kvs.Add(KeyNames.EndKey, FormatValue(query.Options.EndKey));
+            if (HasValue(query.EndKey))
+                kvs.Add(KeyNames.EndKey, FormatValue(query.EndKey));
 
-            if (HasValue(query.Options.EndKeyDocId))
-                kvs.Add(KeyNames.EndKeyDocId, FormatValue(query.Options.EndKeyDocId));
+            if (HasValue(query.EndKeyDocId))
+                kvs.Add(KeyNames.EndKeyDocId, FormatValue(query.EndKeyDocId));
 
-            if (query.Options.Limit.HasValue)
-                kvs.Add(KeyNames.Limit, query.Options.Limit.Value.ToString(MyCouchRuntime.NumberFormat));
+            if (query.Limit.HasValue)
+                kvs.Add(KeyNames.Limit, query.Limit.Value.ToString(MyCouchRuntime.NumberFormat));
 
-            if (query.Options.Skip.HasValue)
-                kvs.Add(KeyNames.Skip, query.Options.Skip.Value.ToString(MyCouchRuntime.NumberFormat));
+            if (query.Skip.HasValue)
+                kvs.Add(KeyNames.Skip, query.Skip.Value.ToString(MyCouchRuntime.NumberFormat));
 
             return kvs;
         }

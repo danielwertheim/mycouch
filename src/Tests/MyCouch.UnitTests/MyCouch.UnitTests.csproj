@@ -59,8 +59,8 @@
     <Compile Include="Fakes\ConnectionFake.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requests\QueryViewRequestBuilderTests.cs" />
-    <Compile Include="Querying\ViewQueryConfiguratorTests.cs" />
-    <Compile Include="Querying\ViewQueryOptionsTests.cs" />
+    <Compile Include="Requests\QueryViewRequestConfiguratorTests.cs" />
+    <Compile Include="Requests\QueryViewRequestTests.cs" />
     <Compile Include="Serialization\ViewQueryResponseRowsDeserializerTestsTests.cs" />
     <Compile Include="Schemes\EntityIdMemberTests.cs" />
     <Compile Include="Schemes\EntityRevMemberTests.cs" />
