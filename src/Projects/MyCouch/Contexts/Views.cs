@@ -15,7 +15,7 @@ namespace MyCouch.Contexts
 {
     public class Views : ApiContextBase, IViews
     {
-        protected QueryViewRequestBuilder RequestBuilder { get; set; }
+        protected QueryViewHttpRequestBuilder HttpRequestBuilder { get; set; }
         protected JsonViewQueryResponseFactory JsonViewQueryResponseFactory { get; set; }
         protected ViewQueryResponseFactory ViewQueryResponseFactory { get; set; }
 
@@ -24,7 +24,7 @@ namespace MyCouch.Contexts
         {
             Ensure.That(serializationConfiguration, "serializationConfiguration").IsNotNull();
 
-            RequestBuilder = new QueryViewRequestBuilder(Connection);
+            HttpRequestBuilder = new QueryViewHttpRequestBuilder(Connection);
             JsonViewQueryResponseFactory = new JsonViewQueryResponseFactory(serializationConfiguration);
             ViewQueryResponseFactory = new ViewQueryResponseFactory(serializationConfiguration);
         }
@@ -88,7 +88,7 @@ namespace MyCouch.Contexts
         
         protected virtual HttpRequest CreateHttpRequest(QueryViewRequest query)
         {
-            return RequestBuilder.Create(query);
+            return HttpRequestBuilder.Create(query);
         }
 
         protected virtual JsonViewQueryResponse ProcessHttpResponse(HttpResponseMessage response)

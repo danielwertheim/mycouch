@@ -51,12 +51,12 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ChangesFeed.cs" />
-    <Compile Include="Requests\Builders\QueryViewRequestBuilder.cs" />
+    <Compile Include="Requests\Builders\QueryViewHttpRequestBuilder.cs" />
     <Compile Include="Requests\GetChangesRequest.cs" />
     <Compile Include="Requests\IRequest.cs" />
     <Compile Include="Contexts\ApiContextBase.cs" />
     <Compile Include="Contexts\Changes.cs" />
-    <Compile Include="Requests\Builders\IRequestBuilder.cs" />
+    <Compile Include="Requests\Builders\IHttpRequestBuilder.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="IChanges.cs" />
     <Compile Include="MyCouchException.cs" />

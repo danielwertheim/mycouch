@@ -7,13 +7,13 @@ using MyCouch.Net;
 
 namespace MyCouch.Requests.Builders
 {
-    public class QueryViewRequestBuilder :
+    public class QueryViewHttpRequestBuilder :
         RequestBuilderBase,
-        IRequestBuilder<QueryViewRequest>
+        IHttpRequestBuilder<QueryViewRequest>
     {
         protected readonly IConnection Connection;
 
-        public QueryViewRequestBuilder(IConnection connection)
+        public QueryViewHttpRequestBuilder(IConnection connection)
         {
             Ensure.That(connection, "connection").IsNotNull();
 

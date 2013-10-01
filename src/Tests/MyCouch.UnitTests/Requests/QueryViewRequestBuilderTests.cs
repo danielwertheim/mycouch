@@ -8,13 +8,13 @@ using Xunit;
 
 namespace MyCouch.UnitTests.Requests
 {
-    public class QueryViewRequestBuilderTests : UnitTestsOf<QueryViewRequestBuilder>
+    public class QueryViewHttpRequestBuilderTests : UnitTestsOf<QueryViewHttpRequestBuilder>
     {
-        public QueryViewRequestBuilderTests()
+        public QueryViewHttpRequestBuilderTests()
         {
             var cnFake = new ConnectionFake(new Uri("https://cdb.foo.com:5984"));
 
-            SUT = new QueryViewRequestBuilder(cnFake);
+            SUT = new QueryViewHttpRequestBuilder(cnFake);
         }
 
         [Fact]
@@ -22,7 +22,7 @@ namespace MyCouch.UnitTests.Requests
         {
             var request = CreateRequest();
             
-            WithRequestFor(
+            WithHttpRequestFor(
                 request,
                 req => {
                     req.Content.Should().BeNull();
@@ -44,7 +44,7 @@ namespace MyCouch.UnitTests.Requests
                 new object[] {"complex1", 42}
             };
 
-            WithRequestFor(
+            WithHttpRequestFor(
                 request,
                 req => req.Content.ReadAsStringAsync().Result.Should().Be("{\"keys\":[\"fake_key\",1,3.14,true,false,\"2008-07-17T09:21:30\",[\"complex1\",42]]}"));
         }
@@ -55,7 +55,7 @@ namespace MyCouch.UnitTests.Requests
             var request = CreateRequest();
             request.Keys = null;
 
-            WithRequestFor(
+            WithHttpRequestFor(
                 request,
                 req => req.Content.Should().BeNull());
         }
@@ -66,7 +66,7 @@ namespace MyCouch.UnitTests.Requests
             var request = CreateRequest();
             request.Keys = new object[0];
 
-            WithRequestFor(
+            WithHttpRequestFor(
                 request,
                 req => req.Content.Should().BeNull());
         }
@@ -77,7 +77,7 @@ namespace MyCouch.UnitTests.Requests
             var request = CreateRequest();
             request.IncludeDocs = true;
 
-            WithRequestFor(
+            WithHttpRequestFor(
                 request,
                 req => req.RequestUri.Query.Should().Be("?include_docs=true"));
         }
@@ -88,7 +88,7 @@ namespace MyCouch.UnitTests.Requests
             var request = CreateRequest();
             request.IncludeDocs = false;
 
-            WithRequestFor(
+            WithHttpRequestFor(
                 request,
                 req => req.RequestUri.Query.Should().Be("?include_docs=false"));
         }
@@ -99,7 +99,7 @@ namespace MyCouch.UnitTests.Requests
             var request = CreateRequest();
             request.Descending = true;
 
-            WithRequestFor(
+            WithHttpRequestFor(
                 request,
                 req => req.RequestUri.Query.Should().Be("?descending=true"));
         }
@@ -110,7 +110,7 @@ namespace MyCouch.UnitTests.Requests
             var request = CreateRequest();
             request.Descending = false;
 
-            WithRequestFor(
+            WithHttpRequestFor(
                 request,
                 req => req.RequestUri.Query.Should().Be("?descending=false"));
         }
@@ -121,7 +121,7 @@ namespace MyCouch.UnitTests.Requests
             var request = CreateRequest();
             request.InclusiveEnd = true;
 
-            WithRequestFor(
+            WithHttpRequestFor(
                 request,
                 req => req.RequestUri.Query.Should().Be("?inclusive_end=true"));
         }
@@ -132,7 +132,7 @@ namespace MyCouch.UnitTests.Requests
             var request = CreateRequest();
             request.InclusiveEnd = false;
 
-            WithRequestFor(
+            WithHttpRequestFor(
                 request,
                 req => req.RequestUri.Query.Should().Be("?inclusive_end=false"));
         }
@@ -143,7 +143,7 @@ namespace MyCouch.UnitTests.Requests
             var request = CreateRequest();
             request.Reduce = true;
 
-            WithRequestFor(
+            WithHttpRequestFor(
                 request,
                 req => req.RequestUri.Query.Should().Be("?reduce=true"));
         }
@@ -154,7 +154,7 @@ namespace MyCouch.UnitTests.Requests
             var request = CreateRequest();
             request.Reduce = false;
 
-            WithRequestFor(
+            WithHttpRequestFor(
                 request,
                 req => req.RequestUri.Query.Should().Be("?reduce=false"));
         }
@@ -165,7 +165,7 @@ namespace MyCouch.UnitTests.Requests
             var request = CreateRequest();
             request.UpdateSeq = true;
 
-            WithRequestFor(
+            WithHttpRequestFor(
                 request,
                 req => req.RequestUri.Query.Should().Be("?update_seq=true"));
         }
@@ -176,7 +176,7 @@ namespace MyCouch.UnitTests.Requests
             var request = CreateRequest();
             request.UpdateSeq = false;
 
-            WithRequestFor(
+            WithHttpRequestFor(
                 request,
                 req => req.RequestUri.Query.Should().Be("?update_seq=false"));
         }
@@ -187,7 +187,7 @@ namespace MyCouch.UnitTests.Requests
             var request = CreateRequest();
             request.Group = true;
 
-            WithRequestFor(
+            WithHttpRequestFor(
                 request,
                 req => req.RequestUri.Query.Should().Be("?group=true"));
         }
@@ -198,7 +198,7 @@ namespace MyCouch.UnitTests.Requests
             var request = CreateRequest();
             request.Group = false;
 
-            WithRequestFor(
+            WithHttpRequestFor(
                 request,
                 req => req.RequestUri.Query.Should().Be("?group=false"));
         }
@@ -209,7 +209,7 @@ namespace MyCouch.UnitTests.Requests
             var request = CreateRequest();
             request.Key = new object[] { "Key1", 42 };
 
-            WithRequestFor(
+            WithHttpRequestFor(
                 request,
                 req => req.RequestUri.Query.Should().Be("?key=%5B%22Key1%22%2C42%5D"));
         }
@@ -220,7 +220,7 @@ namespace MyCouch.UnitTests.Requests
             var request = CreateRequest();
             request.Key = "Key1";
 
-            WithRequestFor(
+            WithHttpRequestFor(
                 request,
                 req => req.RequestUri.Query.Should().Be("?key=%22Key1%22"));
         }
@@ -231,7 +231,7 @@ namespace MyCouch.UnitTests.Requests
             var request = CreateRequest();
             request.Key = 42;
 
-            WithRequestFor(
+            WithHttpRequestFor(
                 request,
                 req => req.RequestUri.Query.Should().Be("?key=42"));
         }
@@ -242,7 +242,7 @@ namespace MyCouch.UnitTests.Requests
             var request = CreateRequest();
             request.Key = 3.14;
 
-            WithRequestFor(
+            WithHttpRequestFor(
                 request,
                 req => req.RequestUri.Query.Should().Be("?key=3.14"));
         }
@@ -253,7 +253,7 @@ namespace MyCouch.UnitTests.Requests
             var request = CreateRequest();
             request.Key = true;
 
-            WithRequestFor(
+            WithHttpRequestFor(
                 request,
                 req => req.RequestUri.Query.Should().Be("?key=true"));
         }
@@ -264,7 +264,7 @@ namespace MyCouch.UnitTests.Requests
             var request = CreateRequest();
             request.Key = new DateTime(2008, 07, 17, 09, 21, 30, 50);
 
-            WithRequestFor(
+            WithHttpRequestFor(
                 request,
                 req => req.RequestUri.Query.Should().Be("?key=%222008-07-17T09%3A21%3A30%22"));
         }
@@ -275,7 +275,7 @@ namespace MyCouch.UnitTests.Requests
             var request = CreateRequest();
             request.StartKey = new object[] { "Key1", 42 };
 
-            WithRequestFor(
+            WithHttpRequestFor(
                 request,
                 req => req.RequestUri.Query.Should().Be("?startkey=%5B%22Key1%22%2C42%5D"));
         }
@@ -286,7 +286,7 @@ namespace MyCouch.UnitTests.Requests
             var request = CreateRequest();
             request.StartKey = "Key1";
 
-            WithRequestFor(
+            WithHttpRequestFor(
                 request,
                 req => req.RequestUri.Query.Should().Be("?startkey=%22Key1%22"));
         }
@@ -297,7 +297,7 @@ namespace MyCouch.UnitTests.Requests
             var request = CreateRequest();
             request.StartKey = 42;
 
-            WithRequestFor(
+            WithHttpRequestFor(
                 request,
                 req => req.RequestUri.Query.Should().Be("?startkey=42"));
         }
@@ -308,7 +308,7 @@ namespace MyCouch.UnitTests.Requests
             var request = CreateRequest();
             request.StartKey = 3.14;
 
-            WithRequestFor(
+            WithHttpRequestFor(
                 request,
                 req => req.RequestUri.Query.Should().Be("?startkey=3.14"));
         }
@@ -319,7 +319,7 @@ namespace MyCouch.UnitTests.Requests
             var request = CreateRequest();
             request.StartKey = true;
 
-            WithRequestFor(
+            WithHttpRequestFor(
                 request,
                 req => req.RequestUri.Query.Should().Be("?startkey=true"));
         }
@@ -330,7 +330,7 @@ namespace MyCouch.UnitTests.Requests
             var request = CreateRequest();
             request.StartKey = new DateTime(2008, 07, 17, 09, 21, 30, 50);
 
-            WithRequestFor(
+            WithHttpRequestFor(
                 request,
                 req => req.RequestUri.Query.Should().Be("?startkey=%222008-07-17T09%3A21%3A30%22"));
         }
@@ -341,7 +341,7 @@ namespace MyCouch.UnitTests.Requests
             var request = CreateRequest();
             request.StartKeyDocId = "My start key doc id 1";
 
-            WithRequestFor(
+            WithHttpRequestFor(
                 request,
                 req => req.RequestUri.Query.Should().Be("?startkey_docid=%22My%20start%20key%20doc%20id%201%22"));
         }
@@ -352,7 +352,7 @@ namespace MyCouch.UnitTests.Requests
             var request = CreateRequest();
             request.EndKey = new object[] { "Key1", 42 };
 
-            WithRequestFor(
+            WithHttpRequestFor(
                 request,
                 req => req.RequestUri.Query.Should().Be("?endkey=%5B%22Key1%22%2C42%5D"));
         }
@@ -363,7 +363,7 @@ namespace MyCouch.UnitTests.Requests
             var request = CreateRequest();
             request.EndKey = "Key1";
 
-            WithRequestFor(
+            WithHttpRequestFor(
                 request,
                 req => req.RequestUri.Query.Should().Be("?endkey=%22Key1%22"));
         }
@@ -374,7 +374,7 @@ namespace MyCouch.UnitTests.Requests
             var request = CreateRequest();
             request.EndKey = 42;
 
-            WithRequestFor(
+            WithHttpRequestFor(
                 request,
                 req => req.RequestUri.Query.Should().Be("?endkey=42"));
         }
@@ -385,7 +385,7 @@ namespace MyCouch.UnitTests.Requests
             var request = CreateRequest();
             request.EndKey = 3.14;
 
-            WithRequestFor(
+            WithHttpRequestFor(
                 request,
                 req => req.RequestUri.Query.Should().Be("?endkey=3.14"));
         }
@@ -396,7 +396,7 @@ namespace MyCouch.UnitTests.Requests
             var request = CreateRequest();
             request.EndKey = true;
 
-            WithRequestFor(
+            WithHttpRequestFor(
                 request,
                 req => req.RequestUri.Query.Should().Be("?endkey=true"));
         }
@@ -407,7 +407,7 @@ namespace MyCouch.UnitTests.Requests
             var request = CreateRequest();
             request.EndKey = new DateTime(2008, 07, 17, 09, 21, 30, 50);
 
-            WithRequestFor(
+            WithHttpRequestFor(
                 request,
                 req => req.RequestUri.Query.Should().Be("?endkey=%222008-07-17T09%3A21%3A30%22"));
         }
@@ -418,7 +418,7 @@ namespace MyCouch.UnitTests.Requests
             var request = CreateRequest();
             request.EndKeyDocId = "My end key doc id 1";
 
-            WithRequestFor(
+            WithHttpRequestFor(
                 request,
                 req => req.RequestUri.Query.Should().Be("?endkey_docid=%22My%20end%20key%20doc%20id%201%22"));
         }
@@ -429,7 +429,7 @@ namespace MyCouch.UnitTests.Requests
             var request = CreateRequest();
             request.Skip = 17;
 
-            WithRequestFor(
+            WithHttpRequestFor(
                 request,
                 req => req.RequestUri.Query.Should().Be("?skip=17"));
         }
@@ -440,7 +440,7 @@ namespace MyCouch.UnitTests.Requests
             var request = CreateRequest();
             request.Limit = 17;
 
-            WithRequestFor(
+            WithHttpRequestFor(
                 request,
                 req => req.RequestUri.Query.Should().Be("?limit=17"));
         }
@@ -451,7 +451,7 @@ namespace MyCouch.UnitTests.Requests
             var request = CreateRequest();
             request.GroupLevel = 3;
 
-            WithRequestFor(
+            WithHttpRequestFor(
                 request,
                 req => req.RequestUri.Query.Should().Be("?group_level=3"));
         }
@@ -476,7 +476,7 @@ namespace MyCouch.UnitTests.Requests
             request.Group = true;
             request.GroupLevel = 3;
 
-            WithRequestFor(
+            WithHttpRequestFor(
                 request,
                 req => req.RequestUri.Query.Should().Be("?include_docs=true&descending=true&reduce=true&inclusive_end=true&update_seq=true&group=true&group_level=3&stale=%22update_after%22&key=%22Key1%22&startkey=%22My%20start%20key%22&startkey_docid=%22My%20start%20key%20doc%20id%22&endkey=%22My%20end%20key%22&endkey_docid=%22My%20end%20key%20doc%20id%22&limit=10&skip=5"));
         }
@@ -486,7 +486,7 @@ namespace MyCouch.UnitTests.Requests
             return new QueryViewRequest("foodesigndoc", "barviewname");
         }
 
-        protected virtual void WithRequestFor(QueryViewRequest query, Action<HttpRequestMessage> a)
+        protected virtual void WithHttpRequestFor(QueryViewRequest query, Action<HttpRequestMessage> a)
         {
             using (var req = SUT.Create(query))
                 a(req);
