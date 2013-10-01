@@ -47,7 +47,7 @@ namespace MyCouch.Requests.Builders
         }
 
         /// <summary>
-        /// Returns <see cref="ViewQueryOptions.Keys"/> as compatible JSON document for use e.g.
+        /// Returns <see cref="QueryViewRequest.Keys"/> as compatible JSON document for use e.g.
         /// with POST of keys against views.
         /// </summary>
         /// <returns></returns>
@@ -61,9 +61,9 @@ namespace MyCouch.Requests.Builders
         }
 
         /// <summary>
-        /// Generates <see cref="ViewQueryOptions"/> configured values as querystring params.
+        /// Generates <see cref="QueryViewRequest"/> configured values as querystring params.
         /// </summary>
-        /// <remarks><see cref="ViewQueryOptions.Keys"/> are not included in this string.</remarks>
+        /// <remarks><see cref="QueryViewRequest.Keys"/> are not included in this string.</remarks>
         /// <returns></returns>
         protected virtual string GenerateQueryStringParams(QueryViewRequest query)
         {
@@ -134,7 +134,7 @@ namespace MyCouch.Requests.Builders
 
         /// <summary>
         /// Contains the string representation (Key) of
-        /// individual options for <see cref="ViewQueryOptions"/>.
+        /// individual options for <see cref="QueryViewRequest"/>.
         /// </summary>
         protected static class KeyNames
         {
