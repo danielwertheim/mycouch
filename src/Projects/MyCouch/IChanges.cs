@@ -18,6 +18,11 @@ namespace MyCouch
         /// <param name="feed"></param>
         /// <returns></returns>
         Task<ChangesResponse> GetAsync(ChangesFeed feed);
+        /// <summary>
+        /// Lets you consume changes from the _changes stream.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         Task<ChangesResponse> GetAsync(GetChangesRequest request);
     }
 }

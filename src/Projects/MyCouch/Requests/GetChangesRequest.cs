@@ -8,7 +8,7 @@ namespace MyCouch.Requests
     public class GetChangesRequest : IRequest
     {
         /// <summary>
-        /// Select the type of feed to consume.
+        /// Select the type of changes feed to consume.
         /// </summary>
         public ChangesFeed Feed { get; protected set; }
         /// <summary>
