@@ -14,17 +14,6 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryViewRequestConfigurator Stale(string value)
-        {
-            Request.Stale = value;
-
-            return this;
-        }
-        /// <summary>
-        /// Allow the results from a stale view to be used.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
         public virtual QueryViewRequestConfigurator Stale(Stale value)
         {
             Request.Stale = value;
