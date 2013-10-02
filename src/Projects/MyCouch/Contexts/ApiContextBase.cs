@@ -15,9 +15,14 @@ namespace MyCouch.Contexts
             Connection = connection;
         }
 
-        protected virtual Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
+        protected virtual Task<HttpResponseMessage> SendAsync(HttpRequestMessage httpRequest)
         {
-            return Connection.SendAsync(request);
+            return Connection.SendAsync(httpRequest);
+        }
+
+        protected virtual Task<HttpResponseMessage> SendAsync(HttpRequestMessage httpRequest, HttpCompletionOption completionOption)
+        {
+            return Connection.SendAsync(httpRequest, completionOption);
         }
     }
 }
