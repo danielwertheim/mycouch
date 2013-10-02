@@ -15,12 +15,12 @@ namespace MyCouch.UnitTests.Fakes
 
         public virtual void Dispose() { }
         
-        public Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
+        public Task<HttpResponseMessage> SendAsync(HttpRequestMessage httpRequest)
         {
             return null;
         }
 
-        public Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, HttpCompletionOption completionOption)
+        public Task<HttpResponseMessage> SendAsync(HttpRequestMessage httpRequest, HttpCompletionOption completionOption)
         {
             return null;
         }
