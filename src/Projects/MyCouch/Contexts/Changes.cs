@@ -18,20 +18,20 @@ namespace MyCouch.Contexts
             return GetAsync(new GetChangesRequest(feed));
         }
 
-        public virtual async Task<ChangesResponse> GetAsync(GetChangesRequest cmd)
+        public virtual async Task<ChangesResponse> GetAsync(GetChangesRequest request)
         {
-            Ensure.That(cmd, "cmd").IsNotNull();
+            Ensure.That(request, "request").IsNotNull();
 
-            using (var req = CreateHttpRequest(cmd))
+            using (var httpRequest = CreateHttpRequest(request))
             {
-                using (var res = await SendAsync(req).ForAwait())
+                using (var res = await SendAsync(httpRequest).ForAwait())
                 {
                     return ProcessHttpResponse(res);
                 }
             }
         }
 
-        protected virtual HttpRequest CreateHttpRequest(GetChangesRequest cmd)
+        protected virtual HttpRequest CreateHttpRequest(GetChangesRequest request)
         {
             throw new NotImplementedException();
         }

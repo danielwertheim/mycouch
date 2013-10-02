@@ -33,26 +33,26 @@ namespace MyCouch.Contexts
             return GetAsync(new GetAttachmentRequest(docId, docRev, attachmentName));
         }
 
-        public virtual async Task<AttachmentResponse> GetAsync(GetAttachmentRequest cmd)
+        public virtual async Task<AttachmentResponse> GetAsync(GetAttachmentRequest request)
         {
-            Ensure.That(cmd, "cmd").IsNotNull();
+            Ensure.That(request, "request").IsNotNull();
 
-            using (var req = CreateHttpRequest(cmd))
+            using (var httpRequest = CreateHttpRequest(request))
             {
-                using (var res = await SendAsync(req).ForAwait())
+                using (var res = await SendAsync(httpRequest).ForAwait())
                 {
                     return ProcessAttachmentResponse(res);
                 }
             }
         }
 
-        public virtual async Task<DocumentHeaderResponse> PutAsync(PutAttachmentRequest cmd)
+        public virtual async Task<DocumentHeaderResponse> PutAsync(PutAttachmentRequest request)
         {
-            Ensure.That(cmd, "cmd").IsNotNull();
+            Ensure.That(request, "request").IsNotNull();
 
-            using (var req = CreateHttpRequest(cmd))
+            using (var httpRequest = CreateHttpRequest(request))
             {
-                using (var res = await SendAsync(req).ForAwait())
+                using (var res = await SendAsync(httpRequest).ForAwait())
                 {
                     return ProcessDocumentHeaderResponse(res);
                 }
@@ -64,45 +64,45 @@ namespace MyCouch.Contexts
             return DeleteAsync(new DeleteAttachmentRequest(docId, docRev, attachmentName));
         }
 
-        public virtual async Task<DocumentHeaderResponse> DeleteAsync(DeleteAttachmentRequest cmd)
+        public virtual async Task<DocumentHeaderResponse> DeleteAsync(DeleteAttachmentRequest request)
         {
-            Ensure.That(cmd, "cmd").IsNotNull();
+            Ensure.That(request, "request").IsNotNull();
 
-            using (var req = CreateHttpRequest(cmd))
+            using (var httpRequest = CreateHttpRequest(request))
             {
-                using (var res = await SendAsync(req).ForAwait())
+                using (var res = await SendAsync(httpRequest).ForAwait())
                 {
                     return ProcessDocumentHeaderResponse(res);
                 }
             }
         }
 
-        protected virtual HttpRequest CreateHttpRequest(GetAttachmentRequest cmd)
+        protected virtual HttpRequest CreateHttpRequest(GetAttachmentRequest request)
         {
-            var req = new HttpRequest(HttpMethod.Get, GenerateRequestUrl(cmd.DocId, cmd.DocRev, cmd.Name));
+            var httpRequest = new HttpRequest(HttpMethod.Get, GenerateRequestUrl(request.DocId, request.DocRev, request.Name));
 
-            req.SetIfMatch(cmd.DocRev);
+            httpRequest.SetIfMatch(request.DocRev);
 
-            return req;
+            return httpRequest;
         }
 
-        protected virtual HttpRequest CreateHttpRequest(PutAttachmentRequest cmd)
+        protected virtual HttpRequest CreateHttpRequest(PutAttachmentRequest request)
         {
-            var req = new HttpRequest(HttpMethod.Put, GenerateRequestUrl(cmd.DocId, cmd.DocRev, cmd.Name));
+            var httpRequest = new HttpRequest(HttpMethod.Put, GenerateRequestUrl(request.DocId, request.DocRev, request.Name));
 
-            req.SetIfMatch(cmd.DocRev);
-            req.SetContent(cmd.ContentType, cmd.Content);
+            httpRequest.SetIfMatch(request.DocRev);
+            httpRequest.SetContent(request.ContentType, request.Content);
 
-            return req;
+            return httpRequest;
         }
 
-        protected virtual HttpRequest CreateHttpRequest(DeleteAttachmentRequest cmd)
+        protected virtual HttpRequest CreateHttpRequest(DeleteAttachmentRequest request)
         {
-            var req = new HttpRequest(HttpMethod.Delete, GenerateRequestUrl(cmd.DocId, cmd.DocRev, cmd.Name));
+            var httpRequest = new HttpRequest(HttpMethod.Delete, GenerateRequestUrl(request.DocId, request.DocRev, request.Name));
 
-            req.SetIfMatch(cmd.DocRev);
+            httpRequest.SetIfMatch(request.DocRev);
 
-            return req;
+            return httpRequest;
         }
 
         protected virtual string GenerateRequestUrl(string docId, string docRev, string attachmentName)

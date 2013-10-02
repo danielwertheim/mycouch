@@ -11,12 +11,12 @@ namespace MyCouch.IntegrationTests
 
             if (!response.IsEmpty)
             {
-                var bulkCmd = new BulkRequest();
+                var bulkRequest = new BulkRequest();
 
                 foreach (var row in response.Rows)
-                    bulkCmd.Delete(row.Id, row.Value.rev.ToString());
+                    bulkRequest.Delete(row.Id, row.Value.rev.ToString());
                 
-                client.Documents.BulkAsync(bulkCmd).Wait();
+                client.Documents.BulkAsync(bulkRequest).Wait();
             }
         }
     }

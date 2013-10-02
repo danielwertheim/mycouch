@@ -45,9 +45,9 @@ namespace MyCouch
         /// representation of the document.
         /// </summary>
         /// <typeparam name="T">The type you want the document deserialized as.</typeparam>
-        /// <param name="cmd"></param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        Task<EntityResponse<T>> GetAsync<T>(GetEntityRequest cmd) where T : class;
+        Task<EntityResponse<T>> GetAsync<T>(GetEntityRequest request) where T : class;
 
         /// <summary>
         /// Inserts sent entity. The resulting JSON that is inserted will have some additional
@@ -63,9 +63,9 @@ namespace MyCouch
         /// meta-data contained in the JSON, like $doctype.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="cmd"></param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        Task<EntityResponse<T>> PostAsync<T>(PostEntityRequest<T> cmd) where T : class;
+        Task<EntityResponse<T>> PostAsync<T>(PostEntityRequest<T> request) where T : class;
 
         /// <summary>
         /// Inserts or Updates sent entity and returns it in the response, and if successful, then with an
@@ -81,9 +81,9 @@ namespace MyCouch
         /// updated _rev value.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="cmd"></param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        Task<EntityResponse<T>> PutAsync<T>(PutEntityRequest<T> cmd) where T : class;
+        Task<EntityResponse<T>> PutAsync<T>(PutEntityRequest<T> request) where T : class;
 
         /// <summary>
         /// Deletes the document that matches the values of the document _id and _rev extracted from <paramref name="entity"/>.

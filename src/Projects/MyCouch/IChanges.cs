@@ -18,6 +18,6 @@ namespace MyCouch
         /// <param name="feed"></param>
         /// <returns></returns>
         Task<ChangesResponse> GetAsync(ChangesFeed feed);
-        Task<ChangesResponse> GetAsync(GetChangesRequest cmd);
+        Task<ChangesResponse> GetAsync(GetChangesRequest request);
     }
 }

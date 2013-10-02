@@ -14,9 +14,9 @@ namespace MyCouch
         /// Lets you use the underlying bulk API to insert, update and delete
         /// documents.
         /// </summary>
-        /// <param name="cmd"></param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        Task<BulkResponse> BulkAsync(BulkRequest cmd);
+        Task<BulkResponse> BulkAsync(BulkRequest request);
 
         /// <summary>
         /// Copies the document having a document id matching <paramref name="srcId"/> to a new document
@@ -40,13 +40,13 @@ namespace MyCouch
         Task<DocumentHeaderResponse> CopyAsync(string srcId, string srcRev, string newId);
 
         /// <summary>
-        /// Copies the document having a document id matching <paramref name="cmd"/>.SrcId to a new document
-        /// with a new id being <paramref name="cmd"/>.NewId.
-        /// You can also specify a specific revision to copy via <paramref name="cmd"/>.SrcRev.
+        /// Copies the document having a document id matching <paramref name="request"/>.SrcId to a new document
+        /// with a new id being <paramref name="request"/>.NewId.
+        /// You can also specify a specific revision to copy via <paramref name="request"/>.SrcRev.
         /// </summary>
-        /// <param name="cmd"></param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        Task<DocumentHeaderResponse> CopyAsync(CopyDocumentRequest cmd);
+        Task<DocumentHeaderResponse> CopyAsync(CopyDocumentRequest request);
 
         /// <summary>
         /// Replaces the document having a document id matching <paramref name="trgId"/> and rev <paramref name="trgRev"/>
@@ -70,13 +70,13 @@ namespace MyCouch
         Task<DocumentHeaderResponse> ReplaceAsync(string srcId, string srcRev, string trgId, string trgRev);
 
         /// <summary>
-        /// Copies the document having a document id matching <paramref name="cmd"/>.SrcId to a new document
-        /// with a new id being <paramref name="cmd"/>.NewId.
-        /// You can also specify a specific revision to copy via <paramref name="cmd"/>.SrcRev.
+        /// Copies the document having a document id matching <paramref name="request"/>.SrcId to a new document
+        /// with a new id being <paramref name="request"/>.NewId.
+        /// You can also specify a specific revision to copy via <paramref name="request"/>.SrcRev.
         /// </summary>
-        /// <param name="cmd"></param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        Task<DocumentHeaderResponse> ReplaceAsync(ReplaceDocumentRequest cmd);
+        Task<DocumentHeaderResponse> ReplaceAsync(ReplaceDocumentRequest request);
 
         /// <summary>
         /// Makes a simple HEAD request which doesn not include the actual JSON document,
@@ -90,11 +90,11 @@ namespace MyCouch
 
         /// <summary>
         /// Makes a simple HEAD request which doesn not include the actual JSON document,
-        /// and returns any matched info for the <paramref name="cmd"/>.
+        /// and returns any matched info for the <paramref name="request"/>.
         /// </summary>
-        /// <param name="cmd"></param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        Task<DocumentHeaderResponse> ExistsAsync(DocumentExistsRequest cmd);
+        Task<DocumentHeaderResponse> ExistsAsync(DocumentExistsRequest request);
 
         /// <summary>
         /// Gets untyped response with the JSON representation of the document.
@@ -110,9 +110,9 @@ namespace MyCouch
         /// <summary>
         /// Gets untyped response with the JSON representation of the document.
         /// </summary>
-        /// <param name="cmd"></param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        Task<DocumentResponse> GetAsync(GetDocumentRequest cmd);
+        Task<DocumentResponse> GetAsync(GetDocumentRequest request);
 
         /// <summary>
         /// Inserts sent JSON document as it is. No additional metadata like doctype will be added.
@@ -124,9 +124,9 @@ namespace MyCouch
         /// <summary>
         /// Inserts sent JSON document as it is. No additional metadata like doctype will be added.
         /// </summary>
-        /// <param name="cmd"></param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        Task<DocumentHeaderResponse> PostAsync(PostDocumentRequest cmd);
+        Task<DocumentHeaderResponse> PostAsync(PostDocumentRequest request);
 
         /// <summary>
         /// Inserts or Updates. The document <paramref name="doc"/> needs to contain the _id and for updates also the _rev field.
@@ -146,12 +146,12 @@ namespace MyCouch
         Task<DocumentHeaderResponse> PutAsync(string id, string rev, string doc);
 
         /// <summary>
-        /// Inserts or Updates. The document in passed <paramref name="cmd"/>.
+        /// Inserts or Updates. The document in passed <paramref name="request"/>.
         /// The document needs to contain the _id but not the _rev, neither for inserts nor for updates.
         /// </summary>
-        /// <param name="cmd"></param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        Task<DocumentHeaderResponse> PutAsync(PutDocumentRequest cmd);
+        Task<DocumentHeaderResponse> PutAsync(PutDocumentRequest request);
 
         /// <summary>
         /// Deletes the document that matches sent <paramref name="id"/> and <paramref name="rev"/>.
@@ -162,10 +162,10 @@ namespace MyCouch
         Task<DocumentHeaderResponse> DeleteAsync(string id, string rev);
 
         /// <summary>
-        /// Deletes the document that matches sent <paramref name="cmd"/>.
+        /// Deletes the document that matches sent <paramref name="request"/>.
         /// </summary>
-        /// <param name="cmd"></param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        Task<DocumentHeaderResponse> DeleteAsync(DeleteDocumentRequest cmd);
+        Task<DocumentHeaderResponse> DeleteAsync(DeleteDocumentRequest request);
     }
 }

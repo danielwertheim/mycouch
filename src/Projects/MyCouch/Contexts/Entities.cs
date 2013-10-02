@@ -33,15 +33,15 @@ namespace MyCouch.Contexts
             return GetAsync<T>(new GetEntityRequest(id, rev));
         }
 
-        public virtual async Task<EntityResponse<T>> GetAsync<T>(GetEntityRequest cmd) where T : class
+        public virtual async Task<EntityResponse<T>> GetAsync<T>(GetEntityRequest request) where T : class
         {
-            Ensure.That(cmd, "cmd").IsNotNull();
+            Ensure.That(request, "request").IsNotNull();
 
-            using (var req = CreateHttpRequest(cmd))
+            using (var httpRequest = CreateHttpRequest(request))
             {
-                using (var res = await SendAsync(req).ForAwait())
+                using (var res = await SendAsync(httpRequest).ForAwait())
                 {
-                    return ProcessEntityResponse<T>(cmd, res);
+                    return ProcessEntityResponse<T>(request, res);
                 }
             }
         }
@@ -51,16 +51,16 @@ namespace MyCouch.Contexts
             return PostAsync(new PostEntityRequest<T>(entity));
         }
 
-        public virtual async Task<EntityResponse<T>> PostAsync<T>(PostEntityRequest<T> cmd) where T : class
+        public virtual async Task<EntityResponse<T>> PostAsync<T>(PostEntityRequest<T> request) where T : class
         {
-            Ensure.That(cmd, "cmd").IsNotNull();
+            Ensure.That(request, "request").IsNotNull();
 
 
-            using (var req = CreateRequest(cmd))
+            using (var httpRequest = CreateHttpRequest(request))
             {
-                using (var res = await SendAsync(req).ForAwait())
+                using (var res = await SendAsync(httpRequest).ForAwait())
                 {
-                    return ProcessEntityResponse(cmd, res);
+                    return ProcessEntityResponse(request, res);
                 }
             }
         }
@@ -70,15 +70,15 @@ namespace MyCouch.Contexts
             return PutAsync(new PutEntityRequest<T>(entity));
         }
 
-        public virtual async Task<EntityResponse<T>> PutAsync<T>(PutEntityRequest<T> cmd) where T : class
+        public virtual async Task<EntityResponse<T>> PutAsync<T>(PutEntityRequest<T> request) where T : class
         {
-            Ensure.That(cmd, "cmd").IsNotNull();
+            Ensure.That(request, "request").IsNotNull();
 
-            using (var req = CreateRequest(cmd))
+            using (var httpRequest = CreateHttpRequest(request))
             {
-                using (var res = await SendAsync(req).ForAwait())
+                using (var res = await SendAsync(httpRequest).ForAwait())
                 {
-                    return ProcessEntityResponse(cmd, res);
+                    return ProcessEntityResponse(request, res);
                 }
             }
         }
@@ -88,15 +88,15 @@ namespace MyCouch.Contexts
             return DeleteAsync(new DeleteEntityRequest<T>(entity));
         }
 
-        public virtual async Task<EntityResponse<T>> DeleteAsync<T>(DeleteEntityRequest<T> cmd) where T : class
+        public virtual async Task<EntityResponse<T>> DeleteAsync<T>(DeleteEntityRequest<T> request) where T : class
         {
-            Ensure.That(cmd, "cmd").IsNotNull();
+            Ensure.That(request, "request").IsNotNull();
 
-            using (var req = CreateRequest(cmd))
+            using (var httpRequest = CreateHttpRequest(request))
             {
-                using (var res = await SendAsync(req).ForAwait())
+                using (var res = await SendAsync(httpRequest).ForAwait())
                 {
-                    return ProcessEntityResponse(cmd, res);
+                    return ProcessEntityResponse(request, res);
                 }
             }
         }
@@ -106,49 +106,49 @@ namespace MyCouch.Contexts
             return Serializer.Serialize(entity);
         }
 
-        protected virtual HttpRequest CreateHttpRequest(GetEntityRequest cmd)
+        protected virtual HttpRequest CreateHttpRequest(GetEntityRequest request)
         {
-            var req = new HttpRequest(HttpMethod.Get, GenerateRequestUrl(cmd.Id, cmd.Rev));
+            var httpRequest = new HttpRequest(HttpMethod.Get, GenerateRequestUrl(request.Id, request.Rev));
 
-            req.SetIfMatch(cmd.Rev);
+            httpRequest.SetIfMatch(request.Rev);
 
-            return req;
+            return httpRequest;
         }
 
-        protected virtual HttpRequestMessage CreateRequest<T>(PostEntityRequest<T> cmd) where T : class
+        protected virtual HttpRequest CreateHttpRequest<T>(PostEntityRequest<T> request) where T : class
         {
-            var req = new HttpRequest(HttpMethod.Post, GenerateRequestUrl());
+            var httpRequest = new HttpRequest(HttpMethod.Post, GenerateRequestUrl());
 
-            req.SetContent(SerializeEntity(cmd.Entity));
+            httpRequest.SetContent(SerializeEntity(request.Entity));
 
-            return req;
+            return httpRequest;
         }
 
-        protected virtual HttpRequestMessage CreateRequest<T>(PutEntityRequest<T> cmd) where T : class
+        protected virtual HttpRequest CreateHttpRequest<T>(PutEntityRequest<T> request) where T : class
         {
-            var id = Reflector.IdMember.GetValueFrom(cmd.Entity);
-            var rev = Reflector.RevMember.GetValueFrom(cmd.Entity);
-            var req = new HttpRequest(HttpMethod.Put, GenerateRequestUrl(id, rev));
+            var id = Reflector.IdMember.GetValueFrom(request.Entity);
+            var rev = Reflector.RevMember.GetValueFrom(request.Entity);
+            var httpRequest = new HttpRequest(HttpMethod.Put, GenerateRequestUrl(id, rev));
 
-            req.SetIfMatch(rev);
-            req.SetContent(SerializeEntity(cmd.Entity));
+            httpRequest.SetIfMatch(rev);
+            httpRequest.SetContent(SerializeEntity(request.Entity));
 
-            return req;
+            return httpRequest;
         }
 
-        protected virtual HttpRequestMessage CreateRequest<T>(DeleteEntityRequest<T> cmd) where T : class
+        protected virtual HttpRequest CreateHttpRequest<T>(DeleteEntityRequest<T> request) where T : class
         {
-            var entityId = Reflector.IdMember.GetValueFrom(cmd.Entity);
+            var entityId = Reflector.IdMember.GetValueFrom(request.Entity);
             Ensure.That(entityId, "entityId").IsNotNullOrWhiteSpace();
 
-            var entityRev = Reflector.RevMember.GetValueFrom(cmd.Entity);
+            var entityRev = Reflector.RevMember.GetValueFrom(request.Entity);
             Ensure.That(entityRev, "entityRev").IsNotNullOrWhiteSpace();
 
-            var req = new HttpRequest(HttpMethod.Delete, GenerateRequestUrl(entityId, entityRev));
+            var httpRequest = new HttpRequest(HttpMethod.Delete, GenerateRequestUrl(entityId, entityRev));
 
-            req.SetIfMatch(entityRev);
+            httpRequest.SetIfMatch(entityRev);
 
-            return req;
+            return httpRequest;
         }
 
         protected virtual string GenerateRequestUrl(string id = null, string rev = null)
@@ -159,15 +159,15 @@ namespace MyCouch.Contexts
                 rev == null ? string.Empty : string.Concat("?rev=", rev));
         }
 
-        protected virtual EntityResponse<T> ProcessEntityResponse<T>(GetEntityRequest cmd, HttpResponseMessage response) where T : class
+        protected virtual EntityResponse<T> ProcessEntityResponse<T>(GetEntityRequest request, HttpResponseMessage response) where T : class
         {
             return EntityResponseFactory.Create<T>(response);
         }
 
-        protected virtual EntityResponse<T> ProcessEntityResponse<T>(PostEntityRequest<T> cmd, HttpResponseMessage response) where T : class
+        protected virtual EntityResponse<T> ProcessEntityResponse<T>(PostEntityRequest<T> request, HttpResponseMessage response) where T : class
         {
             var entityResponse = EntityResponseFactory.Create<T>(response);
-            entityResponse.Entity = cmd.Entity;
+            entityResponse.Entity = request.Entity;
 
             if (entityResponse.IsSuccess)
             {
@@ -178,10 +178,10 @@ namespace MyCouch.Contexts
             return entityResponse;
         }
 
-        protected virtual EntityResponse<T> ProcessEntityResponse<T>(PutEntityRequest<T> cmd, HttpResponseMessage response) where T : class
+        protected virtual EntityResponse<T> ProcessEntityResponse<T>(PutEntityRequest<T> request, HttpResponseMessage response) where T : class
         {
             var entityResponse = EntityResponseFactory.Create<T>(response);
-            entityResponse.Entity = cmd.Entity;
+            entityResponse.Entity = request.Entity;
 
             if (entityResponse.IsSuccess)
                 Reflector.RevMember.SetValueTo(entityResponse.Entity, entityResponse.Rev);
@@ -189,10 +189,10 @@ namespace MyCouch.Contexts
             return entityResponse;
         }
 
-        protected virtual EntityResponse<T> ProcessEntityResponse<T>(DeleteEntityRequest<T> cmd, HttpResponseMessage response) where T : class
+        protected virtual EntityResponse<T> ProcessEntityResponse<T>(DeleteEntityRequest<T> request, HttpResponseMessage response) where T : class
         {
             var entityResponse = EntityResponseFactory.Create<T>(response);
-            entityResponse.Entity = cmd.Entity;
+            entityResponse.Entity = request.Entity;
 
             if (entityResponse.IsSuccess)
                 Reflector.RevMember.SetValueTo(entityResponse.Entity, entityResponse.Rev);

@@ -29,16 +29,16 @@ namespace MyCouch
         /// <summary>
         /// Returns only the requested attachment and not the complete document.
         /// </summary>
-        /// <param name="cmd"></param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        Task<AttachmentResponse> GetAsync(GetAttachmentRequest cmd);
+        Task<AttachmentResponse> GetAsync(GetAttachmentRequest request);
 
         /// <summary>
         /// Used to add an attachment to an existing document.
         /// </summary>
-        /// <param name="cmd"></param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        Task<DocumentHeaderResponse> PutAsync(PutAttachmentRequest cmd);
+        Task<DocumentHeaderResponse> PutAsync(PutAttachmentRequest request);
 
         /// <summary>
         /// Used to delete an existing attachment.
@@ -52,8 +52,8 @@ namespace MyCouch
         /// <summary>
         /// Used to delete an existing attachment.
         /// </summary>
-        /// <param name="cmd"></param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        Task<DocumentHeaderResponse> DeleteAsync(DeleteAttachmentRequest cmd);
+        Task<DocumentHeaderResponse> DeleteAsync(DeleteAttachmentRequest request);
     }
 }
