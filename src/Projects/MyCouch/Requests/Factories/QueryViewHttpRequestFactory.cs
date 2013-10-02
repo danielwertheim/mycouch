@@ -5,15 +5,15 @@ using System.Net.Http;
 using EnsureThat;
 using MyCouch.Net;
 
-namespace MyCouch.Requests.Builders
+namespace MyCouch.Requests.Factories
 {
-    public class QueryViewHttpRequestBuilder :
-        RequestBuilderBase,
-        IHttpRequestBuilder<QueryViewRequest>
+    public class QueryViewHttpRequestFactory :
+        HttpRequestFactoryBase,
+        IHttpRequestFactory<QueryViewRequest>
     {
         protected readonly IConnection Connection;
 
-        public QueryViewHttpRequestBuilder(IConnection connection)
+        public QueryViewHttpRequestFactory(IConnection connection)
         {
             Ensure.That(connection, "connection").IsNotNull();
 

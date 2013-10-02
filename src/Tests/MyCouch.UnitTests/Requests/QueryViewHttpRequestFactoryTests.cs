@@ -2,19 +2,19 @@
 using System.Net.Http;
 using FluentAssertions;
 using MyCouch.Requests;
-using MyCouch.Requests.Builders;
+using MyCouch.Requests.Factories;
 using MyCouch.UnitTests.Fakes;
 using Xunit;
 
 namespace MyCouch.UnitTests.Requests
 {
-    public class QueryViewHttpRequestBuilderTests : UnitTestsOf<QueryViewHttpRequestBuilder>
+    public class QueryViewHttpRequestFactoryTests : UnitTestsOf<QueryViewHttpRequestFactory>
     {
-        public QueryViewHttpRequestBuilderTests()
+        public QueryViewHttpRequestFactoryTests()
         {
             var cnFake = new ConnectionFake(new Uri("https://cdb.foo.com:5984"));
 
-            SUT = new QueryViewHttpRequestBuilder(cnFake);
+            SUT = new QueryViewHttpRequestFactory(cnFake);
         }
 
         [Fact]

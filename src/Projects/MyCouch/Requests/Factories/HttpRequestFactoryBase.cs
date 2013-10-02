@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using MyCouch.Extensions;
 
-namespace MyCouch.Requests.Builders
+namespace MyCouch.Requests.Factories
 {
-    public abstract class RequestBuilderBase
+    public abstract class HttpRequestFactoryBase
     {
         protected virtual bool HasValue(object value)
         {

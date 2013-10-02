@@ -63,14 +63,12 @@ namespace MyCouch.Responses.Factories
             JsonMapper.Map(content, mappings);
         }
 
-        //TODO: Rem
         protected virtual void PopulateMissingIdFromRequestUri(DocumentHeaderResponse response, HttpResponseMessage httpResponse)
         {
             if (string.IsNullOrWhiteSpace(response.Id))
                 response.Id = httpResponse.RequestMessage.GetUriSegmentByRightOffset();
         }
 
-        //TODO: Rem
         protected virtual void PopulateMissingRevFromRequestHeaders(DocumentHeaderResponse response, HttpResponseMessage httpResponse)
         {
             if (string.IsNullOrWhiteSpace(response.Rev))
