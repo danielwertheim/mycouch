@@ -26,7 +26,7 @@ namespace MyCouch.UnitTests.Requests
                 request,
                 req => {
                     req.Content.Should().BeNull();
-                    req.RequestUri.Query.Should().Be("?");
+                    req.RequestUri.Query.Should().Be(string.Empty);
                 });
         }
 

@@ -26,17 +26,17 @@ namespace MyCouch.Requests.Factories
         {
             if (request is QuerySystemViewRequest)
             {
-                return string.Format("{0}/{1}?{2}",
+                return string.Format("{0}/{1}{2}",
                     Connection.Address,
                     request.View.Name,
-                    GenerateQueryStringParams(request));
+                    GenerateQueryString(request));
             }
 
-            return string.Format("{0}/_design/{1}/_view/{2}?{3}",
+            return string.Format("{0}/_design/{1}/_view/{2}{3}",
                 Connection.Address,
                 request.View.DesignDocument,
                 request.View.Name,
-                GenerateQueryStringParams(request));
+                GenerateQueryString(request));
         }
 
         /// <summary>
@@ -51,6 +51,13 @@ namespace MyCouch.Requests.Factories
 
             return string.Format("{{\"keys\":[{0}]}}",
                 string.Join(",", query.Keys.Select(k => FormatValue(k))));
+        }
+
+        protected virtual string GenerateQueryString(QueryViewRequest request)
+        {
+            var p = GenerateQueryStringParams(request);
+
+            return string.IsNullOrEmpty(p) ? string.Empty : string.Concat("?", p);
         }
 
         /// <summary>
