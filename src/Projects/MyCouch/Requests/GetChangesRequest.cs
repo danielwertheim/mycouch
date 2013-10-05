@@ -10,7 +10,7 @@ namespace MyCouch.Requests
         /// <summary>
         /// Select the type of changes feed to consume.
         /// </summary>
-        public ChangesFeed Feed { get; protected set; }
+        public ChangesFeed Feed { get; set; }
         /// <summary>
         /// Start the results from the change immediately after the given sequence number.
         /// </summary>
@@ -49,10 +49,5 @@ namespace MyCouch.Requests
         /// from a design document to selectively get updates. 
         /// </summary>
         public string Filter { get; set; }
-
-        public GetChangesRequest(ChangesFeed feed)
-        {
-            Feed = feed;
-        }
     }
 }

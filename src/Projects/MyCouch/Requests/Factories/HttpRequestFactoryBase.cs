@@ -1,12 +1,22 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using EnsureThat;
 using MyCouch.Extensions;
 
 namespace MyCouch.Requests.Factories
 {
     public abstract class HttpRequestFactoryBase
     {
+        protected readonly IConnection Connection;
+
+        protected HttpRequestFactoryBase(IConnection connection)
+        {
+            Ensure.That(connection, "connection").IsNotNull();
+
+            Connection = connection;
+        }
+
         protected virtual bool HasValue(object value)
         {
             return value != null;

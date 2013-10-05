@@ -51,6 +51,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ChangesFeed.cs" />
+    <Compile Include="Requests\Factories\GetChangesHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\QueryViewHttpRequestFactory.cs" />
     <Compile Include="Requests\GetChangesRequest.cs" />
     <Compile Include="Requests\IRequest.cs" />

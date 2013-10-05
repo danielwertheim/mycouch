@@ -58,6 +58,7 @@
     <Compile Include="Requests\BulkRequestTests.cs" />
     <Compile Include="Fakes\ConnectionFake.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Requests\GetChangesHttpRequestFactoryTests.cs" />
     <Compile Include="Requests\QueryViewHttpRequestFactoryTests.cs" />
     <Compile Include="Requests\QueryViewRequestConfiguratorTests.cs" />
     <Compile Include="Requests\QueryViewRequestTests.cs" />

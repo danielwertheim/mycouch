@@ -11,14 +11,7 @@ namespace MyCouch.Requests.Factories
         HttpRequestFactoryBase,
         IHttpRequestFactory<QueryViewRequest>
     {
-        protected readonly IConnection Connection;
-
-        public QueryViewHttpRequestFactory(IConnection connection)
-        {
-            Ensure.That(connection, "connection").IsNotNull();
-
-            Connection = connection;
-        }
+        public QueryViewHttpRequestFactory(IConnection connection) : base(connection) { }
 
         public virtual HttpRequest Create(QueryViewRequest request)
         {
