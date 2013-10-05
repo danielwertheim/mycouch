@@ -22,21 +22,21 @@ namespace MyCouch.Requests.Factories
                 : new HttpRequest(HttpMethod.Get, GenerateRequestUrl(request));
         }
 
-        protected virtual string GenerateRequestUrl(QueryViewRequest query)
+        protected virtual string GenerateRequestUrl(QueryViewRequest request)
         {
-            if (query is QuerySystemViewRequest)
+            if (request is QuerySystemViewRequest)
             {
                 return string.Format("{0}/{1}?{2}",
                     Connection.Address,
-                    query.View.Name,
-                    GenerateQueryStringParams(query));
+                    request.View.Name,
+                    GenerateQueryStringParams(request));
             }
 
             return string.Format("{0}/_design/{1}/_view/{2}?{3}",
                 Connection.Address,
-                query.View.DesignDocument,
-                query.View.Name,
-                GenerateQueryStringParams(query));
+                request.View.DesignDocument,
+                request.View.Name,
+                GenerateQueryStringParams(request));
         }
 
         /// <summary>
@@ -58,69 +58,69 @@ namespace MyCouch.Requests.Factories
         /// </summary>
         /// <remarks><see cref="QueryViewRequest.Keys"/> are not included in this string.</remarks>
         /// <returns></returns>
-        protected virtual string GenerateQueryStringParams(QueryViewRequest query)
+        protected virtual string GenerateQueryStringParams(QueryViewRequest request)
         {
-            return string.Join("&", ToJsonKeyValues(query)
+            return string.Join("&", ConvertRequestToJsonCompatibleKeyValues(request)
                 .Where(kv => kv.Key != KeyNames.Keys)
                 .Select(kv => string.Format("{0}={1}", kv.Key, Uri.EscapeDataString(kv.Value))));
         }
 
         /// <summary>
-        /// Returns all configured options of <see cref="QueryViewRequest.Options"/> as key values.
+        /// Returns all configured options of <see cref="QueryViewRequest"/> as key values.
         /// The values are formatted to JSON-compatible strings.
         /// </summary>
         /// <returns></returns>
-        protected virtual IDictionary<string, string> ToJsonKeyValues(QueryViewRequest query)
+        protected virtual IDictionary<string, string> ConvertRequestToJsonCompatibleKeyValues(QueryViewRequest request)
         {
             var kvs = new Dictionary<string, string>();
 
-            if (query.IncludeDocs.HasValue)
-                kvs.Add(KeyNames.IncludeDocs, query.IncludeDocs.Value.ToString().ToLower());
+            if (request.IncludeDocs.HasValue)
+                kvs.Add(KeyNames.IncludeDocs, request.IncludeDocs.Value.ToString().ToLower());
 
-            if (query.Descending.HasValue)
-                kvs.Add(KeyNames.Descending, query.Descending.Value.ToString().ToLower());
+            if (request.Descending.HasValue)
+                kvs.Add(KeyNames.Descending, request.Descending.Value.ToString().ToLower());
 
-            if (query.Reduce.HasValue)
-                kvs.Add(KeyNames.Reduce, query.Reduce.Value.ToString().ToLower());
+            if (request.Reduce.HasValue)
+                kvs.Add(KeyNames.Reduce, request.Reduce.Value.ToString().ToLower());
 
-            if (query.InclusiveEnd.HasValue)
-                kvs.Add(KeyNames.InclusiveEnd, query.InclusiveEnd.Value.ToString().ToLower());
+            if (request.InclusiveEnd.HasValue)
+                kvs.Add(KeyNames.InclusiveEnd, request.InclusiveEnd.Value.ToString().ToLower());
 
-            if (query.UpdateSeq.HasValue)
-                kvs.Add(KeyNames.UpdateSeq, query.UpdateSeq.Value.ToString().ToLower());
+            if (request.UpdateSeq.HasValue)
+                kvs.Add(KeyNames.UpdateSeq, request.UpdateSeq.Value.ToString().ToLower());
 
-            if (query.Group.HasValue)
-                kvs.Add(KeyNames.Group, query.Group.Value.ToString().ToLower());
+            if (request.Group.HasValue)
+                kvs.Add(KeyNames.Group, request.Group.Value.ToString().ToLower());
 
-            if (query.GroupLevel.HasValue)
-                kvs.Add(KeyNames.GroupLevel, query.GroupLevel.Value.ToString(MyCouchRuntime.NumberFormat));
+            if (request.GroupLevel.HasValue)
+                kvs.Add(KeyNames.GroupLevel, request.GroupLevel.Value.ToString(MyCouchRuntime.NumberFormat));
 
-            if (HasValue(query.Stale))
-                kvs.Add(KeyNames.Stale, FormatValue(query.Stale));
+            if (HasValue(request.Stale))
+                kvs.Add(KeyNames.Stale, FormatValue(request.Stale));
 
-            if (HasValue(query.Key))
-                kvs.Add(KeyNames.Key, FormatValue(query.Key));
+            if (HasValue(request.Key))
+                kvs.Add(KeyNames.Key, FormatValue(request.Key));
 
-            if (HasValue(query.Keys))
-                kvs.Add(KeyNames.Keys, FormatValue(query.Keys));
+            if (HasValue(request.Keys))
+                kvs.Add(KeyNames.Keys, FormatValue(request.Keys));
 
-            if (HasValue(query.StartKey))
-                kvs.Add(KeyNames.StartKey, FormatValue(query.StartKey));
+            if (HasValue(request.StartKey))
+                kvs.Add(KeyNames.StartKey, FormatValue(request.StartKey));
 
-            if (HasValue(query.StartKeyDocId))
-                kvs.Add(KeyNames.StartKeyDocId, FormatValue(query.StartKeyDocId));
+            if (HasValue(request.StartKeyDocId))
+                kvs.Add(KeyNames.StartKeyDocId, FormatValue(request.StartKeyDocId));
 
-            if (HasValue(query.EndKey))
-                kvs.Add(KeyNames.EndKey, FormatValue(query.EndKey));
+            if (HasValue(request.EndKey))
+                kvs.Add(KeyNames.EndKey, FormatValue(request.EndKey));
 
-            if (HasValue(query.EndKeyDocId))
-                kvs.Add(KeyNames.EndKeyDocId, FormatValue(query.EndKeyDocId));
+            if (HasValue(request.EndKeyDocId))
+                kvs.Add(KeyNames.EndKeyDocId, FormatValue(request.EndKeyDocId));
 
-            if (query.Limit.HasValue)
-                kvs.Add(KeyNames.Limit, query.Limit.Value.ToString(MyCouchRuntime.NumberFormat));
+            if (request.Limit.HasValue)
+                kvs.Add(KeyNames.Limit, request.Limit.Value.ToString(MyCouchRuntime.NumberFormat));
 
-            if (query.Skip.HasValue)
-                kvs.Add(KeyNames.Skip, query.Skip.Value.ToString(MyCouchRuntime.NumberFormat));
+            if (request.Skip.HasValue)
+                kvs.Add(KeyNames.Skip, request.Skip.Value.ToString(MyCouchRuntime.NumberFormat));
 
             return kvs;
         }
