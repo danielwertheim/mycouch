@@ -27,7 +27,7 @@ namespace MyCouch.UnitTests.Requests
                 req =>
                 {
                     req.Content.Should().BeNull();
-                    req.RequestUri.Query.Should().Be("?");
+                    req.RequestUri.Query.Should().Be(string.Empty);
                 });
         }
 
@@ -117,6 +117,28 @@ namespace MyCouch.UnitTests.Requests
             WithHttpRequestFor(
                 request,
                 req => req.RequestUri.Query.Should().Be("?limit=17"));
+        }
+
+        [Fact]
+        public void When_HeartBeat_is_assigned_It_should_get_included_in_the_querystring()
+        {
+            var request = CreateRequest();
+            request.HeartBeatMs = 17;
+
+            WithHttpRequestFor(
+                request,
+                req => req.RequestUri.Query.Should().Be("?heartbeat=17"));
+        }
+
+        [Fact]
+        public void When_Timeout_is_assigned_It_should_get_included_in_the_querystring()
+        {
+            var request = CreateRequest();
+            request.Timeout = 17;
+
+            WithHttpRequestFor(
+                request,
+                req => req.RequestUri.Query.Should().Be("?timeout=17"));
         }
 
         protected virtual GetChangesRequest CreateRequest()

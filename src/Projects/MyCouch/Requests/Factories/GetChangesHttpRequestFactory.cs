@@ -19,9 +19,16 @@ namespace MyCouch.Requests.Factories
 
         protected virtual string GenerateRequestUrl(GetChangesRequest request)
         {
-            return string.Format("{0}/_changes?{1}",
+            return string.Format("{0}/_changes{1}",
                 Connection.Address,
-                GenerateQueryStringParams(request));
+                GenerateQueryString(request));
+        }
+
+        protected virtual string GenerateQueryString(GetChangesRequest request)
+        {
+            var p = GenerateQueryStringParams(request);
+
+            return string.IsNullOrEmpty(p) ? string.Empty : string.Concat("?", p);
         }
 
         protected virtual string GenerateQueryStringParams(GetChangesRequest request)
@@ -51,6 +58,12 @@ namespace MyCouch.Requests.Factories
             if (request.Limit.HasValue)
                 kvs.Add(KeyNames.Limit, request.Limit.Value.ToString(MyCouchRuntime.NumberFormat));
 
+            if (request.HeartBeatMs.HasValue)
+                kvs.Add(KeyNames.HeartBeat, request.HeartBeatMs.Value.ToString(MyCouchRuntime.NumberFormat));
+
+            if (request.Timeout.HasValue)
+                kvs.Add(KeyNames.Timeout, request.Timeout.Value.ToString(MyCouchRuntime.NumberFormat));
+
             return kvs;
         }
 
@@ -64,6 +77,8 @@ namespace MyCouch.Requests.Factories
             public const string IncludeDocs = "include_docs";
             public const string Descending = "descending";
             public const string Limit = "limit";
+            public const string HeartBeat = "heartbeat";
+            public const string Timeout = "timeout";
         }
     }
 }
