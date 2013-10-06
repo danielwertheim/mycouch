@@ -109,6 +109,17 @@ namespace MyCouch.UnitTests.Requests
         }
 
         [Fact]
+        public void When_Since_is_assigned_It_should_get_included_in_the_querystring()
+        {
+            var request = CreateRequest();
+            request.Since = 17;
+
+            WithHttpRequestFor(
+                request,
+                req => req.RequestUri.Query.Should().Be("?since=17"));
+        }
+
+        [Fact]
         public void When_Limit_is_assigned_It_should_get_included_in_the_querystring()
         {
             var request = CreateRequest();

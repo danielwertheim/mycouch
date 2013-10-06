@@ -49,6 +49,9 @@ namespace MyCouch.Requests.Factories
             if(request.Feed != null)
                 kvs.Add(KeyNames.Feed, request.Feed.ToString());
 
+            if (request.Since.HasValue)
+                kvs.Add(KeyNames.Since, request.Since.Value.ToString(MyCouchRuntime.NumberFormat));
+
             if (request.IncludeDocs.HasValue)
                 kvs.Add(KeyNames.IncludeDocs, request.IncludeDocs.Value.ToString().ToLower());
 
@@ -74,6 +77,7 @@ namespace MyCouch.Requests.Factories
         protected static class KeyNames
         {
             public const string Feed = "feed";
+            public const string Since = "since";
             public const string IncludeDocs = "include_docs";
             public const string Descending = "descending";
             public const string Limit = "limit";
