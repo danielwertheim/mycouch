@@ -20,6 +20,11 @@ namespace MyCouch.Contexts
             HttpRequestFactory = new GetChangesHttpRequestFactory(Connection);
         }
 
+        public virtual Task<ChangesResponse> GetAsync()
+        {
+            return GetAsync(new GetChangesRequest());
+        }
+
         public virtual Task<ChangesResponse> GetAsync(ChangesFeed feed)
         {
             return GetAsync(new GetChangesRequest { Feed = feed });

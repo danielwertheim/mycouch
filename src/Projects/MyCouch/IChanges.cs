@@ -10,6 +10,12 @@ namespace MyCouch
     public interface IChanges
     {
         /// <summary>
+        /// Lets you consume changes from the _changes stream, by using
+        /// default values of CouchDb.
+        /// </summary>
+        /// <returns></returns>
+        Task<ChangesResponse> GetAsync();
+        /// <summary>
         /// Lets you consume changes from the _changes stream.
         /// Use the <paramref name="feed"/> param to define how
         /// you want to consume it.
