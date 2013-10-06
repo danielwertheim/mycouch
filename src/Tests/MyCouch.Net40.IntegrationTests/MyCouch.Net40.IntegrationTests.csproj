@@ -93,6 +93,9 @@
     <Compile Include="..\mycouch.integrationtests\clienttests\AttachmentsTests.cs">
       <Link>ClientTests\AttachmentsTests.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.IntegrationTests\ClientTests\ChangesTests.cs">
+      <Link>ClientTests\ChangesTests.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.IntegrationTests\ClientTests\ClientTestsOf.cs">
       <Link>ClientTests\ClientTestsOf.cs</Link>
     </Compile>

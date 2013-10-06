@@ -1,9 +1,9 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 using EnsureThat;
-using MyCouch.Commands;
 using MyCouch.Extensions;
 using MyCouch.Net;
+using MyCouch.Requests;
 using MyCouch.Responses;
 using MyCouch.Responses.Factories;
 using MyCouch.Serialization;
@@ -25,34 +25,34 @@ namespace MyCouch.Contexts
 
         public virtual Task<AttachmentResponse> GetAsync(string docId, string attachmentName)
         {
-            return GetAsync(new GetAttachmentCommand(docId, attachmentName));
+            return GetAsync(new GetAttachmentRequest(docId, attachmentName));
         }
 
         public virtual Task<AttachmentResponse> GetAsync(string docId, string docRev, string attachmentName)
         {
-            return GetAsync(new GetAttachmentCommand(docId, docRev, attachmentName));
+            return GetAsync(new GetAttachmentRequest(docId, docRev, attachmentName));
         }
 
-        public virtual async Task<AttachmentResponse> GetAsync(GetAttachmentCommand cmd)
+        public virtual async Task<AttachmentResponse> GetAsync(GetAttachmentRequest request)
         {
-            Ensure.That(cmd, "cmd").IsNotNull();
+            Ensure.That(request, "request").IsNotNull();
 
-            using (var req = CreateRequest(cmd))
+            using (var httpRequest = CreateHttpRequest(request))
             {
-                using (var res = await SendAsync(req).ForAwait())
+                using (var res = await SendAsync(httpRequest).ForAwait())
                 {
                     return ProcessAttachmentResponse(res);
                 }
             }
         }
 
-        public virtual async Task<DocumentHeaderResponse> PutAsync(PutAttachmentCommand cmd)
+        public virtual async Task<DocumentHeaderResponse> PutAsync(PutAttachmentRequest request)
         {
-            Ensure.That(cmd, "cmd").IsNotNull();
+            Ensure.That(request, "request").IsNotNull();
 
-            using (var req = CreateRequest(cmd))
+            using (var httpRequest = CreateHttpRequest(request))
             {
-                using (var res = await SendAsync(req).ForAwait())
+                using (var res = await SendAsync(httpRequest).ForAwait())
                 {
                     return ProcessDocumentHeaderResponse(res);
                 }
@@ -61,48 +61,48 @@ namespace MyCouch.Contexts
 
         public virtual Task<DocumentHeaderResponse> DeleteAsync(string docId, string docRev, string attachmentName)
         {
-            return DeleteAsync(new DeleteAttachmentCommand(docId, docRev, attachmentName));
+            return DeleteAsync(new DeleteAttachmentRequest(docId, docRev, attachmentName));
         }
 
-        public virtual async Task<DocumentHeaderResponse> DeleteAsync(DeleteAttachmentCommand cmd)
+        public virtual async Task<DocumentHeaderResponse> DeleteAsync(DeleteAttachmentRequest request)
         {
-            Ensure.That(cmd, "cmd").IsNotNull();
+            Ensure.That(request, "request").IsNotNull();
 
-            using (var req = CreateRequest(cmd))
+            using (var httpRequest = CreateHttpRequest(request))
             {
-                using (var res = await SendAsync(req).ForAwait())
+                using (var res = await SendAsync(httpRequest).ForAwait())
                 {
                     return ProcessDocumentHeaderResponse(res);
                 }
             }
         }
 
-        protected virtual HttpRequestMessage CreateRequest(GetAttachmentCommand cmd)
+        protected virtual HttpRequest CreateHttpRequest(GetAttachmentRequest request)
         {
-            var req = new HttpRequest(HttpMethod.Get, GenerateRequestUrl(cmd.DocId, cmd.DocRev, cmd.Name));
+            var httpRequest = new HttpRequest(HttpMethod.Get, GenerateRequestUrl(request.DocId, request.DocRev, request.Name));
 
-            req.SetIfMatch(cmd.DocRev);
+            httpRequest.SetIfMatch(request.DocRev);
 
-            return req;
+            return httpRequest;
         }
 
-        protected virtual HttpRequestMessage CreateRequest(PutAttachmentCommand cmd)
+        protected virtual HttpRequest CreateHttpRequest(PutAttachmentRequest request)
         {
-            var req = new HttpRequest(HttpMethod.Put, GenerateRequestUrl(cmd.DocId, cmd.DocRev, cmd.Name));
+            var httpRequest = new HttpRequest(HttpMethod.Put, GenerateRequestUrl(request.DocId, request.DocRev, request.Name));
 
-            req.SetIfMatch(cmd.DocRev);
-            req.SetContent(cmd.ContentType, cmd.Content);
+            httpRequest.SetIfMatch(request.DocRev);
+            httpRequest.SetContent(request.ContentType, request.Content);
 
-            return req;
+            return httpRequest;
         }
 
-        protected virtual HttpRequestMessage CreateRequest(DeleteAttachmentCommand cmd)
+        protected virtual HttpRequest CreateHttpRequest(DeleteAttachmentRequest request)
         {
-            var req = new HttpRequest(HttpMethod.Delete, GenerateRequestUrl(cmd.DocId, cmd.DocRev, cmd.Name));
+            var httpRequest = new HttpRequest(HttpMethod.Delete, GenerateRequestUrl(request.DocId, request.DocRev, request.Name));
 
-            req.SetIfMatch(cmd.DocRev);
+            httpRequest.SetIfMatch(request.DocRev);
 
-            return req;
+            return httpRequest;
         }
 
         protected virtual string GenerateRequestUrl(string docId, string docRev, string attachmentName)

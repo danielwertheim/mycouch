@@ -4,7 +4,9 @@ using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Extensions;
 using MyCouch.Net;
-using MyCouch.Querying;
+using MyCouch.Requests;
+using MyCouch.Requests.Configurators;
+using MyCouch.Requests.Factories;
 using MyCouch.Responses;
 using MyCouch.Responses.Factories;
 using MyCouch.Serialization;
@@ -13,6 +15,7 @@ namespace MyCouch.Contexts
 {
     public class Views : ApiContextBase, IViews
     {
+        protected IHttpRequestFactory<QueryViewRequest> HttpRequestFactory { get; set; }
         protected JsonViewQueryResponseFactory JsonViewQueryResponseFactory { get; set; }
         protected ViewQueryResponseFactory ViewQueryResponseFactory { get; set; }
 
@@ -21,89 +24,71 @@ namespace MyCouch.Contexts
         {
             Ensure.That(serializationConfiguration, "serializationConfiguration").IsNotNull();
 
+            HttpRequestFactory = new QueryViewHttpRequestFactory(Connection);
             JsonViewQueryResponseFactory = new JsonViewQueryResponseFactory(serializationConfiguration);
             ViewQueryResponseFactory = new ViewQueryResponseFactory(serializationConfiguration);
         }
 
-        public virtual async Task<JsonViewQueryResponse> QueryAsync(ViewQuery query)
+        public virtual async Task<JsonViewQueryResponse> QueryAsync(QueryViewRequest request)
         {
-            Ensure.That(query, "query").IsNotNull();
+            Ensure.That(request, "request").IsNotNull();
 
-            using (var req = CreateRequest(query))
+            using (var httpRequest = CreateHttpRequest(request))
             {
-                using (var res = await SendAsync(req).ForAwait())
+                using (var res = await SendAsync(httpRequest).ForAwait())
                 {
                     return ProcessHttpResponse(res);
                 }
             }
         }
 
-        public virtual async Task<ViewQueryResponse<T>> QueryAsync<T>(ViewQuery query)
+        public virtual async Task<ViewQueryResponse<T>> QueryAsync<T>(QueryViewRequest request)
         {
-            Ensure.That(query, "query").IsNotNull();
+            Ensure.That(request, "request").IsNotNull();
 
-            using (var req = CreateRequest(query))
+            using (var httpRequest = CreateHttpRequest(request))
             {
-                using (var res = await SendAsync(req).ForAwait())
+                using (var res = await SendAsync(httpRequest).ForAwait())
                 {
                     return ProcessHttpResponse<T>(res);
                 }
             }
         }
 
-        public virtual Task<JsonViewQueryResponse> QueryAsync(string designDocument, string viewname, Action<ViewQueryConfigurator> configurator)
+        public virtual Task<JsonViewQueryResponse> QueryAsync(string designDocument, string viewname, Action<QueryViewRequestConfigurator> configurator)
         {
             Ensure.That(designDocument, "designDocument").IsNotNullOrWhiteSpace();
             Ensure.That(viewname, "viewname").IsNotNullOrWhiteSpace();
             Ensure.That(configurator, "configurator").IsNotNull();
 
-            var query = CreateQuery(designDocument, viewname);
+            var request = CreateQueryViewRequest(designDocument, viewname);
 
-            query.Configure(configurator);
+            request.Configure(configurator);
 
-            return QueryAsync(query);
+            return QueryAsync(request);
         }
 
-        public virtual Task<ViewQueryResponse<T>> QueryAsync<T>(string designDocument, string viewname, Action<ViewQueryConfigurator> configurator)
+        public virtual Task<ViewQueryResponse<T>> QueryAsync<T>(string designDocument, string viewname, Action<QueryViewRequestConfigurator> configurator)
         {
             Ensure.That(designDocument, "designDocument").IsNotNullOrWhiteSpace();
             Ensure.That(viewname, "viewname").IsNotNullOrWhiteSpace();
             Ensure.That(configurator, "configurator").IsNotNull();
 
-            var query = CreateQuery(designDocument, viewname);
+            var request = CreateQueryViewRequest(designDocument, viewname);
 
-            query.Configure(configurator);
+            request.Configure(configurator);
 
-            return QueryAsync<T>(query);
+            return QueryAsync<T>(request);
         }
 
-        protected virtual ViewQuery CreateQuery(string designDocument, string viewname)
+        protected virtual QueryViewRequest CreateQueryViewRequest(string designDocument, string viewname)
         {
-            return new ViewQuery(designDocument, viewname);
+            return new QueryViewRequest(designDocument, viewname);
         }
         
-        protected virtual HttpRequestMessage CreateRequest(ViewQuery query)
+        protected virtual HttpRequest CreateHttpRequest(QueryViewRequest request)
         {
-            return query.Options.HasKeys
-                ? new HttpRequest(HttpMethod.Post, GenerateRequestUrl(query)).SetContent(query.Options.GetKeysAsJsonObject())
-                : new HttpRequest(HttpMethod.Get, GenerateRequestUrl(query));
-        }
-
-        protected virtual string GenerateRequestUrl(ViewQuery query)
-        {
-            if (query is SystemViewQuery)
-            {
-                return string.Format("{0}/{1}?{2}",
-                    Connection.Address,
-                    query.View.Name,
-                    query.Options.GenerateQueryStringParams());
-            }
-
-            return string.Format("{0}/_design/{1}/_view/{2}?{3}",
-                Connection.Address,
-                query.View.DesignDocument,
-                query.View.Name,
-                query.Options.GenerateQueryStringParams());
+            return HttpRequestFactory.Create(request);
         }
 
         protected virtual JsonViewQueryResponse ProcessHttpResponse(HttpResponseMessage response)

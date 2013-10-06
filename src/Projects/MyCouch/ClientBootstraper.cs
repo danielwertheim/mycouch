@@ -29,6 +29,10 @@ namespace MyCouch
         /// </summary>
         public Func<ISerializer> SerializerFn { get; set; }
         /// <summary>
+        /// Used e.g. for bootstraping <see cref="IClient.Changes"/>.
+        /// </summary>
+        public Func<IConnection, IChanges> ChangesFn { get; set; }
+        /// <summary>
         /// Used e.g. for bootstraping <see cref="IClient.Attachments"/>.
         /// </summary>
         public Func<IConnection, IAttachments> AttachmentsFn { get; set; }
@@ -51,6 +55,7 @@ namespace MyCouch
 
         public ClientBootstraper()
         {
+            ConfigureChangesFn();
             ConfigureAttachmentsFn();
             ConfigureDatabasesFn();
             ConfigureDocumentsFn();
@@ -62,6 +67,11 @@ namespace MyCouch
          
             ConfigureSerializerFn();
             ConfigureEntityReflectorFn();
+        }
+
+        private void ConfigureChangesFn()
+        {
+            ChangesFn = cn => new Changes(cn);
         }
 
         private void ConfigureAttachmentsFn()

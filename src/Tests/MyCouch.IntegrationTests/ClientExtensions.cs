@@ -1,4 +1,4 @@
-﻿using MyCouch.Commands;
+﻿using MyCouch.Requests;
 
 namespace MyCouch.IntegrationTests
 {
@@ -6,17 +6,17 @@ namespace MyCouch.IntegrationTests
     {
         internal static void ClearAllDocuments(this IClient client)
         {
-            var query = new SystemViewQuery("_all_docs");
+            var query = new QuerySystemViewRequest("_all_docs");
             var response = client.Views.QueryAsync<dynamic>(query).Result;
 
             if (!response.IsEmpty)
             {
-                var bulkCmd = new BulkCommand();
+                var bulkRequest = new BulkRequest();
 
                 foreach (var row in response.Rows)
-                    bulkCmd.Delete(row.Id, row.Value.rev.ToString());
+                    bulkRequest.Delete(row.Id, row.Value.rev.ToString());
                 
-                client.Documents.BulkAsync(bulkCmd).Wait();
+                client.Documents.BulkAsync(bulkRequest).Wait();
             }
         }
     }

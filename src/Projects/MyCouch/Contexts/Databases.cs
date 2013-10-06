@@ -22,7 +22,7 @@ namespace MyCouch.Contexts
 
         public virtual async Task<DatabaseResponse> PutAsync()
         {
-            using (var req = CreateRequest(HttpMethod.Put))
+            using (var req = CreateHttpRequest(HttpMethod.Put))
             {
                 using (var res = await SendAsync(req).ForAwait())
                 {
@@ -33,7 +33,7 @@ namespace MyCouch.Contexts
 
         public virtual async Task<DatabaseResponse> DeleteAsync()
         {
-            using (var req = CreateRequest(HttpMethod.Delete))
+            using (var req = CreateHttpRequest(HttpMethod.Delete))
             {
                 using (var res = await SendAsync(req).ForAwait())
                 {
@@ -42,7 +42,7 @@ namespace MyCouch.Contexts
             }
         }
 
-        protected virtual HttpRequestMessage CreateRequest(HttpMethod method)
+        protected virtual HttpRequest CreateHttpRequest(HttpMethod method)
         {
             return new HttpRequest(method, GenerateRequestUrl());
         }

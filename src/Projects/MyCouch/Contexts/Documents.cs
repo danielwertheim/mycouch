@@ -1,9 +1,9 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 using EnsureThat;
-using MyCouch.Commands;
 using MyCouch.Extensions;
 using MyCouch.Net;
+using MyCouch.Requests;
 using MyCouch.Responses;
 using MyCouch.Responses.Factories;
 using MyCouch.Serialization;
@@ -25,13 +25,13 @@ namespace MyCouch.Contexts
             BulkReponseFactory = new BulkResponseFactory(serializationConfiguration);
         }
 
-        public virtual async Task<BulkResponse> BulkAsync(BulkCommand cmd)
+        public virtual async Task<BulkResponse> BulkAsync(BulkRequest request)
         {
-            Ensure.That(cmd, "cmd").IsNotNull();
+            Ensure.That(request, "request").IsNotNull();
 
-            using (var req = CreateRequest(cmd))
+            using (var httpRequest = CreateHttpRequest(request))
             {
-                using (var res = await SendAsync(req).ForAwait())
+                using (var res = await SendAsync(httpRequest).ForAwait())
                 {
                     return ProcessBulkResponse(res);
                 }
@@ -40,21 +40,21 @@ namespace MyCouch.Contexts
 
         public virtual Task<DocumentHeaderResponse> CopyAsync(string srcId, string newId)
         {
-            return CopyAsync(new CopyDocumentCommand(srcId, newId));
+            return CopyAsync(new CopyDocumentRequest(srcId, newId));
         }
 
         public virtual Task<DocumentHeaderResponse> CopyAsync(string srcId, string srcRev, string newId)
         {
-            return CopyAsync(new CopyDocumentCommand(srcId, srcRev, newId));
+            return CopyAsync(new CopyDocumentRequest(srcId, srcRev, newId));
         }
 
-        public virtual async Task<DocumentHeaderResponse> CopyAsync(CopyDocumentCommand cmd)
+        public virtual async Task<DocumentHeaderResponse> CopyAsync(CopyDocumentRequest request)
         {
-            Ensure.That(cmd, "cmd").IsNotNull();
+            Ensure.That(request, "request").IsNotNull();
 
-            using (var req = CreateRequest(cmd))
+            using (var httpRequest = CreateHttpRequest(request))
             {
-                using (var res = await SendAsync(req).ForAwait())
+                using (var res = await SendAsync(httpRequest).ForAwait())
                 {
                     return ProcessDocumentHeaderResponse(res);
                 }
@@ -63,21 +63,21 @@ namespace MyCouch.Contexts
 
         public virtual Task<DocumentHeaderResponse> ReplaceAsync(string srcId, string trgId, string trgRev)
         {
-            return ReplaceAsync(new ReplaceDocumentCommand(srcId, trgId, trgRev));
+            return ReplaceAsync(new ReplaceDocumentRequest(srcId, trgId, trgRev));
         }
 
         public virtual Task<DocumentHeaderResponse> ReplaceAsync(string srcId, string srcRev, string trgId, string trgRev)
         {
-            return ReplaceAsync(new ReplaceDocumentCommand(srcId, srcRev, trgId, trgRev));
+            return ReplaceAsync(new ReplaceDocumentRequest(srcId, srcRev, trgId, trgRev));
         }
 
-        public virtual async Task<DocumentHeaderResponse> ReplaceAsync(ReplaceDocumentCommand cmd)
+        public virtual async Task<DocumentHeaderResponse> ReplaceAsync(ReplaceDocumentRequest request)
         {
-            Ensure.That(cmd, "cmd").IsNotNull();
+            Ensure.That(request, "request").IsNotNull();
 
-            using (var req = CreateRequest(cmd))
+            using (var httpRequest = CreateHttpRequest(request))
             {
-                using (var res = await SendAsync(req).ForAwait())
+                using (var res = await SendAsync(httpRequest).ForAwait())
                 {
                     return ProcessDocumentHeaderResponse(res);
                 }
@@ -86,16 +86,16 @@ namespace MyCouch.Contexts
 
         public virtual Task<DocumentHeaderResponse> ExistsAsync(string id, string rev = null)
         {
-            return ExistsAsync(new DocumentExistsCommand(id, rev));
+            return ExistsAsync(new DocumentExistsRequest(id, rev));
         }
 
-        public virtual async Task<DocumentHeaderResponse> ExistsAsync(DocumentExistsCommand cmd)
+        public virtual async Task<DocumentHeaderResponse> ExistsAsync(DocumentExistsRequest request)
         {
-            Ensure.That(cmd, "cmd").IsNotNull();
+            Ensure.That(request, "request").IsNotNull();
 
-            using (var req = CreateRequest(cmd))
+            using (var httpRequest = CreateHttpRequest(request))
             {
-                using (var res = await SendAsync(req).ForAwait())
+                using (var res = await SendAsync(httpRequest).ForAwait())
                 {
                     return ProcessDocumentHeaderResponse(res);
                 }
@@ -104,16 +104,16 @@ namespace MyCouch.Contexts
 
         public virtual Task<DocumentResponse> GetAsync(string id, string rev = null)
         {
-            return GetAsync(new GetDocumentCommand(id, rev));
+            return GetAsync(new GetDocumentRequest(id, rev));
         }
 
-        public virtual async Task<DocumentResponse> GetAsync(GetDocumentCommand cmd)
+        public virtual async Task<DocumentResponse> GetAsync(GetDocumentRequest request)
         {
-            Ensure.That(cmd, "cmd").IsNotNull();
+            Ensure.That(request, "request").IsNotNull();
 
-            using (var req = CreateRequest(cmd))
+            using (var httpRequest = CreateHttpRequest(request))
             {
-                using (var res = await SendAsync(req).ForAwait())
+                using (var res = await SendAsync(httpRequest).ForAwait())
                 {
                     return ProcessDocumentResponse(res);
                 }
@@ -122,16 +122,16 @@ namespace MyCouch.Contexts
 
         public virtual Task<DocumentHeaderResponse> PostAsync(string doc)
         {
-            return PostAsync(new PostDocumentCommand(doc));
+            return PostAsync(new PostDocumentRequest(doc));
         }
 
-        public virtual async Task<DocumentHeaderResponse> PostAsync(PostDocumentCommand cmd)
+        public virtual async Task<DocumentHeaderResponse> PostAsync(PostDocumentRequest request)
         {
-            Ensure.That(cmd, "cmd").IsNotNull();
+            Ensure.That(request, "request").IsNotNull();
 
-            using (var req = CreateRequest(cmd))
+            using (var httpRequest = CreateHttpRequest(request))
             {
-                using (var res = await SendAsync(req).ForAwait())
+                using (var res = await SendAsync(httpRequest).ForAwait())
                 {
                     return ProcessDocumentHeaderResponse(res);
                 }
@@ -140,21 +140,21 @@ namespace MyCouch.Contexts
 
         public virtual Task<DocumentHeaderResponse> PutAsync(string id, string doc)
         {
-            return PutAsync(new PutDocumentCommand(id, doc));
+            return PutAsync(new PutDocumentRequest(id, doc));
         }
 
         public virtual Task<DocumentHeaderResponse> PutAsync(string id, string rev, string doc)
         {
-            return PutAsync(new PutDocumentCommand(id, rev, doc));
+            return PutAsync(new PutDocumentRequest(id, rev, doc));
         }
 
-        public virtual async Task<DocumentHeaderResponse> PutAsync(PutDocumentCommand cmd)
+        public virtual async Task<DocumentHeaderResponse> PutAsync(PutDocumentRequest request)
         {
-            Ensure.That(cmd, "cmd").IsNotNull();
+            Ensure.That(request, "request").IsNotNull();
 
-            using (var req = CreateRequest(cmd))
+            using (var httpRequest = CreateHttpRequest(request))
             {
-                using (var res = await SendAsync(req).ForAwait())
+                using (var res = await SendAsync(httpRequest).ForAwait())
                 {
                     return ProcessDocumentHeaderResponse(res);
                 }
@@ -163,96 +163,96 @@ namespace MyCouch.Contexts
 
         public virtual Task<DocumentHeaderResponse> DeleteAsync(string id, string rev)
         {
-            return DeleteAsync(new DeleteDocumentCommand(id, rev));
+            return DeleteAsync(new DeleteDocumentRequest(id, rev));
         }
 
-        public virtual async Task<DocumentHeaderResponse> DeleteAsync(DeleteDocumentCommand cmd)
+        public virtual async Task<DocumentHeaderResponse> DeleteAsync(DeleteDocumentRequest request)
         {
-            Ensure.That(cmd, "cmd").IsNotNull();
+            Ensure.That(request, "request").IsNotNull();
 
-            using (var req = CreateRequest(cmd))
+            using (var httpRequest = CreateHttpRequest(request))
             {
-                using (var res = await SendAsync(req).ForAwait())
+                using (var res = await SendAsync(httpRequest).ForAwait())
                 {
                     return ProcessDocumentHeaderResponse(res);
                 }
             }
         }
 
-        protected virtual HttpRequestMessage CreateRequest(BulkCommand cmd)
+        protected virtual HttpRequest CreateHttpRequest(BulkRequest request)
         {
-            var req = new HttpRequest(HttpMethod.Post, GenerateRequestUrl(cmd));
+            var createHttpRequest = new HttpRequest(HttpMethod.Post, GenerateRequestUrl(request));
 
-            req.SetContent(cmd.ToJson());
+            createHttpRequest.SetContent(request.ToJson());
 
-            return req;
+            return createHttpRequest;
         }
 
-        protected virtual HttpRequestMessage CreateRequest(CopyDocumentCommand cmd)
+        protected virtual HttpRequest CreateHttpRequest(CopyDocumentRequest request)
         {
-            var req = new HttpRequest(new HttpMethod("COPY"), GenerateRequestUrl(cmd.SrcId, cmd.SrcRev));
+            var httpRequest = new HttpRequest(new HttpMethod("COPY"), GenerateRequestUrl(request.SrcId, request.SrcRev));
 
-            req.Headers.Add("Destination", cmd.NewId);
+            httpRequest.Headers.Add("Destination", request.NewId);
 
-            return req;
+            return httpRequest;
         }
 
-        protected virtual HttpRequestMessage CreateRequest(ReplaceDocumentCommand cmd)
+        protected virtual HttpRequest CreateHttpRequest(ReplaceDocumentRequest request)
         {
-            var req = new HttpRequest(new HttpMethod("COPY"), GenerateRequestUrl(cmd.SrcId, cmd.SrcRev));
+            var httpRequest = new HttpRequest(new HttpMethod("COPY"), GenerateRequestUrl(request.SrcId, request.SrcRev));
 
-            req.Headers.Add("Destination", string.Concat(cmd.TrgId, "?rev=", cmd.TrgRev));
+            httpRequest.Headers.Add("Destination", string.Concat(request.TrgId, "?rev=", request.TrgRev));
 
-            return req;
+            return httpRequest;
         }
 
-        protected virtual HttpRequestMessage CreateRequest(DocumentExistsCommand cmd)
+        protected virtual HttpRequest CreateHttpRequest(DocumentExistsRequest request)
         {
-            var req = new HttpRequest(HttpMethod.Head, GenerateRequestUrl(cmd.Id, cmd.Rev));
+            var httpRequest = new HttpRequest(HttpMethod.Head, GenerateRequestUrl(request.Id, request.Rev));
 
-            req.SetIfMatch(cmd.Rev);
+            httpRequest.SetIfMatch(request.Rev);
 
-            return req;
+            return httpRequest;
         }
 
-        protected virtual HttpRequestMessage CreateRequest(GetDocumentCommand cmd)
+        protected virtual HttpRequest CreateHttpRequest(GetDocumentRequest request)
         {
-            var req = new HttpRequest(HttpMethod.Get, GenerateRequestUrl(cmd.Id, cmd.Rev));
+            var httpRequest = new HttpRequest(HttpMethod.Get, GenerateRequestUrl(request.Id, request.Rev));
 
-            req.SetIfMatch(cmd.Rev);
+            httpRequest.SetIfMatch(request.Rev);
 
-            return req;
+            return httpRequest;
         }
 
-        protected virtual HttpRequestMessage CreateRequest(DeleteDocumentCommand cmd)
+        protected virtual HttpRequest CreateHttpRequest(DeleteDocumentRequest request)
         {
-            var req = new HttpRequest(HttpMethod.Delete, GenerateRequestUrl(cmd.Id, cmd.Rev));
+            var httpRequest = new HttpRequest(HttpMethod.Delete, GenerateRequestUrl(request.Id, request.Rev));
 
-            req.SetIfMatch(cmd.Rev);
+            httpRequest.SetIfMatch(request.Rev);
 
-            return req;
+            return httpRequest;
         }
 
-        protected virtual HttpRequestMessage CreateRequest(PutDocumentCommand cmd)
+        protected virtual HttpRequest CreateHttpRequest(PutDocumentRequest request)
         {
-            var req = new HttpRequest(HttpMethod.Put, GenerateRequestUrl(cmd.Id, cmd.Rev));
+            var httpRequest = new HttpRequest(HttpMethod.Put, GenerateRequestUrl(request.Id, request.Rev));
 
-            req.SetIfMatch(cmd.Rev);
-            req.SetContent(cmd.Content);
+            httpRequest.SetIfMatch(request.Rev);
+            httpRequest.SetContent(request.Content);
 
-            return req;
+            return httpRequest;
         }
 
-        protected virtual HttpRequestMessage CreateRequest(PostDocumentCommand cmd)
+        protected virtual HttpRequest CreateHttpRequest(PostDocumentRequest request)
         {
-            var req = new HttpRequest(HttpMethod.Post, GenerateRequestUrl());
+            var httpRequest = new HttpRequest(HttpMethod.Post, GenerateRequestUrl());
 
-            req.SetContent(cmd.Content);
+            httpRequest.SetContent(request.Content);
 
-            return req;
+            return httpRequest;
         }
 
-        protected virtual string GenerateRequestUrl(BulkCommand cmd)
+        protected virtual string GenerateRequestUrl(BulkRequest request)
         {
             return string.Format("{0}/_bulk_docs", Connection.Address);
         }

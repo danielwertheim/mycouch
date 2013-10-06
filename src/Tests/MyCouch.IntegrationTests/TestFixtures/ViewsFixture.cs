@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
-using MyCouch.Commands;
-using MyCouch.Querying;
+using MyCouch.Requests;
 using MyCouch.Testing.Model;
 using MyCouch.Testing.TestData;
 
@@ -19,7 +18,7 @@ namespace MyCouch.IntegrationTests.TestFixtures
 
             Client = IntegrationTestsRuntime.CreateClient();
 
-            var bulk = new BulkCommand();
+            var bulk = new BulkRequest();
             bulk.Include(Artists.Select(i => Client.Entities.Serializer.Serialize(i)).ToArray());
 
             var bulkResponse = Client.Documents.BulkAsync(bulk).Result;
@@ -32,9 +31,9 @@ namespace MyCouch.IntegrationTests.TestFixtures
 
             var tmp = Client.Documents.PostAsync(ClientTestData.Views.ArtistsViews).Result;
 
-            var touchView1 = new ViewQuery(ClientTestData.Views.ArtistsAlbumsViewId).Configure(q => q.Stale(Stale.UpdateAfter));
-            var touchView2 = new ViewQuery(ClientTestData.Views.ArtistsNameNoValueViewId).Configure(q => q.Stale(Stale.UpdateAfter));
-            var touchView3 = new ViewQuery(ClientTestData.Views.ArtistsTotalNumOfAlbumsViewId).Configure(q => q.Stale(Stale.UpdateAfter));
+            var touchView1 = new QueryViewRequest(ClientTestData.Views.ArtistsAlbumsViewId).Configure(q => q.Stale(Stale.UpdateAfter));
+            var touchView2 = new QueryViewRequest(ClientTestData.Views.ArtistsNameNoValueViewId).Configure(q => q.Stale(Stale.UpdateAfter));
+            var touchView3 = new QueryViewRequest(ClientTestData.Views.ArtistsTotalNumOfAlbumsViewId).Configure(q => q.Stale(Stale.UpdateAfter));
 
             Client.Views.QueryAsync(touchView1).Wait();
             Client.Views.QueryAsync(touchView2).Wait();

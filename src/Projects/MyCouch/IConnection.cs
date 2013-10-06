@@ -7,7 +7,7 @@ namespace MyCouch
     public interface IConnection : IDisposable
     {
         Uri Address { get; }
-        Task<HttpResponseMessage> SendAsync(HttpRequestMessage request);
-        Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, HttpCompletionOption completionOption);
+        Task<HttpResponseMessage> SendAsync(HttpRequestMessage httpRequest);
+        Task<HttpResponseMessage> SendAsync(HttpRequestMessage httpRequest, HttpCompletionOption completionOption);
     }
 }
