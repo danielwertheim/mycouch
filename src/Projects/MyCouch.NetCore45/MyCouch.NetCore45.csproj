@@ -227,9 +227,6 @@
     <Compile Include="..\MyCouch\MyCouchUriBuilder.cs">
       <Link>MyCouchUriBuilder.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\net\AttachmentContent.cs">
-      <Link>Net\AttachmentContent.cs</Link>
-    </Compile>
     <Compile Include="..\mycouch\net\BasicHttpClientConnection.cs">
       <Link>Net\BasicHttpClientConnection.cs</Link>
     </Compile>

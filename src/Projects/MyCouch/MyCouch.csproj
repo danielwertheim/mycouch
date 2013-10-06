@@ -107,7 +107,6 @@
     <Compile Include="EntitySchemes\IEntityReflector.cs" />
     <Compile Include="ClientBootstraper.cs" />
     <Compile Include="MyCouchRuntime.cs" />
-    <Compile Include="Net\AttachmentContent.cs" />
     <Compile Include="Requests\PutAttachmentRequest.cs" />
     <Compile Include="Requests\ReplaceDocumentRequest.cs" />
     <Compile Include="Now.cs" />

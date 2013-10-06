@@ -42,7 +42,7 @@ namespace MyCouch.Contexts
             var httpRequest = new HttpRequest(HttpMethod.Put, GenerateRequestUrl(request.DocId, request.DocRev, request.Name));
 
             httpRequest.SetIfMatch(request.DocRev);
-            httpRequest.SetContent(request.ContentType, request.Content);
+            httpRequest.SetContent(request.Content);
 
             return httpRequest;
         }

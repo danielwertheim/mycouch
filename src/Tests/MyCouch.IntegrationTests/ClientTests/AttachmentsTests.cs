@@ -84,7 +84,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             var getAttachmentResponse = SUT.GetAsync(getRequest).Result;
 
             getAttachmentResponse.Should().BeSuccessfulGet(ClientTestData.Artists.Artist1Id, ClientTestData.Attachments.One.Name);
-            getAttachmentResponse.Content.AsBase64EncodedString().Should().Be(ClientTestData.Attachments.One.ContentEncoded);
+            getAttachmentResponse.Content.Should().Equal(ClientTestData.Attachments.One.ContentDecoded.AsBytes());
         }
 
         [Fact]
@@ -107,7 +107,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             var getAttachmentResponse = SUT.GetAsync(getRequest).Result;
 
             getAttachmentResponse.Should().BeSuccessfulGet(ClientTestData.Artists.Artist1Id, ClientTestData.Attachments.One.Name);
-            getAttachmentResponse.Content.AsBase64EncodedString().Should().Be(ClientTestData.Attachments.One.ContentEncoded);
+            getAttachmentResponse.Content.Should().Equal(ClientTestData.Attachments.One.ContentDecoded.AsBytes());
         }
 
         [Fact]
