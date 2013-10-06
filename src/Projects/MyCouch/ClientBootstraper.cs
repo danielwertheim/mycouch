@@ -71,7 +71,7 @@ namespace MyCouch
 
         private void ConfigureChangesFn()
         {
-            ChangesFn = cn => new Changes(cn);
+            ChangesFn = cn => new Changes(cn, SerializationConfigurationFn());
         }
 
         private void ConfigureAttachmentsFn()

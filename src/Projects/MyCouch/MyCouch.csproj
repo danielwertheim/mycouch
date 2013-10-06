@@ -113,6 +113,7 @@
     <Compile Include="Now.cs" />
     <Compile Include="Responses\Factories\AttachmentResponseFactory.cs" />
     <Compile Include="Responses\Factories\BulkResponseFactory.cs" />
+    <Compile Include="Responses\Factories\ChangesResponseFactory.cs" />
     <Compile Include="Responses\Factories\DatabaseResponseFactory.cs" />
     <Compile Include="Responses\Factories\DocumentHeaderResponseFactory.cs" />
     <Compile Include="Responses\Factories\DocumentResponseFactory.cs" />
