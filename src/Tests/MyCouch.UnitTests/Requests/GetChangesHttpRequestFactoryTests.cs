@@ -152,6 +152,17 @@ namespace MyCouch.UnitTests.Requests
                 req => req.RequestUri.Query.Should().Be("?timeout=17"));
         }
 
+        [Fact]
+        public void When_Filter_is_assigned_It_should_get_included_in_the_querystring()
+        {
+            var request = CreateRequest();
+            request.Filter = "app/important";
+
+            WithHttpRequestFor(
+                request,
+                req => req.RequestUri.Query.Should().Be("?filter=app%2Fimportant"));
+        }
+
         protected virtual GetChangesRequest CreateRequest()
         {
             return new GetChangesRequest();

@@ -67,6 +67,9 @@ namespace MyCouch.Requests.Factories
             if (request.Timeout.HasValue)
                 kvs.Add(KeyNames.Timeout, request.Timeout.Value.ToString(MyCouchRuntime.NumberFormat));
 
+            if (request.Filter != null)
+                kvs.Add(KeyNames.Filter, request.Filter);
+
             return kvs;
         }
 
@@ -83,6 +86,7 @@ namespace MyCouch.Requests.Factories
             public const string Limit = "limit";
             public const string HeartBeat = "heartbeat";
             public const string Timeout = "timeout";
+            public const string Filter = "filter";
         }
     }
 }
