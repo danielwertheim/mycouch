@@ -163,6 +163,17 @@ namespace MyCouch.UnitTests.Requests
                 req => req.RequestUri.Query.Should().Be("?filter=app%2Fimportant"));
         }
 
+        [Fact]
+        public void When_Style_is_assigned_It_should_get_included_in_the_querystring()
+        {
+            var request = CreateRequest();
+            request.Style = ChangesStyle.AllDocs;
+
+            WithHttpRequestFor(
+                request,
+                req => req.RequestUri.Query.Should().Be("?style=all_docs"));
+        }
+
         protected virtual GetChangesRequest CreateRequest()
         {
             return new GetChangesRequest();

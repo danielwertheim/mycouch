@@ -70,6 +70,9 @@ namespace MyCouch.Requests.Factories
             if (request.Filter != null)
                 kvs.Add(KeyNames.Filter, request.Filter);
 
+            if (request.Style != null)
+                kvs.Add(KeyNames.Style, request.Style);
+
             return kvs;
         }
 
@@ -87,6 +90,7 @@ namespace MyCouch.Requests.Factories
             public const string HeartBeat = "heartbeat";
             public const string Timeout = "timeout";
             public const string Filter = "filter";
+            public const string Style = "style";
         }
     }
 }
