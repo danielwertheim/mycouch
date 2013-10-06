@@ -12,7 +12,7 @@ namespace MyCouch.Contexts
 {
     public class Changes : ApiContextBase, IChanges
     {
-        protected GetChangesHttpRequestFactory HttpRequestFactory { get; set; }
+        protected IHttpRequestFactory<GetChangesRequest> HttpRequestFactory { get; set; }
 
         public Changes(IConnection connection)
             : base(connection)

@@ -15,7 +15,7 @@ namespace MyCouch.Contexts
 {
     public class Views : ApiContextBase, IViews
     {
-        protected QueryViewHttpRequestFactory HttpRequestFactory { get; set; }
+        protected IHttpRequestFactory<QueryViewRequest> HttpRequestFactory { get; set; }
         protected JsonViewQueryResponseFactory JsonViewQueryResponseFactory { get; set; }
         protected ViewQueryResponseFactory ViewQueryResponseFactory { get; set; }
 
