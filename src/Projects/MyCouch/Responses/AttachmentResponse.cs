@@ -9,6 +9,7 @@ namespace MyCouch.Responses
     {
         public string Name { get; set; }
         public byte[] Content { get; set; }
+        public string ContentType { get;  set; }
         public bool IsEmpty
         {
             get { return Content == null || Content.Length < 1; }

@@ -111,6 +111,28 @@ namespace MyCouch.IntegrationTests.ClientTests
         }
 
         [Fact]
+        public void When_GET_of_an_existing_attachment_the_content_type_is_returned_correctly()
+        {
+            var putDocResponse = Client.Documents.PostAsync(ClientTestData.Artists.Artist1Json).Result;
+
+            var putRequest = new PutAttachmentRequest(
+                putDocResponse.Id,
+                putDocResponse.Rev,
+                ClientTestData.Attachments.One.Name,
+                ClientTestData.Attachments.One.ContentType,
+                ClientTestData.Attachments.One.ContentDecoded.AsBytes());
+            var putAttachmentResponse = SUT.PutAsync(putRequest).Result;
+
+            var getRequest = new GetAttachmentRequest(
+                putAttachmentResponse.Id,
+                putAttachmentResponse.Rev,
+                ClientTestData.Attachments.One.Name);
+            var getAttachmentResponse = SUT.GetAsync(getRequest).Result;
+
+            getAttachmentResponse.ContentType.Should().Be(ClientTestData.Attachments.One.ContentType);
+        }
+
+        [Fact]
         public void Flow_tests()
         {
             var putDocResponse = Client.Documents.PostAsync(ClientTestData.Artists.Artist1Json).Result;
