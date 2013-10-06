@@ -52,20 +52,23 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.UnitTests\BulkCommandTests.cs">
-      <Link>BulkCommandTests.cs</Link>
-    </Compile>
     <Compile Include="..\mycouch.unittests\fakes\ConnectionFake.cs">
       <Link>Fakes\ConnectionFake.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.UnitTests\Querying\ViewQueryConfiguratorTests.cs">
-      <Link>Querying\ViewQueryConfiguratorTests.cs</Link>
+    <Compile Include="..\MyCouch.UnitTests\Requests\BulkRequestTests.cs">
+      <Link>Requests\BulkRequestTests.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.unittests\querying\ViewQueryOptionsTests.cs">
-      <Link>Querying\ViewQueryOptionsTests.cs</Link>
+    <Compile Include="..\MyCouch.UnitTests\Requests\GetChangesHttpRequestFactoryTests.cs">
+      <Link>Requests\GetChangesHttpRequestFactoryTests.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.unittests\requests\ViewQueryRequestBuilderTests.cs">
-      <Link>Requests\ViewQueryRequestBuilderTests.cs</Link>
+    <Compile Include="..\MyCouch.UnitTests\Requests\QueryViewHttpRequestFactoryTests.cs">
+      <Link>Requests\QueryViewHttpRequestFactoryTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.UnitTests\Requests\QueryViewRequestConfiguratorTests.cs">
+      <Link>Requests\QueryViewRequestConfiguratorTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.UnitTests\Requests\QueryViewRequestTests.cs">
+      <Link>Requests\QueryViewRequestTests.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.unittests\schemes\EntityIdMemberTests.cs">
       <Link>Schemes\EntityIdMemberTests.cs</Link>

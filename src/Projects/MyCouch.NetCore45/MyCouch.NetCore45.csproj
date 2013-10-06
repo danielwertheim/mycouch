@@ -107,6 +107,9 @@
     <Compile Include="..\MyCouch\ChangesFeed.cs">
       <Link>ChangesFeed.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch\ChangesStyle.cs">
+      <Link>ChangesStyle.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch\Client.cs">
       <Link>Client.cs</Link>
     </Compile>
@@ -115,57 +118,6 @@
     </Compile>
     <Compile Include="..\MyCouch\ClientExecuteExtensions.cs">
       <Link>ClientExecuteExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch\commands\BulkCommand.cs">
-      <Link>Commands\BulkCommand.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch\commands\CopyDocumentCommand.cs">
-      <Link>Commands\CopyDocumentCommand.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch\commands\DeleteAttachmentCommand.cs">
-      <Link>Commands\DeleteAttachmentCommand.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch\commands\DeleteDocumentCommand.cs">
-      <Link>Commands\DeleteDocumentCommand.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch\commands\DeleteEntityCommand.cs">
-      <Link>Commands\DeleteEntityCommand.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch\commands\DocumentExistsCommand.cs">
-      <Link>Commands\DocumentExistsCommand.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch\commands\GetAttachmentCommand.cs">
-      <Link>Commands\GetAttachmentCommand.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch\Commands\GetChangesCommand.cs">
-      <Link>Commands\GetChangesCommand.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch\commands\GetDocumentCommand.cs">
-      <Link>Commands\GetDocumentCommand.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch\commands\GetEntityCommand.cs">
-      <Link>Commands\GetEntityCommand.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch\Commands\ICommand.cs">
-      <Link>Commands\ICommand.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch\commands\PostDocumentCommand.cs">
-      <Link>Commands\PostDocumentCommand.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch\commands\PostEntityCommand.cs">
-      <Link>Commands\PostEntityCommand.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch\commands\PutAttachmentCommand.cs">
-      <Link>Commands\PutAttachmentCommand.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch\commands\PutDocumentCommand.cs">
-      <Link>Commands\PutDocumentCommand.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch\commands\PutEntityCommand.cs">
-      <Link>Commands\PutEntityCommand.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch\commands\ReplaceDocumentCommand.cs">
-      <Link>Commands\ReplaceDocumentCommand.cs</Link>
     </Compile>
     <Compile Include="..\mycouch\configurations\ConnectionString.cs">
       <Link>Configurations\ConnectionString.cs</Link>
@@ -293,20 +245,77 @@
     <Compile Include="..\MyCouch\Now.cs">
       <Link>Now.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\querying\ViewQueryConfigurator.cs">
-      <Link>Querying\ViewQueryConfigurator.cs</Link>
+    <Compile Include="..\mycouch\requests\BulkRequest.cs">
+      <Link>Requests\BulkRequest.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\querying\ViewQueryOptions.cs">
-      <Link>Querying\ViewQueryOptions.cs</Link>
+    <Compile Include="..\mycouch\requests\configurators\QueryViewRequestConfigurator.cs">
+      <Link>Requests\Configurators\QueryViewRequestConfigurator.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\requests\IRequestBuilder.cs">
-      <Link>Requests\IRequestBuilder.cs</Link>
+    <Compile Include="..\mycouch\requests\CopyDocumentRequest.cs">
+      <Link>Requests\CopyDocumentRequest.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\requests\RequestBuilderBase.cs">
-      <Link>Requests\RequestBuilderBase.cs</Link>
+    <Compile Include="..\mycouch\requests\DeleteAttachmentRequest.cs">
+      <Link>Requests\DeleteAttachmentRequest.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\requests\ViewQueryRequestBuilder.cs">
-      <Link>Requests\ViewQueryRequestBuilder.cs</Link>
+    <Compile Include="..\mycouch\requests\DeleteDocumentRequest.cs">
+      <Link>Requests\DeleteDocumentRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\requests\DeleteEntityRequest.cs">
+      <Link>Requests\DeleteEntityRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\requests\DocumentExistsRequest.cs">
+      <Link>Requests\DocumentExistsRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\requests\factories\GetChangesHttpRequestFactory.cs">
+      <Link>Requests\Factories\GetChangesHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\requests\factories\HttpRequestFactoryBase.cs">
+      <Link>Requests\Factories\HttpRequestFactoryBase.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\requests\factories\IHttpRequestFactory.cs">
+      <Link>Requests\Factories\IHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\requests\factories\QueryViewHttpRequestFactory.cs">
+      <Link>Requests\Factories\QueryViewHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\requests\GetAttachmentRequest.cs">
+      <Link>Requests\GetAttachmentRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\requests\GetChangesRequest.cs">
+      <Link>Requests\GetChangesRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\requests\GetDocumentRequest.cs">
+      <Link>Requests\GetDocumentRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\requests\GetEntityRequest.cs">
+      <Link>Requests\GetEntityRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\requests\IRequest.cs">
+      <Link>Requests\IRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\requests\PostDocumentRequest.cs">
+      <Link>Requests\PostDocumentRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\requests\PostEntityRequest.cs">
+      <Link>Requests\PostEntityRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\requests\PutAttachmentRequest.cs">
+      <Link>Requests\PutAttachmentRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\requests\PutDocumentRequest.cs">
+      <Link>Requests\PutDocumentRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\requests\PutEntityRequest.cs">
+      <Link>Requests\PutEntityRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\requests\QuerySystemViewRequest.cs">
+      <Link>Requests\QuerySystemViewRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\requests\QueryViewRequest.cs">
+      <Link>Requests\QueryViewRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\requests\ReplaceDocumentRequest.cs">
+      <Link>Requests\ReplaceDocumentRequest.cs</Link>
     </Compile>
     <Compile Include="..\mycouch\responses\AttachmentResponse.cs">
       <Link>Responses\AttachmentResponse.cs</Link>
@@ -440,14 +449,8 @@
     <Compile Include="..\MyCouch\Stale.cs">
       <Link>Stale.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\SystemViewQuery.cs">
-      <Link>SystemViewQuery.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch\ViewIdentity.cs">
       <Link>ViewIdentity.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch\ViewQuery.cs">
-      <Link>ViewQuery.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
