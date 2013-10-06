@@ -244,6 +244,9 @@
     <Compile Include="..\MyCouch\Requests\DocumentExistsRequest.cs">
       <Link>Requests\DocumentExistsRequest.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch\Requests\Factories\AttachmentHttpRequestFactory.cs">
+      <Link>Requests\Factories\GetChangesHttpRequestFactory.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch\Requests\Factories\GetChangesHttpRequestFactory.cs">
       <Link>Requests\Factories\GetChangesHttpRequestFactory.cs</Link>
     </Compile>
