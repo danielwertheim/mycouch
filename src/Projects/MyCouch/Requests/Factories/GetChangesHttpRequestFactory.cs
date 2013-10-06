@@ -61,8 +61,8 @@ namespace MyCouch.Requests.Factories
             if (request.Limit.HasValue)
                 kvs.Add(KeyNames.Limit, request.Limit.Value.ToString(MyCouchRuntime.NumberFormat));
 
-            if (request.HeartBeatMs.HasValue)
-                kvs.Add(KeyNames.HeartBeat, request.HeartBeatMs.Value.ToString(MyCouchRuntime.NumberFormat));
+            if (request.Heartbeat.HasValue)
+                kvs.Add(KeyNames.HeartBeat, request.Heartbeat.Value.ToString(MyCouchRuntime.NumberFormat));
 
             if (request.Timeout.HasValue)
                 kvs.Add(KeyNames.Timeout, request.Timeout.Value.ToString(MyCouchRuntime.NumberFormat));

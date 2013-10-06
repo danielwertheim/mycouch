@@ -134,7 +134,7 @@ namespace MyCouch.UnitTests.Requests
         public void When_HeartBeat_is_assigned_It_should_get_included_in_the_querystring()
         {
             var request = CreateRequest();
-            request.HeartBeatMs = 17;
+            request.Heartbeat = 17;
 
             WithHttpRequestFor(
                 request,

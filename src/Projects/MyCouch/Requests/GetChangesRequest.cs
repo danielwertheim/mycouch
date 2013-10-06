@@ -29,7 +29,7 @@ namespace MyCouch.Requests
         /// newline at every tick where the length between the ticks
         /// is the value you define.
         /// </summary>
-        public int? HeartBeatMs { get; set; }
+        public int? Heartbeat { get; set; }
         /// <summary>
         /// Maximum period in milliseconds to wait for a change before the response is sent,
         /// even if there are no results.
