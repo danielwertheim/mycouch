@@ -52,6 +52,7 @@
     </Compile>
     <Compile Include="ChangesFeed.cs" />
     <Compile Include="ChangesStyle.cs" />
+    <Compile Include="Net\BytesContent.cs" />
     <Compile Include="Requests\Factories\AttachmentHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\GetChangesHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\QueryViewHttpRequestFactory.cs" />

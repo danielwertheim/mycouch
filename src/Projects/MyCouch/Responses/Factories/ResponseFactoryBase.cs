@@ -30,6 +30,7 @@ namespace MyCouch.Responses.Factories
             response.RequestUri = httpResponse.RequestMessage.RequestUri;
             response.StatusCode = httpResponse.StatusCode;
             response.RequestMethod = httpResponse.RequestMessage.Method;
+            response.ContentType = httpResponse.Content.Headers.ContentType.ToString();
 
             if (response.IsSuccess)
                 onSuccessfulResponseMaterializer(response, httpResponse);

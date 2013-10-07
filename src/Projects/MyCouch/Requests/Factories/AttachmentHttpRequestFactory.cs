@@ -1,12 +1,8 @@
 ﻿using MyCouch.Net;
 using MyCouch.Requests;
 using MyCouch.Requests.Factories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 
 namespace MyCouch.Contexts
 {
@@ -16,9 +12,7 @@ namespace MyCouch.Contexts
         IHttpRequestFactory<PutAttachmentRequest>,
         IHttpRequestFactory<DeleteAttachmentRequest>
     {
-        public AttachmentHttpRequestFactory(IConnection connection) : base(connection)
-        {
-        }
+        public AttachmentHttpRequestFactory(IConnection connection) : base(connection) { }
 
         protected virtual string GenerateRequestUrl(string docId, string docRev, string attachmentName)
         {
@@ -29,7 +23,7 @@ namespace MyCouch.Contexts
                 docRev == null ? string.Empty : string.Concat("?rev=", docRev));
         }
 
-        public HttpRequest Create(GetAttachmentRequest request)
+        public virtual HttpRequest Create(GetAttachmentRequest request)
         {
             var httpRequest = new HttpRequest(HttpMethod.Get, GenerateRequestUrl(request.DocId, request.DocRev, request.Name));
 
@@ -38,18 +32,17 @@ namespace MyCouch.Contexts
             return httpRequest;
         }
 
-        public HttpRequest Create(PutAttachmentRequest request)
+        public virtual HttpRequest Create(PutAttachmentRequest request)
         {
             var httpRequest = new HttpRequest(HttpMethod.Put, GenerateRequestUrl(request.DocId, request.DocRev, request.Name));
 
             httpRequest.SetIfMatch(request.DocRev);
-            httpRequest.SetContent(request.Content);
-            httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue(request.ContentType);
+            httpRequest.SetContent(request.Content, request.ContentType);
 
             return httpRequest;
         }
 
-        public HttpRequest Create(DeleteAttachmentRequest request)
+        public virtual HttpRequest Create(DeleteAttachmentRequest request)
         {
             var httpRequest = new HttpRequest(HttpMethod.Delete, GenerateRequestUrl(request.DocId, request.DocRev, request.Name));
 

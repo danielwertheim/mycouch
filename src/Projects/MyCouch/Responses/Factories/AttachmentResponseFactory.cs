@@ -1,9 +1,6 @@
-﻿using System;
-using System.IO;
-using System.Net.Http;
+﻿using System.Net.Http;
 using MyCouch.Extensions;
 using MyCouch.Serialization;
-using System.Linq;
 
 namespace MyCouch.Responses.Factories
 {
@@ -19,7 +16,7 @@ namespace MyCouch.Responses.Factories
             return Materialize(new AttachmentResponse(), httpResponse, OnSuccessfulResponse, OnFailedResponse);
         }
 
-        protected void OnSuccessfulResponse(AttachmentResponse response, HttpResponseMessage httpResponse)
+        protected virtual void OnSuccessfulResponse(AttachmentResponse response, HttpResponseMessage httpResponse)
         {
             using (var content = httpResponse.Content.ReadAsStream())
             {
@@ -30,7 +27,6 @@ namespace MyCouch.Responses.Factories
                 content.Position = 0;
 
                 response.Content = httpResponse.Content.ReadAsByteArrayAsync().Result;
-                response.ContentType = httpResponse.Content.Headers.ContentType.ToString();
             }
         }
 

@@ -177,6 +177,9 @@
     <Compile Include="..\MyCouch\Net\BasicHttpClientConnection.cs">
       <Link>Net\BasicHttpClientConnection.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch\Net\BytesContent.cs">
+      <Link>Net\BytesContent.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch\Net\HttpContentTypes.cs">
       <Link>Net\HttpContentTypes.cs</Link>
     </Compile>
