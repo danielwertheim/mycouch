@@ -130,9 +130,9 @@ namespace MyCouch.Testing.TestData
             public static class One
             {
                 public const string Name = "att:1";
-                public const string ContentEncoded = "TXlDb3VjaCwgdGhlIHNpbXBsZSBhc3luY2hyb25vdXMgY2xpZW50IGZvciAuTmV0";
-                public const string ContentDecoded = "MyCouch, the simple asynchronous client for .Net";
+                public const string Content = "MyCouch, the simple asynchronous client for .Net";
                 public static readonly string ContentType = HttpContentTypes.Text;
+                public static readonly byte[] Bytes = MyCouchRuntime.DefaultEncoding.GetBytes(Content);
             }
         }
 
