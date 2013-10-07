@@ -84,7 +84,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             var getAttachmentResponse = SUT.GetAsync(getRequest).Result;
 
             getAttachmentResponse.Should().BeSuccessfulGet(ClientTestData.Artists.Artist1Id, ClientTestData.Attachments.One.Name);
-            getAttachmentResponse.Content.AsBase64EncodedString().Should().Be(ClientTestData.Attachments.One.ContentEncoded);
+            getAttachmentResponse.Content.Should().Equal(ClientTestData.Attachments.One.ContentDecoded.AsBytes());
         }
 
         [Fact]
@@ -107,7 +107,29 @@ namespace MyCouch.IntegrationTests.ClientTests
             var getAttachmentResponse = SUT.GetAsync(getRequest).Result;
 
             getAttachmentResponse.Should().BeSuccessfulGet(ClientTestData.Artists.Artist1Id, ClientTestData.Attachments.One.Name);
-            getAttachmentResponse.Content.AsBase64EncodedString().Should().Be(ClientTestData.Attachments.One.ContentEncoded);
+            getAttachmentResponse.Content.Should().Equal(ClientTestData.Attachments.One.ContentDecoded.AsBytes());
+        }
+
+        [Fact]
+        public void When_GET_of_an_existing_attachment_the_content_type_is_returned_correctly()
+        {
+            var putDocResponse = Client.Documents.PostAsync(ClientTestData.Artists.Artist1Json).Result;
+
+            var putRequest = new PutAttachmentRequest(
+                putDocResponse.Id,
+                putDocResponse.Rev,
+                ClientTestData.Attachments.One.Name,
+                ClientTestData.Attachments.One.ContentType,
+                ClientTestData.Attachments.One.ContentDecoded.AsBytes());
+            var putAttachmentResponse = SUT.PutAsync(putRequest).Result;
+
+            var getRequest = new GetAttachmentRequest(
+                putAttachmentResponse.Id,
+                putAttachmentResponse.Rev,
+                ClientTestData.Attachments.One.Name);
+            var getAttachmentResponse = SUT.GetAsync(getRequest).Result;
+
+            getAttachmentResponse.ContentType.Should().Be(ClientTestData.Attachments.One.ContentType);
         }
 
         [Fact]

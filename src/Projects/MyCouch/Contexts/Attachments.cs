@@ -7,6 +7,7 @@ using MyCouch.Requests;
 using MyCouch.Responses;
 using MyCouch.Responses.Factories;
 using MyCouch.Serialization;
+using MyCouch.Requests.Factories;
 
 namespace MyCouch.Contexts
 {
@@ -14,6 +15,9 @@ namespace MyCouch.Contexts
     {
         protected AttachmentResponseFactory AttachmentResponseFactory { get; set; }
         protected DocumentHeaderResponseFactory DocumentHeaderResponseFactory { get; set; }
+        protected IHttpRequestFactory<GetAttachmentRequest> GetAttachmentHttpRequestFactory { get; set; }
+        protected IHttpRequestFactory<PutAttachmentRequest> PutAttachmentHttpRequestFactory { get; set; }
+        protected IHttpRequestFactory<DeleteAttachmentRequest> DeleteAttachmentHttpRequestFactory { get; set; }
 
         public Attachments(IConnection connection, SerializationConfiguration serializationConfiguration) : base(connection)
         {
@@ -21,6 +25,9 @@ namespace MyCouch.Contexts
 
             AttachmentResponseFactory = new AttachmentResponseFactory(serializationConfiguration);
             DocumentHeaderResponseFactory = new DocumentHeaderResponseFactory(serializationConfiguration);
+            GetAttachmentHttpRequestFactory = new AttachmentHttpRequestFactory(Connection);
+            PutAttachmentHttpRequestFactory = new AttachmentHttpRequestFactory(Connection);
+            DeleteAttachmentHttpRequestFactory = new AttachmentHttpRequestFactory(Connection);
         }
 
         public virtual Task<AttachmentResponse> GetAsync(string docId, string attachmentName)
@@ -79,39 +86,17 @@ namespace MyCouch.Contexts
 
         protected virtual HttpRequest CreateHttpRequest(GetAttachmentRequest request)
         {
-            var httpRequest = new HttpRequest(HttpMethod.Get, GenerateRequestUrl(request.DocId, request.DocRev, request.Name));
-
-            httpRequest.SetIfMatch(request.DocRev);
-
-            return httpRequest;
+            return GetAttachmentHttpRequestFactory.Create(request);
         }
 
         protected virtual HttpRequest CreateHttpRequest(PutAttachmentRequest request)
         {
-            var httpRequest = new HttpRequest(HttpMethod.Put, GenerateRequestUrl(request.DocId, request.DocRev, request.Name));
-
-            httpRequest.SetIfMatch(request.DocRev);
-            httpRequest.SetContent(request.ContentType, request.Content);
-
-            return httpRequest;
+            return PutAttachmentHttpRequestFactory.Create(request);
         }
 
         protected virtual HttpRequest CreateHttpRequest(DeleteAttachmentRequest request)
         {
-            var httpRequest = new HttpRequest(HttpMethod.Delete, GenerateRequestUrl(request.DocId, request.DocRev, request.Name));
-
-            httpRequest.SetIfMatch(request.DocRev);
-
-            return httpRequest;
-        }
-
-        protected virtual string GenerateRequestUrl(string docId, string docRev, string attachmentName)
-        {
-            return string.Format("{0}/{1}/{2}{3}",
-                Connection.Address,
-                docId,
-                attachmentName,
-                docRev == null ? string.Empty : string.Concat("?rev=", docRev));
+            return DeleteAttachmentHttpRequestFactory.Create(request);
         }
 
         protected virtual AttachmentResponse ProcessAttachmentResponse(HttpResponseMessage response)

@@ -3,6 +3,7 @@ using System.IO;
 using System.Net.Http;
 using MyCouch.Extensions;
 using MyCouch.Serialization;
+using System.Linq;
 
 namespace MyCouch.Responses.Factories
 {
@@ -18,7 +19,7 @@ namespace MyCouch.Responses.Factories
             return Materialize(new AttachmentResponse(), httpResponse, OnSuccessfulResponse, OnFailedResponse);
         }
 
-        protected virtual void OnSuccessfulResponse(AttachmentResponse response, HttpResponseMessage httpResponse)
+        protected void OnSuccessfulResponse(AttachmentResponse response, HttpResponseMessage httpResponse)
         {
             using (var content = httpResponse.Content.ReadAsStream())
             {
@@ -27,10 +28,9 @@ namespace MyCouch.Responses.Factories
                 PopulateMissingRevFromRequestHeaders(response, httpResponse);
 
                 content.Position = 0;
-                using (var reader = new StreamReader(content, MyCouchRuntime.DefaultEncoding))
-                {
-                    response.Content = Convert.FromBase64String(reader.ReadToEnd());
-                }
+
+                response.Content = httpResponse.Content.ReadAsByteArrayAsync().Result;
+                response.ContentType = httpResponse.Content.Headers.ContentType.ToString();
             }
         }
 

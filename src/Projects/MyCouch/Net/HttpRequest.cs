@@ -28,10 +28,10 @@ namespace MyCouch.Net
             return this;
         }
 
-        public virtual HttpRequest SetContent(string contentType, byte[] content)
+        public virtual HttpRequest SetContent(byte[] content)
         {
             if (content != null && content.Length > 0)
-                Content = new AttachmentContent(contentType, content);
+                Content = new ByteArrayContent(content);
 
             return this;
         }

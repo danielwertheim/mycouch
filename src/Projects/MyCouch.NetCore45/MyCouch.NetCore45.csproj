@@ -227,9 +227,6 @@
     <Compile Include="..\MyCouch\MyCouchUriBuilder.cs">
       <Link>MyCouchUriBuilder.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\net\AttachmentContent.cs">
-      <Link>Net\AttachmentContent.cs</Link>
-    </Compile>
     <Compile Include="..\mycouch\net\BasicHttpClientConnection.cs">
       <Link>Net\BasicHttpClientConnection.cs</Link>
     </Compile>
@@ -265,6 +262,9 @@
     </Compile>
     <Compile Include="..\mycouch\requests\DocumentExistsRequest.cs">
       <Link>Requests\DocumentExistsRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch\requests\factories\AttachmentHttpRequestFactory.cs">
+      <Link>Requests\Factories\AttachmentHttpRequestFactory.cs</Link>
     </Compile>
     <Compile Include="..\mycouch\requests\factories\GetChangesHttpRequestFactory.cs">
       <Link>Requests\Factories\GetChangesHttpRequestFactory.cs</Link>
