@@ -1,6 +1,5 @@
 ﻿using System;
 using EnsureThat;
-using System.Net.Http;
 
 namespace MyCouch.Requests
 {
