@@ -121,7 +121,6 @@
     <Compile Include="Responses\Factories\DocumentHeaderResponseFactory.cs" />
     <Compile Include="Responses\Factories\DocumentResponseFactory.cs" />
     <Compile Include="Responses\Factories\EntityResponseFactory.cs" />
-    <Compile Include="Responses\Factories\JsonViewQueryResponseFactory.cs" />
     <Compile Include="Responses\Factories\ResponseFactoryBase.cs" />
     <Compile Include="Responses\Factories\QueryResponseFactoryBase.cs" />
     <Compile Include="Responses\Factories\ViewQueryResponseFactory.cs" />
@@ -158,7 +157,6 @@
     <Compile Include="IDocuments.cs" />
     <Compile Include="IViews.cs" />
     <Compile Include="Stale.cs" />
-    <Compile Include="Responses\JsonViewQueryResponse.cs" />
     <Compile Include="Serialization\SerializationContractResolver.cs" />
     <Compile Include="Serialization\ISerializer.cs" />
     <Compile Include="Net\JsonContent.cs" />

@@ -10,7 +10,7 @@ namespace MyCouch.Testing
     [DebuggerStepThrough]
     public static class Shoulds
     {
-        public static ViewQueryResponseAssertions Should(this JsonViewQueryResponse response)
+        public static ViewQueryResponseAssertions Should(this ViewQueryResponse response)
         {
             return new ViewQueryResponseAssertions(response);
         }
@@ -43,10 +43,10 @@ namespace MyCouch.Testing
 
     public class ViewQueryResponseAssertions
     {
-        protected readonly JsonViewQueryResponse Response;
+        protected readonly ViewQueryResponse Response;
 
         [DebuggerStepThrough]
-        public ViewQueryResponseAssertions(JsonViewQueryResponse response)
+        public ViewQueryResponseAssertions(ViewQueryResponse response)
         {
             Response = response;
         }

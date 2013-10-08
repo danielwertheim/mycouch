@@ -16,7 +16,6 @@ namespace MyCouch.Contexts
     public class Views : ApiContextBase, IViews
     {
         protected IHttpRequestFactory<QueryViewRequest> HttpRequestFactory { get; set; }
-        protected JsonViewQueryResponseFactory JsonViewQueryResponseFactory { get; set; }
         protected ViewQueryResponseFactory ViewQueryResponseFactory { get; set; }
 
         public Views(IConnection connection, SerializationConfiguration serializationConfiguration)
@@ -25,11 +24,10 @@ namespace MyCouch.Contexts
             Ensure.That(serializationConfiguration, "serializationConfiguration").IsNotNull();
 
             HttpRequestFactory = new QueryViewHttpRequestFactory(Connection);
-            JsonViewQueryResponseFactory = new JsonViewQueryResponseFactory(serializationConfiguration);
             ViewQueryResponseFactory = new ViewQueryResponseFactory(serializationConfiguration);
         }
 
-        public virtual async Task<JsonViewQueryResponse> QueryAsync(QueryViewRequest request)
+        public virtual async Task<ViewQueryResponse> QueryAsync(QueryViewRequest request)
         {
             Ensure.That(request, "request").IsNotNull();
 
@@ -55,7 +53,7 @@ namespace MyCouch.Contexts
             }
         }
 
-        public virtual Task<JsonViewQueryResponse> QueryAsync(string designDocument, string viewname, Action<QueryViewRequestConfigurator> configurator)
+        public virtual Task<ViewQueryResponse> QueryAsync(string designDocument, string viewname, Action<QueryViewRequestConfigurator> configurator)
         {
             Ensure.That(designDocument, "designDocument").IsNotNullOrWhiteSpace();
             Ensure.That(viewname, "viewname").IsNotNullOrWhiteSpace();
@@ -91,9 +89,9 @@ namespace MyCouch.Contexts
             return HttpRequestFactory.Create(request);
         }
 
-        protected virtual JsonViewQueryResponse ProcessHttpResponse(HttpResponseMessage response)
+        protected virtual ViewQueryResponse ProcessHttpResponse(HttpResponseMessage response)
         {
-            return JsonViewQueryResponseFactory.Create(response);
+            return ViewQueryResponseFactory.Create(response);
         }
 
         protected virtual ViewQueryResponse<T> ProcessHttpResponse<T>(HttpResponseMessage response)

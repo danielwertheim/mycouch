@@ -13,12 +13,12 @@ namespace MyCouch
     {
         /// <summary>
         /// Lets you run an <see cref="QueryViewRequest"/>.
-        /// The resulting <see cref="JsonViewQueryResponse"/> will consist of
+        /// The resulting <see cref="ViewQueryResponse"/> will consist of
         /// Rows being JSON-strings.
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        Task<JsonViewQueryResponse> QueryAsync(QueryViewRequest query);
+        Task<ViewQueryResponse> QueryAsync(QueryViewRequest query);
 
         /// <summary>
         /// Lets you run an <see cref="QueryViewRequest"/>.
@@ -29,14 +29,14 @@ namespace MyCouch
 
         /// <summary>
         /// Creates and executes an <see cref="QueryViewRequest"/> on the fly.
-        /// The resulting <see cref="JsonViewQueryResponse"/> will consist of
+        /// The resulting <see cref="ViewQueryResponse"/> will consist of
         /// Rows being JSON-strings.
         /// </summary>
         /// <param name="designDocument"></param>
         /// <param name="viewname"></param>
         /// <param name="configurator"></param>
         /// <returns></returns>
-        Task<JsonViewQueryResponse> QueryAsync(string designDocument, string viewname, Action<QueryViewRequestConfigurator> configurator);
+        Task<ViewQueryResponse> QueryAsync(string designDocument, string viewname, Action<QueryViewRequestConfigurator> configurator);
 
         /// <summary>
         /// Creates and executes an <see cref="QueryViewRequest"/> on the fly.
