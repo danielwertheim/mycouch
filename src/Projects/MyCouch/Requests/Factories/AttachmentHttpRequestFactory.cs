@@ -11,15 +11,6 @@ namespace MyCouch.Requests.Factories
     {
         public AttachmentHttpRequestFactory(IConnection connection) : base(connection) { }
 
-        protected virtual string GenerateRequestUrl(string docId, string docRev, string attachmentName)
-        {
-            return string.Format("{0}/{1}/{2}{3}",
-                Connection.Address,
-                docId,
-                attachmentName,
-                docRev == null ? string.Empty : string.Concat("?rev=", docRev));
-        }
-
         public virtual HttpRequest Create(GetAttachmentRequest request)
         {
             var httpRequest = new HttpRequest(HttpMethod.Get, GenerateRequestUrl(request.DocId, request.DocRev, request.Name));
@@ -46,6 +37,15 @@ namespace MyCouch.Requests.Factories
             httpRequest.SetIfMatch(request.DocRev);
 
             return httpRequest;
+        }
+
+        protected virtual string GenerateRequestUrl(string docId, string docRev, string attachmentName)
+        {
+            return string.Format("{0}/{1}/{2}{3}",
+                Connection.Address,
+                docId,
+                attachmentName,
+                docRev == null ? string.Empty : string.Concat("?rev=", docRev));
         }
     }
 }
