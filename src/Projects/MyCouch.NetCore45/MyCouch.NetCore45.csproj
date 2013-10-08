@@ -266,8 +266,14 @@
     <Compile Include="..\mycouch\requests\DocumentExistsRequest.cs">
       <Link>Requests\DocumentExistsRequest.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\requests\factories\AttachmentHttpRequestFactory.cs">
-      <Link>Requests\Factories\AttachmentHttpRequestFactory.cs</Link>
+    <Compile Include="..\MyCouch\Requests\Factories\AttachmentHttpRequestFactoryBase.cs">
+      <Link>Requests\Factories\AttachmentHttpRequestFactoryBase.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Requests\Factories\DeleteAttachmentHttpRequestFactory.cs">
+      <Link>Requests\Factories\DeleteAttachmentHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Requests\Factories\GetAttachmentHttpRequestFactory.cs">
+      <Link>Requests\Factories\GetAttachmentHttpRequestFactory.cs</Link>
     </Compile>
     <Compile Include="..\mycouch\requests\factories\GetChangesHttpRequestFactory.cs">
       <Link>Requests\Factories\GetChangesHttpRequestFactory.cs</Link>
@@ -277,6 +283,9 @@
     </Compile>
     <Compile Include="..\mycouch\requests\factories\IHttpRequestFactory.cs">
       <Link>Requests\Factories\IHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Requests\Factories\PutAttachmentHttpRequestFactory.cs">
+      <Link>Requests\Factories\PutAttachmentHttpRequestFactory.cs</Link>
     </Compile>
     <Compile Include="..\mycouch\requests\factories\QueryViewHttpRequestFactory.cs">
       <Link>Requests\Factories\QueryViewHttpRequestFactory.cs</Link>
@@ -350,6 +359,9 @@
     <Compile Include="..\mycouch\responses\factories\BulkResponseFactory.cs">
       <Link>Responses\Factories\BulkResponseFactory.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch\Responses\Factories\ChangesResponseFactory.cs">
+      <Link>Responses\Factories\ChangesResponseFactory.cs</Link>
+    </Compile>
     <Compile Include="..\mycouch\responses\factories\DatabaseResponseFactory.cs">
       <Link>Responses\Factories\DatabaseResponseFactory.cs</Link>
     </Compile>
@@ -362,9 +374,6 @@
     <Compile Include="..\mycouch\responses\factories\EntityResponseFactory.cs">
       <Link>Responses\Factories\EntityResponseFactory.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\responses\factories\JsonViewQueryResponseFactory.cs">
-      <Link>Responses\Factories\JsonViewQueryResponseFactory.cs</Link>
-    </Compile>
     <Compile Include="..\mycouch\responses\factories\QueryResponseFactoryBase.cs">
       <Link>Responses\Factories\QueryResponseFactoryBase.cs</Link>
     </Compile>
@@ -373,9 +382,6 @@
     </Compile>
     <Compile Include="..\mycouch\responses\factories\ViewQueryResponseFactory.cs">
       <Link>Responses\Factories\ViewQueryResponseFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch\responses\JsonViewQueryResponse.cs">
-      <Link>Responses\JsonViewQueryResponse.cs</Link>
     </Compile>
     <Compile Include="..\mycouch\responses\meta\QueriesScheme.cs">
       <Link>Responses\Meta\QueriesScheme.cs</Link>
