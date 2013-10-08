@@ -25,9 +25,9 @@ namespace MyCouch.Contexts
 
             AttachmentResponseFactory = new AttachmentResponseFactory(serializationConfiguration);
             DocumentHeaderResponseFactory = new DocumentHeaderResponseFactory(serializationConfiguration);
-            GetAttachmentHttpRequestFactory = new AttachmentHttpRequestFactory(Connection);
-            PutAttachmentHttpRequestFactory = new AttachmentHttpRequestFactory(Connection);
-            DeleteAttachmentHttpRequestFactory = new AttachmentHttpRequestFactory(Connection);
+            GetAttachmentHttpRequestFactory = new GetAttachmentHttpRequestFactory(Connection);
+            PutAttachmentHttpRequestFactory = new PutAttachmentHttpRequestFactory(Connection);
+            DeleteAttachmentHttpRequestFactory = new DeleteAttachmentHttpRequestFactory(Connection);
         }
 
         public virtual Task<AttachmentResponse> GetAsync(string docId, string attachmentName)

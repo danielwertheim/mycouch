@@ -53,8 +53,11 @@
     <Compile Include="ChangesFeed.cs" />
     <Compile Include="ChangesStyle.cs" />
     <Compile Include="Net\BytesContent.cs" />
-    <Compile Include="Requests\Factories\AttachmentHttpRequestFactory.cs" />
+    <Compile Include="Requests\Factories\GetAttachmentHttpRequestFactory.cs" />
+    <Compile Include="Requests\Factories\AttachmentHttpRequestFactoryBase.cs" />
+    <Compile Include="Requests\Factories\DeleteAttachmentHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\GetChangesHttpRequestFactory.cs" />
+    <Compile Include="Requests\Factories\PutAttachmentHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\QueryViewHttpRequestFactory.cs" />
     <Compile Include="Requests\GetChangesRequest.cs" />
     <Compile Include="Requests\IRequest.cs" />
