@@ -1,10 +1,7 @@
-﻿using MyCouch.Net;
-using MyCouch.Requests;
-using MyCouch.Requests.Factories;
-using System.Net.Http;
-using System.Net.Http.Headers;
+﻿using System.Net.Http;
+using MyCouch.Net;
 
-namespace MyCouch.Contexts
+namespace MyCouch.Requests.Factories
 {
     public class AttachmentHttpRequestFactory : 
         HttpRequestFactoryBase,
