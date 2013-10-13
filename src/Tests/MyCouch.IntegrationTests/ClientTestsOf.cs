@@ -2,7 +2,7 @@
 using MyCouch.Testing;
 using Xunit;
 
-namespace MyCouch.IntegrationTests.ClientTests
+namespace MyCouch.IntegrationTests
 {
     public abstract class ClientTestsOf<T>
         : TestsOf<T>, IUseFixture<ClientTestsFixture> where T : class

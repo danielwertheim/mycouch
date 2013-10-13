@@ -59,7 +59,7 @@
     <Compile Include="ClientTests\DocumentsTests.cs" />
     <Compile Include="ClientTests\EntitiesTests.cs" />
     <Compile Include="ClientTests\ViewsTests.cs" />
-    <Compile Include="ClientTests\ClientTestsOf.cs" />
+    <Compile Include="ClientTestsOf.cs" />
     <Compile Include="IntegrationTestsRuntime.cs" />
     <Compile Include="IPreserveStatePerFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
