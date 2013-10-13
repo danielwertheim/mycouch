@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Net.Http;
+using System.Text;
 using MyCouch.Extensions;
 using MyCouch.Serialization;
 
@@ -28,10 +29,17 @@ namespace MyCouch.Responses.Factories
                 }
 
                 content.Position = 0;
+
+                var sb = new StringBuilder();
                 using (var reader = new StreamReader(content, MyCouchRuntime.DefaultEncoding))
                 {
-                    response.Content = reader.ReadToEnd();
+                    while (!reader.EndOfStream)
+                    {
+                        sb.Append(reader.ReadLine());
+                    }
                 }
+                response.Content = sb.ToString();
+                sb.Clear();
             }
         }
     }
