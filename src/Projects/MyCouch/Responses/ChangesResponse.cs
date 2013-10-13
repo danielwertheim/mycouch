@@ -12,13 +12,19 @@ namespace MyCouch.Responses
 #endif
     public class ChangesResponse<TIncludedDoc> : Response
     {
+        public long LastSeq { get; set; }
+        public Row[] Results { get; set; }
+
+#if !NETFX_CORE
+        [Serializable]
+#endif
         public class Row
         {
-            public string Id { get; set; }
-            public long Seq { get; set; }
-            public Change[] Changes { get; set; }
-            public bool Deleted { get; set; }
-            public TIncludedDoc IncludedDoc { get; set; }
+            public virtual string Id { get; set; }
+            public virtual long Seq { get; set; }
+            public virtual Change[] Changes { get; set; }
+            public virtual bool Deleted { get; set; }
+            public virtual TIncludedDoc IncludedDoc { get; set; }
         }
     }
 }

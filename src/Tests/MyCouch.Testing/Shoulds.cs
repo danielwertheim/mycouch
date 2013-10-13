@@ -39,6 +39,11 @@ namespace MyCouch.Testing
         {
             return new DocumentHeaderResponseAssertions(response);
         }
+
+        public static ChangesResponseAssertions<T> Should<T>(this ChangesResponse<T> response)
+        {
+            return new ChangesResponseAssertions<T>(response);
+        }
     }
 
     public class ViewQueryResponseAssertions
@@ -388,6 +393,29 @@ namespace MyCouch.Testing
             Response.Reason.Should().BeNull();
             Response.Id.Should().Be(initialId);
             Response.Rev.Should().NotBeNullOrEmpty();
+        }
+    }
+
+    public class ChangesResponseAssertions<T>
+    {
+        protected readonly ChangesResponse<T> Response;
+
+        [DebuggerStepThrough]
+        public ChangesResponseAssertions(ChangesResponse<T> response)
+        {
+            Response = response;
+        }
+
+        public void BeSuccessfulGet(long? expectedLastSeq = null)
+        {
+            Response.RequestMethod.Should().Be(HttpMethod.Get);
+            Response.IsSuccess.Should().BeTrue();
+            Response.StatusCode.Should().Be(HttpStatusCode.OK);
+            Response.Error.Should().BeNull();
+            Response.Reason.Should().BeNull();
+
+            if (expectedLastSeq.HasValue)
+                Response.LastSeq.Should().Be(expectedLastSeq.Value);
         }
     }
 }

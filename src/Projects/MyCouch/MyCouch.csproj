@@ -121,6 +121,7 @@
     <Compile Include="Responses\Factories\DocumentHeaderResponseFactory.cs" />
     <Compile Include="Responses\Factories\DocumentResponseFactory.cs" />
     <Compile Include="Responses\Factories\EntityResponseFactory.cs" />
+    <Compile Include="Serialization\Converters\MultiTypeDeserializationJsonConverter.cs" />
     <Compile Include="Responses\Factories\ResponseFactoryBase.cs" />
     <Compile Include="Responses\Factories\QueryResponseFactoryBase.cs" />
     <Compile Include="Responses\Factories\ViewQueryResponseFactory.cs" />
