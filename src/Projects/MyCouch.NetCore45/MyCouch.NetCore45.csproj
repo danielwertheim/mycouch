@@ -413,6 +413,9 @@
     <Compile Include="..\mycouch\serialization\conventions\SerializationConventions.cs">
       <Link>Serialization\Conventions\SerializationConventions.cs</Link>
     </Compile>
+    <Compile Include="..\mycouch\serialization\converters\MultiTypeDeserializationJsonConverter.cs">
+      <Link>Serialization\Converters\MultiTypeDeserializationJsonConverter.cs</Link>
+    </Compile>
     <Compile Include="..\mycouch\serialization\DefaultSerializer.cs">
       <Link>Serialization\DefaultSerializer.cs</Link>
     </Compile>
