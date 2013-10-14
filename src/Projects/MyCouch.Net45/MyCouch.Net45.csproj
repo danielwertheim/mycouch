@@ -282,9 +282,6 @@
     <Compile Include="..\MyCouch\Responses\BulkResponse.cs">
       <Link>Responses\BulkResponse.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Responses\Change.cs">
-      <Link>Responses\Change.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch\Responses\ChangesResponse.cs">
       <Link>Responses\ChangesResponse.cs</Link>
     </Compile>
@@ -321,23 +318,14 @@
     <Compile Include="..\MyCouch\Responses\Factories\EntityResponseFactory.cs">
       <Link>Responses\Factories\EntityResponseFactory.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Responses\Factories\QueryResponseFactoryBase.cs">
-      <Link>Responses\Factories\QueryResponseFactoryBase.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch\Responses\Factories\ResponseFactoryBase.cs">
       <Link>Responses\Factories\ResponseFactoryBase.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch\Responses\Factories\ViewQueryResponseFactory.cs">
       <Link>Responses\Factories\ViewQueryResponseFactory.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Responses\Meta\QueriesScheme.cs">
-      <Link>Responses\Meta\QueriesScheme.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch\Responses\Meta\ResponseMeta.cs">
-      <Link>Responses\Meta\ResponseMeta.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch\Responses\Meta\ResponseScheme.cs">
-      <Link>Responses\Meta\ResponseScheme.cs</Link>
+    <Compile Include="..\MyCouch\Responses\JsonScheme.cs">
+      <Link>Responses\JsonScheme.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch\Responses\QueryResponse.cs">
       <Link>Responses\QueryResponse.cs</Link>
@@ -360,6 +348,9 @@
     <Compile Include="..\MyCouch\Serialization\Conventions\SerializationConventions.cs">
       <Link>Serialization\Conventions\SerializationConventions.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch\Serialization\Converters\KeyJsonConverter.cs">
+      <Link>Serialization\Converters\KeyJsonConverter.cs</Link>
+    </Compile>
     <Compile Include="..\mycouch\serialization\converters\MultiTypeDeserializationJsonConverter.cs">
       <Link>Serialization\Converters\MultiTypeDeserializationJsonConverter.cs</Link>
     </Compile>
@@ -372,14 +363,8 @@
     <Compile Include="..\MyCouch\Serialization\EntitySerializer.cs">
       <Link>Serialization\EntitySerializer.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Serialization\IQueryResponseRowsDeserializer.cs">
-      <Link>Serialization\IQueryResponseRowsDeserializer.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch\Serialization\ISerializer.cs">
       <Link>Serialization\ISerializer.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch\Serialization\JsonArrayItemVisitor.cs">
-      <Link>Serialization\JsonArrayItemVisitor.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch\Serialization\JsonResponseMapper.cs">
       <Link>Serialization\JsonResponseMapper.cs</Link>
@@ -395,9 +380,6 @@
     </Compile>
     <Compile Include="..\MyCouch\Serialization\SerializationContractResolver.cs">
       <Link>Serialization\SerializationContractResolver.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch\Serialization\ViewQueryResponseRowsDeserializer.cs">
-      <Link>Serialization\ViewQueryResponseRowsDeserializer.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch\Serialization\Writers\EntityJsonWriter.cs">
       <Link>Serialization\Writers\EntityJsonWriter.cs</Link>
