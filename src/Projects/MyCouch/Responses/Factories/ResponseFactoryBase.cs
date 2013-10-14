@@ -3,7 +3,6 @@ using System.IO;
 using System.Net.Http;
 using EnsureThat;
 using MyCouch.Extensions;
-using MyCouch.Responses.Meta;
 using MyCouch.Serialization;
 
 namespace MyCouch.Responses.Factories
@@ -58,8 +57,8 @@ namespace MyCouch.Responses.Factories
         {
             var mappings = new JsonResponseMappings
             {
-                {ResponseMeta.Scheme.Error, jr => response.Error = jr.Value.ToString()},
-                {ResponseMeta.Scheme.Reason, jr => response.Reason = jr.Value.ToString()}
+                {JsonScheme.Error, jr => response.Error = jr.Value.ToString()},
+                {JsonScheme.Reason, jr => response.Reason = jr.Value.ToString()}
             };
             JsonMapper.Map(content, mappings);
         }
@@ -80,8 +79,8 @@ namespace MyCouch.Responses.Factories
         {
             var mappings = new JsonResponseMappings
             {
-                {ResponseMeta.Scheme.Id, jr => response.Id = jr.Value.ToString()},
-                {ResponseMeta.Scheme.Rev, jr => response.Rev = jr.Value.ToString()}
+                {JsonScheme.Id, jr => response.Id = jr.Value.ToString()},
+                {JsonScheme.Rev, jr => response.Rev = jr.Value.ToString()}
             };
             JsonMapper.Map(content, mappings);
         }

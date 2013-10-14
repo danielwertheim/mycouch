@@ -1,18 +1,17 @@
-﻿using System.Linq;
-using System.Net.Http;
+﻿using System.Net.Http;
+using MyCouch.Extensions;
 using MyCouch.Serialization;
-using Newtonsoft.Json;
 
 namespace MyCouch.Responses.Factories
 {
-    public class ViewQueryResponseFactory : QueryResponseFactoryBase
+    public class ViewQueryResponseFactory : ResponseFactoryBase
     {
-        protected IQueryResponseRowsDeserializer RowsDeserializer { get; set; }
+        protected readonly ISerializer Serializer;
 
         public ViewQueryResponseFactory(SerializationConfiguration serializationConfiguration)
             : base(serializationConfiguration)
         {
-            RowsDeserializer = new ViewQueryResponseRowsDeserializer(serializationConfiguration);
+            Serializer = new DefaultSerializer(SerializationConfiguration);
         }
 
         public virtual ViewQueryResponse Create(HttpResponseMessage httpResponse)
@@ -25,9 +24,12 @@ namespace MyCouch.Responses.Factories
             return Materialize(new ViewQueryResponse<T>(), httpResponse, OnSuccessfulResponse, OnFailedResponse);
         }
 
-        protected override void OnPopulateRows<T>(QueryResponse<T> response, JsonReader jr)
+        protected virtual void OnSuccessfulResponse<T>(ViewQueryResponse<T> response, HttpResponseMessage httpResponse)
         {
-            response.Rows = RowsDeserializer.Deserialize<T>(jr).ToArray();
+            using (var content = httpResponse.Content.ReadAsStream())
+            {
+                Serializer.Populate(response, content);
+            }
         }
     }
 }

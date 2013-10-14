@@ -2,6 +2,8 @@
 #if NETFX_CORE
 using System.Reflection;
 #endif
+using MyCouch.Serialization.Converters;
+using Newtonsoft.Json;
 
 namespace MyCouch.Responses
 {
@@ -19,6 +21,7 @@ namespace MyCouch.Responses
         }
 #endif
         public string Id { get; set; }
+        [JsonConverter(typeof(KeyJsonConverter))]
         public object Key { get; set; }
     }
 }

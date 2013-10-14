@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace MyCouch.Responses
 {
@@ -7,8 +8,10 @@ namespace MyCouch.Responses
 #endif
     public abstract class QueryResponse<TRow> : Response where TRow : QueryResponseRow
     {
+        [JsonProperty(JsonScheme.TotalRows)]
         public long TotalRows { get; set; }
         public long RowCount { get { return IsEmpty ? 0 : Rows.Length; } }
+        [JsonProperty(JsonScheme.UpdateSeq)]
         public long UpdateSeq { get; set; }
         public long OffSet { get; set; }
         public TRow[] Rows { get; set; }

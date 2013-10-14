@@ -1,20 +1,17 @@
-﻿using System.IO;
-using System.Net.Http;
+﻿using System.Net.Http;
 using MyCouch.Extensions;
 using MyCouch.Serialization;
-using MyCouch.Serialization.Readers;
-using Newtonsoft.Json;
 
 namespace MyCouch.Responses.Factories
 {
     public class ChangesResponseFactory : ResponseFactoryBase
     {
-        protected readonly JsonSerializer Serializer;
+        protected readonly ISerializer Serializer;
 
         public ChangesResponseFactory(SerializationConfiguration serializationConfiguration)
             : base(serializationConfiguration)
         {
-            Serializer = JsonSerializer.Create(SerializationConfiguration.Settings);
+            Serializer = new DefaultSerializer(SerializationConfiguration);
         }
 
         public virtual ChangesResponse Create(HttpResponseMessage httpResponse)
@@ -31,13 +28,7 @@ namespace MyCouch.Responses.Factories
         {
             using (var content = httpResponse.Content.ReadAsStream())
             {
-                using (var sr = new StreamReader(content))
-                {
-                    using (var jr = SerializationConfiguration.ApplyConfigToReader(new MyCouchJsonReader(sr)))
-                    {
-                        Serializer.Populate(jr, response);
-                    }
-                }
+                Serializer.Populate(response, content);
             }
         }
     }

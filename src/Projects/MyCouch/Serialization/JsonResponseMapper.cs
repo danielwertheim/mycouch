@@ -27,7 +27,7 @@ namespace MyCouch.Serialization
 
             var numOfHandlersProcessed = 0;
 
-            using (var sr = new StreamReader(jsonData))
+            using (var sr = new StreamReader(jsonData, MyCouchRuntime.DefaultEncoding))
             {
                 using (var jr = Configuration.ApplyConfigToReader(new MyCouchJsonReader(sr)))
                 {

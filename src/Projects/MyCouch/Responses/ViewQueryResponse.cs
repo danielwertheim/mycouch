@@ -1,4 +1,6 @@
 ﻿using System;
+using MyCouch.Serialization.Converters;
+using Newtonsoft.Json;
 
 namespace MyCouch.Responses
 {
@@ -17,7 +19,10 @@ namespace MyCouch.Responses
 #endif
         public class Row : QueryResponseRow
         {
+            [JsonConverter(typeof(MultiTypeDeserializationJsonConverter))]
             public T Value { get; set; }
+            [JsonProperty(JsonScheme.IncludedDoc)]
+            [JsonConverter(typeof(MultiTypeDeserializationJsonConverter))]
             public T IncludedDoc { get; set; }
         }
     }
