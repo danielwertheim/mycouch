@@ -319,5 +319,37 @@ namespace MyCouch.IntegrationTests.ClientTests
 
             response.Should().BeSuccessfulGet(artists.Take(artists.Length - 1).Select(a => a.Albums).ToArray());
         }
+
+        [Fact]
+        public void When_skip_two_of_ten_It_should_return_the_other_eight()
+        {
+            var query = new QueryViewRequest(ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId).Configure(cfg => cfg
+                .Skip(2));
+
+            var response = SUT.QueryAsync<Artist>(query).Result;
+
+            response.Should().BeSuccessfulGet(8);
+        }
+
+        [Fact]
+        public void When_limit_is_two_of_ten_It_should_return_two()
+        {
+            var query = new QueryViewRequest(ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId).Configure(cfg => cfg
+                .Limit(2));
+
+            var response = SUT.QueryAsync<Artist>(query).Result;
+
+            response.Should().BeSuccessfulGet(2);
+        }
+
+        [Fact]
+        public void When_getting_all_artists_It_can_deserialize_artists_properly()
+        {
+            var query = new QueryViewRequest(ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId);
+
+            var response = SUT.QueryAsync<Artist>(query).Result;
+
+            response.Should().BeSuccessfulGet(Artists);
+        }
     }
 }

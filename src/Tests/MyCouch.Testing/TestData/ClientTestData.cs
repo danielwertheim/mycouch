@@ -117,12 +117,16 @@ namespace MyCouch.Testing.TestData
                         "\"total_num_of_albums\": {" +
                             "\"map\": \"function(doc) {  if(doc.$doctype !== 'artist') return;  emit(null, doc.albums.length);}\"," +
                             "\"reduce\":\"_sum\"" +
+                        "}," +
+                        "\"name_as_key_and_doc_as_value\": {" +
+                            "\"map\": \"function(doc) {  if(doc.$doctype !== 'artist') return;  emit(doc.name, doc);}\"" +
                         "}" +
                     "}" +
                 "}";
             public static readonly ViewIdentity ArtistsAlbumsViewId = new ViewIdentity("artists", "albums");
             public static readonly ViewIdentity ArtistsNameNoValueViewId = new ViewIdentity("artists", "name_no_value");
             public static readonly ViewIdentity ArtistsTotalNumOfAlbumsViewId = new ViewIdentity("artists", "total_num_of_albums");
+            public static readonly ViewIdentity ArtistsNameAsKeyAndDocAsValueId = new ViewIdentity("artists", "name_as_key_and_doc_as_value");
         }
 
         public static class Attachments
