@@ -394,14 +394,11 @@
     <Compile Include="..\mycouch\serialization\EntitySerializer.cs">
       <Link>Serialization\EntitySerializer.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch\Serialization\IEntitySerializer.cs">
+      <Link>Serialization\IEntitySerializer.cs</Link>
+    </Compile>
     <Compile Include="..\mycouch\serialization\ISerializer.cs">
       <Link>Serialization\ISerializer.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch\serialization\JsonResponseMapper.cs">
-      <Link>Serialization\JsonResponseMapper.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch\serialization\JsonResponseMappings.cs">
-      <Link>Serialization\JsonResponseMappings.cs</Link>
     </Compile>
     <Compile Include="..\mycouch\serialization\readers\MyCouchJsonReader.cs">
       <Link>Serialization\Readers\MyCouchJsonReader.cs</Link>

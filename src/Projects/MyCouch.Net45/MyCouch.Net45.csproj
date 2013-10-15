@@ -363,14 +363,11 @@
     <Compile Include="..\MyCouch\Serialization\EntitySerializer.cs">
       <Link>Serialization\EntitySerializer.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch\Serialization\IEntitySerializer.cs">
+      <Link>Serialization\IEntitySerializer.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch\Serialization\ISerializer.cs">
       <Link>Serialization\ISerializer.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch\Serialization\JsonResponseMapper.cs">
-      <Link>Serialization\JsonResponseMapper.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch\Serialization\JsonResponseMappings.cs">
-      <Link>Serialization\JsonResponseMappings.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch\Serialization\Readers\MyCouchJsonReader.cs">
       <Link>Serialization\Readers\MyCouchJsonReader.cs</Link>
