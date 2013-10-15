@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using FluentAssertions;
@@ -51,111 +52,19 @@ namespace MyCouch.Testing
         }
     }
 
-    public class ViewQueryResponseAssertions
+    public class ViewQueryResponseAssertions : ViewQueryResponseAssertions<string, string>
     {
-        protected readonly ViewQueryResponse Response;
-
         [DebuggerStepThrough]
-        public ViewQueryResponseAssertions(ViewQueryResponse response)
+        public ViewQueryResponseAssertions(ViewQueryResponse response) : base(response)
         {
-            Response = response;
-        }
-
-        public void BeSuccessfulGet(string[] expected)
-        {
-            BeSuccessful(HttpMethod.Get, expected);
-        }
-
-        public void BeSuccessfulPost(string[] expected)
-        {
-            BeSuccessful(HttpMethod.Post, expected);
-        }
-
-        private void BeSuccessful(HttpMethod method, string[] expected)
-        {
-            BeSuccessful(method, expected.Length);
-            for (var i = 0; i < Response.RowCount; i++)
-                CustomAsserts.AreValueEqual(expected[i], Response.Rows[i].Value);
-        }
-
-        public void BeSuccessfulGet(int numOfRows)
-        {
-            BeSuccessful(HttpMethod.Get, numOfRows);
-        }
-
-        public void BeSuccessfulPost(int numOfRows)
-        {
-            BeSuccessful(HttpMethod.Get, numOfRows);
-        }
-
-        private void BeSuccessful(HttpMethod method, int numOfRows)
-        {
-            Response.RequestMethod.Should().Be(method);
-            Response.IsSuccess.Should().BeTrue();
-            Response.StatusCode.Should().Be(HttpStatusCode.OK);
-            Response.Error.Should().BeNull();
-            Response.Reason.Should().BeNull();
-            Response.IsEmpty.Should().BeFalse();
-
-            if (numOfRows > 0)
-            {
-                Response.Rows.Should().NotBeNull();
-                Response.RowCount.Should().Be(numOfRows);
-            }
         }
     }
 
-    public class ViewQueryResponseAssertions<T>
+    public class ViewQueryResponseAssertions<T> : ViewQueryResponseAssertions<T, string>
     {
-        protected readonly ViewQueryResponse<T> Response;
-
         [DebuggerStepThrough]
-        public ViewQueryResponseAssertions(ViewQueryResponse<T> response)
+        public ViewQueryResponseAssertions(ViewQueryResponse<T> response) : base(response)
         {
-            Response = response;
-        }
-
-        public void BeSuccessfulGet(T[] expected)
-        {
-            BeSuccessful(HttpMethod.Get, expected);
-        }
-
-        public void BeSuccessfulPost(T[] expected)
-        {
-            BeSuccessful(HttpMethod.Post, expected);
-        }
-
-        private void BeSuccessful(HttpMethod method, T[] expected)
-        {
-            BeSuccessful(method, expected.Length);
-            for (var i = 0; i < Response.RowCount; i++)
-                CustomAsserts.AreValueEqual(expected[i], Response.Rows[i].Value);
-        }
-
-        public void BeSuccessfulPost(int numOfRows)
-        {
-            BeSuccessful(HttpMethod.Post, numOfRows);
-        }
-
-        public void BeSuccessfulGet(int numOfRows)
-        {
-            BeSuccessful(HttpMethod.Get, numOfRows);
-        }
-
-        private void BeSuccessful(HttpMethod method, int numOfRows)
-        {
-            Response.RequestMethod.Should().Be(method);
-            Response.IsSuccess.Should().BeTrue();
-            Response.StatusCode.Should().Be(HttpStatusCode.OK);
-            Response.Error.Should().BeNull();
-            Response.Reason.Should().BeNull();
-            Response.IsEmpty.Should().BeFalse();
-
-            if (numOfRows > 0)
-            {
-                Response.Rows.Should().NotBeNull();
-                Response.RowCount.Should().Be(numOfRows);
-            }
         }
     }
 
@@ -174,6 +83,11 @@ namespace MyCouch.Testing
             BeSuccessful(HttpMethod.Get, expected);
         }
 
+        public void BeSuccessfulGet<TKey>(T[] expected, Func<ViewQueryResponse<T, TIncludedDoc>.Row, TKey> orderBy)
+        {
+            BeSuccessful(HttpMethod.Get, expected, orderBy);
+        }
+
         public void BeSuccessfulPost(T[] expected)
         {
             BeSuccessful(HttpMethod.Post, expected);
@@ -184,6 +98,18 @@ namespace MyCouch.Testing
             BeSuccessful(method, expected.Length);
             for (var i = 0; i < Response.RowCount; i++)
                 CustomAsserts.AreValueEqual(expected[i], Response.Rows[i].Value);
+        }
+
+        private void BeSuccessful<TKey>(HttpMethod method, T[] expected, Func<ViewQueryResponse<T, TIncludedDoc>.Row, TKey> orderBy = null)
+        {
+            BeSuccessful(method, expected.Length);
+
+            var actual = orderBy != null 
+                ? Response.Rows.OrderBy(orderBy).ToArray() 
+                : Response.Rows;
+
+            for (var i = 0; i < Response.RowCount; i++)
+                CustomAsserts.AreValueEqual(expected[i], actual[i].Value);
         }
 
         public void BeSuccessfulPost(int numOfRows)

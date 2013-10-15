@@ -32,7 +32,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             var response = SUT.QueryAsync(query).Result;
 
             response.Should().BeSuccessfulGet(numOfRows: 1);
-            response.Rows[0].Value = expectedSum.ToString();
+            response.Rows[0].Value.Should().Be(expectedSum.ToString());
         }
 
         [Fact]
@@ -44,7 +44,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             var response = SUT.QueryAsync<dynamic>(query).Result;
 
             response.Should().BeSuccessfulGet(numOfRows: 1);
-            response.Rows[0].Value = expectedSum;
+            ((long)response.Rows[0].Value).Should().Be(expectedSum);
         }
 
         [Fact]
@@ -56,7 +56,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             var response = SUT.QueryAsync<int>(query).Result;
 
             response.Should().BeSuccessfulGet(numOfRows: 1);
-            response.Rows[0].Value = expectedSum;
+            response.Rows[0].Value.Should().Be(expectedSum);
         }
 
         [Fact]
@@ -349,7 +349,9 @@ namespace MyCouch.IntegrationTests.ClientTests
 
             var response = SUT.QueryAsync<Artist>(query).Result;
 
-            response.Should().BeSuccessfulGet(Artists);
+            response.Should().BeSuccessfulGet(
+                Artists.OrderBy(a => a.ArtistId).ToArray(),
+                i => i.Id);
         }
     }
 }
