@@ -90,14 +90,14 @@
     <Compile Include="..\MyCouch.IntegrationTests\ClientExtensions.cs">
       <Link>ClientExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.IntegrationTests\ClientTestsOf.cs">
+      <Link>ClientTestsOf.cs</Link>
+    </Compile>
     <Compile Include="..\mycouch.integrationtests\clienttests\AttachmentsTests.cs">
       <Link>ClientTests\AttachmentsTests.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.IntegrationTests\ClientTests\ChangesTests.cs">
       <Link>ClientTests\ChangesTests.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests\ClientTests\ClientTestsOf.cs">
-      <Link>ClientTests\ClientTestsOf.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.integrationtests\clienttests\DocumentsTests.cs">
       <Link>ClientTests\DocumentsTests.cs</Link>

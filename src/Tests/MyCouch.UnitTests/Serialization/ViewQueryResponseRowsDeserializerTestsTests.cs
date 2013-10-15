@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using FluentAssertions;
 using MyCouch.EntitySchemes;
 using MyCouch.EntitySchemes.Reflections;
 using MyCouch.Responses;
 using MyCouch.Serialization;
-using MyCouch.Serialization.Readers;
 using MyCouch.Testing;
 using MyCouch.Testing.Model;
 using MyCouch.Testing.TestData;
@@ -51,14 +48,14 @@ namespace MyCouch.UnitTests.Serialization
     }
 #endif
 
-    public abstract class ViewQueryResponseRowsDeserializerTests : UnitTestsOf<ViewQueryResponseRowsDeserializer>
+    public abstract class ViewQueryResponseRowsDeserializerTests : UnitTestsOf<DefaultSerializer>
     {
         protected readonly SerializationConfiguration SerializationConfiguration;
 
         protected ViewQueryResponseRowsDeserializerTests(SerializationConfiguration serializationConfiguration)
         {
             SerializationConfiguration = serializationConfiguration;
-            SUT = new ViewQueryResponseRowsDeserializer(SerializationConfiguration);
+            SUT = new DefaultSerializer(SerializationConfiguration);
         }
 
         [Fact]
@@ -227,14 +224,10 @@ namespace MyCouch.UnitTests.Serialization
 
         private ViewQueryResponse<T>.Row[] Deserialize<T>(string jsonRows) where T : class
         {
-            using (var sr = new StreamReader(jsonRows.AsStream()))
-            using (var jr = SerializationConfiguration.ApplyConfigToReader(new MyCouchJsonReader(sr)))
+            using (var content = jsonRows.AsStream())
             {
-                if (jr.Read())
-                    return SUT.Deserialize<ViewQueryResponse<T>.Row>(jr).ToArray();
+                return SUT.Deserialize<ViewQueryResponse<T>.Row[]>(content);
             }
-
-            return null;
         }
     }
 }

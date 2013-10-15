@@ -16,7 +16,7 @@ namespace MyCouch.Responses
 #if !NETFX_CORE
         [Serializable]
 #endif
-        public class Row
+        public class Row : IResponseRow
         {
             public string Id { get; set; }
             public string Rev { get; set; }

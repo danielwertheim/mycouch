@@ -79,7 +79,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         {
             var query = new QueryViewRequest(ClientTestData.Views.ArtistsNameNoValueViewId).Configure(cfg => cfg.IncludeDocs(true));
 
-            var response = SUT.QueryAsync<Artist>(query).Result;
+            var response = SUT.QueryAsync<string, Artist>(query).Result;
 
             response.Should().BeSuccessfulGet(Artists.Length);
             for (var i = 0; i < response.RowCount; i++)
@@ -90,11 +90,11 @@ namespace MyCouch.IntegrationTests.ClientTests
         }
 
         [Fact]
-        public void When_IncludeDocs_and_no_value_is_returned_but_non_array_doc_is_included_Then_the_included_docs_are_not_extracted()
+        public void When_IncludeDocs_of_non_array_doc_and_null_value_is_returned_Then_the_neither_included_docs_nor_value_is_extracted()
         {
             var query = new QueryViewRequest(ClientTestData.Views.ArtistsNameNoValueViewId).Configure(cfg => cfg.IncludeDocs(true));
 
-            var response = SUT.QueryAsync<string[]>(query).Result;
+            var response = SUT.QueryAsync<string[], string[]>(query).Result;
 
             response.Should().BeSuccessfulGet(Artists.Length);
             for (var i = 0; i < response.RowCount; i++)

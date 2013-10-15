@@ -244,8 +244,14 @@
     <Compile Include="..\MyCouch\Requests\DocumentExistsRequest.cs">
       <Link>Requests\DocumentExistsRequest.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\Factories\AttachmentHttpRequestFactory.cs">
-      <Link>Requests\Factories\GetChangesHttpRequestFactory.cs</Link>
+    <Compile Include="..\MyCouch\Requests\Factories\AttachmentHttpRequestFactoryBase.cs">
+      <Link>Requests\Factories\AttachmentHttpRequestFactoryBase.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Requests\Factories\DeleteAttachmentHttpRequestFactory.cs">
+      <Link>Requests\Factories\DeleteAttachmentHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Requests\Factories\GetAttachmentHttpRequestFactory.cs">
+      <Link>Requests\Factories\GetAttachmentHttpRequestFactory.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch\Requests\Factories\GetChangesHttpRequestFactory.cs">
       <Link>Requests\Factories\GetChangesHttpRequestFactory.cs</Link>
@@ -255,6 +261,9 @@
     </Compile>
     <Compile Include="..\MyCouch\Requests\Factories\IHttpRequestFactory.cs">
       <Link>Requests\Factories\IHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Requests\Factories\PutAttachmentHttpRequestFactory.cs">
+      <Link>Requests\Factories\PutAttachmentHttpRequestFactory.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch\Requests\Factories\QueryViewHttpRequestFactory.cs">
       <Link>Requests\Factories\QueryViewHttpRequestFactory.cs</Link>
@@ -304,9 +313,6 @@
     <Compile Include="..\mycouch\responses\BulkResponse.cs">
       <Link>Responses\BulkResponse.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Responses\Change.cs">
-      <Link>Responses\Change.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch\Responses\ChangesResponse.cs">
       <Link>Responses\ChangesResponse.cs</Link>
     </Compile>
@@ -328,6 +334,9 @@
     <Compile Include="..\mycouch\responses\factories\BulkResponseFactory.cs">
       <Link>Responses\Factories\BulkResponseFactory.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch\Responses\Factories\ChangesResponseFactory.cs">
+      <Link>Responses\Factories\ChangesResponseFactory.cs</Link>
+    </Compile>
     <Compile Include="..\mycouch\responses\factories\DatabaseResponseFactory.cs">
       <Link>Responses\Factories\DatabaseResponseFactory.cs</Link>
     </Compile>
@@ -340,35 +349,17 @@
     <Compile Include="..\mycouch\responses\factories\EntityResponseFactory.cs">
       <Link>Responses\Factories\EntityResponseFactory.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\responses\factories\JsonViewQueryResponseFactory.cs">
-      <Link>Responses\Factories\JsonViewQueryResponseFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch\responses\factories\QueryResponseFactoryBase.cs">
-      <Link>Responses\Factories\QueryResponseFactoryBase.cs</Link>
-    </Compile>
     <Compile Include="..\mycouch\responses\factories\ResponseFactoryBase.cs">
       <Link>Responses\Factories\ResponseFactoryBase.cs</Link>
     </Compile>
     <Compile Include="..\mycouch\responses\factories\ViewQueryResponseFactory.cs">
       <Link>Responses\Factories\ViewQueryResponseFactory.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\responses\JsonViewQueryResponse.cs">
-      <Link>Responses\JsonViewQueryResponse.cs</Link>
+    <Compile Include="..\MyCouch\Responses\IResponseRow.cs">
+      <Link>Responses\IResponseRow.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\responses\meta\QueriesScheme.cs">
-      <Link>Responses\Meta\QueriesScheme.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch\responses\meta\ResponseMeta.cs">
-      <Link>Responses\Meta\ResponseMeta.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch\responses\meta\ResponseScheme.cs">
-      <Link>Responses\Meta\ResponseScheme.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch\responses\QueryResponse.cs">
-      <Link>Responses\QueryResponse.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch\responses\QueryResponseRow.cs">
-      <Link>Responses\QueryResponseRow.cs</Link>
+    <Compile Include="..\MyCouch\Responses\JsonScheme.cs">
+      <Link>Responses\JsonScheme.cs</Link>
     </Compile>
     <Compile Include="..\mycouch\responses\Response.cs">
       <Link>Responses\Response.cs</Link>
@@ -385,6 +376,12 @@
     <Compile Include="..\mycouch\serialization\conventions\SerializationConventions.cs">
       <Link>Serialization\Conventions\SerializationConventions.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch\Serialization\Converters\KeyJsonConverter.cs">
+      <Link>Serialization\Converters\KeyJsonConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Serialization\Converters\MultiTypeDeserializationJsonConverter.cs">
+      <Link>Serialization\Converters\MultiTypeDeserializationJsonConverter.cs</Link>
+    </Compile>
     <Compile Include="..\mycouch\serialization\DefaultSerializer.cs">
       <Link>Serialization\DefaultSerializer.cs</Link>
     </Compile>
@@ -394,20 +391,11 @@
     <Compile Include="..\mycouch\serialization\EntitySerializer.cs">
       <Link>Serialization\EntitySerializer.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\serialization\IQueryResponseRowsDeserializer.cs">
-      <Link>Serialization\IQueryResponseRowsDeserializer.cs</Link>
+    <Compile Include="..\MyCouch\Serialization\IEntitySerializer.cs">
+      <Link>Serialization\IEntitySerializer.cs</Link>
     </Compile>
     <Compile Include="..\mycouch\serialization\ISerializer.cs">
       <Link>Serialization\ISerializer.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch\serialization\JsonArrayItemVisitor.cs">
-      <Link>Serialization\JsonArrayItemVisitor.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch\serialization\JsonResponseMapper.cs">
-      <Link>Serialization\JsonResponseMapper.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch\serialization\JsonResponseMappings.cs">
-      <Link>Serialization\JsonResponseMappings.cs</Link>
     </Compile>
     <Compile Include="..\mycouch\serialization\readers\MyCouchJsonReader.cs">
       <Link>Serialization\Readers\MyCouchJsonReader.cs</Link>
@@ -417,9 +405,6 @@
     </Compile>
     <Compile Include="..\mycouch\serialization\SerializationContractResolver.cs">
       <Link>Serialization\SerializationContractResolver.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch\serialization\ViewQueryResponseRowsDeserializer.cs">
-      <Link>Serialization\ViewQueryResponseRowsDeserializer.cs</Link>
     </Compile>
     <Compile Include="..\mycouch\serialization\writers\EntityJsonWriter.cs">
       <Link>Serialization\Writers\EntityJsonWriter.cs</Link>

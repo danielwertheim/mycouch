@@ -70,5 +70,19 @@ namespace MyCouch.Serialization
         {
             return new MyCouchJsonReader(r);
         }
+
+        public virtual void Populate<T>(T item, Stream data) where T : class
+        {
+            if (data == null || (data.CanSeek && data.Length < 1))
+                return;
+
+            using (var sr = new StreamReader(data, MyCouchRuntime.DefaultEncoding))
+            {
+                using (var jsonReader = Configuration.ApplyConfigToReader(CreateReaderFor<T>(sr)))
+                {
+                    InternalSerializer.Populate(jsonReader, item);
+                }
+            }
+        }
     }
 }

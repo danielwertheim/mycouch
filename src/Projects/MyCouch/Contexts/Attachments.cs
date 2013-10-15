@@ -19,15 +19,16 @@ namespace MyCouch.Contexts
         protected IHttpRequestFactory<PutAttachmentRequest> PutAttachmentHttpRequestFactory { get; set; }
         protected IHttpRequestFactory<DeleteAttachmentRequest> DeleteAttachmentHttpRequestFactory { get; set; }
 
-        public Attachments(IConnection connection, SerializationConfiguration serializationConfiguration) : base(connection)
+        public Attachments(IConnection connection, ISerializer serializer)
+            : base(connection)
         {
-            Ensure.That(serializationConfiguration, "serializationConfiguration").IsNotNull();
+            Ensure.That(serializer, "serializer").IsNotNull();
 
-            AttachmentResponseFactory = new AttachmentResponseFactory(serializationConfiguration);
-            DocumentHeaderResponseFactory = new DocumentHeaderResponseFactory(serializationConfiguration);
-            GetAttachmentHttpRequestFactory = new AttachmentHttpRequestFactory(Connection);
-            PutAttachmentHttpRequestFactory = new AttachmentHttpRequestFactory(Connection);
-            DeleteAttachmentHttpRequestFactory = new AttachmentHttpRequestFactory(Connection);
+            AttachmentResponseFactory = new AttachmentResponseFactory(serializer);
+            DocumentHeaderResponseFactory = new DocumentHeaderResponseFactory(serializer);
+            GetAttachmentHttpRequestFactory = new GetAttachmentHttpRequestFactory(Connection);
+            PutAttachmentHttpRequestFactory = new PutAttachmentHttpRequestFactory(Connection);
+            DeleteAttachmentHttpRequestFactory = new DeleteAttachmentHttpRequestFactory(Connection);
         }
 
         public virtual Task<AttachmentResponse> GetAsync(string docId, string attachmentName)
