@@ -12,7 +12,12 @@ namespace MyCouch.Responses
 #if !NETFX_CORE
     [Serializable]
 #endif
-    public class ViewQueryResponse<T> : Response
+    public class ViewQueryResponse<T> : ViewQueryResponse<T, string> { }
+
+#if !NETFX_CORE
+    [Serializable]
+#endif
+    public class ViewQueryResponse<TValue, TIncludedDoc> : Response
     {
         [JsonProperty(JsonScheme.TotalRows)]
         public long TotalRows { get; set; }
@@ -43,16 +48,16 @@ namespace MyCouch.Responses
         public class Row : IResponseRow
         {
             public string Id { get; set; }
-            
+
             [JsonConverter(typeof(KeyJsonConverter))]
             public object Key { get; set; }
-            
+
             [JsonConverter(typeof(MultiTypeDeserializationJsonConverter))]
-            public T Value { get; set; }
-            
+            public TValue Value { get; set; }
+
             [JsonProperty(JsonScheme.IncludedDoc)]
             [JsonConverter(typeof(MultiTypeDeserializationJsonConverter))]
-            public T IncludedDoc { get; set; }
+            public TIncludedDoc IncludedDoc { get; set; }
         }
     }
 }

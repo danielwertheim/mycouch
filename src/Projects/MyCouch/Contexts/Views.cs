@@ -54,6 +54,18 @@ namespace MyCouch.Contexts
             }
         }
 
+        public virtual async Task<ViewQueryResponse<TValue, TIncludedDoc>> QueryAsync<TValue, TIncludedDoc>(QueryViewRequest request)
+        {
+
+            using (var httpRequest = CreateHttpRequest(request))
+            {
+                using (var res = await SendAsync(httpRequest).ForAwait())
+                {
+                    return ProcessHttpResponse<TValue, TIncludedDoc>(res);
+                }
+            }
+        }
+
         public virtual Task<ViewQueryResponse> QueryAsync(string designDocument, string viewname, Action<QueryViewRequestConfigurator> configurator)
         {
             Ensure.That(designDocument, "designDocument").IsNotNullOrWhiteSpace();
@@ -80,6 +92,19 @@ namespace MyCouch.Contexts
             return QueryAsync<T>(request);
         }
 
+        public virtual Task<ViewQueryResponse<TValue, TIncludedDoc>> QueryAsync<TValue, TIncludedDoc>(string designDocument, string viewname, Action<QueryViewRequestConfigurator> configurator)
+        {
+            Ensure.That(designDocument, "designDocument").IsNotNullOrWhiteSpace();
+            Ensure.That(viewname, "viewname").IsNotNullOrWhiteSpace();
+            Ensure.That(configurator, "configurator").IsNotNull();
+
+            var request = CreateQueryViewRequest(designDocument, viewname);
+
+            request.Configure(configurator);
+
+            return QueryAsync<TValue, TIncludedDoc>(request);
+        }
+
         protected virtual QueryViewRequest CreateQueryViewRequest(string designDocument, string viewname)
         {
             return new QueryViewRequest(designDocument, viewname);
@@ -98,6 +123,11 @@ namespace MyCouch.Contexts
         protected virtual ViewQueryResponse<T> ProcessHttpResponse<T>(HttpResponseMessage response)
         {
             return ViewQueryResponseFactory.Create<T>(response);
+        }
+
+        protected virtual ViewQueryResponse<TValue, TIncludedDoc> ProcessHttpResponse<TValue, TIncludedDoc>(HttpResponseMessage response)
+        {
+            return ViewQueryResponseFactory.Create<TValue, TIncludedDoc>(response);
         }
     }
 }

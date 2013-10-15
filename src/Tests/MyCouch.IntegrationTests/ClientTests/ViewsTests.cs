@@ -79,7 +79,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         {
             var query = new QueryViewRequest(ClientTestData.Views.ArtistsNameNoValueViewId).Configure(cfg => cfg.IncludeDocs(true));
 
-            var response = SUT.QueryAsync<Artist>(query).Result;
+            var response = SUT.QueryAsync<string, Artist>(query).Result;
 
             response.Should().BeSuccessfulGet(Artists.Length);
             for (var i = 0; i < response.RowCount; i++)
@@ -94,7 +94,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         {
             var query = new QueryViewRequest(ClientTestData.Views.ArtistsNameNoValueViewId).Configure(cfg => cfg.IncludeDocs(true));
 
-            var response = SUT.QueryAsync<string[]>(query).Result;
+            var response = SUT.QueryAsync<string[], string[]>(query).Result;
 
             response.Should().BeSuccessfulGet(Artists.Length);
             for (var i = 0; i < response.RowCount; i++)

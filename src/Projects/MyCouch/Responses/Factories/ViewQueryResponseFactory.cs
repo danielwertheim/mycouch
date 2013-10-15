@@ -27,7 +27,12 @@ namespace MyCouch.Responses.Factories
             return Materialize(new ViewQueryResponse<T>(), httpResponse, OnSuccessfulResponse, OnFailedResponse);
         }
 
-        protected virtual void OnSuccessfulResponse<T>(ViewQueryResponse<T> response, HttpResponseMessage httpResponse)
+        public virtual ViewQueryResponse<TValue, TIncludedDoc> Create<TValue, TIncludedDoc>(HttpResponseMessage httpResponse)
+        {
+            return Materialize(new ViewQueryResponse<TValue, TIncludedDoc>(), httpResponse, OnSuccessfulResponse, OnFailedResponse);
+        }
+
+        protected virtual void OnSuccessfulResponse<TValue, TIncludedDoc>(ViewQueryResponse<TValue, TIncludedDoc> response, HttpResponseMessage httpResponse)
         {
             using (var content = httpResponse.Content.ReadAsStream())
             {
