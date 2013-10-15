@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using EnsureThat;
 using MyCouch.Extensions;
 using MyCouch.Serialization;
 
@@ -6,12 +7,14 @@ namespace MyCouch.Responses.Factories
 {
     public class ViewQueryResponseFactory : ResponseFactoryBase
     {
-        protected readonly ISerializer Serializer;
+        protected readonly IEntitySerializer EntitySerializer;
 
-        public ViewQueryResponseFactory(SerializationConfiguration serializationConfiguration)
-            : base(serializationConfiguration)
+        public ViewQueryResponseFactory(ISerializer serializer, IEntitySerializer entitySerializer)
+            : base(serializer)
         {
-            Serializer = new DefaultSerializer(SerializationConfiguration);
+            Ensure.That(entitySerializer, "entitySerializer").IsNotNull();
+
+            EntitySerializer = entitySerializer;
         }
 
         public virtual ViewQueryResponse Create(HttpResponseMessage httpResponse)
@@ -28,7 +31,7 @@ namespace MyCouch.Responses.Factories
         {
             using (var content = httpResponse.Content.ReadAsStream())
             {
-                Serializer.Populate(response, content);
+                EntitySerializer.Populate(response, content);
             }
         }
     }

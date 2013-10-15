@@ -6,8 +6,8 @@ namespace MyCouch.Responses.Factories
 {
     public class AttachmentResponseFactory : ResponseFactoryBase
     {
-        public AttachmentResponseFactory(SerializationConfiguration serializationConfiguration)
-            : base(serializationConfiguration)
+        public AttachmentResponseFactory(ISerializer serializer)
+            : base(serializer)
         {
         }
 

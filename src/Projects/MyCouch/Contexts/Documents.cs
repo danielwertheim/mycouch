@@ -16,13 +16,14 @@ namespace MyCouch.Contexts
         protected DocumentHeaderResponseFactory DocumentHeaderReponseFactory { get; set; }
         protected BulkResponseFactory BulkReponseFactory { get; set; }
 
-        public Documents(IConnection connection, SerializationConfiguration serializationConfiguration) : base(connection)
+        public Documents(IConnection connection, ISerializer serializer)
+            : base(connection)
         {
-            Ensure.That(serializationConfiguration, "serializationConfiguration").IsNotNull();
+            Ensure.That(serializer, "serializer").IsNotNull();
 
-            DocumentReponseFactory = new DocumentResponseFactory(serializationConfiguration);
-            DocumentHeaderReponseFactory = new DocumentHeaderResponseFactory(serializationConfiguration);
-            BulkReponseFactory = new BulkResponseFactory(serializationConfiguration);
+            DocumentReponseFactory = new DocumentResponseFactory(serializer);
+            DocumentHeaderReponseFactory = new DocumentHeaderResponseFactory(serializer);
+            BulkReponseFactory = new BulkResponseFactory(serializer);
         }
 
         public virtual async Task<BulkResponse> BulkAsync(BulkRequest request)

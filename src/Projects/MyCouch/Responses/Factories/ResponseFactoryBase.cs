@@ -9,15 +9,13 @@ namespace MyCouch.Responses.Factories
 {
     public abstract class ResponseFactoryBase
     {
-        protected readonly SerializationConfiguration SerializationConfiguration;
-        protected readonly JsonResponseMapper JsonMapper;
+        protected readonly ISerializer Serializer;
 
-        protected ResponseFactoryBase(SerializationConfiguration serializationConfiguration)
+        protected ResponseFactoryBase(ISerializer serializer)
         {
-            Ensure.That(serializationConfiguration, "serializationConfiguration").IsNotNull();
+            Ensure.That(serializer, "serializer").IsNotNull();
 
-            SerializationConfiguration = serializationConfiguration;
-            JsonMapper = new JsonResponseMapper(SerializationConfiguration);
+            Serializer = serializer;
         }
 
         protected virtual T Materialize<T>(
@@ -55,12 +53,7 @@ namespace MyCouch.Responses.Factories
 
         protected virtual void PopulateFailedInfoFromResponseStream(Response response, Stream content)
         {
-            var mappings = new JsonResponseMappings
-            {
-                {JsonScheme.Error, jr => response.Error = jr.Value.ToString()},
-                {JsonScheme.Reason, jr => response.Reason = jr.Value.ToString()}
-            };
-            JsonMapper.Map(content, mappings);
+            Serializer.Populate(response, content);
         }
 
         protected virtual void PopulateMissingIdFromRequestUri(DocumentHeaderResponse response, HttpResponseMessage httpResponse)
@@ -77,12 +70,7 @@ namespace MyCouch.Responses.Factories
 
         protected virtual void PopulateDocumentHeaderFromResponseStream(DocumentHeaderResponse response, Stream content)
         {
-            var mappings = new JsonResponseMappings
-            {
-                {JsonScheme.Id, jr => response.Id = jr.Value.ToString()},
-                {JsonScheme.Rev, jr => response.Rev = jr.Value.ToString()}
-            };
-            JsonMapper.Map(content, mappings);
+            Serializer.Populate(response, content);
         }
     }
 }

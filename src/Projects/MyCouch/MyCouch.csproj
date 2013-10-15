@@ -131,12 +131,11 @@
     <Compile Include="Serialization\Conventions\ISerializationConvention.cs" />
     <Compile Include="Serialization\Conventions\SerializationConventions.cs" />
     <Compile Include="Serialization\EntitySerializer.cs" />
+    <Compile Include="Serialization\IEntitySerializer.cs" />
     <Compile Include="Serialization\Readers\MyCouchJsonReader.cs" />
     <Compile Include="Serialization\Writers\EntityJsonWriter.cs" />
     <Compile Include="Serialization\EntityContractResolver.cs" />
     <Compile Include="Serialization\Writers\MyCouchJsonWriter.cs" />
-    <Compile Include="Serialization\JsonResponseMapper.cs" />
-    <Compile Include="Serialization\JsonResponseMappings.cs" />
     <Compile Include="Serialization\SerializationConfiguration.cs" />
     <Compile Include="Requests\QuerySystemViewRequest.cs" />
     <Compile Include="Responses\Response.cs" />

@@ -7,14 +7,14 @@ namespace MyCouch.Responses.Factories
 {
     public class EntityResponseFactory : ResponseFactoryBase
     {
-        protected readonly ISerializer Serializer;
+        protected readonly ISerializer EntitySerializer;
 
-        public EntityResponseFactory(SerializationConfiguration serializationConfiguration, ISerializer serializer)
-            : base(serializationConfiguration)
+        public EntityResponseFactory(ISerializer serializer, ISerializer entitySerializer)
+            : base(serializer)
         {
-            Ensure.That(serializer, "serializer").IsNotNull();
+            Ensure.That(entitySerializer, "entitySerializer").IsNotNull();
 
-            Serializer = serializer;
+            EntitySerializer = entitySerializer;
         }
 
         public virtual EntityResponse<T> Create<T>(HttpResponseMessage httpResponse) where T : class
@@ -37,7 +37,7 @@ namespace MyCouch.Responses.Factories
                 if (response.RequestMethod == HttpMethod.Get)
                 {
                     content.Position = 0;
-                    response.Entity = Serializer.Deserialize<T>(content);
+                    response.Entity = EntitySerializer.Deserialize<T>(content);
                 }
             }
         }

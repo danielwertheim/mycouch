@@ -6,12 +6,9 @@ namespace MyCouch.Responses.Factories
 {
     public class ChangesResponseFactory : ResponseFactoryBase
     {
-        protected readonly ISerializer Serializer;
-
-        public ChangesResponseFactory(SerializationConfiguration serializationConfiguration)
-            : base(serializationConfiguration)
+        public ChangesResponseFactory(ISerializer serializer)
+            : base(serializer)
         {
-            Serializer = new DefaultSerializer(SerializationConfiguration);
         }
 
         public virtual ChangesResponse Create(HttpResponseMessage httpResponse)

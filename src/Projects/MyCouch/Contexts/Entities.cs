@@ -13,18 +13,19 @@ namespace MyCouch.Contexts
 {
     public class Entities : ApiContextBase, IEntities
     {
-        public ISerializer Serializer { get; protected set; }
+        public IEntitySerializer Serializer { get; protected set; }
         public IEntityReflector Reflector { get; protected set;}
         protected EntityResponseFactory EntityResponseFactory { get; set; }
 
-        public Entities(IConnection connection, SerializationConfiguration serializationConfiguration, IEntityReflector entityReflector)
+        public Entities(IConnection connection, ISerializer serializer, IEntitySerializer entitySerializer, IEntityReflector entityReflector)
             : base(connection)
         {
-            Ensure.That(serializationConfiguration, "serializationConfiguration").IsNotNull();
+            Ensure.That(serializer, "serializer").IsNotNull();
+            Ensure.That(entitySerializer, "entitySerializer").IsNotNull();
             Ensure.That(entityReflector, "entityReflector").IsNotNull();
 
-            Serializer = new EntitySerializer(serializationConfiguration);
-            EntityResponseFactory = new EntityResponseFactory(serializationConfiguration, Serializer);
+            Serializer = entitySerializer;
+            EntityResponseFactory = new EntityResponseFactory(serializer, entitySerializer);
             Reflector = entityReflector;
         }
 

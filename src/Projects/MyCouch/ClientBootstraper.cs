@@ -29,6 +29,10 @@ namespace MyCouch
         /// </summary>
         public Func<ISerializer> SerializerFn { get; set; }
         /// <summary>
+        /// Used e.g. for bootstraping <see cref="IEntities.Serializer"/>.
+        /// </summary>
+        public Func<IEntitySerializer> EntitySerializerFn { get; set; }
+        /// <summary>
         /// Used e.g. for bootstraping <see cref="IClient.Changes"/>.
         /// </summary>
         public Func<IConnection, IChanges> ChangesFn { get; set; }
@@ -64,36 +68,38 @@ namespace MyCouch
 
             ConfigureSerializationConfigurationFn();
             ConfigureEntitySerializationConfigurationFn();
-         
+
             ConfigureSerializerFn();
+            ConfigureEntitySerializerFn();
             ConfigureEntityReflectorFn();
         }
 
         private void ConfigureChangesFn()
         {
-            ChangesFn = cn => new Changes(cn, SerializationConfigurationFn());
+            ChangesFn = cn => new Changes(cn, SerializerFn());
         }
 
         private void ConfigureAttachmentsFn()
         {
-            AttachmentsFn = cn => new Attachments(cn, SerializationConfigurationFn());
+            AttachmentsFn = cn => new Attachments(cn, SerializerFn());
         }
 
         private void ConfigureDatabasesFn()
         {
-            DatabasesFn = cn => new Databases(cn, SerializationConfigurationFn());
+            DatabasesFn = cn => new Databases(cn, SerializerFn());
         }
 
         private void ConfigureDocumentsFn()
         {
-            DocumentsFn = cn => new Documents(cn, SerializationConfigurationFn());
+            DocumentsFn = cn => new Documents(cn, SerializerFn());
         }
 
         private void ConfigureEntitiesFn()
         {
             EntitiesFn = cn => new Entities(
                 cn,
-                EntitySerializationConfigurationFn(),
+                SerializerFn(),
+                EntitySerializerFn(),
                 EntityReflectorFn());
         }
 
@@ -101,7 +107,8 @@ namespace MyCouch
         {
             ViewsFn = cn => new Views(
                 cn,
-                EntitySerializationConfigurationFn());
+                SerializerFn(),
+                EntitySerializerFn());
         }
 
         private void ConfigureEntityReflectorFn()
@@ -140,8 +147,14 @@ namespace MyCouch
 
         private void ConfigureSerializerFn()
         {
-            var serializer = new Lazy<DefaultSerializer>(() => new DefaultSerializer(SerializationConfigurationFn()));
+            var serializer = new Lazy<ISerializer>(() => new DefaultSerializer(SerializationConfigurationFn()));
             SerializerFn = () => serializer.Value;
+        }
+
+        private void ConfigureEntitySerializerFn()
+        {
+            var serializer = new Lazy<IEntitySerializer>(() => new EntitySerializer(EntitySerializationConfigurationFn()));
+            EntitySerializerFn = () => serializer.Value;
         }
     }
 }

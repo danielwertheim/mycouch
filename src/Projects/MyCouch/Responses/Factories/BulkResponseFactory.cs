@@ -6,12 +6,9 @@ namespace MyCouch.Responses.Factories
 {
     public class BulkResponseFactory : ResponseFactoryBase
     {
-        protected readonly ISerializer Serializer;
-
-        public BulkResponseFactory(SerializationConfiguration serializationConfiguration)
-            : base(serializationConfiguration)
+        public BulkResponseFactory(ISerializer serializer)
+            : base(serializer)
         {
-            Serializer = new DefaultSerializer(SerializationConfiguration);
         }
 
         public virtual BulkResponse Create(HttpResponseMessage httpResponse)

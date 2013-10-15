@@ -8,8 +8,8 @@ namespace MyCouch.Responses.Factories
 {
     public class DocumentResponseFactory : ResponseFactoryBase
     {
-        public DocumentResponseFactory(SerializationConfiguration serializationConfiguration)
-            : base(serializationConfiguration) { }
+        public DocumentResponseFactory(ISerializer serializer)
+            : base(serializer) { }
 
         public virtual DocumentResponse Create(HttpResponseMessage httpResponse)
         {

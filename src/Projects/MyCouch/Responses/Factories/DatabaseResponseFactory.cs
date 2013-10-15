@@ -5,8 +5,9 @@ namespace MyCouch.Responses.Factories
 {
     public class DatabaseResponseFactory : ResponseFactoryBase
     {
-        public DatabaseResponseFactory(SerializationConfiguration serializationConfiguration)
-            : base(serializationConfiguration) { }
+        public DatabaseResponseFactory(ISerializer serializer)
+            : base(serializer)
+        { }
 
         public virtual DatabaseResponse Create(HttpResponseMessage httpResponse)
         {

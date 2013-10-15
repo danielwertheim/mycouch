@@ -16,11 +16,13 @@ namespace MyCouch.Contexts
         protected IHttpRequestFactory<GetChangesRequest> HttpRequestFactory { get; set; }
         protected ChangesResponseFactory ChangesResponseFactory { get; set; }
 
-        public Changes(IConnection connection, SerializationConfiguration serializationConfiguration)
+        public Changes(IConnection connection, ISerializer serializer)
             : base(connection)
         {
+            Ensure.That(serializer, "serializer").IsNotNull();
+
             HttpRequestFactory = new GetChangesHttpRequestFactory(Connection);
-            ChangesResponseFactory = new ChangesResponseFactory(serializationConfiguration);
+            ChangesResponseFactory = new ChangesResponseFactory(serializer);
         }
 
         public virtual Task<ChangesResponse> GetAsync()
