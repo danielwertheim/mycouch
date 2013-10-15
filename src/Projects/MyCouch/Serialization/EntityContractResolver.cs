@@ -1,9 +1,9 @@
-﻿//#if NETFX_CORE
-//using System.Reflection;
-//#endif
-using System;
+﻿using System;
 using System.Collections.Generic;
+#if NETFX_CORE
 using System.Reflection;
+#endif
+using System.Linq;
 using EnsureThat;
 using MyCouch.EntitySchemes;
 using MyCouch.Responses;
@@ -21,6 +21,17 @@ namespace MyCouch.Serialization
     {
         protected readonly IEntityReflector EntityReflector;
 
+#if NETFX_CORE
+        private static readonly TypeInfo ResponseTypeInfo;
+        private static readonly TypeInfo QueryResponseRowTypeInfo;
+
+        static EntityContractResolver()
+        {
+            ResponseTypeInfo = typeof(Response).GetTypeInfo();
+            QueryResponseRowTypeInfo = typeof(QueryResponseRow).GetTypeInfo();
+        }
+#endif
+
         public EntityContractResolver(IEntityReflector entityReflector)
         {
             Ensure.That(entityReflector, "entityReflector").IsNotNull();
@@ -31,13 +42,20 @@ namespace MyCouch.Serialization
         protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
         {
 #if !NETFX_CORE
-            if (type == typeof(BulkResponse.Row) || typeof (QueryResponseRow).IsAssignableFrom(type))
+            if (!type.IsClass || type == typeof(object) || typeof(Response).IsAssignableFrom(type) || typeof(QueryResponseRow).IsAssignableFrom(type))
                 return base.CreateProperties(type, memberSerialization);
 #else
-            if (type == typeof(BulkResponse.Row) || QueryResponseRow.TypeInfo.IsAssignableFrom(type.GetTypeInfo()))
+            if(type == typeof(object))
+                return base.CreateProperties(type, memberSerialization);
+
+            var typeInfo = type.GetTypeInfo();
+            if (!typeInfo.IsClass || ResponseTypeInfo.IsAssignableFrom(typeInfo) || QueryResponseRowTypeInfo.IsAssignableFrom(typeInfo))
                 return base.CreateProperties(type, memberSerialization);
 #endif
             var props = base.CreateProperties(type, memberSerialization);
+            if (!props.Any())
+                return props;
+
             int? idRank = null, revRank = null;
             JsonProperty id = null, rev = null;
 
