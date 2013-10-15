@@ -29,7 +29,7 @@ namespace MyCouch.Responses
 #if !NETFX_CORE
         [Serializable]
 #endif
-        public class Row
+        public class Row : IResponseRow
         {
             public virtual string Id { get; set; }
             public virtual long Seq { get; set; }

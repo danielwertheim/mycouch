@@ -23,12 +23,12 @@ namespace MyCouch.Serialization
 
 #if NETFX_CORE
         private static readonly TypeInfo ResponseTypeInfo;
-        private static readonly TypeInfo QueryResponseRowTypeInfo;
+        private static readonly TypeInfo ResponseRowTypeInfo;
 
         static EntityContractResolver()
         {
             ResponseTypeInfo = typeof(Response).GetTypeInfo();
-            QueryResponseRowTypeInfo = typeof(QueryResponseRow).GetTypeInfo();
+            ResponseRowTypeInfo = typeof(IResponseRow).GetTypeInfo();
         }
 #endif
 
@@ -42,14 +42,14 @@ namespace MyCouch.Serialization
         protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
         {
 #if !NETFX_CORE
-            if (!type.IsClass || type == typeof(object) || typeof(Response).IsAssignableFrom(type) || typeof(QueryResponseRow).IsAssignableFrom(type))
+            if (!type.IsClass || type == typeof(object) || typeof(Response).IsAssignableFrom(type) || typeof(IResponseRow).IsAssignableFrom(type))
                 return base.CreateProperties(type, memberSerialization);
 #else
             if(type == typeof(object))
                 return base.CreateProperties(type, memberSerialization);
 
             var typeInfo = type.GetTypeInfo();
-            if (!typeInfo.IsClass || ResponseTypeInfo.IsAssignableFrom(typeInfo) || QueryResponseRowTypeInfo.IsAssignableFrom(typeInfo))
+            if (!typeInfo.IsClass || ResponseTypeInfo.IsAssignableFrom(typeInfo) || ResponseRowTypeInfo.IsAssignableFrom(typeInfo))
                 return base.CreateProperties(type, memberSerialization);
 #endif
             var props = base.CreateProperties(type, memberSerialization);

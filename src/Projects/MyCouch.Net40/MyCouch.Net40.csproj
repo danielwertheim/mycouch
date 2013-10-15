@@ -355,14 +355,11 @@
     <Compile Include="..\mycouch\responses\factories\ViewQueryResponseFactory.cs">
       <Link>Responses\Factories\ViewQueryResponseFactory.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch\Responses\IResponseRow.cs">
+      <Link>Responses\IResponseRow.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch\Responses\JsonScheme.cs">
       <Link>Responses\JsonScheme.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch\responses\QueryResponse.cs">
-      <Link>Responses\QueryResponse.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch\responses\QueryResponseRow.cs">
-      <Link>Responses\QueryResponseRow.cs</Link>
     </Compile>
     <Compile Include="..\mycouch\responses\Response.cs">
       <Link>Responses\Response.cs</Link>
