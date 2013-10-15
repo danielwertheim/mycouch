@@ -112,7 +112,8 @@ namespace MyCouch.IntegrationTests.ClientTests
 
             var response = SUT.QueryAsync(query).Result;
 
-            response.Should().BeSuccessfulGet(artists.Select(a => Client.Serializer.Serialize(a.Albums)).ToArray());
+            response.Rows = response.Rows.OrderBy(r => r.Id).ToArray();
+            response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Select(a => Client.Serializer.Serialize(a.Albums)).ToArray());
         }
 
         [Fact]
@@ -123,7 +124,8 @@ namespace MyCouch.IntegrationTests.ClientTests
 
             var response = SUT.QueryAsync<string[]>(query).Result;
 
-            response.Should().BeSuccessfulGet(artists.Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray());
+            response.Rows = response.Rows.OrderBy(r => r.Id).ToArray();
+            response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray());
         }
 
         [Fact]
@@ -134,7 +136,8 @@ namespace MyCouch.IntegrationTests.ClientTests
 
             var response = SUT.QueryAsync<Album[]>(query).Result;
 
-            response.Should().BeSuccessfulGet(artists.Select(a => a.Albums).ToArray());
+            response.Rows = response.Rows.OrderBy(r => r.Id).ToArray();
+            response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Select(a => a.Albums).ToArray());
         }
 
         [Fact]
@@ -145,7 +148,8 @@ namespace MyCouch.IntegrationTests.ClientTests
 
             var response = SUT.QueryAsync(query).Result;
 
-            response.Should().BeSuccessfulGet(artists.Select(a => Client.Serializer.Serialize(a.Albums)).ToArray());
+            response.Rows = response.Rows.OrderBy(r => r.Id).ToArray();
+            response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Select(a => Client.Serializer.Serialize(a.Albums)).ToArray());
         }
 
         [Fact]
@@ -156,7 +160,8 @@ namespace MyCouch.IntegrationTests.ClientTests
 
             var response = SUT.QueryAsync<string[]>(query).Result;
 
-            response.Should().BeSuccessfulGet(artists.Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray());
+            response.Rows = response.Rows.OrderBy(r => r.Id).ToArray();
+            response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray());
         }
 
         [Fact]
@@ -167,11 +172,12 @@ namespace MyCouch.IntegrationTests.ClientTests
 
             var response = SUT.QueryAsync<Album[]>(query).Result;
 
-            response.Should().BeSuccessfulGet(artists.Select(a => a.Albums).ToArray());
+            response.Rows = response.Rows.OrderBy(r => r.Id).ToArray();
+            response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Select(a => a.Albums).ToArray());
         }
 
         [Fact]
-        public void When_Key_is_specified_using_json_Then_matching_row_is_returned()
+        public void When_Key_is_specified_using_json_Then_the_matching_row_is_returned()
         {
             var artist = Artists[2];
             var query = new QueryViewRequest(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Key(artist.Name));
@@ -182,7 +188,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         }
 
         [Fact]
-        public void When_Key_is_specified_using_json_array_Then_matching_row_is_returned()
+        public void When_Key_is_specified_using_json_array_Then_the_matching_row_is_returned()
         {
             var artist = Artists[2];
             var query = new QueryViewRequest(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Key(artist.Name));
@@ -193,7 +199,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         }
 
         [Fact]
-        public void When_Key_is_specified_using_entities_Then_matching_row_is_returned()
+        public void When_Key_is_specified_using_entities_Then_the_matching_row_is_returned()
         {
             var artist = Artists[2];
             var query = new QueryViewRequest(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Key(artist.Name));
@@ -212,7 +218,8 @@ namespace MyCouch.IntegrationTests.ClientTests
 
             var response = SUT.QueryAsync(query).Result;
 
-            response.Should().BeSuccessfulPost(artists.Select(a => Client.Serializer.Serialize(a.Albums)).ToArray());
+            response.Rows = response.Rows.OrderBy(r => r.Id).ToArray();
+            response.Should().BeSuccessfulPost(artists.OrderBy(a => a.ArtistId).Select(a => Client.Serializer.Serialize(a.Albums)).ToArray());
         }
 
         [Fact]
@@ -224,7 +231,8 @@ namespace MyCouch.IntegrationTests.ClientTests
 
             var response = SUT.QueryAsync<string[]>(query).Result;
 
-            response.Should().BeSuccessfulPost(artists.Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray());
+            response.Rows = response.Rows.OrderBy(r => r.Id).ToArray();
+            response.Should().BeSuccessfulPost(artists.OrderBy(a => a.ArtistId).Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray());
         }
 
         [Fact]
@@ -236,7 +244,8 @@ namespace MyCouch.IntegrationTests.ClientTests
 
             var response = SUT.QueryAsync<Album[]>(query).Result;
 
-            response.Should().BeSuccessfulPost(artists.Select(a => a.Albums).ToArray());
+            response.Rows = response.Rows.OrderBy(r => r.Id).ToArray();
+            response.Should().BeSuccessfulPost(artists.OrderBy(a => a.ArtistId).Select(a => a.Albums).ToArray());
         }
 
         [Fact]
@@ -249,7 +258,8 @@ namespace MyCouch.IntegrationTests.ClientTests
 
             var response = SUT.QueryAsync(query).Result;
 
-            response.Should().BeSuccessfulGet(artists.Select(a => Client.Serializer.Serialize(a.Albums)).ToArray());
+            response.Rows = response.Rows.OrderBy(r => r.Id).ToArray();
+            response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Select(a => Client.Serializer.Serialize(a.Albums)).ToArray());
         }
 
         [Fact]
@@ -262,7 +272,8 @@ namespace MyCouch.IntegrationTests.ClientTests
 
             var response = SUT.QueryAsync<string[]>(query).Result;
 
-            response.Should().BeSuccessfulGet(artists.Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray());
+            response.Rows = response.Rows.OrderBy(r => r.Id).ToArray();
+            response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray());
         }
 
         [Fact]
@@ -275,7 +286,8 @@ namespace MyCouch.IntegrationTests.ClientTests
 
             var response = SUT.QueryAsync<Album[]>(query).Result;
 
-            response.Should().BeSuccessfulGet(artists.Select(a => a.Albums).ToArray());
+            response.Rows = response.Rows.OrderBy(r => r.Id).ToArray();
+            response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Select(a => a.Albums).ToArray());
         }
 
         [Fact]
@@ -289,7 +301,8 @@ namespace MyCouch.IntegrationTests.ClientTests
 
             var response = SUT.QueryAsync(query).Result;
 
-            response.Should().BeSuccessfulGet(artists.Take(artists.Length - 1).Select(a => Client.Serializer.Serialize(a.Albums)).ToArray());
+            response.Rows = response.Rows.OrderBy(r => r.Id).ToArray();
+            response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Take(artists.Length - 1).Select(a => Client.Serializer.Serialize(a.Albums)).ToArray());
         }
 
         [Fact]
@@ -303,7 +316,8 @@ namespace MyCouch.IntegrationTests.ClientTests
 
             var response = SUT.QueryAsync<string[]>(query).Result;
 
-            response.Should().BeSuccessfulGet(artists.Take(artists.Length - 1).Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray());
+            response.Rows = response.Rows.OrderBy(r => r.Id).ToArray();
+            response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Take(artists.Length - 1).Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray());
         }
 
         [Fact]
@@ -317,7 +331,8 @@ namespace MyCouch.IntegrationTests.ClientTests
 
             var response = SUT.QueryAsync<Album[]>(query).Result;
 
-            response.Should().BeSuccessfulGet(artists.Take(artists.Length - 1).Select(a => a.Albums).ToArray());
+            response.Rows = response.Rows.OrderBy(r => r.Id).ToArray();
+            response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Take(artists.Length - 1).Select(a => a.Albums).ToArray());
         }
 
         [Fact]
