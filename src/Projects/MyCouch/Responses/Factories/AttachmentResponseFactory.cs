@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Net.Http;
+﻿using System.Net.Http;
 using MyCouch.Extensions;
 using MyCouch.Serialization;
 
@@ -8,8 +6,8 @@ namespace MyCouch.Responses.Factories
 {
     public class AttachmentResponseFactory : ResponseFactoryBase
     {
-        public AttachmentResponseFactory(SerializationConfiguration serializationConfiguration)
-            : base(serializationConfiguration)
+        public AttachmentResponseFactory(ISerializer serializer)
+            : base(serializer)
         {
         }
 
@@ -27,10 +25,8 @@ namespace MyCouch.Responses.Factories
                 PopulateMissingRevFromRequestHeaders(response, httpResponse);
 
                 content.Position = 0;
-                using (var reader = new StreamReader(content, MyCouchRuntime.DefaultEncoding))
-                {
-                    response.Content = Convert.FromBase64String(reader.ReadToEnd());
-                }
+
+                response.Content = httpResponse.Content.ReadAsByteArrayAsync().Result;
             }
         }
 

@@ -114,14 +114,23 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.UnitTests\BulkCommandTests.cs">
-      <Link>BulkCommandTests.cs</Link>
+    <Compile Include="..\MyCouch.UnitTests\Fakes\ConnectionFake.cs">
+      <Link>Fakes\ConnectionFake.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.UnitTests\Querying\ViewQueryConfiguratorTests.cs">
-      <Link>Querying\ViewQueryConfiguratorTests.cs</Link>
+    <Compile Include="..\MyCouch.UnitTests\Requests\BulkRequestTests.cs">
+      <Link>Requests\BulkRequestTests.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.unittests\querying\ViewQueryOptionsTests.cs">
-      <Link>Querying\ViewQueryOptionsTests.cs</Link>
+    <Compile Include="..\MyCouch.UnitTests\Requests\GetChangesHttpRequestFactoryTests.cs">
+      <Link>Requests\GetChangesHttpRequestFactoryTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.UnitTests\Requests\QueryViewHttpRequestFactoryTests.cs">
+      <Link>Requests\QueryViewHttpRequestFactoryTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.UnitTests\Requests\QueryViewRequestConfiguratorTests.cs">
+      <Link>Requests\QueryViewRequestConfiguratorTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.UnitTests\Requests\QueryViewRequestTests.cs">
+      <Link>Requests\QueryViewRequestTests.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.unittests\schemes\EntityIdMemberTests.cs">
       <Link>Schemes\EntityIdMemberTests.cs</Link>
@@ -175,8 +184,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\FluentAssertions.2.1.0.0\lib\winrt45\FluentAssertions.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\packages\Newtonsoft.Json.5.0.6\lib\netcore45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Newtonsoft.Json.5.0.8\lib\netcore45\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -189,6 +199,7 @@
       <Name>MyCouch.NetCore45.Testing</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
   </PropertyGroup>

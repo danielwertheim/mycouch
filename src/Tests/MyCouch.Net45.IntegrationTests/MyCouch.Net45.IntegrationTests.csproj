@@ -36,7 +36,7 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -56,11 +56,14 @@
     <Compile Include="..\MyCouch.IntegrationTests\ClientExtensions.cs">
       <Link>ClientExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.IntegrationTests\ClientTestsOf.cs">
+      <Link>ClientTestsOf.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.IntegrationTests\ClientTests\AttachmentsTests.cs">
       <Link>ClientTests\AttachmentsTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests\ClientTests\ClientTestsOf.cs">
-      <Link>ClientTests\ClientTestsOf.cs</Link>
+    <Compile Include="..\MyCouch.IntegrationTests\ClientTests\ChangesTests.cs">
+      <Link>ClientTests\ChangesTests.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.IntegrationTests\ClientTests\DocumentsTests.cs">
       <Link>ClientTests\DocumentsTests.cs</Link>

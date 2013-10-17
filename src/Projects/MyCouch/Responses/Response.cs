@@ -12,6 +12,7 @@ namespace MyCouch.Responses
         public HttpStatusCode StatusCode { get; set; }
         public Uri RequestUri { get; set; }
         public HttpMethod RequestMethod { get; set; }
+        public string ContentType { get; set; }
         public string Error { get; set; }
         public string Reason { get; set; }
         public bool IsSuccess

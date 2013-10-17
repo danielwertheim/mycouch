@@ -117,12 +117,16 @@ namespace MyCouch.Testing.TestData
                         "\"total_num_of_albums\": {" +
                             "\"map\": \"function(doc) {  if(doc.$doctype !== 'artist') return;  emit(null, doc.albums.length);}\"," +
                             "\"reduce\":\"_sum\"" +
+                        "}," +
+                        "\"name_as_key_and_doc_as_value\": {" +
+                            "\"map\": \"function(doc) {  if(doc.$doctype !== 'artist') return;  emit(doc.name, doc);}\"" +
                         "}" +
                     "}" +
                 "}";
             public static readonly ViewIdentity ArtistsAlbumsViewId = new ViewIdentity("artists", "albums");
             public static readonly ViewIdentity ArtistsNameNoValueViewId = new ViewIdentity("artists", "name_no_value");
             public static readonly ViewIdentity ArtistsTotalNumOfAlbumsViewId = new ViewIdentity("artists", "total_num_of_albums");
+            public static readonly ViewIdentity ArtistsNameAsKeyAndDocAsValueId = new ViewIdentity("artists", "name_as_key_and_doc_as_value");
         }
 
         public static class Attachments
@@ -130,9 +134,9 @@ namespace MyCouch.Testing.TestData
             public static class One
             {
                 public const string Name = "att:1";
-                public const string ContentEncoded = "TXlDb3VjaCwgdGhlIHNpbXBsZSBhc3luY2hyb25vdXMgY2xpZW50IGZvciAuTmV0";
-                public const string ContentDecoded = "MyCouch, the simple asynchronous client for .Net";
+                public const string Content = "MyCouch, the simple asynchronous client for .Net";
                 public static readonly string ContentType = HttpContentTypes.Text;
+                public static readonly byte[] Bytes = MyCouchRuntime.DefaultEncoding.GetBytes(Content);
             }
         }
 

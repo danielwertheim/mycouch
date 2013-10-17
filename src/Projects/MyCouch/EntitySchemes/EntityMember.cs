@@ -65,7 +65,6 @@ namespace MyCouch.EntitySchemes
 #if !NETFX_CORE
             return type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
 #else
-            //TODO: Ensure perf
             return type.GetRuntimeProperties();
 #endif
         }

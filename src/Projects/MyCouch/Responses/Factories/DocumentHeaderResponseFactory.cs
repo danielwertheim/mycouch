@@ -6,8 +6,9 @@ namespace MyCouch.Responses.Factories
 {
     public class DocumentHeaderResponseFactory : ResponseFactoryBase
     {
-        public DocumentHeaderResponseFactory(SerializationConfiguration serializationConfiguration)
-            : base(serializationConfiguration) { }
+        public DocumentHeaderResponseFactory(ISerializer serializer)
+            : base(serializer)
+        { }
 
         public virtual DocumentHeaderResponse Create(HttpResponseMessage httpResponse)
         {

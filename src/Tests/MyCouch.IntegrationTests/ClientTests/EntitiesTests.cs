@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using FluentAssertions;
 using MyCouch.Testing;
 using MyCouch.Testing.Model;
 using MyCouch.Testing.TestData;

@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using MyCouch.Commands;
+using MyCouch.Requests;
 using MyCouch.Testing;
 using MyCouch.Testing.TestData;
 using Xunit;
@@ -16,13 +16,13 @@ namespace MyCouch.IntegrationTests.ClientTests
         [Fact]
         public void When_PUT_of_a_new_attachment_and_new_document_The_response_is_ok()
         {
-            var putCmd = new PutAttachmentCommand(
+            var putRequest = new PutAttachmentRequest(
                 ClientTestData.Artists.Artist1Id,
                 ClientTestData.Attachments.One.Name,
                 ClientTestData.Attachments.One.ContentType,
-                ClientTestData.Attachments.One.ContentDecoded.AsBytes());
+                ClientTestData.Attachments.One.Bytes);
 
-            var putAttachmentAndDocResponse = SUT.PutAsync(putCmd).Result;
+            var putAttachmentAndDocResponse = SUT.PutAsync(putRequest).Result;
 
             putAttachmentAndDocResponse.Should().BeSuccessfulPut(ClientTestData.Artists.Artist1Id);
         }
@@ -31,14 +31,14 @@ namespace MyCouch.IntegrationTests.ClientTests
         public void When_PUT_of_a_new_attachment_The_response_is_ok()
         {
             var postDocResponse = Client.Documents.PostAsync(ClientTestData.Artists.Artist1Json).Result;
-            var putCmd = new PutAttachmentCommand(
+            var putRequest = new PutAttachmentRequest(
                 postDocResponse.Id,
                 postDocResponse.Rev, 
                 ClientTestData.Attachments.One.Name,
                 ClientTestData.Attachments.One.ContentType,
-                ClientTestData.Attachments.One.ContentDecoded.AsBytes());
+                ClientTestData.Attachments.One.Bytes);
 
-            var putAttachmentResponse = SUT.PutAsync(putCmd).Result;
+            var putAttachmentResponse = SUT.PutAsync(putRequest).Result;
 
             putAttachmentResponse.Should().BeSuccessfulPut(ClientTestData.Artists.Artist1Id);
         }
@@ -48,19 +48,19 @@ namespace MyCouch.IntegrationTests.ClientTests
         {
             var putDocResponse = Client.Documents.PostAsync(ClientTestData.Artists.Artist1Json).Result;
 
-            var putCmd = new PutAttachmentCommand(
+            var putRequest = new PutAttachmentRequest(
                 putDocResponse.Id,
                 putDocResponse.Rev,
                 ClientTestData.Attachments.One.Name,
                 ClientTestData.Attachments.One.ContentType,
-                ClientTestData.Attachments.One.ContentDecoded.AsBytes());
-            var putAttachmentResponse = SUT.PutAsync(putCmd).Result;
+                ClientTestData.Attachments.One.Bytes);
+            var putAttachmentResponse = SUT.PutAsync(putRequest).Result;
 
-            var deleteCmd = new DeleteAttachmentCommand(
+            var deleteRequest = new DeleteAttachmentRequest(
                 putAttachmentResponse.Id, 
                 putAttachmentResponse.Rev, 
                 ClientTestData.Attachments.One.Name);
-            var deleteResponse = SUT.DeleteAsync(deleteCmd).Result;
+            var deleteResponse = SUT.DeleteAsync(deleteRequest).Result;
 
             deleteResponse.Should().BeSuccessfulDelete(ClientTestData.Artists.Artist1Id);
         }
@@ -70,21 +70,21 @@ namespace MyCouch.IntegrationTests.ClientTests
         {
             var putDocResponse = Client.Documents.PostAsync(ClientTestData.Artists.Artist1Json).Result;
 
-            var putCmd = new PutAttachmentCommand(
+            var putRequest = new PutAttachmentRequest(
                 putDocResponse.Id,
                 putDocResponse.Rev,
                 ClientTestData.Attachments.One.Name,
                 ClientTestData.Attachments.One.ContentType,
-                ClientTestData.Attachments.One.ContentDecoded.AsBytes());
-            var putAttachmentResponse = SUT.PutAsync(putCmd).Result;
+                ClientTestData.Attachments.One.Bytes);
+            var putAttachmentResponse = SUT.PutAsync(putRequest).Result;
 
-            var getCmd = new GetAttachmentCommand(
+            var getRequest = new GetAttachmentRequest(
                 putAttachmentResponse.Id,
                 ClientTestData.Attachments.One.Name);
-            var getAttachmentResponse = SUT.GetAsync(getCmd).Result;
+            var getAttachmentResponse = SUT.GetAsync(getRequest).Result;
 
             getAttachmentResponse.Should().BeSuccessfulGet(ClientTestData.Artists.Artist1Id, ClientTestData.Attachments.One.Name);
-            getAttachmentResponse.Content.AsBase64EncodedString().Should().Be(ClientTestData.Attachments.One.ContentEncoded);
+            getAttachmentResponse.Content.Should().Equal(ClientTestData.Attachments.One.Bytes);
         }
 
         [Fact]
@@ -92,22 +92,44 @@ namespace MyCouch.IntegrationTests.ClientTests
         {
             var putDocResponse = Client.Documents.PostAsync(ClientTestData.Artists.Artist1Json).Result;
 
-            var putCmd = new PutAttachmentCommand(
+            var putRequest = new PutAttachmentRequest(
                 putDocResponse.Id,
                 putDocResponse.Rev,
                 ClientTestData.Attachments.One.Name,
                 ClientTestData.Attachments.One.ContentType,
-                ClientTestData.Attachments.One.ContentDecoded.AsBytes());
-            var putAttachmentResponse = SUT.PutAsync(putCmd).Result;
+                ClientTestData.Attachments.One.Bytes);
+            var putAttachmentResponse = SUT.PutAsync(putRequest).Result;
 
-            var getCmd = new GetAttachmentCommand(
+            var getRequest = new GetAttachmentRequest(
                 putAttachmentResponse.Id, 
                 putAttachmentResponse.Rev, 
                 ClientTestData.Attachments.One.Name);
-            var getAttachmentResponse = SUT.GetAsync(getCmd).Result;
+            var getAttachmentResponse = SUT.GetAsync(getRequest).Result;
 
             getAttachmentResponse.Should().BeSuccessfulGet(ClientTestData.Artists.Artist1Id, ClientTestData.Attachments.One.Name);
-            getAttachmentResponse.Content.AsBase64EncodedString().Should().Be(ClientTestData.Attachments.One.ContentEncoded);
+            getAttachmentResponse.Content.Should().Equal(ClientTestData.Attachments.One.Bytes);
+        }
+
+        [Fact]
+        public void When_GET_of_an_existing_attachment_the_content_type_is_returned_correctly()
+        {
+            var putDocResponse = Client.Documents.PostAsync(ClientTestData.Artists.Artist1Json).Result;
+
+            var putRequest = new PutAttachmentRequest(
+                putDocResponse.Id,
+                putDocResponse.Rev,
+                ClientTestData.Attachments.One.Name,
+                ClientTestData.Attachments.One.ContentType,
+                ClientTestData.Attachments.One.Bytes);
+            var putAttachmentResponse = SUT.PutAsync(putRequest).Result;
+
+            var getRequest = new GetAttachmentRequest(
+                putAttachmentResponse.Id,
+                putAttachmentResponse.Rev,
+                ClientTestData.Attachments.One.Name);
+            var getAttachmentResponse = SUT.GetAsync(getRequest).Result;
+
+            getAttachmentResponse.ContentType.Should().Be(ClientTestData.Attachments.One.ContentType);
         }
 
         [Fact]
@@ -115,27 +137,27 @@ namespace MyCouch.IntegrationTests.ClientTests
         {
             var putDocResponse = Client.Documents.PostAsync(ClientTestData.Artists.Artist1Json).Result;
 
-            var putCmd = new PutAttachmentCommand(
+            var putRequest = new PutAttachmentRequest(
                 putDocResponse.Id,
                 putDocResponse.Rev,
                 ClientTestData.Attachments.One.Name,
                 ClientTestData.Attachments.One.ContentType,
-                ClientTestData.Attachments.One.ContentDecoded.AsBytes());
-            var putAttachmentResponse = SUT.PutAsync(putCmd).Result;
+                ClientTestData.Attachments.One.Bytes);
+            var putAttachmentResponse = SUT.PutAsync(putRequest).Result;
             putAttachmentResponse.Should().BeSuccessfulPut(ClientTestData.Artists.Artist1Id);
 
-            var getCmd = new GetAttachmentCommand(
+            var getRequest = new GetAttachmentRequest(
                 putAttachmentResponse.Id,
                 putAttachmentResponse.Rev,
                 ClientTestData.Attachments.One.Name);
-            var getResponse = SUT.GetAsync(getCmd).Result;
+            var getResponse = SUT.GetAsync(getRequest).Result;
             getResponse.Should().BeSuccessfulGet(ClientTestData.Artists.Artist1Id, ClientTestData.Attachments.One.Name);
 
-            var deleteCmd = new DeleteAttachmentCommand(
+            var deleteRequest = new DeleteAttachmentRequest(
                 putAttachmentResponse.Id,
                 putAttachmentResponse.Rev,
                 ClientTestData.Attachments.One.Name);
-            var deleteResponse = SUT.DeleteAsync(deleteCmd).Result;
+            var deleteResponse = SUT.DeleteAsync(deleteRequest).Result;
             deleteResponse.Should().BeSuccessfulDelete(ClientTestData.Artists.Artist1Id);
         }
     }

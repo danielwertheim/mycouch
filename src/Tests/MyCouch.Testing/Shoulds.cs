@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using FluentAssertions;
@@ -10,7 +11,7 @@ namespace MyCouch.Testing
     [DebuggerStepThrough]
     public static class Shoulds
     {
-        public static ViewQueryResponseAssertions Should(this JsonViewQueryResponse response)
+        public static ViewQueryResponseAssertions Should(this ViewQueryResponse response)
         {
             return new ViewQueryResponseAssertions(response);
         }
@@ -18,6 +19,11 @@ namespace MyCouch.Testing
         public static ViewQueryResponseAssertions<T> Should<T>(this ViewQueryResponse<T> response)
         {
             return new ViewQueryResponseAssertions<T>(response);
+        }
+
+        public static ViewQueryResponseAssertions<T, TIncludedDoc> Should<T, TIncludedDoc>(this ViewQueryResponse<T, TIncludedDoc> response)
+        {
+            return new ViewQueryResponseAssertions<T, TIncludedDoc>(response);
         }
 
         public static DocumentResponseAssertions Should(this DocumentResponse response)
@@ -39,68 +45,35 @@ namespace MyCouch.Testing
         {
             return new DocumentHeaderResponseAssertions(response);
         }
-    }
 
-    public class ViewQueryResponseAssertions
-    {
-        protected readonly JsonViewQueryResponse Response;
-
-        [DebuggerStepThrough]
-        public ViewQueryResponseAssertions(JsonViewQueryResponse response)
+        public static ChangesResponseAssertions<T> Should<T>(this ChangesResponse<T> response)
         {
-            Response = response;
-        }
-
-        public void BeSuccessfulGet(string[] expected)
-        {
-            BeSuccessful(HttpMethod.Get, expected);
-        }
-
-        public void BeSuccessfulPost(string[] expected)
-        {
-            BeSuccessful(HttpMethod.Post, expected);
-        }
-
-        private void BeSuccessful(HttpMethod method, string[] expected)
-        {
-            BeSuccessful(method, expected.Length);
-            for (var i = 0; i < Response.RowCount; i++)
-                CustomAsserts.AreValueEqual(expected[i], Response.Rows[i].Value);
-        }
-
-        public void BeSuccessfulGet(int numOfRows)
-        {
-            BeSuccessful(HttpMethod.Get, numOfRows);
-        }
-
-        public void BeSuccessfulPost(int numOfRows)
-        {
-            BeSuccessful(HttpMethod.Get, numOfRows);
-        }
-
-        private void BeSuccessful(HttpMethod method, int numOfRows)
-        {
-            Response.RequestMethod.Should().Be(method);
-            Response.IsSuccess.Should().BeTrue();
-            Response.StatusCode.Should().Be(HttpStatusCode.OK);
-            Response.Error.Should().BeNull();
-            Response.Reason.Should().BeNull();
-            Response.IsEmpty.Should().BeFalse();
-
-            if (numOfRows > 0)
-            {
-                Response.Rows.Should().NotBeNull();
-                Response.RowCount.Should().Be(numOfRows);
-            }
+            return new ChangesResponseAssertions<T>(response);
         }
     }
 
-    public class ViewQueryResponseAssertions<T>
+    public class ViewQueryResponseAssertions : ViewQueryResponseAssertions<string, string>
     {
-        protected readonly ViewQueryResponse<T> Response;
+        [DebuggerStepThrough]
+        public ViewQueryResponseAssertions(ViewQueryResponse response) : base(response)
+        {
+        }
+    }
+
+    public class ViewQueryResponseAssertions<T> : ViewQueryResponseAssertions<T, string>
+    {
+        [DebuggerStepThrough]
+        public ViewQueryResponseAssertions(ViewQueryResponse<T> response) : base(response)
+        {
+        }
+    }
+
+    public class ViewQueryResponseAssertions<T, TIncludedDoc>
+    {
+        protected readonly ViewQueryResponse<T, TIncludedDoc> Response;
 
         [DebuggerStepThrough]
-        public ViewQueryResponseAssertions(ViewQueryResponse<T> response)
+        public ViewQueryResponseAssertions(ViewQueryResponse<T, TIncludedDoc> response)
         {
             Response = response;
         }
@@ -108,6 +81,11 @@ namespace MyCouch.Testing
         public void BeSuccessfulGet(T[] expected)
         {
             BeSuccessful(HttpMethod.Get, expected);
+        }
+
+        public void BeSuccessfulGet<TKey>(T[] expected, Func<ViewQueryResponse<T, TIncludedDoc>.Row, TKey> orderBy)
+        {
+            BeSuccessful(HttpMethod.Get, expected, orderBy);
         }
 
         public void BeSuccessfulPost(T[] expected)
@@ -120,6 +98,18 @@ namespace MyCouch.Testing
             BeSuccessful(method, expected.Length);
             for (var i = 0; i < Response.RowCount; i++)
                 CustomAsserts.AreValueEqual(expected[i], Response.Rows[i].Value);
+        }
+
+        private void BeSuccessful<TKey>(HttpMethod method, T[] expected, Func<ViewQueryResponse<T, TIncludedDoc>.Row, TKey> orderBy = null)
+        {
+            BeSuccessful(method, expected.Length);
+
+            var actual = orderBy != null 
+                ? Response.Rows.OrderBy(orderBy).ToArray() 
+                : Response.Rows;
+
+            for (var i = 0; i < Response.RowCount; i++)
+                CustomAsserts.AreValueEqual(expected[i], actual[i].Value);
         }
 
         public void BeSuccessfulPost(int numOfRows)
@@ -388,6 +378,29 @@ namespace MyCouch.Testing
             Response.Reason.Should().BeNull();
             Response.Id.Should().Be(initialId);
             Response.Rev.Should().NotBeNullOrEmpty();
+        }
+    }
+
+    public class ChangesResponseAssertions<T>
+    {
+        protected readonly ChangesResponse<T> Response;
+
+        [DebuggerStepThrough]
+        public ChangesResponseAssertions(ChangesResponse<T> response)
+        {
+            Response = response;
+        }
+
+        public void BeSuccessfulGet(long? expectedLastSeq = null)
+        {
+            Response.RequestMethod.Should().Be(HttpMethod.Get);
+            Response.IsSuccess.Should().BeTrue();
+            Response.StatusCode.Should().Be(HttpStatusCode.OK);
+            Response.Error.Should().BeNull();
+            Response.Reason.Should().BeNull();
+
+            if (expectedLastSeq.HasValue)
+                Response.LastSeq.Should().Be(expectedLastSeq.Value);
         }
     }
 }

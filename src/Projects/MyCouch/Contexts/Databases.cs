@@ -13,16 +13,16 @@ namespace MyCouch.Contexts
     {
         protected DatabaseResponseFactory DatabaseResponseFactory { get; set; }
 
-        public Databases(IConnection connection, SerializationConfiguration serializationConfiguration) : base(connection)
+        public Databases(IConnection connection, ISerializer serializer) : base(connection)
         {
-            Ensure.That(serializationConfiguration, "serializationConfiguration").IsNotNull();
+            Ensure.That(serializer, "serializer").IsNotNull();
 
-            DatabaseResponseFactory = new DatabaseResponseFactory(serializationConfiguration);
+            DatabaseResponseFactory = new DatabaseResponseFactory(serializer);
         }
 
         public virtual async Task<DatabaseResponse> PutAsync()
         {
-            using (var req = CreateRequest(HttpMethod.Put))
+            using (var req = CreateHttpRequest(HttpMethod.Put))
             {
                 using (var res = await SendAsync(req).ForAwait())
                 {
@@ -33,7 +33,7 @@ namespace MyCouch.Contexts
 
         public virtual async Task<DatabaseResponse> DeleteAsync()
         {
-            using (var req = CreateRequest(HttpMethod.Delete))
+            using (var req = CreateHttpRequest(HttpMethod.Delete))
             {
                 using (var res = await SendAsync(req).ForAwait())
                 {
@@ -42,7 +42,7 @@ namespace MyCouch.Contexts
             }
         }
 
-        protected virtual HttpRequestMessage CreateRequest(HttpMethod method)
+        protected virtual HttpRequest CreateHttpRequest(HttpMethod method)
         {
             return new HttpRequest(method, GenerateRequestUrl());
         }

@@ -9,6 +9,7 @@ namespace MyCouch
     {
         public IConnection Connection { get; private set; }
         public ISerializer Serializer { get; private set; }
+        public IChanges Changes { get; private set; }
         public IAttachments Attachments { get; private set; }
         public IDatabases Databases { get; private set; }
         public IDocuments Documents { get; private set; }
@@ -28,6 +29,7 @@ namespace MyCouch
             bootstraper = bootstraper ?? new ClientBootstraper();
 
             Serializer = bootstraper.SerializerFn();
+            Changes = bootstraper.ChangesFn(Connection);
             Attachments = bootstraper.AttachmentsFn(Connection);
             Databases = bootstraper.DatabasesFn(Connection);
             Documents = bootstraper.DocumentsFn(Connection);

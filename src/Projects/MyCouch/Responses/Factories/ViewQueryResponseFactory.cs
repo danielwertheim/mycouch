@@ -1,18 +1,25 @@
-﻿using System.Linq;
-using System.Net.Http;
+﻿using System.Net.Http;
+using EnsureThat;
+using MyCouch.Extensions;
 using MyCouch.Serialization;
-using Newtonsoft.Json;
 
 namespace MyCouch.Responses.Factories
 {
-    public class ViewQueryResponseFactory : QueryResponseFactoryBase
+    public class ViewQueryResponseFactory : ResponseFactoryBase
     {
-        protected IQueryResponseRowsDeserializer RowsDeserializer { get; set; }
+        protected readonly IEntitySerializer EntitySerializer;
 
-        public ViewQueryResponseFactory(SerializationConfiguration serializationConfiguration)
-            : base(serializationConfiguration)
+        public ViewQueryResponseFactory(ISerializer serializer, IEntitySerializer entitySerializer)
+            : base(serializer)
         {
-            RowsDeserializer = new ViewQueryResponseRowsDeserializer(serializationConfiguration);
+            Ensure.That(entitySerializer, "entitySerializer").IsNotNull();
+
+            EntitySerializer = entitySerializer;
+        }
+
+        public virtual ViewQueryResponse Create(HttpResponseMessage httpResponse)
+        {
+            return Materialize(new ViewQueryResponse(), httpResponse, OnSuccessfulResponse, OnFailedResponse);
         }
 
         public virtual ViewQueryResponse<T> Create<T>(HttpResponseMessage httpResponse)
@@ -20,9 +27,17 @@ namespace MyCouch.Responses.Factories
             return Materialize(new ViewQueryResponse<T>(), httpResponse, OnSuccessfulResponse, OnFailedResponse);
         }
 
-        protected override void OnPopulateRows<T>(QueryResponse<T> response, JsonReader jr)
+        public virtual ViewQueryResponse<TValue, TIncludedDoc> Create<TValue, TIncludedDoc>(HttpResponseMessage httpResponse)
         {
-            response.Rows = RowsDeserializer.Deserialize<T>(jr).ToArray();
+            return Materialize(new ViewQueryResponse<TValue, TIncludedDoc>(), httpResponse, OnSuccessfulResponse, OnFailedResponse);
+        }
+
+        protected virtual void OnSuccessfulResponse<TValue, TIncludedDoc>(ViewQueryResponse<TValue, TIncludedDoc> response, HttpResponseMessage httpResponse)
+        {
+            using (var content = httpResponse.Content.ReadAsStream())
+            {
+                EntitySerializer.Populate(response, content);
+            }
         }
     }
 }

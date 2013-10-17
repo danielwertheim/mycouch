@@ -25,7 +25,7 @@ namespace MyCouch.UnitTests.Serialization
     }
 #endif
 
-    public abstract class EntitySerializationTests : SerializerTests<DefaultSerializer>
+    public abstract class EntitySerializationTests : SerializerTests<EntitySerializer>
     {
         protected SerializationConfiguration CreateSerializationConfiguration(EntityReflector entityReflector)
         {
