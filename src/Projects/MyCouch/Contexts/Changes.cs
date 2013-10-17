@@ -1,8 +1,10 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.IO;
+using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Extensions;
-using MyCouch.Net;
 using MyCouch.Requests;
 using MyCouch.Requests.Factories;
 using MyCouch.Responses;
@@ -15,6 +17,7 @@ namespace MyCouch.Contexts
     {
         protected IHttpRequestFactory<GetChangesRequest> HttpRequestFactory { get; set; }
         protected ChangesResponseFactory ChangesResponseFactory { get; set; }
+        protected ContinuousChangesResponseFactory ContinuousChangesResponseFactory { get; set; }
 
         public Changes(IConnection connection, ISerializer serializer)
             : base(connection)
@@ -23,37 +26,19 @@ namespace MyCouch.Contexts
 
             HttpRequestFactory = new GetChangesHttpRequestFactory(Connection);
             ChangesResponseFactory = new ChangesResponseFactory(serializer);
-        }
-
-        public virtual Task<ChangesResponse> GetAsync()
-        {
-            return GetAsync(new GetChangesRequest());
-        }
-
-        public virtual Task<ChangesResponse<TIncludedDoc>> GetAsync<TIncludedDoc>()
-        {
-            return GetAsync<TIncludedDoc>(new GetChangesRequest());
-        }
-
-        public virtual Task<ChangesResponse> GetAsync(ChangesFeed feed)
-        {
-            return GetAsync(new GetChangesRequest { Feed = feed });
-        }
-
-        public virtual Task<ChangesResponse<TIncludedDoc>> GetAsync<TIncludedDoc>(ChangesFeed feed)
-        {
-            return GetAsync<TIncludedDoc>(new GetChangesRequest { Feed = feed });
+            ContinuousChangesResponseFactory = new ContinuousChangesResponseFactory(serializer);
         }
 
         public virtual async Task<ChangesResponse> GetAsync(GetChangesRequest request)
         {
             Ensure.That(request, "request").IsNotNull();
+            EnsureNonContinuousFeed(request);
 
-            using (var httpRequest = CreateHttpRequest(request))
+            using (var httpRequest = HttpRequestFactory.Create(request))
             {
-                using (var res = await SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead).ForAwait())
+                using (var httpResponse = await SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead).ForAwait())
                 {
-                    return ProcessHttpResponse(res);
+                    return ChangesResponseFactory.Create(httpResponse);
                 }
             }
         }
@@ -61,29 +46,52 @@ namespace MyCouch.Contexts
         public virtual async Task<ChangesResponse<TIncludedDoc>> GetAsync<TIncludedDoc>(GetChangesRequest request)
         {
             Ensure.That(request, "request").IsNotNull();
+            EnsureNonContinuousFeed(request);
 
-            using (var httpRequest = CreateHttpRequest(request))
+            using (var httpRequest = HttpRequestFactory.Create(request))
             {
-                using (var res = await SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead).ForAwait())
+                using (var httpResponse = await SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead).ForAwait())
                 {
-                    return ProcessHttpResponse<TIncludedDoc>(res);
+                    return ChangesResponseFactory.Create<TIncludedDoc>(httpResponse);
                 }
             }
         }
 
-        protected virtual HttpRequest CreateHttpRequest(GetChangesRequest request)
+        public virtual async Task<ContinuousChangesResponse> GetAsync(GetChangesRequest request, Action<string> onRead, CancellationToken cancellationToken)
         {
-            return HttpRequestFactory.Create(request);
+            Ensure.That(request, "request").IsNotNull();
+            Ensure.That(onRead, "onRead").IsNotNull();
+            if (request.Feed == null || request.Feed != ChangesFeed.Continuous)
+                throw new ArgumentException(ExceptionStrings.GetContinuousChangesInvalidFeed, "request");
+
+            using (var httpRequest = HttpRequestFactory.Create(request))
+            {
+                using (var httpResponse = await SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ForAwait())
+                {
+                    var response = ContinuousChangesResponseFactory.Create(httpResponse);
+                    if (response.IsSuccess)
+                    {
+                        using (var content = httpResponse.Content.ReadAsStream())
+                        {
+                            using (var reader = new StreamReader(content, MyCouchRuntime.DefaultEncoding))
+                            {
+                                while (!cancellationToken.IsCancellationRequested && !reader.EndOfStream)
+                                {
+                                    cancellationToken.ThrowIfCancellationRequested();
+                                    onRead(reader.ReadLine());
+                                }
+                            }
+                        }
+                    }
+                    return response;
+                }
+            }
         }
 
-        protected virtual ChangesResponse ProcessHttpResponse(HttpResponseMessage response)
+        protected virtual void EnsureNonContinuousFeed(GetChangesRequest request)
         {
-            return ChangesResponseFactory.Create(response);
-        }
-
-        protected virtual ChangesResponse<TIncludedDoc> ProcessHttpResponse<TIncludedDoc>(HttpResponseMessage response)
-        {
-            return ChangesResponseFactory.Create<TIncludedDoc>(response);
+            if(request.Feed != null && request.Feed == ChangesFeed.Continuous)
+                throw new ArgumentException(ExceptionStrings.GetChangesForNonContinuousFeedOnly, "request");
         }
     }
 }

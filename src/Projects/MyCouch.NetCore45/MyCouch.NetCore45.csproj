@@ -338,6 +338,9 @@
     <Compile Include="..\MyCouch\Responses\ChangesResponse.cs">
       <Link>Responses\ChangesResponse.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch\Responses\ContinuousChangesResponse.cs">
+      <Link>Responses\ContinuousChangesResponse.cs</Link>
+    </Compile>
     <Compile Include="..\mycouch\responses\DatabaseResponse.cs">
       <Link>Responses\DatabaseResponse.cs</Link>
     </Compile>
@@ -358,6 +361,9 @@
     </Compile>
     <Compile Include="..\MyCouch\Responses\Factories\ChangesResponseFactory.cs">
       <Link>Responses\Factories\ChangesResponseFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Responses\Factories\ContinuousChangesResponseFactory.cs">
+      <Link>Responses\Factories\ContinuousChangesResponseFactory.cs</Link>
     </Compile>
     <Compile Include="..\mycouch\responses\factories\DatabaseResponseFactory.cs">
       <Link>Responses\Factories\DatabaseResponseFactory.cs</Link>

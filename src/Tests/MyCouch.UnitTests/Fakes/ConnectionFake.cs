@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MyCouch.UnitTests.Fakes
@@ -21,6 +22,11 @@ namespace MyCouch.UnitTests.Fakes
         }
 
         public Task<HttpResponseMessage> SendAsync(HttpRequestMessage httpRequest, HttpCompletionOption completionOption)
+        {
+            return null;
+        }
+
+        public Task<HttpResponseMessage> SendAsync(HttpRequestMessage httpRequest, HttpCompletionOption completionOption, CancellationToken cancellationToken)
         {
             return null;
         }

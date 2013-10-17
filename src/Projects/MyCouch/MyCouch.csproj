@@ -85,6 +85,7 @@
     <Compile Include="Requests\PutEntityRequest.cs" />
     <Compile Include="Configurations\ConnectionString.cs" />
     <Compile Include="Responses\ChangesResponse.cs" />
+    <Compile Include="Responses\ContinuousChangesResponse.cs" />
     <Compile Include="Responses\DatabaseResponse.cs" />
     <Compile Include="Contexts\Databases.cs" />
     <Compile Include="Requests\DeleteAttachmentRequest.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="Responses\Factories\AttachmentResponseFactory.cs" />
     <Compile Include="Responses\Factories\BulkResponseFactory.cs" />
     <Compile Include="Responses\Factories\ChangesResponseFactory.cs" />
+    <Compile Include="Responses\Factories\ContinuousChangesResponseFactory.cs" />
     <Compile Include="Responses\Factories\DatabaseResponseFactory.cs" />
     <Compile Include="Responses\Factories\DocumentHeaderResponseFactory.cs" />
     <Compile Include="Responses\Factories\DocumentResponseFactory.cs" />

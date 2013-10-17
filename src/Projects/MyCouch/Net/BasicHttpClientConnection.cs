@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading;
 using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Extensions;
@@ -77,6 +78,11 @@ namespace MyCouch.Net
         public virtual async Task<HttpResponseMessage> SendAsync(HttpRequestMessage httpRequest, HttpCompletionOption completionOption)
         {
             return await HttpClient.SendAsync(httpRequest, completionOption).ForAwait();
+        }
+
+        public virtual async Task<HttpResponseMessage> SendAsync(HttpRequestMessage httpRequest, HttpCompletionOption completionOption, CancellationToken cancellationToken)
+        {
+            return await HttpClient.SendAsync(httpRequest, completionOption, cancellationToken).ForAwait();
         }
     }
 }

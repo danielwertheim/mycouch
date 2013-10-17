@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using EnsureThat;
 
@@ -23,6 +24,11 @@ namespace MyCouch.Contexts
         protected virtual Task<HttpResponseMessage> SendAsync(HttpRequestMessage httpRequest, HttpCompletionOption completionOption)
         {
             return Connection.SendAsync(httpRequest, completionOption);
+        }
+
+        protected virtual Task<HttpResponseMessage> SendAsync(HttpRequestMessage httpRequest, HttpCompletionOption completionOption, CancellationToken cancellationToken)
+        {
+            return Connection.SendAsync(httpRequest, completionOption, cancellationToken);
         }
     }
 }

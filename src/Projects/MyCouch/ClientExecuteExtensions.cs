@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using MyCouch.Requests;
 using MyCouch.Responses;
 
@@ -9,6 +11,11 @@ namespace MyCouch
         public static Task<ChangesResponse> PerformAsync(this IClient client, GetChangesRequest request)
         {
             return client.Changes.GetAsync(request);
+        }
+
+        public static Task<ContinuousChangesResponse> PerformAsync(this IClient client, GetChangesRequest request, Action<string> onRead, CancellationToken cancellationToken)
+        {
+            return client.Changes.GetAsync(request, onRead, cancellationToken);
         }
 
         public static Task<BulkResponse> PerformAsync(this IClient client, BulkRequest request)

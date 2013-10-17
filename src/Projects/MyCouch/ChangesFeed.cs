@@ -21,6 +21,16 @@ namespace MyCouch
             Value = value;
         }
 
+        public static bool operator ==(ChangesFeed left, ChangesFeed right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(ChangesFeed left, ChangesFeed right)
+        {
+            return !Equals(left, right);
+        }
+
         public override bool Equals(object obj)
         {
             return Equals(obj as ChangesFeed);

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 using EnsureThat;
 using MyCouch.Serialization.Readers;
@@ -45,7 +46,7 @@ namespace MyCouch.Serialization
 
             using (var sr = new StringReader(data))
             {
-                using (var jsonReader = Configuration.ApplyConfigToReader(CreateReaderFor<T>(sr)))
+                using (var jsonReader = Configuration.ApplyConfigToReader(CreateReaderFor(sr)))
                 {
                     return InternalSerializer.Deserialize<T>(jsonReader);
                 }
@@ -59,14 +60,14 @@ namespace MyCouch.Serialization
 
             using (var sr = new StreamReader(data, MyCouchRuntime.DefaultEncoding))
             {
-                using (var jsonReader = Configuration.ApplyConfigToReader(CreateReaderFor<T>(sr)))
+                using (var jsonReader = Configuration.ApplyConfigToReader(CreateReaderFor(sr)))
                 {
                     return InternalSerializer.Deserialize<T>(jsonReader);
                 }
             }
         }
 
-        protected virtual JsonTextReader CreateReaderFor<T>(TextReader r)
+        protected virtual JsonTextReader CreateReaderFor(TextReader r)
         {
             return new MyCouchJsonReader(r);
         }
@@ -78,7 +79,7 @@ namespace MyCouch.Serialization
 
             using (var sr = new StreamReader(data, MyCouchRuntime.DefaultEncoding))
             {
-                using (var jsonReader = Configuration.ApplyConfigToReader(CreateReaderFor<T>(sr)))
+                using (var jsonReader = Configuration.ApplyConfigToReader(CreateReaderFor(sr)))
                 {
                     InternalSerializer.Populate(jsonReader, item);
                 }
