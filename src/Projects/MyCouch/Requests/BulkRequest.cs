@@ -8,7 +8,7 @@ namespace MyCouch.Requests
 #if !NETFX_CORE
     [Serializable]
 #endif
-    public class BulkRequest : IRequest
+    public class BulkRequest : Request
     {
         protected readonly List<string> Docs;
 

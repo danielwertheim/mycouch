@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using MyCouch.Net;
 
 namespace MyCouch.UnitTests.Fakes
 {
@@ -15,18 +16,18 @@ namespace MyCouch.UnitTests.Fakes
         }
 
         public virtual void Dispose() { }
-        
-        public Task<HttpResponseMessage> SendAsync(HttpRequestMessage httpRequest)
+
+        public Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest)
         {
             return null;
         }
 
-        public Task<HttpResponseMessage> SendAsync(HttpRequestMessage httpRequest, HttpCompletionOption completionOption)
+        public Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, HttpCompletionOption completionOption)
         {
             return null;
         }
 
-        public Task<HttpResponseMessage> SendAsync(HttpRequestMessage httpRequest, HttpCompletionOption completionOption, CancellationToken cancellationToken)
+        public Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, HttpCompletionOption completionOption, CancellationToken cancellationToken)
         {
             return null;
         }

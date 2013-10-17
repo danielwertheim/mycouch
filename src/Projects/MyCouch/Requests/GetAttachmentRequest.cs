@@ -6,7 +6,7 @@ namespace MyCouch.Requests
 #if !NETFX_CORE
     [Serializable]
 #endif
-    public class GetAttachmentRequest : IRequest
+    public class GetAttachmentRequest : Request
     {
         public string DocId { get; private set; }
         public string DocRev { get; private set; }

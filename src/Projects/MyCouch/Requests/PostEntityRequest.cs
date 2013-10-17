@@ -6,7 +6,7 @@ namespace MyCouch.Requests
 #if !NETFX_CORE
     [Serializable]
 #endif
-    public class PostEntityRequest<T> : IRequest where T : class
+    public class PostEntityRequest<T> : Request where T : class
     {
         public T Entity { get; set; }
 

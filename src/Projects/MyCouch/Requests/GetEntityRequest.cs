@@ -6,7 +6,7 @@ namespace MyCouch.Requests
 #if !NETFX_CORE
     [Serializable]
 #endif
-    public class GetEntityRequest : IRequest
+    public class GetEntityRequest : Request
     {
         public string Id { get; private set; }
         public string Rev { get; private set; }

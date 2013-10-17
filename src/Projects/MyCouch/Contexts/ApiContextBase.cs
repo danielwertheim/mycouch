@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using EnsureThat;
+using MyCouch.Net;
 
 namespace MyCouch.Contexts
 {
@@ -16,17 +17,17 @@ namespace MyCouch.Contexts
             Connection = connection;
         }
 
-        protected virtual Task<HttpResponseMessage> SendAsync(HttpRequestMessage httpRequest)
+        protected virtual Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest)
         {
             return Connection.SendAsync(httpRequest);
         }
 
-        protected virtual Task<HttpResponseMessage> SendAsync(HttpRequestMessage httpRequest, HttpCompletionOption completionOption)
+        protected virtual Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, HttpCompletionOption completionOption)
         {
             return Connection.SendAsync(httpRequest, completionOption);
         }
 
-        protected virtual Task<HttpResponseMessage> SendAsync(HttpRequestMessage httpRequest, HttpCompletionOption completionOption, CancellationToken cancellationToken)
+        protected virtual Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, HttpCompletionOption completionOption, CancellationToken cancellationToken)
         {
             return Connection.SendAsync(httpRequest, completionOption, cancellationToken);
         }

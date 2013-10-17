@@ -18,8 +18,8 @@ namespace MyCouch.Requests.Factories
             Ensure.That(request, "request").IsNotNull();
 
             return request.HasKeys
-                ? new HttpRequest(HttpMethod.Post, GenerateRequestUrl(request)).SetContent(GetKeysAsJsonObject(request))
-                : new HttpRequest(HttpMethod.Get, GenerateRequestUrl(request));
+                ? CreateFor<QueryViewRequest>(HttpMethod.Post, GenerateRequestUrl(request)).SetContent(GetKeysAsJsonObject(request))
+                : CreateFor<QueryViewRequest>(HttpMethod.Get, GenerateRequestUrl(request));
         }
 
         protected virtual string GenerateRequestUrl(QueryViewRequest request)

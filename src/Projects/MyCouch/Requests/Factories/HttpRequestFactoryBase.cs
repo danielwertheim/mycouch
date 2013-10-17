@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using EnsureThat;
 using MyCouch.Extensions;
+using MyCouch.Net;
 
 namespace MyCouch.Requests.Factories
 {
@@ -15,6 +17,11 @@ namespace MyCouch.Requests.Factories
             Ensure.That(connection, "connection").IsNotNull();
 
             Connection = connection;
+        }
+
+        protected virtual HttpRequest CreateFor<T>(HttpMethod method, string url) where T : Request
+        {
+            return new HttpRequest(method, url).SetRequestType(typeof(T));
         }
 
         protected virtual bool HasValue(object value)

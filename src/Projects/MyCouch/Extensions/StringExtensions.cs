@@ -26,6 +26,14 @@ namespace MyCouch.Extensions
             return value;
         }
 
+        public static string TrimToEnd(this string value, string shouldEndWith)
+        {
+            if (value.EndsWith(shouldEndWith))
+                return value;
+
+            return value.Substring(0, value.IndexOf(shouldEndWith, StringComparison.OrdinalIgnoreCase));
+        }
+
         public static string ToCamelCase(this string s)
         {
             if (string.IsNullOrWhiteSpace(s))

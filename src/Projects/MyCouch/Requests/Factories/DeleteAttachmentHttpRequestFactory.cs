@@ -11,7 +11,7 @@ namespace MyCouch.Requests.Factories
 
         public virtual HttpRequest Create(DeleteAttachmentRequest request)
         {
-            var httpRequest = new HttpRequest(HttpMethod.Delete, GenerateRequestUrl(request.DocId, request.DocRev, request.Name));
+            var httpRequest = CreateFor<DeleteAttachmentRequest>(HttpMethod.Delete, GenerateRequestUrl(request.DocId, request.DocRev, request.Name));
 
             httpRequest.SetIfMatch(request.DocRev);
 

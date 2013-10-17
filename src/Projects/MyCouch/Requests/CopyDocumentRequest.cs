@@ -6,7 +6,7 @@ namespace MyCouch.Requests
 #if !NETFX_CORE
     [Serializable]
 #endif
-    public class CopyDocumentRequest : IRequest
+    public class CopyDocumentRequest : Request
     {
         /// <summary>
         /// The Id of the document to copy.

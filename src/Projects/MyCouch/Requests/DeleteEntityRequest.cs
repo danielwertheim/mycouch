@@ -6,7 +6,7 @@ namespace MyCouch.Requests
 #if !NETFX_CORE
     [Serializable]
 #endif
-    public class DeleteEntityRequest<T> : IRequest where T : class
+    public class DeleteEntityRequest<T> : Request where T : class
     {
         public T Entity { get; set; }
 

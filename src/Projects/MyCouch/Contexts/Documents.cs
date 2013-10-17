@@ -4,6 +4,7 @@ using EnsureThat;
 using MyCouch.Extensions;
 using MyCouch.Net;
 using MyCouch.Requests;
+using MyCouch.Requests.Factories;
 using MyCouch.Responses;
 using MyCouch.Responses.Factories;
 using MyCouch.Serialization;
@@ -12,6 +13,14 @@ namespace MyCouch.Contexts
 {
     public class Documents : ApiContextBase, IDocuments
     {
+        protected IHttpRequestFactory<BulkRequest> BulkHttpRequestFactory { get; set; }
+        protected IHttpRequestFactory<CopyDocumentRequest> CopyDocumentHttpRequestFactory { get; set; }
+        protected IHttpRequestFactory<ReplaceDocumentRequest> ReplaceDocumentHttpRequestFactory { get; set; }
+        protected IHttpRequestFactory<DocumentExistsRequest> DocumentExistsHttpRequestFactory { get; set; }
+        protected IHttpRequestFactory<GetDocumentRequest> GetDocumentHttpRequestFactory { get; set; }
+        protected IHttpRequestFactory<PostDocumentRequest> PostDocumentHttpRequestFactory { get; set; }
+        protected IHttpRequestFactory<PutDocumentRequest> PutDocumentHttpRequestFactory { get; set; }
+        protected IHttpRequestFactory<DeleteDocumentRequest> DeleteDocumentHttpRequestFactory { get; set; }
         protected DocumentResponseFactory DocumentReponseFactory { get; set; }
         protected DocumentHeaderResponseFactory DocumentHeaderReponseFactory { get; set; }
         protected BulkResponseFactory BulkReponseFactory { get; set; }
@@ -20,6 +29,15 @@ namespace MyCouch.Contexts
             : base(connection)
         {
             Ensure.That(serializer, "serializer").IsNotNull();
+
+            BulkHttpRequestFactory = new BulkRequestHttpRequestFactory(Connection);
+            CopyDocumentHttpRequestFactory = new CopyDocumentHttpRequestFactory(Connection);
+            ReplaceDocumentHttpRequestFactory = new ReplaceDocumentHttpRequestFactory(Connection);
+            DocumentExistsHttpRequestFactory = new DocumentExistsHttpRequestFactory(Connection);
+            GetDocumentHttpRequestFactory = new GetDocumentHttpRequestFactory(Connection);
+            PostDocumentHttpRequestFactory = new PostDocumentHttpRequestFactory(Connection);
+            PutDocumentHttpRequestFactory = new PutDocumentHttpRequestFactory(Connection);
+            DeleteDocumentHttpRequestFactory = new DeleteDocumentHttpRequestFactory(Connection);
 
             DocumentReponseFactory = new DocumentResponseFactory(serializer);
             DocumentHeaderReponseFactory = new DocumentHeaderResponseFactory(serializer);
@@ -182,88 +200,42 @@ namespace MyCouch.Contexts
 
         protected virtual HttpRequest CreateHttpRequest(BulkRequest request)
         {
-            var createHttpRequest = new HttpRequest(HttpMethod.Post, GenerateRequestUrl(request));
-
-            createHttpRequest.SetContent(request.ToJson());
-
-            return createHttpRequest;
+            return BulkHttpRequestFactory.Create(request);
         }
 
         protected virtual HttpRequest CreateHttpRequest(CopyDocumentRequest request)
         {
-            var httpRequest = new HttpRequest(new HttpMethod("COPY"), GenerateRequestUrl(request.SrcId, request.SrcRev));
-
-            httpRequest.Headers.Add("Destination", request.NewId);
-
-            return httpRequest;
+            return CopyDocumentHttpRequestFactory.Create(request);
         }
 
         protected virtual HttpRequest CreateHttpRequest(ReplaceDocumentRequest request)
         {
-            var httpRequest = new HttpRequest(new HttpMethod("COPY"), GenerateRequestUrl(request.SrcId, request.SrcRev));
-
-            httpRequest.Headers.Add("Destination", string.Concat(request.TrgId, "?rev=", request.TrgRev));
-
-            return httpRequest;
+            return ReplaceDocumentHttpRequestFactory.Create(request);
         }
 
         protected virtual HttpRequest CreateHttpRequest(DocumentExistsRequest request)
         {
-            var httpRequest = new HttpRequest(HttpMethod.Head, GenerateRequestUrl(request.Id, request.Rev));
-
-            httpRequest.SetIfMatch(request.Rev);
-
-            return httpRequest;
+            return DocumentExistsHttpRequestFactory.Create(request);
         }
 
         protected virtual HttpRequest CreateHttpRequest(GetDocumentRequest request)
         {
-            var httpRequest = new HttpRequest(HttpMethod.Get, GenerateRequestUrl(request.Id, request.Rev));
-
-            httpRequest.SetIfMatch(request.Rev);
-
-            return httpRequest;
+            return GetDocumentHttpRequestFactory.Create(request);
         }
 
         protected virtual HttpRequest CreateHttpRequest(DeleteDocumentRequest request)
         {
-            var httpRequest = new HttpRequest(HttpMethod.Delete, GenerateRequestUrl(request.Id, request.Rev));
-
-            httpRequest.SetIfMatch(request.Rev);
-
-            return httpRequest;
+            return DeleteDocumentHttpRequestFactory.Create(request);
         }
 
         protected virtual HttpRequest CreateHttpRequest(PutDocumentRequest request)
         {
-            var httpRequest = new HttpRequest(HttpMethod.Put, GenerateRequestUrl(request.Id, request.Rev));
-
-            httpRequest.SetIfMatch(request.Rev);
-            httpRequest.SetContent(request.Content);
-
-            return httpRequest;
+            return PutDocumentHttpRequestFactory.Create(request);
         }
 
         protected virtual HttpRequest CreateHttpRequest(PostDocumentRequest request)
         {
-            var httpRequest = new HttpRequest(HttpMethod.Post, GenerateRequestUrl());
-
-            httpRequest.SetContent(request.Content);
-
-            return httpRequest;
-        }
-
-        protected virtual string GenerateRequestUrl(BulkRequest request)
-        {
-            return string.Format("{0}/_bulk_docs", Connection.Address);
-        }
-
-        protected virtual string GenerateRequestUrl(string id = null, string rev = null)
-        {
-            return string.Format("{0}/{1}{2}",
-                Connection.Address,
-                id ?? string.Empty,
-                rev == null ? string.Empty : string.Concat("?rev=", rev));
+            return PostDocumentHttpRequestFactory.Create(request);
         }
 
         protected virtual BulkResponse ProcessBulkResponse(HttpResponseMessage response)

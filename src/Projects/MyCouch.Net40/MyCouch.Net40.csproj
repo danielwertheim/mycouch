@@ -247,8 +247,29 @@
     <Compile Include="..\MyCouch\Requests\Factories\AttachmentHttpRequestFactoryBase.cs">
       <Link>Requests\Factories\AttachmentHttpRequestFactoryBase.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch\Requests\Factories\BulkRequestHttpRequestFactory.cs">
+      <Link>Requests\Factories\BulkRequestHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Requests\Factories\CopyDocumentHttpRequestFactory.cs">
+      <Link>Requests\Factories\CopyDocumentHttpRequestFactory.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch\Requests\Factories\DeleteAttachmentHttpRequestFactory.cs">
       <Link>Requests\Factories\DeleteAttachmentHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Requests\Factories\DeleteDocumentHttpRequestFactory.cs">
+      <Link>Requests\Factories\DeleteDocumentHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Requests\Factories\DeleteEntityHttpRequestFactory.cs">
+      <Link>Requests\Factories\DeleteEntityHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Requests\Factories\DocumentExistsHttpRequestFactory.cs">
+      <Link>Requests\Factories\DocumentExistsHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Requests\Factories\DocumentHttpRequestFactoryBase.cs">
+      <Link>Requests\Factories\DocumentHttpRequestFactoryBase.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Requests\Factories\EntityHttpRequestFactoryBase.cs">
+      <Link>Requests\Factories\EntityHttpRequestFactoryBase.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch\Requests\Factories\GetAttachmentHttpRequestFactory.cs">
       <Link>Requests\Factories\GetAttachmentHttpRequestFactory.cs</Link>
@@ -256,17 +277,38 @@
     <Compile Include="..\MyCouch\Requests\Factories\GetChangesHttpRequestFactory.cs">
       <Link>Requests\Factories\GetChangesHttpRequestFactory.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch\Requests\Factories\GetDocumentHttpRequestFactory.cs">
+      <Link>Requests\Factories\GetDocumentHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Requests\Factories\GetEntityHttpRequestFactory.cs">
+      <Link>Requests\Factories\GetEntityHttpRequestFactory.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch\Requests\Factories\HttpRequestFactoryBase.cs">
       <Link>Requests\Factories\HttpRequestFactoryBase.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch\Requests\Factories\IHttpRequestFactory.cs">
       <Link>Requests\Factories\IHttpRequestFactory.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch\Requests\Factories\PostDocumentHttpRequestFactory.cs">
+      <Link>Requests\Factories\PostDocumentHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Requests\Factories\PostEntityHttpRequestFactory.cs">
+      <Link>Requests\Factories\PostEntityHttpRequestFactory.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch\Requests\Factories\PutAttachmentHttpRequestFactory.cs">
       <Link>Requests\Factories\PutAttachmentHttpRequestFactory.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch\Requests\Factories\PutDocumentHttpRequestFactory.cs">
+      <Link>Requests\Factories\PutDocumentHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Requests\Factories\PutEntityHttpRequestFactory.cs">
+      <Link>Requests\Factories\PutEntityHttpRequestFactory.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch\Requests\Factories\QueryViewHttpRequestFactory.cs">
       <Link>Requests\Factories\QueryViewHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Requests\Factories\ReplaceDocumentHttpRequestFactory.cs">
+      <Link>Requests\Factories\ReplaceDocumentHttpRequestFactory.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch\Requests\GetAttachmentRequest.cs">
       <Link>Requests\GetAttachmentRequest.cs</Link>
@@ -279,9 +321,6 @@
     </Compile>
     <Compile Include="..\MyCouch\Requests\GetEntityRequest.cs">
       <Link>Requests\GetEntityRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch\Requests\IRequest.cs">
-      <Link>Requests\IRequest.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch\Requests\PostDocumentRequest.cs">
       <Link>Requests\PostDocumentRequest.cs</Link>
@@ -306,6 +345,9 @@
     </Compile>
     <Compile Include="..\MyCouch\Requests\ReplaceDocumentRequest.cs">
       <Link>Requests\ReplaceDocumentRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch\Requests\Request.cs">
+      <Link>Requests\Request.cs</Link>
     </Compile>
     <Compile Include="..\mycouch\responses\AttachmentResponse.cs">
       <Link>Responses\AttachmentResponse.cs</Link>

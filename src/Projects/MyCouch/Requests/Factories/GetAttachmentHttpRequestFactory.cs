@@ -11,7 +11,7 @@ namespace MyCouch.Requests.Factories
 
         public virtual HttpRequest Create(GetAttachmentRequest request)
         {
-            var httpRequest = new HttpRequest(HttpMethod.Get, GenerateRequestUrl(request.DocId, request.DocRev, request.Name));
+            var httpRequest = CreateFor<GetAttachmentRequest>(HttpMethod.Get, GenerateRequestUrl(request.DocId, request.DocRev, request.Name));
 
             httpRequest.SetIfMatch(request.DocRev);
 

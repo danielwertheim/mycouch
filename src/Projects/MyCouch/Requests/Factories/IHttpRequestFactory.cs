@@ -2,7 +2,7 @@
 
 namespace MyCouch.Requests.Factories
 {
-    public interface IHttpRequestFactory<in T> where T : IRequest
+    public interface IHttpRequestFactory<in T> where T : Request
     {
         HttpRequest Create(T request);
     }

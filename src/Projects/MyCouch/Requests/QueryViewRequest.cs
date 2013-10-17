@@ -8,7 +8,7 @@ namespace MyCouch.Requests
 #if !NETFX_CORE
     [Serializable]
 #endif
-    public class QueryViewRequest : IRequest
+    public class QueryViewRequest : Request
     {
         public ViewIdentity View { get; private set; }
         /// <summary>

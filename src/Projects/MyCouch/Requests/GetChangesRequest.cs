@@ -5,7 +5,7 @@ namespace MyCouch.Requests
 #if !NETFX_CORE
     [Serializable]
 #endif
-    public class GetChangesRequest : IRequest
+    public class GetChangesRequest : Request
     {
         /// <summary>
         /// Select the type of changes feed to consume.

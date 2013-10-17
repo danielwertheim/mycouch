@@ -14,7 +14,7 @@ namespace MyCouch.Requests.Factories
 
         public virtual HttpRequest Create(GetChangesRequest request)
         {
-            return new HttpRequest(HttpMethod.Get, GenerateRequestUrl(request));
+            return CreateFor<GetChangesRequest>(HttpMethod.Get, GenerateRequestUrl(request));
         }
 
         protected virtual string GenerateRequestUrl(GetChangesRequest request)

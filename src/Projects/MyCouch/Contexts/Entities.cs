@@ -5,6 +5,7 @@ using MyCouch.EntitySchemes;
 using MyCouch.Extensions;
 using MyCouch.Net;
 using MyCouch.Requests;
+using MyCouch.Requests.Factories;
 using MyCouch.Responses;
 using MyCouch.Responses.Factories;
 using MyCouch.Serialization;
@@ -13,8 +14,13 @@ namespace MyCouch.Contexts
 {
     public class Entities : ApiContextBase, IEntities
     {
-        public IEntitySerializer Serializer { get; protected set; }
-        public IEntityReflector Reflector { get; protected set;}
+        public IEntitySerializer Serializer { get; private set; }
+        public IEntityReflector Reflector { get; private set;}
+        protected GetEntityHttpRequestFactory GetEntityHttpRequestFactory { get; set; }
+        protected PostEntityHttpRequestFactory PostEntityHttpRequestFactory { get; set; }
+        protected PutEntityHttpRequestFactory PutEntityHttpRequestFactory { get; set; }
+        protected DeleteEntityHttpRequestFactory DeleteEntityHttpRequestFactory { get; set; }
+ 
         protected EntityResponseFactory EntityResponseFactory { get; set; }
 
         public Entities(IConnection connection, ISerializer serializer, IEntitySerializer entitySerializer, IEntityReflector entityReflector)
@@ -27,6 +33,10 @@ namespace MyCouch.Contexts
             Serializer = entitySerializer;
             EntityResponseFactory = new EntityResponseFactory(serializer, entitySerializer);
             Reflector = entityReflector;
+            GetEntityHttpRequestFactory = new GetEntityHttpRequestFactory(Connection, Serializer, Reflector);
+            PostEntityHttpRequestFactory = new PostEntityHttpRequestFactory(Connection, Serializer, Reflector);
+            PutEntityHttpRequestFactory = new PutEntityHttpRequestFactory(Connection, Serializer, Reflector);
+            DeleteEntityHttpRequestFactory = new DeleteEntityHttpRequestFactory(Connection, Serializer, Reflector);
         }
 
         public virtual Task<EntityResponse<T>> GetAsync<T>(string id, string rev = null) where T : class
@@ -102,62 +112,24 @@ namespace MyCouch.Contexts
             }
         }
 
-        protected virtual string SerializeEntity<T>(T entity) where T : class
-        {
-            return Serializer.Serialize(entity);
-        }
-
         protected virtual HttpRequest CreateHttpRequest(GetEntityRequest request)
         {
-            var httpRequest = new HttpRequest(HttpMethod.Get, GenerateRequestUrl(request.Id, request.Rev));
-
-            httpRequest.SetIfMatch(request.Rev);
-
-            return httpRequest;
+            return GetEntityHttpRequestFactory.Create(request);
         }
 
         protected virtual HttpRequest CreateHttpRequest<T>(PostEntityRequest<T> request) where T : class
         {
-            var httpRequest = new HttpRequest(HttpMethod.Post, GenerateRequestUrl());
-
-            httpRequest.SetContent(SerializeEntity(request.Entity));
-
-            return httpRequest;
+            return PostEntityHttpRequestFactory.Create(request);
         }
 
         protected virtual HttpRequest CreateHttpRequest<T>(PutEntityRequest<T> request) where T : class
         {
-            var id = Reflector.IdMember.GetValueFrom(request.Entity);
-            var rev = Reflector.RevMember.GetValueFrom(request.Entity);
-            var httpRequest = new HttpRequest(HttpMethod.Put, GenerateRequestUrl(id, rev));
-
-            httpRequest.SetIfMatch(rev);
-            httpRequest.SetContent(SerializeEntity(request.Entity));
-
-            return httpRequest;
+            return PutEntityHttpRequestFactory.Create(request);
         }
 
         protected virtual HttpRequest CreateHttpRequest<T>(DeleteEntityRequest<T> request) where T : class
         {
-            var entityId = Reflector.IdMember.GetValueFrom(request.Entity);
-            Ensure.That(entityId, "entityId").IsNotNullOrWhiteSpace();
-
-            var entityRev = Reflector.RevMember.GetValueFrom(request.Entity);
-            Ensure.That(entityRev, "entityRev").IsNotNullOrWhiteSpace();
-
-            var httpRequest = new HttpRequest(HttpMethod.Delete, GenerateRequestUrl(entityId, entityRev));
-
-            httpRequest.SetIfMatch(entityRev);
-
-            return httpRequest;
-        }
-
-        protected virtual string GenerateRequestUrl(string id = null, string rev = null)
-        {
-            return string.Format("{0}/{1}{2}",
-                Connection.Address,
-                id ?? string.Empty,
-                rev == null ? string.Empty : string.Concat("?rev=", rev));
+            return DeleteEntityHttpRequestFactory.Create(request);
         }
 
         protected virtual EntityResponse<T> ProcessEntityResponse<T>(GetEntityRequest request, HttpResponseMessage response) where T : class

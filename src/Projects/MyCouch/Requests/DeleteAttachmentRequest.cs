@@ -6,7 +6,7 @@ namespace MyCouch.Requests
 #if !NETFX_CORE
     [Serializable]
 #endif
-    public class DeleteAttachmentRequest : IRequest
+    public class DeleteAttachmentRequest : Request
     {
         public string DocId { get; private set; }
         public string DocRev { get; private set; }

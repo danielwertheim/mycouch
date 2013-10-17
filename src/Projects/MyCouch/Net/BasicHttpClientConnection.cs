@@ -70,19 +70,19 @@ namespace MyCouch.Net
                   .WithExtraMessageOf(() => ExceptionStrings.BasicHttpClientConnectionUriIsMissingDb);
         }
 
-        public virtual async Task<HttpResponseMessage> SendAsync(HttpRequestMessage httpRequest)
+        public virtual async Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest)
         {
-            return await HttpClient.SendAsync(httpRequest).ForAwait();
+            return await HttpClient.SendAsync(httpRequest.RemoveRequestType()).ForAwait();
         }
 
-        public virtual async Task<HttpResponseMessage> SendAsync(HttpRequestMessage httpRequest, HttpCompletionOption completionOption)
+        public virtual async Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, HttpCompletionOption completionOption)
         {
-            return await HttpClient.SendAsync(httpRequest, completionOption).ForAwait();
+            return await HttpClient.SendAsync(httpRequest.RemoveRequestType(), completionOption).ForAwait();
         }
 
-        public virtual async Task<HttpResponseMessage> SendAsync(HttpRequestMessage httpRequest, HttpCompletionOption completionOption, CancellationToken cancellationToken)
+        public virtual async Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, HttpCompletionOption completionOption, CancellationToken cancellationToken)
         {
-            return await HttpClient.SendAsync(httpRequest, completionOption, cancellationToken).ForAwait();
+            return await HttpClient.SendAsync(httpRequest.RemoveRequestType(), completionOption, cancellationToken).ForAwait();
         }
     }
 }

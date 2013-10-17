@@ -6,7 +6,7 @@ namespace MyCouch.Requests
 #if !NETFX_CORE
     [Serializable]
 #endif
-    public class PostDocumentRequest : IRequest
+    public class PostDocumentRequest : Request
     {
         public string Content { get; set; }
 
