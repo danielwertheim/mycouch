@@ -3,7 +3,7 @@ using MyCouch.Net;
 
 namespace MyCouch.Requests.Factories
 {
-    public class ReplaceDocumentHttpRequestFactory : DocumentHttpRequestFactoryBase, IHttpRequestFactory<ReplaceDocumentRequest>
+    public class ReplaceDocumentHttpRequestFactory : DocumentHttpRequestFactoryBase
     {
         public ReplaceDocumentHttpRequestFactory(IConnection connection) : base(connection) { }
 

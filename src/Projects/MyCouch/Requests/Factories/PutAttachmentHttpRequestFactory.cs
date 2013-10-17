@@ -3,9 +3,7 @@ using MyCouch.Net;
 
 namespace MyCouch.Requests.Factories
 {
-    public class PutAttachmentHttpRequestFactory :
-        AttachmentHttpRequestFactoryBase,
-        IHttpRequestFactory<PutAttachmentRequest>
+    public class PutAttachmentHttpRequestFactory : AttachmentHttpRequestFactoryBase
     {
         public PutAttachmentHttpRequestFactory(IConnection connection) : base(connection) { }
 

@@ -6,9 +6,7 @@ using MyCouch.Net;
 
 namespace MyCouch.Requests.Factories
 {
-    public class GetChangesHttpRequestFactory :
-        HttpRequestFactoryBase,
-        IHttpRequestFactory<GetChangesRequest>
+    public class GetChangesHttpRequestFactory : HttpRequestFactoryBase
     {
         public GetChangesHttpRequestFactory(IConnection connection) : base(connection) {}
 

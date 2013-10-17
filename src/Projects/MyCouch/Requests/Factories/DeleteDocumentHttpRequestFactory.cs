@@ -3,7 +3,7 @@ using MyCouch.Net;
 
 namespace MyCouch.Requests.Factories
 {
-    public class DeleteDocumentHttpRequestFactory : DocumentHttpRequestFactoryBase, IHttpRequestFactory<DeleteDocumentRequest>
+    public class DeleteDocumentHttpRequestFactory : DocumentHttpRequestFactoryBase
     {
         public DeleteDocumentHttpRequestFactory(IConnection connection) : base(connection) {}
 

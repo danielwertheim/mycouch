@@ -13,14 +13,14 @@ namespace MyCouch.Contexts
 {
     public class Documents : ApiContextBase, IDocuments
     {
-        protected IHttpRequestFactory<BulkRequest> BulkHttpRequestFactory { get; set; }
-        protected IHttpRequestFactory<CopyDocumentRequest> CopyDocumentHttpRequestFactory { get; set; }
-        protected IHttpRequestFactory<ReplaceDocumentRequest> ReplaceDocumentHttpRequestFactory { get; set; }
-        protected IHttpRequestFactory<DocumentExistsRequest> DocumentExistsHttpRequestFactory { get; set; }
-        protected IHttpRequestFactory<GetDocumentRequest> GetDocumentHttpRequestFactory { get; set; }
-        protected IHttpRequestFactory<PostDocumentRequest> PostDocumentHttpRequestFactory { get; set; }
-        protected IHttpRequestFactory<PutDocumentRequest> PutDocumentHttpRequestFactory { get; set; }
-        protected IHttpRequestFactory<DeleteDocumentRequest> DeleteDocumentHttpRequestFactory { get; set; }
+        protected BulkHttpRequestFactory BulkHttpRequestFactory { get; set; }
+        protected CopyDocumentHttpRequestFactory CopyDocumentHttpRequestFactory { get; set; }
+        protected ReplaceDocumentHttpRequestFactory ReplaceDocumentHttpRequestFactory { get; set; }
+        protected DocumentExistsHttpRequestFactory DocumentExistsHttpRequestFactory { get; set; }
+        protected GetDocumentHttpRequestFactory GetDocumentHttpRequestFactory { get; set; }
+        protected PostDocumentHttpRequestFactory PostDocumentHttpRequestFactory { get; set; }
+        protected PutDocumentHttpRequestFactory PutDocumentHttpRequestFactory { get; set; }
+        protected DeleteDocumentHttpRequestFactory DeleteDocumentHttpRequestFactory { get; set; }
         protected DocumentResponseFactory DocumentReponseFactory { get; set; }
         protected DocumentHeaderResponseFactory DocumentHeaderReponseFactory { get; set; }
         protected BulkResponseFactory BulkReponseFactory { get; set; }
@@ -30,7 +30,7 @@ namespace MyCouch.Contexts
         {
             Ensure.That(serializer, "serializer").IsNotNull();
 
-            BulkHttpRequestFactory = new BulkRequestHttpRequestFactory(Connection);
+            BulkHttpRequestFactory = new BulkHttpRequestFactory(Connection);
             CopyDocumentHttpRequestFactory = new CopyDocumentHttpRequestFactory(Connection);
             ReplaceDocumentHttpRequestFactory = new ReplaceDocumentHttpRequestFactory(Connection);
             DocumentExistsHttpRequestFactory = new DocumentExistsHttpRequestFactory(Connection);

@@ -15,9 +15,9 @@ namespace MyCouch.Contexts
     {
         protected AttachmentResponseFactory AttachmentResponseFactory { get; set; }
         protected DocumentHeaderResponseFactory DocumentHeaderResponseFactory { get; set; }
-        protected IHttpRequestFactory<GetAttachmentRequest> GetAttachmentHttpRequestFactory { get; set; }
-        protected IHttpRequestFactory<PutAttachmentRequest> PutAttachmentHttpRequestFactory { get; set; }
-        protected IHttpRequestFactory<DeleteAttachmentRequest> DeleteAttachmentHttpRequestFactory { get; set; }
+        protected GetAttachmentHttpRequestFactory GetAttachmentHttpRequestFactory { get; set; }
+        protected PutAttachmentHttpRequestFactory PutAttachmentHttpRequestFactory { get; set; }
+        protected DeleteAttachmentHttpRequestFactory DeleteAttachmentHttpRequestFactory { get; set; }
 
         public Attachments(IConnection connection, ISerializer serializer)
             : base(connection)

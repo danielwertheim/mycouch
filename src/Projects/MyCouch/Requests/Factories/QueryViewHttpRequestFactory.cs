@@ -7,9 +7,7 @@ using MyCouch.Net;
 
 namespace MyCouch.Requests.Factories
 {
-    public class QueryViewHttpRequestFactory :
-        HttpRequestFactoryBase,
-        IHttpRequestFactory<QueryViewRequest>
+    public class QueryViewHttpRequestFactory : HttpRequestFactoryBase
     {
         public QueryViewHttpRequestFactory(IConnection connection) : base(connection) { }
 

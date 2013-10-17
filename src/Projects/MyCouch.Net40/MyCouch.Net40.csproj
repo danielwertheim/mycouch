@@ -247,8 +247,8 @@
     <Compile Include="..\MyCouch\Requests\Factories\AttachmentHttpRequestFactoryBase.cs">
       <Link>Requests\Factories\AttachmentHttpRequestFactoryBase.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\Factories\BulkRequestHttpRequestFactory.cs">
-      <Link>Requests\Factories\BulkRequestHttpRequestFactory.cs</Link>
+    <Compile Include="..\MyCouch\Requests\Factories\BulkHttpRequestFactory.cs">
+      <Link>Requests\Factories\BulkHttpRequestFactory.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch\Requests\Factories\CopyDocumentHttpRequestFactory.cs">
       <Link>Requests\Factories\CopyDocumentHttpRequestFactory.cs</Link>
@@ -285,9 +285,6 @@
     </Compile>
     <Compile Include="..\MyCouch\Requests\Factories\HttpRequestFactoryBase.cs">
       <Link>Requests\Factories\HttpRequestFactoryBase.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch\Requests\Factories\IHttpRequestFactory.cs">
-      <Link>Requests\Factories\IHttpRequestFactory.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch\Requests\Factories\PostDocumentHttpRequestFactory.cs">
       <Link>Requests\Factories\PostDocumentHttpRequestFactory.cs</Link>

@@ -53,7 +53,7 @@
     <Compile Include="ChangesFeed.cs" />
     <Compile Include="ChangesStyle.cs" />
     <Compile Include="Net\BytesContent.cs" />
-    <Compile Include="Requests\Factories\BulkRequestHttpRequestFactory.cs" />
+    <Compile Include="Requests\Factories\BulkHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\CopyDocumentHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\DeleteDocumentHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\DeleteEntityHttpRequestFactory.cs" />
@@ -77,7 +77,6 @@
     <Compile Include="Requests\Request.cs" />
     <Compile Include="Contexts\ApiContextBase.cs" />
     <Compile Include="Contexts\Changes.cs" />
-    <Compile Include="Requests\Factories\IHttpRequestFactory.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="IChanges.cs" />
     <Compile Include="MyCouchException.cs" />

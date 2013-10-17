@@ -15,7 +15,7 @@ namespace MyCouch.Contexts
 {
     public class Changes : ApiContextBase, IChanges
     {
-        protected IHttpRequestFactory<GetChangesRequest> HttpRequestFactory { get; set; }
+        protected GetChangesHttpRequestFactory HttpRequestFactory { get; set; }
         protected ChangesResponseFactory ChangesResponseFactory { get; set; }
         protected ContinuousChangesResponseFactory ContinuousChangesResponseFactory { get; set; }
 

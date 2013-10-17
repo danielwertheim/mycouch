@@ -3,9 +3,9 @@ using MyCouch.Net;
 
 namespace MyCouch.Requests.Factories
 {
-    public class BulkRequestHttpRequestFactory : HttpRequestFactoryBase, IHttpRequestFactory<BulkRequest>
+    public class BulkHttpRequestFactory : HttpRequestFactoryBase
     {
-        public BulkRequestHttpRequestFactory(IConnection connection) : base(connection) { }
+        public BulkHttpRequestFactory(IConnection connection) : base(connection) { }
 
         public virtual HttpRequest Create(BulkRequest request)
         {

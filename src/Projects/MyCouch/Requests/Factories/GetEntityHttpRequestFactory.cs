@@ -5,7 +5,7 @@ using MyCouch.Serialization;
 
 namespace MyCouch.Requests.Factories
 {
-    public class GetEntityHttpRequestFactory : EntityHttpRequestFactoryBase, IHttpRequestFactory<GetEntityRequest>
+    public class GetEntityHttpRequestFactory : EntityHttpRequestFactoryBase
     {
         public GetEntityHttpRequestFactory(IConnection connection, IEntitySerializer serializer, IEntityReflector reflector)
             : base(connection, serializer, reflector) {}
