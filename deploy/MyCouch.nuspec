@@ -25,7 +25,7 @@
     <dependencies>
        <group targetFramework="net40">
          <dependency id="Ensure.That" version="1.0.0" />
-         <dependency id="Newtonsoft.Json" version="5.0.6" />
+         <dependency id="Newtonsoft.Json" version="5.0.8" />
          <dependency id="Microsoft.Bcl" version="1.1.3" />
          <dependency id="Microsoft.Bcl.Async" version="1.0.16" />
          <dependency id="Microsoft.Bcl.Build" version="1.0.10" />
@@ -33,11 +33,11 @@
        </group>
        <group targetFramework="net45">
          <dependency id="Ensure.That" version="1.0.0" />
-         <dependency id="Newtonsoft.Json" version="5.0.6" />
+         <dependency id="Newtonsoft.Json" version="5.0.8" />
        </group>
        <group targetFramework="netcore">
          <dependency id="Ensure.That" version="1.0.0" />
-         <dependency id="Newtonsoft.Json" version="5.0.6" />
+         <dependency id="Newtonsoft.Json" version="5.0.8" />
        </group>
     </dependencies>
   </metadata>
