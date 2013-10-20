@@ -72,17 +72,27 @@ namespace MyCouch.Net
 
         public virtual async Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest)
         {
-            return await HttpClient.SendAsync(httpRequest.RemoveRequestType()).ForAwait();
+            return await HttpClient.SendAsync(OnBeforeSend(httpRequest)).ForAwait();
+        }
+
+        public virtual async Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, CancellationToken cancellationToken)
+        {
+            return await HttpClient.SendAsync(OnBeforeSend(httpRequest), cancellationToken).ForAwait();
         }
 
         public virtual async Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, HttpCompletionOption completionOption)
         {
-            return await HttpClient.SendAsync(httpRequest.RemoveRequestType(), completionOption).ForAwait();
+            return await HttpClient.SendAsync(OnBeforeSend(httpRequest), completionOption).ForAwait();
         }
 
         public virtual async Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, HttpCompletionOption completionOption, CancellationToken cancellationToken)
         {
-            return await HttpClient.SendAsync(httpRequest.RemoveRequestType(), completionOption, cancellationToken).ForAwait();
+            return await HttpClient.SendAsync(OnBeforeSend(httpRequest), completionOption, cancellationToken).ForAwait();
+        }
+
+        protected virtual HttpRequest OnBeforeSend(HttpRequest httpRequest)
+        {
+            return httpRequest.RemoveRequestType();
         }
     }
 }

@@ -22,6 +22,11 @@ namespace MyCouch.UnitTests.Fakes
             return null;
         }
 
+        public Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, CancellationToken cancellationToken)
+        {
+            return null;
+        }
+
         public Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, HttpCompletionOption completionOption)
         {
             return null;

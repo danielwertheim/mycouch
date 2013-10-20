@@ -10,6 +10,7 @@ namespace MyCouch
     {
         Uri Address { get; }
         Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest);
+        Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, CancellationToken cancellationToken);
         Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, HttpCompletionOption completionOption);
         Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, HttpCompletionOption completionOption, CancellationToken cancellationToken);
     }
