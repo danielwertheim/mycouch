@@ -14,6 +14,7 @@ namespace MyCouch.Net
         public static class CustomHeaders
         {
             public const string RequestType = "mycouch-type";
+            public const string RequestEntityType = "mycouch-entitytype";
         }
 
         public HttpRequest(HttpMethod method, string url) : base(method, new Uri(url))
@@ -46,27 +47,41 @@ namespace MyCouch.Net
         public virtual HttpRequest SetRequestType(Type requestType)
         {
             Headers.Add(CustomHeaders.RequestType, GetRequestTypeName(requestType));
-
+#if !NETFX_CORE
+            if(requestType.IsGenericType)
+                Headers.Add(CustomHeaders.RequestEntityType, GetRequestEntityTypeName(requestType));
+#else
+            var typeInfo = requestType.GetTypeInfo();
+            if(typeInfo.IsGenericType)
+                Headers.Add(CustomHeaders.RequestEntityType, GetRequestEntityTypeName(requestType));
+#endif
             return this;
         }
 
         protected virtual string GetRequestTypeName(Type requestType)
         {
-#if net45
+#if !NETFX_CORE
             return requestType.IsGenericType
-                ? string.Format("{0}:{1}", requestType.Name.Substring(0, requestType.Name.IndexOf('`')), requestType.GenericTypeArguments[0].Name)
+                ? requestType.Name.Substring(0, requestType.Name.IndexOf('`'))
                 : requestType.Name;
-#endif
-#if net40
-            return requestType.IsGenericType
-                ? string.Format("{0}:{1}", requestType.Name.Substring(0, requestType.Name.IndexOf('`')), requestType.GetGenericArguments()[0].Name)
-                : requestType.Name;
-#endif
-#if NETFX_CORE
+#else
             var typeInfo = requestType.GetTypeInfo();
             return typeInfo.IsGenericType
-                ? string.Format("{0}:{1}", requestType.Name.Substring(0, requestType.Name.IndexOf('`')), requestType.GenericTypeArguments[0].Name)
+                ? requestType.Name.Substring(0, requestType.Name.IndexOf('`'))
                 : requestType.Name;
+#endif
+        }
+
+        protected virtual string GetRequestEntityTypeName(Type requestType)
+        {
+#if net45
+            return requestType.GenericTypeArguments[0].Name;
+#endif
+#if net40
+            return requestType.GetGenericArguments()[0].Name;
+#endif
+#if NETFX_CORE
+            return requestType.GenericTypeArguments[0].Name;
 #endif
         }
 
@@ -74,6 +89,9 @@ namespace MyCouch.Net
         {
             if (Headers.Contains(CustomHeaders.RequestType))
                 Headers.Remove(CustomHeaders.RequestType);
+
+            if (Headers.Contains(CustomHeaders.RequestEntityType))
+                Headers.Remove(CustomHeaders.RequestEntityType);
 
             return this;
         }

@@ -9,14 +9,14 @@
     <summary>Simple async CouchDb client.</summary>
     <description>
       Simple asynchronous CouchDb client for .Net - builds on top of the asynchronous HTTP client and uses JSON.Net to provide flexible serialization behaviour. It tries to keep the domain language of CouchDb instead of bringing in generic repositories and other confusing stuff. MyCouch lets you work with raw JSON and/or entities/POCOS without requiring any implementation of interfaces, baseclasses etc. MyCouch provides you with some model conventions like injection of $doctype to the document. It is plug-gable. If you don't like some piece, then hook in your implementation instead.
-      Supports .Net4.0, .Net4.5 and Windows store apps.
+      Supports .Net4.0, .Net4.5 and Windows store apps. Also supports Cloudant.
     </description>
     <iconUrl>http://www.mycouchclient.com/logos/mycouch-nuget.png</iconUrl>
     <projectUrl>https://github.com/danielwertheim/MyCouch</projectUrl>
     <licenseUrl>https://github.com/danielwertheim/MyCouch#license</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <releaseNotes>Can be found on project site: https://github.com/danielwertheim/mycouch/wiki/release-notes</releaseNotes>
-    <tags>couchdb cloudant nosql json document-db documents poco async asynchronous</tags>
+    <tags>couchdb cloudant nosql json document-db documents poco async asynchronous winrt</tags>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System.Configuration" targetFramework="net40" />
       <frameworkAssembly assemblyName="System.Configuration" targetFramework="net45" />
