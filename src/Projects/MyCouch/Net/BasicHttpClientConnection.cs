@@ -33,7 +33,7 @@ namespace MyCouch.Net
             HttpClient = null;
         }
 
-        protected HttpClient CreateHttpClient(Uri uri)
+        protected virtual HttpClient CreateHttpClient(Uri uri)
         {
             var client = new HttpClient { BaseAddress = new Uri(BuildCleanUrl(uri)) };
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(HttpContentTypes.Json));
