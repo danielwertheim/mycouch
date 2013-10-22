@@ -116,11 +116,67 @@ namespace MyCouch.UnitTests.Schemes
         }
 
         [Fact]
-        public void When_DocumentId_is_defined_in_base_It_can_extract_the_id()
+        public void When_ModelRev_is_defined_in_base_It_can_extract_the_rev()
+        {
+            var model = new ModelInheritanceModelRevChild { ModelInheritanceModelRevBaseRev = "ModelInheritanceModelRevChild:ModelInheritanceModelRevBaseRev:1" };
+
+            SUT.GetValueFrom(model).Should().Be(model.ModelInheritanceModelRevBaseRev);
+        }
+
+        [Fact]
+        public void When_ModelRev_is_defined_in_base_but_child_has_more_specific_ModelRev_It_extracts_the_child_ModelRev()
+        {
+            var model = new ModelInheritanceModelRevWithMoreSpecificChild { ModelInheritanceModelRevWithMoreSpecificChildRev = "ModelInheritanceModelRevWithMoreSpecificChild:ModelInheritanceModelRevWithMoreSpecificChildRev:1" };
+
+            SUT.GetValueFrom(model).Should().Be(model.ModelInheritanceModelRevWithMoreSpecificChildRev);
+        }
+
+        [Fact]
+        public void When_ModelRev_is_defined_in_base_but_child_has_DocumentRev_It_extracts_the_child_DocumentRev()
+        {
+            var model = new ModelInheritanceModelRevWithChildDocumentRev { DocumentRev = "ModelInheritanceModelRevWithChildDocumentRev:DocumentRev:1" };
+
+            SUT.GetValueFrom(model).Should().Be(model.DocumentRev);
+        }
+
+        [Fact]
+        public void When_ModelRev_is_defined_in_base_but_child_has_EntityRev_It_extracts_the_child_EntityRev()
+        {
+            var model = new ModelInheritanceModelRevWithChildEntityRev { EntityRev = "ModelInheritanceModelRevWithChildEntityRev:EntityRev:1" };
+
+            SUT.GetValueFrom(model).Should().Be(model.EntityRev);
+        }
+
+        [Fact]
+        public void When_ModelRev_is_defined_in_base_but_child_has_Rev_It_extracts_the_child_Rev()
+        {
+            var model = new ModelInheritanceModelRevWithChildRev { Rev = "ModelInheritanceModelRevWithChildRev:Rev:1" };
+
+            SUT.GetValueFrom(model).Should().Be(model.Rev);
+        }
+
+        [Fact]
+        public void When_DocumentRev_is_defined_in_base_It_can_extract_the_rev()
         {
             var model = new ModelInheritanceDocumentRevChild { DocumentRev = "ModelInheritanceDocumentRevChild:DocumentRev:1" };
 
             SUT.GetValueFrom(model).Should().Be(model.DocumentRev);
+        }
+
+        [Fact]
+        public void When_EntityRev_is_defined_in_base_It_can_extract_the_rev()
+        {
+            var model = new ModelInheritanceEntityRevChild { EntityRev = "ModelInheritanceEntityRevChild:EntityRev:1" };
+
+            SUT.GetValueFrom(model).Should().Be(model.EntityRev);
+        }
+
+        [Fact]
+        public void When_Rev_is_defined_in_base_It_can_extract_the_rev()
+        {
+            var model = new ModelInheritanceRevChild { Rev = "ModelInheritanceRevChild:Rev:1" };
+
+            SUT.GetValueFrom(model).Should().Be(model.Rev);
         }
 
         private class ModelForMemberRanking
@@ -158,6 +214,11 @@ namespace MyCouch.UnitTests.Schemes
             public string ModelFiveRev { get; set; }
         }
 
+        private class ModelInheritanceModelRevBase
+        {
+            public string ModelInheritanceModelRevBaseRev { get; set; }
+        }
+
         private class ModelInheritanceLowerCasedRevBase
         {
             public string _rev { get; set; }
@@ -168,9 +229,43 @@ namespace MyCouch.UnitTests.Schemes
             public string _Rev { get; set; }
         }
 
+        private class ModelInheritanceModelRevChild : ModelInheritanceModelRevBase
+        {
+        }
+
+        private class ModelInheritanceModelRevWithMoreSpecificChild : ModelInheritanceModelRevBase
+        {
+            public string ModelInheritanceModelRevWithMoreSpecificChildRev { get; set; }
+        }
+
+        private class ModelInheritanceModelRevWithChildDocumentRev : ModelInheritanceModelRevBase
+        {
+            public string DocumentRev { get; set; }
+        }
+
+        private class ModelInheritanceModelRevWithChildEntityRev : ModelInheritanceModelRevBase
+        {
+            public string EntityRev { get; set; }
+        }
+
+        private class ModelInheritanceModelRevWithChildRev : ModelInheritanceModelRevBase
+        {
+            public string Rev { get; set; }
+        }
+
         private class ModelInheritanceDocumentRevBase
         {
             public string DocumentRev { get; set; }
+        }
+
+        private class ModelInheritanceEntityRevBase
+        {
+            public string EntityRev { get; set; }
+        }
+
+        private class ModelInheritanceRevBase
+        {
+            public string Rev { get; set; }
         }
 
         private class ModelInheritanceLowerCasedRevChild : ModelInheritanceLowerCasedRevBase
@@ -182,6 +277,14 @@ namespace MyCouch.UnitTests.Schemes
         }
 
         private class ModelInheritanceDocumentRevChild : ModelInheritanceDocumentRevBase
+        {
+        }
+
+        private class ModelInheritanceEntityRevChild : ModelInheritanceEntityRevBase
+        {
+        }
+
+        private class ModelInheritanceRevChild : ModelInheritanceRevBase
         {
         }
     }
