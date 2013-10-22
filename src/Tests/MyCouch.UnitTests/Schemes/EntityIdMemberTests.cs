@@ -116,11 +116,67 @@ namespace MyCouch.UnitTests.Schemes
         }
 
         [Fact]
+        public void When_ModelId_is_defined_in_base_It_can_extract_the_id()
+        {
+            var model = new ModelInheritanceModelIdChild { ModelInheritanceModelIdBaseId = "ModelInheritanceModelIdChild:ModelInheritanceModelIdBaseId:1" };
+
+            SUT.GetValueFrom(model).Should().Be(model.ModelInheritanceModelIdBaseId);
+        }
+
+        [Fact]
+        public void When_ModelId_is_defined_in_base_but_child_has_more_specific_ModelId_It_extracts_the_child_ModelId()
+        {
+            var model = new ModelInheritanceModelIdWithMoreSpecificChild { ModelInheritanceModelIdWithMoreSpecificChildId = "ModelInheritanceModelIdWithMoreSpecificChild:ModelInheritanceModelIdWithMoreSpecificChildId:1" };
+
+            SUT.GetValueFrom(model).Should().Be(model.ModelInheritanceModelIdWithMoreSpecificChildId);
+        }
+
+        [Fact]
+        public void When_ModelId_is_defined_in_base_but_child_has_DocumentId_It_extracts_the_child_DocumentId()
+        {
+            var model = new ModelInheritanceModelIdWithChildDocumentId { DocumentId = "ModelInheritanceModelIdWithChildDocumentId:DocumentId:1" };
+
+            SUT.GetValueFrom(model).Should().Be(model.DocumentId);
+        }
+
+        [Fact]
+        public void When_ModelId_is_defined_in_base_but_child_has_EntityId_It_extracts_the_child_EntityId()
+        {
+            var model = new ModelInheritanceModelIdWithChildEntityId { EntityId = "ModelInheritanceModelIdWithChildEntityId:EntityId:1" };
+
+            SUT.GetValueFrom(model).Should().Be(model.EntityId);
+        }
+
+        [Fact]
+        public void When_ModelId_is_defined_in_base_but_child_has_Id_It_extracts_the_child_Id()
+        {
+            var model = new ModelInheritanceModelIdWithChildId { Id = "ModelInheritanceModelIdWithChildId:Id:1" };
+
+            SUT.GetValueFrom(model).Should().Be(model.Id);
+        }
+
+        [Fact]
         public void When_DocumentId_is_defined_in_base_It_can_extract_the_id()
         {
             var model = new ModelInheritanceDocumentIdChild { DocumentId = "ModelInheritanceDocumentIdChild:DocumentId:1" };
 
             SUT.GetValueFrom(model).Should().Be(model.DocumentId);
+        }
+
+        [Fact]
+        public void When_EntityId_is_defined_in_base_It_can_extract_the_id()
+        {
+            var model = new ModelInheritanceEntityIdChild { EntityId = "ModelInheritanceEntityIdChild:EntityId:1" };
+
+            SUT.GetValueFrom(model).Should().Be(model.EntityId);
+        }
+
+        [Fact]
+        public void When_Id_is_defined_in_base_It_can_extract_the_id()
+        {
+            var model = new ModelInheritanceIdChild { Id = "ModelInheritanceIdChild:Id:1" };
+
+            SUT.GetValueFrom(model).Should().Be(model.Id);
         }
 
         private class ModelForMemberRanking
@@ -158,6 +214,11 @@ namespace MyCouch.UnitTests.Schemes
             public string ModelFiveId { get; set; }
         }
 
+        private class ModelInheritanceModelIdBase
+        {
+            public string ModelInheritanceModelIdBaseId { get; set; }
+        }
+
         private class ModelInheritanceLowerCasedIdBase
         {
             public string _id { get; set; }
@@ -173,6 +234,16 @@ namespace MyCouch.UnitTests.Schemes
             public string DocumentId { get; set; }
         }
 
+        private class ModelInheritanceEntityIdBase
+        {
+            public string EntityId { get; set; }
+        }
+
+        private class ModelInheritanceIdBase
+        {
+            public string Id { get; set; }
+        }
+
         private class ModelInheritanceLowerCasedIdChild : ModelInheritanceLowerCasedIdBase
         {
         }
@@ -181,7 +252,39 @@ namespace MyCouch.UnitTests.Schemes
         {
         }
 
+        private class ModelInheritanceModelIdChild : ModelInheritanceModelIdBase
+        {
+        }
+
+        private class ModelInheritanceModelIdWithMoreSpecificChild : ModelInheritanceModelIdBase
+        {
+            public string ModelInheritanceModelIdWithMoreSpecificChildId { get; set; }
+        }
+
+        private class ModelInheritanceModelIdWithChildDocumentId : ModelInheritanceModelIdBase
+        {
+            public string DocumentId { get; set; }
+        }
+
+        private class ModelInheritanceModelIdWithChildEntityId : ModelInheritanceModelIdBase
+        {
+            public string EntityId { get; set; }
+        }
+
+        private class ModelInheritanceModelIdWithChildId : ModelInheritanceModelIdBase
+        {
+            public string Id { get; set; }
+        }
+
         private class ModelInheritanceDocumentIdChild : ModelInheritanceDocumentIdBase
+        {
+        }
+
+        private class ModelInheritanceEntityIdChild : ModelInheritanceEntityIdBase
+        {
+        }
+
+        private class ModelInheritanceIdChild : ModelInheritanceIdBase
         {
         }
     }
