@@ -99,6 +99,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\..\Projects\MyCouch.Cloudant.Net45\MyCouch.Cloudant.Net45.csproj">
+      <Project>{fb7cd2af-ddc5-44c6-8467-e3dbd1eec417}</Project>
+      <Name>MyCouch.Cloudant.Net45</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Projects\MyCouch.Net45\MyCouch.Net45.csproj">
       <Project>{564701b5-d8f3-4b69-981f-559f8867fb76}</Project>
       <Name>MyCouch.Net45</Name>

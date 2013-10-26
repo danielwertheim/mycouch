@@ -123,6 +123,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Projects\MyCouch.Cloudant.Net40\MyCouch.Cloudant.Net40.csproj">
+      <Project>{510861cb-11b9-47c9-8ef3-4a1a2a8222c3}</Project>
+      <Name>MyCouch.Cloudant.Net40</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Projects\MyCouch.Net40\MyCouch.Net40.csproj">
       <Project>{f6f6b78c-3213-452c-834b-2d2c8ae69685}</Project>
       <Name>MyCouch.Net40</Name>
