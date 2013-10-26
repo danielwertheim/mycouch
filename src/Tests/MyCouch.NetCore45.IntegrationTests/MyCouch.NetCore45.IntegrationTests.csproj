@@ -114,37 +114,37 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests\ClientExtensions.cs">
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\ClientExtensions.cs">
       <Link>ClientExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests\ClientTestsOf.cs">
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\ClientTestsOf.cs">
       <Link>ClientTestsOf.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.integrationtests\clienttests\AttachmentsTests.cs">
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\clienttests\AttachmentsTests.cs">
       <Link>ClientTests\AttachmentsTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests\ClientTests\ChangesTests.cs">
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\ClientTests\ChangesTests.cs">
       <Link>ClientTests\ChangesTests.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.integrationtests\clienttests\DocumentsTests.cs">
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\clienttests\DocumentsTests.cs">
       <Link>ClientTests\DocumentsTests.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.integrationtests\clienttests\EntitiesTests.cs">
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\clienttests\EntitiesTests.cs">
       <Link>ClientTests\EntitiesTests.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.integrationtests\clienttests\ViewsTests.cs">
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\clienttests\ViewsTests.cs">
       <Link>ClientTests\ViewsTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests\IntegrationTestsRuntime.cs">
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\IntegrationTestsRuntime.cs">
       <Link>IntegrationTestsRuntime.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests\IPreserveStatePerFixture.cs">
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\IPreserveStatePerFixture.cs">
       <Link>IPreserveStatePerFixture.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests\TestFixtures\ClientTestsFixture.cs">
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\TestFixtures\ClientTestsFixture.cs">
       <Link>TestFixtures\ClientTestsFixture.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests\TestFixtures\ViewsFixture.cs">
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\TestFixtures\ViewsFixture.cs">
       <Link>TestFixtures\ViewsFixture.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

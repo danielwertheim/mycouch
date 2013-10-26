@@ -53,40 +53,18 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests\ClientExtensions.cs">
-      <Link>ClientExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests\ClientTestsOf.cs">
-      <Link>ClientTestsOf.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests\ClientTests\AttachmentsTests.cs">
-      <Link>ClientTests\AttachmentsTests.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests\ClientTests\ChangesTests.cs">
-      <Link>ClientTests\ChangesTests.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests\ClientTests\DocumentsTests.cs">
-      <Link>ClientTests\DocumentsTests.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests\ClientTests\EntitiesTests.cs">
-      <Link>ClientTests\EntitiesTests.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests\ClientTests\ViewsTests.cs">
-      <Link>ClientTests\ViewsTests.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests\IntegrationTestsRuntime.cs">
-      <Link>IntegrationTestsRuntime.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests\IPreserveStatePerFixture.cs">
-      <Link>IPreserveStatePerFixture.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests\TestFixtures\ClientTestsFixture.cs">
-      <Link>TestFixtures\ClientTestsFixture.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests\TestFixtures\ViewsFixture.cs">
-      <Link>TestFixtures\ViewsFixture.cs</Link>
-    </Compile>
+    <Compile Include="ClientExtensions.cs" />
+    <Compile Include="ClientTestsOf.cs" />
+    <Compile Include="ClientTests\AttachmentsTests.cs" />
+    <Compile Include="ClientTests\ChangesTests.cs" />
+    <Compile Include="ClientTests\DocumentsTests.cs" />
+    <Compile Include="ClientTests\EntitiesTests.cs" />
+    <Compile Include="ClientTests\ViewsTests.cs" />
+    <Compile Include="IntegrationTestsRuntime.cs" />
+    <Compile Include="IPreserveStatePerFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestFixtures\ClientTestsFixture.cs" />
+    <Compile Include="TestFixtures\ViewsFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Projects\MyCouch.Cloudant.Net45\MyCouch.Cloudant.Net45.csproj">

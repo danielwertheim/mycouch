@@ -53,49 +53,21 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.unittests\fakes\ConnectionFake.cs">
-      <Link>Fakes\ConnectionFake.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.UnitTests\Requests\BulkRequestTests.cs">
-      <Link>Requests\BulkRequestTests.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.UnitTests\Requests\GetChangesHttpRequestFactoryTests.cs">
-      <Link>Requests\GetChangesHttpRequestFactoryTests.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.UnitTests\Requests\QueryViewHttpRequestFactoryTests.cs">
-      <Link>Requests\QueryViewHttpRequestFactoryTests.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.UnitTests\Requests\QueryViewRequestConfiguratorTests.cs">
-      <Link>Requests\QueryViewRequestConfiguratorTests.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.UnitTests\Requests\QueryViewRequestTests.cs">
-      <Link>Requests\QueryViewRequestTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.unittests\schemes\EntityIdMemberTests.cs">
-      <Link>Schemes\EntityIdMemberTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.unittests\schemes\EntityRevMemberTests.cs">
-      <Link>Schemes\EntityRevMemberTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.unittests\serialization\DefaultSerializationTests.cs">
-      <Link>Serialization\DefaultSerializationTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.unittests\serialization\EntitySerializationTests.cs">
-      <Link>Serialization\EntitySerializationTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.unittests\serialization\SerializerTests.cs">
-      <Link>Serialization\SerializerTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.unittests\serialization\ViewQueryResponseRowsDeserializerTestsTests.cs">
-      <Link>Serialization\ViewQueryResponseRowsDeserializerTestsTests.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.UnitTests\UnitTestsOf.cs">
-      <Link>UnitTestsOf.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.UnitTests\UriBuilderTests.cs">
-      <Link>UriBuilderTests.cs</Link>
-    </Compile>
+    <Compile Include="Fakes\ConnectionFake.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Requests\BulkRequestTests.cs" />
+    <Compile Include="Requests\GetChangesHttpRequestFactoryTests.cs" />
+    <Compile Include="Requests\QueryViewHttpRequestFactoryTests.cs" />
+    <Compile Include="Requests\QueryViewRequestConfiguratorTests.cs" />
+    <Compile Include="Requests\QueryViewRequestTests.cs" />
+    <Compile Include="Schemes\EntityIdMemberTests.cs" />
+    <Compile Include="Schemes\EntityRevMemberTests.cs" />
+    <Compile Include="Serialization\DefaultSerializationTests.cs" />
+    <Compile Include="Serialization\EntitySerializationTests.cs" />
+    <Compile Include="Serialization\SerializerTests.cs" />
+    <Compile Include="Serialization\ViewQueryResponseRowsDeserializerTestsTests.cs" />
+    <Compile Include="UnitTestsOf.cs" />
+    <Compile Include="UriBuilderTests.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
