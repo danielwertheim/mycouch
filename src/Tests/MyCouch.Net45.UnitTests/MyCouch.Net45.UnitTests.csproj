@@ -53,6 +53,7 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Cloudant\Requests\SearchIndexHttpRequestFactoryTests.cs" />
     <Compile Include="Cloudant\Requests\SearchIndexRequestConfiguratorTests.cs" />
     <Compile Include="Fakes\ConnectionFake.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

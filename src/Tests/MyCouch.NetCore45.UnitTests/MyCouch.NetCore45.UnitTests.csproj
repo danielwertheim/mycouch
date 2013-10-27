@@ -114,6 +114,9 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45.UnitTests\Cloudant\Requests\SearchIndexHttpRequestFactoryTests.cs">
+      <Link>Cloudant\Requests\SearchIndexHttpRequestFactoryTests.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45.UnitTests\Cloudant\Requests\SearchIndexRequestConfiguratorTests.cs">
       <Link>Cloudant\Requests\SearchIndexRequestConfiguratorTests.cs</Link>
     </Compile>
