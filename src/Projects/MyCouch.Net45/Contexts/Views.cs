@@ -15,7 +15,7 @@ namespace MyCouch.Contexts
 {
     public class Views : ApiContextBase, IViews
     {
-        protected QueryViewHttpRequestFactory HttpRequestFactory { get; set; }
+        protected QueryViewHttpRequestFactory QueryViewHttpRequestFactory { get; set; }
         protected ViewQueryResponseFactory ViewQueryResponseFactory { get; set; }
 
         public Views(IConnection connection, ISerializer serializer, IEntitySerializer entitySerializer)
@@ -24,7 +24,7 @@ namespace MyCouch.Contexts
             Ensure.That(serializer, "serializer").IsNotNull();
             Ensure.That(entitySerializer, "entitySerializer").IsNotNull();
 
-            HttpRequestFactory = new QueryViewHttpRequestFactory(Connection);
+            QueryViewHttpRequestFactory = new QueryViewHttpRequestFactory(Connection);
             ViewQueryResponseFactory = new ViewQueryResponseFactory(serializer, entitySerializer);
         }
 
@@ -112,7 +112,7 @@ namespace MyCouch.Contexts
         
         protected virtual HttpRequest CreateHttpRequest(QueryViewRequest request)
         {
-            return HttpRequestFactory.Create(request);
+            return QueryViewHttpRequestFactory.Create(request);
         }
 
         protected virtual ViewQueryResponse ProcessHttpResponse(HttpResponseMessage response)

@@ -435,6 +435,17 @@ namespace MyCouch.UnitTests.Requests
         }
 
         [Fact]
+        public void When_Stale_is_assigned_It_should_get_included_in_the_querystring()
+        {
+            var request = CreateRequest();
+            request.Stale = Stale.UpdateAfter;
+
+            WithHttpRequestFor(
+                request,
+                req => req.RequestUri.Query.Should().Be("?stale=update_after"));
+        }
+
+        [Fact]
         public void When_Limit_is_assigned_It_should_get_included_in_the_querystring()
         {
             var request = CreateRequest();
@@ -478,7 +489,7 @@ namespace MyCouch.UnitTests.Requests
 
             WithHttpRequestFor(
                 request,
-                req => req.RequestUri.Query.Should().Be("?include_docs=true&descending=true&reduce=true&inclusive_end=true&update_seq=true&group=true&group_level=3&stale=%22update_after%22&key=%22Key1%22&startkey=%22My%20start%20key%22&startkey_docid=%22My%20start%20key%20doc%20id%22&endkey=%22My%20end%20key%22&endkey_docid=%22My%20end%20key%20doc%20id%22&limit=10&skip=5"));
+                req => req.RequestUri.Query.Should().Be("?include_docs=true&descending=true&reduce=true&inclusive_end=true&update_seq=true&group=true&group_level=3&stale=update_after&key=%22Key1%22&startkey=%22My%20start%20key%22&startkey_docid=%22My%20start%20key%20doc%20id%22&endkey=%22My%20end%20key%22&endkey_docid=%22My%20end%20key%20doc%20id%22&limit=10&skip=5"));
         }
 
         protected virtual QueryViewRequest CreateRequest()

@@ -18,7 +18,7 @@ namespace MyCouch.Requests
         /// <summary>
         /// Allow the results from a stale view to be used.
         /// </summary>
-        public string Stale { get; set; }
+        public Stale Stale { get; set; }
         /// <summary>
         /// Include the full content of the documents in the return.
         /// </summary>

@@ -271,5 +271,15 @@ namespace MyCouch.UnitTests.Requests
 
             _request.Keys.Should().BeEquivalentTo(configuredValue);
         }
+
+        [Fact]
+        public void When_config_of_Stale_It_configures_underlying_options_Stale()
+        {
+            var configuredValue = Stale.UpdateAfter;
+
+            SUT.Stale(configuredValue);
+
+            _request.Stale.Should().Be(configuredValue);
+        }
     }
 }

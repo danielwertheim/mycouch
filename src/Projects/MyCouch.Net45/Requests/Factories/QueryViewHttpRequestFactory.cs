@@ -101,7 +101,7 @@ namespace MyCouch.Requests.Factories
                 kvs.Add(KeyNames.GroupLevel, request.GroupLevel.Value.ToString(MyCouchRuntime.NumberFormat));
 
             if (HasValue(request.Stale))
-                kvs.Add(KeyNames.Stale, FormatValue(request.Stale));
+                kvs.Add(KeyNames.Stale, request.Stale.ToString());
 
             if (HasValue(request.Key))
                 kvs.Add(KeyNames.Key, FormatValue(request.Key));
