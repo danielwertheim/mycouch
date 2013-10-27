@@ -31,6 +31,28 @@ namespace MyCouch.UnitTests.Cloudant.Requests
         }
 
         [Fact]
+        public void When_Expression_is_assigned_It_should_get_included_in_the_querystring()
+        {
+            var request = CreateRequest();
+            request.Expression = "Some value";
+
+            WithHttpRequestFor(
+                request,
+                req => req.RequestUri.Query.Should().Be("?q=Some%20value"));
+        }
+
+        [Fact]
+        public void When_Bookmark_is_assigned_It_should_get_included_in_the_querystring()
+        {
+            var request = CreateRequest();
+            request.Bookmark = "g1AAAADOeJzLYWBgYM5gTmGQT0lKzi9KdUhJMtbLSs1LLUst0kvOyS9NScwr0ctLLckBKmRKZEiy____f1YGk5v9l1kRDUCxRCaideexAEmGBiAFNGM_2JBvNSdBYomMJBpyAGLIfxRDmLIAxz9DAg";
+
+            WithHttpRequestFor(
+                request,
+                req => req.RequestUri.Query.Should().Be("?bookmark=g1AAAADOeJzLYWBgYM5gTmGQT0lKzi9KdUhJMtbLSs1LLUst0kvOyS9NScwr0ctLLckBKmRKZEiy____f1YGk5v9l1kRDUCxRCaideexAEmGBiAFNGM_2JBvNSdBYomMJBpyAGLIfxRDmLIAxz9DAg"));
+        }
+
+        [Fact]
         public void When_IncludeDocs_is_assigned_true_It_should_get_included_in_the_querystring()
         {
             var request = CreateRequest();

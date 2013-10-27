@@ -27,6 +27,16 @@ namespace MyCouch.UnitTests.Cloudant.Requests
         }
 
         [Fact]
+        public void When_config_of_Bookmark_of_string_It_configures_underlying_options_Bookmark()
+        {
+            const string configuredValue = "g1AAAADOeJzLYWBgYM5gTmGQT0lKzi9KdUhJMtbLSs1LLUst0kvOyS9NScwr0ctLLckBKmRKZEiy____f1YGk5v9l1kRDUCxRCaideexAEmGBiAFNGM_2JBvNSdBYomMJBpyAGLIfxRDmLIAxz9DAg";
+
+            SUT.Bookmark(configuredValue);
+
+            _request.Bookmark.Should().Be(configuredValue);
+        }
+
+        [Fact]
         public void When_config_of_Descending_It_configures_underlying_options_Descending()
         {
             const bool configuredValue = true;
