@@ -111,6 +111,12 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\CloudantClient.cs">
+      <Link>CloudantClient.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\ICloudantClient.cs">
+      <Link>ICloudantClient.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\ISearches.cs">
       <Link>ISearches.cs</Link>
     </Compile>

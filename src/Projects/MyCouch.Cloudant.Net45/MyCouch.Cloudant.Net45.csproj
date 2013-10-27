@@ -49,6 +49,8 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="CloudantClient.cs" />
+    <Compile Include="ICloudantClient.cs" />
     <Compile Include="Requests\Configurators\SearchIndexRequestConfigurator.cs" />
     <Compile Include="Requests\SearchIndexRequest.cs" />
     <Compile Include="Responses\SearchIndexResponse.cs" />

@@ -8,7 +8,7 @@ namespace MyCouch.IntegrationTests.TestFixtures
 
         public ClientTestsFixture()
         {
-            Client = IntegrationTestsRuntime.CreateClient();
+            Client = IntegrationTestsRuntime.CreateNormalClient();
         }
 
         public virtual void Dispose()

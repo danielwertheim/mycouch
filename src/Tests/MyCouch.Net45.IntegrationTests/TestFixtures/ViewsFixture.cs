@@ -16,7 +16,7 @@ namespace MyCouch.IntegrationTests.TestFixtures
         {
             Artists = ClientTestData.Artists.CreateArtists(10);
 
-            Client = IntegrationTestsRuntime.CreateClient();
+            Client = IntegrationTestsRuntime.CreateNormalClient();
 
             var bulk = new BulkRequest();
             bulk.Include(Artists.Select(i => Client.Entities.Serializer.Serialize(i)).ToArray());

@@ -19,7 +19,7 @@ deploy/builds
 
 #env
 env/data/*
-!env/data/local.json
+!env/data/normal.json
 
 # misc
 *~
