@@ -60,8 +60,8 @@ namespace MyCouch.Cloudant.Requests.Factories
             if (HasValue(request.Bookmark))
                 kvs.Add(KeyNames.Bookmark, request.Bookmark);
 
-            if (HasValue(request.Stale))
-                kvs.Add(KeyNames.Stale, request.Stale.ToString());
+            if (request.Stale.HasValue)
+                kvs.Add(KeyNames.Stale, request.Stale.Value.AsString());
 
             if (request.IncludeDocs.HasValue)
                 kvs.Add(KeyNames.IncludeDocs, request.IncludeDocs.Value.ToString().ToLower());

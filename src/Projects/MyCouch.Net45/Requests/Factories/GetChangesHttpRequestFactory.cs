@@ -44,8 +44,8 @@ namespace MyCouch.Requests.Factories
         {
             var kvs = new Dictionary<string, string>();
 
-            if(request.Feed != null)
-                kvs.Add(KeyNames.Feed, request.Feed.ToString());
+            if(request.Feed.HasValue)
+                kvs.Add(KeyNames.Feed, request.Feed.Value.AsString());
 
             if (request.Since.HasValue)
                 kvs.Add(KeyNames.Since, request.Since.Value.ToString(MyCouchRuntime.NumberFormat));
@@ -68,8 +68,8 @@ namespace MyCouch.Requests.Factories
             if (request.Filter != null)
                 kvs.Add(KeyNames.Filter, request.Filter);
 
-            if (request.Style != null)
-                kvs.Add(KeyNames.Style, request.Style);
+            if (request.Style.HasValue)
+                kvs.Add(KeyNames.Style, request.Style.Value.AsString());
 
             return kvs;
         }

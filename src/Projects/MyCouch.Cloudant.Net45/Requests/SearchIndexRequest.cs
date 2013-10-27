@@ -29,7 +29,7 @@ namespace MyCouch.Cloudant.Requests
         /// <summary>
         /// Allow the results from a stale search index to be used.
         /// </summary>
-        public Stale Stale { get; set; }
+        public Stale? Stale { get; set; }
 
         /// <summary>
         /// Include the full content of the documents in the return.

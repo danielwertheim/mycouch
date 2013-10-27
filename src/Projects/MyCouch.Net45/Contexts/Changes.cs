@@ -61,7 +61,7 @@ namespace MyCouch.Contexts
         {
             Ensure.That(request, "request").IsNotNull();
             Ensure.That(onRead, "onRead").IsNotNull();
-            if (request.Feed == null || request.Feed != ChangesFeed.Continuous)
+            if (!request.Feed.HasValue || request.Feed != ChangesFeed.Continuous)
                 throw new ArgumentException(ExceptionStrings.GetContinuousChangesInvalidFeed, "request");
 
             using (var httpRequest = HttpRequestFactory.Create(request))
@@ -90,7 +90,7 @@ namespace MyCouch.Contexts
 
         protected virtual void EnsureNonContinuousFeed(GetChangesRequest request)
         {
-            if(request.Feed != null && request.Feed == ChangesFeed.Continuous)
+            if(request.Feed.HasValue && request.Feed == ChangesFeed.Continuous)
                 throw new ArgumentException(ExceptionStrings.GetChangesForNonContinuousFeedOnly, "request");
         }
     }

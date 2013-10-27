@@ -1,54 +1,28 @@
-﻿using System;
-using EnsureThat;
+﻿using System.Collections.Generic;
 
 namespace MyCouch
 {
-    public class Stale : IEquatable<Stale>, IEquatable<string>
+    public enum Stale
     {
-        protected readonly string Value;
+        Ok,
+        UpdateAfter
+    }
 
-        private static readonly Stale OkValue = new Stale("ok");
-        private static readonly Stale UpdateAfterValue = new Stale("update_after");
+    public static class StaleEnumExtensions
+    {
+        private static readonly Dictionary<Stale, string> Mappings;
 
-        public static Stale Ok { get { return OkValue; } }
-        public static Stale UpdateAfter { get { return UpdateAfterValue; } }
-
-        private Stale(string value)
+        static StaleEnumExtensions()
         {
-            Ensure.That(value, "value").IsNotNull();
-            Value = value;
+            Mappings = new Dictionary<Stale, string> {
+                { Stale.Ok, "ok" },
+                { Stale.UpdateAfter, "update_after" }
+            };
         }
 
-        public override bool Equals(object obj)
+        public static string AsString(this Stale stale)
         {
-            return Equals(obj as Stale);
-        }
-
-        public bool Equals(Stale other)
-        {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return string.Equals(Value, other.Value);
-        }
-
-        public bool Equals(string other)
-        {
-            return string.Equals(Value, other);
-        }
-
-        public override int GetHashCode()
-        {
-            return Value.GetHashCode();
-        }
-
-        public static implicit operator string(Stale item)
-        {
-            return item == null ? null: item.Value;
-        }
-
-        public override string ToString()
-        {
-            return Value;
+            return Mappings[stale];
         }
     }
 }

@@ -100,8 +100,8 @@ namespace MyCouch.Requests.Factories
             if (request.GroupLevel.HasValue)
                 kvs.Add(KeyNames.GroupLevel, request.GroupLevel.Value.ToString(MyCouchRuntime.NumberFormat));
 
-            if (HasValue(request.Stale))
-                kvs.Add(KeyNames.Stale, request.Stale.ToString());
+            if (request.Stale.HasValue)
+                kvs.Add(KeyNames.Stale, request.Stale.Value.AsString());
 
             if (HasValue(request.Key))
                 kvs.Add(KeyNames.Key, FormatValue(request.Key));

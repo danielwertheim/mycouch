@@ -10,13 +10,13 @@ namespace MyCouch.Requests
         /// <summary>
         /// Select the type of changes feed to consume.
         /// </summary>
-        public ChangesFeed Feed { get; set; }
+        public ChangesFeed? Feed { get; set; }
         /// <summary>
         /// Specifies how many revisions are returned in the changes array.
         /// The default, main_only, will only return the current “winning” revision;
         /// all_docs will return all leaf revisions (including conflicts and deleted former conflicts.)
         /// </summary>
-        public ChangesStyle Style { get; set; }
+        public ChangesStyle? Style { get; set; }
         /// <summary>
         /// Start the results from the change immediately after the given sequence number.
         /// </summary>
