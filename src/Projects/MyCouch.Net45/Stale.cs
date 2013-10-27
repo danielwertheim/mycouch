@@ -43,7 +43,7 @@ namespace MyCouch
 
         public static implicit operator string(Stale item)
         {
-            return item.Value;
+            return item == null ? null: item.Value;
         }
 
         public override string ToString()

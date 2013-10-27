@@ -75,14 +75,14 @@ namespace MyCouch.UnitTests.Cloudant.Requests
         }
 
         [Fact]
-        public void When_Skip_is_assigned_It_should_get_included_in_the_querystring()
+        public void When_Stale_is_assigned_It_should_get_included_in_the_querystring()
         {
             var request = CreateRequest();
-            request.Skip = 17;
+            request.Stale = Stale.UpdateAfter;
 
             WithHttpRequestFor(
                 request,
-                req => req.RequestUri.Query.Should().Be("?skip=17"));
+                req => req.RequestUri.Query.Should().Be("?stale=update_after"));
         }
 
         [Fact]
@@ -101,14 +101,15 @@ namespace MyCouch.UnitTests.Cloudant.Requests
         {
             var request = CreateRequest();
             request.Expression = "class:mammal";
+            request.Bookmark = "Some bookmark";
+            request.Stale = Stale.UpdateAfter;
             request.IncludeDocs = true;
             request.Descending = true;
-            request.Skip = 5;
             request.Limit = 10;
 
             WithHttpRequestFor(
                 request,
-                req => req.RequestUri.Query.Should().Be("?q=class%3Amammal&include_docs=true&descending=true&limit=10&skip=5"));
+                req => req.RequestUri.Query.Should().Be("?q=class%3Amammal&bookmark=Some%20bookmark&stale=update_after&include_docs=true&descending=true&limit=10"));
         }
 
         protected virtual SearchIndexRequest CreateRequest()

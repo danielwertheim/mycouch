@@ -18,6 +18,20 @@ namespace MyCouch.Cloudant.Requests
         public string Expression { get; set; }
 
         /// <summary>
+        /// A bookmark that was received from a previous search. This
+        /// allows you to page through the results. If there are no more
+        /// results after the bookmark, you will get a response with an
+        /// empty rows array and the same bookmark. That way you can
+        /// determine that you have reached the end of the result list.
+        /// </summary>
+        public string Bookmark { get; set; }
+
+        /// <summary>
+        /// Allow the results from a stale search index to be used.
+        /// </summary>
+        public Stale Stale { get; set; }
+
+        /// <summary>
         /// Include the full content of the documents in the return.
         /// </summary>
         public bool? IncludeDocs { get; set; }
@@ -26,11 +40,6 @@ namespace MyCouch.Cloudant.Requests
         /// Return the documents in descending by key order.
         /// </summary>
         public bool? Descending { get; set; }
-
-        /// <summary>
-        /// Skip this number of records before starting to return the results.
-        /// </summary>
-        public int? Skip { get; set; }
 
         /// <summary>
         /// Limit the number of the returned documents to the specified number.

@@ -57,6 +57,12 @@ namespace MyCouch.Cloudant.Requests.Factories
             if (HasValue(request.Expression))
                 kvs.Add(KeyNames.Expression, request.Expression);
 
+            if (HasValue(request.Bookmark))
+                kvs.Add(KeyNames.Bookmark, request.Bookmark);
+
+            if (HasValue(request.Stale))
+                kvs.Add(KeyNames.Stale, request.Stale.ToString());
+
             if (request.IncludeDocs.HasValue)
                 kvs.Add(KeyNames.IncludeDocs, request.IncludeDocs.Value.ToString().ToLower());
 
@@ -65,9 +71,6 @@ namespace MyCouch.Cloudant.Requests.Factories
 
             if (request.Limit.HasValue)
                 kvs.Add(KeyNames.Limit, request.Limit.Value.ToString(MyCouchRuntime.NumberFormat));
-
-            if (request.Skip.HasValue)
-                kvs.Add(KeyNames.Skip, request.Skip.Value.ToString(MyCouchRuntime.NumberFormat));
 
             return kvs;
         }
@@ -79,10 +82,11 @@ namespace MyCouch.Cloudant.Requests.Factories
         protected static class KeyNames
         {
             public const string Expression = "q";
+            public const string Bookmark = "bookmark";
+            public const string Stale = "stale";
             public const string IncludeDocs = "include_docs";
             public const string Descending = "descending";
             public const string Limit = "limit";
-            public const string Skip = "skip";
         }
     }
 }

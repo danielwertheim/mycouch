@@ -47,13 +47,13 @@ namespace MyCouch.UnitTests.Cloudant.Requests
         }
 
         [Fact]
-        public void When_config_of_Skip_It_configures_underlying_options_Skip()
+        public void When_config_of_Stale_It_configures_underlying_options_Stale()
         {
-            const int configuredValue = 10;
+            var configuredValue = Stale.UpdateAfter;
 
-            SUT.Skip(configuredValue);
+            SUT.Stale(configuredValue);
 
-            _request.Skip.Should().Be(configuredValue);
+            _request.Stale.Should().Be(configuredValue);
         }
 
         [Fact]
