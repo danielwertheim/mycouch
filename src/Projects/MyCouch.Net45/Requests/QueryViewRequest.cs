@@ -10,7 +10,11 @@ namespace MyCouch.Requests
 #endif
     public class QueryViewRequest : Request
     {
-        public ViewIdentity View { get; private set; }
+        /// <summary>
+        /// Identitfies the view that this Query request will be
+        /// performed against.
+        /// </summary>
+        public ViewIdentity ViewIdentity { get; private set; }
         /// <summary>
         /// Allow the results from a stale view to be used.
         /// </summary>
@@ -90,7 +94,7 @@ namespace MyCouch.Requests
         {
             Ensure.That(viewIdentity, "viewIdentity").IsNotNull();
 
-            View = viewIdentity;
+            ViewIdentity = viewIdentity;
         }
 
         public virtual QueryViewRequest Configure(Action<QueryViewRequestConfigurator> configurator)

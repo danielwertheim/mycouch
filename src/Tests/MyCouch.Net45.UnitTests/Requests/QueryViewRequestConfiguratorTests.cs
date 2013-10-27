@@ -18,9 +18,49 @@ namespace MyCouch.UnitTests.Requests
         }
 
         [Fact]
+        public void When_config_of_Descending_It_configures_underlying_options_Descending()
+        {
+            const bool configuredValue = true;
+
+            SUT.Descending(configuredValue);
+
+            _request.Descending.Should().Be(configuredValue);
+        }
+
+        [Fact]
+        public void When_config_of_IncludeDocs_It_configures_underlying_options_IncludeDocs()
+        {
+            const bool configuredValue = true;
+
+            SUT.IncludeDocs(configuredValue);
+
+            _request.IncludeDocs.Should().Be(configuredValue);
+        }
+
+        [Fact]
+        public void When_config_of_Skip_It_configures_underlying_options_Skip()
+        {
+            const int configuredValue = 10;
+
+            SUT.Skip(configuredValue);
+
+            _request.Skip.Should().Be(configuredValue);
+        }
+
+        [Fact]
+        public void When_config_of_Limit_It_configures_underlying_options_Limit()
+        {
+            const int configuredValue = 10;
+
+            SUT.Limit(configuredValue);
+
+            _request.Limit.Should().Be(configuredValue);
+        }
+
+        [Fact]
         public void When_config_of_Key_of_string_It_configures_underlying_options_Key()
         {
-            var configuredValue = "Fake key 1";
+            const string configuredValue = "Fake key 1";
 
             SUT.Key(configuredValue);
 
@@ -30,7 +70,7 @@ namespace MyCouch.UnitTests.Requests
         [Fact]
         public void When_config_of_Key_of_int_It_configures_underlying_options_Key()
         {
-            var configuredValue = 42;
+            const int configuredValue = 42;
 
             SUT.Key(configuredValue);
 
@@ -40,7 +80,7 @@ namespace MyCouch.UnitTests.Requests
         [Fact]
         public void When_config_of_Key_of_double_It_configures_underlying_options_Key()
         {
-            var configuredValue = 3.14;
+            const double configuredValue = 3.14;
 
             SUT.Key(configuredValue);
 
@@ -60,7 +100,7 @@ namespace MyCouch.UnitTests.Requests
         [Fact]
         public void When_config_of_Key_of_boolean_It_configures_underlying_options_Key()
         {
-            var configuredValue = true;
+            const bool configuredValue = true;
 
             SUT.Key(configuredValue);
 
@@ -86,7 +126,7 @@ namespace MyCouch.UnitTests.Requests
         [Fact]
         public void When_config_of_StartKey_of_string_It_configures_underlying_options_Key()
         {
-            var configuredValue = "Fake key 1";
+            const string configuredValue = "Fake key 1";
 
             SUT.StartKey(configuredValue);
 
@@ -96,7 +136,7 @@ namespace MyCouch.UnitTests.Requests
         [Fact]
         public void When_config_of_StartKey_of_int_It_configures_underlying_options_Key()
         {
-            var configuredValue = 42;
+            const int configuredValue = 42;
 
             SUT.StartKey(configuredValue);
 
@@ -106,7 +146,7 @@ namespace MyCouch.UnitTests.Requests
         [Fact]
         public void When_config_of_StartKey_of_double_It_configures_underlying_options_Key()
         {
-            var configuredValue = 3.14;
+            const double configuredValue = 3.14;
 
             SUT.StartKey(configuredValue);
 
@@ -126,7 +166,7 @@ namespace MyCouch.UnitTests.Requests
         [Fact]
         public void When_config_of_StartKey_of_boolean_It_configures_underlying_options_Key()
         {
-            var configuredValue = true;
+            const bool configuredValue = true;
 
             SUT.StartKey(configuredValue);
 
@@ -152,7 +192,7 @@ namespace MyCouch.UnitTests.Requests
         [Fact]
         public void When_config_of_EndKey_of_string_It_configures_underlying_options_Key()
         {
-            var configuredValue = "Fake key 1";
+            const string configuredValue = "Fake key 1";
 
             SUT.EndKey(configuredValue);
 
@@ -162,7 +202,7 @@ namespace MyCouch.UnitTests.Requests
         [Fact]
         public void When_config_of_EndKey_of_int_It_configures_underlying_options_Key()
         {
-            var configuredValue = 42;
+            const int configuredValue = 42;
 
             SUT.EndKey(configuredValue);
 
@@ -172,7 +212,7 @@ namespace MyCouch.UnitTests.Requests
         [Fact]
         public void When_config_of_EndKey_of_double_It_configures_underlying_options_Key()
         {
-            var configuredValue = 3.14;
+            const double configuredValue = 3.14;
 
             SUT.EndKey(configuredValue);
 
@@ -192,7 +232,7 @@ namespace MyCouch.UnitTests.Requests
         [Fact]
         public void When_config_of_EndKey_of_boolean_It_configures_underlying_options_Key()
         {
-            var configuredValue = true;
+            const bool configuredValue = true;
 
             SUT.EndKey(configuredValue);
 

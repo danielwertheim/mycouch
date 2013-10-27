@@ -80,6 +80,21 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\ISearches.cs">
+      <Link>ISearches.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.cloudant.net45\requests\configurators\SearchIndexRequestConfigurator.cs">
+      <Link>Requests\Configurators\SearchIndexRequestConfigurator.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.cloudant.net45\requests\SearchIndexRequest.cs">
+      <Link>Requests\SearchIndexRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.cloudant.net45\responses\SearchIndexResponse.cs">
+      <Link>Responses\SearchIndexResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\SearchIndexIdentity.cs">
+      <Link>SearchIndexIdentity.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -90,6 +105,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Requests\Factories\" />
+    <Folder Include="Responses\Factories\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets')" />

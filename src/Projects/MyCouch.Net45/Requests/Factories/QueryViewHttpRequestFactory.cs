@@ -26,14 +26,14 @@ namespace MyCouch.Requests.Factories
             {
                 return string.Format("{0}/{1}{2}",
                     Connection.Address,
-                    request.View.Name,
+                    request.ViewIdentity.Name,
                     GenerateQueryString(request));
             }
 
             return string.Format("{0}/_design/{1}/_view/{2}{3}",
                 Connection.Address,
-                request.View.DesignDocument,
-                request.View.Name,
+                request.ViewIdentity.DesignDocument,
+                request.ViewIdentity.Name,
                 GenerateQueryString(request));
         }
 

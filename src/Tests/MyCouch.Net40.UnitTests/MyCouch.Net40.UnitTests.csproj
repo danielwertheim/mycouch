@@ -87,6 +87,9 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="..\mycouch.net45.unittests\cloudant\requests\SearchIndexRequestConfiguratorTests.cs">
+      <Link>Cloudant\Requests\SearchIndexRequestConfiguratorTests.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45.UnitTests\fakes\ConnectionFake.cs">
       <Link>Fakes\ConnectionFake.cs</Link>
     </Compile>

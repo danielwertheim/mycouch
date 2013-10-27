@@ -49,6 +49,11 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Requests\Configurators\SearchIndexRequestConfigurator.cs" />
+    <Compile Include="Requests\SearchIndexRequest.cs" />
+    <Compile Include="Responses\SearchIndexResponse.cs" />
+    <Compile Include="SearchIndexIdentity.cs" />
+    <Compile Include="ISearches.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -59,6 +64,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Requests\Factories\" />
+    <Folder Include="Responses\Factories\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

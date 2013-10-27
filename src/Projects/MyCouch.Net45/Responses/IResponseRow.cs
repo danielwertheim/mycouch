@@ -3,5 +3,5 @@
     /// <summary>
     /// Marker for response rows.
     /// </summary>
-    internal interface IResponseRow { }
+    public interface IResponseRow { }
 }
