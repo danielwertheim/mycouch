@@ -1,10 +1,12 @@
 # MyCouch #
-The asynchronous CouchDb client for .Net - builds on top of the asynchronous HTTP client and uses JSON.Net to provide flexible serialization behaviour. It tries to keep the domain language of CouchDb instead of bringing in generic repositories and other confusing stuff. MyCouch lets you work with raw JSON and/or entities/POCOS without requiring any implementation of interfaces, baseclasses etc. MyCouch provides you with some model conventions like injection of `$doctype` to the document. It is plug-gable. If you don't like some piece, then hook in your implementation instead.
+The asynchronous CouchDb and Cloudant client for .Net - builds on top of the asynchronous HTTP client and uses JSON.Net to provide flexible serialization behaviour. It tries to keep the domain language of CouchDb instead of bringing in generic repositories and other confusing stuff. MyCouch lets you work with raw JSON and/or entities/POCOS without requiring any implementation of interfaces, baseclasses etc. MyCouch provides you with some model conventions like injection of `$doctype` to the document. It is plug-gable. If you don't like some piece, then hook in your implementation instead.
 
 ## NuGet ##
 MyCouch is distributed via NuGet. You can [find the package here](https://nuget.org/packages/MyCouch/). But basically, in a .Net4.0, .Net4.5 or Windows Store app project, open up the Package manager console, and invoke:
 
     pm:> install-package mycouch
+
+**Please note!** Some users with old versions of NuGet has reported that dependencies to `Ensure.That` might not be resolved. The solution is to update NuGet.
 
 ## Documentation ##
 The documentation is contained in the [project wiki](https://github.com/danielwertheim/mycouch/wiki).
@@ -15,7 +17,7 @@ A [public Trello board](https://trello.com/b/wuDUldwD/mycouch-main) is used inst
 ## Get up and running with the source ##
 The Sample has been written using Visual Studio 2012, targeting multiple platforms (.Net40, .Net45, Windows Store apps). .Net45 is the mainstream project. .Net4.0 uses Microsofts various portable class library (PCL) for adding missing BCL capabilities, the async HttpClient etc. to .Net4.0.
 
-Please note. **No NuGet packages are checked in**. To get your project up and running you need to install the missing NuGet packages using the provided PowerShell script:
+Please note. **No NuGet packages are checked in**. If you are using the latest version of NuGet (v2.7.4+) you should be able to just build and the packages will be restored. If this does not work, you could install the missing NuGet packages using the provided PowerShell script:
 
     ps:> .\setup-devenv.ps1
 
