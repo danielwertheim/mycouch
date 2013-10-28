@@ -21,10 +21,11 @@ namespace MyCouch.UnitTests.Cloudant.Requests
         public void When_not_configured_It_yields_no_content_nor_querystring()
         {
             var request = CreateRequest();
-            
+
             WithHttpRequestFor(
                 request,
-                req => {
+                req =>
+                {
                     req.Content.Should().BeNull();
                     req.RequestUri.Query.Should().Be(string.Empty);
                 });
@@ -75,28 +76,6 @@ namespace MyCouch.UnitTests.Cloudant.Requests
         }
 
         [Fact]
-        public void When_Descending_is_assigned_true_It_should_get_included_in_the_querystring()
-        {
-            var request = CreateRequest();
-            request.Descending = true;
-
-            WithHttpRequestFor(
-                request,
-                req => req.RequestUri.Query.Should().Be("?descending=true"));
-        }
-
-        [Fact]
-        public void When_Descending_is_assigned_false_It_should_get_included_in_the_querystring()
-        {
-            var request = CreateRequest();
-            request.Descending = false;
-
-            WithHttpRequestFor(
-                request,
-                req => req.RequestUri.Query.Should().Be("?descending=false"));
-        }
-
-        [Fact]
         public void When_Stale_is_assigned_It_should_get_included_in_the_querystring()
         {
             var request = CreateRequest();
@@ -119,6 +98,17 @@ namespace MyCouch.UnitTests.Cloudant.Requests
         }
 
         [Fact]
+        public void When_Sort_is_assigned_It_should_get_included_in_the_querystring()
+        {
+            var request = CreateRequest();
+            request.Sort.AddRange(new[] { "diet<string>", "-min_length<number>" });
+
+            WithHttpRequestFor(
+                request,
+                req => req.RequestUri.Query.Should().Be("?sort=%5B%22diet%3Cstring%3E%22%2C%22-min_length%3Cnumber%3E%22%5D"));
+        }
+
+        [Fact]
         public void When_all_options_are_configured_It_yields_a_query_string_accordingly()
         {
             var request = CreateRequest();
@@ -126,12 +116,12 @@ namespace MyCouch.UnitTests.Cloudant.Requests
             request.Bookmark = "Some bookmark";
             request.Stale = Stale.UpdateAfter;
             request.IncludeDocs = true;
-            request.Descending = true;
             request.Limit = 10;
+            request.Sort.AddRange(new[] { "diet<string>", "-min_length<number>" });
 
             WithHttpRequestFor(
                 request,
-                req => req.RequestUri.Query.Should().Be("?q=class%3Amammal&bookmark=Some%20bookmark&stale=update_after&include_docs=true&descending=true&limit=10"));
+                req => req.RequestUri.Query.Should().Be("?q=class%3Amammal&sort=%5B%22diet%3Cstring%3E%22%2C%22-min_length%3Cnumber%3E%22%5D&bookmark=Some%20bookmark&stale=update_after&limit=10&include_docs=true"));
         }
 
         protected virtual SearchIndexRequest CreateRequest()

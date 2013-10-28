@@ -37,13 +37,25 @@ namespace MyCouch.UnitTests.Cloudant.Requests
         }
 
         [Fact]
-        public void When_config_of_Descending_It_configures_underlying_options_Descending()
+        public void When_config_of_Sort_It_configures_underlying_options_Sort()
         {
-            const bool configuredValue = true;
+            var configuredValue = new [] { "diet<string>", "latin_name<string>", "min_length<number>" };
 
-            SUT.Descending(configuredValue);
+            SUT.Sort(configuredValue);
 
-            _request.Descending.Should().Be(configuredValue);
+            _request.Sort.Should().ContainInOrder(configuredValue);
+        }
+
+        [Fact]
+        public void When_config_of_Sort_which_already_is_configures_It_uses_the_last_value_to_configure_underlying_options_Sort()
+        {
+            var configuredValue1 = new[] { "diet<string>", "latin_name<string>", "min_length<number>" };
+            var configuredValue2 = new[] { "-diet<string>", "-latin_name<string>", "-min_length<number>" };
+
+            SUT.Sort(configuredValue1);
+            SUT.Sort(configuredValue2);
+
+            _request.Sort.Should().ContainInOrder(configuredValue2);
         }
 
         [Fact]

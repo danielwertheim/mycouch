@@ -107,7 +107,7 @@ namespace MyCouch.Requests.Factories
                 kvs.Add(KeyNames.Key, FormatValue(request.Key));
 
             if (HasValue(request.Keys))
-                kvs.Add(KeyNames.Keys, FormatValue(request.Keys));
+                kvs.Add(KeyNames.Keys, FormatValues(request.Keys));
 
             if (HasValue(request.StartKey))
                 kvs.Add(KeyNames.StartKey, FormatValue(request.StartKey));

@@ -22,6 +22,18 @@
         }
 
         /// <summary>
+        /// Allow the results from a stale search index to be used.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public virtual SearchIndexRequestConfigurator Stale(Stale value)
+        {
+            Request.Stale = value;
+
+            return this;
+        }
+
+        /// <summary>
         /// A bookmark that was received from a previous search. This
         /// allows you to page through the results. If there are no more
         /// results after the bookmark, you will get a response with an
@@ -38,13 +50,14 @@
         }
 
         /// <summary>
-        /// Allow the results from a stale search index to be used.
+        /// Sort expressions used to sort the output.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="sortExpressions"></param>
         /// <returns></returns>
-        public virtual SearchIndexRequestConfigurator Stale(Stale value)
+        public virtual SearchIndexRequestConfigurator Sort(params string[] sortExpressions)
         {
-            Request.Stale = value;
+            Request.Sort.Clear();
+            Request.Sort.AddRange(sortExpressions);
 
             return this;
         }
@@ -57,18 +70,6 @@
         public virtual SearchIndexRequestConfigurator IncludeDocs(bool value)
         {
             Request.IncludeDocs = value;
-
-            return this;
-        }
-
-        /// <summary>
-        /// Return the documents in descending by key order.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public virtual SearchIndexRequestConfigurator Descending(bool value)
-        {
-            Request.Descending = value;
 
             return this;
         }

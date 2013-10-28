@@ -34,7 +34,12 @@ namespace MyCouch.Requests.Factories
             return value != null;
         }
 
-        protected virtual bool HasValue(IEnumerable<string> value)
+        protected virtual bool HasValue(object[] value)
+        {
+            return value != null && value.Any();
+        }
+
+        protected virtual bool HasValue(IList<string> value)
         {
             return value != null && value.Any();
         }
@@ -48,7 +53,7 @@ namespace MyCouch.Requests.Factories
                 return FormatValue(value as string);
 
             if (value is Array)
-                return FormatValue(value as object[]);
+                return FormatValues(value as object[]);
 
             if (value is short)
                 return value.To<short>().ToString(MyCouchRuntime.NumberFormat);
@@ -91,9 +96,14 @@ namespace MyCouch.Requests.Factories
             return string.Format("\"{0}\"", value);
         }
 
-        protected virtual string FormatValue(object[] value)
+        protected virtual string FormatValues(object[] value)
         {
             return string.Format("[{0}]", string.Join(",", value.Select(v => FormatValue(v))));
-        }   
+        }
+
+        protected virtual string FormatValues(IList<string> values)
+        {
+            return string.Format("[{0}]", string.Join(",", values.Select(v => FormatValue(v))));
+        }
     }
 }
