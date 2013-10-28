@@ -20,12 +20,7 @@ namespace MyCouch.Cloudant.Contexts
             throw new System.NotImplementedException();
         }
 
-        public virtual Task<SearchIndexResponse<TValue>> SearchAsync<TValue>(SearchIndexRequest search)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public virtual Task<SearchIndexResponse<TValue, TIncludedDoc>> SearchAsync<TValue, TIncludedDoc>(SearchIndexRequest search)
+        public virtual Task<SearchIndexResponse<TIncludedDoc>> SearchAsync<TIncludedDoc>(SearchIndexRequest search)
         {
             throw new System.NotImplementedException();
         }

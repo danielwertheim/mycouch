@@ -7,7 +7,6 @@ namespace MyCouch.Cloudant
     public interface ISearches
     {
         Task<SearchIndexResponse> SearchAsync(SearchIndexRequest search);
-        Task<SearchIndexResponse<TValue>> SearchAsync<TValue>(SearchIndexRequest search);
-        Task<SearchIndexResponse<TValue, TIncludedDoc>> SearchAsync<TValue, TIncludedDoc>(SearchIndexRequest search);
+        Task<SearchIndexResponse<TIncludedDoc>> SearchAsync<TIncludedDoc>(SearchIndexRequest search);
     }
 }
