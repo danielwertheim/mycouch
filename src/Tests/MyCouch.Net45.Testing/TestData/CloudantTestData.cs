@@ -242,9 +242,9 @@ namespace MyCouch.Testing.TestData
                         "\"animals\": {" +
                             "\"index\": \"function(doc){\\n" +
                             "  index('default', doc._id);\\n" +
-                            "  if(doc.min_length){\\n    index('min_length', doc.min_length, {\\\"store\\\": \\\"yes\\\"});\\n  }\\n" +
+                            "  if(doc.minLength){\\n    index('minLength', doc.minLength, {\\\"store\\\": \\\"yes\\\"});\\n  }\\n" +
                             "  if(doc.diet){\\n    index('diet', doc.diet, {\\\"store\\\": \\\"yes\\\"});\\n  }\\n" +
-                            "  if (doc.latin_name){\\n    index('latin_name', doc.latin_name, {\\\"store\\\": \\\"yes\\\"});\\n  }\\n" +
+                            "  if (doc.latinName){\\n    index('latinName', doc.latinName, {\\\"store\\\": \\\"yes\\\"});\\n  }\\n" +
                             "  if (doc['class']){\\n    index('class', doc['class'], {\\\"store\\\": \\\"yes\\\"});\\n  }\\n}\"" +
                         "}" +
                     "}" +

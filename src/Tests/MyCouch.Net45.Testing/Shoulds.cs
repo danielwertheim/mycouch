@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using FluentAssertions;
+using MyCouch.Cloudant.Responses;
 using MyCouch.Responses;
 
 namespace MyCouch.Testing
@@ -11,6 +12,16 @@ namespace MyCouch.Testing
     [DebuggerStepThrough]
     public static class Shoulds
     {
+        public static SearcIndexResponseAssertions Should(this SearchIndexResponse response)
+        {
+            return new SearcIndexResponseAssertions(response);
+        }
+
+        public static SearcIndexResponseAssertions<TIncludedDoc> Should<TIncludedDoc>(this SearchIndexResponse<TIncludedDoc> response)
+        {
+            return new SearcIndexResponseAssertions<TIncludedDoc>(response);
+        }
+
         public static ViewQueryResponseAssertions Should(this ViewQueryResponse response)
         {
             return new ViewQueryResponseAssertions(response);
@@ -49,6 +60,44 @@ namespace MyCouch.Testing
         public static ChangesResponseAssertions<T> Should<T>(this ChangesResponse<T> response)
         {
             return new ChangesResponseAssertions<T>(response);
+        }
+    }
+
+    public class SearcIndexResponseAssertions : SearcIndexResponseAssertions<string>
+    {
+        [DebuggerStepThrough]
+        public SearcIndexResponseAssertions(SearchIndexResponse response) : base(response) {}
+    }
+
+    public class SearcIndexResponseAssertions<TIncludedDoc>
+    {
+        protected readonly SearchIndexResponse<TIncludedDoc> Response;
+
+        [DebuggerStepThrough]
+        public SearcIndexResponseAssertions(SearchIndexResponse<TIncludedDoc> response)
+        {
+            Response = response;
+        }
+
+        public void BeSuccessfulGet(int numOfRows)
+        {
+            BeSuccessful(HttpMethod.Get, numOfRows);
+        }
+
+        private void BeSuccessful(HttpMethod method, int numOfRows)
+        {
+            Response.RequestMethod.Should().Be(method);
+            Response.IsSuccess.Should().BeTrue();
+            Response.StatusCode.Should().Be(HttpStatusCode.OK);
+            Response.Error.Should().BeNull();
+            Response.Reason.Should().BeNull();
+            Response.IsEmpty.Should().BeFalse();
+
+            if (numOfRows > 0)
+            {
+                Response.Rows.Should().NotBeNull();
+                Response.RowCount.Should().Be(numOfRows);
+            }
         }
     }
 
