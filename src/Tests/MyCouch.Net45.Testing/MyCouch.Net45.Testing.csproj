@@ -53,55 +53,39 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Testing\CustomAsserts.cs">
-      <Link>CustomAsserts.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Testing\Model\Album.cs">
-      <Link>Model\Album.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.testing\model\Artist.cs">
-      <Link>Model\Artist.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Testing\Shoulds.cs">
-      <Link>Shoulds.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Testing\TestConstants.cs">
-      <Link>TestConstants.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.testing\testdata\ClientTestData.cs">
-      <Link>TestData\ClientTestData.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.testing\testdata\JsonTestData.cs">
-      <Link>TestData\JsonTestData.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Testing\TestsOf.cs">
-      <Link>TestsOf.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Testing\TypeExtensions.cs">
-      <Link>TypeExtensions.cs</Link>
-    </Compile>
+    <Compile Include="CustomAsserts.cs" />
+    <Compile Include="Model\Album.cs" />
+    <Compile Include="Model\Animal.cs" />
+    <Compile Include="Model\Artist.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Shoulds.cs" />
+    <Compile Include="TestConstants.cs" />
+    <Compile Include="TestData\ClientTestData.cs" />
+    <Compile Include="TestData\CloudantTestData.cs" />
+    <Compile Include="TestData\JsonTestData.cs" />
+    <Compile Include="TestsOf.cs" />
+    <Compile Include="TypeExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\mycouch.testing\jsontestdatafiles\ViewQueryAlbumRows.json">
-      <Link>JsonTestDataFiles\ViewQueryAlbumRows.json</Link>
+    <Content Include="JsonTestDataFiles\ViewQueryAlbumRows.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\mycouch.testing\jsontestdatafiles\ViewQueryAllDocRows.json">
-      <Link>JsonTestDataFiles\ViewQueryAllDocRows.json</Link>
+    <Content Include="JsonTestDataFiles\ViewQueryAllDocRows.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\MyCouch.Testing\JsonTestDataFiles\ViewQueryComplexKeysRows.json">
-      <Link>JsonTestDataFiles\ViewQueryComplexKeysRows.json</Link>
+    <Content Include="JsonTestDataFiles\ViewQueryComplexKeysRows.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\MyCouch.Testing\JsonTestDataFiles\ViewQuerySingleValueKeysRows.json">
-      <Link>JsonTestDataFiles\ViewQuerySingleValueKeysRows.json</Link>
+    <Content Include="JsonTestDataFiles\ViewQuerySingleValueKeysRows.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Projects\MyCouch.Cloudant.Net45\MyCouch.Cloudant.Net45.csproj">
+      <Project>{fb7cd2af-ddc5-44c6-8467-e3dbd1eec417}</Project>
+      <Name>MyCouch.Cloudant.Net45</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Projects\MyCouch.Net45\MyCouch.Net45.csproj">
       <Project>{564701b5-d8f3-4b69-981f-559f8867fb76}</Project>
       <Name>MyCouch.Net45</Name>

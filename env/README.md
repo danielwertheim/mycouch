@@ -2,11 +2,11 @@ The `server.csx` is used to serve test environment configurations to the integra
 
 ```
 data\
-     local.json
+     normal.json
      cloudant.json
 ```
 
-`local.json` should exist from the beginning. **The other files are not checked in** to source control since it can contain sensitive data.
+`normal.json` should exist from the beginning. **The other files are not checked in** to source control since it can contain sensitive data.
 
 You will need to have [ScriptCs installed](http://scriptcs.net/).
 
