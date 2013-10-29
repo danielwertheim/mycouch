@@ -1,12 +1,14 @@
 # MyCouch #
 The asynchronous CouchDb and Cloudant client for .Net - builds on top of the asynchronous HTTP client and uses JSON.Net to provide flexible serialization behaviour. It tries to keep the domain language of CouchDb instead of bringing in generic repositories and other confusing stuff. MyCouch lets you work with raw JSON and/or entities/POCOS without requiring any implementation of interfaces, baseclasses etc. MyCouch provides you with some model conventions like injection of `$doctype` to the document. It is plug-gable. If you don't like some piece, then hook in your implementation instead.
 
+MyCouch is not an official client created by Cloudant.
+
 ## NuGet ##
 MyCouch is distributed via NuGet. You can [find the package here](https://nuget.org/packages/MyCouch/). But basically, in a .Net4.0, .Net4.5 or Windows Store app project, open up the Package manager console, and invoke:
 
     pm:> install-package mycouch
 
-or if you also want some Cloudant specific features like Lucene searches:
+or if you also want some [Cloudant](http://cloudant.com) specific features like [Lucene searches](https://cloudant.com/for-developers/search/):
 
 	pm:> install-package mycouch.cloudant
 
