@@ -1,16 +1,17 @@
-﻿using MyCouch.IntegrationTests.TestFixtures;
+﻿using MyCouch.Cloudant;
+using MyCouch.IntegrationTests.TestFixtures;
 using MyCouch.Testing;
 using Xunit;
 
 namespace MyCouch.IntegrationTests
 {
-    public abstract class ClientTestsOf<T> : TestsOf<T>, IUseFixture<ClientTestsFixture> where T : class
+    public abstract class CloudantTestsOf<T> : TestsOf<T>, IUseFixture<CloudantTestsFixture> where T : class
     {
-        protected IClient Client { get; set; }
+        protected ICloudantClient Client { get; set; }
 
         protected abstract void OnTestInit();
 
-        public void SetFixture(ClientTestsFixture data)
+        public void SetFixture(CloudantTestsFixture data)
         {
             Client = data.Client;
             OnTestInit();

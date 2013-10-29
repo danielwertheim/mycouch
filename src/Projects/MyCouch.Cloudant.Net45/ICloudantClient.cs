@@ -2,6 +2,6 @@
 {
     public interface ICloudantClient : IClient
     {
-         
+        ISearches Searches { get; }
     }
 }

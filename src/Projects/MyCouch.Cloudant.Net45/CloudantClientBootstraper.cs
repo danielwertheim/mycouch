@@ -12,9 +12,12 @@ namespace MyCouch.Cloudant
             ConfigureSearchesFn();
         }
 
-        private void ConfigureSearchesFn()
+        protected virtual void ConfigureSearchesFn()
         {
-            SearchesFn = cn => new Searches(cn);
+            SearchesFn = cn => new Searches(
+                cn,
+                SerializerFn(),
+                EntitySerializerFn());
         }
     }
 }

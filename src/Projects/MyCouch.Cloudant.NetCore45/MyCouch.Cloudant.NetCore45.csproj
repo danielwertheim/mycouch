@@ -135,6 +135,9 @@
     <Compile Include="..\MyCouch.Cloudant.Net45\Requests\SearchIndexRequest.cs">
       <Link>Requests\SearchIndexRequest.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\Responses\Factories\SearchIndexResponseFactory.cs">
+      <Link>Responses\Factories\SearchIndexResponseFactory.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\Responses\SearchIndexResponse.cs">
       <Link>Responses\SearchIndexResponse.cs</Link>
     </Compile>
@@ -156,9 +159,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Responses\Factories\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
   </PropertyGroup>

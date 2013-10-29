@@ -60,10 +60,14 @@
     <Compile Include="ClientTests\DocumentsTests.cs" />
     <Compile Include="ClientTests\EntitiesTests.cs" />
     <Compile Include="ClientTests\ViewsTests.cs" />
+    <Compile Include="CloudantTestsOf.cs" />
+    <Compile Include="CloudantTests\SearchTests.cs" />
     <Compile Include="IntegrationTestsRuntime.cs" />
     <Compile Include="IPreserveStatePerFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestFixtures\ClientTestsFixture.cs" />
+    <Compile Include="TestFixtures\CloudantTestsFixture.cs" />
+    <Compile Include="TestFixtures\SearchFixture.cs" />
     <Compile Include="TestFixtures\ViewsFixture.cs" />
   </ItemGroup>
   <ItemGroup>

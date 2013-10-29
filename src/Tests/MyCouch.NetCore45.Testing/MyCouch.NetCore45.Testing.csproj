@@ -126,6 +126,9 @@
     <Compile Include="..\MyCouch.Net45.Testing\Model\Album.cs">
       <Link>Model\Album.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45.Testing\Model\Animal.cs">
+      <Link>Model\Animal.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45.Testing\model\Artist.cs">
       <Link>Model\Artist.cs</Link>
     </Compile>
@@ -137,6 +140,9 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45.Testing\testdata\ClientTestData.cs">
       <Link>TestData\ClientTestData.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.Testing\TestData\CloudantTestData.cs">
+      <Link>TestData\CloudantTestData.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45.Testing\testdata\JsonTestData.cs">
       <Link>TestData\JsonTestData.cs</Link>

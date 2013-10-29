@@ -56,6 +56,7 @@
     <Compile Include="Requests\Configurators\SearchIndexRequestConfigurator.cs" />
     <Compile Include="Requests\Factories\SearchIndexHttpRequestFactory.cs" />
     <Compile Include="Requests\SearchIndexRequest.cs" />
+    <Compile Include="Responses\Factories\SearchIndexResponseFactory.cs" />
     <Compile Include="Responses\SearchIndexResponse.cs" />
     <Compile Include="SearchIndexIdentity.cs" />
     <Compile Include="ISearches.cs" />
@@ -70,9 +71,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Responses\Factories\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

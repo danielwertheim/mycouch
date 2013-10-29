@@ -47,8 +47,8 @@ namespace MyCouch.Cloudant.Requests
         /// </summary>
         public int? Limit { get; set; }
 
-        public SearchIndexRequest(string designDocument, string viewName)
-            : this(new SearchIndexIdentity(designDocument, viewName)) { }
+        public SearchIndexRequest(string designDocument, string searchIndexName)
+            : this(new SearchIndexIdentity(designDocument, searchIndexName)) { }
 
         public SearchIndexRequest(SearchIndexIdentity indexIdentity)
         {

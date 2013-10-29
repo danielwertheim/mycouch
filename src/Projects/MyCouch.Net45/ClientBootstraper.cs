@@ -74,27 +74,27 @@ namespace MyCouch
             ConfigureEntityReflectorFn();
         }
 
-        private void ConfigureChangesFn()
+        protected virtual void ConfigureChangesFn()
         {
             ChangesFn = cn => new Changes(cn, SerializerFn());
         }
 
-        private void ConfigureAttachmentsFn()
+        protected virtual void ConfigureAttachmentsFn()
         {
             AttachmentsFn = cn => new Attachments(cn, SerializerFn());
         }
 
-        private void ConfigureDatabasesFn()
+        protected virtual void ConfigureDatabasesFn()
         {
             DatabasesFn = cn => new Databases(cn, SerializerFn());
         }
 
-        private void ConfigureDocumentsFn()
+        protected virtual void ConfigureDocumentsFn()
         {
             DocumentsFn = cn => new Documents(cn, SerializerFn());
         }
 
-        private void ConfigureEntitiesFn()
+        protected virtual void ConfigureEntitiesFn()
         {
             EntitiesFn = cn => new Entities(
                 cn,
@@ -103,7 +103,7 @@ namespace MyCouch
                 EntityReflectorFn());
         }
 
-        private void ConfigureViewsFn()
+        protected virtual void ConfigureViewsFn()
         {
             ViewsFn = cn => new Views(
                 cn,
@@ -111,7 +111,7 @@ namespace MyCouch
                 EntitySerializerFn());
         }
 
-        private void ConfigureEntityReflectorFn()
+        protected virtual void ConfigureEntityReflectorFn()
         {
 #if !NETFX_CORE
             var entityReflector = new Lazy<IEntityReflector>(() => new EntityReflector(new IlDynamicPropertyFactory()));
@@ -121,7 +121,7 @@ namespace MyCouch
             EntityReflectorFn = () => entityReflector.Value;
         }
 
-        private void ConfigureSerializationConfigurationFn()
+        protected virtual void ConfigureSerializationConfigurationFn()
         {
             var serializationConfiguration = new Lazy<SerializationConfiguration>(() =>
             {
@@ -133,7 +133,7 @@ namespace MyCouch
             SerializationConfigurationFn = () => serializationConfiguration.Value;
         }
 
-        private void ConfigureEntitySerializationConfigurationFn()
+        protected virtual void ConfigureEntitySerializationConfigurationFn()
         {
             var serializationConfiguration = new Lazy<SerializationConfiguration>(() =>
             {
@@ -145,13 +145,13 @@ namespace MyCouch
             EntitySerializationConfigurationFn = () => serializationConfiguration.Value;
         }
 
-        private void ConfigureSerializerFn()
+        protected virtual void ConfigureSerializerFn()
         {
             var serializer = new Lazy<ISerializer>(() => new DefaultSerializer(SerializationConfigurationFn()));
             SerializerFn = () => serializer.Value;
         }
 
-        private void ConfigureEntitySerializerFn()
+        protected virtual void ConfigureEntitySerializerFn()
         {
             var serializer = new Lazy<IEntitySerializer>(() => new EntitySerializer(EntitySerializationConfigurationFn()));
             EntitySerializerFn = () => serializer.Value;

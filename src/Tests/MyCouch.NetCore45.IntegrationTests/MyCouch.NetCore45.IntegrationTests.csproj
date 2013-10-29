@@ -135,6 +135,12 @@
     <Compile Include="..\MyCouch.Net45.IntegrationTests\clienttests\ViewsTests.cs">
       <Link>ClientTests\ViewsTests.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\CloudantTestsOf.cs">
+      <Link>CloudantTestsOf.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\CloudantTests\SearchTests.cs">
+      <Link>CloudantTests\SearchTests.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45.IntegrationTests\IntegrationTestsRuntime.cs">
       <Link>IntegrationTestsRuntime.cs</Link>
     </Compile>
@@ -143,6 +149,12 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45.IntegrationTests\TestFixtures\ClientTestsFixture.cs">
       <Link>TestFixtures\ClientTestsFixture.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\TestFixtures\CloudantTestsFixture.cs">
+      <Link>TestFixtures\CloudantTestsFixture.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\TestFixtures\SearchFixture.cs">
+      <Link>TestFixtures\SearchFixture.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45.IntegrationTests\TestFixtures\ViewsFixture.cs">
       <Link>TestFixtures\ViewsFixture.cs</Link>
