@@ -6,6 +6,10 @@ MyCouch is distributed via NuGet. You can [find the package here](https://nuget.
 
     pm:> install-package mycouch
 
+or if you also want some Cloudant specific features like Lucene searches:
+
+	pm:> install-package mycouch.cloudant
+
 **Please note!** Some users with old versions of NuGet has reported that dependencies to `Ensure.That` might not be resolved. The solution is to update NuGet.
 
 ## Documentation ##
