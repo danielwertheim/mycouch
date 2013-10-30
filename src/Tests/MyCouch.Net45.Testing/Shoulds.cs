@@ -440,16 +440,14 @@ namespace MyCouch.Testing
             Response = response;
         }
 
-        public void BeSuccessfulGet(long? expectedLastSeq = null)
+        public void BeSuccessfulGet()
         {
             Response.RequestMethod.Should().Be(HttpMethod.Get);
             Response.IsSuccess.Should().BeTrue();
             Response.StatusCode.Should().Be(HttpStatusCode.OK);
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
-
-            if (expectedLastSeq.HasValue)
-                Response.LastSeq.Should().Be(expectedLastSeq.Value);
+            Response.LastSeq.Should().NotBeNullOrEmpty();
         }
     }
 }

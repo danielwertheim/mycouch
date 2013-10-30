@@ -15,7 +15,7 @@ namespace MyCouch.Responses
     public class ChangesResponse<TIncludedDoc> : Response
     {
         [JsonProperty(JsonScheme.LastSeq)]
-        public long LastSeq { get; set; }
+        public string LastSeq { get; set; }
         public Row[] Results { get; set; }
 
 #if !NETFX_CORE
@@ -32,7 +32,7 @@ namespace MyCouch.Responses
         public class Row : IResponseRow
         {
             public virtual string Id { get; set; }
-            public virtual long Seq { get; set; }
+            public virtual string Seq { get; set; }
             public virtual Change[] Changes { get; set; }
             public virtual bool Deleted { get; set; }
             [JsonProperty(JsonScheme.IncludedDoc)]

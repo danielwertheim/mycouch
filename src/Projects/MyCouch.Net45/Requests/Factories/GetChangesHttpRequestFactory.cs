@@ -47,8 +47,8 @@ namespace MyCouch.Requests.Factories
             if(request.Feed.HasValue)
                 kvs.Add(KeyNames.Feed, request.Feed.Value.AsString());
 
-            if (request.Since.HasValue)
-                kvs.Add(KeyNames.Since, request.Since.Value.ToString(MyCouchRuntime.NumberFormat));
+            if (HasValue(request.Since))
+                kvs.Add(KeyNames.Since, request.Since);
 
             if (request.IncludeDocs.HasValue)
                 kvs.Add(KeyNames.IncludeDocs, request.IncludeDocs.Value.ToString().ToLower());

@@ -23,7 +23,7 @@ namespace MyCouch.Responses
         public long TotalRows { get; set; }
         public long RowCount { get { return IsEmpty ? 0 : Rows.Length; } }
         [JsonProperty(JsonScheme.UpdateSeq)]
-        public long UpdateSeq { get; set; }
+        public string UpdateSeq { get; set; }
         public long OffSet { get; set; }
         public Row[] Rows { get; set; }
         public bool IsEmpty

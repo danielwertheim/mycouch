@@ -112,7 +112,7 @@ namespace MyCouch.UnitTests.Requests
         public void When_Since_is_assigned_It_should_get_included_in_the_querystring()
         {
             var request = CreateRequest();
-            request.Since = 17;
+            request.Since = "17";
 
             WithHttpRequestFor(
                 request,

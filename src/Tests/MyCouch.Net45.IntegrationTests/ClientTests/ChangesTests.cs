@@ -96,7 +96,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             response.IsSuccess.Should().BeTrue();
         }
 
-        private long GetLastSequence()
+        private string GetLastSequence()
         {
             var changes = SUT.GetAsync(new GetChangesRequest { Feed = ChangesFeed.Normal }).Result;
 
@@ -105,9 +105,10 @@ namespace MyCouch.IntegrationTests.ClientTests
 
         protected virtual void VerifyChanges<T>(ChangesResponse<T> previous, ChangesResponse<T> current, string expectedId, string expectedRev, bool shouldBeDeleted, int numOfChangesPerformed = 1)
         {
-            current.Should().BeSuccessfulGet(previous.LastSeq + numOfChangesPerformed);
+            current.Should().BeSuccessfulGet();
 
-            var change = current.Results.Single(c => c.Seq > previous.LastSeq);
+            var orderedChanges = current.Results.OrderBy(c => c.Seq).ToList();
+            var change = orderedChanges.Last();
             change.Id.Should().Be(expectedId);
             change.Changes.Single().Rev.Should().Be(expectedRev);
             change.Deleted.Should().Be(shouldBeDeleted);

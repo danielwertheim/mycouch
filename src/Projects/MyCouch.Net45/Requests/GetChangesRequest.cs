@@ -20,7 +20,7 @@ namespace MyCouch.Requests
         /// <summary>
         /// Start the results from the change immediately after the given sequence number.
         /// </summary>
-        public long? Since { get; set; }
+        public string Since { get; set; }
         /// <summary>
         /// Limit number of result rows to the specified value.
         /// </summary>
