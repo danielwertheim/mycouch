@@ -12,6 +12,12 @@ nuget = "nuget.exe"
 
 target default, (clean, compile, copy, test, zip, nuget_pack):
     pass
+	
+target copy, (copy_core, copy_cloudant):
+	pass
+	
+target nuget_pack, (nuget_pack_core, nuget_pack_cloudant):
+	pass
 
 target clean:
     rm(build_dir_path)
@@ -22,7 +28,7 @@ target compile:
         targets: ("Clean", "Build"),
         configuration: build_config)
 
-target copy:
+target copy_core:
     with FileList("${solution_dir_path}/Projects/${project_name}.Net40/bin/${build_config}"):
         .Include("${project_name}.*.{dll,xml}")
         .ForEach def(file):
@@ -65,7 +71,7 @@ target testnetcore45:
 target zip:
     zip(build_dir_path, "${builds_dir_path}/${build_name}.zip")
 
-target nuget_pack:
+target nuget_pack_core:
     exec(nuget, "pack ${project_name}.nuspec -version ${build_version} -basepath ${build_dir_path} -outputdirectory ${builds_dir_path}")
 
 target nuget_pack_cloudant:
