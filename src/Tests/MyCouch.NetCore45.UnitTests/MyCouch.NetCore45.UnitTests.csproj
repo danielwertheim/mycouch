@@ -114,46 +114,52 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.UnitTests\Fakes\ConnectionFake.cs">
+    <Compile Include="..\MyCouch.Net45.UnitTests\Cloudant\Requests\SearchIndexHttpRequestFactoryTests.cs">
+      <Link>Cloudant\Requests\SearchIndexHttpRequestFactoryTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.UnitTests\Cloudant\Requests\SearchIndexRequestConfiguratorTests.cs">
+      <Link>Cloudant\Requests\SearchIndexRequestConfiguratorTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.UnitTests\Fakes\ConnectionFake.cs">
       <Link>Fakes\ConnectionFake.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.UnitTests\Requests\BulkRequestTests.cs">
+    <Compile Include="..\MyCouch.Net45.UnitTests\Requests\BulkRequestTests.cs">
       <Link>Requests\BulkRequestTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.UnitTests\Requests\GetChangesHttpRequestFactoryTests.cs">
+    <Compile Include="..\MyCouch.Net45.UnitTests\Requests\GetChangesHttpRequestFactoryTests.cs">
       <Link>Requests\GetChangesHttpRequestFactoryTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.UnitTests\Requests\QueryViewHttpRequestFactoryTests.cs">
+    <Compile Include="..\MyCouch.Net45.UnitTests\Requests\QueryViewHttpRequestFactoryTests.cs">
       <Link>Requests\QueryViewHttpRequestFactoryTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.UnitTests\Requests\QueryViewRequestConfiguratorTests.cs">
+    <Compile Include="..\MyCouch.Net45.UnitTests\Requests\QueryViewRequestConfiguratorTests.cs">
       <Link>Requests\QueryViewRequestConfiguratorTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.UnitTests\Requests\QueryViewRequestTests.cs">
+    <Compile Include="..\MyCouch.Net45.UnitTests\Requests\QueryViewRequestTests.cs">
       <Link>Requests\QueryViewRequestTests.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.unittests\schemes\EntityIdMemberTests.cs">
+    <Compile Include="..\MyCouch.Net45.UnitTests\schemes\EntityIdMemberTests.cs">
       <Link>Schemes\EntityIdMemberTests.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.unittests\schemes\EntityRevMemberTests.cs">
+    <Compile Include="..\MyCouch.Net45.UnitTests\schemes\EntityRevMemberTests.cs">
       <Link>Schemes\EntityRevMemberTests.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.unittests\serialization\DefaultSerializationTests.cs">
+    <Compile Include="..\MyCouch.Net45.UnitTests\serialization\DefaultSerializationTests.cs">
       <Link>Serialization\DefaultSerializationTests.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.unittests\serialization\EntitySerializationTests.cs">
+    <Compile Include="..\MyCouch.Net45.UnitTests\serialization\EntitySerializationTests.cs">
       <Link>Serialization\EntitySerializationTests.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.unittests\serialization\SerializerTests.cs">
+    <Compile Include="..\MyCouch.Net45.UnitTests\serialization\SerializerTests.cs">
       <Link>Serialization\SerializerTests.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.unittests\serialization\ViewQueryResponseRowsDeserializerTestsTests.cs">
+    <Compile Include="..\MyCouch.Net45.UnitTests\serialization\ViewQueryResponseRowsDeserializerTestsTests.cs">
       <Link>Serialization\ViewQueryResponseRowsDeserializerTestsTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.UnitTests\UnitTestsOf.cs">
+    <Compile Include="..\MyCouch.Net45.UnitTests\UnitTestsOf.cs">
       <Link>UnitTestsOf.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.UnitTests\UriBuilderTests.cs">
+    <Compile Include="..\MyCouch.Net45.UnitTests\UriBuilderTests.cs">
       <Link>UriBuilderTests.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -190,6 +196,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Projects\MyCouch.Cloudant.NetCore45\MyCouch.Cloudant.NetCore45.csproj">
+      <Project>{850b3c7a-8885-4ccb-ae30-814140f019d2}</Project>
+      <Name>MyCouch.Cloudant.NetCore45</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Projects\MyCouch.NetCore45\MyCouch.NetCore45.csproj">
       <Project>{07fea184-bce6-4224-a9d7-b8d3ff5bb439}</Project>
       <Name>MyCouch.NetCore45</Name>

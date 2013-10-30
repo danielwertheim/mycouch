@@ -83,385 +83,385 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\ChangesFeed.cs">
+    <Compile Include="..\MyCouch.Net45\ChangesFeed.cs">
       <Link>ChangesFeed.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\ChangesStyle.cs">
+    <Compile Include="..\MyCouch.Net45\ChangesStyle.cs">
       <Link>ChangesStyle.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Client.cs">
+    <Compile Include="..\MyCouch.Net45\Client.cs">
       <Link>Client.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\ClientBootstraper.cs">
+    <Compile Include="..\MyCouch.Net45\ClientBootstraper.cs">
       <Link>ClientBootstraper.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\ClientExecuteExtensions.cs">
+    <Compile Include="..\MyCouch.Net45\ClientExecuteExtensions.cs">
       <Link>ClientExecuteExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\configurations\ConnectionString.cs">
+    <Compile Include="..\MyCouch.Net45\configurations\ConnectionString.cs">
       <Link>Configurations\ConnectionString.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\contexts\ApiContextBase.cs">
+    <Compile Include="..\MyCouch.Net45\contexts\ApiContextBase.cs">
       <Link>Contexts\ApiContextBase.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\contexts\Attachments.cs">
+    <Compile Include="..\MyCouch.Net45\contexts\Attachments.cs">
       <Link>Contexts\Attachments.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Contexts\Changes.cs">
+    <Compile Include="..\MyCouch.Net45\Contexts\Changes.cs">
       <Link>Contexts\Changes.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\contexts\Databases.cs">
+    <Compile Include="..\MyCouch.Net45\contexts\Databases.cs">
       <Link>Contexts\Databases.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\contexts\Documents.cs">
+    <Compile Include="..\MyCouch.Net45\contexts\Documents.cs">
       <Link>Contexts\Documents.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\contexts\Entities.cs">
+    <Compile Include="..\MyCouch.Net45\contexts\Entities.cs">
       <Link>Contexts\Entities.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\contexts\Views.cs">
+    <Compile Include="..\MyCouch.Net45\contexts\Views.cs">
       <Link>Contexts\Views.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\entityschemes\EntityIdMember.cs">
+    <Compile Include="..\MyCouch.Net45\entityschemes\EntityIdMember.cs">
       <Link>EntitySchemes\EntityIdMember.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\entityschemes\EntityMember.cs">
+    <Compile Include="..\MyCouch.Net45\entityschemes\EntityMember.cs">
       <Link>EntitySchemes\EntityMember.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\entityschemes\EntityReflector.cs">
+    <Compile Include="..\MyCouch.Net45\entityschemes\EntityReflector.cs">
       <Link>EntitySchemes\EntityReflector.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\entityschemes\EntityRevMember.cs">
+    <Compile Include="..\MyCouch.Net45\entityschemes\EntityRevMember.cs">
       <Link>EntitySchemes\EntityRevMember.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\entityschemes\IEntityMember.cs">
+    <Compile Include="..\MyCouch.Net45\entityschemes\IEntityMember.cs">
       <Link>EntitySchemes\IEntityMember.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\entityschemes\IEntityReflector.cs">
+    <Compile Include="..\MyCouch.Net45\entityschemes\IEntityReflector.cs">
       <Link>EntitySchemes\IEntityReflector.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\entityschemes\reflections\DynamicProperty.cs">
+    <Compile Include="..\MyCouch.Net45\entityschemes\reflections\DynamicProperty.cs">
       <Link>EntitySchemes\Reflections\DynamicProperty.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\entityschemes\reflections\DynamicStringGetter.cs">
+    <Compile Include="..\MyCouch.Net45\entityschemes\reflections\DynamicStringGetter.cs">
       <Link>EntitySchemes\Reflections\DynamicStringGetter.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\entityschemes\reflections\DynamicStringSetter.cs">
+    <Compile Include="..\MyCouch.Net45\entityschemes\reflections\DynamicStringSetter.cs">
       <Link>EntitySchemes\Reflections\DynamicStringSetter.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\entityschemes\reflections\IDynamicPropertyFactory.cs">
+    <Compile Include="..\MyCouch.Net45\entityschemes\reflections\IDynamicPropertyFactory.cs">
       <Link>EntitySchemes\Reflections\IDynamicPropertyFactory.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\entityschemes\reflections\IlDynamicPropertyFactory.cs">
+    <Compile Include="..\MyCouch.Net45\entityschemes\reflections\IlDynamicPropertyFactory.cs">
       <Link>EntitySchemes\Reflections\IlDynamicPropertyFactory.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\entityschemes\reflections\LambdaDynamicPropertyFactory.cs">
+    <Compile Include="..\MyCouch.Net45\entityschemes\reflections\LambdaDynamicPropertyFactory.cs">
       <Link>EntitySchemes\Reflections\LambdaDynamicPropertyFactory.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\ExceptionStrings.cs">
+    <Compile Include="..\MyCouch.Net45\ExceptionStrings.cs">
       <Link>ExceptionStrings.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\extensions\HttpExtensions.cs">
+    <Compile Include="..\MyCouch.Net45\extensions\HttpExtensions.cs">
       <Link>Extensions\HttpExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Extensions\ObjectExtensions.cs">
+    <Compile Include="..\MyCouch.Net45\Extensions\ObjectExtensions.cs">
       <Link>Extensions\ObjectExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\extensions\StringExtensions.cs">
+    <Compile Include="..\MyCouch.Net45\extensions\StringExtensions.cs">
       <Link>Extensions\StringExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\extensions\TaskExtensions.cs">
+    <Compile Include="..\MyCouch.Net45\extensions\TaskExtensions.cs">
       <Link>Extensions\TaskExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\IAttachments.cs">
+    <Compile Include="..\MyCouch.Net45\IAttachments.cs">
       <Link>IAttachments.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\IChanges.cs">
+    <Compile Include="..\MyCouch.Net45\IChanges.cs">
       <Link>IChanges.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\IClient.cs">
+    <Compile Include="..\MyCouch.Net45\IClient.cs">
       <Link>IClient.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\IConnection.cs">
+    <Compile Include="..\MyCouch.Net45\IConnection.cs">
       <Link>IConnection.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\IDatabases.cs">
+    <Compile Include="..\MyCouch.Net45\IDatabases.cs">
       <Link>IDatabases.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\IDocuments.cs">
+    <Compile Include="..\MyCouch.Net45\IDocuments.cs">
       <Link>IDocuments.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\IEntities.cs">
+    <Compile Include="..\MyCouch.Net45\IEntities.cs">
       <Link>IEntities.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\IViews.cs">
+    <Compile Include="..\MyCouch.Net45\IViews.cs">
       <Link>IViews.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\MyCouchException.cs">
+    <Compile Include="..\MyCouch.Net45\MyCouchException.cs">
       <Link>MyCouchException.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\MyCouchRuntime.cs">
+    <Compile Include="..\MyCouch.Net45\MyCouchRuntime.cs">
       <Link>MyCouchRuntime.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\MyCouchUriBuilder.cs">
+    <Compile Include="..\MyCouch.Net45\MyCouchUriBuilder.cs">
       <Link>MyCouchUriBuilder.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\net\BasicHttpClientConnection.cs">
+    <Compile Include="..\MyCouch.Net45\net\BasicHttpClientConnection.cs">
       <Link>Net\BasicHttpClientConnection.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Net\BytesContent.cs">
+    <Compile Include="..\MyCouch.Net45\Net\BytesContent.cs">
       <Link>Net\BytesContent.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\net\HttpContentTypes.cs">
+    <Compile Include="..\MyCouch.Net45\net\HttpContentTypes.cs">
       <Link>Net\HttpContentTypes.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\net\HttpRequest.cs">
+    <Compile Include="..\MyCouch.Net45\net\HttpRequest.cs">
       <Link>Net\HttpRequest.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\net\JsonContent.cs">
+    <Compile Include="..\MyCouch.Net45\net\JsonContent.cs">
       <Link>Net\JsonContent.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Now.cs">
+    <Compile Include="..\MyCouch.Net45\Now.cs">
       <Link>Now.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\BulkRequest.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\BulkRequest.cs">
       <Link>Requests\BulkRequest.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\Configurators\QueryViewRequestConfigurator.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\Configurators\QueryViewRequestConfigurator.cs">
       <Link>Requests\Configurators\QueryViewRequestConfigurator.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\CopyDocumentRequest.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\CopyDocumentRequest.cs">
       <Link>Requests\CopyDocumentRequest.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\DeleteAttachmentRequest.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\DeleteAttachmentRequest.cs">
       <Link>Requests\DeleteAttachmentRequest.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\DeleteDocumentRequest.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\DeleteDocumentRequest.cs">
       <Link>Requests\DeleteDocumentRequest.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\DeleteEntityRequest.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\DeleteEntityRequest.cs">
       <Link>Requests\DeleteEntityRequest.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\DocumentExistsRequest.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\DocumentExistsRequest.cs">
       <Link>Requests\DocumentExistsRequest.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\Factories\AttachmentHttpRequestFactoryBase.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\Factories\AttachmentHttpRequestFactoryBase.cs">
       <Link>Requests\Factories\AttachmentHttpRequestFactoryBase.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\Factories\BulkHttpRequestFactory.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\Factories\BulkHttpRequestFactory.cs">
       <Link>Requests\Factories\BulkHttpRequestFactory.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\Factories\CopyDocumentHttpRequestFactory.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\Factories\CopyDocumentHttpRequestFactory.cs">
       <Link>Requests\Factories\CopyDocumentHttpRequestFactory.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\Factories\DeleteAttachmentHttpRequestFactory.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\Factories\DeleteAttachmentHttpRequestFactory.cs">
       <Link>Requests\Factories\DeleteAttachmentHttpRequestFactory.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\Factories\DeleteDocumentHttpRequestFactory.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\Factories\DeleteDocumentHttpRequestFactory.cs">
       <Link>Requests\Factories\DeleteDocumentHttpRequestFactory.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\Factories\DeleteEntityHttpRequestFactory.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\Factories\DeleteEntityHttpRequestFactory.cs">
       <Link>Requests\Factories\DeleteEntityHttpRequestFactory.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\Factories\DocumentExistsHttpRequestFactory.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\Factories\DocumentExistsHttpRequestFactory.cs">
       <Link>Requests\Factories\DocumentExistsHttpRequestFactory.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\Factories\DocumentHttpRequestFactoryBase.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\Factories\DocumentHttpRequestFactoryBase.cs">
       <Link>Requests\Factories\DocumentHttpRequestFactoryBase.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\Factories\EntityHttpRequestFactoryBase.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\Factories\EntityHttpRequestFactoryBase.cs">
       <Link>Requests\Factories\EntityHttpRequestFactoryBase.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\Factories\GetAttachmentHttpRequestFactory.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\Factories\GetAttachmentHttpRequestFactory.cs">
       <Link>Requests\Factories\GetAttachmentHttpRequestFactory.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\Factories\GetChangesHttpRequestFactory.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\Factories\GetChangesHttpRequestFactory.cs">
       <Link>Requests\Factories\GetChangesHttpRequestFactory.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\Factories\GetDocumentHttpRequestFactory.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\Factories\GetDocumentHttpRequestFactory.cs">
       <Link>Requests\Factories\GetDocumentHttpRequestFactory.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\Factories\GetEntityHttpRequestFactory.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\Factories\GetEntityHttpRequestFactory.cs">
       <Link>Requests\Factories\GetEntityHttpRequestFactory.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\Factories\HttpRequestFactoryBase.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\Factories\HttpRequestFactoryBase.cs">
       <Link>Requests\Factories\HttpRequestFactoryBase.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\Factories\PostDocumentHttpRequestFactory.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\Factories\PostDocumentHttpRequestFactory.cs">
       <Link>Requests\Factories\PostDocumentHttpRequestFactory.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\Factories\PostEntityHttpRequestFactory.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\Factories\PostEntityHttpRequestFactory.cs">
       <Link>Requests\Factories\PostEntityHttpRequestFactory.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\Factories\PutAttachmentHttpRequestFactory.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\Factories\PutAttachmentHttpRequestFactory.cs">
       <Link>Requests\Factories\PutAttachmentHttpRequestFactory.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\Factories\PutDocumentHttpRequestFactory.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\Factories\PutDocumentHttpRequestFactory.cs">
       <Link>Requests\Factories\PutDocumentHttpRequestFactory.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\Factories\PutEntityHttpRequestFactory.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\Factories\PutEntityHttpRequestFactory.cs">
       <Link>Requests\Factories\PutEntityHttpRequestFactory.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\Factories\QueryViewHttpRequestFactory.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\Factories\QueryViewHttpRequestFactory.cs">
       <Link>Requests\Factories\QueryViewHttpRequestFactory.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\Factories\ReplaceDocumentHttpRequestFactory.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\Factories\ReplaceDocumentHttpRequestFactory.cs">
       <Link>Requests\Factories\ReplaceDocumentHttpRequestFactory.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\GetAttachmentRequest.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\GetAttachmentRequest.cs">
       <Link>Requests\GetAttachmentRequest.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\GetChangesRequest.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\GetChangesRequest.cs">
       <Link>Requests\GetChangesRequest.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\GetDocumentRequest.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\GetDocumentRequest.cs">
       <Link>Requests\GetDocumentRequest.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\GetEntityRequest.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\GetEntityRequest.cs">
       <Link>Requests\GetEntityRequest.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\PostDocumentRequest.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\PostDocumentRequest.cs">
       <Link>Requests\PostDocumentRequest.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\PostEntityRequest.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\PostEntityRequest.cs">
       <Link>Requests\PostEntityRequest.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\PutAttachmentRequest.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\PutAttachmentRequest.cs">
       <Link>Requests\PutAttachmentRequest.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\PutDocumentRequest.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\PutDocumentRequest.cs">
       <Link>Requests\PutDocumentRequest.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\PutEntityRequest.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\PutEntityRequest.cs">
       <Link>Requests\PutEntityRequest.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\QuerySystemViewRequest.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\QuerySystemViewRequest.cs">
       <Link>Requests\QuerySystemViewRequest.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\QueryViewRequest.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\QueryViewRequest.cs">
       <Link>Requests\QueryViewRequest.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\ReplaceDocumentRequest.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\ReplaceDocumentRequest.cs">
       <Link>Requests\ReplaceDocumentRequest.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Requests\Request.cs">
+    <Compile Include="..\MyCouch.Net45\Requests\Request.cs">
       <Link>Requests\Request.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\responses\AttachmentResponse.cs">
+    <Compile Include="..\MyCouch.Net45\responses\AttachmentResponse.cs">
       <Link>Responses\AttachmentResponse.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\responses\BulkResponse.cs">
+    <Compile Include="..\MyCouch.Net45\responses\BulkResponse.cs">
       <Link>Responses\BulkResponse.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Responses\ChangesResponse.cs">
+    <Compile Include="..\MyCouch.Net45\Responses\ChangesResponse.cs">
       <Link>Responses\ChangesResponse.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Responses\ContinuousChangesResponse.cs">
+    <Compile Include="..\MyCouch.Net45\Responses\ContinuousChangesResponse.cs">
       <Link>Responses\ContinuousChangesResponse.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\responses\DatabaseResponse.cs">
+    <Compile Include="..\MyCouch.Net45\responses\DatabaseResponse.cs">
       <Link>Responses\DatabaseResponse.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\responses\DocumentHeaderResponse.cs">
+    <Compile Include="..\MyCouch.Net45\responses\DocumentHeaderResponse.cs">
       <Link>Responses\DocumentHeaderResponse.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\responses\DocumentResponse.cs">
+    <Compile Include="..\MyCouch.Net45\responses\DocumentResponse.cs">
       <Link>Responses\DocumentResponse.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\responses\EntityResponse.cs">
+    <Compile Include="..\MyCouch.Net45\responses\EntityResponse.cs">
       <Link>Responses\EntityResponse.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\responses\factories\AttachmentResponseFactory.cs">
+    <Compile Include="..\MyCouch.Net45\responses\factories\AttachmentResponseFactory.cs">
       <Link>Responses\Factories\AttachmentResponseFactory.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\responses\factories\BulkResponseFactory.cs">
+    <Compile Include="..\MyCouch.Net45\responses\factories\BulkResponseFactory.cs">
       <Link>Responses\Factories\BulkResponseFactory.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Responses\Factories\ChangesResponseFactory.cs">
+    <Compile Include="..\MyCouch.Net45\Responses\Factories\ChangesResponseFactory.cs">
       <Link>Responses\Factories\ChangesResponseFactory.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Responses\Factories\ContinuousChangesResponseFactory.cs">
+    <Compile Include="..\MyCouch.Net45\Responses\Factories\ContinuousChangesResponseFactory.cs">
       <Link>Responses\Factories\ContinuousChangesResponseFactory.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\responses\factories\DatabaseResponseFactory.cs">
+    <Compile Include="..\MyCouch.Net45\responses\factories\DatabaseResponseFactory.cs">
       <Link>Responses\Factories\DatabaseResponseFactory.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\responses\factories\DocumentHeaderResponseFactory.cs">
+    <Compile Include="..\MyCouch.Net45\responses\factories\DocumentHeaderResponseFactory.cs">
       <Link>Responses\Factories\DocumentHeaderResponseFactory.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\responses\factories\DocumentResponseFactory.cs">
+    <Compile Include="..\MyCouch.Net45\responses\factories\DocumentResponseFactory.cs">
       <Link>Responses\Factories\DocumentResponseFactory.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\responses\factories\EntityResponseFactory.cs">
+    <Compile Include="..\MyCouch.Net45\responses\factories\EntityResponseFactory.cs">
       <Link>Responses\Factories\EntityResponseFactory.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\responses\factories\ResponseFactoryBase.cs">
+    <Compile Include="..\MyCouch.Net45\responses\factories\ResponseFactoryBase.cs">
       <Link>Responses\Factories\ResponseFactoryBase.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\responses\factories\ViewQueryResponseFactory.cs">
+    <Compile Include="..\MyCouch.Net45\responses\factories\ViewQueryResponseFactory.cs">
       <Link>Responses\Factories\ViewQueryResponseFactory.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Responses\IResponseRow.cs">
+    <Compile Include="..\MyCouch.Net45\Responses\IResponseRow.cs">
       <Link>Responses\IResponseRow.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Responses\JsonScheme.cs">
+    <Compile Include="..\MyCouch.Net45\Responses\JsonScheme.cs">
       <Link>Responses\JsonScheme.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\responses\Response.cs">
+    <Compile Include="..\MyCouch.Net45\responses\Response.cs">
       <Link>Responses\Response.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\responses\ViewQueryResponse.cs">
+    <Compile Include="..\MyCouch.Net45\responses\ViewQueryResponse.cs">
       <Link>Responses\ViewQueryResponse.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\serialization\conventions\DocTypeSerializationConvention.cs">
+    <Compile Include="..\MyCouch.Net45\serialization\conventions\DocTypeSerializationConvention.cs">
       <Link>Serialization\Conventions\DocTypeSerializationConvention.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\serialization\conventions\ISerializationConvention.cs">
+    <Compile Include="..\MyCouch.Net45\serialization\conventions\ISerializationConvention.cs">
       <Link>Serialization\Conventions\ISerializationConvention.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\serialization\conventions\SerializationConventions.cs">
+    <Compile Include="..\MyCouch.Net45\serialization\conventions\SerializationConventions.cs">
       <Link>Serialization\Conventions\SerializationConventions.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Serialization\Converters\KeyJsonConverter.cs">
+    <Compile Include="..\MyCouch.Net45\Serialization\Converters\KeyJsonConverter.cs">
       <Link>Serialization\Converters\KeyJsonConverter.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Serialization\Converters\MultiTypeDeserializationJsonConverter.cs">
+    <Compile Include="..\MyCouch.Net45\Serialization\Converters\MultiTypeDeserializationJsonConverter.cs">
       <Link>Serialization\Converters\MultiTypeDeserializationJsonConverter.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\serialization\DefaultSerializer.cs">
+    <Compile Include="..\MyCouch.Net45\serialization\DefaultSerializer.cs">
       <Link>Serialization\DefaultSerializer.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\serialization\EntityContractResolver.cs">
+    <Compile Include="..\MyCouch.Net45\serialization\EntityContractResolver.cs">
       <Link>Serialization\EntityContractResolver.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\serialization\EntitySerializer.cs">
+    <Compile Include="..\MyCouch.Net45\serialization\EntitySerializer.cs">
       <Link>Serialization\EntitySerializer.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Serialization\IEntitySerializer.cs">
+    <Compile Include="..\MyCouch.Net45\Serialization\IEntitySerializer.cs">
       <Link>Serialization\IEntitySerializer.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\serialization\ISerializer.cs">
+    <Compile Include="..\MyCouch.Net45\serialization\ISerializer.cs">
       <Link>Serialization\ISerializer.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\serialization\readers\MyCouchJsonReader.cs">
+    <Compile Include="..\MyCouch.Net45\serialization\readers\MyCouchJsonReader.cs">
       <Link>Serialization\Readers\MyCouchJsonReader.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\serialization\SerializationConfiguration.cs">
+    <Compile Include="..\MyCouch.Net45\serialization\SerializationConfiguration.cs">
       <Link>Serialization\SerializationConfiguration.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\serialization\SerializationContractResolver.cs">
+    <Compile Include="..\MyCouch.Net45\serialization\SerializationContractResolver.cs">
       <Link>Serialization\SerializationContractResolver.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\serialization\writers\EntityJsonWriter.cs">
+    <Compile Include="..\MyCouch.Net45\serialization\writers\EntityJsonWriter.cs">
       <Link>Serialization\Writers\EntityJsonWriter.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch\serialization\writers\MyCouchJsonWriter.cs">
+    <Compile Include="..\MyCouch.Net45\serialization\writers\MyCouchJsonWriter.cs">
       <Link>Serialization\Writers\MyCouchJsonWriter.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\Stale.cs">
+    <Compile Include="..\MyCouch.Net45\Stale.cs">
       <Link>Stale.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch\ViewIdentity.cs">
+    <Compile Include="..\MyCouch.Net45\ViewIdentity.cs">
       <Link>ViewIdentity.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

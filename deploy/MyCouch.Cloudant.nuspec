@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <id>MyCouch.Cloudant</id>
+    <title>MyCouch - CouchDb and Cloudant client</title>
+    <version>$version$</version>
+    <authors>danielwertheim</authors>
+    <copyright>Copyright 2013 Daniel Wertheim</copyright>
+    <summary>Simple async CouchDb and Cloudant client.</summary>
+    <description>
+      This package contains support for Cloudant specific features. If you want pure CouchDb support and basic Cloudant support, go with the "MyCouch" package instead.
+
+      MyCouch is the simple asynchronous CouchDb and Cloudant client for .Net - builds on top of the asynchronous HTTP client and uses JSON.Net to provide flexible serialization behaviour. It tries to keep the domain language of CouchDb instead of bringing in generic repositories and other confusing stuff. MyCouch lets you work with raw JSON and/or entities/POCOS without requiring any implementation of interfaces, baseclasses etc. MyCouch provides you with some model conventions like injection of $doctype to the document. It is plug-gable. If you don't like some piece, then hook in your implementation instead.
+
+      Supports .Net4.0, .Net4.5 and Windows store apps (WinRT).
+
+      Please NOTE. This is not an official Cloudant package.
+
+      Please NOTE. If you don't have NuGet up to date, some uses has had issues with resolving dependencies.
+    </description>
+    <iconUrl>http://www.mycouchclient.com/logos/mycouch-nuget.png</iconUrl>
+    <projectUrl>https://github.com/danielwertheim/MyCouch</projectUrl>
+    <licenseUrl>https://github.com/danielwertheim/MyCouch#license</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <releaseNotes>Can be found on project site: https://github.com/danielwertheim/mycouch/wiki/release-notes</releaseNotes>
+    <tags>couchdb cloudant nosql json document-db documents poco async asynchronous winrt</tags>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.Configuration" targetFramework="net40" />
+      <frameworkAssembly assemblyName="System.Configuration" targetFramework="net45" />
+      <frameworkAssembly assemblyName="System.Net.Http" targetFramework="net45" />
+    </frameworkAssemblies>
+    <dependencies>
+       <group targetFramework="net40">
+         <dependency id="MyCouch" version="[$version$]" />
+         <dependency id="Ensure.That" version="1.0.0" />
+         <dependency id="Newtonsoft.Json" version="5.0.8" />
+         <dependency id="Microsoft.Bcl" version="1.1.3" />
+         <dependency id="Microsoft.Bcl.Async" version="1.0.16" />
+         <dependency id="Microsoft.Bcl.Build" version="1.0.10" />
+         <dependency id="Microsoft.Net.Http" version="2.2.15" />
+       </group>
+       <group targetFramework="net45">
+         <dependency id="MyCouch" version="[$version$]" />
+         <dependency id="Ensure.That" version="1.0.0" />
+         <dependency id="Newtonsoft.Json" version="5.0.8" />
+       </group>
+       <group targetFramework="netcore">
+         <dependency id="MyCouch" version="[$version$]" />
+         <dependency id="Ensure.That" version="1.0.0" />
+         <dependency id="Newtonsoft.Json" version="5.0.8" />
+       </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="Net40\MyCouch.Cloudant.Net40.dll" target="lib\net40" />
+    <file src="Net40\MyCouch.Cloudant.Net40.xml" target="lib\net40" />
+    <file src="Net45\MyCouch.Cloudant.Net45.dll" target="lib\net45" />
+    <file src="Net45\MyCouch.Cloudant.Net45.xml" target="lib\net45" />
+    <file src="NetCore45\MyCouch.Cloudant.NetCore45.dll" target="lib\netcore" />
+    <file src="NetCore45\MyCouch.Cloudant.NetCore45.xml" target="lib\netcore" />
+  </files>
+</package>

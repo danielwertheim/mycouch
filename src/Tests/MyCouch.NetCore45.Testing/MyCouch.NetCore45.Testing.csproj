@@ -107,6 +107,10 @@
   </ItemGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <ProjectReference Include="..\..\Projects\MyCouch.Cloudant.NetCore45\MyCouch.Cloudant.NetCore45.csproj">
+      <Project>{850b3c7a-8885-4ccb-ae30-814140f019d2}</Project>
+      <Name>MyCouch.Cloudant.NetCore45</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Projects\MyCouch.NetCore45\MyCouch.NetCore45.csproj">
       <Project>{07fea184-bce6-4224-a9d7-b8d3ff5bb439}</Project>
       <Name>MyCouch.NetCore45</Name>
@@ -116,31 +120,37 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Testing\CustomAsserts.cs">
+    <Compile Include="..\MyCouch.Net45.Testing\CustomAsserts.cs">
       <Link>CustomAsserts.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Testing\Model\Album.cs">
+    <Compile Include="..\MyCouch.Net45.Testing\Model\Album.cs">
       <Link>Model\Album.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.testing\model\Artist.cs">
+    <Compile Include="..\MyCouch.Net45.Testing\Model\Animal.cs">
+      <Link>Model\Animal.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.Testing\model\Artist.cs">
       <Link>Model\Artist.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Testing\Shoulds.cs">
+    <Compile Include="..\MyCouch.Net45.Testing\Shoulds.cs">
       <Link>Shoulds.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Testing\TestConstants.cs">
+    <Compile Include="..\MyCouch.Net45.Testing\TestConstants.cs">
       <Link>TestConstants.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.testing\testdata\ClientTestData.cs">
+    <Compile Include="..\MyCouch.Net45.Testing\testdata\ClientTestData.cs">
       <Link>TestData\ClientTestData.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.testing\testdata\JsonTestData.cs">
+    <Compile Include="..\MyCouch.Net45.Testing\TestData\CloudantTestData.cs">
+      <Link>TestData\CloudantTestData.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.Testing\testdata\JsonTestData.cs">
       <Link>TestData\JsonTestData.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Testing\TestsOf.cs">
+    <Compile Include="..\MyCouch.Net45.Testing\TestsOf.cs">
       <Link>TestsOf.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Testing\TypeExtensions.cs">
+    <Compile Include="..\MyCouch.Net45.Testing\TypeExtensions.cs">
       <Link>TypeExtensions.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -156,19 +166,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\mycouch.testing\jsontestdatafiles\ViewQueryAlbumRows.json">
+    <Content Include="..\MyCouch.Net45.Testing\jsontestdatafiles\ViewQueryAlbumRows.json">
       <Link>JsonTestDataFiles\ViewQueryAlbumRows.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\mycouch.testing\jsontestdatafiles\ViewQueryAllDocRows.json">
+    <Content Include="..\MyCouch.Net45.Testing\jsontestdatafiles\ViewQueryAllDocRows.json">
       <Link>JsonTestDataFiles\ViewQueryAllDocRows.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\MyCouch.Testing\JsonTestDataFiles\ViewQueryComplexKeysRows.json">
+    <Content Include="..\MyCouch.Net45.Testing\JsonTestDataFiles\ViewQueryComplexKeysRows.json">
       <Link>JsonTestDataFiles\ViewQueryComplexKeysRows.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\MyCouch.Testing\JsonTestDataFiles\ViewQuerySingleValueKeysRows.json">
+    <Content Include="..\MyCouch.Net45.Testing\JsonTestDataFiles\ViewQuerySingleValueKeysRows.json">
       <Link>JsonTestDataFiles\ViewQuerySingleValueKeysRows.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
