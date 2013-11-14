@@ -13,7 +13,7 @@ namespace MyCouch.Serialization.Conventions
 
         public DocTypeSerializationConvention()
         {
-            Convention = t => t.Name.ToLower();
+            Convention = t => t.Name.ToLowerInvariant();
         }
     }
 }
