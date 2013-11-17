@@ -13,7 +13,7 @@ namespace MyCouch.IntegrationTests.ClientTests
 {
     public class ChangesTests : ClientTestsOf<IChanges>
     {
-        protected readonly Func<string, int> StringToNumeric = s => int.Parse(new string(s.Where(Char.IsDigit).ToArray()));
+        protected readonly Func<string, int> StringToNumeric = s => int.Parse(new string(s.TakeWhile(Char.IsDigit).ToArray()));
 
         protected override void OnTestInit()
         {
@@ -71,7 +71,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             var deleteOfDoc = Client.Documents.DeleteAsync(putOfDoc.Id, putOfDoc.Rev).Result;
 
             var changesAfterLastOperation = SUT.GetAsync(changesRequest).Result;
-            VerifyChanges(changes0, changesAfterLastOperation, deleteOfDoc.Id, deleteOfDoc.Rev, shouldBeDeleted: true, numOfChangesPerformed: 3);
+            VerifyChanges(changes0, changesAfterLastOperation, deleteOfDoc.Id, deleteOfDoc.Rev, shouldBeDeleted: true);
         }
 
         [Fact]
@@ -106,15 +106,11 @@ namespace MyCouch.IntegrationTests.ClientTests
             return changes.LastSeq;
         }
 
-        protected virtual void VerifyChanges<T>(ChangesResponse<T> previous, ChangesResponse<T> current, string expectedId, string expectedRev, bool shouldBeDeleted, int numOfChangesPerformed = 1)
+        protected virtual void VerifyChanges<T>(ChangesResponse<T> previous, ChangesResponse<T> current, string expectedId, string expectedRev, bool shouldBeDeleted)
         {
             current.Should().BeSuccessfulGet();
 
-            var lastPreviousChange = previous.Results.Select(c => new { NumericSeq = StringToNumeric(c.Seq), Change = c}).OrderBy(i => i.NumericSeq).Last();
             var lastChange = current.Results.Select(c => new { NumericSeq = StringToNumeric(c.Seq), Change = c }).OrderBy(i => i.NumericSeq).Last();
-
-            (lastChange.NumericSeq - lastPreviousChange.NumericSeq).Should().Be(numOfChangesPerformed);
-
             lastChange.Change.Id.Should().Be(expectedId);
             lastChange.Change.Changes.Single().Rev.Should().Be(expectedRev);
             lastChange.Change.Deleted.Should().Be(shouldBeDeleted);
