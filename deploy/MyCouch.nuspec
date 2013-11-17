@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>MyCouch</id>
-    <title>MyCouch - CouchDb and Cloudant client</title>
+    <title>MyCouch - CouchDb client</title>
     <version>$version$</version>
     <authors>danielwertheim</authors>
     <copyright>Copyright 2013 Daniel Wertheim</copyright>
