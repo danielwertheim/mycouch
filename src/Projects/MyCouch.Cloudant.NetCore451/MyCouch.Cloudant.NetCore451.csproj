@@ -105,7 +105,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <ProjectReference Include="..\MyCouch.NetCore45\MyCouch.NetCore451.csproj">
+    <ProjectReference Include="..\MyCouch.NetCore451\MyCouch.NetCore451.csproj">
       <Project>{07fea184-bce6-4224-a9d7-b8d3ff5bb439}</Project>
       <Name>MyCouch.NetCore451</Name>
     </ProjectReference>

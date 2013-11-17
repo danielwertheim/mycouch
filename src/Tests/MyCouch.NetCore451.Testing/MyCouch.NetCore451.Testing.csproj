@@ -111,11 +111,11 @@
   </ItemGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <ProjectReference Include="..\..\Projects\MyCouch.Cloudant.NetCore45\MyCouch.Cloudant.NetCore451.csproj">
+    <ProjectReference Include="..\..\Projects\MyCouch.Cloudant.NetCore451\MyCouch.Cloudant.NetCore451.csproj">
       <Project>{850b3c7a-8885-4ccb-ae30-814140f019d2}</Project>
       <Name>MyCouch.Cloudant.NetCore451</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Projects\MyCouch.NetCore45\MyCouch.NetCore451.csproj">
+    <ProjectReference Include="..\..\Projects\MyCouch.NetCore451\MyCouch.NetCore451.csproj">
       <Project>{07fea184-bce6-4224-a9d7-b8d3ff5bb439}</Project>
       <Name>MyCouch.NetCore451</Name>
     </ProjectReference>
