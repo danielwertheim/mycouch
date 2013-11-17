@@ -6,19 +6,17 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{11A46453-9068-48AF-8251-F47DE632A3BB}</ProjectGuid>
+    <ProjectGuid>{850B3C7A-8885-4CCB-AE30-814140F019D2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MyCouch.IntegrationTests</RootNamespace>
-    <AssemblyName>MyCouch.NetCore45.IntegrationTests</AssemblyName>
+    <RootNamespace>MyCouch.Cloudant</RootNamespace>
+    <AssemblyName>MyCouch.Cloudant.NetCore451</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <PackageCertificateKeyFile>MyCouch.NetCore45.IntegrationTests_TemporaryKey.pfx</PackageCertificateKeyFile>
     <TargetPlatformVersion>8.1</TargetPlatformVersion>
     <MinimumVisualStudioVersion>12</MinimumVisualStudioVersion>
     <TargetFrameworkVersion />
-    <AppxBundle>Never</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -36,6 +34,8 @@
     <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <NoWarn>1591</NoWarn>
+    <DocumentationFile>bin\Release\MyCouch.Cloudant.NetCore451.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
@@ -103,125 +103,74 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
-  <PropertyGroup>
-    <AppXPackage>True</AppXPackage>
-    <AppxPackageIncludePrivateSymbols>true</AppxPackageIncludePrivateSymbols>
-  </PropertyGroup>
   <ItemGroup>
-    <!--A reference to the entire .Net Framework and Windows SDK are automatically included-->
-    <SDKReference Include="TestPlatform, Version=11.0" />
-    <SDKReference Include="XUnit, Version=2.0">
-      <Name>XUnit for Managed Projects</Name>
-    </SDKReference>
+    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <ProjectReference Include="..\MyCouch.NetCore45\MyCouch.NetCore451.csproj">
+      <Project>{07fea184-bce6-4224-a9d7-b8d3ff5bb439}</Project>
+      <Name>MyCouch.NetCore451</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.IntegrationTests\ClientExtensions.cs">
-      <Link>ClientExtensions.cs</Link>
+    <Compile Include="..\MyCouch.Cloudant.Net45\CloudantClient.cs">
+      <Link>CloudantClient.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.IntegrationTests\ClientTestsOf.cs">
-      <Link>ClientTestsOf.cs</Link>
+    <Compile Include="..\MyCouch.Cloudant.Net45\CloudantClientBootstraper.cs">
+      <Link>CloudantClientBootstraper.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.IntegrationTests\clienttests\AttachmentsTests.cs">
-      <Link>ClientTests\AttachmentsTests.cs</Link>
+    <Compile Include="..\MyCouch.Cloudant.Net45\Contexts\Searches.cs">
+      <Link>Contexts\Searches.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.IntegrationTests\ClientTests\ChangesTests.cs">
-      <Link>ClientTests\ChangesTests.cs</Link>
+    <Compile Include="..\MyCouch.Cloudant.Net45\ICloudantClient.cs">
+      <Link>ICloudantClient.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.IntegrationTests\clienttests\DocumentsTests.cs">
-      <Link>ClientTests\DocumentsTests.cs</Link>
+    <Compile Include="..\MyCouch.Cloudant.Net45\ISearches.cs">
+      <Link>ISearches.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.IntegrationTests\clienttests\EntitiesTests.cs">
-      <Link>ClientTests\EntitiesTests.cs</Link>
+    <Compile Include="..\MyCouch.Cloudant.Net45\Requests\Configurators\SearchIndexRequestConfigurator.cs">
+      <Link>Requests\Configurators\SearchIndexRequestConfigurator.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.IntegrationTests\clienttests\ViewsTests.cs">
-      <Link>ClientTests\ViewsTests.cs</Link>
+    <Compile Include="..\MyCouch.Cloudant.Net45\Requests\Factories\SearchIndexHttpRequestFactory.cs">
+      <Link>Requests\Factories\SearchIndexHttpRequestFactory.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.IntegrationTests\CloudantTestsOf.cs">
-      <Link>CloudantTestsOf.cs</Link>
+    <Compile Include="..\MyCouch.Cloudant.Net45\Requests\SearchIndexRequest.cs">
+      <Link>Requests\SearchIndexRequest.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.IntegrationTests\CloudantTests\SearchTests.cs">
-      <Link>CloudantTests\SearchTests.cs</Link>
+    <Compile Include="..\MyCouch.Cloudant.Net45\Responses\Factories\SearchIndexResponseFactory.cs">
+      <Link>Responses\Factories\SearchIndexResponseFactory.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.IntegrationTests\IntegrationTestsRuntime.cs">
-      <Link>IntegrationTestsRuntime.cs</Link>
+    <Compile Include="..\MyCouch.Cloudant.Net45\Responses\SearchIndexResponse.cs">
+      <Link>Responses\SearchIndexResponse.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.IntegrationTests\IPreserveStatePerFixture.cs">
-      <Link>IPreserveStatePerFixture.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45.IntegrationTests\TestFixtures\ClientTestsFixture.cs">
-      <Link>TestFixtures\ClientTestsFixture.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45.IntegrationTests\TestFixtures\CloudantTestsFixture.cs">
-      <Link>TestFixtures\CloudantTestsFixture.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45.IntegrationTests\TestFixtures\SearchFixture.cs">
-      <Link>TestFixtures\SearchFixture.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45.IntegrationTests\TestFixtures\ViewsFixture.cs">
-      <Link>TestFixtures\ViewsFixture.cs</Link>
+    <Compile Include="..\MyCouch.Cloudant.Net45\SearchIndexIdentity.cs">
+      <Link>SearchIndexIdentity.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <AppxManifest Include="Package.appxmanifest">
-      <SubType>Designer</SubType>
-    </AppxManifest>
-    <None Include="MyCouch.NetCore45.IntegrationTests_TemporaryKey.pfx" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Images\UnitTestLogo.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\UnitTestSmallLogo.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\UnitTestSplashScreen.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\UnitTestStoreLogo.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Projects\MyCouch.Cloudant.NetCore45\MyCouch.Cloudant.NetCore45.csproj">
-      <Project>{850b3c7a-8885-4ccb-ae30-814140f019d2}</Project>
-      <Name>MyCouch.Cloudant.NetCore45</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Projects\MyCouch.NetCore45\MyCouch.NetCore45.csproj">
-      <Project>{07fea184-bce6-4224-a9d7-b8d3ff5bb439}</Project>
-      <Name>MyCouch.NetCore45</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MyCouch.NetCore45.Testing\MyCouch.NetCore45.Testing.csproj">
-      <Project>{a47b5c4d-01be-4c95-9896-1b0a984879ae}</Project>
-      <Name>MyCouch.NetCore45.Testing</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="FluentAssertions, Version=2.1.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+    <Reference Include="EnsureThat, Version=1.0.0.37966, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\FluentAssertions.2.1.0.0\lib\winrt45\FluentAssertions.dll</HintPath>
+      <HintPath>..\..\packages\Ensure.That.1.0.0\lib\portable-win+net40+sl40+wp71\EnsureThat.dll\EnsureThat.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Newtonsoft.Json.5.0.8\lib\netcore45\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
-  <PropertyGroup>
-    <SDKReferenceDirectoryRoot>$(SolutionDir)\libs;$(SDKReferenceDirectoryRoot)</SDKReferenceDirectoryRoot>
-  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
-  </Target>  
+  </Target>
   <Target Name="AfterBuild">
   </Target>
   -->

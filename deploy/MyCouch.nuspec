@@ -12,7 +12,7 @@
 
       If you want Cloudant specific features like Lucene Searches, go with the "MyCouch.Cloudant" package instead.
 
-      Supports .Net4.0, .Net4.5 and Windows store apps (WinRT).
+      Supports .Net4.0, .Net4.5 and Windows store apps 8.1 (WinRT).
 
       Please NOTE. This is not an official Cloudant package.
 
@@ -42,7 +42,7 @@
          <dependency id="Ensure.That" version="1.0.0" />
          <dependency id="Newtonsoft.Json" version="5.0.8" />
        </group>
-       <group targetFramework="netcore">
+       <group targetFramework="netcore451">
          <dependency id="Ensure.That" version="1.0.0" />
          <dependency id="Newtonsoft.Json" version="5.0.8" />
        </group>
@@ -53,7 +53,7 @@
     <file src="Net40\MyCouch.Net40.xml" target="lib\net40" />
     <file src="Net45\MyCouch.Net45.dll" target="lib\net45" />
     <file src="Net45\MyCouch.Net45.xml" target="lib\net45" />
-    <file src="NetCore45\MyCouch.NetCore45.dll" target="lib\netcore" />
-    <file src="NetCore45\MyCouch.NetCore45.xml" target="lib\netcore" />
+    <file src="NetCore451\MyCouch.NetCore451.dll" target="lib\netcore451" />
+    <file src="NetCore451\MyCouch.NetCore451.xml" target="lib\netcore451" />
   </files>
 </package>

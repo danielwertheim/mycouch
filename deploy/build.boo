@@ -37,10 +37,10 @@ target copy_core:
         .Include("${project_name}.*.{dll,xml}")
         .ForEach def(file):
             file.CopyToDirectory("${build_dir_path}/Net45")
-    with FileList("${solution_dir_path}/Projects/${project_name}.NetCore45/bin/${build_config}"):
+    with FileList("${solution_dir_path}/Projects/${project_name}.NetCore451/bin/${build_config}"):
         .Include("${project_name}.*.{dll,xml}")
         .ForEach def(file):
-            file.CopyToDirectory("${build_dir_path}/NetCore45")
+            file.CopyToDirectory("${build_dir_path}/NetCore451")
 
 target copy_cloudant:
     with FileList("${solution_dir_path}/Projects/${project_name_cloudant}.Net40/bin/${build_config}"):
@@ -51,12 +51,12 @@ target copy_cloudant:
         .Include("${project_name_cloudant}.*.{dll,xml}")
         .ForEach def(file):
             file.CopyToDirectory("${build_dir_path}/Net45")
-    with FileList("${solution_dir_path}/Projects/${project_name_cloudant}.NetCore45/bin/${build_config}"):
+    with FileList("${solution_dir_path}/Projects/${project_name_cloudant}.NetCore451/bin/${build_config}"):
         .Include("${project_name_cloudant}.*.{dll,xml}")
         .ForEach def(file):
-            file.CopyToDirectory("${build_dir_path}/NetCore45")
+            file.CopyToDirectory("${build_dir_path}/NetCore451")
 
-target test, (test40, test45, testnetcore45):
+target test, (test40, test45, testnetcore451):
     pass
 
 target test40:
@@ -65,8 +65,8 @@ target test40:
 target test45:
     exec(testrunner, "${solution_dir_path}/Tests/${project_name}.Net45.UnitTests/bin/${build_config}/${project_name}.Net45.UnitTests.dll")
 
-target testnetcore45:
-    exec(testrunner, "${solution_dir_path}/Tests/${project_name}.NetCore45.UnitTests/bin/${build_config}/${project_name}.NetCore45.UnitTests.dll")
+target testnetcore451:
+    exec(testrunner, "${solution_dir_path}/Tests/${project_name}.NetCore451.UnitTests/bin/${build_config}/${project_name}.NetCore451.UnitTests.dll")
 
 target zip:
     zip(build_dir_path, "${builds_dir_path}/${build_name}.zip")

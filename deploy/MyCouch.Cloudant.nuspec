@@ -12,7 +12,7 @@
 
       MyCouch is the simple asynchronous CouchDb and Cloudant client for .Net - builds on top of the asynchronous HTTP client and uses JSON.Net to provide flexible serialization behaviour. It tries to keep the domain language of CouchDb instead of bringing in generic repositories and other confusing stuff. MyCouch lets you work with raw JSON and/or entities/POCOS without requiring any implementation of interfaces, baseclasses etc. MyCouch provides you with some model conventions like injection of $doctype to the document. It is plug-gable. If you don't like some piece, then hook in your implementation instead.
 
-      Supports .Net4.0, .Net4.5 and Windows store apps (WinRT).
+      Supports .Net4.0, .Net4.5 and Windows store apps 8.1 (WinRT).
 
       Please NOTE. This is not an official Cloudant package.
 
@@ -39,12 +39,7 @@
          <dependency id="Microsoft.Bcl.Build" version="1.0.10" />
          <dependency id="Microsoft.Net.Http" version="2.2.15" />
        </group>
-       <group targetFramework="net45">
-         <dependency id="MyCouch" version="[$version$]" />
-         <dependency id="Ensure.That" version="1.0.0" />
-         <dependency id="Newtonsoft.Json" version="5.0.8" />
-       </group>
-       <group targetFramework="netcore">
+       <group targetFramework="netcore451">
          <dependency id="MyCouch" version="[$version$]" />
          <dependency id="Ensure.That" version="1.0.0" />
          <dependency id="Newtonsoft.Json" version="5.0.8" />
@@ -56,7 +51,7 @@
     <file src="Net40\MyCouch.Cloudant.Net40.xml" target="lib\net40" />
     <file src="Net45\MyCouch.Cloudant.Net45.dll" target="lib\net45" />
     <file src="Net45\MyCouch.Cloudant.Net45.xml" target="lib\net45" />
-    <file src="NetCore45\MyCouch.Cloudant.NetCore45.dll" target="lib\netcore" />
-    <file src="NetCore45\MyCouch.Cloudant.NetCore45.xml" target="lib\netcore" />
+    <file src="NetCore451\MyCouch.Cloudant.NetCore451.dll" target="lib\netcore451" />
+    <file src="NetCore451\MyCouch.Cloudant.NetCore451.xml" target="lib\netcore451" />
   </files>
 </package>

@@ -6,14 +6,15 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{A47B5C4D-01BE-4C95-9896-1B0A984879AE}</ProjectGuid>
+    <ProjectGuid>{11A46453-9068-48AF-8251-F47DE632A3BB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MyCouch.Testing</RootNamespace>
-    <AssemblyName>MyCouch.NetCore45.Testing</AssemblyName>
+    <RootNamespace>MyCouch.IntegrationTests</RootNamespace>
+    <AssemblyName>MyCouch.NetCore451.IntegrationTests</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <PackageCertificateKeyFile>MyCouch.NetCore45.IntegrationTests_TemporaryKey.pfx</PackageCertificateKeyFile>
     <TargetPlatformVersion>8.1</TargetPlatformVersion>
     <MinimumVisualStudioVersion>12</MinimumVisualStudioVersion>
     <TargetFrameworkVersion />
@@ -102,6 +103,10 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <AppXPackage>True</AppXPackage>
+    <AppxPackageIncludePrivateSymbols>true</AppxPackageIncludePrivateSymbols>
+  </PropertyGroup>
   <ItemGroup>
     <!--A reference to the entire .Net Framework and Windows SDK are automatically included-->
     <SDKReference Include="TestPlatform, Version=11.0" />
@@ -110,54 +115,90 @@
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
-    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <ProjectReference Include="..\..\Projects\MyCouch.Cloudant.NetCore45\MyCouch.Cloudant.NetCore45.csproj">
-      <Project>{850b3c7a-8885-4ccb-ae30-814140f019d2}</Project>
-      <Name>MyCouch.Cloudant.NetCore45</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Projects\MyCouch.NetCore45\MyCouch.NetCore45.csproj">
-      <Project>{07fea184-bce6-4224-a9d7-b8d3ff5bb439}</Project>
-      <Name>MyCouch.NetCore45</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.Testing\CustomAsserts.cs">
-      <Link>CustomAsserts.cs</Link>
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\ClientExtensions.cs">
+      <Link>ClientExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.Testing\Model\Album.cs">
-      <Link>Model\Album.cs</Link>
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\ClientTestsOf.cs">
+      <Link>ClientTestsOf.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.Testing\Model\Animal.cs">
-      <Link>Model\Animal.cs</Link>
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\clienttests\AttachmentsTests.cs">
+      <Link>ClientTests\AttachmentsTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.Testing\model\Artist.cs">
-      <Link>Model\Artist.cs</Link>
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\ClientTests\ChangesTests.cs">
+      <Link>ClientTests\ChangesTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.Testing\Shoulds.cs">
-      <Link>Shoulds.cs</Link>
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\clienttests\DocumentsTests.cs">
+      <Link>ClientTests\DocumentsTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.Testing\TestConstants.cs">
-      <Link>TestConstants.cs</Link>
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\clienttests\EntitiesTests.cs">
+      <Link>ClientTests\EntitiesTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.Testing\testdata\ClientTestData.cs">
-      <Link>TestData\ClientTestData.cs</Link>
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\clienttests\ViewsTests.cs">
+      <Link>ClientTests\ViewsTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.Testing\TestData\CloudantTestData.cs">
-      <Link>TestData\CloudantTestData.cs</Link>
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\CloudantTestsOf.cs">
+      <Link>CloudantTestsOf.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.Testing\testdata\JsonTestData.cs">
-      <Link>TestData\JsonTestData.cs</Link>
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\CloudantTests\SearchTests.cs">
+      <Link>CloudantTests\SearchTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.Testing\TestsOf.cs">
-      <Link>TestsOf.cs</Link>
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\IntegrationTestsRuntime.cs">
+      <Link>IntegrationTestsRuntime.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.Testing\TypeExtensions.cs">
-      <Link>TypeExtensions.cs</Link>
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\IPreserveStatePerFixture.cs">
+      <Link>IPreserveStatePerFixture.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\TestFixtures\ClientTestsFixture.cs">
+      <Link>TestFixtures\ClientTestsFixture.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\TestFixtures\CloudantTestsFixture.cs">
+      <Link>TestFixtures\CloudantTestsFixture.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\TestFixtures\SearchFixture.cs">
+      <Link>TestFixtures\SearchFixture.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\TestFixtures\ViewsFixture.cs">
+      <Link>TestFixtures\ViewsFixture.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+    <None Include="MyCouch.NetCore45.IntegrationTests_TemporaryKey.pfx" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\UnitTestLogo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\UnitTestSmallLogo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\UnitTestSplashScreen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\UnitTestStoreLogo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Projects\MyCouch.Cloudant.NetCore45\MyCouch.Cloudant.NetCore451.csproj">
+      <Project>{850b3c7a-8885-4ccb-ae30-814140f019d2}</Project>
+      <Name>MyCouch.Cloudant.NetCore451</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Projects\MyCouch.NetCore45\MyCouch.NetCore451.csproj">
+      <Project>{07fea184-bce6-4224-a9d7-b8d3ff5bb439}</Project>
+      <Name>MyCouch.NetCore451</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MyCouch.NetCore45.Testing\MyCouch.NetCore451.Testing.csproj">
+      <Project>{a47b5c4d-01be-4c95-9896-1b0a984879ae}</Project>
+      <Name>MyCouch.NetCore451.Testing</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FluentAssertions, Version=2.1.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
@@ -169,25 +210,7 @@
       <HintPath>..\..\packages\Newtonsoft.Json.5.0.8\lib\netcore45\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="..\MyCouch.Net45.Testing\jsontestdatafiles\ViewQueryAlbumRows.json">
-      <Link>JsonTestDataFiles\ViewQueryAlbumRows.json</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\MyCouch.Net45.Testing\jsontestdatafiles\ViewQueryAllDocRows.json">
-      <Link>JsonTestDataFiles\ViewQueryAllDocRows.json</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\MyCouch.Net45.Testing\JsonTestDataFiles\ViewQueryComplexKeysRows.json">
-      <Link>JsonTestDataFiles\ViewQueryComplexKeysRows.json</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\MyCouch.Net45.Testing\JsonTestDataFiles\ViewQuerySingleValueKeysRows.json">
-      <Link>JsonTestDataFiles\ViewQuerySingleValueKeysRows.json</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <None Include="packages.config" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>
   </PropertyGroup>
@@ -198,7 +221,7 @@
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
-  </Target>
+  </Target>  
   <Target Name="AfterBuild">
   </Target>
   -->
