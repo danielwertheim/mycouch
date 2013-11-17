@@ -216,7 +216,7 @@ namespace MyCouch.Testing
         {
             Response.RequestMethod.Should().Be(HttpMethod.Post);
             Response.IsSuccess.Should().BeTrue();
-            Response.StatusCode.Should().Be(HttpStatusCode.Created);
+            (Response.StatusCode == HttpStatusCode.Accepted || Response.StatusCode == HttpStatusCode.Created).Should().BeTrue();
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
             Response.IsEmpty.Should().BeFalse();
@@ -233,7 +233,7 @@ namespace MyCouch.Testing
         {
             Response.RequestMethod.Should().Be(HttpMethod.Put);
             Response.IsSuccess.Should().BeTrue();
-            Response.StatusCode.Should().Be(HttpStatusCode.Created);
+            (Response.StatusCode == HttpStatusCode.Accepted || Response.StatusCode == HttpStatusCode.Created).Should().BeTrue();
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
             Response.IsEmpty.Should().BeFalse();
@@ -261,7 +261,7 @@ namespace MyCouch.Testing
         {
             Response.RequestMethod.Should().Be(HttpMethod.Put);
             Response.IsSuccess.Should().BeTrue();
-            Response.StatusCode.Should().Be(HttpStatusCode.Created);
+            (Response.StatusCode == HttpStatusCode.Accepted || Response.StatusCode == HttpStatusCode.Created).Should().BeTrue();
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
             Response.IsEmpty.Should().BeFalse();
@@ -377,7 +377,7 @@ namespace MyCouch.Testing
         {
             Response.RequestMethod.Should().Be(HttpMethod.Post);
             Response.IsSuccess.Should().BeTrue();
-            Response.StatusCode.Should().Be(HttpStatusCode.Created);
+            (Response.StatusCode == HttpStatusCode.Accepted || Response.StatusCode == HttpStatusCode.Created).Should().BeTrue();
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
             Response.Id.Should().Be(initialId);
@@ -388,7 +388,7 @@ namespace MyCouch.Testing
         {
             Response.RequestMethod.Should().Be(HttpMethod.Put);
             Response.IsSuccess.Should().BeTrue();
-            Response.StatusCode.Should().Be(HttpStatusCode.Created);
+            (Response.StatusCode == HttpStatusCode.Accepted || Response.StatusCode == HttpStatusCode.Created).Should().BeTrue();
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
             Response.Id.Should().Be(initialId);
@@ -410,7 +410,7 @@ namespace MyCouch.Testing
         {
             Response.RequestMethod.Should().Be(HttpMethod.Put);
             Response.IsSuccess.Should().BeTrue();
-            Response.StatusCode.Should().Be(HttpStatusCode.Created);
+            (Response.StatusCode == HttpStatusCode.Accepted || Response.StatusCode == HttpStatusCode.Created).Should().BeTrue();
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
             Response.Id.Should().NotBeNullOrEmpty();

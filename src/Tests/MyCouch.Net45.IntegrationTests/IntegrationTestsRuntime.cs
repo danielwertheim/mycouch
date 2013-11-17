@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using MyCouch.Cloudant;
+using MyCouch.Net;
+using MyCouch.Requests;
 using Newtonsoft.Json;
 
 namespace MyCouch.IntegrationTests
@@ -9,18 +12,18 @@ namespace MyCouch.IntegrationTests
     internal static class IntegrationTestsRuntime
     {
         private const string TestEnvironmentsBaseUrl = "http://localhost:8991/testenvironments/";
-        private static readonly TestEnvironment NormalEnvironment;
-        private static readonly TestEnvironment CloudantEnvironment;
+        private static readonly TestEnvironment NormalClientEnvironment;
+        private static readonly TestEnvironment CloudantClientEnvironment;
 
         static IntegrationTestsRuntime()
         {
             using (var c = new HttpClient())
             {
-                NormalEnvironment = GetTestEnvironment(c, "normal");
-                CloudantEnvironment = GetTestEnvironment(c, "cloudant");
+                NormalClientEnvironment = GetTestEnvironment(c, "normal");
+                CloudantClientEnvironment = GetTestEnvironment(c, "cloudant");
             }
 
-            if (NormalEnvironment != null)
+            if (NormalClientEnvironment != null)
             {
                 using (var client = CreateNormalClient())
                 {
@@ -29,7 +32,7 @@ namespace MyCouch.IntegrationTests
                 }
             }
 
-            if (CloudantEnvironment != null)
+            if (CloudantClientEnvironment != null)
             {
                 using (var client = CreateCloudantClient())
                 {
@@ -60,28 +63,28 @@ namespace MyCouch.IntegrationTests
 
         internal static IClient CreateNormalClient()
         {
-            if(NormalEnvironment == null)
-                throw new Exception("Can not create client for Normal tests. Missing configuration.");
+            if(NormalClientEnvironment == null)
+                throw new Exception("Can not create Normal client. Missing configuration.");
 
-            var cfg = NormalEnvironment.Client;
+            var cfg = NormalClientEnvironment.Client;
             var uriBuilder = new MyCouchUriBuilder(cfg.ServerUrl)
-                .SetDbName(NormalEnvironment.Client.DbName)
+                .SetDbName(NormalClientEnvironment.Client.DbName)
                 .SetBasicCredentials(cfg.User, cfg.Password);
 
-            return new Client(uriBuilder.Build());
+            return cfg.IsAgainstCloudant ? new Client(new CustomCloudantConnection(uriBuilder.Build())) : new Client(uriBuilder.Build());
         }
 
         internal static ICloudantClient CreateCloudantClient()
         {
-            if (NormalEnvironment == null)
-                throw new Exception("Can not create client for Cloudant tests. Missing configuration.");
+            if (NormalClientEnvironment == null)
+                throw new Exception("Can not create Cloudant client. Missing configuration.");
 
-            var cfg = CloudantEnvironment.Client;
+            var cfg = CloudantClientEnvironment.Client;
             var uriBuilder = new MyCouchUriBuilder(cfg.ServerUrl)
-                .SetDbName(NormalEnvironment.Client.DbName)
+                .SetDbName(NormalClientEnvironment.Client.DbName)
                 .SetBasicCredentials(cfg.User, cfg.Password);
 
-            return new CloudantClient(uriBuilder.Build());
+            return new CloudantClient(new CustomCloudantConnection(uriBuilder.Build()));
         }
 
         private class TestEnvironment
@@ -100,6 +103,31 @@ namespace MyCouch.IntegrationTests
             public string DbName { get; set; }
             public string User { get; set; }
             public string Password { get; set; }
+            public bool IsAgainstCloudant { get { return ServerUrl.Contains("cloudant.com"); } }
+        }
+
+        private class CustomCloudantConnection : BasicHttpClientConnection
+        {
+            public CustomCloudantConnection(Uri uri)
+                : base(uri) { }
+
+            protected override HttpRequest OnBeforeSend(HttpRequest httpRequest)
+            {
+                if (httpRequest.Method == HttpMethod.Post || httpRequest.Method == HttpMethod.Put || httpRequest.Method == HttpMethod.Delete)
+                {
+                    httpRequest.RequestUri = string.IsNullOrEmpty(httpRequest.RequestUri.Query)
+                        ? new Uri(httpRequest.RequestUri + "?w=3")
+                        : new Uri(httpRequest.RequestUri + "&w=3");
+                }
+
+                if (httpRequest.Method == HttpMethod.Get || httpRequest.Method == HttpMethod.Head)
+                {
+                    httpRequest.RequestUri = string.IsNullOrEmpty(httpRequest.RequestUri.Query)
+                              ? new Uri(httpRequest.RequestUri + "?r=1")
+                              : new Uri(httpRequest.RequestUri + "&r=1");
+                }
+                return base.OnBeforeSend(httpRequest);
+            }
         }
     }
 }
