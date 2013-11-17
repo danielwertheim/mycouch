@@ -52,6 +52,9 @@ namespace MyCouch.Requests.Factories
             if (value is string)
                 return FormatValue(value as string);
 
+            if (value is Enum)
+                return FormatValue(value.ToString());
+
             if (value is Array)
                 return FormatValues(value as object[]);
 

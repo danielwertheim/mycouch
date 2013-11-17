@@ -3,6 +3,7 @@ using System.Net.Http;
 using FluentAssertions;
 using MyCouch.Requests;
 using MyCouch.Requests.Factories;
+using MyCouch.Testing.TestData;
 using MyCouch.UnitTests.Fakes;
 using Xunit;
 
@@ -36,6 +37,7 @@ namespace MyCouch.UnitTests.Requests
             var request = CreateRequest();
             request.Keys = new object[] {
                 "fake_key",
+                FooEnum.Two,
                 1,
                 3.14,
                 true,
@@ -46,7 +48,7 @@ namespace MyCouch.UnitTests.Requests
 
             WithHttpRequestFor(
                 request,
-                req => req.Content.ReadAsStringAsync().Result.Should().Be("{\"keys\":[\"fake_key\",1,3.14,true,false,\"2008-07-17T09:21:30\",[\"complex1\",42]]}"));
+                req => req.Content.ReadAsStringAsync().Result.Should().Be("{\"keys\":[\"fake_key\",\"Two\",1,3.14,true,false,\"2008-07-17T09:21:30\",[\"complex1\",42]]}"));
         }
 
         [Fact]
@@ -226,6 +228,17 @@ namespace MyCouch.UnitTests.Requests
         }
 
         [Fact]
+        public void When_Key_of_enum_is_assigned_It_should_get_included_in_the_querystring()
+        {
+            var request = CreateRequest();
+            request.Key = FooEnum.Two;
+
+            WithHttpRequestFor(
+                request,
+                req => req.RequestUri.Query.Should().Be("?key=%22Two%22"));
+        }
+
+        [Fact]
         public void When_Key_of_int_is_assigned_It_should_get_included_in_the_querystring()
         {
             var request = CreateRequest();
@@ -273,11 +286,11 @@ namespace MyCouch.UnitTests.Requests
         public void When_complex_StartKey_is_assigned_It_should_get_included_in_the_querystring()
         {
             var request = CreateRequest();
-            request.StartKey = new object[] { "Key1", 42 };
+            request.StartKey = new object[] { "Key1", FooEnum.Two, 42 };
 
             WithHttpRequestFor(
                 request,
-                req => req.RequestUri.Query.Should().Be("?startkey=%5B%22Key1%22%2C42%5D"));
+                req => req.RequestUri.Query.Should().Be("?startkey=%5B%22Key1%22%2C%22Two%22%2C42%5D"));
         }
 
         [Fact]
@@ -289,6 +302,17 @@ namespace MyCouch.UnitTests.Requests
             WithHttpRequestFor(
                 request,
                 req => req.RequestUri.Query.Should().Be("?startkey=%22Key1%22"));
+        }
+
+        [Fact]
+        public void When_StartKey_of_enum_is_assigned_It_should_get_included_in_the_querystring()
+        {
+            var request = CreateRequest();
+            request.StartKey = FooEnum.Two;
+
+            WithHttpRequestFor(
+                request,
+                req => req.RequestUri.Query.Should().Be("?startkey=%22Two%22"));
         }
 
         [Fact]
@@ -350,11 +374,11 @@ namespace MyCouch.UnitTests.Requests
         public void When_complex_EndKey_is_assigned_It_should_get_included_in_the_querystring()
         {
             var request = CreateRequest();
-            request.EndKey = new object[] { "Key1", 42 };
+            request.EndKey = new object[] { "Key1", FooEnum.Two, 42 };
 
             WithHttpRequestFor(
                 request,
-                req => req.RequestUri.Query.Should().Be("?endkey=%5B%22Key1%22%2C42%5D"));
+                req => req.RequestUri.Query.Should().Be("?endkey=%5B%22Key1%22%2C%22Two%22%2C42%5D"));
         }
 
         [Fact]
@@ -366,6 +390,17 @@ namespace MyCouch.UnitTests.Requests
             WithHttpRequestFor(
                 request,
                 req => req.RequestUri.Query.Should().Be("?endkey=%22Key1%22"));
+        }
+
+        [Fact]
+        public void When_EndKey_of_enum_is_assigned_It_should_get_included_in_the_querystring()
+        {
+            var request = CreateRequest();
+            request.EndKey = FooEnum.Two;
+
+            WithHttpRequestFor(
+                request,
+                req => req.RequestUri.Query.Should().Be("?endkey=%22Two%22"));
         }
 
         [Fact]
@@ -501,6 +536,12 @@ namespace MyCouch.UnitTests.Requests
         {
             using (var req = SUT.Create(query))
                 a(req);
+        }
+
+        protected enum FooEnum
+        {
+            One,
+            Two
         }
     }
 }

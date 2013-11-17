@@ -68,6 +68,16 @@ namespace MyCouch.UnitTests.Requests
         }
 
         [Fact]
+        public void When_config_of_Key_of_enum_It_configures_underlying_options_Key()
+        {
+            const FooEnum configuredValue = FooEnum.Two;
+
+            SUT.Key(configuredValue);
+
+            _request.Key.Should().Be(configuredValue);
+        }
+
+        [Fact]
         public void When_config_of_Key_of_int_It_configures_underlying_options_Key()
         {
             const int configuredValue = 42;
@@ -112,6 +122,7 @@ namespace MyCouch.UnitTests.Requests
         {
             var configuredValue = new object[] {
                 "fake key",
+                FooEnum.Two,
                 42,
                 3.14,
                 new DateTime(2008, 07, 17, 09, 21, 30, 50),
@@ -127,6 +138,16 @@ namespace MyCouch.UnitTests.Requests
         public void When_config_of_StartKey_of_string_It_configures_underlying_options_Key()
         {
             const string configuredValue = "Fake key 1";
+
+            SUT.StartKey(configuredValue);
+
+            _request.StartKey.Should().Be(configuredValue);
+        }
+
+        [Fact]
+        public void When_config_of_StartKey_of_enum_It_configures_underlying_options_Key()
+        {
+            const FooEnum configuredValue = FooEnum.Two;
 
             SUT.StartKey(configuredValue);
 
@@ -178,6 +199,7 @@ namespace MyCouch.UnitTests.Requests
         {
             var configuredValue = new object[] {
                 "fake key",
+                FooEnum.Two,
                 42,
                 3.14,
                 new DateTime(2008, 07, 17, 09, 21, 30, 50),
@@ -193,6 +215,16 @@ namespace MyCouch.UnitTests.Requests
         public void When_config_of_EndKey_of_string_It_configures_underlying_options_Key()
         {
             const string configuredValue = "Fake key 1";
+
+            SUT.EndKey(configuredValue);
+
+            _request.EndKey.Should().Be(configuredValue);
+        }
+
+        [Fact]
+        public void When_config_of_EndKey_of_enum_It_configures_underlying_options_Key()
+        {
+            const FooEnum configuredValue = FooEnum.Two;
 
             SUT.EndKey(configuredValue);
 
@@ -244,6 +276,7 @@ namespace MyCouch.UnitTests.Requests
         {
             var configuredValue = new object[] {
                 "fake key",
+                FooEnum.Two,
                 42,
                 3.14,
                 new DateTime(2008, 07, 17, 09, 21, 30, 50),
@@ -260,6 +293,7 @@ namespace MyCouch.UnitTests.Requests
         {
             var configuredValue = new object[] {
                 "fake key",
+                FooEnum.Two,
                 42,
                 3.14,
                 new DateTime(2008, 07, 17, 09, 21, 30, 50),
@@ -280,6 +314,12 @@ namespace MyCouch.UnitTests.Requests
             SUT.Stale(configuredValue);
 
             _request.Stale.Should().Be(configuredValue);
+        }
+
+        private enum FooEnum
+        {
+            One,
+            Two
         }
     }
 }

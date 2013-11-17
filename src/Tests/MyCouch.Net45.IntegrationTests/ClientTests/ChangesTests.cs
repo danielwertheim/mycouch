@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -12,6 +13,8 @@ namespace MyCouch.IntegrationTests.ClientTests
 {
     public class ChangesTests : ClientTestsOf<IChanges>
     {
+        protected readonly Func<string, int> StringToNumeric = s => int.Parse(new string(s.TakeWhile(Char.IsDigit).ToArray()));
+
         protected override void OnTestInit()
         {
             SUT = Client.Changes;
@@ -30,7 +33,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             var changesAfterPostOfDoc = SUT.GetAsync(changesRequestWithInclude).Result;
             VerifyChanges(changes0, changesAfterPostOfDoc, postOfDoc.Id, postOfDoc.Rev, shouldBeDeleted: false);
 
-            var change = changesAfterPostOfDoc.Results.OrderBy(c => c.Seq).Last();
+            var change = changesAfterPostOfDoc.Results.OrderBy(c => StringToNumeric(c.Seq)).Last();
             var postedDoc = Client.Documents.GetAsync(postOfDoc.Id, postOfDoc.Rev).Result.Content;
 
             change.IncludedDoc.Should().Be(postedDoc);
@@ -68,7 +71,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             var deleteOfDoc = Client.Documents.DeleteAsync(putOfDoc.Id, putOfDoc.Rev).Result;
 
             var changesAfterLastOperation = SUT.GetAsync(changesRequest).Result;
-            VerifyChanges(changes0, changesAfterLastOperation, deleteOfDoc.Id, deleteOfDoc.Rev, shouldBeDeleted: true, numOfChangesPerformed: 3);
+            VerifyChanges(changes0, changesAfterLastOperation, deleteOfDoc.Id, deleteOfDoc.Rev, shouldBeDeleted: true);
         }
 
         [Fact]
@@ -103,15 +106,14 @@ namespace MyCouch.IntegrationTests.ClientTests
             return changes.LastSeq;
         }
 
-        protected virtual void VerifyChanges<T>(ChangesResponse<T> previous, ChangesResponse<T> current, string expectedId, string expectedRev, bool shouldBeDeleted, int numOfChangesPerformed = 1)
+        protected virtual void VerifyChanges<T>(ChangesResponse<T> previous, ChangesResponse<T> current, string expectedId, string expectedRev, bool shouldBeDeleted)
         {
             current.Should().BeSuccessfulGet();
 
-            var orderedChanges = current.Results.OrderBy(c => c.Seq).ToList();
-            var change = orderedChanges.Last();
-            change.Id.Should().Be(expectedId);
-            change.Changes.Single().Rev.Should().Be(expectedRev);
-            change.Deleted.Should().Be(shouldBeDeleted);
+            var lastChange = current.Results.Select(c => new { NumericSeq = StringToNumeric(c.Seq), Change = c }).OrderBy(i => i.NumericSeq).Last();
+            lastChange.Change.Id.Should().Be(expectedId);
+            lastChange.Change.Changes.Single().Rev.Should().Be(expectedRev);
+            lastChange.Change.Deleted.Should().Be(shouldBeDeleted);
         }
     }
 }

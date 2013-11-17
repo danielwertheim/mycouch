@@ -1,19 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{850B3C7A-8885-4CCB-AE30-814140F019D2}</ProjectGuid>
+    <ProjectGuid>{A47B5C4D-01BE-4C95-9896-1B0A984879AE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MyCouch.Cloudant</RootNamespace>
-    <AssemblyName>MyCouch.Cloudant.NetCore45</AssemblyName>
+    <RootNamespace>MyCouch.Testing</RootNamespace>
+    <AssemblyName>MyCouch.NetCore451.Testing</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetPlatformVersion>8.1</TargetPlatformVersion>
+    <MinimumVisualStudioVersion>12</MinimumVisualStudioVersion>
+    <TargetFrameworkVersion />
+    <AppxBundle>Never</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,8 +35,6 @@
     <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <NoWarn>1591</NoWarn>
-    <DocumentationFile>bin\Release\MyCouch.Cloudant.NetCore45.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
@@ -101,55 +103,66 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <!--A reference to the entire .Net Framework and Windows SDK are automatically included-->
+    <SDKReference Include="TestPlatform, Version=11.0" />
+    <SDKReference Include="XUnit, Version=2.0">
+      <Name>XUnit for Managed Projects</Name>
+    </SDKReference>
+  </ItemGroup>
+  <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <ProjectReference Include="..\MyCouch.NetCore45\MyCouch.NetCore45.csproj">
+    <ProjectReference Include="..\..\Projects\MyCouch.Cloudant.NetCore451\MyCouch.Cloudant.NetCore451.csproj">
+      <Project>{850b3c7a-8885-4ccb-ae30-814140f019d2}</Project>
+      <Name>MyCouch.Cloudant.NetCore451</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Projects\MyCouch.NetCore451\MyCouch.NetCore451.csproj">
       <Project>{07fea184-bce6-4224-a9d7-b8d3ff5bb439}</Project>
-      <Name>MyCouch.NetCore45</Name>
+      <Name>MyCouch.NetCore451</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\CloudantClient.cs">
-      <Link>CloudantClient.cs</Link>
+    <Compile Include="..\MyCouch.Net45.Testing\CustomAsserts.cs">
+      <Link>CustomAsserts.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\CloudantClientBootstraper.cs">
-      <Link>CloudantClientBootstraper.cs</Link>
+    <Compile Include="..\MyCouch.Net45.Testing\Model\Album.cs">
+      <Link>Model\Album.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\Contexts\Searches.cs">
-      <Link>Contexts\Searches.cs</Link>
+    <Compile Include="..\MyCouch.Net45.Testing\Model\Animal.cs">
+      <Link>Model\Animal.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\ICloudantClient.cs">
-      <Link>ICloudantClient.cs</Link>
+    <Compile Include="..\MyCouch.Net45.Testing\model\Artist.cs">
+      <Link>Model\Artist.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\ISearches.cs">
-      <Link>ISearches.cs</Link>
+    <Compile Include="..\MyCouch.Net45.Testing\Shoulds.cs">
+      <Link>Shoulds.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\Requests\Configurators\SearchIndexRequestConfigurator.cs">
-      <Link>Requests\Configurators\SearchIndexRequestConfigurator.cs</Link>
+    <Compile Include="..\MyCouch.Net45.Testing\TestConstants.cs">
+      <Link>TestConstants.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\Requests\Factories\SearchIndexHttpRequestFactory.cs">
-      <Link>Requests\Factories\SearchIndexHttpRequestFactory.cs</Link>
+    <Compile Include="..\MyCouch.Net45.Testing\testdata\ClientTestData.cs">
+      <Link>TestData\ClientTestData.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\Requests\SearchIndexRequest.cs">
-      <Link>Requests\SearchIndexRequest.cs</Link>
+    <Compile Include="..\MyCouch.Net45.Testing\TestData\CloudantTestData.cs">
+      <Link>TestData\CloudantTestData.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\Responses\Factories\SearchIndexResponseFactory.cs">
-      <Link>Responses\Factories\SearchIndexResponseFactory.cs</Link>
+    <Compile Include="..\MyCouch.Net45.Testing\testdata\JsonTestData.cs">
+      <Link>TestData\JsonTestData.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\Responses\SearchIndexResponse.cs">
-      <Link>Responses\SearchIndexResponse.cs</Link>
+    <Compile Include="..\MyCouch.Net45.Testing\TestsOf.cs">
+      <Link>TestsOf.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\SearchIndexIdentity.cs">
-      <Link>SearchIndexIdentity.cs</Link>
+    <Compile Include="..\MyCouch.Net45.Testing\TypeExtensions.cs">
+      <Link>TypeExtensions.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="EnsureThat, Version=1.0.0.37966, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="FluentAssertions, Version=2.1.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Ensure.That.1.0.0\lib\portable-win+net40+sl40+wp71\EnsureThat.dll\EnsureThat.dll</HintPath>
+      <HintPath>..\..\packages\FluentAssertions.2.1.0.0\lib\winrt45\FluentAssertions.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -157,13 +170,31 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\MyCouch.Net45.Testing\jsontestdatafiles\ViewQueryAlbumRows.json">
+      <Link>JsonTestDataFiles\ViewQueryAlbumRows.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\MyCouch.Net45.Testing\jsontestdatafiles\ViewQueryAllDocRows.json">
+      <Link>JsonTestDataFiles\ViewQueryAllDocRows.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\MyCouch.Net45.Testing\JsonTestDataFiles\ViewQueryComplexKeysRows.json">
+      <Link>JsonTestDataFiles\ViewQueryComplexKeysRows.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\MyCouch.Net45.Testing\JsonTestDataFiles\ViewQuerySingleValueKeysRows.json">
+      <Link>JsonTestDataFiles\ViewQuerySingleValueKeysRows.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
-  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
-    <VisualStudioVersion>11.0</VisualStudioVersion>
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
+    <VisualStudioVersion>12.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <PropertyGroup>
+    <SDKReferenceDirectoryRoot>$(SolutionDir)\libs;$(SDKReferenceDirectoryRoot)</SDKReferenceDirectoryRoot>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

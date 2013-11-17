@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 
 namespace MyCouch.Serialization
@@ -21,6 +22,7 @@ namespace MyCouch.Serialization
                 MissingMemberHandling = MissingMemberHandling.Ignore,
                 NullValueHandling = NullValueHandling.Ignore
             };
+            Settings.Converters.Add(new StringEnumConverter());
         }
 
         public virtual T ApplyConfigToWriter<T>(T writer) where T : JsonWriter
