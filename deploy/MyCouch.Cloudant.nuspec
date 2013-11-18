@@ -39,6 +39,11 @@
          <dependency id="Microsoft.Bcl.Build" version="1.0.10" />
          <dependency id="Microsoft.Net.Http" version="2.2.15" />
        </group>
+       <group targetFramework="net45">
+         <dependency id="MyCouch" version="[$version$]" />
+         <dependency id="Ensure.That" version="1.0.0" />
+         <dependency id="Newtonsoft.Json" version="5.0.8" />
+       </group>
        <group targetFramework="netcore451">
          <dependency id="MyCouch" version="[$version$]" />
          <dependency id="Ensure.That" version="1.0.0" />

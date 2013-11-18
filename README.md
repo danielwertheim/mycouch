@@ -4,7 +4,7 @@ The asynchronous CouchDb and Cloudant client for .Net - builds on top of the asy
 MyCouch is NOT an official client by Cloudant.
 
 ## NuGet ##
-MyCouch is distributed via NuGet. You can [find the package here](https://nuget.org/packages/MyCouch/). But basically, in a .Net4.0, .Net4.5 or Windows Store app project, open up the Package manager console, and invoke:
+MyCouch is distributed via NuGet. You can [find the CouchDb package here](https://nuget.org/packages/MyCouch/) [and the Cloudant package here](https://nuget.org/packages/MyCouch.Cloudant/). But basically, in a .Net4.0, .Net4.5 or Windows Store app project, open up the Package manager console, and invoke:
 
     pm:> install-package mycouch
 
@@ -21,7 +21,7 @@ The documentation is contained in the [project wiki](https://github.com/danielwe
 A [public Trello board](https://trello.com/b/wuDUldwD/mycouch-main) is used instead of a "roadmap".
 
 ## Get up and running with the source ##
-The Sample has been written using Visual Studio 2012, targeting multiple platforms (.Net4.0, .Net4.5, Windows Store apps). .Net4.5 is the mainstream project. .Net4.0 uses Microsofts various portable class library (PCL) for adding missing BCL capabilities, the async HttpClient etc. to .Net4.0.
+The Sample has been written using Visual Studio 2012 (for the Windows store 8.1 libs, Visual Studio 2013 is needed), targeting multiple platforms (.Net4.0, .Net4.5, Windows Store apps). The .Net4.5 is the mainstream project. .Net4.0 uses Microsofts various portable class library (PCL) for adding missing BCL capabilities, the async HttpClient etc. to .Net4.0.
 
 Please note. **No NuGet packages are checked in**. If you are using the latest version of NuGet (v2.7.1+) you should be able to just build and the packages will be restored. If this does not work, you could install the missing NuGet packages using the provided PowerShell script:
 
