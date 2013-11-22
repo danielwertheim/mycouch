@@ -384,6 +384,16 @@ namespace MyCouch.Testing
             Response.Rev.Should().NotBeNullOrEmpty();
         }
 
+        public void BeSuccessfulBatchPost(string initialId)
+        {
+            Response.RequestMethod.Should().Be(HttpMethod.Post);
+            Response.IsSuccess.Should().BeTrue();
+            Response.StatusCode.Should().Be(HttpStatusCode.Accepted);
+            Response.Error.Should().BeNull();
+            Response.Reason.Should().BeNull();
+            Response.Id.Should().Be(initialId);
+        }
+
         public void BeSuccessfulPut(string initialId)
         {
             Response.RequestMethod.Should().Be(HttpMethod.Put);
@@ -393,6 +403,16 @@ namespace MyCouch.Testing
             Response.Reason.Should().BeNull();
             Response.Id.Should().Be(initialId);
             Response.Rev.Should().NotBeNullOrEmpty();
+        }
+
+        public void BeSuccessfulBatchPut(string initialId)
+        {
+            Response.RequestMethod.Should().Be(HttpMethod.Put);
+            Response.IsSuccess.Should().BeTrue();
+            Response.StatusCode.Should().Be(HttpStatusCode.Accepted);
+            Response.Error.Should().BeNull();
+            Response.Reason.Should().BeNull();
+            Response.Id.Should().Be(initialId);
         }
 
         public void Be409Put(string initialId)
@@ -416,6 +436,17 @@ namespace MyCouch.Testing
             Response.Id.Should().NotBeNullOrEmpty();
             Response.Id.Should().Be(initialId);
             Response.Rev.Should().NotBeNullOrEmpty();
+        }
+
+        public void BeSuccessfulBatchPutOfNew(string initialId)
+        {
+            Response.RequestMethod.Should().Be(HttpMethod.Put);
+            Response.IsSuccess.Should().BeTrue();
+            Response.StatusCode.Should().Be(HttpStatusCode.Accepted);
+            Response.Error.Should().BeNull();
+            Response.Reason.Should().BeNull();
+            Response.Id.Should().NotBeNullOrEmpty();
+            Response.Id.Should().Be(initialId);
         }
 
         public void BeSuccessfulDelete(string initialId)

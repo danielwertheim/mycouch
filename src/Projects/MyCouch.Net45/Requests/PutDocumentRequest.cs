@@ -11,6 +11,7 @@ namespace MyCouch.Requests
         public string Id { get; private set; }
         public string Rev { get; private set; }
         public string Content { get; set; }
+        public bool Batch { get; set; }
 
         public PutDocumentRequest(string id, string rev, string content)
             : this(id, content)
