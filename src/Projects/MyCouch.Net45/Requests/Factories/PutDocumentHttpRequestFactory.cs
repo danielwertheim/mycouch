@@ -9,7 +9,7 @@ namespace MyCouch.Requests.Factories
 
         public virtual HttpRequest Create(PutDocumentRequest request)
         {
-            var httpRequest = CreateFor<PutDocumentRequest>(HttpMethod.Put, GenerateRequestUrl(request.Id, request.Rev));
+            var httpRequest = CreateFor<PutDocumentRequest>(HttpMethod.Put, GenerateRequestUrl(request.Id, request.Rev, request.Batch));
 
             httpRequest.SetIfMatch(request.Rev);
             httpRequest.SetContent(request.Content);

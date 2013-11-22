@@ -8,6 +8,7 @@ namespace MyCouch.Requests
 #endif
     public class PostDocumentRequest : Request
     {
+        public bool Batch { get; set; }
         public string Content { get; set; }
 
         public PostDocumentRequest(string content)
