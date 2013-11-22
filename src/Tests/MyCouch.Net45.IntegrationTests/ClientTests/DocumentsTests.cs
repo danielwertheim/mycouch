@@ -3,6 +3,8 @@ using FluentAssertions;
 using MyCouch.Testing;
 using MyCouch.Testing.TestData;
 using Xunit;
+using MyCouch.Requests;
+using System.Net;
 
 namespace MyCouch.IntegrationTests.ClientTests
 {
@@ -60,11 +62,29 @@ namespace MyCouch.IntegrationTests.ClientTests
         }
 
         [Fact]
+        public void When_post_of_new_document_in_batch_mode_The_document_is_persisted()
+        {
+            var request = new PostDocumentRequest(ClientTestData.Artists.Artist1Json) { Batch = true };
+            var response = SUT.PostAsync(request).Result;
+
+            response.Should().BeSuccessfulBatchPost(ClientTestData.Artists.Artist1Id);
+        }
+
+        [Fact]
         public void When_put_of_new_document_The_document_is_replaced()
         {
             var response = SUT.PutAsync(ClientTestData.Artists.Artist1Id, ClientTestData.Artists.Artist1Json).Result;
 
             response.Should().BeSuccessfulPutOfNew(ClientTestData.Artists.Artist1Id);
+        }
+
+        [Fact]
+        public void When_put_of_new_document_in_batch_mode_The_document_is_replaced()
+        {
+            var request = new PutDocumentRequest(ClientTestData.Artists.Artist1Id, ClientTestData.Artists.Artist1Json) { Batch = true };
+            var response = SUT.PutAsync(request).Result;
+
+            response.Should().BeSuccessfulBatchPutOfNew(ClientTestData.Artists.Artist1Id);
         }
         
         [Fact]
@@ -76,6 +96,18 @@ namespace MyCouch.IntegrationTests.ClientTests
             var response = SUT.PutAsync(getResponse.Id, getResponse.Content).Result;
 
             response.Should().BeSuccessfulPut(ClientTestData.Artists.Artist1Id);
+        }
+
+        [Fact]
+        public void Can_put_of_existing_document_in_batch_mode()
+        {
+            var postResponse = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
+            var getResponse = SUT.GetAsync(postResponse.Id).Result;
+
+            var updateRequest = new PutDocumentRequest(getResponse.Id, getResponse.Content) { Batch = true };
+            var response = SUT.PutAsync(updateRequest).Result;
+
+            response.Should().BeSuccessfulBatchPut(ClientTestData.Artists.Artist1Id);
         }
 
         [Fact]
