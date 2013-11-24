@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using MyCouch.Extensions;
+
 namespace MyCouch.Requests.Factories
 {
     public abstract class DocumentHttpRequestFactoryBase : HttpRequestFactoryBase
@@ -8,20 +11,17 @@ namespace MyCouch.Requests.Factories
         protected virtual string GenerateRequestUrl(string id = null, string rev = null, bool batch = false)
         {
             var queryParameters = new List<string>();
+
             if (rev != null)
-            {
                 queryParameters.Add(string.Format("rev={0}", rev));
-            }
+
             if (batch)
-            {
                 queryParameters.Add("batch=ok");
-            }
-            var queryParametersForURI = string.Join("&", queryParameters);
 
             return string.Format("{0}/{1}{2}",
                 Connection.Address,
                 id ?? string.Empty,
-                string.IsNullOrEmpty(queryParametersForURI) ? "" : "?" + queryParametersForURI);
+                queryParameters.Any() ? string.Join("&", queryParameters).PrependWith("?") : string.Empty);
         }
     }
 }

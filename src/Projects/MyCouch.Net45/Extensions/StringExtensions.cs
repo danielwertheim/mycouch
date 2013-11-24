@@ -10,6 +10,11 @@ namespace MyCouch.Extensions
             return Convert.ToBase64String(MyCouchRuntime.DefaultEncoding.GetBytes(value));
         }
 
+        public static string PrependWith(this string value, string prefix)
+        {
+            return string.Concat(prefix, value);
+        }
+
         public static string RemoveStarting(this string value, string starting)
         {
             while (value.StartsWith(starting))
