@@ -4,7 +4,6 @@ using MyCouch.Testing;
 using MyCouch.Testing.TestData;
 using Xunit;
 using MyCouch.Requests;
-using System.Net;
 
 namespace MyCouch.IntegrationTests.ClientTests
 {
