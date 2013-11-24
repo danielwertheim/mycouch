@@ -381,7 +381,9 @@ namespace MyCouch.Testing
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
             Response.Id.Should().Be(initialId);
-            Response.Rev.Should().NotBeNullOrEmpty();
+
+            if(Response.StatusCode == HttpStatusCode.Created)
+                Response.Rev.Should().NotBeNullOrEmpty();
         }
 
         public void BeSuccessfulBatchPost(string initialId)
@@ -435,7 +437,8 @@ namespace MyCouch.Testing
             Response.Reason.Should().BeNull();
             Response.Id.Should().NotBeNullOrEmpty();
             Response.Id.Should().Be(initialId);
-            Response.Rev.Should().NotBeNullOrEmpty();
+            if (Response.StatusCode == HttpStatusCode.Created)
+                Response.Rev.Should().NotBeNullOrEmpty();
         }
 
         public void BeSuccessfulBatchPutOfNew(string initialId)
