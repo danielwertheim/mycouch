@@ -10,9 +10,9 @@ namespace MyCouch.Serialization
         {
         }
 
-        protected override JsonTextWriter CreateWriterFor<T>(TextWriter w)
+        protected override JsonTextWriter CreateWriterFor<T>(TextWriter writer)
         {
-            return new EntityJsonWriter(typeof(T), w);
+            return new EntityJsonWriter(typeof(T), writer);
         }
     }
 }
