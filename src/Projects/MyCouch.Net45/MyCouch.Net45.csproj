@@ -177,7 +177,7 @@
     <Compile Include="Serialization\SerializationConfiguration.cs" />
     <Compile Include="Serialization\SerializationContractResolver.cs" />
     <Compile Include="Serialization\Writers\EntityJsonWriter.cs" />
-    <Compile Include="Serialization\Writers\MyCouchJsonWriter.cs" />
+    <Compile Include="Serialization\Writers\DocumentJsonWriter.cs" />
     <Compile Include="Stale.cs" />
     <Compile Include="ViewIdentity.cs" />
   </ItemGroup>

@@ -10,7 +10,7 @@ namespace MyCouch.Serialization.Writers
     /// conventions found in <see cref="Conventions"/>,
     /// which by default will e.g. inject info about doctype.
     /// </summary>
-    public class EntityJsonWriter : MyCouchJsonWriter
+    public class EntityJsonWriter : DocumentJsonWriter
     {
         protected readonly Type DocType;
         protected bool HasWrittenDocHeader = false;

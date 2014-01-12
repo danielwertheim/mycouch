@@ -452,11 +452,11 @@
     <Compile Include="..\MyCouch.Net45\serialization\SerializationContractResolver.cs">
       <Link>Serialization\SerializationContractResolver.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Serialization\Writers\DocumentJsonWriter.cs">
+      <Link>Serialization\Writers\DocumentJsonWriter.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\serialization\writers\EntityJsonWriter.cs">
       <Link>Serialization\Writers\EntityJsonWriter.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\serialization\writers\MyCouchJsonWriter.cs">
-      <Link>Serialization\Writers\MyCouchJsonWriter.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Stale.cs">
       <Link>Stale.cs</Link>

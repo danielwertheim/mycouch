@@ -3,9 +3,9 @@ using Newtonsoft.Json;
 
 namespace MyCouch.Serialization.Writers
 {
-    public class MyCouchJsonWriter : JsonTextWriter
+    public class DocumentJsonWriter : JsonTextWriter
     {
-        public MyCouchJsonWriter(TextWriter textWriter) : base(textWriter) { }
+        public DocumentJsonWriter(TextWriter textWriter) : base(textWriter) { }
 
         public override void WriteNull()
         {

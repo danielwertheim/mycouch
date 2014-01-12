@@ -36,7 +36,7 @@ namespace MyCouch.Serialization
 
         protected virtual JsonTextWriter CreateWriterFor<T>(TextWriter w)
         {
-            return new MyCouchJsonWriter(w);
+            return new DocumentJsonWriter(w);
         }
 
         public virtual T Deserialize<T>(string data) where T : class
