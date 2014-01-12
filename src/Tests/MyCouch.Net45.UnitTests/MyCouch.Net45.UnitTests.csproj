@@ -67,7 +67,7 @@
     <Compile Include="Serialization\DefaultSerializationTests.cs" />
     <Compile Include="Serialization\EntitySerializationTests.cs" />
     <Compile Include="Serialization\SerializerTests.cs" />
-    <Compile Include="Serialization\ViewQueryResponseRowsDeserializerTestsTests.cs" />
+    <Compile Include="Serialization\ViewQueryResponseRowsDeserializerTests.cs" />
     <Compile Include="UnitTestsOf.cs" />
     <Compile Include="UriBuilderTests.cs" />
   </ItemGroup>

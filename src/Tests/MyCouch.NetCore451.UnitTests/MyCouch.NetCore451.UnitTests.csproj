@@ -157,8 +157,8 @@
     <Compile Include="..\MyCouch.Net45.UnitTests\serialization\SerializerTests.cs">
       <Link>Serialization\SerializerTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.UnitTests\serialization\ViewQueryResponseRowsDeserializerTestsTests.cs">
-      <Link>Serialization\ViewQueryResponseRowsDeserializerTestsTests.cs</Link>
+    <Compile Include="..\MyCouch.Net45.UnitTests\Serialization\ViewQueryResponseRowsDeserializerTests.cs">
+      <Link>Serialization\ViewQueryResponseRowsDeserializerTests.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45.UnitTests\UnitTestsOf.cs">
       <Link>UnitTestsOf.cs</Link>
