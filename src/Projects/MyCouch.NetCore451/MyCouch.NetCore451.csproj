@@ -467,6 +467,9 @@
     <Compile Include="..\MyCouch.Net45\serialization\ISerializer.cs">
       <Link>Serialization\ISerializer.cs</Link>
     </Compile>
+    <Compile Include="..\mycouch.net45\serialization\meta\DocumentAttribute.cs">
+      <Link>Serialization\Meta\DocumentAttribute.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\serialization\readers\MyCouchJsonReader.cs">
       <Link>Serialization\Readers\MyCouchJsonReader.cs</Link>
     </Compile>
