@@ -2,6 +2,7 @@
 using MyCouch.EntitySchemes;
 using MyCouch.EntitySchemes.Reflections;
 using MyCouch.Serialization;
+using MyCouch.Serialization.Meta;
 using Xunit;
 
 namespace MyCouch.UnitTests.Serialization
@@ -11,7 +12,7 @@ namespace MyCouch.UnitTests.Serialization
         public EntitySerializationWithLambdaPropertyFactoryTests()
         {
             var entityReflector = new EntityReflector(new LambdaDynamicPropertyFactory());
-            SUT = new EntitySerializer(CreateSerializationConfiguration(entityReflector));
+            SUT = new EntitySerializer(CreateSerializationConfiguration(entityReflector), CreateDocumentSerializationMetaProvider());
         }
     }
 #if !NETFX_CORE
@@ -20,7 +21,7 @@ namespace MyCouch.UnitTests.Serialization
         public EntitySerializationWithIlPropertyFactoryTests()
         {
             var entityReflector = new EntityReflector(new IlDynamicPropertyFactory());
-            SUT = new EntitySerializer(CreateSerializationConfiguration(entityReflector));
+            SUT = new EntitySerializer(CreateSerializationConfiguration(entityReflector), CreateDocumentSerializationMetaProvider());
         }
     }
 #endif
@@ -30,6 +31,11 @@ namespace MyCouch.UnitTests.Serialization
         protected static SerializationConfiguration CreateSerializationConfiguration(EntityReflector entityReflector)
         {
             return new SerializationConfiguration(new EntityContractResolver(entityReflector));
+        }
+
+        protected static IDocumentSerializationMetaProvider CreateDocumentSerializationMetaProvider()
+        {
+            return new DocumentSerializationMetaProvider();
         }
 
         [Fact]

@@ -3,6 +3,7 @@ using MyCouch.Contexts;
 using MyCouch.EntitySchemes;
 using MyCouch.EntitySchemes.Reflections;
 using MyCouch.Serialization;
+using MyCouch.Serialization.Meta;
 
 namespace MyCouch
 {
@@ -19,6 +20,10 @@ namespace MyCouch
         /// used in <see cref="IEntities.Serializer"/> used in <see cref="IClient.Entities"/>.
         /// </summary>
         public Func<SerializationConfiguration> EntitySerializationConfigurationFn { get; set; }
+        /// <summary>
+        /// Used for constructing meta-data about documents used for serialization.
+        /// </summary>
+        public Func<IDocumentSerializationMetaProvider> DocumentSerializationMetaProviderFn { get; set; }
         /// <summary>
         /// Used e.g. for boostraping components that needs to be able to read and set values
         /// effectively to entities. Used e.g. in <see cref="IEntities.Reflector"/>.
@@ -68,6 +73,7 @@ namespace MyCouch
 
             ConfigureSerializationConfigurationFn();
             ConfigureEntitySerializationConfigurationFn();
+            ConfigureDocumentSerializationMetaProvider();
 
             ConfigureSerializerFn();
             ConfigureEntitySerializerFn();
@@ -123,14 +129,19 @@ namespace MyCouch
 
         protected virtual void ConfigureSerializationConfigurationFn()
         {
-            var serializationConfiguration = new Lazy<SerializationConfiguration>(() =>
+            SerializationConfigurationFn = () =>
             {
                 var contractResolver = new SerializationContractResolver();
 
                 return new SerializationConfiguration(contractResolver);
-            });
+            };
+        }
 
-            SerializationConfigurationFn = () => serializationConfiguration.Value;
+        protected virtual void ConfigureDocumentSerializationMetaProvider()
+        {
+            var provider = new Lazy<IDocumentSerializationMetaProvider>(() => new DocumentSerializationMetaProvider());
+
+            DocumentSerializationMetaProviderFn = () => provider.Value;
         }
 
         protected virtual void ConfigureEntitySerializationConfigurationFn()
@@ -147,13 +158,13 @@ namespace MyCouch
 
         protected virtual void ConfigureSerializerFn()
         {
-            var serializer = new Lazy<ISerializer>(() => new DefaultSerializer(SerializationConfigurationFn()));
+            var serializer = new Lazy<ISerializer>(() => new DefaultSerializer(SerializationConfigurationFn(), DocumentSerializationMetaProviderFn()));
             SerializerFn = () => serializer.Value;
         }
 
         protected virtual void ConfigureEntitySerializerFn()
         {
-            var serializer = new Lazy<IEntitySerializer>(() => new EntitySerializer(EntitySerializationConfigurationFn()));
+            var serializer = new Lazy<IEntitySerializer>(() => new EntitySerializer(EntitySerializationConfigurationFn(), DocumentSerializationMetaProviderFn()));
             EntitySerializerFn = () => serializer.Value;
         }
     }

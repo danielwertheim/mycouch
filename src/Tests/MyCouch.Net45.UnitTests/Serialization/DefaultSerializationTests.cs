@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using MyCouch.Serialization;
+using MyCouch.Serialization.Meta;
 using Xunit;
 
 namespace MyCouch.UnitTests.Serialization
@@ -8,7 +9,7 @@ namespace MyCouch.UnitTests.Serialization
     {
         public DefaultSerializerWithDefaultConfigTests()
         {
-            SUT = new DefaultSerializer(new SerializationConfiguration());
+            SUT = new DefaultSerializer(new SerializationConfiguration(), new DocumentSerializationMetaProvider());
         }
 
         [Fact]

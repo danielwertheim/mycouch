@@ -10,17 +10,17 @@ namespace MyCouch.Serialization.Writers
     {
         protected readonly DocumentSerializationMeta DocumentMeta;
         protected bool HasWrittenDocumentMeta { get; set; }
+        protected readonly SerializationConventions Conventions;
 
-        public SerializationConventions Conventions { get; set; }
-
-        public DocumentJsonWriter(DocumentSerializationMeta documentMeta, TextWriter textWriter)
+        public DocumentJsonWriter(DocumentSerializationMeta documentMeta, TextWriter textWriter, SerializationConventions conventions)
             : base(textWriter)
         {
             Ensure.That(documentMeta, "documentMeta").IsNotNull();
+            Ensure.That(conventions, "conventions").IsNotNull();
 
             HasWrittenDocumentMeta = false;
             DocumentMeta = documentMeta;
-            Conventions = new SerializationConventions();
+            Conventions = conventions;
         }
 
         public override void WriteStartObject()

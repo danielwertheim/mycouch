@@ -14,12 +14,13 @@ namespace MyCouch.Serialization
         protected readonly IDocumentSerializationMetaProvider DocumentMetaProvider;
         protected readonly JsonSerializer InternalSerializer;
 
-        public DefaultSerializer(SerializationConfiguration configuration)
+        public DefaultSerializer(SerializationConfiguration configuration, IDocumentSerializationMetaProvider documentSerializationMetaProvider)
         {
             Ensure.That(configuration, "configuration").IsNotNull();
+            Ensure.That(documentSerializationMetaProvider, "documentSerializationMetaProvider").IsNotNull();
 
             Configuration = configuration;
-            DocumentMetaProvider = new DocumentSerializationMetaProvider();
+            DocumentMetaProvider = documentSerializationMetaProvider;
             InternalSerializer = JsonSerializer.Create(Configuration.Settings);
         }
 
@@ -38,7 +39,7 @@ namespace MyCouch.Serialization
 
         protected virtual JsonTextWriter CreateWriterFor<T>(TextWriter writer)
         {
-            return new DocumentJsonWriter(DocumentMetaProvider.Get(typeof(T)), writer);
+            return new DocumentJsonWriter(DocumentMetaProvider.Get(typeof(T)), writer, Configuration.Conventions);
         }
 
         public virtual T Deserialize<T>(string data) where T : class

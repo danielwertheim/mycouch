@@ -5,6 +5,7 @@ using MyCouch.EntitySchemes;
 using MyCouch.EntitySchemes.Reflections;
 using MyCouch.Responses;
 using MyCouch.Serialization;
+using MyCouch.Serialization.Meta;
 using MyCouch.Testing;
 using MyCouch.Testing.Model;
 using MyCouch.Testing.TestData;
@@ -55,7 +56,7 @@ namespace MyCouch.UnitTests.Serialization
         protected ViewQueryResponseRowsDeserializerTests(SerializationConfiguration serializationConfiguration)
         {
             SerializationConfiguration = serializationConfiguration;
-            SUT = new DefaultSerializer(SerializationConfiguration);
+            SUT = new DefaultSerializer(SerializationConfiguration, new DocumentSerializationMetaProvider());
         }
 
         [Fact]

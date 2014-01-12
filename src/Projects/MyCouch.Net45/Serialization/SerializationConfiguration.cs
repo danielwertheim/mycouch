@@ -1,3 +1,4 @@
+using MyCouch.Serialization.Conventions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
@@ -7,6 +8,7 @@ namespace MyCouch.Serialization
     public class SerializationConfiguration
     {
         public JsonSerializerSettings Settings { get; protected set; }
+        public SerializationConventions Conventions { get; protected set; }
 
         public SerializationConfiguration(IContractResolver contractResolver = null)
         {
@@ -23,6 +25,7 @@ namespace MyCouch.Serialization
                 NullValueHandling = NullValueHandling.Ignore
             };
             Settings.Converters.Add(new StringEnumConverter());
+            Conventions = new SerializationConventions();
         }
 
         public virtual T ApplyConfigToWriter<T>(T writer) where T : JsonWriter
