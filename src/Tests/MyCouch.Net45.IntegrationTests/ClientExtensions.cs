@@ -1,4 +1,5 @@
-﻿using MyCouch.Requests;
+﻿using MyCouch.Extensions;
+using MyCouch.Requests;
 using MyCouch.Responses;
 
 namespace MyCouch.IntegrationTests
@@ -17,7 +18,7 @@ namespace MyCouch.IntegrationTests
             BulkDelete(client, response);
         }
 
-        private static void BulkDelete(IClient client, ViewQueryResponse<dynamic> response)
+        private static async void BulkDelete(IClient client, ViewQueryResponse<dynamic> response)
         {
             if (response.IsEmpty)
                 return;
@@ -27,7 +28,7 @@ namespace MyCouch.IntegrationTests
             foreach (var row in response.Rows)
                 bulkRequest.Delete(row.Id, row.Value.rev.ToString());
 
-            client.Documents.BulkAsync(bulkRequest).Wait();
+            await client.Documents.BulkAsync(bulkRequest).ForAwait();
         }
     }
 }
