@@ -1,4 +1,6 @@
 ﻿using MyCouch.Serialization;
+using MyCouch.Serialization.Meta;
+using Newtonsoft.Json;
 
 namespace MyCouch.UnitTests.Serialization
 {
@@ -10,6 +12,18 @@ namespace MyCouch.UnitTests.Serialization
             public string Rev { get; set; }
             public string Value { get; set; }
         }
+
+        protected class ChildModelEntity : ModelEntity { }
+
+        [Document(DocType = "Foo bar")]
+        protected class ModelEntityWithMeta
+        {
+            public string Id { get; set; }
+            public string Rev { get; set; }
+            public string Value { get; set; }
+        }
+
+        protected class ChildModelEntityWithMeta : ModelEntityWithMeta { }
 
         protected class ModelWithIdInWrongOrder
         {

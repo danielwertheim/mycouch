@@ -146,6 +146,9 @@
     <Compile Include="..\MyCouch.Net45\contexts\Views.cs">
       <Link>Contexts\Views.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\DocumentAttribute.cs">
+      <Link>DocumentAttribute.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\entityschemes\EntityIdMember.cs">
       <Link>EntitySchemes\EntityIdMember.cs</Link>
     </Compile>
@@ -467,8 +470,14 @@
     <Compile Include="..\MyCouch.Net45\serialization\ISerializer.cs">
       <Link>Serialization\ISerializer.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.net45\serialization\meta\DocumentAttribute.cs">
-      <Link>Serialization\Meta\DocumentAttribute.cs</Link>
+    <Compile Include="..\MyCouch.Net45\Serialization\Meta\DocumentSerializationMeta.cs">
+      <Link>Serialization\Meta\DocumentSerializationMeta.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Serialization\Meta\DocumentSerializationMetaProvider.cs">
+      <Link>Serialization\Meta\DocumentSerializationMetaProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Serialization\Meta\IDocumentSerializationMetaProvider.cs">
+      <Link>Serialization\Meta\IDocumentSerializationMetaProvider.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\serialization\readers\MyCouchJsonReader.cs">
       <Link>Serialization\Readers\MyCouchJsonReader.cs</Link>
@@ -481,9 +490,6 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\Serialization\Writers\DocumentJsonWriter.cs">
       <Link>Serialization\Writers\DocumentJsonWriter.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\serialization\writers\EntityJsonWriter.cs">
-      <Link>Serialization\Writers\EntityJsonWriter.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Stale.cs">
       <Link>Stale.cs</Link>

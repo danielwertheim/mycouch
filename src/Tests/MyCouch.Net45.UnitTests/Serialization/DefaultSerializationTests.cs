@@ -56,13 +56,36 @@ namespace MyCouch.UnitTests.Serialization
         }
 
         [Fact]
-        public void When_serializing_entity_It_will_not_inject_document_header_in_json()
+        public void When_serializing_entity_It_will_inject_document_header_in_json()
         {
             var model = new ModelEntity { Id = "abc", Rev = "505e07eb-41a4-4bb1-8a4c-fb6453f9927d", Value = "Some value." };
 
             var json = SUT.Serialize(model);
 
-            json.Should().NotContain("\"$doctype\":\"modelentity\"");
+            json.Should().Contain("\"$doctype\":\"modelentity\"");
+        }
+
+        [Fact]
+        public void When_serializing_entity_that_has_specific_docType_via_meta_It_will_use_that_as_document_header_in_json()
+        {
+            var model = new ModelEntityWithMeta { Id = "abc", Rev = "505e07eb-41a4-4bb1-8a4c-fb6453f9927d", Value = "Some value." };
+
+            var json = SUT.Serialize(model);
+
+            json.Should().Contain("\"$doctype\":\"foo bar\"");
+            json.Should().NotContain("\"$doctype\":\"modelentitywithmeta\"");
+        }
+
+        [Fact]
+        public void When_serializing_child_extending_entity_that_has_specific_docType_via_meta_It_will_use_that_as_document_header_in_json()
+        {
+            var model = new ChildModelEntityWithMeta { Id = "abc", Rev = "505e07eb-41a4-4bb1-8a4c-fb6453f9927d", Value = "Some value." };
+
+            var json = SUT.Serialize(model);
+
+            json.Should().Contain("\"$doctype\":\"foo bar\"");
+            json.Should().NotContain("\"$doctype\":\"childmodelentitywithmeta\"");
+            json.Should().NotContain("\"$doctype\":\"modelentitywithmeta\"");
         }
 
         [Fact]
@@ -115,7 +138,8 @@ namespace MyCouch.UnitTests.Serialization
 
             var json = SUT.Serialize(model);
 
-            json.Should().Be("{\"id\":\"abc\",\"modelWithIdInWrongOrderId\":\"def\",\"value\":\"ghi\"}");
+            json.Should().NotContain("\"modelWithIdInWrongOrderId\":\"abc\"");
+            json.Should().Contain("\"id\":\"abc\"");
         }
     }
 }

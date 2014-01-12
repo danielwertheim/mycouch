@@ -27,7 +27,7 @@ namespace MyCouch.UnitTests.Serialization
 
     public abstract class EntitySerializationTests : SerializerTests<EntitySerializer>
     {
-        protected SerializationConfiguration CreateSerializationConfiguration(EntityReflector entityReflector)
+        protected static SerializationConfiguration CreateSerializationConfiguration(EntityReflector entityReflector)
         {
             return new SerializationConfiguration(new EntityContractResolver(entityReflector));
         }
@@ -84,6 +84,39 @@ namespace MyCouch.UnitTests.Serialization
             var json = SUT.Serialize(model);
 
             json.Should().Contain("\"$doctype\":\"modelentity\"");
+        }
+
+        [Fact]
+        public void When_serializing_child_entity_It_will_inject_child_document_header_in_json()
+        {
+            var model = new ChildModelEntity { Id = "abc", Rev = "505e07eb-41a4-4bb1-8a4c-fb6453f9927d", Value = "Some value." };
+
+            var json = SUT.Serialize(model);
+
+            json.Should().Contain("\"$doctype\":\"childmodelentity\"");
+        }
+
+        [Fact]
+        public void When_serializing_entity_that_has_specific_docType_via_meta_It_will_use_that_as_document_header_in_json()
+        {
+            var model = new ModelEntityWithMeta { Id = "abc", Rev = "505e07eb-41a4-4bb1-8a4c-fb6453f9927d", Value = "Some value." };
+
+            var json = SUT.Serialize(model);
+
+            json.Should().Contain("\"$doctype\":\"foo bar\"");
+            json.Should().NotContain("\"$doctype\":\"modelentitywithmeta\"");
+        }
+
+        [Fact]
+        public void When_serializing_child_extending_entity_that_has_specific_docType_via_meta_It_will_use_that_as_document_header_in_json()
+        {
+            var model = new ChildModelEntityWithMeta { Id = "abc", Rev = "505e07eb-41a4-4bb1-8a4c-fb6453f9927d", Value = "Some value." };
+
+            var json = SUT.Serialize(model);
+
+            json.Should().Contain("\"$doctype\":\"foo bar\"");
+            json.Should().NotContain("\"$doctype\":\"childmodelentitywithmeta\"");
+            json.Should().NotContain("\"$doctype\":\"modelentitywithmeta\"");
         }
 
         [Fact]

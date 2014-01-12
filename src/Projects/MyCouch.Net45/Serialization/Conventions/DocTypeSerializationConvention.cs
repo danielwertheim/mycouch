@@ -1,4 +1,5 @@
 ﻿using System;
+using MyCouch.Serialization.Meta;
 
 namespace MyCouch.Serialization.Conventions
 {
@@ -9,11 +10,13 @@ namespace MyCouch.Serialization.Conventions
             get { return "$doctype"; }
         }
 
-        public Func<Type, string> Convention { get; private set; }
+        public Func<DocumentSerializationMeta, string> Convention { get; private set; }
 
         public DocTypeSerializationConvention()
         {
-            Convention = t => t.Name.ToLowerInvariant();
+            Convention = m => !m.IsAnonymous
+                ? m.DocType.ToLowerInvariant()
+                : string.Empty;
         }
     }
 }
