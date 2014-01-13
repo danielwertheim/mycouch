@@ -1,9 +1,7 @@
 ﻿using System.IO;
 using System.Text;
 using EnsureThat;
-using MyCouch.Serialization.Meta;
 using MyCouch.Serialization.Readers;
-using MyCouch.Serialization.Writers;
 using Newtonsoft.Json;
 
 namespace MyCouch.Serialization
@@ -11,16 +9,13 @@ namespace MyCouch.Serialization
     public class DefaultSerializer : ISerializer
     {
         protected readonly SerializationConfiguration Configuration;
-        protected readonly IDocumentSerializationMetaProvider DocumentMetaProvider;
         protected readonly JsonSerializer InternalSerializer;
 
-        public DefaultSerializer(SerializationConfiguration configuration, IDocumentSerializationMetaProvider documentSerializationMetaProvider)
+        public DefaultSerializer(SerializationConfiguration configuration)
         {
             Ensure.That(configuration, "configuration").IsNotNull();
-            Ensure.That(documentSerializationMetaProvider, "documentSerializationMetaProvider").IsNotNull();
 
             Configuration = configuration;
-            DocumentMetaProvider = documentSerializationMetaProvider;
             InternalSerializer = JsonSerializer.Create(Configuration.Settings);
         }
 
@@ -39,7 +34,7 @@ namespace MyCouch.Serialization
 
         protected virtual JsonTextWriter CreateWriterFor<T>(TextWriter writer)
         {
-            return new DocumentJsonWriter(DocumentMetaProvider.Get(typeof(T)), writer, Configuration.Conventions);
+            return new JsonTextWriter(writer);
         }
 
         public virtual T Deserialize<T>(string data) where T : class

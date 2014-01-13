@@ -12,8 +12,7 @@ namespace MyCouch
         
         /// <summary>
         /// The Serializer associated with this client instance. Use this if you want
-        /// to serialize or deserialize using the same behavior that the provider
-        /// has.
+        /// to serialize or deserialize using the same behavior that the provider has.
         /// </summary>
         /// <remarks>If you want a serializer that supports entity conventions, check <see cref="IEntities.Serializer"/></remarks>
         ISerializer Serializer { get; }

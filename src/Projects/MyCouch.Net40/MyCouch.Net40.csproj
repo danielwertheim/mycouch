@@ -434,11 +434,17 @@
     <Compile Include="..\MyCouch.Net45\serialization\DefaultSerializer.cs">
       <Link>Serialization\DefaultSerializer.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Serialization\DocumentSerializer.cs">
+      <Link>Serialization\DocumentSerializer.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\serialization\EntityContractResolver.cs">
       <Link>Serialization\EntityContractResolver.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\serialization\EntitySerializer.cs">
       <Link>Serialization\EntitySerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Serialization\IDocumentSerializer.cs">
+      <Link>Serialization\IDocumentSerializer.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Serialization\IEntitySerializer.cs">
       <Link>Serialization\IEntitySerializer.cs</Link>

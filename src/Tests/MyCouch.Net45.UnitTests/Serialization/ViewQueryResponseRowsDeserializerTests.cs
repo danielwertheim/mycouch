@@ -57,7 +57,7 @@ namespace MyCouch.UnitTests.Serialization
         protected ViewQueryResponseRowsDeserializerTests(SerializationConfiguration serializationConfiguration)
         {
             SerializationConfiguration = serializationConfiguration;
-            SUT = new DefaultSerializer(SerializationConfiguration, new DocumentSerializationMetaProvider());
+            SUT = new DefaultSerializer(SerializationConfiguration);
         }
 
         [Fact]

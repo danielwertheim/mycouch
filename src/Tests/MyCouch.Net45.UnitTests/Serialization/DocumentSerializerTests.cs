@@ -5,11 +5,11 @@ using Xunit;
 
 namespace MyCouch.UnitTests.Serialization
 {
-    public class DefaultSerializerWithDefaultConfigTests : SerializerTests<DefaultSerializer>
+    public class DocumentSerializerTests : SerializerTests<DefaultSerializer>
     {
-        public DefaultSerializerWithDefaultConfigTests()
+        public DocumentSerializerTests()
         {
-            SUT = new DefaultSerializer(new SerializationConfiguration(), new DocumentSerializationMetaProvider());
+            SUT = new DocumentSerializer(new SerializationConfiguration(), new DocumentSerializationMetaProvider());
         }
 
         [Fact]

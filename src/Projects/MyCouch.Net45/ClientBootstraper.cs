@@ -10,53 +10,86 @@ namespace MyCouch
     public class ClientBootstraper
     {
         /// <summary>
-        /// Used e.g. for bootstraping components relying on serialization, e.g <see cref="ISerializer"/>
+        /// Used e.g. for bootstraping components relying on plain serialization, <see cref="ISerializer"/>
         /// used in <see cref="IClient.Serializer"/>.
         /// </summary>
-        /// <remarks>For entity serialization configuration, <see cref="EntitySerializationConfigurationFn"/>.</remarks>
+        /// <remarks>
+        /// For document serialization configuration, <see cref="DocumentSerializationConfigurationFn"/>
+        /// For entity serialization configuration, <see cref="EntitySerializationConfigurationFn"/>.
+        /// </remarks>
         public Func<SerializationConfiguration> SerializationConfigurationFn { get; set; }
+
         /// <summary>
-        /// Used e.g. for bootstraping components relying on entity serialization, e.g <see cref="ISerializer"/>
+        /// Used e.g. for bootstraping components relying on document serialization, <see cref="IDocumentSerializer"/>
+        /// used in <see cref="IDocuments.Serializer"/> used in <see cref="IClient.Documents"/>.
+        /// </summary>
+        /// <remarks>
+        /// For plain serialization configuration, <see cref="SerializationConfigurationFn"/>.
+        /// For entity serialization configuration, <see cref="EntitySerializationConfigurationFn"/>.
+        /// </remarks>
+        public Func<SerializationConfiguration> DocumentSerializationConfigurationFn { get; set; }
+
+        /// <summary>
+        /// Used e.g. for bootstraping components relying on entity serialization, <see cref="IEntitySerializer"/>
         /// used in <see cref="IEntities.Serializer"/> used in <see cref="IClient.Entities"/>.
         /// </summary>
+        /// <remarks>
+        /// For plain serialization configuration, <see cref="SerializationConfigurationFn"/>.
+        /// For document serialization configuration, <see cref="DocumentSerializationConfigurationFn"/>
+        /// </remarks>
         public Func<SerializationConfiguration> EntitySerializationConfigurationFn { get; set; }
+
         /// <summary>
         /// Used for constructing meta-data about documents used for serialization.
         /// </summary>
         public Func<IDocumentSerializationMetaProvider> DocumentSerializationMetaProviderFn { get; set; }
+
         /// <summary>
         /// Used e.g. for boostraping components that needs to be able to read and set values
         /// effectively to entities. Used e.g. in <see cref="IEntities.Reflector"/>.
         /// </summary>
         public Func<IEntityReflector> EntityReflectorFn { get; set; }
+
         /// <summary>
         /// Used e.g. for bootstraping <see cref="IClient.Serializer"/>.
         /// </summary>
         public Func<ISerializer> SerializerFn { get; set; }
+
+        /// <summary>
+        /// Used e.g. for bootstraping <see cref="IDocuments.Serializer"/>.
+        /// </summary>
+        public Func<IDocumentSerializer> DocumentSerializerFn { get; set; }
+
         /// <summary>
         /// Used e.g. for bootstraping <see cref="IEntities.Serializer"/>.
         /// </summary>
         public Func<IEntitySerializer> EntitySerializerFn { get; set; }
+
         /// <summary>
         /// Used e.g. for bootstraping <see cref="IClient.Changes"/>.
         /// </summary>
         public Func<IConnection, IChanges> ChangesFn { get; set; }
+
         /// <summary>
         /// Used e.g. for bootstraping <see cref="IClient.Attachments"/>.
         /// </summary>
         public Func<IConnection, IAttachments> AttachmentsFn { get; set; }
+
         /// <summary>
         /// Used e.g. for bootstraping <see cref="IClient.Databases"/>.
         /// </summary>
         public Func<IConnection, IDatabases> DatabasesFn { get; set; }
+
         /// <summary>
         /// Used e.g. for bootstraping <see cref="IClient.Documents"/>.
         /// </summary>
         public Func<IConnection, IDocuments> DocumentsFn { get; set; }
+
         /// <summary>
         /// Used e.g. for bootstraping <see cref="IClient.Entities"/>.
         /// </summary>
         public Func<IConnection, IEntities> EntitiesFn { get; set; }
+
         /// <summary>
         /// Used e.g. for bootstraping <see cref="IClient.Views"/>.
         /// </summary>
@@ -72,10 +105,12 @@ namespace MyCouch
             ConfigureViewsFn();
 
             ConfigureSerializationConfigurationFn();
+            ConfigureDocumentSerializationConfigurationFn();
             ConfigureEntitySerializationConfigurationFn();
             ConfigureDocumentSerializationMetaProvider();
 
             ConfigureSerializerFn();
+            ConfigureDocumentSerializerFn();
             ConfigureEntitySerializerFn();
             ConfigureEntityReflectorFn();
         }
@@ -97,7 +132,9 @@ namespace MyCouch
 
         protected virtual void ConfigureDocumentsFn()
         {
-            DocumentsFn = cn => new Documents(cn, SerializerFn());
+            DocumentsFn = cn => new Documents(
+                cn,
+                DocumentSerializerFn());
         }
 
         protected virtual void ConfigureEntitiesFn()
@@ -137,11 +174,16 @@ namespace MyCouch
             };
         }
 
-        protected virtual void ConfigureDocumentSerializationMetaProvider()
+        protected virtual void ConfigureDocumentSerializationConfigurationFn()
         {
-            var provider = new Lazy<IDocumentSerializationMetaProvider>(() => new DocumentSerializationMetaProvider());
+            var serializationConfiguration = new Lazy<SerializationConfiguration>(() =>
+            {
+                var contractResolver = new SerializationContractResolver();
 
-            DocumentSerializationMetaProviderFn = () => provider.Value;
+                return new SerializationConfiguration(contractResolver);
+            });
+
+            DocumentSerializationConfigurationFn = () => serializationConfiguration.Value;
         }
 
         protected virtual void ConfigureEntitySerializationConfigurationFn()
@@ -156,10 +198,23 @@ namespace MyCouch
             EntitySerializationConfigurationFn = () => serializationConfiguration.Value;
         }
 
+        protected virtual void ConfigureDocumentSerializationMetaProvider()
+        {
+            var provider = new Lazy<IDocumentSerializationMetaProvider>(() => new DocumentSerializationMetaProvider());
+
+            DocumentSerializationMetaProviderFn = () => provider.Value;
+        }
+
         protected virtual void ConfigureSerializerFn()
         {
-            var serializer = new Lazy<ISerializer>(() => new DefaultSerializer(SerializationConfigurationFn(), DocumentSerializationMetaProviderFn()));
+            var serializer = new Lazy<ISerializer>(() => new DefaultSerializer(SerializationConfigurationFn()));
             SerializerFn = () => serializer.Value;
+        }
+
+        protected virtual void ConfigureDocumentSerializerFn()
+        {
+            var serializer = new Lazy<IDocumentSerializer>(() => new DocumentSerializer(DocumentSerializationConfigurationFn(), DocumentSerializationMetaProviderFn()));
+            DocumentSerializerFn = () => serializer.Value;
         }
 
         protected virtual void ConfigureEntitySerializerFn()

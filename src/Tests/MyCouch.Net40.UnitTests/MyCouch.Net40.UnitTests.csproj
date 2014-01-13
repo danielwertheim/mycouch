@@ -117,8 +117,8 @@
     <Compile Include="..\MyCouch.Net45.UnitTests\schemes\EntityRevMemberTests.cs">
       <Link>Schemes\EntityRevMemberTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.UnitTests\Serialization\DefaultSerializationTests.cs">
-      <Link>Serialization\DefaultSerializationTests.cs</Link>
+    <Compile Include="..\MyCouch.Net45.UnitTests\Serialization\DocumentSerializerTests.cs">
+      <Link>Serialization\DocumentSerializerTests.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45.UnitTests\Serialization\EntitySerializationTests.cs">
       <Link>Serialization\EntitySerializationTests.cs</Link>

@@ -169,8 +169,10 @@
     <Compile Include="Serialization\Converters\KeyJsonConverter.cs" />
     <Compile Include="Serialization\Converters\MultiTypeDeserializationJsonConverter.cs" />
     <Compile Include="Serialization\DefaultSerializer.cs" />
+    <Compile Include="Serialization\DocumentSerializer.cs" />
     <Compile Include="Serialization\EntityContractResolver.cs" />
     <Compile Include="Serialization\EntitySerializer.cs" />
+    <Compile Include="Serialization\IDocumentSerializer.cs" />
     <Compile Include="Serialization\Meta\DocumentSerializationMetaProvider.cs" />
     <Compile Include="DocumentAttribute.cs" />
     <Compile Include="Serialization\IEntitySerializer.cs" />

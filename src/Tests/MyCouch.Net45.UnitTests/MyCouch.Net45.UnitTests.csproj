@@ -64,7 +64,7 @@
     <Compile Include="Requests\QueryViewRequestTests.cs" />
     <Compile Include="Schemes\EntityIdMemberTests.cs" />
     <Compile Include="Schemes\EntityRevMemberTests.cs" />
-    <Compile Include="Serialization\DefaultSerializationTests.cs" />
+    <Compile Include="Serialization\DocumentSerializerTests.cs" />
     <Compile Include="Serialization\EntitySerializationTests.cs" />
     <Compile Include="Serialization\SerializerTests.cs" />
     <Compile Include="Serialization\ViewQueryResponseRowsDeserializerTests.cs" />
