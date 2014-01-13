@@ -66,7 +66,7 @@ namespace MyCouch.Testing
     public class SearcIndexResponseAssertions : SearcIndexResponseAssertions<string>
     {
         [DebuggerStepThrough]
-        public SearcIndexResponseAssertions(SearchIndexResponse response) : base(response) {}
+        public SearcIndexResponseAssertions(SearchIndexResponse response) : base(response) { }
     }
 
     public class SearcIndexResponseAssertions<TIncludedDoc>
@@ -104,7 +104,8 @@ namespace MyCouch.Testing
     public class ViewQueryResponseAssertions : ViewQueryResponseAssertions<string, string>
     {
         [DebuggerStepThrough]
-        public ViewQueryResponseAssertions(ViewQueryResponse response) : base(response)
+        public ViewQueryResponseAssertions(ViewQueryResponse response)
+            : base(response)
         {
         }
     }
@@ -112,7 +113,8 @@ namespace MyCouch.Testing
     public class ViewQueryResponseAssertions<T> : ViewQueryResponseAssertions<T, string>
     {
         [DebuggerStepThrough]
-        public ViewQueryResponseAssertions(ViewQueryResponse<T> response) : base(response)
+        public ViewQueryResponseAssertions(ViewQueryResponse<T> response)
+            : base(response)
         {
         }
     }
@@ -153,8 +155,8 @@ namespace MyCouch.Testing
         {
             BeSuccessful(method, expected.Length);
 
-            var actual = orderBy != null 
-                ? Response.Rows.OrderBy(orderBy).ToArray() 
+            var actual = orderBy != null
+                ? Response.Rows.OrderBy(orderBy).ToArray()
                 : Response.Rows;
 
             for (var i = 0; i < Response.RowCount; i++)
@@ -193,7 +195,7 @@ namespace MyCouch.Testing
         protected readonly EntityResponse<T> Response;
 
         [DebuggerStepThrough]
-        public EntityResponseAssertions (EntityResponse<T> response)
+        public EntityResponseAssertions(EntityResponse<T> response)
         {
             Response = response;
         }
@@ -214,9 +216,11 @@ namespace MyCouch.Testing
 
         public void BeSuccessfulPost(string initialId, Func<T, string> idAccessor, Func<T, string> revAccessor)
         {
+            var codes = new[] { HttpStatusCode.Accepted, HttpStatusCode.Created };
+
             Response.RequestMethod.Should().Be(HttpMethod.Post);
             Response.IsSuccess.Should().BeTrue();
-            (Response.StatusCode == HttpStatusCode.Accepted || Response.StatusCode == HttpStatusCode.Created).Should().BeTrue();
+            codes.Should().Contain(Response.StatusCode);
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
             Response.IsEmpty.Should().BeFalse();
@@ -231,9 +235,11 @@ namespace MyCouch.Testing
 
         public void BeSuccessfulPut(string initialId, Func<T, string> idAccessor, Func<T, string> revAccessor)
         {
+            var codes = new[] { HttpStatusCode.Accepted, HttpStatusCode.Created };
+
             Response.RequestMethod.Should().Be(HttpMethod.Put);
             Response.IsSuccess.Should().BeTrue();
-            (Response.StatusCode == HttpStatusCode.Accepted || Response.StatusCode == HttpStatusCode.Created).Should().BeTrue();
+            codes.Should().Contain(Response.StatusCode);
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
             Response.IsEmpty.Should().BeFalse();
@@ -259,9 +265,11 @@ namespace MyCouch.Testing
 
         public void BeSuccessfulPutOfNew(string initialId, Func<T, string> idAccessor, Func<T, string> revAccessor)
         {
+            var codes = new[] { HttpStatusCode.Accepted, HttpStatusCode.Created };
+
             Response.RequestMethod.Should().Be(HttpMethod.Put);
             Response.IsSuccess.Should().BeTrue();
-            (Response.StatusCode == HttpStatusCode.Accepted || Response.StatusCode == HttpStatusCode.Created).Should().BeTrue();
+            codes.Should().Contain(Response.StatusCode);
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
             Response.IsEmpty.Should().BeFalse();
@@ -375,14 +383,16 @@ namespace MyCouch.Testing
 
         public void BeSuccessfulPost(string initialId)
         {
+            var codes = new[] { HttpStatusCode.Accepted, HttpStatusCode.Created };
+
             Response.RequestMethod.Should().Be(HttpMethod.Post);
             Response.IsSuccess.Should().BeTrue();
-            (Response.StatusCode == HttpStatusCode.Accepted || Response.StatusCode == HttpStatusCode.Created).Should().BeTrue();
+            codes.Should().Contain(Response.StatusCode);
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
             Response.Id.Should().Be(initialId);
 
-            if(Response.StatusCode == HttpStatusCode.Created)
+            if (Response.StatusCode == HttpStatusCode.Created)
                 Response.Rev.Should().NotBeNullOrEmpty();
         }
 
@@ -398,9 +408,11 @@ namespace MyCouch.Testing
 
         public void BeSuccessfulPut(string initialId)
         {
+            var codes = new[] { HttpStatusCode.Accepted, HttpStatusCode.Created };
+
             Response.RequestMethod.Should().Be(HttpMethod.Put);
             Response.IsSuccess.Should().BeTrue();
-            (Response.StatusCode == HttpStatusCode.Accepted || Response.StatusCode == HttpStatusCode.Created).Should().BeTrue();
+            codes.Should().Contain(Response.StatusCode);
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
             Response.Id.Should().Be(initialId);
@@ -430,9 +442,11 @@ namespace MyCouch.Testing
 
         public void BeSuccessfulPutOfNew(string initialId)
         {
+            var codes = new[] { HttpStatusCode.Accepted, HttpStatusCode.Created };
+
             Response.RequestMethod.Should().Be(HttpMethod.Put);
             Response.IsSuccess.Should().BeTrue();
-            (Response.StatusCode == HttpStatusCode.Accepted || Response.StatusCode == HttpStatusCode.Created).Should().BeTrue();
+            codes.Should().Contain(Response.StatusCode);
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
             Response.Id.Should().NotBeNullOrEmpty();
