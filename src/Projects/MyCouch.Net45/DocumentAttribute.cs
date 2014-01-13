@@ -13,6 +13,7 @@ namespace MyCouch
 #if !NETFX_CORE
     [Serializable]
 #endif
+    [AttributeUsage(AttributeTargets.Class)]
     public class DocumentAttribute : Attribute
     {
         /// <summary>
