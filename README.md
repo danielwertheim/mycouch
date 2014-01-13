@@ -21,9 +21,11 @@ The documentation is contained in the [project wiki](https://github.com/danielwe
 A [public Trello board](https://trello.com/b/wuDUldwD/mycouch-main) is used instead of a "roadmap".
 
 ## Get up and running with the source ##
-The Sample has been written using Visual Studio 2012 (for the Windows store 8.1 libs, Visual Studio 2013 is needed), targeting multiple platforms (.Net4.0, .Net4.5, Windows Store apps). The .Net4.5 is the mainstream project. .Net4.0 uses Microsofts various portable class library (PCL) for adding missing BCL capabilities, the async HttpClient etc. to .Net4.0.
+- For .Net4.0 and .Net4.5, Visual Studio 2012 is needed.
+- For Windows store 8.0, currently not included. But let me know and I will assist or fix it.
+- For Windows store 8.1, Visual Studio 2013 is needed.
 
-Please note. **No NuGet packages are checked in**. If you are using the latest version of NuGet (v2.7.1+) you should be able to just build and the packages will be restored. If this does not work, you could install the missing NuGet packages using the provided PowerShell script:
+Please note. **No NuGet packages are checked in**. If you are using the latest version of NuGet (v2.7.1+) **you should be able to just build and the packages will be restored**. If this does not work, you could install the missing NuGet packages using the provided PowerShell script:
 
     ps:> .\setup-devenv.ps1
 
@@ -34,9 +36,7 @@ or
 For the script to work, you need to have [the NuGet command line](http://nuget.codeplex.com/releases) `(NuGet.exe) registrered in the environment path`, or you need to tweak the script so it knows where it will find your NuGet.exe.
 
 ## A word about the integration tests ##
-They are written using xUnit. To get started you need to create a database `mycouchtests` and one user `mycouchtester` with password `p@ssword`. The user also must be allowed to create views in the database.
-
-**Please note**, that if you run the tests using the `xUnit plugin` for `ReSharper` or using the `xUnit console`, you will get a couple of failing UnitTests for the Windows store project. This is a **bug with xUnit**. It does not load and execute the Windows store test project in its own app-container as it does when you execute them via Visual Studios test explorer.
+They are written using **xUnit**. To get started you need to create a database `mycouchtests` and one user `mycouchtester` with password `p@ssword`. The user also must be allowed to create views in the database.
 
 ### Test environments ###
 There is an external dependency for getting up and running with the integration tests (not the unit tests). In the repo, there's a folder in the root named `env`. In there there's a [ScriptCS](http://scriptcs.net) script `server.csx`. It will start a NancyFX web server that serves the integration tests with test environment settings.
