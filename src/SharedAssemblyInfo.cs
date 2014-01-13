@@ -11,9 +11,9 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyDescription("MyCouch - async .Net client for CouchDb and Cloudant.")]
 [assembly: AssemblyCompany("Daniel Wertheim")]
-[assembly: AssemblyCopyright("Copyright © 2013 Daniel Wertheim")]
+[assembly: AssemblyCopyright("Copyright © 2014 Daniel Wertheim")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-[assembly: AssemblyVersion("0.19.0.*")]
-[assembly: AssemblyFileVersion("0.19.0")]
+[assembly: AssemblyVersion("0.20.0.*")]
+[assembly: AssemblyFileVersion("0.20.0")]
