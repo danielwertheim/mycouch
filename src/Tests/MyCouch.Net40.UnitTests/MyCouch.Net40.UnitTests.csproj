@@ -150,6 +150,10 @@
       <Project>{dd577175-035c-49d5-a8c8-e57ab2d87e16}</Project>
       <Name>MyCouch.Net40.Testing</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MyCouch.Testdata\MyCouch.Testdata.csproj">
+      <Project>{54e245c4-a9ee-4a54-9e0f-ba60faf131e0}</Project>
+      <Name>MyCouch.Testdata</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

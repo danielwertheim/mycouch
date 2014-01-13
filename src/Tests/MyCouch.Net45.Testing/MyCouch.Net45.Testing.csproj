@@ -62,23 +62,10 @@
     <Compile Include="TestConstants.cs" />
     <Compile Include="TestData\ClientTestData.cs" />
     <Compile Include="TestData\CloudantTestData.cs" />
-    <Compile Include="TestData\JsonTestData.cs" />
     <Compile Include="TestsOf.cs" />
     <Compile Include="TypeExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="JsonTestDataFiles\ViewQueryAlbumRows.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="JsonTestDataFiles\ViewQueryAllDocRows.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="JsonTestDataFiles\ViewQueryComplexKeysRows.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="JsonTestDataFiles\ViewQuerySingleValueKeysRows.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

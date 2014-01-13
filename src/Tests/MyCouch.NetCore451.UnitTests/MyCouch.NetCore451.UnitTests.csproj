@@ -212,6 +212,10 @@
       <Project>{a47b5c4d-01be-4c95-9896-1b0a984879ae}</Project>
       <Name>MyCouch.NetCore451.Testing</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MyCouch.Testdata\MyCouch.Testdata.csproj">
+      <Project>{54e245c4-a9ee-4a54-9e0f-ba60faf131e0}</Project>
+      <Name>MyCouch.Testdata</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">

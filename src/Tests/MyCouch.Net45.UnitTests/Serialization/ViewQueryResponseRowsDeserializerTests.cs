@@ -6,6 +6,7 @@ using MyCouch.EntitySchemes.Reflections;
 using MyCouch.Responses;
 using MyCouch.Serialization;
 using MyCouch.Serialization.Meta;
+using MyCouch.Testdata;
 using MyCouch.Testing;
 using MyCouch.Testing.Model;
 using MyCouch.Testing.TestData;
@@ -62,7 +63,7 @@ namespace MyCouch.UnitTests.Serialization
         [Fact]
         public void It_can_populate_an_all_docs_view_query_response_of_string()
         {
-            var rows = Deserialize<string>(JsonTestData.ViewQueryAllDocRows);
+            var rows = Deserialize<string>(JsonTestdata.ViewQueryAllDocRows);
 
             rows.Length.Should().Be(2);
             rows[0].Id.Should().Be("1");
@@ -77,7 +78,7 @@ namespace MyCouch.UnitTests.Serialization
         [Fact]
         public void It_can_populate_an_all_docs_view_query_response_of_dynamic()
         {
-            var rows = Deserialize<dynamic>(JsonTestData.ViewQueryAllDocRows);
+            var rows = Deserialize<dynamic>(JsonTestdata.ViewQueryAllDocRows);
 
             rows.Length.Should().Be(2);
             rows[0].Id.Should().Be("1");
@@ -94,7 +95,7 @@ namespace MyCouch.UnitTests.Serialization
         [Fact]
         public void It_can_populate_an_all_docs_view_query_response_of_dictionary()
         {
-            var rows = Deserialize<IDictionary<string, object>>(JsonTestData.ViewQueryAllDocRows);
+            var rows = Deserialize<IDictionary<string, object>>(JsonTestdata.ViewQueryAllDocRows);
 
             rows.Length.Should().Be(2);
             rows[0].Id.Should().Be("1");
@@ -111,7 +112,7 @@ namespace MyCouch.UnitTests.Serialization
         [Fact]
         public void It_can_populate_single_value_keys_in_view_query_response_of_string()
         {
-            var rows = Deserialize<string>(JsonTestData.ViewQuerySingleValueKeysRows);
+            var rows = Deserialize<string>(JsonTestdata.ViewQuerySingleValueKeysRows);
 
             rows.Length.Should().Be(4);
             rows[0].Id.Should().Be("integer:1");
@@ -130,7 +131,7 @@ namespace MyCouch.UnitTests.Serialization
         [Fact]
         public void It_can_populate_complex_keys_in_view_query_response_of_string()
         {
-            var rows = Deserialize<string>(JsonTestData.ViewQueryComplexKeysRows);
+            var rows = Deserialize<string>(JsonTestdata.ViewQueryComplexKeysRows);
 
             rows.Length.Should().Be(2);
             rows[0].Id.Should().Be("complex:1");
@@ -143,7 +144,7 @@ namespace MyCouch.UnitTests.Serialization
         [Fact]
         public void It_can_populate_an_albums_view_query_response_of_string()
         {
-            var rows = Deserialize<string>(JsonTestData.ViewQueryAlbumRows);
+            var rows = Deserialize<string>(JsonTestdata.ViewQueryAlbumRows);
 
             rows.Length.Should().Be(4);
             rows[0].Id.Should().Be("1");
@@ -166,7 +167,7 @@ namespace MyCouch.UnitTests.Serialization
         [Fact]
         public void It_can_populate_an_albums_view_query_response_of_strings()
         {
-            var rows = Deserialize<string[]>(JsonTestData.ViewQueryAlbumRows);
+            var rows = Deserialize<string[]>(JsonTestdata.ViewQueryAlbumRows);
 
             rows.Length.Should().Be(4);
             rows[0].Id.Should().Be("1");
@@ -199,7 +200,7 @@ namespace MyCouch.UnitTests.Serialization
         [Fact]
         public void It_can_populate_an_albums_view_query_response_of_albums()
         {
-            var rows = Deserialize<Album[]>(JsonTestData.ViewQueryAlbumRows);
+            var rows = Deserialize<Album[]>(JsonTestdata.ViewQueryAlbumRows);
 
             rows.Length.Should().Be(4);
             rows[0].Id.Should().Be("1");

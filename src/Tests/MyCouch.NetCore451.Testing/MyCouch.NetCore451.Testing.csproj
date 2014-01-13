@@ -148,9 +148,6 @@
     <Compile Include="..\MyCouch.Net45.Testing\TestData\CloudantTestData.cs">
       <Link>TestData\CloudantTestData.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.Testing\testdata\JsonTestData.cs">
-      <Link>TestData\JsonTestData.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Net45.Testing\TestsOf.cs">
       <Link>TestsOf.cs</Link>
     </Compile>
@@ -170,22 +167,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\MyCouch.Net45.Testing\jsontestdatafiles\ViewQueryAlbumRows.json">
-      <Link>JsonTestDataFiles\ViewQueryAlbumRows.json</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\MyCouch.Net45.Testing\jsontestdatafiles\ViewQueryAllDocRows.json">
-      <Link>JsonTestDataFiles\ViewQueryAllDocRows.json</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\MyCouch.Net45.Testing\JsonTestDataFiles\ViewQueryComplexKeysRows.json">
-      <Link>JsonTestDataFiles\ViewQueryComplexKeysRows.json</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\MyCouch.Net45.Testing\JsonTestDataFiles\ViewQuerySingleValueKeysRows.json">
-      <Link>JsonTestDataFiles\ViewQuerySingleValueKeysRows.json</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
