@@ -14,8 +14,6 @@
 
       Supports .Net4.0, .Net4.5 and Windows store apps 8.1 (WinRT).
 
-      Please NOTE. This is not an official Cloudant package.
-
       Please NOTE. If you don't have NuGet up to date, some uses has had issues with resolving dependencies.
     </description>
     <iconUrl>http://www.mycouchclient.com/logos/mycouch-nuget.png</iconUrl>
@@ -33,10 +31,10 @@
        <group targetFramework="net40">
          <dependency id="Ensure.That" version="1.0.0" />
          <dependency id="Newtonsoft.Json" version="5.0.8" />
-         <dependency id="Microsoft.Bcl" version="1.1.3" />
-         <dependency id="Microsoft.Bcl.Async" version="1.0.16" />
-         <dependency id="Microsoft.Bcl.Build" version="1.0.10" />
-         <dependency id="Microsoft.Net.Http" version="2.2.15" />
+         <dependency id="Microsoft.Bcl" version="1.1.6" />
+         <dependency id="Microsoft.Bcl.Async" version="1.0.165" />
+         <dependency id="Microsoft.Bcl.Build" version="1.0.13" />
+         <dependency id="Microsoft.Net.Http" version="2.2.18" />
        </group>
        <group targetFramework="net45">
          <dependency id="Ensure.That" version="1.0.0" />
