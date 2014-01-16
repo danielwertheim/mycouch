@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using MyCouch.Requests;
 using MyCouch.Responses;
+using MyCouch.Serialization;
 
 namespace MyCouch
 {
@@ -10,6 +11,16 @@ namespace MyCouch
     /// </summary>
     public interface IDocuments
     {
+        /// <summary>
+        /// The Serializer associated with this <see cref="IDocuments"/> instance. Use this if you want
+        /// to serialize or deserialize using document conventions.
+        /// </summary>
+        /// <remarks>
+        /// If you want the native, non convention based serializer, check <see cref="IClient.Serializer"/>
+        /// If you want full entity convention based serializer, check <see cref="IEntities.Serializer"/>
+        /// </remarks>
+        IDocumentSerializer Serializer { get; }
+
         /// <summary>
         /// Lets you use the underlying bulk API to insert, update and delete
         /// documents.

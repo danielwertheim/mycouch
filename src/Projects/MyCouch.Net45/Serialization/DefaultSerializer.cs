@@ -1,9 +1,7 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Text;
 using EnsureThat;
 using MyCouch.Serialization.Readers;
-using MyCouch.Serialization.Writers;
 using Newtonsoft.Json;
 
 namespace MyCouch.Serialization
@@ -34,9 +32,9 @@ namespace MyCouch.Serialization
             return content.ToString();
         }
 
-        protected virtual JsonTextWriter CreateWriterFor<T>(TextWriter w)
+        protected virtual JsonTextWriter CreateWriterFor<T>(TextWriter writer)
         {
-            return new MyCouchJsonWriter(w);
+            return new JsonTextWriter(writer);
         }
 
         public virtual T Deserialize<T>(string data) where T : class
@@ -67,9 +65,9 @@ namespace MyCouch.Serialization
             }
         }
 
-        protected virtual JsonTextReader CreateReaderFor(TextReader r)
+        protected virtual JsonTextReader CreateReaderFor(TextReader reader)
         {
-            return new MyCouchJsonReader(r);
+            return new MyCouchJsonReader(reader);
         }
 
         public virtual void Populate<T>(T item, Stream data) where T : class

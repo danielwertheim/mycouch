@@ -68,20 +68,22 @@ namespace MyCouch.IntegrationTests
 
             var cfg = NormalClientEnvironment.Client;
             var uriBuilder = new MyCouchUriBuilder(cfg.ServerUrl)
-                .SetDbName(NormalClientEnvironment.Client.DbName)
+                .SetDbName(cfg.DbName)
                 .SetBasicCredentials(cfg.User, cfg.Password);
 
-            return cfg.IsAgainstCloudant ? new Client(new CustomCloudantConnection(uriBuilder.Build())) : new Client(uriBuilder.Build());
+            return cfg.IsAgainstCloudant
+                ? new Client(new CustomCloudantConnection(uriBuilder.Build()))
+                : new Client(uriBuilder.Build());
         }
 
         internal static ICloudantClient CreateCloudantClient()
         {
-            if (NormalClientEnvironment == null)
+            if (CloudantClientEnvironment == null)
                 throw new Exception("Can not create Cloudant client. Missing configuration.");
 
             var cfg = CloudantClientEnvironment.Client;
             var uriBuilder = new MyCouchUriBuilder(cfg.ServerUrl)
-                .SetDbName(NormalClientEnvironment.Client.DbName)
+                .SetDbName(cfg.DbName)
                 .SetBasicCredentials(cfg.User, cfg.Password);
 
             return new CloudantClient(new CustomCloudantConnection(uriBuilder.Build()));

@@ -1,14 +1,15 @@
 ﻿using FluentAssertions;
 using MyCouch.Serialization;
+using MyCouch.Serialization.Meta;
 using Xunit;
 
 namespace MyCouch.UnitTests.Serialization
 {
-    public class DefaultSerializerWithDefaultConfigTests : SerializerTests<DefaultSerializer>
+    public class DocumentSerializerTests : SerializerTests<DefaultSerializer>
     {
-        public DefaultSerializerWithDefaultConfigTests()
+        public DocumentSerializerTests()
         {
-            SUT = new DefaultSerializer(new SerializationConfiguration());
+            SUT = new DocumentSerializer(new SerializationConfiguration(), new DocumentSerializationMetaProvider());
         }
 
         [Fact]
@@ -56,13 +57,56 @@ namespace MyCouch.UnitTests.Serialization
         }
 
         [Fact]
-        public void When_serializing_entity_It_will_not_inject_document_header_in_json()
+        public void When_serializing_entity_It_will_inject_docType_in_json()
         {
             var model = new ModelEntity { Id = "abc", Rev = "505e07eb-41a4-4bb1-8a4c-fb6453f9927d", Value = "Some value." };
 
             var json = SUT.Serialize(model);
 
-            json.Should().NotContain("\"$doctype\":\"modelentity\"");
+            json.Should().Contain("\"$doctype\":\"modelentity\"");
+        }
+
+        [Fact]
+        public void When_serializing_entity_with_specific_DocType_via_meta_It_will_use_that_in_json()
+        {
+            var model = new ModelEntityWithMeta { Id = "abc", Rev = "505e07eb-41a4-4bb1-8a4c-fb6453f9927d", Value = "Some value." };
+
+            var json = SUT.Serialize(model);
+
+            json.Should().Contain("\"$doctype\":\"foo bar\"");
+            json.Should().NotContain("\"$doctype\":\"modelentitywithmeta\"");
+        }
+
+        [Fact]
+        public void When_serializing_entity_with_specific_DocNamespace_via_meta_It_will_use_that_in_json()
+        {
+            var model = new ModelEntityWithMeta { Id = "abc", Rev = "505e07eb-41a4-4bb1-8a4c-fb6453f9927d", Value = "Some value." };
+
+            var json = SUT.Serialize(model);
+
+            json.Should().Contain("\"$docns\":\"MyNs\"");
+        }
+
+        [Fact]
+        public void When_serializing_entity_with_specific_DocVersion_via_meta_It_will_use_that_in_json()
+        {
+            var model = new ModelEntityWithMeta { Id = "abc", Rev = "505e07eb-41a4-4bb1-8a4c-fb6453f9927d", Value = "Some value." };
+
+            var json = SUT.Serialize(model);
+
+            json.Should().Contain("\"$docver\":\"1.2.1\"");
+        }
+
+        [Fact]
+        public void When_serializing_child_extending_entity_that_has_specific_docType_via_meta_It_will_use_that_in_json()
+        {
+            var model = new ChildModelEntityWithMeta { Id = "abc", Rev = "505e07eb-41a4-4bb1-8a4c-fb6453f9927d", Value = "Some value." };
+
+            var json = SUT.Serialize(model);
+
+            json.Should().Contain("\"$doctype\":\"foo bar\"");
+            json.Should().NotContain("\"$doctype\":\"childmodelentitywithmeta\"");
+            json.Should().NotContain("\"$doctype\":\"modelentitywithmeta\"");
         }
 
         [Fact]
@@ -115,7 +159,8 @@ namespace MyCouch.UnitTests.Serialization
 
             var json = SUT.Serialize(model);
 
-            json.Should().Be("{\"id\":\"abc\",\"modelWithIdInWrongOrderId\":\"def\",\"value\":\"ghi\"}");
+            json.Should().NotContain("\"modelWithIdInWrongOrderId\":\"abc\"");
+            json.Should().Contain("\"id\":\"abc\"");
         }
     }
 }

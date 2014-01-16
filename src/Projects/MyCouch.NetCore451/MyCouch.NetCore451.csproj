@@ -146,6 +146,9 @@
     <Compile Include="..\MyCouch.Net45\contexts\Views.cs">
       <Link>Contexts\Views.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\DocumentAttribute.cs">
+      <Link>DocumentAttribute.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\entityschemes\EntityIdMember.cs">
       <Link>EntitySchemes\EntityIdMember.cs</Link>
     </Compile>
@@ -437,14 +440,20 @@
     <Compile Include="..\MyCouch.Net45\responses\ViewQueryResponse.cs">
       <Link>Responses\ViewQueryResponse.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\serialization\conventions\DocTypeSerializationConvention.cs">
-      <Link>Serialization\Conventions\DocTypeSerializationConvention.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Net45\serialization\conventions\ISerializationConvention.cs">
       <Link>Serialization\Conventions\ISerializationConvention.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Serialization\Conventions\ISerializationConventionWriter.cs">
+      <Link>Serialization\Conventions\ISerializationConventionWriter.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\serialization\conventions\SerializationConventions.cs">
       <Link>Serialization\Conventions\SerializationConventions.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Serialization\Conventions\SerializationConventionWriter.cs">
+      <Link>Serialization\Conventions\SerializationConventionWriter.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Serialization\Conventions\StringSerializationConvention.cs">
+      <Link>Serialization\Conventions\StringSerializationConvention.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Serialization\Converters\KeyJsonConverter.cs">
       <Link>Serialization\Converters\KeyJsonConverter.cs</Link>
@@ -455,17 +464,32 @@
     <Compile Include="..\MyCouch.Net45\serialization\DefaultSerializer.cs">
       <Link>Serialization\DefaultSerializer.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Serialization\DocumentSerializer.cs">
+      <Link>Serialization\DocumentSerializer.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\serialization\EntityContractResolver.cs">
       <Link>Serialization\EntityContractResolver.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\serialization\EntitySerializer.cs">
       <Link>Serialization\EntitySerializer.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Serialization\IDocumentSerializer.cs">
+      <Link>Serialization\IDocumentSerializer.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\Serialization\IEntitySerializer.cs">
       <Link>Serialization\IEntitySerializer.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\serialization\ISerializer.cs">
       <Link>Serialization\ISerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Serialization\Meta\DocumentSerializationMeta.cs">
+      <Link>Serialization\Meta\DocumentSerializationMeta.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Serialization\Meta\DocumentSerializationMetaProvider.cs">
+      <Link>Serialization\Meta\DocumentSerializationMetaProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Serialization\Meta\IDocumentSerializationMetaProvider.cs">
+      <Link>Serialization\Meta\IDocumentSerializationMetaProvider.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\serialization\readers\MyCouchJsonReader.cs">
       <Link>Serialization\Readers\MyCouchJsonReader.cs</Link>
@@ -476,11 +500,8 @@
     <Compile Include="..\MyCouch.Net45\serialization\SerializationContractResolver.cs">
       <Link>Serialization\SerializationContractResolver.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\serialization\writers\EntityJsonWriter.cs">
-      <Link>Serialization\Writers\EntityJsonWriter.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\serialization\writers\MyCouchJsonWriter.cs">
-      <Link>Serialization\Writers\MyCouchJsonWriter.cs</Link>
+    <Compile Include="..\MyCouch.Net45\Serialization\Writers\DocumentJsonWriter.cs">
+      <Link>Serialization\Writers\DocumentJsonWriter.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Stale.cs">
       <Link>Stale.cs</Link>

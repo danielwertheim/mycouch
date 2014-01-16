@@ -1,18 +1,12 @@
-﻿using System.IO;
-using MyCouch.Serialization.Writers;
-using Newtonsoft.Json;
+﻿using MyCouch.Serialization.Meta;
 
 namespace MyCouch.Serialization
 {
-    public class EntitySerializer : DefaultSerializer, IEntitySerializer
+    public class EntitySerializer : DocumentSerializer, IEntitySerializer
     {
-        public EntitySerializer(SerializationConfiguration configuration) : base(configuration)
+        public EntitySerializer(SerializationConfiguration configuration, IDocumentSerializationMetaProvider documentSerializationMetaProvider)
+            : base(configuration, documentSerializationMetaProvider)
         {
-        }
-
-        protected override JsonTextWriter CreateWriterFor<T>(TextWriter w)
-        {
-            return new EntityJsonWriter(typeof(T), w);
         }
     }
 }

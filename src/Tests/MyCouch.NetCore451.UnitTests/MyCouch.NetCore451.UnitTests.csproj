@@ -148,8 +148,8 @@
     <Compile Include="..\MyCouch.Net45.UnitTests\schemes\EntityRevMemberTests.cs">
       <Link>Schemes\EntityRevMemberTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.UnitTests\serialization\DefaultSerializationTests.cs">
-      <Link>Serialization\DefaultSerializationTests.cs</Link>
+    <Compile Include="..\MyCouch.Net45.UnitTests\Serialization\DocumentSerializerTests.cs">
+      <Link>Serialization\DocumentSerializerTests.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45.UnitTests\serialization\EntitySerializationTests.cs">
       <Link>Serialization\EntitySerializationTests.cs</Link>
@@ -157,8 +157,8 @@
     <Compile Include="..\MyCouch.Net45.UnitTests\serialization\SerializerTests.cs">
       <Link>Serialization\SerializerTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.UnitTests\serialization\ViewQueryResponseRowsDeserializerTestsTests.cs">
-      <Link>Serialization\ViewQueryResponseRowsDeserializerTestsTests.cs</Link>
+    <Compile Include="..\MyCouch.Net45.UnitTests\Serialization\ViewQueryResponseRowsDeserializerTests.cs">
+      <Link>Serialization\ViewQueryResponseRowsDeserializerTests.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45.UnitTests\UnitTestsOf.cs">
       <Link>UnitTestsOf.cs</Link>
@@ -190,9 +190,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="FluentAssertions, Version=2.1.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+    <Reference Include="FluentAssertions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\FluentAssertions.2.1.0.0\lib\winrt45\FluentAssertions.dll</HintPath>
+      <HintPath>..\..\packages\FluentAssertions.2.2.0.0\lib\winrt45\FluentAssertions.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -211,6 +211,10 @@
     <ProjectReference Include="..\MyCouch.NetCore451.Testing\MyCouch.NetCore451.Testing.csproj">
       <Project>{a47b5c4d-01be-4c95-9896-1b0a984879ae}</Project>
       <Name>MyCouch.NetCore451.Testing</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MyCouch.Testdata\MyCouch.Testdata.csproj">
+      <Project>{54e245c4-a9ee-4a54-9e0f-ba60faf131e0}</Project>
+      <Name>MyCouch.Testdata</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

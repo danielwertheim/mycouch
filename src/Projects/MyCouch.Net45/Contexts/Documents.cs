@@ -25,11 +25,14 @@ namespace MyCouch.Contexts
         protected DocumentHeaderResponseFactory DocumentHeaderReponseFactory { get; set; }
         protected BulkResponseFactory BulkReponseFactory { get; set; }
 
-        public Documents(IConnection connection, ISerializer serializer)
+        public IDocumentSerializer Serializer { get; private set; }
+
+        public Documents(IConnection connection, IDocumentSerializer serializer)
             : base(connection)
         {
             Ensure.That(serializer, "serializer").IsNotNull();
 
+            Serializer = serializer;
             BulkHttpRequestFactory = new BulkHttpRequestFactory(Connection);
             CopyDocumentHttpRequestFactory = new CopyDocumentHttpRequestFactory(Connection);
             ReplaceDocumentHttpRequestFactory = new ReplaceDocumentHttpRequestFactory(Connection);
@@ -39,9 +42,9 @@ namespace MyCouch.Contexts
             PutDocumentHttpRequestFactory = new PutDocumentHttpRequestFactory(Connection);
             DeleteDocumentHttpRequestFactory = new DeleteDocumentHttpRequestFactory(Connection);
 
-            DocumentReponseFactory = new DocumentResponseFactory(serializer);
-            DocumentHeaderReponseFactory = new DocumentHeaderResponseFactory(serializer);
-            BulkReponseFactory = new BulkResponseFactory(serializer);
+            DocumentReponseFactory = new DocumentResponseFactory(Serializer);
+            DocumentHeaderReponseFactory = new DocumentHeaderResponseFactory(Serializer);
+            BulkReponseFactory = new BulkResponseFactory(Serializer);
         }
 
         public virtual async Task<BulkResponse> BulkAsync(BulkRequest request)

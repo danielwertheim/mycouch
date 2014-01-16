@@ -2,6 +2,7 @@
 using MyCouch.EntitySchemes;
 using MyCouch.EntitySchemes.Reflections;
 using MyCouch.Serialization;
+using MyCouch.Serialization.Meta;
 using Xunit;
 
 namespace MyCouch.UnitTests.Serialization
@@ -11,7 +12,7 @@ namespace MyCouch.UnitTests.Serialization
         public EntitySerializationWithLambdaPropertyFactoryTests()
         {
             var entityReflector = new EntityReflector(new LambdaDynamicPropertyFactory());
-            SUT = new EntitySerializer(CreateSerializationConfiguration(entityReflector));
+            SUT = new EntitySerializer(CreateSerializationConfiguration(entityReflector), CreateDocumentSerializationMetaProvider());
         }
     }
 #if !NETFX_CORE
@@ -20,16 +21,21 @@ namespace MyCouch.UnitTests.Serialization
         public EntitySerializationWithIlPropertyFactoryTests()
         {
             var entityReflector = new EntityReflector(new IlDynamicPropertyFactory());
-            SUT = new EntitySerializer(CreateSerializationConfiguration(entityReflector));
+            SUT = new EntitySerializer(CreateSerializationConfiguration(entityReflector), CreateDocumentSerializationMetaProvider());
         }
     }
 #endif
 
     public abstract class EntitySerializationTests : SerializerTests<EntitySerializer>
     {
-        protected SerializationConfiguration CreateSerializationConfiguration(EntityReflector entityReflector)
+        protected static SerializationConfiguration CreateSerializationConfiguration(EntityReflector entityReflector)
         {
             return new SerializationConfiguration(new EntityContractResolver(entityReflector));
+        }
+
+        protected static IDocumentSerializationMetaProvider CreateDocumentSerializationMetaProvider()
+        {
+            return new DocumentSerializationMetaProvider();
         }
 
         [Fact]
@@ -77,13 +83,66 @@ namespace MyCouch.UnitTests.Serialization
         }
 
         [Fact]
-        public void When_serializing_entity_It_will_inject_document_header_in_json()
+        public void When_serializing_entity_It_will_inject_docType_in_json()
         {
             var model = new ModelEntity { Id = "abc", Rev = "505e07eb-41a4-4bb1-8a4c-fb6453f9927d", Value = "Some value." };
 
             var json = SUT.Serialize(model);
 
             json.Should().Contain("\"$doctype\":\"modelentity\"");
+        }
+
+        [Fact]
+        public void When_serializing_child_entity_It_will_inject_child_docType_json()
+        {
+            var model = new ChildModelEntity { Id = "abc", Rev = "505e07eb-41a4-4bb1-8a4c-fb6453f9927d", Value = "Some value." };
+
+            var json = SUT.Serialize(model);
+
+            json.Should().Contain("\"$doctype\":\"childmodelentity\"");
+        }
+
+        [Fact]
+        public void When_serializing_entity_with_specific_DocType_via_meta_It_will_use_that_in_json()
+        {
+            var model = new ModelEntityWithMeta { Id = "abc", Rev = "505e07eb-41a4-4bb1-8a4c-fb6453f9927d", Value = "Some value." };
+
+            var json = SUT.Serialize(model);
+
+            json.Should().Contain("\"$doctype\":\"foo bar\"");
+            json.Should().NotContain("\"$doctype\":\"modelentitywithmeta\"");
+        }
+
+        [Fact]
+        public void When_serializing_entity_with_specific_DocNamespace_via_meta_It_will_use_that_in_json()
+        {
+            var model = new ModelEntityWithMeta { Id = "abc", Rev = "505e07eb-41a4-4bb1-8a4c-fb6453f9927d", Value = "Some value." };
+
+            var json = SUT.Serialize(model);
+
+            json.Should().Contain("\"$docns\":\"MyNs\"");
+        }
+
+        [Fact]
+        public void When_serializing_entity_with_specific_DocVersion_via_meta_It_will_use_that_in_json()
+        {
+            var model = new ModelEntityWithMeta { Id = "abc", Rev = "505e07eb-41a4-4bb1-8a4c-fb6453f9927d", Value = "Some value." };
+
+            var json = SUT.Serialize(model);
+
+            json.Should().Contain("\"$docver\":\"1.2.1\"");
+        }
+
+        [Fact]
+        public void When_serializing_child_extending_entity_that_has_specific_docType_via_meta_It_will_use_that_in_json()
+        {
+            var model = new ChildModelEntityWithMeta { Id = "abc", Rev = "505e07eb-41a4-4bb1-8a4c-fb6453f9927d", Value = "Some value." };
+
+            var json = SUT.Serialize(model);
+
+            json.Should().Contain("\"$doctype\":\"foo bar\"");
+            json.Should().NotContain("\"$doctype\":\"childmodelentitywithmeta\"");
+            json.Should().NotContain("\"$doctype\":\"modelentitywithmeta\"");
         }
 
         [Fact]

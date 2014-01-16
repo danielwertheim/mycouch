@@ -30,9 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FluentAssertions, Version=2.1.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+    <Reference Include="FluentAssertions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\FluentAssertions.2.1.0.0\lib\net45\FluentAssertions.dll</HintPath>
+      <HintPath>..\..\packages\FluentAssertions.2.2.0.0\lib\net45\FluentAssertions.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -64,10 +64,10 @@
     <Compile Include="Requests\QueryViewRequestTests.cs" />
     <Compile Include="Schemes\EntityIdMemberTests.cs" />
     <Compile Include="Schemes\EntityRevMemberTests.cs" />
-    <Compile Include="Serialization\DefaultSerializationTests.cs" />
+    <Compile Include="Serialization\DocumentSerializerTests.cs" />
     <Compile Include="Serialization\EntitySerializationTests.cs" />
     <Compile Include="Serialization\SerializerTests.cs" />
-    <Compile Include="Serialization\ViewQueryResponseRowsDeserializerTestsTests.cs" />
+    <Compile Include="Serialization\ViewQueryResponseRowsDeserializerTests.cs" />
     <Compile Include="UnitTestsOf.cs" />
     <Compile Include="UriBuilderTests.cs" />
   </ItemGroup>
@@ -84,6 +84,10 @@
     <ProjectReference Include="..\MyCouch.Net45.Testing\MyCouch.Net45.Testing.csproj">
       <Project>{adc6ac03-747d-444c-a204-cab1624429c7}</Project>
       <Name>MyCouch.Net45.Testing</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MyCouch.Testdata\MyCouch.Testdata.csproj">
+      <Project>{54e245c4-a9ee-4a54-9e0f-ba60faf131e0}</Project>
+      <Name>MyCouch.Testdata</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

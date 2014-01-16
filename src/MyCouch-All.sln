@@ -44,6 +44,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCouch.Cloudant.Net45", "P
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCouch.Cloudant.NetCore451", "Projects\MyCouch.Cloudant.NetCore451\MyCouch.Cloudant.NetCore451.csproj", "{850B3C7A-8885-4CCB-AE30-814140F019D2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCouch.Testdata", "Tests\MyCouch.Testdata\MyCouch.Testdata.csproj", "{54E245C4-A9EE-4A54-9E0F-BA60FAF131E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -252,6 +254,16 @@ Global
 		{850B3C7A-8885-4CCB-AE30-814140F019D2}.Release|x64.Build.0 = Release|x64
 		{850B3C7A-8885-4CCB-AE30-814140F019D2}.Release|x86.ActiveCfg = Release|x86
 		{850B3C7A-8885-4CCB-AE30-814140F019D2}.Release|x86.Build.0 = Release|x86
+		{54E245C4-A9EE-4A54-9E0F-BA60FAF131E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54E245C4-A9EE-4A54-9E0F-BA60FAF131E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54E245C4-A9EE-4A54-9E0F-BA60FAF131E0}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{54E245C4-A9EE-4A54-9E0F-BA60FAF131E0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{54E245C4-A9EE-4A54-9E0F-BA60FAF131E0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{54E245C4-A9EE-4A54-9E0F-BA60FAF131E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54E245C4-A9EE-4A54-9E0F-BA60FAF131E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54E245C4-A9EE-4A54-9E0F-BA60FAF131E0}.Release|ARM.ActiveCfg = Release|Any CPU
+		{54E245C4-A9EE-4A54-9E0F-BA60FAF131E0}.Release|x64.ActiveCfg = Release|Any CPU
+		{54E245C4-A9EE-4A54-9E0F-BA60FAF131E0}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
