@@ -15,7 +15,7 @@ namespace MyCouch.UnitTests.Serialization
 
         protected class ChildModelEntity : ModelEntity { }
 
-        [Document(DocType = "Foo bar")]
+        [Document(DocType = "Foo bar", DocNamespace = "MyNs", DocVersion = "1.2.1")]
         protected class ModelEntityWithMeta
         {
             public string Id { get; set; }

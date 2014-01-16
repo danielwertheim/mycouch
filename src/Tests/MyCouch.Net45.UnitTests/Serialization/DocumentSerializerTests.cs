@@ -57,7 +57,7 @@ namespace MyCouch.UnitTests.Serialization
         }
 
         [Fact]
-        public void When_serializing_entity_It_will_inject_document_header_in_json()
+        public void When_serializing_entity_It_will_inject_docType_in_json()
         {
             var model = new ModelEntity { Id = "abc", Rev = "505e07eb-41a4-4bb1-8a4c-fb6453f9927d", Value = "Some value." };
 
@@ -67,7 +67,7 @@ namespace MyCouch.UnitTests.Serialization
         }
 
         [Fact]
-        public void When_serializing_entity_that_has_specific_docType_via_meta_It_will_use_that_as_document_header_in_json()
+        public void When_serializing_entity_with_specific_DocType_via_meta_It_will_use_that_in_json()
         {
             var model = new ModelEntityWithMeta { Id = "abc", Rev = "505e07eb-41a4-4bb1-8a4c-fb6453f9927d", Value = "Some value." };
 
@@ -78,7 +78,27 @@ namespace MyCouch.UnitTests.Serialization
         }
 
         [Fact]
-        public void When_serializing_child_extending_entity_that_has_specific_docType_via_meta_It_will_use_that_as_document_header_in_json()
+        public void When_serializing_entity_with_specific_DocNamespace_via_meta_It_will_use_that_in_json()
+        {
+            var model = new ModelEntityWithMeta { Id = "abc", Rev = "505e07eb-41a4-4bb1-8a4c-fb6453f9927d", Value = "Some value." };
+
+            var json = SUT.Serialize(model);
+
+            json.Should().Contain("\"$docns\":\"MyNs\"");
+        }
+
+        [Fact]
+        public void When_serializing_entity_with_specific_DocVersion_via_meta_It_will_use_that_in_json()
+        {
+            var model = new ModelEntityWithMeta { Id = "abc", Rev = "505e07eb-41a4-4bb1-8a4c-fb6453f9927d", Value = "Some value." };
+
+            var json = SUT.Serialize(model);
+
+            json.Should().Contain("\"$docver\":\"1.2.1\"");
+        }
+
+        [Fact]
+        public void When_serializing_child_extending_entity_that_has_specific_docType_via_meta_It_will_use_that_in_json()
         {
             var model = new ChildModelEntityWithMeta { Id = "abc", Rev = "505e07eb-41a4-4bb1-8a4c-fb6453f9927d", Value = "Some value." };
 

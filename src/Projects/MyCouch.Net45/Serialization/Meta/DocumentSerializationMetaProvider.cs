@@ -25,21 +25,25 @@ namespace MyCouch.Serialization.Meta
 
         protected virtual DocumentSerializationMeta CreateFor(Type docType)
         {
-            var documentMetaAttr = ExtractMetaDataAttribute(docType);
             var isAnonymous = CheckIfDocTypeIsAnonymous(docType);
-            var name = docType.Name;
-            var ns = docType.Namespace;
+            var metaAttr = ExtractMetaDataAttribute(docType);
+            var type = metaAttr == null ? docType.Name : metaAttr.DocType ?? docType.Name;
 
-            return documentMetaAttr == null
-                ? new DocumentSerializationMeta(name, ns, isAnonymous)
-                : new DocumentSerializationMeta(documentMetaAttr.DocType ?? name, ns, isAnonymous);
+            var meta = new DocumentSerializationMeta(type, isAnonymous);
+            if (metaAttr != null)
+            {
+                meta.DocNamespace = metaAttr.DocNamespace;
+                meta.DocVersion = metaAttr.DocVersion;
+            }
+
+            return meta;
         }
 
         protected virtual DocumentAttribute ExtractMetaDataAttribute(Type docType)
         {
 #if NETFX_CORE
             return docType.GetTypeInfo().GetCustomAttribute<DocumentAttribute>();
-            
+
 #elif net40
             return docType.GetCustomAttributes(typeof (DocumentAttribute), true).FirstOrDefault() as DocumentAttribute;
 #else

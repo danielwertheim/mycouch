@@ -11,6 +11,7 @@ namespace MyCouch.Serialization.Writers
         protected readonly DocumentSerializationMeta DocumentMeta;
         protected bool HasWrittenDocumentMeta { get; set; }
         protected readonly SerializationConventions Conventions;
+        protected readonly ISerializationConventionWriter ConventionWriter;
 
         public DocumentJsonWriter(DocumentSerializationMeta documentMeta, TextWriter textWriter, SerializationConventions conventions)
             : base(textWriter)
@@ -21,27 +22,34 @@ namespace MyCouch.Serialization.Writers
             HasWrittenDocumentMeta = false;
             DocumentMeta = documentMeta;
             Conventions = conventions;
+            ConventionWriter = new SerializationConventionWriter(this);
         }
 
         public override void WriteStartObject()
         {
             base.WriteStartObject();
 
-            WriteDocumentMeta(DocumentMeta);
-        }
-
-        protected virtual void WriteDocumentMeta(DocumentSerializationMeta meta)
-        {
             if (Conventions == null || HasWrittenDocumentMeta)
                 return;
 
             HasWrittenDocumentMeta = true;
 
-            if (Conventions.DocType != null)
-            {
-                WritePropertyName(Conventions.DocType.PropertyName);
-                WriteValue(Conventions.DocType.Convention(meta));
-            }
+            WriteDocumentMeta(DocumentMeta);
+        }
+
+        protected virtual void WriteDocumentMeta(DocumentSerializationMeta meta)
+        {
+            WriteDocumentMetaConvention(Conventions.DocType, meta);
+            WriteDocumentMetaConvention(Conventions.DocNamespace, meta);
+            WriteDocumentMetaConvention(Conventions.DocVersion, meta);
+        }
+
+        protected virtual void WriteDocumentMetaConvention(ISerializationConvention convention, DocumentSerializationMeta meta)
+        {
+            if(convention == null)
+                return;
+
+            convention.Apply(meta, ConventionWriter);
         }
 
         public override void WriteNull()

@@ -5,9 +5,9 @@ namespace MyCouch
 {
     /// <summary>
     /// Optional, can be used as a provider of meta-data
-    /// about your documents on your entities.
+    /// about your documents or your entities.
     /// Is e.g. used by <see cref="IDocumentSerializationMetaProvider"/>
-    /// to extract a custom value for the $doctype property
+    /// to extract custom values for e.g. the $doctype property
     /// injected upon serialization of documents for persisting documents.
     /// </summary>
 #if !NETFX_CORE
@@ -17,9 +17,18 @@ namespace MyCouch
     public class DocumentAttribute : Attribute
     {
         /// <summary>
-        /// If specified, will e.g. override the default
-        /// generated $doctype value.
+        /// Used to override default $doctype.
         /// </summary>
         public string DocType { get; set; }
+
+        /// <summary>
+        /// Used to generate $docns.
+        /// </summary>
+        public string DocNamespace { get; set; }
+
+        /// <summary>
+        /// Used to generate $docver.
+        /// </summary>
+        public string DocVersion { get; set; }
     }
 }

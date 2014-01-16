@@ -163,7 +163,9 @@
     <Compile Include="Responses\JsonScheme.cs" />
     <Compile Include="Responses\Response.cs" />
     <Compile Include="Responses\ViewQueryResponse.cs" />
-    <Compile Include="Serialization\Conventions\DocTypeSerializationConvention.cs" />
+    <Compile Include="Serialization\Conventions\ISerializationConventionWriter.cs" />
+    <Compile Include="Serialization\Conventions\SerializationConventionWriter.cs" />
+    <Compile Include="Serialization\Conventions\StringSerializationConvention.cs" />
     <Compile Include="Serialization\Conventions\ISerializationConvention.cs" />
     <Compile Include="Serialization\Conventions\SerializationConventions.cs" />
     <Compile Include="Serialization\Converters\KeyJsonConverter.cs" />

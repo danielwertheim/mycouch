@@ -440,14 +440,20 @@
     <Compile Include="..\MyCouch.Net45\responses\ViewQueryResponse.cs">
       <Link>Responses\ViewQueryResponse.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\serialization\conventions\DocTypeSerializationConvention.cs">
-      <Link>Serialization\Conventions\DocTypeSerializationConvention.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Net45\serialization\conventions\ISerializationConvention.cs">
       <Link>Serialization\Conventions\ISerializationConvention.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Serialization\Conventions\ISerializationConventionWriter.cs">
+      <Link>Serialization\Conventions\ISerializationConventionWriter.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\serialization\conventions\SerializationConventions.cs">
       <Link>Serialization\Conventions\SerializationConventions.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Serialization\Conventions\SerializationConventionWriter.cs">
+      <Link>Serialization\Conventions\SerializationConventionWriter.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Serialization\Conventions\StringSerializationConvention.cs">
+      <Link>Serialization\Conventions\StringSerializationConvention.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Serialization\Converters\KeyJsonConverter.cs">
       <Link>Serialization\Converters\KeyJsonConverter.cs</Link>
