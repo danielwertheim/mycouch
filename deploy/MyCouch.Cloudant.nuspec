@@ -5,7 +5,7 @@
     <title>MyCouch - Cloudant client</title>
     <version>$version$</version>
     <authors>danielwertheim</authors>
-    <copyright>Copyright 2013 Daniel Wertheim</copyright>
+    <copyright>Copyright 2014 Daniel Wertheim</copyright>
     <summary>Simple async CouchDb and Cloudant client.</summary>
     <description>
       This package contains support for Cloudant specific features. If you want pure CouchDb support go with the "MyCouch" package instead.
