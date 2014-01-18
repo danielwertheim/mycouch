@@ -11,7 +11,7 @@ namespace MyCouch.Net
 {
     public class BasicHttpClientConnection : IConnection
     {
-        protected HttpClient HttpClient;
+        protected HttpClient HttpClient { get; private set; }
 
         public Uri Address
         {
@@ -25,8 +25,17 @@ namespace MyCouch.Net
 
         public virtual void Dispose()
         {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
             if (HttpClient == null)
                 throw new ObjectDisposedException(typeof(BasicHttpClientConnection).Name);
+
+            if (!disposing)
+                return;
 
             HttpClient.CancelPendingRequests();
             HttpClient.Dispose();

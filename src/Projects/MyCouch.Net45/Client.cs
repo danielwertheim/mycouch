@@ -39,8 +39,17 @@ namespace MyCouch
 
         public virtual void Dispose()
         {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
             if (Connection == null)
                 throw new ObjectDisposedException(typeof(Client).Name);
+
+            if (!disposing)
+                return;
 
             Connection.Dispose();
             Connection = null;
