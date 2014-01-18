@@ -14,7 +14,7 @@
 
       Supports .Net4.0, .Net4.5 and Windows store apps 8.1 (WinRT).
 
-      Please NOTE. If you don't have NuGet up to date, some uses has had issues with resolving dependencies.
+      Please NOTE. If you don't have NuGet up to date, some users has experienced issues with resolving dependencies.
     </description>
     <iconUrl>http://www.mycouchclient.com/logos/mycouch-nuget.png</iconUrl>
     <projectUrl>https://github.com/danielwertheim/MyCouch</projectUrl>
