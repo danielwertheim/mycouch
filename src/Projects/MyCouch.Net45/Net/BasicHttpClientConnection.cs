@@ -12,6 +12,7 @@ namespace MyCouch.Net
     public class BasicHttpClientConnection : IConnection
     {
         protected HttpClient HttpClient { get; private set; }
+        protected bool IsDisposed { get; private set; }
 
         public Uri Address
         {
@@ -31,8 +32,9 @@ namespace MyCouch.Net
 
         protected virtual void Dispose(bool disposing)
         {
-            if (HttpClient == null)
-                throw new ObjectDisposedException(typeof(BasicHttpClientConnection).Name);
+            ThrowIfDisposed();
+
+            IsDisposed = true;
 
             if (!disposing)
                 return;
@@ -42,7 +44,13 @@ namespace MyCouch.Net
             HttpClient = null;
         }
 
-        protected virtual HttpClient CreateHttpClient(Uri uri)
+        protected virtual void ThrowIfDisposed()
+        {
+            if (IsDisposed)
+                throw new ObjectDisposedException(GetType().Name);
+        }
+
+        private HttpClient CreateHttpClient(Uri uri)
         {
             var client = new HttpClient { BaseAddress = new Uri(BuildCleanUrl(uri)) };
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(HttpContentTypes.Json));
@@ -60,7 +68,7 @@ namespace MyCouch.Net
             return client;
         }
 
-        protected virtual string BuildCleanUrl(Uri uri)
+        private string BuildCleanUrl(Uri uri)
         {
             EnsureValidUri(uri);
 
@@ -71,7 +79,7 @@ namespace MyCouch.Net
             return url;
         }
 
-        protected virtual void EnsureValidUri(Uri uri)
+        private void EnsureValidUri(Uri uri)
         {
             Ensure.That(uri, "uri").IsNotNull();
             Ensure.That(uri.LocalPath, "uri.LocalPath")
@@ -81,26 +89,36 @@ namespace MyCouch.Net
 
         public virtual async Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest)
         {
+            ThrowIfDisposed();
+
             return await HttpClient.SendAsync(OnBeforeSend(httpRequest)).ForAwait();
         }
 
         public virtual async Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, CancellationToken cancellationToken)
         {
+            ThrowIfDisposed();
+
             return await HttpClient.SendAsync(OnBeforeSend(httpRequest), cancellationToken).ForAwait();
         }
 
         public virtual async Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, HttpCompletionOption completionOption)
         {
+            ThrowIfDisposed();
+
             return await HttpClient.SendAsync(OnBeforeSend(httpRequest), completionOption).ForAwait();
         }
 
         public virtual async Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, HttpCompletionOption completionOption, CancellationToken cancellationToken)
         {
+            ThrowIfDisposed();
+
             return await HttpClient.SendAsync(OnBeforeSend(httpRequest), completionOption, cancellationToken).ForAwait();
         }
 
         protected virtual HttpRequest OnBeforeSend(HttpRequest httpRequest)
         {
+            ThrowIfDisposed();
+
             return httpRequest.RemoveRequestType();
         }
     }
