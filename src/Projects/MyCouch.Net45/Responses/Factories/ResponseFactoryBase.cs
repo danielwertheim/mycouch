@@ -58,7 +58,7 @@ namespace MyCouch.Responses.Factories
 
         protected virtual void PopulateMissingIdFromRequestUri(DocumentHeaderResponse response, HttpResponseMessage httpResponse)
         {
-            if (string.IsNullOrWhiteSpace(response.Id))
+            if (string.IsNullOrWhiteSpace(response.Id) && httpResponse.RequestMessage.Method != HttpMethod.Post)
                 response.Id = httpResponse.RequestMessage.GetUriSegmentByRightOffset();
         }
 
