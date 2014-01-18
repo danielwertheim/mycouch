@@ -8,7 +8,7 @@ namespace MyCouch.IntegrationTests.TestFixtures
 {
     public class ViewsFixture : IDisposable
     {
-        protected IClient Client;
+        protected IMyCouchClient Client;
 
         public Artist[] Artists { get; protected set; }
 

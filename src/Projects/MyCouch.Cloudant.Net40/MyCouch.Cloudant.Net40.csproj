@@ -84,20 +84,20 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\CloudantClient.cs">
-      <Link>CloudantClient.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\CloudantClientBootstraper.cs">
-      <Link>CloudantClientBootstraper.cs</Link>
-    </Compile>
     <Compile Include="..\mycouch.cloudant.net45\contexts\Searches.cs">
       <Link>Contexts\Searches.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\ICloudantClient.cs">
-      <Link>ICloudantClient.cs</Link>
+    <Compile Include="..\MyCouch.Cloudant.Net45\IMyCouchCloudantClient.cs">
+      <Link>IMyCouchCloudantClient.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\ISearches.cs">
       <Link>ISearches.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\MyCouchCloudantClient.cs">
+      <Link>MyCouchCloudantClient.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\MyCouchCloudantClientBootstraper.cs">
+      <Link>MyCouchCloudantClientBootstraper.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.cloudant.net45\requests\configurators\SearchIndexRequestConfigurator.cs">
       <Link>Requests\Configurators\SearchIndexRequestConfigurator.cs</Link>

@@ -54,8 +54,8 @@
     </Compile>
     <Compile Include="ChangesFeed.cs" />
     <Compile Include="ChangesStyle.cs" />
-    <Compile Include="Client.cs" />
-    <Compile Include="ClientBootstraper.cs" />
+    <Compile Include="MyCouchClient.cs" />
+    <Compile Include="MyCouchClientBootstraper.cs" />
     <Compile Include="ClientExecuteExtensions.cs" />
     <Compile Include="Configurations\ConnectionString.cs" />
     <Compile Include="Contexts\ApiContextBase.cs" />
@@ -84,7 +84,7 @@
     <Compile Include="Extensions\TaskExtensions.cs" />
     <Compile Include="IAttachments.cs" />
     <Compile Include="IChanges.cs" />
-    <Compile Include="IClient.cs" />
+    <Compile Include="IMyCouchClient.cs" />
     <Compile Include="IConnection.cs" />
     <Compile Include="IDatabases.cs" />
     <Compile Include="IDocuments.cs" />

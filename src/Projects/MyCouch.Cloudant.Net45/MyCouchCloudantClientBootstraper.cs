@@ -3,11 +3,11 @@ using MyCouch.Cloudant.Contexts;
 
 namespace MyCouch.Cloudant
 {
-    public class CloudantClientBootstraper : ClientBootstraper
+    public class MyCouchCloudantClientBootstraper : MyCouchClientBootstraper
     {
         public Func<IConnection, ISearches> SearchesFn { get; set; }
 
-        public CloudantClientBootstraper()
+        public MyCouchCloudantClientBootstraper()
         {
             ConfigureSearchesFn();
         }

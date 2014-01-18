@@ -7,7 +7,7 @@ namespace MyCouch
 {
     /// <summary>
     /// Used to access and manage documents. If you want to work with entities, POCOs,
-    /// use <see cref="IEntities"/> instead, via <see cref="IClient.Entities"/>.
+    /// use <see cref="IEntities"/> instead, via <see cref="IMyCouchClient.Entities"/>.
     /// </summary>
     public interface IDocuments
     {
@@ -16,7 +16,7 @@ namespace MyCouch
         /// to serialize or deserialize using document conventions.
         /// </summary>
         /// <remarks>
-        /// If you want the native, non convention based serializer, check <see cref="IClient.Serializer"/>
+        /// If you want the native, non convention based serializer, check <see cref="IMyCouchClient.Serializer"/>
         /// If you want full entity convention based serializer, check <see cref="IEntities.Serializer"/>
         /// </remarks>
         IDocumentSerializer Serializer { get; }

@@ -6,7 +6,7 @@ namespace MyCouch.IntegrationTests
 {
     public abstract class ClientTestsOf<T> : TestsOf<T>, IUseFixture<ClientTestsFixture> where T : class
     {
-        protected IClient Client { get; set; }
+        protected IMyCouchClient Client { get; set; }
 
         protected abstract void OnTestInit();
 

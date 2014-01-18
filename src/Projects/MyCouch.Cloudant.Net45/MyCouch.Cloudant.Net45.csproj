@@ -49,10 +49,10 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="CloudantClient.cs" />
-    <Compile Include="CloudantClientBootstraper.cs" />
+    <Compile Include="MyCouchCloudantClient.cs" />
+    <Compile Include="MyCouchCloudantClientBootstraper.cs" />
     <Compile Include="Contexts\Searches.cs" />
-    <Compile Include="ICloudantClient.cs" />
+    <Compile Include="IMyCouchCloudantClient.cs" />
     <Compile Include="Requests\Configurators\SearchIndexRequestConfigurator.cs" />
     <Compile Include="Requests\Factories\SearchIndexHttpRequestFactory.cs" />
     <Compile Include="Requests\SearchIndexRequest.cs" />

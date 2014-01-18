@@ -113,12 +113,6 @@
     <Compile Include="..\MyCouch.Net45\ChangesStyle.cs">
       <Link>ChangesStyle.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\Client.cs">
-      <Link>Client.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\ClientBootstraper.cs">
-      <Link>ClientBootstraper.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Net45\ClientExecuteExtensions.cs">
       <Link>ClientExecuteExtensions.cs</Link>
     </Compile>
@@ -206,9 +200,6 @@
     <Compile Include="..\MyCouch.Net45\IChanges.cs">
       <Link>IChanges.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\IClient.cs">
-      <Link>IClient.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Net45\IConnection.cs">
       <Link>IConnection.cs</Link>
     </Compile>
@@ -221,8 +212,17 @@
     <Compile Include="..\MyCouch.Net45\IEntities.cs">
       <Link>IEntities.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\IMyCouchClient.cs">
+      <Link>IMyCouchClient.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\IViews.cs">
       <Link>IViews.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\MyCouchClient.cs">
+      <Link>MyCouchClient.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\MyCouchClientBootstraper.cs">
+      <Link>MyCouchClientBootstraper.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\MyCouchException.cs">
       <Link>MyCouchException.cs</Link>

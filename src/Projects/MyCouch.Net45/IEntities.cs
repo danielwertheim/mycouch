@@ -15,7 +15,7 @@ namespace MyCouch
         /// The Serializer associated with this <see cref="IEntities"/> instance. Use this if you want
         /// to serialize or deserialize using entity conventions.
         /// </summary>
-        /// <remarks>If you want the native, non convention based serializer, check <see cref="IClient.Serializer"/></remarks>
+        /// <remarks>If you want the native, non convention based serializer, check <see cref="IMyCouchClient.Serializer"/></remarks>
         IEntitySerializer Serializer { get; }
 
         /// <summary>

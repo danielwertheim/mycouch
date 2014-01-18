@@ -5,7 +5,7 @@ namespace MyCouch.IntegrationTests.TestFixtures
 {
     public class CloudantTestsFixture : IDisposable
     {
-        public ICloudantClient Client { get; protected set; }
+        public IMyCouchCloudantClient Client { get; protected set; }
 
         public CloudantTestsFixture()
         {
