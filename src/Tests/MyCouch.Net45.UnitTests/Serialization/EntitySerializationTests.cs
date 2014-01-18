@@ -93,6 +93,16 @@ namespace MyCouch.UnitTests.Serialization
         }
 
         [Fact]
+        public void When_serializing_anonymous_entity_It_will_NOT_inject_docType_in_json()
+        {
+            var model = new { Id = "abc", Rev = "505e07eb-41a4-4bb1-8a4c-fb6453f9927d", Value = "Some value." };
+
+            var json = SUT.Serialize(model);
+
+            json.Should().NotContain("\"$doctype\":\"modelentity\"");
+        }
+
+        [Fact]
         public void When_serializing_child_entity_It_will_inject_child_docType_json()
         {
             var model = new ChildModelEntity { Id = "abc", Rev = "505e07eb-41a4-4bb1-8a4c-fb6453f9927d", Value = "Some value." };
