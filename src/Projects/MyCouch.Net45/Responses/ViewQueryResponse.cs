@@ -1,4 +1,5 @@
 ﻿using System;
+using MyCouch.Extensions;
 using MyCouch.Serialization.Converters;
 using Newtonsoft.Json;
 
@@ -12,7 +13,7 @@ namespace MyCouch.Responses
 #if !NETFX_CORE
     [Serializable]
 #endif
-    public class ViewQueryResponse<T> : ViewQueryResponse<T, string> { }
+    public class ViewQueryResponse<TValue> : ViewQueryResponse<TValue, string> { }
 
 #if !NETFX_CORE
     [Serializable]
@@ -58,6 +59,53 @@ namespace MyCouch.Responses
             [JsonProperty(JsonScheme.IncludedDoc)]
             [JsonConverter(typeof(MultiTypeDeserializationJsonConverter))]
             public TIncludedDoc IncludedDoc { get; set; }
+
+            public string KeyAsString()
+            {
+                return Key == null ? null : Key.ToString();
+            }
+
+            public Guid? KeyAsGuid()
+            {
+                return Key == null
+                    ? null
+                    : (Guid?)Guid.Parse(Key.ToString());
+            }
+
+            public DateTime? KeyAsDateTime()
+            {
+                return Key == null
+                    ? null
+                    : (DateTime?)Key.ToString().AsDateTimeFromIso8601();
+            }
+
+            public int? KeyAsInt()
+            {
+                return Key == null
+                    ? null
+                    : (int?)int.Parse(Key.ToString(), MyCouchRuntime.NumberFormat);
+            }
+
+            public long? KeyAsLong()
+            {
+                return Key == null
+                    ? null
+                    : (long?)long.Parse(Key.ToString(), MyCouchRuntime.NumberFormat);
+            }
+
+            public double? KeyAsDouble()
+            {
+                return Key == null
+                    ? null
+                    : (double?)double.Parse(Key.ToString(), MyCouchRuntime.NumberFormat);
+            }
+
+            public decimal? KeyAsDecimal()
+            {
+                return Key == null
+                    ? null
+                    : (decimal?)decimal.Parse(Key.ToString(), MyCouchRuntime.NumberFormat);
+            }
         }
     }
 }
