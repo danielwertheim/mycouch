@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Net.Http.Headers;
 
 namespace MyCouch.Extensions
@@ -11,8 +12,8 @@ namespace MyCouch.Extensions
             var val = segments[segments.Length - (1 + offset)];
 
             return val.EndsWith("/")
-                ? val.Substring(0, val.Length - 1)
-                : val;
+                ? Uri.UnescapeDataString(val.Substring(0, val.Length - 1))
+                : Uri.UnescapeDataString(val);
         }
 
         public static string GetETag(this HttpResponseHeaders headers)
