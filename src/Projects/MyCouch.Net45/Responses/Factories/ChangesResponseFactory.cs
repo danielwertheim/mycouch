@@ -21,9 +21,9 @@ namespace MyCouch.Responses.Factories
             return Materialize(new ChangesResponse<T>(), httpResponse, OnSuccessfulResponse, OnFailedResponse);
         }
 
-        protected virtual void OnSuccessfulResponse<T>(ChangesResponse<T> response, HttpResponseMessage httpResponse)
+        protected async virtual void OnSuccessfulResponse<T>(ChangesResponse<T> response, HttpResponseMessage httpResponse)
         {
-            using (var content = httpResponse.Content.ReadAsStream())
+            using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
             {
                 Serializer.Populate(response, content);
             }

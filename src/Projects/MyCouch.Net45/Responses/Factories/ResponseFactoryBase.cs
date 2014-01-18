@@ -37,9 +37,9 @@ namespace MyCouch.Responses.Factories
             return response;
         }
 
-        protected virtual void OnFailedResponse(Response response, HttpResponseMessage httpResponse)
+        protected async virtual void OnFailedResponse(Response response, HttpResponseMessage httpResponse)
         {
-            using (var content = httpResponse.Content.ReadAsStream())
+            using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
                 PopulateFailedInfoFromResponseStream(response, content);
         }
 

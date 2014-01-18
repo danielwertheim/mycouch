@@ -71,7 +71,7 @@ namespace MyCouch.Contexts
                     var response = ContinuousChangesResponseFactory.Create(httpResponse);
                     if (response.IsSuccess)
                     {
-                        using (var content = httpResponse.Content.ReadAsStream())
+                        using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
                         {
                             using (var reader = new StreamReader(content, MyCouchRuntime.DefaultEncoding))
                             {

@@ -16,9 +16,9 @@ namespace MyCouch.Responses.Factories
             return Materialize(new DocumentResponse(), httpResponse, OnSuccessfulResponse, OnFailedResponse);
         }
 
-        protected virtual void OnSuccessfulResponse(DocumentResponse response, HttpResponseMessage httpResponse)
+        protected async virtual void OnSuccessfulResponse(DocumentResponse response, HttpResponseMessage httpResponse)
         {
-            using (var content = httpResponse.Content.ReadAsStream())
+            using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
             {
                 if (ContentShouldHaveIdAndRev(httpResponse.RequestMessage))
                     PopulateDocumentHeaderFromResponseStream(response, content);

@@ -22,9 +22,9 @@ namespace MyCouch.Responses.Factories
             return Materialize(new EntityResponse<T>(), httpResponse, OnSuccessfulResponse, OnFailedResponse);
         }
 
-        protected virtual void OnSuccessfulResponse<T>(EntityResponse<T> response, HttpResponseMessage httpResponse) where T : class
+        protected async virtual void OnSuccessfulResponse<T>(EntityResponse<T> response, HttpResponseMessage httpResponse) where T : class
         {
-            using (var content = httpResponse.Content.ReadAsStream())
+            using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
             {
                 if (ContentShouldHaveIdAndRev(httpResponse.RequestMessage))
                     PopulateDocumentHeaderFromResponseStream(response, content);

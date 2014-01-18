@@ -16,9 +16,9 @@ namespace MyCouch.Responses.Factories
             return Materialize(new BulkResponse(), httpResponse, OnSuccessfulResponse, OnFailedResponse);
         }
 
-        protected virtual void OnSuccessfulResponse(BulkResponse response, HttpResponseMessage httpResponse)
+        protected async virtual void OnSuccessfulResponse(BulkResponse response, HttpResponseMessage httpResponse)
         {
-            using (var content = httpResponse.Content.ReadAsStream())
+            using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
             {
                 response.Rows = Serializer.Deserialize<BulkResponse.Row[]>(content);
             }
