@@ -227,9 +227,6 @@
     <Compile Include="..\MyCouch.Net45\net\JsonContent.cs">
       <Link>Net\JsonContent.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\Now.cs">
-      <Link>Now.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\BulkRequest.cs">
       <Link>Requests\BulkRequest.cs</Link>
     </Compile>

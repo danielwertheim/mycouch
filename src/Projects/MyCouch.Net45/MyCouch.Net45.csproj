@@ -98,7 +98,6 @@
     <Compile Include="Net\HttpContentTypes.cs" />
     <Compile Include="Net\HttpRequest.cs" />
     <Compile Include="Net\JsonContent.cs" />
-    <Compile Include="Now.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requests\BulkRequest.cs" />
     <Compile Include="Requests\Configurators\QueryViewRequestConfigurator.cs" />

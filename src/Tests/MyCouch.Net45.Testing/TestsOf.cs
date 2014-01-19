@@ -11,12 +11,12 @@ namespace MyCouch.Testing
     {
         protected TestsOf()
         {
-            Now.ValueGenerator = () => TestConstants.FixedDateTime;
+            //Now.ValueGenerator = () => TestConstants.FixedDateTime;
         }
 
         public virtual void Dispose()
         {
-            Now.ValueGenerator = () => TestConstants.FixedDateTime;
+            //Now.ValueGenerator = () => TestConstants.FixedDateTime;
         }
     }
 }
