@@ -16,9 +16,9 @@ namespace MyCouch
         public IEntities Entities { get; protected set; }
         public IViews Views { get; private set; }
 
-        public MyCouchClient(string url) : this(new Uri(url)) { }
+        public MyCouchClient(string dbUri) : this(new Uri(dbUri)) { }
 
-        public MyCouchClient(Uri uri) : this(new BasicHttpClientConnection(uri)) { }
+        public MyCouchClient(Uri dbUri) : this(new BasicHttpClientConnection(dbUri)) { }
 
         public MyCouchClient(IConnection connection, MyCouchClientBootstraper bootstraper = null)
         {

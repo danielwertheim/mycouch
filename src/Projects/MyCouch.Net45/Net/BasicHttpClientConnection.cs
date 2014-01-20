@@ -19,9 +19,11 @@ namespace MyCouch.Net
             get { return HttpClient.BaseAddress; }
         }
 
-        public BasicHttpClientConnection(Uri uri)
+        public BasicHttpClientConnection(Uri dbUri)
         {
-            HttpClient = CreateHttpClient(uri);
+            Ensure.That(dbUri, "dbUri").IsNotNull();
+
+            HttpClient = CreateHttpClient(dbUri);
         }
 
         public virtual void Dispose()
@@ -50,14 +52,14 @@ namespace MyCouch.Net
                 throw new ObjectDisposedException(GetType().Name);
         }
 
-        private HttpClient CreateHttpClient(Uri uri)
+        private HttpClient CreateHttpClient(Uri dbUri)
         {
-            var client = new HttpClient { BaseAddress = new Uri(BuildCleanUrl(uri)) };
+            var client = new HttpClient { BaseAddress = new Uri(BuildCleanUrl(dbUri)) };
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(HttpContentTypes.Json));
 
-            if (!string.IsNullOrWhiteSpace(uri.UserInfo))
+            if (!string.IsNullOrWhiteSpace(dbUri.UserInfo))
             {
-                var parts = uri.UserInfo
+                var parts = dbUri.UserInfo
                     .Split(new[] { ":" }, StringSplitOptions.RemoveEmptyEntries)
                     .Select(p => Uri.UnescapeDataString(p))
                     .ToArray();
