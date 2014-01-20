@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using MyCouch.Cloudant;
 using MyCouch.Net;
-using MyCouch.Requests;
 using Newtonsoft.Json;
 
 namespace MyCouch.IntegrationTests
