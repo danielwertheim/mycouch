@@ -15,7 +15,7 @@ namespace MyCouch.Responses.Factories
             return Materialize(new DocumentHeaderResponse(), httpResponse, OnSuccessfulResponse, OnFailedResponse);
         }
 
-        protected virtual void OnSuccessfulResponse(DocumentHeaderResponse response, HttpResponseMessage httpResponse)
+        protected async virtual void OnSuccessfulResponse(DocumentHeaderResponse response, HttpResponseMessage httpResponse)
         {
             if (httpResponse.RequestMessage.Method == HttpMethod.Head)
             {
@@ -25,7 +25,7 @@ namespace MyCouch.Responses.Factories
                 return;
             }
 
-            using (var content = httpResponse.Content.ReadAsStream())
+            using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
                 PopulateDocumentHeaderFromResponseStream(response, content);
         }
 

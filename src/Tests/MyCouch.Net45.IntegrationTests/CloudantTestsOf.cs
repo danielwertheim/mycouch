@@ -7,7 +7,7 @@ namespace MyCouch.IntegrationTests
 {
     public abstract class CloudantTestsOf<T> : TestsOf<T>, IUseFixture<CloudantTestsFixture> where T : class
     {
-        protected ICloudantClient Client { get; set; }
+        protected IMyCouchCloudantClient Client { get; set; }
 
         protected abstract void OnTestInit();
 

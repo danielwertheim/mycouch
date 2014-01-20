@@ -9,7 +9,7 @@ namespace MyCouch.IntegrationTests.TestFixtures
 {
     public class SearchFixture : IDisposable
     {
-        protected ICloudantClient Client;
+        protected IMyCouchCloudantClient Client;
 
         public Animal[] Animals { get; protected set; }
 

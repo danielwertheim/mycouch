@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using MyCouch.Extensions;
 
@@ -20,7 +21,7 @@ namespace MyCouch.Requests.Factories
 
             return string.Format("{0}/{1}{2}",
                 Connection.Address,
-                id ?? string.Empty,
+                id != null ? Uri.EscapeDataString(id) : string.Empty,
                 queryParameters.Any() ? string.Join("&", queryParameters).PrependWith("?") : string.Empty);
         }
     }

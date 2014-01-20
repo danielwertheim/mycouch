@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Text;
 
 namespace MyCouch.Extensions
@@ -61,6 +62,11 @@ namespace MyCouch.Extensions
             }
 
             return sb.ToString();
+        }
+
+        public static DateTime AsDateTimeFromIso8601(this string value)
+        {
+            return DateTime.Parse(value, null, DateTimeStyles.RoundtripKind);
         }
     }
 }

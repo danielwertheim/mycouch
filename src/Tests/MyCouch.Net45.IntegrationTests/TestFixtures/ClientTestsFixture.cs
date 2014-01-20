@@ -4,7 +4,7 @@ namespace MyCouch.IntegrationTests.TestFixtures
 {
     public class ClientTestsFixture : IDisposable
     {
-        public IClient Client { get; protected set; }
+        public IMyCouchClient Client { get; protected set; }
 
         public ClientTestsFixture()
         {

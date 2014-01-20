@@ -1,4 +1,4 @@
-﻿using System.IO;
+﻿using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 
@@ -12,8 +12,8 @@ namespace MyCouch.Extensions
             var val = segments[segments.Length - (1 + offset)];
 
             return val.EndsWith("/")
-                ? val.Substring(0, val.Length - 1)
-                : val;
+                ? Uri.UnescapeDataString(val.Substring(0, val.Length - 1))
+                : Uri.UnescapeDataString(val);
         }
 
         public static string GetETag(this HttpResponseHeaders headers)
@@ -21,11 +21,6 @@ namespace MyCouch.Extensions
             return headers.ETag == null || headers.ETag.Tag == null
                 ? string.Empty
                 : headers.ETag.Tag.Substring(1, headers.ETag.Tag.Length - 2);
-        }
-
-        public static Stream ReadAsStream(this HttpContent content)
-        {
-            return content.ReadAsStreamAsync().Result;
         }
     }
 }

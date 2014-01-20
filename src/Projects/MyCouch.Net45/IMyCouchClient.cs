@@ -3,7 +3,7 @@ using MyCouch.Serialization;
 
 namespace MyCouch
 {
-    public interface IClient : IDisposable
+    public interface IMyCouchClient : IDisposable
     {
         /// <summary>
         /// The underlying <see cref="IConnection"/> used to communicate with CouchDb.

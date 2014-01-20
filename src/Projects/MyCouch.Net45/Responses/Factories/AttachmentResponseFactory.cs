@@ -16,9 +16,9 @@ namespace MyCouch.Responses.Factories
             return Materialize(new AttachmentResponse(), httpResponse, OnSuccessfulResponse, OnFailedResponse);
         }
 
-        protected virtual void OnSuccessfulResponse(AttachmentResponse response, HttpResponseMessage httpResponse)
+        protected async virtual void OnSuccessfulResponse(AttachmentResponse response, HttpResponseMessage httpResponse)
         {
-            using (var content = httpResponse.Content.ReadAsStream())
+            using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
             {
                 PopulateMissingIdFromRequestUri(response, httpResponse);
                 PopulateMissingNameFromRequestUri(response, httpResponse);

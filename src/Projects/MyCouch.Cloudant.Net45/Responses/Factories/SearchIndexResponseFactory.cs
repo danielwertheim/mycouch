@@ -28,9 +28,9 @@ namespace MyCouch.Cloudant.Responses.Factories
             return Materialize(new SearchIndexResponse<TIncludedDoc>(), httpResponse, OnSuccessfulResponse, OnFailedResponse);
         }
 
-        protected virtual void OnSuccessfulResponse<TIncludedDoc>(SearchIndexResponse<TIncludedDoc> response, HttpResponseMessage httpResponse)
+        protected async virtual void OnSuccessfulResponse<TIncludedDoc>(SearchIndexResponse<TIncludedDoc> response, HttpResponseMessage httpResponse)
         {
-            using (var content = httpResponse.Content.ReadAsStream())
+            using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
             {
                 EntitySerializer.Populate(response, content);
             }

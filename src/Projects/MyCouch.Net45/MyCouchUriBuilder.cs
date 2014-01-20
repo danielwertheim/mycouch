@@ -17,11 +17,11 @@ namespace MyCouch
             get { return !string.IsNullOrWhiteSpace(Username); }
         }
 
-        public MyCouchUriBuilder(string url)
+        public MyCouchUriBuilder(string serverUri)
         {
-            Ensure.That(url, "url").IsNotNullOrWhiteSpace();
+            Ensure.That(serverUri, "serverUri").IsNotNullOrWhiteSpace();
 
-            var tmp = new Uri(url);
+            var tmp = new Uri(serverUri);
             Scheme = tmp.Scheme;
             Authority = tmp.Authority.Replace("/", string.Empty);
             DbName = tmp.LocalPath.Replace("/", string.Empty);

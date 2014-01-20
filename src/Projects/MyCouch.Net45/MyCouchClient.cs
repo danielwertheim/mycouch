@@ -5,7 +5,7 @@ using MyCouch.Serialization;
 
 namespace MyCouch
 {
-    public class Client : IClient
+    public class MyCouchClient : IMyCouchClient
     {
         public IConnection Connection { get; private set; }
         public ISerializer Serializer { get; private set; }
@@ -16,17 +16,17 @@ namespace MyCouch
         public IEntities Entities { get; protected set; }
         public IViews Views { get; private set; }
 
-        public Client(string url) : this(new Uri(url)) { }
+        public MyCouchClient(string dbUri) : this(new Uri(dbUri)) { }
 
-        public Client(Uri uri) : this(new BasicHttpClientConnection(uri)) { }
+        public MyCouchClient(Uri dbUri) : this(new BasicHttpClientConnection(dbUri)) { }
 
-        public Client(IConnection connection, ClientBootstraper bootstraper = null)
+        public MyCouchClient(IConnection connection, MyCouchClientBootstraper bootstraper = null)
         {
             Ensure.That(connection, "connection").IsNotNull();
 
             Connection = connection;
 
-            bootstraper = bootstraper ?? new ClientBootstraper();
+            bootstraper = bootstraper ?? new MyCouchClientBootstraper();
 
             Serializer = bootstraper.SerializerFn();
             Changes = bootstraper.ChangesFn(Connection);
@@ -39,8 +39,17 @@ namespace MyCouch
 
         public virtual void Dispose()
         {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
             if (Connection == null)
-                throw new ObjectDisposedException(typeof(Client).Name);
+                throw new ObjectDisposedException(typeof(MyCouchClient).Name);
+
+            if (!disposing)
+                return;
 
             Connection.Dispose();
             Connection = null;

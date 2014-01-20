@@ -6,7 +6,7 @@ namespace MyCouch.IntegrationTests
 {
     internal static class ClientExtensions
     {
-        internal static void ClearAllDocuments(this IClient client)
+        internal static void ClearAllDocuments(this IMyCouchClient client)
         {
             var query = new QuerySystemViewRequest("_all_docs").Configure(q => q.Stale(Stale.UpdateAfter));
             var response = client.Views.QueryAsync<dynamic>(query).Result;
@@ -18,7 +18,7 @@ namespace MyCouch.IntegrationTests
             BulkDelete(client, response);
         }
 
-        private static async void BulkDelete(IClient client, ViewQueryResponse<dynamic> response)
+        private static async void BulkDelete(IMyCouchClient client, ViewQueryResponse<dynamic> response)
         {
             if (response.IsEmpty)
                 return;

@@ -11,36 +11,55 @@ namespace MyCouch.Net
 {
     public class BasicHttpClientConnection : IConnection
     {
-        protected HttpClient HttpClient;
+        protected HttpClient HttpClient { get; private set; }
+        protected bool IsDisposed { get; private set; }
 
         public Uri Address
         {
             get { return HttpClient.BaseAddress; }
         }
 
-        public BasicHttpClientConnection(Uri uri)
+        public BasicHttpClientConnection(Uri dbUri)
         {
-            HttpClient = CreateHttpClient(uri);
+            Ensure.That(dbUri, "dbUri").IsNotNull();
+
+            HttpClient = CreateHttpClient(dbUri);
         }
 
         public virtual void Dispose()
         {
-            if (HttpClient == null)
-                throw new ObjectDisposedException(typeof(BasicHttpClientConnection).Name);
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            ThrowIfDisposed();
+
+            IsDisposed = true;
+
+            if (!disposing)
+                return;
 
             HttpClient.CancelPendingRequests();
             HttpClient.Dispose();
             HttpClient = null;
         }
 
-        protected virtual HttpClient CreateHttpClient(Uri uri)
+        protected virtual void ThrowIfDisposed()
         {
-            var client = new HttpClient { BaseAddress = new Uri(BuildCleanUrl(uri)) };
+            if (IsDisposed)
+                throw new ObjectDisposedException(GetType().Name);
+        }
+
+        private HttpClient CreateHttpClient(Uri dbUri)
+        {
+            var client = new HttpClient { BaseAddress = new Uri(BuildCleanUrl(dbUri)) };
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(HttpContentTypes.Json));
 
-            if (!string.IsNullOrWhiteSpace(uri.UserInfo))
+            if (!string.IsNullOrWhiteSpace(dbUri.UserInfo))
             {
-                var parts = uri.UserInfo
+                var parts = dbUri.UserInfo
                     .Split(new[] { ":" }, StringSplitOptions.RemoveEmptyEntries)
                     .Select(p => Uri.UnescapeDataString(p))
                     .ToArray();
@@ -51,7 +70,7 @@ namespace MyCouch.Net
             return client;
         }
 
-        protected virtual string BuildCleanUrl(Uri uri)
+        private string BuildCleanUrl(Uri uri)
         {
             EnsureValidUri(uri);
 
@@ -62,7 +81,7 @@ namespace MyCouch.Net
             return url;
         }
 
-        protected virtual void EnsureValidUri(Uri uri)
+        private void EnsureValidUri(Uri uri)
         {
             Ensure.That(uri, "uri").IsNotNull();
             Ensure.That(uri.LocalPath, "uri.LocalPath")
@@ -72,26 +91,36 @@ namespace MyCouch.Net
 
         public virtual async Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest)
         {
+            ThrowIfDisposed();
+
             return await HttpClient.SendAsync(OnBeforeSend(httpRequest)).ForAwait();
         }
 
         public virtual async Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, CancellationToken cancellationToken)
         {
+            ThrowIfDisposed();
+
             return await HttpClient.SendAsync(OnBeforeSend(httpRequest), cancellationToken).ForAwait();
         }
 
         public virtual async Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, HttpCompletionOption completionOption)
         {
+            ThrowIfDisposed();
+
             return await HttpClient.SendAsync(OnBeforeSend(httpRequest), completionOption).ForAwait();
         }
 
         public virtual async Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, HttpCompletionOption completionOption, CancellationToken cancellationToken)
         {
+            ThrowIfDisposed();
+
             return await HttpClient.SendAsync(OnBeforeSend(httpRequest), completionOption, cancellationToken).ForAwait();
         }
 
         protected virtual HttpRequest OnBeforeSend(HttpRequest httpRequest)
         {
+            ThrowIfDisposed();
+
             return httpRequest.RemoveRequestType();
         }
     }

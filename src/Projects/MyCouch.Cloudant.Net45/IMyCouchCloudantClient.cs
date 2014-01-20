@@ -1,6 +1,6 @@
 ﻿namespace MyCouch.Cloudant
 {
-    public interface ICloudantClient : IClient
+    public interface IMyCouchCloudantClient : IMyCouchClient
     {
         ISearches Searches { get; }
     }

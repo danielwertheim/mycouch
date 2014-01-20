@@ -10,7 +10,7 @@
         {
             DocType = new StringSerializationConvention(
                 "$doctype",
-                m => !m.IsAnonymous ? m.DocType.ToLowerInvariant() : string.Empty);
+                m => !m.IsAnonymous ? m.DocType.ToLowerInvariant() : null);
 
             DocNamespace = new StringSerializationConvention(
                 "$docns",

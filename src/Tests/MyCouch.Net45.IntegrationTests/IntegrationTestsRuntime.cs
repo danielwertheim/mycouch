@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using MyCouch.Cloudant;
 using MyCouch.Net;
-using MyCouch.Requests;
 using Newtonsoft.Json;
 
 namespace MyCouch.IntegrationTests
@@ -61,7 +59,7 @@ namespace MyCouch.IntegrationTests
             }
         }
 
-        internal static IClient CreateNormalClient()
+        internal static IMyCouchClient CreateNormalClient()
         {
             if(NormalClientEnvironment == null)
                 throw new Exception("Can not create Normal client. Missing configuration.");
@@ -72,11 +70,11 @@ namespace MyCouch.IntegrationTests
                 .SetBasicCredentials(cfg.User, cfg.Password);
 
             return cfg.IsAgainstCloudant
-                ? new Client(new CustomCloudantConnection(uriBuilder.Build()))
-                : new Client(uriBuilder.Build());
+                ? new MyCouchClient(new CustomCloudantConnection(uriBuilder.Build()))
+                : new MyCouchClient(uriBuilder.Build());
         }
 
-        internal static ICloudantClient CreateCloudantClient()
+        internal static IMyCouchCloudantClient CreateCloudantClient()
         {
             if (CloudantClientEnvironment == null)
                 throw new Exception("Can not create Cloudant client. Missing configuration.");
@@ -86,7 +84,7 @@ namespace MyCouch.IntegrationTests
                 .SetDbName(cfg.DbName)
                 .SetBasicCredentials(cfg.User, cfg.Password);
 
-            return new CloudantClient(new CustomCloudantConnection(uriBuilder.Build()));
+            return new MyCouchCloudantClient(new CustomCloudantConnection(uriBuilder.Build()));
         }
 
         private class TestEnvironment

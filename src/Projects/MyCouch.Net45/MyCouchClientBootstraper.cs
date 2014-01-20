@@ -7,11 +7,11 @@ using MyCouch.Serialization.Meta;
 
 namespace MyCouch
 {
-    public class ClientBootstraper
+    public class MyCouchClientBootstraper
     {
         /// <summary>
         /// Used e.g. for bootstraping components relying on plain serialization, <see cref="ISerializer"/>
-        /// used in <see cref="IClient.Serializer"/>.
+        /// used in <see cref="IMyCouchClient.Serializer"/>.
         /// </summary>
         /// <remarks>
         /// For document serialization configuration, <see cref="DocumentSerializationConfigurationFn"/>
@@ -21,7 +21,7 @@ namespace MyCouch
 
         /// <summary>
         /// Used e.g. for bootstraping components relying on document serialization, <see cref="IDocumentSerializer"/>
-        /// used in <see cref="IDocuments.Serializer"/> used in <see cref="IClient.Documents"/>.
+        /// used in <see cref="IDocuments.Serializer"/> used in <see cref="IMyCouchClient.Documents"/>.
         /// </summary>
         /// <remarks>
         /// For plain serialization configuration, <see cref="SerializationConfigurationFn"/>.
@@ -31,7 +31,7 @@ namespace MyCouch
 
         /// <summary>
         /// Used e.g. for bootstraping components relying on entity serialization, <see cref="IEntitySerializer"/>
-        /// used in <see cref="IEntities.Serializer"/> used in <see cref="IClient.Entities"/>.
+        /// used in <see cref="IEntities.Serializer"/> used in <see cref="IMyCouchClient.Entities"/>.
         /// </summary>
         /// <remarks>
         /// For plain serialization configuration, <see cref="SerializationConfigurationFn"/>.
@@ -51,7 +51,7 @@ namespace MyCouch
         public Func<IEntityReflector> EntityReflectorFn { get; set; }
 
         /// <summary>
-        /// Used e.g. for bootstraping <see cref="IClient.Serializer"/>.
+        /// Used e.g. for bootstraping <see cref="IMyCouchClient.Serializer"/>.
         /// </summary>
         public Func<ISerializer> SerializerFn { get; set; }
 
@@ -66,36 +66,36 @@ namespace MyCouch
         public Func<IEntitySerializer> EntitySerializerFn { get; set; }
 
         /// <summary>
-        /// Used e.g. for bootstraping <see cref="IClient.Changes"/>.
+        /// Used e.g. for bootstraping <see cref="IMyCouchClient.Changes"/>.
         /// </summary>
         public Func<IConnection, IChanges> ChangesFn { get; set; }
 
         /// <summary>
-        /// Used e.g. for bootstraping <see cref="IClient.Attachments"/>.
+        /// Used e.g. for bootstraping <see cref="IMyCouchClient.Attachments"/>.
         /// </summary>
         public Func<IConnection, IAttachments> AttachmentsFn { get; set; }
 
         /// <summary>
-        /// Used e.g. for bootstraping <see cref="IClient.Databases"/>.
+        /// Used e.g. for bootstraping <see cref="IMyCouchClient.Databases"/>.
         /// </summary>
         public Func<IConnection, IDatabases> DatabasesFn { get; set; }
 
         /// <summary>
-        /// Used e.g. for bootstraping <see cref="IClient.Documents"/>.
+        /// Used e.g. for bootstraping <see cref="IMyCouchClient.Documents"/>.
         /// </summary>
         public Func<IConnection, IDocuments> DocumentsFn { get; set; }
 
         /// <summary>
-        /// Used e.g. for bootstraping <see cref="IClient.Entities"/>.
+        /// Used e.g. for bootstraping <see cref="IMyCouchClient.Entities"/>.
         /// </summary>
         public Func<IConnection, IEntities> EntitiesFn { get; set; }
 
         /// <summary>
-        /// Used e.g. for bootstraping <see cref="IClient.Views"/>.
+        /// Used e.g. for bootstraping <see cref="IMyCouchClient.Views"/>.
         /// </summary>
         public Func<IConnection, IViews> ViewsFn { get; set; }
 
-        public ClientBootstraper()
+        public MyCouchClientBootstraper()
         {
             ConfigureChangesFn();
             ConfigureAttachmentsFn();
