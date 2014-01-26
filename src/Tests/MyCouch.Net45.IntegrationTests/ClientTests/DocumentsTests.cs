@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using FluentAssertions;
 using MyCouch.Testing;
 using MyCouch.Testing.TestData;
