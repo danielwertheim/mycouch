@@ -12,7 +12,7 @@ namespace MyCouch.Requests.Factories
             var httpRequest = CreateFor<PutDocumentRequest>(HttpMethod.Put, GenerateRequestUrl(request.Id, request.Rev, request.Batch));
 
             httpRequest.SetIfMatch(request.Rev);
-            httpRequest.SetContent(request.Content);
+            httpRequest.SetJsonContent(request.Content);
 
             return httpRequest;
         }

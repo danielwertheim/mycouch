@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+#if NETFX_CORE
 using System.Reflection;
 using MyCouch.Extensions;
+#endif
 
 namespace MyCouch.Net
 {
@@ -28,18 +30,25 @@ namespace MyCouch.Net
                 Headers.TryAddWithoutValidation("If-Match", rev);
         }
 
-        public virtual HttpRequest SetContent(string content)
-        {
-            if(!string.IsNullOrWhiteSpace(content))
-                Content = new JsonContent(content);
-
-            return this;
-        }
-
         public virtual HttpRequest SetContent(byte[] content, string contentType)
         {
             if (content != null && content.Length > 0)
                 Content = new BytesContent(content, contentType);
+
+            return this;
+        }
+
+        public virtual HttpRequest SetJsonContent()
+        {
+            Content = new JsonContent();
+
+            return this;
+        }
+
+        public virtual HttpRequest SetJsonContent(string content)
+        {
+            if(!string.IsNullOrWhiteSpace(content))
+                Content = new JsonContent(content);
 
             return this;
         }
