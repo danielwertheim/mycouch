@@ -23,6 +23,7 @@ namespace MyCouch.IntegrationTests.ClientTests
 
         public void SetFixture(ViewsFixture data)
         {
+            data.Init(Environment);
             Artists = data.Artists;
         }
 

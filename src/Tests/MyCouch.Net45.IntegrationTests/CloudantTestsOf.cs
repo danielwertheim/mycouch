@@ -8,11 +8,15 @@ namespace MyCouch.IntegrationTests
         TestsOf<T>,
         IDisposable where T : class
     {
+        protected readonly TestEnvironment Environment;
         protected IMyCouchCloudantClient Client { get; set; }
 
-        protected CloudantTestsOf()
+        protected CloudantTestsOf() : this(IntegrationTestsRuntime.CloudantClientEnvironment) { }
+
+        protected CloudantTestsOf(TestEnvironment environment)
         {
-            Client = IntegrationTestsRuntime.CreateCloudantClient();
+            Environment = environment;
+            Client = IntegrationTestsRuntime.CreateCloudantClient(Environment);
             CleanDb();
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using MyCouch.Requests;
 using MyCouch.Testing.Model;
 using MyCouch.Testing.TestData;
@@ -8,14 +9,23 @@ namespace MyCouch.IntegrationTests.TestFixtures
 {
     public class ViewsFixture : IDisposable
     {
-        public Artist[] Artists { get; protected set; }
+        private TestEnvironment _environment;
 
-        public ViewsFixture()
+        public Artist[] Artists { get; private set; }
+
+        public void Init(TestEnvironment environment)
         {
+            if(_environment != null)
+                return;
+
+            _environment = environment;
+
             Artists = ClientTestData.Artists.CreateArtists(10);
 
-            using (var client = IntegrationTestsRuntime.CreateNormalClient())
+            using (var client = IntegrationTestsRuntime.CreateClient(_environment))
             {
+                client.ClearAllDocuments();
+
                 var bulk = new BulkRequest();
                 bulk.Include(Artists.Select(i => client.Entities.Serializer.Serialize(i)).ToArray());
 
@@ -33,15 +43,19 @@ namespace MyCouch.IntegrationTests.TestFixtures
                 var touchView2 = new QueryViewRequest(ClientTestData.Views.ArtistsNameNoValueViewId).Configure(q => q.Stale(Stale.UpdateAfter));
                 var touchView3 = new QueryViewRequest(ClientTestData.Views.ArtistsTotalNumOfAlbumsViewId).Configure(q => q.Stale(Stale.UpdateAfter));
 
-                client.Views.QueryAsync(touchView1).Wait();
-                client.Views.QueryAsync(touchView2).Wait();
-                client.Views.QueryAsync(touchView3).Wait();
+                Task.WaitAll(
+                    client.Views.QueryAsync(touchView1),
+                    client.Views.QueryAsync(touchView2),
+                    client.Views.QueryAsync(touchView3));
             }
         }
 
         public virtual void Dispose()
         {
-            using (var client = IntegrationTestsRuntime.CreateNormalClient())
+            if(_environment == null)
+                return;
+
+            using (var client = IntegrationTestsRuntime.CreateClient(_environment))
             {
                 client.ClearAllDocuments();
             }

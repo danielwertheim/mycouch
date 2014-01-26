@@ -7,11 +7,15 @@ namespace MyCouch.IntegrationTests
         TestsOf<T>,
         IDisposable where T : class
     {
+        protected readonly TestEnvironment Environment;
         protected IMyCouchClient Client { get; set; }
 
-        protected ClientTestsOf()
+        protected ClientTestsOf() : this(IntegrationTestsRuntime.ClientEnvironment) { }
+
+        protected ClientTestsOf(TestEnvironment environment)
         {
-            Client = IntegrationTestsRuntime.CreateNormalClient();
+            Environment = environment;
+            Client = IntegrationTestsRuntime.CreateClient(Environment);
             CleanDb();
         }
 

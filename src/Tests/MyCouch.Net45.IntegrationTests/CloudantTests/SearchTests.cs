@@ -24,6 +24,7 @@ namespace MyCouch.IntegrationTests.CloudantTests
 
         public void SetFixture(SearchFixture data)
         {
+            data.Init(Environment);
             Animals = data.Animals;
         }
 
