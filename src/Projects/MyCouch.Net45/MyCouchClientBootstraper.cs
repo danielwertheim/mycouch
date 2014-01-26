@@ -76,9 +76,9 @@ namespace MyCouch
         public Func<IConnection, IAttachments> AttachmentsFn { get; set; }
 
         /// <summary>
-        /// Used e.g. for bootstraping <see cref="IMyCouchClient.Databases"/>.
+        /// Used e.g. for bootstraping <see cref="IMyCouchClient.Database"/>.
         /// </summary>
-        public Func<IConnection, IDatabases> DatabasesFn { get; set; }
+        public Func<IConnection, IDatabase> DatabasesFn { get; set; }
 
         /// <summary>
         /// Used e.g. for bootstraping <see cref="IMyCouchClient.Documents"/>.
@@ -99,7 +99,7 @@ namespace MyCouch
         {
             ConfigureChangesFn();
             ConfigureAttachmentsFn();
-            ConfigureDatabasesFn();
+            ConfigureDatabaseFn();
             ConfigureDocumentsFn();
             ConfigureEntitiesFn();
             ConfigureViewsFn();
@@ -125,9 +125,9 @@ namespace MyCouch
             AttachmentsFn = cn => new Attachments(cn, SerializerFn());
         }
 
-        protected virtual void ConfigureDatabasesFn()
+        protected virtual void ConfigureDatabaseFn()
         {
-            DatabasesFn = cn => new Databases(cn, SerializerFn());
+            DatabasesFn = cn => new Database(cn, SerializerFn());
         }
 
         protected virtual void ConfigureDocumentsFn()

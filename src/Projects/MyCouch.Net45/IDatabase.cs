@@ -6,7 +6,7 @@ namespace MyCouch
     /// <summary>
     /// Used to manage a database.
     /// </summary>
-    public interface IDatabases
+    public interface IDatabase
     {
         /// <summary>
         /// Creates the database, but only if it does not already exist.

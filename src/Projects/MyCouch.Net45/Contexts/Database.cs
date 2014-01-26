@@ -9,11 +9,11 @@ using MyCouch.Serialization;
 
 namespace MyCouch.Contexts
 {
-    public class Databases : ApiContextBase, IDatabases
+    public class Database : ApiContextBase, IDatabase
     {
         protected DatabaseResponseFactory DatabaseResponseFactory { get; set; }
 
-        public Databases(IConnection connection, ISerializer serializer) : base(connection)
+        public Database(IConnection connection, ISerializer serializer) : base(connection)
         {
             Ensure.That(serializer, "serializer").IsNotNull();
 

@@ -61,7 +61,7 @@
     <Compile Include="Contexts\ApiContextBase.cs" />
     <Compile Include="Contexts\Attachments.cs" />
     <Compile Include="Contexts\Changes.cs" />
-    <Compile Include="Contexts\Databases.cs" />
+    <Compile Include="Contexts\Database.cs" />
     <Compile Include="Contexts\Documents.cs" />
     <Compile Include="Contexts\Entities.cs" />
     <Compile Include="Contexts\Views.cs" />
@@ -86,7 +86,7 @@
     <Compile Include="IChanges.cs" />
     <Compile Include="IMyCouchClient.cs" />
     <Compile Include="IConnection.cs" />
-    <Compile Include="IDatabases.cs" />
+    <Compile Include="IDatabase.cs" />
     <Compile Include="IDocuments.cs" />
     <Compile Include="IEntities.cs" />
     <Compile Include="IViews.cs" />

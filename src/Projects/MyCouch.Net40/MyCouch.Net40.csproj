@@ -107,8 +107,8 @@
     <Compile Include="..\MyCouch.Net45\Contexts\Changes.cs">
       <Link>Contexts\Changes.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\contexts\Databases.cs">
-      <Link>Contexts\Databases.cs</Link>
+    <Compile Include="..\MyCouch.Net45\Contexts\Database.cs">
+      <Link>Contexts\Database.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\contexts\Documents.cs">
       <Link>Contexts\Documents.cs</Link>
@@ -182,8 +182,8 @@
     <Compile Include="..\MyCouch.Net45\IConnection.cs">
       <Link>IConnection.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\IDatabases.cs">
-      <Link>IDatabases.cs</Link>
+    <Compile Include="..\MyCouch.Net45\IDatabase.cs">
+      <Link>IDatabase.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\IDocuments.cs">
       <Link>IDocuments.cs</Link>
