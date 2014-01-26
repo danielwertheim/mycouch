@@ -14,6 +14,8 @@ namespace MyCouch.Contexts
     public class Database : ApiContextBase, IDatabase
     {
         protected DatabaseResponseFactory DatabaseResponseFactory { get; set; }
+        protected PutDatabaseHttpRequestFactory PutDatabaseHttpRequestFactory { get; set; }
+        protected DeleteDatabaseHttpRequestFactory DeleteDatabaseHttpRequestFactory { get; set; }
         protected CompactDatabaseHttpRequestFactory CompactDatabaseHttpRequestFactory { get; set; }
 
         public Database(IConnection connection, ISerializer serializer) : base(connection)
@@ -21,12 +23,14 @@ namespace MyCouch.Contexts
             Ensure.That(serializer, "serializer").IsNotNull();
 
             DatabaseResponseFactory = new DatabaseResponseFactory(serializer);
+            PutDatabaseHttpRequestFactory = new PutDatabaseHttpRequestFactory(Connection);
+            DeleteDatabaseHttpRequestFactory = new DeleteDatabaseHttpRequestFactory(Connection);
             CompactDatabaseHttpRequestFactory = new CompactDatabaseHttpRequestFactory(Connection);
         }
 
         public virtual async Task<DatabaseResponse> PutAsync()
         {
-            using (var req = CreateHttpRequest(HttpMethod.Put))
+            using (var req = CreateHttpRequest(new PutDatabaseRequest()))
             {
                 using (var res = await SendAsync(req).ForAwait())
                 {
@@ -37,7 +41,7 @@ namespace MyCouch.Contexts
 
         public virtual async Task<DatabaseResponse> DeleteAsync()
         {
-            using (var req = CreateHttpRequest(HttpMethod.Delete))
+            using (var req = CreateHttpRequest(new DeleteDatabaseRequest()))
             {
                 using (var res = await SendAsync(req).ForAwait())
                 {
@@ -57,19 +61,19 @@ namespace MyCouch.Contexts
             }
         }
 
+        protected virtual HttpRequest CreateHttpRequest(PutDatabaseRequest request)
+        {
+            return PutDatabaseHttpRequestFactory.Create(request);
+        }
+
+        protected virtual HttpRequest CreateHttpRequest(DeleteDatabaseRequest request)
+        {
+            return DeleteDatabaseHttpRequestFactory.Create(request);
+        }
+
         protected virtual HttpRequest CreateHttpRequest(CompactDatabaseRequest request)
         {
             return CompactDatabaseHttpRequestFactory.Create(request);
-        }
-
-        protected virtual HttpRequest CreateHttpRequest(HttpMethod method)
-        {
-            return new HttpRequest(method, GenerateRequestUrl());
-        }
-
-        protected virtual string GenerateRequestUrl()
-        {
-            return Connection.Address.ToString();
         }
 
         protected virtual DatabaseResponse ProcessResponse(HttpResponseMessage response)

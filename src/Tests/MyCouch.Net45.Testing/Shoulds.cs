@@ -78,6 +78,15 @@ namespace MyCouch.Testing
             Response = response;
         }
 
+        public void Be200Delete()
+        {
+            Response.RequestMethod.Should().Be(HttpMethod.Delete);
+            Response.IsSuccess.Should().BeTrue();
+            Response.StatusCode.Should().Be(HttpStatusCode.OK);
+            Response.Error.Should().BeNull();
+            Response.Reason.Should().BeNull();
+        }
+
         public void Be202Post()
         {
             Response.RequestMethod.Should().Be(HttpMethod.Post);

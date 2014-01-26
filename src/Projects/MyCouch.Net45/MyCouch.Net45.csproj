@@ -104,6 +104,7 @@
     <Compile Include="Requests\Configurators\QueryViewRequestConfigurator.cs" />
     <Compile Include="Requests\CopyDocumentRequest.cs" />
     <Compile Include="Requests\DeleteAttachmentRequest.cs" />
+    <Compile Include="Requests\DeleteDatabaseRequest.cs" />
     <Compile Include="Requests\DeleteDocumentRequest.cs" />
     <Compile Include="Requests\DeleteEntityRequest.cs" />
     <Compile Include="Requests\DocumentExistsRequest.cs" />
@@ -113,6 +114,7 @@
     <Compile Include="Requests\Factories\CopyDocumentHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\DatabaseHttpRequestFactoryBase.cs" />
     <Compile Include="Requests\Factories\DeleteAttachmentHttpRequestFactory.cs" />
+    <Compile Include="Requests\Factories\DeleteDatabaseHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\DeleteDocumentHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\DeleteEntityHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\DocumentExistsHttpRequestFactory.cs" />
@@ -126,6 +128,7 @@
     <Compile Include="Requests\Factories\PostDocumentHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\PostEntityHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\PutAttachmentHttpRequestFactory.cs" />
+    <Compile Include="Requests\Factories\PutDatabaseHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\PutDocumentHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\PutEntityHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\QueryViewHttpRequestFactory.cs" />
@@ -137,6 +140,7 @@
     <Compile Include="Requests\PostDocumentRequest.cs" />
     <Compile Include="Requests\PostEntityRequest.cs" />
     <Compile Include="Requests\PutAttachmentRequest.cs" />
+    <Compile Include="Requests\PutDatabaseRequest.cs" />
     <Compile Include="Requests\PutDocumentRequest.cs" />
     <Compile Include="Requests\PutEntityRequest.cs" />
     <Compile Include="Requests\QuerySystemViewRequest.cs" />

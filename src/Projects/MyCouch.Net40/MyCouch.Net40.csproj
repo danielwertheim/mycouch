@@ -242,6 +242,9 @@
     <Compile Include="..\MyCouch.Net45\Requests\DeleteAttachmentRequest.cs">
       <Link>Requests\DeleteAttachmentRequest.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Requests\DeleteDatabaseRequest.cs">
+      <Link>Requests\DeleteDatabaseRequest.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\DeleteDocumentRequest.cs">
       <Link>Requests\DeleteDocumentRequest.cs</Link>
     </Compile>
@@ -268,6 +271,9 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\Factories\DeleteAttachmentHttpRequestFactory.cs">
       <Link>Requests\Factories\DeleteAttachmentHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Requests\Factories\DeleteDatabaseHttpRequestFactory.cs">
+      <Link>Requests\Factories\DeleteDatabaseHttpRequestFactory.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\Factories\DeleteDocumentHttpRequestFactory.cs">
       <Link>Requests\Factories\DeleteDocumentHttpRequestFactory.cs</Link>
@@ -308,6 +314,9 @@
     <Compile Include="..\MyCouch.Net45\Requests\Factories\PutAttachmentHttpRequestFactory.cs">
       <Link>Requests\Factories\PutAttachmentHttpRequestFactory.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Requests\Factories\PutDatabaseHttpRequestFactory.cs">
+      <Link>Requests\Factories\PutDatabaseHttpRequestFactory.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\Factories\PutDocumentHttpRequestFactory.cs">
       <Link>Requests\Factories\PutDocumentHttpRequestFactory.cs</Link>
     </Compile>
@@ -340,6 +349,9 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\PutAttachmentRequest.cs">
       <Link>Requests\PutAttachmentRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Requests\PutDatabaseRequest.cs">
+      <Link>Requests\PutDatabaseRequest.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\PutDocumentRequest.cs">
       <Link>Requests\PutDocumentRequest.cs</Link>

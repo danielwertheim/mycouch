@@ -13,6 +13,14 @@ namespace MyCouch.IntegrationTests.ClientTests
         }
 
         [Fact]
+        public void When_Delete_of_existing_db_The_response_should_be_202()
+        {
+            var response = SUT.DeleteAsync().Result;
+
+            response.Should().Be200Delete();
+        }
+
+        [Fact]
         public void When_Compact_of_existing_db_The_response_should_be_202()
         {
             var response = SUT.CompactAsync().Result;
