@@ -17,5 +17,11 @@ namespace MyCouch
         /// Deletes the database.
         /// </summary>
         Task<DatabaseResponse> DeleteAsync();
+
+        /// <summary>
+        /// Compact, POST /{db}/_compact, requests compaction of the database.
+        /// </summary>
+        /// <returns></returns>
+        Task<DatabaseResponse> CompactAsync();
     }
 }

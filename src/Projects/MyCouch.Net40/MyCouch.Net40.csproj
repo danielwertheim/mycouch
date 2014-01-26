@@ -230,6 +230,9 @@
     <Compile Include="..\MyCouch.Net45\Requests\BulkRequest.cs">
       <Link>Requests\BulkRequest.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Requests\CompactDatabaseRequest.cs">
+      <Link>Requests\CompactDatabaseRequest.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\Configurators\QueryViewRequestConfigurator.cs">
       <Link>Requests\Configurators\QueryViewRequestConfigurator.cs</Link>
     </Compile>
@@ -254,8 +257,14 @@
     <Compile Include="..\MyCouch.Net45\Requests\Factories\BulkHttpRequestFactory.cs">
       <Link>Requests\Factories\BulkHttpRequestFactory.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Requests\Factories\CompactDatabaseHttpRequestFactory.cs">
+      <Link>Requests\Factories\CompactDatabaseHttpRequestFactory.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\Factories\CopyDocumentHttpRequestFactory.cs">
       <Link>Requests\Factories\CopyDocumentHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Requests\Factories\DatabaseHttpRequestFactoryBase.cs">
+      <Link>Requests\Factories\DatabaseHttpRequestFactoryBase.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\Factories\DeleteAttachmentHttpRequestFactory.cs">
       <Link>Requests\Factories\DeleteAttachmentHttpRequestFactory.cs</Link>

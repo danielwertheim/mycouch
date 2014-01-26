@@ -12,6 +12,11 @@ namespace MyCouch.Testing
     [DebuggerStepThrough]
     public static class Shoulds
     {
+        public static DatabaseResponseAssertions Should(this DatabaseResponse response)
+        {
+            return new DatabaseResponseAssertions(response);
+        }
+
         public static SearcIndexResponseAssertions Should(this SearchIndexResponse response)
         {
             return new SearcIndexResponseAssertions(response);
@@ -60,6 +65,26 @@ namespace MyCouch.Testing
         public static ChangesResponseAssertions<T> Should<T>(this ChangesResponse<T> response)
         {
             return new ChangesResponseAssertions<T>(response);
+        }
+    }
+
+    public class DatabaseResponseAssertions
+    {
+        protected readonly DatabaseResponse Response;
+
+        [DebuggerStepThrough]
+        public DatabaseResponseAssertions(DatabaseResponse response)
+        {
+            Response = response;
+        }
+
+        public void Be202Post()
+        {
+            Response.RequestMethod.Should().Be(HttpMethod.Post);
+            Response.IsSuccess.Should().BeTrue();
+            Response.StatusCode.Should().Be(HttpStatusCode.Accepted);
+            Response.Error.Should().BeNull();
+            Response.Reason.Should().BeNull();
         }
     }
 

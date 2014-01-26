@@ -100,6 +100,7 @@
     <Compile Include="Net\JsonContent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requests\BulkRequest.cs" />
+    <Compile Include="Requests\CompactDatabaseRequest.cs" />
     <Compile Include="Requests\Configurators\QueryViewRequestConfigurator.cs" />
     <Compile Include="Requests\CopyDocumentRequest.cs" />
     <Compile Include="Requests\DeleteAttachmentRequest.cs" />
@@ -108,7 +109,9 @@
     <Compile Include="Requests\DocumentExistsRequest.cs" />
     <Compile Include="Requests\Factories\AttachmentHttpRequestFactoryBase.cs" />
     <Compile Include="Requests\Factories\BulkHttpRequestFactory.cs" />
+    <Compile Include="Requests\Factories\CompactDatabaseHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\CopyDocumentHttpRequestFactory.cs" />
+    <Compile Include="Requests\Factories\DatabaseHttpRequestFactoryBase.cs" />
     <Compile Include="Requests\Factories\DeleteAttachmentHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\DeleteDocumentHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\DeleteEntityHttpRequestFactory.cs" />
