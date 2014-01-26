@@ -2,8 +2,8 @@
 using FluentAssertions;
 using MyCouch.Testing;
 using MyCouch.Testing.TestData;
-using Xunit;
 using MyCouch.Requests;
+using Xunit;
 
 namespace MyCouch.IntegrationTests.ClientTests
 {
