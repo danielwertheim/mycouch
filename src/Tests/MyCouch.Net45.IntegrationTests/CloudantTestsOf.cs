@@ -13,15 +13,20 @@ namespace MyCouch.IntegrationTests
         protected CloudantTestsOf()
         {
             Client = IntegrationTestsRuntime.CreateCloudantClient();
+            CleanDb();
         }
 
         public virtual void Dispose()
         {
-            if (!(this is IPreserveStatePerFixture))
-                Client.ClearAllDocuments();
-
+            CleanDb();
             Client.Dispose();
             Client = null;
+        }
+
+        protected void CleanDb()
+        {
+            if (!(this is IPreserveStatePerFixture))
+                Client.ClearAllDocuments();
         }
     }
 }

@@ -20,24 +20,6 @@ namespace MyCouch.IntegrationTests
                 NormalClientEnvironment = GetTestEnvironment(c, "normal");
                 CloudantClientEnvironment = GetTestEnvironment(c, "cloudant");
             }
-
-            if (NormalClientEnvironment != null)
-            {
-                using (var client = CreateNormalClient())
-                {
-                    //client.Database.PutAsync().Wait();
-                    client.ClearAllDocuments();
-                }
-            }
-
-            if (CloudantClientEnvironment != null)
-            {
-                using (var client = CreateCloudantClient())
-                {
-                    //client.Database.PutAsync().Wait();
-                    client.ClearAllDocuments();
-                }
-            }
         }
 
         private static TestEnvironment GetTestEnvironment(HttpClient client, string envName)
