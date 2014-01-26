@@ -20,6 +20,7 @@ deploy/builds
 #env
 env/data/*
 !env/data/normal.json
+!env/data/temp.json
 
 # misc
 *~
