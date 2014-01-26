@@ -9,11 +9,14 @@ using Xunit;
 
 namespace MyCouch.IntegrationTests.ClientTests
 {
-    public class ViewsTests : ClientTestsOf<IViews>, IPreserveStatePerFixture, IUseFixture<ViewsFixture>
+    public class ViewsTests :
+        ClientTestsOf<IViews>,
+        IPreserveStatePerFixture,
+        IUseFixture<ViewsFixture>
     {
         protected Artist[] Artists { get; set; }
 
-        protected override void OnTestInit()
+        public ViewsTests()
         {
             SUT = Client.Views;
         }

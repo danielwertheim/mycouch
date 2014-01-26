@@ -1,27 +1,26 @@
-﻿using MyCouch.IntegrationTests.TestFixtures;
+﻿using System;
 using MyCouch.Testing;
-using Xunit;
 
 namespace MyCouch.IntegrationTests
 {
-    public abstract class ClientTestsOf<T> : TestsOf<T>, IUseFixture<ClientTestsFixture> where T : class
+    public abstract class ClientTestsOf<T> :
+        TestsOf<T>,
+        IDisposable where T : class
     {
         protected IMyCouchClient Client { get; set; }
 
-        protected abstract void OnTestInit();
-
-        public void SetFixture(ClientTestsFixture data)
+        protected ClientTestsOf()
         {
-            Client = data.Client;
-            OnTestInit();
+            Client = IntegrationTestsRuntime.CreateNormalClient();
         }
 
-        public override void Dispose()
+        public virtual void Dispose()
         {
-            base.Dispose();
-
             if (!(this is IPreserveStatePerFixture))
                 Client.ClearAllDocuments();
+
+            Client.Dispose();
+            Client = null;
         }
     }
 }

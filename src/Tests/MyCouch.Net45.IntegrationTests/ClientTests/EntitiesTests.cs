@@ -8,7 +8,7 @@ namespace MyCouch.IntegrationTests.ClientTests
 {
     public class EntitiesTests : ClientTestsOf<IEntities>
     {
-        protected override void OnTestInit()
+        public EntitiesTests()
         {
             SUT = Client.Entities;
         }

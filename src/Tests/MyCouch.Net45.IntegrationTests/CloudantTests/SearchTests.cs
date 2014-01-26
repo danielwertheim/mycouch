@@ -10,11 +10,14 @@ using Xunit;
 
 namespace MyCouch.IntegrationTests.CloudantTests
 {
-    public class SearchTests : CloudantTestsOf<ISearches>, IPreserveStatePerFixture, IUseFixture<SearchFixture>
+    public class SearchTests :
+        CloudantTestsOf<ISearches>,
+        IPreserveStatePerFixture,
+        IUseFixture<SearchFixture>
     {
         protected Animal[] Animals { get; set; }
 
-        protected override void OnTestInit()
+        public SearchTests()
         {
             SUT = Client.Searches;
         }

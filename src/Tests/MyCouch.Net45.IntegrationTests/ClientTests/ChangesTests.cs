@@ -14,7 +14,7 @@ namespace MyCouch.IntegrationTests.ClientTests
     {
         protected readonly Func<string, int> StringToNumeric = s => int.Parse(new string(s.TakeWhile(Char.IsDigit).ToArray()));
 
-        protected override void OnTestInit()
+        public ChangesTests()
         {
             SUT = Client.Changes;
         }
