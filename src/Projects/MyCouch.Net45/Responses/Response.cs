@@ -31,14 +31,15 @@ namespace MyCouch.Responses
 
         public virtual string ToStringDebugVersion()
         {
-            return string.Format("RequestUri: {1}{0}RequestMethod: {2}{0}Status: {3}({4}){0}Error:{5}{0}Reason: {6}",
+            return string.Format("RequestUri: {1}{0}RequestMethod: {2}{0}Status: {3}({4}){0}Error:{5}{0}Reason: {6}{0}ContentType:{7}",
                 Environment.NewLine,
                 RequestUri,
                 RequestMethod,
                 StatusCode,
                 (int)StatusCode,
                 Error ?? "<NULL>",
-                Reason ?? "<NULL>");
+                Reason ?? "<NULL>",
+                ContentType);
         }
     }
 }

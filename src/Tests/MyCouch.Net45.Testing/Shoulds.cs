@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using FluentAssertions;
 using MyCouch.Cloudant.Responses;
+using MyCouch.Net;
 using MyCouch.Responses;
 
 namespace MyCouch.Testing
@@ -78,22 +79,25 @@ namespace MyCouch.Testing
             Response = response;
         }
 
-        public void Be200Delete()
+        public void Be200DeleteWithJson(string content)
         {
-            Response.RequestMethod.Should().Be(HttpMethod.Delete);
-            Response.IsSuccess.Should().BeTrue();
-            Response.StatusCode.Should().Be(HttpStatusCode.OK);
-            Response.Error.Should().BeNull();
-            Response.Reason.Should().BeNull();
+            EnsureJsonResponse(HttpMethod.Delete, HttpStatusCode.OK, content);
         }
 
-        public void Be202Post()
+        public void Be202PostWithJson(string content)
         {
-            Response.RequestMethod.Should().Be(HttpMethod.Post);
+            EnsureJsonResponse(HttpMethod.Post, HttpStatusCode.Accepted, content);
+        }
+
+        private void EnsureJsonResponse(HttpMethod method, HttpStatusCode statusCode, string content)
+        {
+            Response.RequestMethod.Should().Be(method);
             Response.IsSuccess.Should().BeTrue();
-            Response.StatusCode.Should().Be(HttpStatusCode.Accepted);
+            Response.StatusCode.Should().Be(statusCode);
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
+            Response.ContentType.Should().Be(HttpContentTypes.Json);
+            Response.Content.Should().Be(content);
         }
     }
 

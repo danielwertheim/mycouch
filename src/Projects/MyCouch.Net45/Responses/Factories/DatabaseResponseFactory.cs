@@ -1,4 +1,7 @@
-﻿using System.Net.Http;
+﻿using System.IO;
+using System.Net.Http;
+using System.Text;
+using MyCouch.Extensions;
 using MyCouch.Serialization;
 
 namespace MyCouch.Responses.Factories
@@ -14,6 +17,22 @@ namespace MyCouch.Responses.Factories
             return Materialize(new DatabaseResponse(), httpResponse, OnSuccessfulResponse, OnFailedResponse);
         }
 
-        protected virtual void OnSuccessfulResponse(DatabaseResponse result, HttpResponseMessage response) { }
+        protected virtual async void OnSuccessfulResponse(DatabaseResponse response, HttpResponseMessage httpResponse)
+        {
+            using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
+            {
+                var sb = new StringBuilder();
+
+                using (var reader = new StreamReader(content, MyCouchRuntime.DefaultEncoding))
+                {
+                    while (!reader.EndOfStream)
+                        sb.Append(reader.ReadLine());
+                }
+
+                response.Content = sb.ToString();
+
+                sb.Clear();
+            }
+        }
     }
 }

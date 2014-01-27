@@ -17,7 +17,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         {
             var response = SUT.DeleteAsync().Result;
 
-            response.Should().Be200Delete();
+            response.Should().Be200DeleteWithJson("{\"ok\":true}");
         }
 
         [Fact]
@@ -25,7 +25,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         {
             var response = SUT.CompactAsync().Result;
 
-            response.Should().Be202Post();
+            response.Should().Be202PostWithJson("{\"ok\":true}");
         }
     }
 }
