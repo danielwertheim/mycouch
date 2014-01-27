@@ -19,6 +19,7 @@ namespace MyCouch.Requests
             Ensure.That(rev, "rev").IsNotNullOrWhiteSpace();
 
             Rev = rev;
+            Batch = false;
         }
 
         public PutDocumentRequest(string id, string content)
