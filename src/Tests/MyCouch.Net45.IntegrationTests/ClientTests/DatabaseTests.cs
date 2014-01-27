@@ -13,6 +13,14 @@ namespace MyCouch.IntegrationTests.ClientTests
         }
 
         [Fact]
+        public void When_Get_of_existing_db_The_response_should_be_200()
+        {
+            var response = SUT.GetAsync().Result;
+
+            response.Should().Be200GetWithNonEmptyJson();
+        }
+
+        [Fact]
         public void When_Delete_of_existing_db_The_response_should_be_200()
         {
             var response = SUT.DeleteAsync().Result;

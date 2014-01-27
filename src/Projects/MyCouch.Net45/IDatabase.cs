@@ -10,6 +10,18 @@ namespace MyCouch
     public interface IDatabase
     {
         /// <summary>
+        /// Gets information about the database.
+        /// </summary>
+        /// <returns></returns>
+        Task<DatabaseResponse> GetAsync();
+
+        /// <summary>
+        /// Gets information about the database.
+        /// </summary>
+        /// <returns></returns>
+        Task<DatabaseResponse> GetAsync(GetDatabaseRequest request);
+
+        /// <summary>
         /// Creates the database, but only if it does not already exist.
         /// </summary>
         Task<DatabaseResponse> PutAsync();

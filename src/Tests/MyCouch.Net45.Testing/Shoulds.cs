@@ -79,6 +79,12 @@ namespace MyCouch.Testing
             Response = response;
         }
 
+        public void Be200GetWithNonEmptyJson()
+        {
+            EnsureJsonResponse(HttpMethod.Get, HttpStatusCode.OK);
+            Response.Content.Should().NotBeNullOrWhiteSpace();
+        }
+
         public void Be200DeleteWithJson(string content)
         {
             EnsureJsonResponse(HttpMethod.Delete, HttpStatusCode.OK, content);
@@ -89,7 +95,7 @@ namespace MyCouch.Testing
             EnsureJsonResponse(HttpMethod.Post, HttpStatusCode.Accepted, content);
         }
 
-        private void EnsureJsonResponse(HttpMethod method, HttpStatusCode statusCode, string content)
+        private void EnsureJsonResponse(HttpMethod method, HttpStatusCode statusCode)
         {
             Response.RequestMethod.Should().Be(method);
             Response.IsSuccess.Should().BeTrue();
@@ -97,6 +103,11 @@ namespace MyCouch.Testing
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
             Response.ContentType.Should().Be(HttpContentTypes.Json);
+        }
+
+        private void EnsureJsonResponse(HttpMethod method, HttpStatusCode statusCode, string content)
+        {
+            EnsureJsonResponse(method, statusCode);
             Response.Content.Should().Be(content);
         }
     }

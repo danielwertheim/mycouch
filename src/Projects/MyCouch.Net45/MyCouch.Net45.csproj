@@ -121,6 +121,7 @@
     <Compile Include="Requests\Factories\EntityHttpRequestFactoryBase.cs" />
     <Compile Include="Requests\Factories\GetAttachmentHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\GetChangesHttpRequestFactory.cs" />
+    <Compile Include="Requests\Factories\GetDatabaseHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\GetDocumentHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\GetEntityHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\HttpRequestFactoryBase.cs" />
@@ -135,6 +136,7 @@
     <Compile Include="Requests\Factories\ViewCleanupHttpRequestFactory.cs" />
     <Compile Include="Requests\GetAttachmentRequest.cs" />
     <Compile Include="Requests\GetChangesRequest.cs" />
+    <Compile Include="Requests\GetDatabaseRequest.cs" />
     <Compile Include="Requests\GetDocumentRequest.cs" />
     <Compile Include="Requests\GetEntityRequest.cs" />
     <Compile Include="Requests\PostDocumentRequest.cs" />

@@ -8,6 +8,11 @@ namespace MyCouch
 {
     public static class ClientExecuteExtensions
     {
+        public static Task<DatabaseResponse> PerformAsync(this IMyCouchClient client, GetDatabaseRequest request)
+        {
+            return client.Database.GetAsync(request);
+        }
+
         public static Task<DatabaseResponse> PerformAsync(this IMyCouchClient client, PutDatabaseRequest request)
         {
             return client.Database.PutAsync(request);

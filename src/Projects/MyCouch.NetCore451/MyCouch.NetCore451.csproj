@@ -314,6 +314,9 @@
     <Compile Include="..\MyCouch.Net45\requests\factories\GetChangesHttpRequestFactory.cs">
       <Link>Requests\Factories\GetChangesHttpRequestFactory.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Requests\Factories\GetDatabaseHttpRequestFactory.cs">
+      <Link>Requests\Factories\GetDatabaseHttpRequestFactory.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\Factories\GetDocumentHttpRequestFactory.cs">
       <Link>Requests\Factories\GetDocumentHttpRequestFactory.cs</Link>
     </Compile>
@@ -355,6 +358,9 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\requests\GetChangesRequest.cs">
       <Link>Requests\GetChangesRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Requests\GetDatabaseRequest.cs">
+      <Link>Requests\GetDatabaseRequest.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\requests\GetDocumentRequest.cs">
       <Link>Requests\GetDocumentRequest.cs</Link>

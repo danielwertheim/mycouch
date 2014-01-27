@@ -14,6 +14,7 @@ namespace MyCouch.Contexts
     public class Database : ApiContextBase, IDatabase
     {
         protected DatabaseResponseFactory DatabaseResponseFactory { get; set; }
+        protected GetDatabaseHttpRequestFactory GetDatabaseHttpRequestFactory { get; set; }
         protected PutDatabaseHttpRequestFactory PutDatabaseHttpRequestFactory { get; set; }
         protected DeleteDatabaseHttpRequestFactory DeleteDatabaseHttpRequestFactory { get; set; }
         protected CompactDatabaseHttpRequestFactory CompactDatabaseHttpRequestFactory { get; set; }
@@ -24,10 +25,29 @@ namespace MyCouch.Contexts
             Ensure.That(serializer, "serializer").IsNotNull();
 
             DatabaseResponseFactory = new DatabaseResponseFactory(serializer);
+            GetDatabaseHttpRequestFactory = new GetDatabaseHttpRequestFactory(Connection);
             PutDatabaseHttpRequestFactory = new PutDatabaseHttpRequestFactory(Connection);
             DeleteDatabaseHttpRequestFactory = new DeleteDatabaseHttpRequestFactory(Connection);
             CompactDatabaseHttpRequestFactory = new CompactDatabaseHttpRequestFactory(Connection);
             ViewCleanupHttpRequestFactory = new ViewCleanupHttpRequestFactory(Connection);
+        }
+
+        public virtual Task<DatabaseResponse> GetAsync()
+        {
+            return GetAsync(new GetDatabaseRequest());
+        }
+
+        public virtual async Task<DatabaseResponse> GetAsync(GetDatabaseRequest request)
+        {
+            Ensure.That(request, "request").IsNotNull();
+
+            using (var httpRequest = CreateHttpRequest(request))
+            {
+                using (var res = await SendAsync(httpRequest).ForAwait())
+                {
+                    return ProcessResponse(res);
+                }
+            }
         }
 
         public virtual Task<DatabaseResponse> PutAsync()
@@ -100,6 +120,11 @@ namespace MyCouch.Contexts
                     return ProcessResponse(res);
                 }
             }
+        }
+
+        protected virtual HttpRequest CreateHttpRequest(GetDatabaseRequest request)
+        {
+            return GetDatabaseHttpRequestFactory.Create(request);
         }
 
         protected virtual HttpRequest CreateHttpRequest(PutDatabaseRequest request)
