@@ -8,6 +8,26 @@ namespace MyCouch
 {
     public static class ClientExecuteExtensions
     {
+        public static Task<DatabaseResponse> PerformAsync(this IMyCouchClient client, PutDatabaseRequest request)
+        {
+            return client.Database.PutAsync(request);
+        }
+
+        public static Task<DatabaseResponse> PerformAsync(this IMyCouchClient client, DeleteDatabaseRequest request)
+        {
+            return client.Database.DeleteAsync(request);
+        }
+
+        public static Task<DatabaseResponse> PerformAsync(this IMyCouchClient client, CompactDatabaseRequest request)
+        {
+            return client.Database.CompactAsync(request);
+        }
+
+        public static Task<DatabaseResponse> PerformAsync(this IMyCouchClient client, ViewCleanupRequest request)
+        {
+            return client.Database.ViewCleanup(request);
+        }
+
         public static Task<ChangesResponse> PerformAsync(this IMyCouchClient client, GetChangesRequest request)
         {
             return client.Changes.GetAsync(request);

@@ -30,44 +30,72 @@ namespace MyCouch.Contexts
             ViewCleanupHttpRequestFactory = new ViewCleanupHttpRequestFactory(Connection);
         }
 
-        public virtual async Task<DatabaseResponse> PutAsync()
+        public virtual Task<DatabaseResponse> PutAsync()
         {
-            using (var req = CreateHttpRequest(new PutDatabaseRequest()))
+            return PutAsync(new PutDatabaseRequest());
+        }
+
+        public virtual async Task<DatabaseResponse> PutAsync(PutDatabaseRequest request)
+        {
+            Ensure.That(request, "request").IsNotNull();
+
+            using (var httpRequest = CreateHttpRequest(request))
             {
-                using (var res = await SendAsync(req).ForAwait())
+                using (var res = await SendAsync(httpRequest).ForAwait())
                 {
                     return ProcessResponse(res);
                 }
             }
         }
 
-        public virtual async Task<DatabaseResponse> DeleteAsync()
+        public virtual Task<DatabaseResponse> DeleteAsync()
         {
-            using (var req = CreateHttpRequest(new DeleteDatabaseRequest()))
+            return DeleteAsync(new DeleteDatabaseRequest());
+        }
+
+        public virtual async Task<DatabaseResponse> DeleteAsync(DeleteDatabaseRequest request)
+        {
+            Ensure.That(request, "request").IsNotNull();
+
+            using (var httpRequest = CreateHttpRequest(request))
             {
-                using (var res = await SendAsync(req).ForAwait())
+                using (var res = await SendAsync(httpRequest).ForAwait())
                 {
                     return ProcessResponse(res);
                 }
             }
         }
 
-        public virtual async Task<DatabaseResponse> CompactAsync()
+        public virtual Task<DatabaseResponse> CompactAsync()
         {
-            using (var req = CreateHttpRequest(new CompactDatabaseRequest()))
+            return CompactAsync(new CompactDatabaseRequest());
+        }
+
+        public virtual async Task<DatabaseResponse> CompactAsync(CompactDatabaseRequest request)
+        {
+            Ensure.That(request, "request").IsNotNull();
+
+            using (var httpRequest = CreateHttpRequest(request))
             {
-                using (var res = await SendAsync(req).ForAwait())
+                using (var res = await SendAsync(httpRequest).ForAwait())
                 {
                     return ProcessResponse(res);
                 }
             }
         }
 
-        public virtual async Task<DatabaseResponse> ViewCleanup()
+        public virtual Task<DatabaseResponse> ViewCleanup()
         {
-            using (var req = CreateHttpRequest(new ViewCleanupRequest()))
+            return ViewCleanup(new ViewCleanupRequest());
+        }
+
+        public virtual async Task<DatabaseResponse> ViewCleanup(ViewCleanupRequest request)
+        {
+            Ensure.That(request, "request").IsNotNull();
+
+            using (var httpRequest = CreateHttpRequest(request))
             {
-                using (var res = await SendAsync(req).ForAwait())
+                using (var res = await SendAsync(httpRequest).ForAwait())
                 {
                     return ProcessResponse(res);
                 }
