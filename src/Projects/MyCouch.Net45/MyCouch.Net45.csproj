@@ -112,7 +112,6 @@
     <Compile Include="Requests\Factories\BulkHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\CompactDatabaseHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\CopyDocumentHttpRequestFactory.cs" />
-    <Compile Include="Requests\Factories\DatabaseHttpRequestFactoryBase.cs" />
     <Compile Include="Requests\Factories\DeleteAttachmentHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\DeleteDatabaseHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\DeleteDocumentHttpRequestFactory.cs" />

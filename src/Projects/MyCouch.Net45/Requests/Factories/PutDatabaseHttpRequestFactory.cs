@@ -3,7 +3,7 @@ using MyCouch.Net;
 
 namespace MyCouch.Requests.Factories
 {
-    public class PutDatabaseHttpRequestFactory : DatabaseHttpRequestFactoryBase
+    public class PutDatabaseHttpRequestFactory : HttpRequestFactoryBase
     {
         public PutDatabaseHttpRequestFactory(IConnection connection) : base(connection) { }
 
@@ -12,6 +12,11 @@ namespace MyCouch.Requests.Factories
             var httpRequest = CreateFor<PutDatabaseRequest>(HttpMethod.Put, GenerateRequestUrl());
 
             return httpRequest;
+        }
+
+        protected virtual string GenerateRequestUrl()
+        {
+            return Connection.Address.ToString();
         }
     }
 }

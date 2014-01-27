@@ -3,7 +3,7 @@ using MyCouch.Net;
 
 namespace MyCouch.Requests.Factories
 {
-    public class DeleteDatabaseHttpRequestFactory: DatabaseHttpRequestFactoryBase
+    public class DeleteDatabaseHttpRequestFactory : HttpRequestFactoryBase
     {
         public DeleteDatabaseHttpRequestFactory(IConnection connection) : base(connection) { }
 
@@ -12,6 +12,11 @@ namespace MyCouch.Requests.Factories
             var httpRequest = CreateFor<DeleteDatabaseRequest>(HttpMethod.Delete, GenerateRequestUrl());
 
             return httpRequest;
+        }
+
+        protected virtual string GenerateRequestUrl()
+        {
+            return Connection.Address.ToString();
         }
     }
 }

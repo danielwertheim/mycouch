@@ -287,9 +287,6 @@
     <Compile Include="..\MyCouch.Net45\Requests\Factories\CopyDocumentHttpRequestFactory.cs">
       <Link>Requests\Factories\CopyDocumentHttpRequestFactory.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\Requests\Factories\DatabaseHttpRequestFactoryBase.cs">
-      <Link>Requests\Factories\DatabaseHttpRequestFactoryBase.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\Factories\DeleteAttachmentHttpRequestFactory.cs">
       <Link>Requests\Factories\DeleteAttachmentHttpRequestFactory.cs</Link>
     </Compile>

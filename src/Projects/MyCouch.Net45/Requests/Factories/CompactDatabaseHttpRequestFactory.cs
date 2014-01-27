@@ -3,7 +3,7 @@ using MyCouch.Net;
 
 namespace MyCouch.Requests.Factories
 {
-    public class CompactDatabaseHttpRequestFactory : DatabaseHttpRequestFactoryBase
+    public class CompactDatabaseHttpRequestFactory : HttpRequestFactoryBase
     {
         public CompactDatabaseHttpRequestFactory(IConnection connection) : base(connection) { }
 
@@ -16,9 +16,9 @@ namespace MyCouch.Requests.Factories
             return httpRequest;
         }
 
-        protected override string GenerateRequestUrl()
+        protected virtual string GenerateRequestUrl()
         {
-            return string.Concat(base.GenerateRequestUrl(), "/_compact");
+            return string.Concat(Connection.Address, "/_compact");
         }
     }
 }

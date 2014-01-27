@@ -3,7 +3,7 @@ using MyCouch.Net;
 
 namespace MyCouch.Requests.Factories
 {
-    public class ViewCleanupHttpRequestFactory : DatabaseHttpRequestFactoryBase
+    public class ViewCleanupHttpRequestFactory : HttpRequestFactoryBase
     {
         public ViewCleanupHttpRequestFactory(IConnection connection) : base(connection) { }
 
@@ -16,9 +16,9 @@ namespace MyCouch.Requests.Factories
             return httpRequest;
         }
 
-        protected override string GenerateRequestUrl()
+        protected virtual string GenerateRequestUrl()
         {
-            return string.Concat(base.GenerateRequestUrl(), "/_view_cleanup");
+            return string.Concat(Connection.Address, "/_view_cleanup");
         }
     }
 }
