@@ -27,5 +27,13 @@ namespace MyCouch.IntegrationTests.ClientTests
 
             response.Should().Be202PostWithJson("{\"ok\":true}");
         }
+
+        [Fact]
+        public void When_ViewCleanup_and_db_exists_The_response_be()
+        {
+            var response = SUT.ViewCleanup().Result;
+
+            response.Should().Be202PostWithJson("{\"ok\":true}");
+        }
     }
 }

@@ -23,5 +23,12 @@ namespace MyCouch
         /// </summary>
         /// <returns></returns>
         Task<DatabaseResponse> CompactAsync();
+
+        /// <summary>
+        /// Removes view index files that are no longer required by CouchDB as a result of changed views within design documents.
+        /// POST /{db}/_view_cleanup
+        /// </summary>
+        /// <returns></returns>
+        Task<DatabaseResponse> ViewCleanup();
     }
 }

@@ -133,6 +133,7 @@
     <Compile Include="Requests\Factories\PutEntityHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\QueryViewHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\ReplaceDocumentHttpRequestFactory.cs" />
+    <Compile Include="Requests\Factories\ViewCleanupHttpRequestFactory.cs" />
     <Compile Include="Requests\GetAttachmentRequest.cs" />
     <Compile Include="Requests\GetChangesRequest.cs" />
     <Compile Include="Requests\GetDocumentRequest.cs" />
@@ -147,6 +148,7 @@
     <Compile Include="Requests\QueryViewRequest.cs" />
     <Compile Include="Requests\ReplaceDocumentRequest.cs" />
     <Compile Include="Requests\Request.cs" />
+    <Compile Include="Requests\ViewCleanupRequest.cs" />
     <Compile Include="Responses\AttachmentResponse.cs" />
     <Compile Include="Responses\BulkResponse.cs" />
     <Compile Include="Responses\ChangesResponse.cs" />
