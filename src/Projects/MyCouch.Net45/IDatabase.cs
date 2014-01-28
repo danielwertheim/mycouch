@@ -22,6 +22,23 @@ namespace MyCouch
         Task<DatabaseResponse> GetAsync(GetDatabaseRequest request);
 
         /// <summary>
+        /// Returns the HTTP Headers containing a minimal amount of information
+        /// about the specified database. Since the response body is empty,
+        /// using the HEAD method is a lightweight way to check if the database
+        /// exists already or not.
+        /// </summary>
+        /// <returns></returns>
+        Task<DatabaseResponse> HeadAsync();
+
+        /// <summary>
+        /// Returns the HTTP Headers containing a minimal amount of information
+        /// about the specified database. Since the response body is empty,
+        /// using the HEAD method is a lightweight way to check if the database
+        /// exists already or not.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        Task<DatabaseResponse> HeadAsync(HeadDatabaseRequest request);
         /// Creates the database, but only if it does not already exist.
         /// </summary>
         Task<DatabaseResponse> PutAsync();

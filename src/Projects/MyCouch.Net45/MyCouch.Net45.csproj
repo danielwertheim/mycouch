@@ -103,6 +103,7 @@
     <Compile Include="Requests\CompactDatabaseRequest.cs" />
     <Compile Include="Requests\Configurators\QueryViewRequestConfigurator.cs" />
     <Compile Include="Requests\CopyDocumentRequest.cs" />
+    <Compile Include="Requests\HeadDatabaseRequest.cs" />
     <Compile Include="Requests\DeleteAttachmentRequest.cs" />
     <Compile Include="Requests\DeleteDatabaseRequest.cs" />
     <Compile Include="Requests\DeleteDocumentRequest.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Requests\Factories\BulkHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\CompactDatabaseHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\CopyDocumentHttpRequestFactory.cs" />
+    <Compile Include="Requests\Factories\HeadDatabaseHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\DeleteAttachmentHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\DeleteDatabaseHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\DeleteDocumentHttpRequestFactory.cs" />
@@ -153,6 +155,7 @@
     <Compile Include="Responses\AttachmentResponse.cs" />
     <Compile Include="Responses\BulkResponse.cs" />
     <Compile Include="Responses\ChangesResponse.cs" />
+    <Compile Include="Responses\ContentResponse.cs" />
     <Compile Include="Responses\ContinuousChangesResponse.cs" />
     <Compile Include="Responses\DatabaseResponse.cs" />
     <Compile Include="Responses\DocumentHeaderResponse.cs" />

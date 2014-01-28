@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System.Net;
+using System.Net.Http;
 using MyCouch.Testing;
 using Xunit;
 
@@ -13,11 +14,19 @@ namespace MyCouch.IntegrationTests.ClientTests
         }
 
         [Fact]
+        public void When_Head_of_existing_db_The_response_should_be_200()
+        {
+            var response = SUT.HeadAsync().Result;
+
+            response.Should().Be(HttpMethod.Head, HttpStatusCode.OK);
+        }
+
+        [Fact]
         public void When_Get_of_existing_db_The_response_should_be_200()
         {
             var response = SUT.GetAsync().Result;
 
-            response.Should().Be200GetWithNonEmptyJson();
+            response.Should().BeAnyJson(HttpMethod.Get, HttpStatusCode.OK);
         }
 
         [Fact]
@@ -25,7 +34,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         {
             var response = SUT.DeleteAsync().Result;
 
-            response.Should().Be200DeleteWithJson("{\"ok\":true}");
+            response.Should().BeOkJson(HttpMethod.Delete, HttpStatusCode.OK);
         }
 
         [Fact]
@@ -33,7 +42,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         {
             var response = SUT.CompactAsync().Result;
 
-            response.Should().Be202PostWithJson("{\"ok\":true}");
+            response.Should().BeOkJson(HttpMethod.Post, HttpStatusCode.Accepted);
         }
 
         [Fact]
@@ -41,7 +50,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         {
             var response = SUT.ViewCleanup().Result;
 
-            response.Should().Be202PostWithJson("{\"ok\":true}");
+            response.Should().BeOkJson(HttpMethod.Post, HttpStatusCode.Accepted);
         }
     }
 }

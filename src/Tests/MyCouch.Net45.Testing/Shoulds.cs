@@ -69,47 +69,55 @@ namespace MyCouch.Testing
         }
     }
 
-    public class DatabaseResponseAssertions
+    public abstract class ResponseAssertions<T> where T : Response
     {
-        protected readonly DatabaseResponse Response;
+        protected readonly T Response;
 
         [DebuggerStepThrough]
-        public DatabaseResponseAssertions(DatabaseResponse response)
+        protected ResponseAssertions(T response)
         {
             Response = response;
         }
 
-        public void Be200GetWithNonEmptyJson()
-        {
-            EnsureJsonResponse(HttpMethod.Get, HttpStatusCode.OK);
-            Response.Content.Should().NotBeNullOrWhiteSpace();
-        }
-
-        public void Be200DeleteWithJson(string content)
-        {
-            EnsureJsonResponse(HttpMethod.Delete, HttpStatusCode.OK, content);
-        }
-
-        public void Be202PostWithJson(string content)
-        {
-            EnsureJsonResponse(HttpMethod.Post, HttpStatusCode.Accepted, content);
-        }
-
-        private void EnsureJsonResponse(HttpMethod method, HttpStatusCode statusCode)
+        public virtual void Be(HttpMethod method, HttpStatusCode statusCode)
         {
             Response.RequestMethod.Should().Be(method);
             Response.IsSuccess.Should().BeTrue();
             Response.StatusCode.Should().Be(statusCode);
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
-            Response.ContentType.Should().Be(HttpContentTypes.Json);
         }
+    }
 
-        private void EnsureJsonResponse(HttpMethod method, HttpStatusCode statusCode, string content)
+    public abstract class ContentResponseAssertions<T> : ResponseAssertions<T> where T : ContentResponse
+    {
+        [DebuggerStepThrough]
+        protected ContentResponseAssertions(T response) : base(response) { }
+
+        public void BeJson(HttpMethod method, HttpStatusCode statusCode, string content)
         {
-            EnsureJsonResponse(method, statusCode);
+            Be(method, statusCode);
+            Response.ContentType.Should().Be(HttpContentTypes.Json);
             Response.Content.Should().Be(content);
         }
+
+        public void BeAnyJson(HttpMethod method, HttpStatusCode statusCode = HttpStatusCode.OK)
+        {
+            Be(method, statusCode);
+            Response.ContentType.Should().Be(HttpContentTypes.Json);
+            Response.Content.Should().NotBeNullOrWhiteSpace();
+        }
+
+        public void BeOkJson(HttpMethod method, HttpStatusCode statusCode = HttpStatusCode.OK)
+        {
+            BeJson(method, statusCode, "{\"ok\":true}");
+        }
+    }
+
+    public class DatabaseResponseAssertions : ContentResponseAssertions<DatabaseResponse>
+    {
+        [DebuggerStepThrough]
+        public DatabaseResponseAssertions(DatabaseResponse response) : base(response) { }
     }
 
     public class SearcIndexResponseAssertions : SearcIndexResponseAssertions<string>

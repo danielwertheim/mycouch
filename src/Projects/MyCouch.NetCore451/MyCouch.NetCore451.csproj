@@ -323,6 +323,9 @@
     <Compile Include="..\MyCouch.Net45\Requests\Factories\GetEntityHttpRequestFactory.cs">
       <Link>Requests\Factories\GetEntityHttpRequestFactory.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Requests\Factories\HeadDatabaseHttpRequestFactory.cs">
+      <Link>Requests\Factories\HeadDatabaseHttpRequestFactory.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\requests\factories\HttpRequestFactoryBase.cs">
       <Link>Requests\Factories\HttpRequestFactoryBase.cs</Link>
     </Compile>
@@ -368,6 +371,9 @@
     <Compile Include="..\MyCouch.Net45\requests\GetEntityRequest.cs">
       <Link>Requests\GetEntityRequest.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Requests\HeadDatabaseRequest.cs">
+      <Link>Requests\HeadDatabaseRequest.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\requests\PostDocumentRequest.cs">
       <Link>Requests\PostDocumentRequest.cs</Link>
     </Compile>
@@ -409,6 +415,9 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\Responses\ChangesResponse.cs">
       <Link>Responses\ChangesResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\ContentResponse.cs">
+      <Link>Responses\ContentResponse.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Responses\ContinuousChangesResponse.cs">
       <Link>Responses\ContinuousChangesResponse.cs</Link>
