@@ -13,9 +13,9 @@ namespace MyCouch.Testing
     [DebuggerStepThrough]
     public static class Shoulds
     {
-        public static DatabaseResponseAssertions Should(this DatabaseResponse response)
+        public static ContentResponseAssertions Should(this ContentResponse response)
         {
-            return new DatabaseResponseAssertions(response);
+            return new ContentResponseAssertions(response);
         }
 
         public static SearcIndexResponseAssertions Should(this SearchIndexResponse response)
@@ -89,6 +89,12 @@ namespace MyCouch.Testing
         }
     }
 
+    public class ContentResponseAssertions : ContentResponseAssertions<ContentResponse>
+    {
+        [DebuggerStepThrough]
+        public ContentResponseAssertions(ContentResponse response) : base(response) { }
+    }
+
     public abstract class ContentResponseAssertions<T> : ResponseAssertions<T> where T : ContentResponse
     {
         [DebuggerStepThrough]
@@ -112,12 +118,6 @@ namespace MyCouch.Testing
         {
             BeJson(method, statusCode, "{\"ok\":true}");
         }
-    }
-
-    public class DatabaseResponseAssertions : ContentResponseAssertions<DatabaseResponse>
-    {
-        [DebuggerStepThrough]
-        public DatabaseResponseAssertions(DatabaseResponse response) : base(response) { }
     }
 
     public class SearcIndexResponseAssertions : SearcIndexResponseAssertions<string>

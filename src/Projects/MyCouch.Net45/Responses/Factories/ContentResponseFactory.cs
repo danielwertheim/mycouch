@@ -6,18 +6,18 @@ using MyCouch.Serialization;
 
 namespace MyCouch.Responses.Factories
 {
-    public class DatabaseResponseFactory : ResponseFactoryBase
+    public class ContentResponseFactory : ResponseFactoryBase
     {
-        public DatabaseResponseFactory(ISerializer serializer)
+        public ContentResponseFactory(ISerializer serializer)
             : base(serializer)
         { }
 
-        public virtual DatabaseResponse Create(HttpResponseMessage httpResponse)
+        public virtual ContentResponse Create(HttpResponseMessage httpResponse)
         {
-            return Materialize(new DatabaseResponse(), httpResponse, OnSuccessfulResponse, OnFailedResponse);
+            return Materialize(new ContentResponse(), httpResponse, OnSuccessfulResponse, OnFailedResponse);
         }
 
-        protected virtual async void OnSuccessfulResponse(DatabaseResponse response, HttpResponseMessage httpResponse)
+        protected virtual async void OnSuccessfulResponse(ContentResponse response, HttpResponseMessage httpResponse)
         {
             using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
             {

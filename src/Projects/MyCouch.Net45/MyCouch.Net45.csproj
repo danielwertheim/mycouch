@@ -157,7 +157,6 @@
     <Compile Include="Responses\ChangesResponse.cs" />
     <Compile Include="Responses\ContentResponse.cs" />
     <Compile Include="Responses\ContinuousChangesResponse.cs" />
-    <Compile Include="Responses\DatabaseResponse.cs" />
     <Compile Include="Responses\DocumentHeaderResponse.cs" />
     <Compile Include="Responses\DocumentResponse.cs" />
     <Compile Include="Responses\EntityResponse.cs" />
@@ -165,7 +164,7 @@
     <Compile Include="Responses\Factories\BulkResponseFactory.cs" />
     <Compile Include="Responses\Factories\ChangesResponseFactory.cs" />
     <Compile Include="Responses\Factories\ContinuousChangesResponseFactory.cs" />
-    <Compile Include="Responses\Factories\DatabaseResponseFactory.cs" />
+    <Compile Include="Responses\Factories\ContentResponseFactory.cs" />
     <Compile Include="Responses\Factories\DocumentHeaderResponseFactory.cs" />
     <Compile Include="Responses\Factories\DocumentResponseFactory.cs" />
     <Compile Include="Responses\Factories\EntityResponseFactory.cs" />

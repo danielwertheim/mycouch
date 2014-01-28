@@ -401,9 +401,6 @@
     <Compile Include="..\MyCouch.Net45\Responses\ContinuousChangesResponse.cs">
       <Link>Responses\ContinuousChangesResponse.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\responses\DatabaseResponse.cs">
-      <Link>Responses\DatabaseResponse.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Net45\responses\DocumentHeaderResponse.cs">
       <Link>Responses\DocumentHeaderResponse.cs</Link>
     </Compile>
@@ -422,11 +419,11 @@
     <Compile Include="..\MyCouch.Net45\Responses\Factories\ChangesResponseFactory.cs">
       <Link>Responses\Factories\ChangesResponseFactory.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\Factories\ContentResponseFactory.cs">
+      <Link>Responses\Factories\ContentResponseFactory.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\Responses\Factories\ContinuousChangesResponseFactory.cs">
       <Link>Responses\Factories\ContinuousChangesResponseFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\responses\factories\DatabaseResponseFactory.cs">
-      <Link>Responses\Factories\DatabaseResponseFactory.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\responses\factories\DocumentHeaderResponseFactory.cs">
       <Link>Responses\Factories\DocumentHeaderResponseFactory.cs</Link>

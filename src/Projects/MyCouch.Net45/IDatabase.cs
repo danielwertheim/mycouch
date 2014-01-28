@@ -13,14 +13,14 @@ namespace MyCouch
         /// Gets information about the database.
         /// </summary>
         /// <returns></returns>
-        Task<DatabaseResponse> GetAsync();
+        Task<ContentResponse> GetAsync();
 
         /// <summary>
         /// Gets information about the database.
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        Task<DatabaseResponse> GetAsync(GetDatabaseRequest request);
+        Task<ContentResponse> GetAsync(GetDatabaseRequest request);
 
         /// <summary>
         /// Returns the HTTP Headers containing a minimal amount of information
@@ -29,7 +29,7 @@ namespace MyCouch
         /// exists already or not.
         /// </summary>
         /// <returns></returns>
-        Task<DatabaseResponse> HeadAsync();
+        Task<ContentResponse> HeadAsync();
 
         /// <summary>
         /// Returns the HTTP Headers containing a minimal amount of information
@@ -39,51 +39,51 @@ namespace MyCouch
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        Task<DatabaseResponse> HeadAsync(HeadDatabaseRequest request);
+        Task<ContentResponse> HeadAsync(HeadDatabaseRequest request);
 
         /// <summary>
         /// Creates the database, but only if it does not already exist.
         /// </summary>
-        Task<DatabaseResponse> PutAsync();
+        Task<ContentResponse> PutAsync();
 
         /// <summary>
         /// Creates the database, but only if it does not already exist.
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        Task<DatabaseResponse> PutAsync(PutDatabaseRequest request);
+        Task<ContentResponse> PutAsync(PutDatabaseRequest request);
 
         /// <summary>
         /// Deletes the database.
         /// </summary>
-        Task<DatabaseResponse> DeleteAsync();
+        Task<ContentResponse> DeleteAsync();
 
         /// <summary>
         /// Deletes the database.
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        Task<DatabaseResponse> DeleteAsync(DeleteDatabaseRequest request);
+        Task<ContentResponse> DeleteAsync(DeleteDatabaseRequest request);
 
         /// <summary>
         /// Requests compaction of the database.
         /// </summary>
         /// <returns></returns>
-        Task<DatabaseResponse> CompactAsync();
+        Task<ContentResponse> CompactAsync();
 
         /// <summary>
         /// Requests compaction of the database.
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        Task<DatabaseResponse> CompactAsync(CompactDatabaseRequest request);
+        Task<ContentResponse> CompactAsync(CompactDatabaseRequest request);
 
         /// <summary>
         /// Removes view index files that are no longer required by CouchDB as a
         /// result of changed views within design documents.
         /// </summary>
         /// <returns></returns>
-        Task<DatabaseResponse> ViewCleanup();
+        Task<ContentResponse> ViewCleanup();
 
         /// <summary>
         /// Removes view index files that are no longer required by CouchDB as a
@@ -91,6 +91,6 @@ namespace MyCouch
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        Task<DatabaseResponse> ViewCleanup(ViewCleanupRequest request);
+        Task<ContentResponse> ViewCleanup(ViewCleanupRequest request);
     }
 }

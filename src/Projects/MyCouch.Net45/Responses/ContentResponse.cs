@@ -5,7 +5,7 @@ namespace MyCouch.Responses
 #if !NETFX_CORE
     [Serializable]
 #endif
-    public abstract class ContentResponse : Response
+    public class ContentResponse : Response
     {
         public string Content { get; set; }
 
