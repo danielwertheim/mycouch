@@ -18,6 +18,7 @@ namespace MyCouch
         /// <summary>
         /// Gets information about the database.
         /// </summary>
+        /// <param name="request"></param>
         /// <returns></returns>
         Task<DatabaseResponse> GetAsync(GetDatabaseRequest request);
 
@@ -39,6 +40,8 @@ namespace MyCouch
         /// <param name="request"></param>
         /// <returns></returns>
         Task<DatabaseResponse> HeadAsync(HeadDatabaseRequest request);
+
+        /// <summary>
         /// Creates the database, but only if it does not already exist.
         /// </summary>
         Task<DatabaseResponse> PutAsync();
@@ -46,6 +49,8 @@ namespace MyCouch
         /// <summary>
         /// Creates the database, but only if it does not already exist.
         /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         Task<DatabaseResponse> PutAsync(PutDatabaseRequest request);
 
         /// <summary>
@@ -56,30 +61,33 @@ namespace MyCouch
         /// <summary>
         /// Deletes the database.
         /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         Task<DatabaseResponse> DeleteAsync(DeleteDatabaseRequest request);
 
         /// <summary>
-        /// Compact, POST /{db}/_compact, requests compaction of the database.
+        /// Requests compaction of the database.
         /// </summary>
         /// <returns></returns>
         Task<DatabaseResponse> CompactAsync();
 
         /// <summary>
-        /// Compact, POST /{db}/_compact, requests compaction of the database.
+        /// Requests compaction of the database.
         /// </summary>
+        /// <param name="request"></param>
         /// <returns></returns>
         Task<DatabaseResponse> CompactAsync(CompactDatabaseRequest request);
 
         /// <summary>
-        /// Removes view index files that are no longer required by CouchDB as a result of changed views within design documents.
-        /// POST /{db}/_view_cleanup
+        /// Removes view index files that are no longer required by CouchDB as a
+        /// result of changed views within design documents.
         /// </summary>
         /// <returns></returns>
         Task<DatabaseResponse> ViewCleanup();
 
         /// <summary>
-        /// Removes view index files that are no longer required by CouchDB as a result of changed views within design documents.
-        /// POST /{db}/_view_cleanup
+        /// Removes view index files that are no longer required by CouchDB as a
+        /// result of changed views within design documents.
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
