@@ -14,11 +14,11 @@ namespace MyCouch.Contexts
     public class Database : ApiContextBase, IDatabase
     {
         protected DatabaseResponseFactory DatabaseResponseFactory { get; set; }
-        protected GetDatabaseHttpRequestFactory GetDatabaseHttpRequestFactory { get; set; }
+        protected GetDatabaseHttpRequestFactory GetHttpRequestFactory { get; set; }
         protected HeadDatabaseHttpRequestFactory HeadHttpRequestFactory { get; set; }
-        protected PutDatabaseHttpRequestFactory PutDatabaseHttpRequestFactory { get; set; }
-        protected DeleteDatabaseHttpRequestFactory DeleteDatabaseHttpRequestFactory { get; set; }
-        protected CompactDatabaseHttpRequestFactory CompactDatabaseHttpRequestFactory { get; set; }
+        protected PutDatabaseHttpRequestFactory PutHttpRequestFactory { get; set; }
+        protected DeleteDatabaseHttpRequestFactory DeleteHttpRequestFactory { get; set; }
+        protected CompactDatabaseHttpRequestFactory CompactHttpRequestFactory { get; set; }
         protected ViewCleanupHttpRequestFactory ViewCleanupHttpRequestFactory { get; set; }
 
         public Database(IConnection connection, ISerializer serializer) : base(connection)
@@ -26,11 +26,11 @@ namespace MyCouch.Contexts
             Ensure.That(serializer, "serializer").IsNotNull();
 
             DatabaseResponseFactory = new DatabaseResponseFactory(serializer);
-            GetDatabaseHttpRequestFactory = new GetDatabaseHttpRequestFactory(Connection);
+            GetHttpRequestFactory = new GetDatabaseHttpRequestFactory(Connection);
             HeadHttpRequestFactory = new HeadDatabaseHttpRequestFactory(Connection);
-            PutDatabaseHttpRequestFactory = new PutDatabaseHttpRequestFactory(Connection);
-            DeleteDatabaseHttpRequestFactory = new DeleteDatabaseHttpRequestFactory(Connection);
-            CompactDatabaseHttpRequestFactory = new CompactDatabaseHttpRequestFactory(Connection);
+            PutHttpRequestFactory = new PutDatabaseHttpRequestFactory(Connection);
+            DeleteHttpRequestFactory = new DeleteDatabaseHttpRequestFactory(Connection);
+            CompactHttpRequestFactory = new CompactDatabaseHttpRequestFactory(Connection);
             ViewCleanupHttpRequestFactory = new ViewCleanupHttpRequestFactory(Connection);
         }
 
@@ -144,7 +144,7 @@ namespace MyCouch.Contexts
 
         protected virtual HttpRequest CreateHttpRequest(GetDatabaseRequest request)
         {
-            return GetDatabaseHttpRequestFactory.Create(request);
+            return GetHttpRequestFactory.Create(request);
         }
 
         protected virtual HttpRequest CreateHttpRequest(HeadDatabaseRequest request)
@@ -154,17 +154,17 @@ namespace MyCouch.Contexts
 
         protected virtual HttpRequest CreateHttpRequest(PutDatabaseRequest request)
         {
-            return PutDatabaseHttpRequestFactory.Create(request);
+            return PutHttpRequestFactory.Create(request);
         }
 
         protected virtual HttpRequest CreateHttpRequest(DeleteDatabaseRequest request)
         {
-            return DeleteDatabaseHttpRequestFactory.Create(request);
+            return DeleteHttpRequestFactory.Create(request);
         }
 
         protected virtual HttpRequest CreateHttpRequest(CompactDatabaseRequest request)
         {
-            return CompactDatabaseHttpRequestFactory.Create(request);
+            return CompactHttpRequestFactory.Create(request);
         }
 
         protected virtual HttpRequest CreateHttpRequest(ViewCleanupRequest request)
