@@ -34,7 +34,7 @@ namespace MyCouch.Responses
 
         public override string ToStringDebugVersion()
         {
-            return string.Format("{0}{1}{0}IsEmpty: {2}{0}TotalRows: {3}{0}RowCount: {4}{0}Offset: {5}{0}UpdateSeq: {6}",
+            return string.Format("{1}{0}IsEmpty: {2}{0}TotalRows: {3}{0}RowCount: {4}{0}Offset: {5}{0}UpdateSeq: {6}",
                 Environment.NewLine,
                 base.ToStringDebugVersion(),
                 IsEmpty,

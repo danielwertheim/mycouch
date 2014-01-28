@@ -15,7 +15,7 @@ namespace MyCouch.Responses
 
         public override string ToStringDebugVersion()
         {
-            return string.Format("{0}{1}{0}Model: {2}{0}IsEmpty: {3}", 
+            return string.Format("{1}{0}Model: {2}{0}IsEmpty: {3}",
                 Environment.NewLine, 
                 base.ToStringDebugVersion(), 
                 typeof(T).Name,
