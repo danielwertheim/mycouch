@@ -24,6 +24,7 @@ namespace MyCouch.Net
             Ensure.That(dbUri, "dbUri").IsNotNull();
 
             HttpClient = CreateHttpClient(dbUri);
+            IsDisposed = false;
         }
 
         public virtual void Dispose()
