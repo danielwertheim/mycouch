@@ -272,9 +272,6 @@
     <Compile Include="..\MyCouch.Net45\requests\DeleteEntityRequest.cs">
       <Link>Requests\DeleteEntityRequest.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\requests\DocumentExistsRequest.cs">
-      <Link>Requests\DocumentExistsRequest.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\Factories\AttachmentHttpRequestFactoryBase.cs">
       <Link>Requests\Factories\AttachmentHttpRequestFactoryBase.cs</Link>
     </Compile>
@@ -299,9 +296,6 @@
     <Compile Include="..\MyCouch.Net45\Requests\Factories\DeleteEntityHttpRequestFactory.cs">
       <Link>Requests\Factories\DeleteEntityHttpRequestFactory.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\Requests\Factories\DocumentExistsHttpRequestFactory.cs">
-      <Link>Requests\Factories\DocumentExistsHttpRequestFactory.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\Factories\DocumentHttpRequestFactoryBase.cs">
       <Link>Requests\Factories\DocumentHttpRequestFactoryBase.cs</Link>
     </Compile>
@@ -325,6 +319,9 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\Factories\HeadDatabaseHttpRequestFactory.cs">
       <Link>Requests\Factories\HeadDatabaseHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Requests\Factories\HeadDocumentHttpRequestFactory.cs">
+      <Link>Requests\Factories\HeadDocumentHttpRequestFactory.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\requests\factories\HttpRequestFactoryBase.cs">
       <Link>Requests\Factories\HttpRequestFactoryBase.cs</Link>
@@ -373,6 +370,9 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\HeadDatabaseRequest.cs">
       <Link>Requests\HeadDatabaseRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Requests\HeadDocumentRequest.cs">
+      <Link>Requests\HeadDocumentRequest.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\requests\PostDocumentRequest.cs">
       <Link>Requests\PostDocumentRequest.cs</Link>

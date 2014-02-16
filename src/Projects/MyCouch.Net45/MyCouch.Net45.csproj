@@ -108,7 +108,7 @@
     <Compile Include="Requests\DeleteDatabaseRequest.cs" />
     <Compile Include="Requests\DeleteDocumentRequest.cs" />
     <Compile Include="Requests\DeleteEntityRequest.cs" />
-    <Compile Include="Requests\DocumentExistsRequest.cs" />
+    <Compile Include="Requests\HeadDocumentRequest.cs" />
     <Compile Include="Requests\Factories\AttachmentHttpRequestFactoryBase.cs" />
     <Compile Include="Requests\Factories\BulkHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\CompactDatabaseHttpRequestFactory.cs" />
@@ -118,7 +118,7 @@
     <Compile Include="Requests\Factories\DeleteDatabaseHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\DeleteDocumentHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\DeleteEntityHttpRequestFactory.cs" />
-    <Compile Include="Requests\Factories\DocumentExistsHttpRequestFactory.cs" />
+    <Compile Include="Requests\Factories\HeadDocumentHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\DocumentHttpRequestFactoryBase.cs" />
     <Compile Include="Requests\Factories\EntityHttpRequestFactoryBase.cs" />
     <Compile Include="Requests\Factories\GetAttachmentHttpRequestFactory.cs" />

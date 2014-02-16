@@ -6,12 +6,12 @@ namespace MyCouch.Requests
 #if !NETFX_CORE
     [Serializable]
 #endif
-    public class DocumentExistsRequest : Request
+    public class HeadDocumentRequest : Request
     {
         public string Id { get; private set; }
         public string Rev { get; private set; }
 
-        public DocumentExistsRequest(string id, string rev = null)
+        public HeadDocumentRequest(string id, string rev = null)
         {
             Ensure.That(id, "id").IsNotNullOrWhiteSpace();
 

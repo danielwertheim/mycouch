@@ -63,9 +63,9 @@ namespace MyCouch
             return client.Documents.ReplaceAsync(request);
         }
 
-        public static Task<DocumentHeaderResponse> PerformAsync(this IMyCouchClient client, DocumentExistsRequest request)
+        public static Task<DocumentHeaderResponse> PerformAsync(this IMyCouchClient client, HeadDocumentRequest request)
         {
-            return client.Documents.ExistsAsync(request);
+            return client.Documents.HeadAsync(request);
         }
 
         public static Task<DocumentResponse> PerformAsync(this IMyCouchClient client, GetDocumentRequest request)

@@ -15,45 +15,45 @@ namespace MyCouch.IntegrationTests.ClientTests
         }
 
         [Fact]
-        public void When_exists_of_non_existing_document_The_response_is_empty()
+        public void When_HEAD_of_non_existing_document_The_response_is_empty()
         {
-            var response = SUT.ExistsAsync("fooId").Result;
+            var response = SUT.HeadAsync("fooId").Result;
 
             response.Should().BeHead404("fooId");
         }
 
         [Fact]
-        public void When_exists_using_not_matching_rev_The_response_is_empty()
+        public void When_HEAD_using_not_matching_rev_The_response_is_empty()
         {
             var postResponse = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
 
-            var response = SUT.ExistsAsync(postResponse.Id, "1-795258d03c3bdb58fffc409e153c5d45").Result;
+            var response = SUT.HeadAsync(postResponse.Id, "1-795258d03c3bdb58fffc409e153c5d45").Result;
 
             response.Should().BeHead404(postResponse.Id);
         }
 
         [Fact]
-        public void When_exists_using_matching_id_The_response_is_ok()
+        public void When_HEAD_using_matching_id_The_response_is_ok()
         {
             var postResponse = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
 
-            var response = SUT.ExistsAsync(postResponse.Id).Result;
+            var response = SUT.HeadAsync(postResponse.Id).Result;
 
             response.Should().BeHead200(postResponse.Id, postResponse.Rev);
         }
 
         [Fact]
-        public void When_exists_using_matching_id_and_rev_The_response_is_ok()
+        public void When_HEAD_using_matching_id_and_rev_The_response_is_ok()
         {
             var postResponse = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
 
-            var response = SUT.ExistsAsync(postResponse.Id, postResponse.Rev).Result;
+            var response = SUT.HeadAsync(postResponse.Id, postResponse.Rev).Result;
 
             response.Should().BeHead200(postResponse.Id, postResponse.Rev);
         }
 
         [Fact]
-        public void When_post_of_new_document_The_document_is_persisted()
+        public void When_POST_of_new_document_The_document_is_persisted()
         {
             var response = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
 
@@ -61,7 +61,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         }
 
         [Fact]
-        public void When_post_of_new_document_in_batch_mode_The_document_is_persisted()
+        public void When_POST_of_new_document_in_batch_mode_The_document_is_persisted()
         {
             var request = new PostDocumentRequest(ClientTestData.Artists.Artist1Json) { Batch = true };
             var response = SUT.PostAsync(request).Result;
@@ -70,7 +70,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         }
 
         [Fact]
-        public void When_put_of_new_document_The_document_is_replaced()
+        public void When_PUT_of_new_document_The_document_is_replaced()
         {
             var response = SUT.PutAsync(ClientTestData.Artists.Artist1Id, ClientTestData.Artists.Artist1Json).Result;
 
@@ -78,7 +78,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         }
 
         [Fact]
-        public void When_put_of_new_document_in_batch_mode_The_document_is_replaced()
+        public void When_PUT_of_new_document_in_batch_mode_The_document_is_replaced()
         {
             var request = new PutDocumentRequest(ClientTestData.Artists.Artist1Id, ClientTestData.Artists.Artist1Json) { Batch = true };
             var response = SUT.PutAsync(request).Result;
@@ -87,7 +87,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         }
         
         [Fact]
-        public void When_put_of_existing_document_The_document_is_replaced()
+        public void When_PUT_of_existing_document_The_document_is_replaced()
         {
             var postResponse = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
             var getResponse = SUT.GetAsync(postResponse.Id).Result;
@@ -98,7 +98,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         }
 
         [Fact]
-        public void Can_put_of_existing_document_in_batch_mode()
+        public void Can_PUT_of_existing_document_in_batch_mode()
         {
             var postResponse = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
             var getResponse = SUT.GetAsync(postResponse.Id).Result;
@@ -110,7 +110,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         }
 
         [Fact]
-        public void When_put_of_existing_document_Using_wrong_rev_A_conflict_is_detected()
+        public void When_PUT_of_existing_document_Using_wrong_rev_A_conflict_is_detected()
         {
             var postResponse = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
 
@@ -120,7 +120,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         }
 
         [Fact]
-        public void When_delete_of_existing_document_Using_id_and_rev_The_document_is_deleted()
+        public void When_DELETE_of_existing_document_Using_id_and_rev_The_document_is_deleted()
         {
             var r = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
 
@@ -130,7 +130,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         }
 
         [Fact]
-        public void When_copying_using_srcId_The_document_is_copied()
+        public void When_COPY_using_srcId_The_document_is_copied()
         {
             var artistPost = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
             var srcArtist = SUT.GetAsync(artistPost.Id).Result;
@@ -147,7 +147,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         }
 
         [Fact]
-        public void When_copying_using_srcId_and_srcRev_The_document_is_copied()
+        public void When_COPY_using_srcId_and_srcRev_The_document_is_copied()
         {
             var artistPost1 = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
             var srcArtist = SUT.GetAsync(artistPost1.Id).Result;
@@ -166,7 +166,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         }
 
         [Fact]
-        public void When_replacing_using_srcId_The_document_is_replacing_target()
+        public void When_REPLACE_using_srcId_The_document_is_replacing_target()
         {
             var artist1Post = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
             var artist2Post = SUT.PostAsync(ClientTestData.Artists.Artist2Json).Result;
@@ -183,7 +183,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         }
 
         [Fact]
-        public void When_replacing_using_srcId_and_srcRev_The_document_is_replacing_target()
+        public void When_REPLACE_using_srcId_and_srcRev_The_document_is_replacing_target()
         {
             var artist1Post = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
             var artist2Post = SUT.PostAsync(ClientTestData.Artists.Artist2Json).Result;
