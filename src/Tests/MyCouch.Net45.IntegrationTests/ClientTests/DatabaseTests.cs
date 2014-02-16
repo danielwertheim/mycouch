@@ -18,7 +18,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         {
             var response = SUT.HeadAsync().Result;
 
-            response.Should().Be(HttpMethod.Head, HttpStatusCode.OK);
+            response.Should().Be(HttpMethod.Head);
         }
 
         [Fact]
@@ -26,7 +26,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         {
             var response = SUT.GetAsync().Result;
 
-            response.Should().BeAnyJson(HttpMethod.Get, HttpStatusCode.OK);
+            response.Should().BeAnyJson(HttpMethod.Get);
         }
 
         [Fact]
@@ -34,7 +34,7 @@ namespace MyCouch.IntegrationTests.ClientTests
         {
             var response = SUT.DeleteAsync().Result;
 
-            response.Should().BeOkJson(HttpMethod.Delete, HttpStatusCode.OK);
+            response.Should().BeOkJson(HttpMethod.Delete);
         }
 
         [Fact]

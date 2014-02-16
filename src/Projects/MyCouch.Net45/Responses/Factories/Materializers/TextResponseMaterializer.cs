@@ -1,23 +1,18 @@
-﻿using System.IO;
+using System.IO;
 using System.Net.Http;
 using System.Text;
 using MyCouch.Extensions;
-using MyCouch.Serialization;
 
-namespace MyCouch.Responses.Factories
+namespace MyCouch.Responses.Factories.Materializers
 {
-    public class ContentResponseFactory : ResponseFactoryBase
+    public class TextResponseMaterializer
     {
-        public ContentResponseFactory(ISerializer serializer)
-            : base(serializer)
-        { }
-
-        public virtual ContentResponse Create(HttpResponseMessage httpResponse)
+        public virtual void Materialize(TextResponse response, HttpResponseMessage httpResponse)
         {
-            return Materialize(new ContentResponse(), httpResponse, OnSuccessfulResponse, OnFailedResponse);
+            SetContent(response, httpResponse);
         }
 
-        protected virtual async void OnSuccessfulResponse(ContentResponse response, HttpResponseMessage httpResponse)
+        protected virtual async void SetContent(TextResponse response, HttpResponseMessage httpResponse)
         {
             using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
             {

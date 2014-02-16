@@ -9,10 +9,13 @@ namespace MyCouch.Responses
 #endif
     public abstract class Response
     {
+        protected const string NullValueForDebugOutput = "<NULL>";
+
         public HttpStatusCode StatusCode { get; set; }
         public Uri RequestUri { get; set; }
         public HttpMethod RequestMethod { get; set; }
         public string ContentType { get; set; }
+        public long? ContentLength { get; set; }
         public string Error { get; set; }
         public string Reason { get; set; }
         public bool IsSuccess
@@ -31,14 +34,14 @@ namespace MyCouch.Responses
 
         public virtual string ToStringDebugVersion()
         {
-            return string.Format("RequestUri: {1}{0}RequestMethod: {2}{0}Status: {3}({4}){0}Error:{5}{0}Reason: {6}{0}ContentType:{7}",
+            return string.Format("RequestUri: {1}{0}RequestMethod: {2}{0}Status: {3}({4}){0}Error:{5}{0}Reason: {6}{0}ContentType:{7}{0}",
                 Environment.NewLine,
                 RequestUri,
                 RequestMethod,
                 StatusCode,
                 (int)StatusCode,
-                Error ?? "<NULL>",
-                Reason ?? "<NULL>",
+                Error ?? NullValueForDebugOutput,
+                Reason ?? NullValueForDebugOutput,
                 ContentType);
         }
     }

@@ -8,32 +8,32 @@ namespace MyCouch
 {
     public static class ClientExecuteExtensions
     {
-        public static Task<ContentResponse> PerformAsync(this IMyCouchClient client, HeadDatabaseRequest request)
+        public static Task<TextResponse> PerformAsync(this IMyCouchClient client, HeadDatabaseRequest request)
         {
             return client.Database.HeadAsync(request);
         }
 
-        public static Task<ContentResponse> PerformAsync(this IMyCouchClient client, GetDatabaseRequest request)
+        public static Task<TextResponse> PerformAsync(this IMyCouchClient client, GetDatabaseRequest request)
         {
             return client.Database.GetAsync(request);
         }
 
-        public static Task<ContentResponse> PerformAsync(this IMyCouchClient client, PutDatabaseRequest request)
+        public static Task<TextResponse> PerformAsync(this IMyCouchClient client, PutDatabaseRequest request)
         {
             return client.Database.PutAsync(request);
         }
 
-        public static Task<ContentResponse> PerformAsync(this IMyCouchClient client, DeleteDatabaseRequest request)
+        public static Task<TextResponse> PerformAsync(this IMyCouchClient client, DeleteDatabaseRequest request)
         {
             return client.Database.DeleteAsync(request);
         }
 
-        public static Task<ContentResponse> PerformAsync(this IMyCouchClient client, CompactDatabaseRequest request)
+        public static Task<TextResponse> PerformAsync(this IMyCouchClient client, CompactDatabaseRequest request)
         {
             return client.Database.CompactAsync(request);
         }
 
-        public static Task<ContentResponse> PerformAsync(this IMyCouchClient client, ViewCleanupRequest request)
+        public static Task<TextResponse> PerformAsync(this IMyCouchClient client, ViewCleanupRequest request)
         {
             return client.Database.ViewCleanup(request);
         }

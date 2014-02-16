@@ -13,7 +13,7 @@ namespace MyCouch.Testing
     [DebuggerStepThrough]
     public static class Shoulds
     {
-        public static ContentResponseAssertions Should(this ContentResponse response)
+        public static ContentResponseAssertions Should(this TextResponse response)
         {
             return new ContentResponseAssertions(response);
         }
@@ -79,7 +79,7 @@ namespace MyCouch.Testing
             Response = response;
         }
 
-        public virtual void Be(HttpMethod method, HttpStatusCode statusCode)
+        public virtual void Be(HttpMethod method, HttpStatusCode statusCode = HttpStatusCode.OK)
         {
             Response.RequestMethod.Should().Be(method);
             Response.IsSuccess.Should().BeTrue();
@@ -89,16 +89,10 @@ namespace MyCouch.Testing
         }
     }
 
-    public class ContentResponseAssertions : ContentResponseAssertions<ContentResponse>
+    public class ContentResponseAssertions : ResponseAssertions<TextResponse>
     {
         [DebuggerStepThrough]
-        public ContentResponseAssertions(ContentResponse response) : base(response) { }
-    }
-
-    public abstract class ContentResponseAssertions<T> : ResponseAssertions<T> where T : ContentResponse
-    {
-        [DebuggerStepThrough]
-        protected ContentResponseAssertions(T response) : base(response) { }
+        public ContentResponseAssertions(TextResponse response) : base(response) { }
 
         public void BeJson(HttpMethod method, HttpStatusCode statusCode, string content)
         {

@@ -108,6 +108,9 @@
     <Compile Include="..\mycouch.cloudant.net45\requests\SearchIndexRequest.cs">
       <Link>Requests\SearchIndexRequest.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\Responses\Factories\Materializers\SearchIndexResponseMaterializer.cs">
+      <Link>Responses\Factories\Materializers\SearchIndexResponseMaterializer.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\Responses\Factories\SearchIndexResponseFactory.cs">
       <Link>Responses\Factories\SearchIndexResponseFactory.cs</Link>
     </Compile>

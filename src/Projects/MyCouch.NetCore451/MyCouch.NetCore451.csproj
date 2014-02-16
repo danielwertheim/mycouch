@@ -413,6 +413,9 @@
     <Compile Include="..\MyCouch.Net45\responses\BulkResponse.cs">
       <Link>Responses\BulkResponse.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\BytesResponse.cs">
+      <Link>Responses\BytesResponse.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\Responses\ChangesResponse.cs">
       <Link>Responses\ChangesResponse.cs</Link>
     </Compile>
@@ -440,9 +443,6 @@
     <Compile Include="..\MyCouch.Net45\Responses\Factories\ChangesResponseFactory.cs">
       <Link>Responses\Factories\ChangesResponseFactory.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\Responses\Factories\ContentResponseFactory.cs">
-      <Link>Responses\Factories\ContentResponseFactory.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Net45\Responses\Factories\ContinuousChangesResponseFactory.cs">
       <Link>Responses\Factories\ContinuousChangesResponseFactory.cs</Link>
     </Compile>
@@ -455,8 +455,47 @@
     <Compile Include="..\MyCouch.Net45\responses\factories\EntityResponseFactory.cs">
       <Link>Responses\Factories\EntityResponseFactory.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\Factories\Materializers\AttachmentResponseMaterializer.cs">
+      <Link>Responses\Factories\Materializers\AttachmentResponseMaterializer.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\Factories\Materializers\BasicResponseMaterializer.cs">
+      <Link>Responses\Factories\Materializers\BasicResponseMaterializer.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\Factories\Materializers\BulkResponseMaterializer.cs">
+      <Link>Responses\Factories\Materializers\BulkResponseMaterializer.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\Factories\Materializers\ChangesResponseMaterializer.cs">
+      <Link>Responses\Factories\Materializers\ChangesResponseMaterializer.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\Factories\Materializers\DocumentHeaderResponseMaterializer.cs">
+      <Link>Responses\Factories\Materializers\DocumentHeaderResponseMaterializer.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\Factories\Materializers\DocumentResponseMaterializer.cs">
+      <Link>Responses\Factories\Materializers\DocumentResponseMaterializer.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\Factories\Materializers\EntityResponseMaterializer.cs">
+      <Link>Responses\Factories\Materializers\EntityResponseMaterializer.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\Factories\Materializers\FailedDocumentHeaderResponseMaterializer.cs">
+      <Link>Responses\Factories\Materializers\FailedDocumentHeaderResponseMaterializer.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\Factories\Materializers\FailedEntityResponseMaterializer.cs">
+      <Link>Responses\Factories\Materializers\FailedEntityResponseMaterializer.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\Factories\Materializers\FailedResponseMaterializer.cs">
+      <Link>Responses\Factories\Materializers\FailedResponseMaterializer.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\Factories\Materializers\TextResponseMaterializer.cs">
+      <Link>Responses\Factories\Materializers\TextResponseMaterializer.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\Factories\Materializers\ViewQueryResponseMaterializer.cs">
+      <Link>Responses\Factories\Materializers\ViewQueryResponseMaterializer.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\responses\factories\ResponseFactoryBase.cs">
       <Link>Responses\Factories\ResponseFactoryBase.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\Factories\TextResponseFactory.cs">
+      <Link>Responses\Factories\TextResponseFactory.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\responses\factories\ViewQueryResponseFactory.cs">
       <Link>Responses\Factories\ViewQueryResponseFactory.cs</Link>
@@ -469,6 +508,9 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\responses\Response.cs">
       <Link>Responses\Response.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\TextResponse.cs">
+      <Link>Responses\TextResponse.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\responses\ViewQueryResponse.cs">
       <Link>Responses\ViewQueryResponse.cs</Link>

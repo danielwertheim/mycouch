@@ -5,16 +5,17 @@ namespace MyCouch.Responses
 #if !NETFX_CORE
     [Serializable]
 #endif
-    public class ContentResponse : Response
+    public abstract class ContentResponse<TContent> : Response
     {
-        public string Content { get; set; }
+        public TContent Content { get; set; }
+        public abstract bool IsEmpty { get; }
 
         public override string ToStringDebugVersion()
         {
-            return string.Format("{1}{0}Content:{2}",
+            return string.Format("{1}{0}IsEmpty: {2}",
                 Environment.NewLine,
                 base.ToStringDebugVersion(),
-                Content ?? "<NULL>");
+                IsEmpty);
         }
     }
 }

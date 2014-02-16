@@ -13,7 +13,7 @@ namespace MyCouch.Contexts
 {
     public class Database : ApiContextBase, IDatabase
     {
-        protected ContentResponseFactory ContentResponseFactory { get; set; }
+        protected TextResponseFactory TextResponseFactory { get; set; }
         protected GetDatabaseHttpRequestFactory GetHttpRequestFactory { get; set; }
         protected HeadDatabaseHttpRequestFactory HeadHttpRequestFactory { get; set; }
         protected PutDatabaseHttpRequestFactory PutHttpRequestFactory { get; set; }
@@ -25,7 +25,7 @@ namespace MyCouch.Contexts
         {
             Ensure.That(serializer, "serializer").IsNotNull();
 
-            ContentResponseFactory = new ContentResponseFactory(serializer);
+            TextResponseFactory = new TextResponseFactory(serializer);
             GetHttpRequestFactory = new GetDatabaseHttpRequestFactory(Connection);
             HeadHttpRequestFactory = new HeadDatabaseHttpRequestFactory(Connection);
             PutHttpRequestFactory = new PutDatabaseHttpRequestFactory(Connection);
@@ -34,12 +34,12 @@ namespace MyCouch.Contexts
             ViewCleanupHttpRequestFactory = new ViewCleanupHttpRequestFactory(Connection);
         }
 
-        public virtual Task<ContentResponse> HeadAsync()
+        public virtual Task<TextResponse> HeadAsync()
         {
             return HeadAsync(new HeadDatabaseRequest());
         }
 
-        public virtual async Task<ContentResponse> HeadAsync(HeadDatabaseRequest request)
+        public virtual async Task<TextResponse> HeadAsync(HeadDatabaseRequest request)
         {
             Ensure.That(request, "request").IsNotNull();
 
@@ -52,12 +52,12 @@ namespace MyCouch.Contexts
             }
         }
 
-        public virtual Task<ContentResponse> GetAsync()
+        public virtual Task<TextResponse> GetAsync()
         {
             return GetAsync(new GetDatabaseRequest());
         }
 
-        public virtual async Task<ContentResponse> GetAsync(GetDatabaseRequest request)
+        public virtual async Task<TextResponse> GetAsync(GetDatabaseRequest request)
         {
             Ensure.That(request, "request").IsNotNull();
 
@@ -70,12 +70,12 @@ namespace MyCouch.Contexts
             }
         }
 
-        public virtual Task<ContentResponse> PutAsync()
+        public virtual Task<TextResponse> PutAsync()
         {
             return PutAsync(new PutDatabaseRequest());
         }
 
-        public virtual async Task<ContentResponse> PutAsync(PutDatabaseRequest request)
+        public virtual async Task<TextResponse> PutAsync(PutDatabaseRequest request)
         {
             Ensure.That(request, "request").IsNotNull();
 
@@ -88,12 +88,12 @@ namespace MyCouch.Contexts
             }
         }
 
-        public virtual Task<ContentResponse> DeleteAsync()
+        public virtual Task<TextResponse> DeleteAsync()
         {
             return DeleteAsync(new DeleteDatabaseRequest());
         }
 
-        public virtual async Task<ContentResponse> DeleteAsync(DeleteDatabaseRequest request)
+        public virtual async Task<TextResponse> DeleteAsync(DeleteDatabaseRequest request)
         {
             Ensure.That(request, "request").IsNotNull();
 
@@ -106,12 +106,12 @@ namespace MyCouch.Contexts
             }
         }
 
-        public virtual Task<ContentResponse> CompactAsync()
+        public virtual Task<TextResponse> CompactAsync()
         {
             return CompactAsync(new CompactDatabaseRequest());
         }
 
-        public virtual async Task<ContentResponse> CompactAsync(CompactDatabaseRequest request)
+        public virtual async Task<TextResponse> CompactAsync(CompactDatabaseRequest request)
         {
             Ensure.That(request, "request").IsNotNull();
 
@@ -124,12 +124,12 @@ namespace MyCouch.Contexts
             }
         }
 
-        public virtual Task<ContentResponse> ViewCleanup()
+        public virtual Task<TextResponse> ViewCleanup()
         {
             return ViewCleanup(new ViewCleanupRequest());
         }
 
-        public virtual async Task<ContentResponse> ViewCleanup(ViewCleanupRequest request)
+        public virtual async Task<TextResponse> ViewCleanup(ViewCleanupRequest request)
         {
             Ensure.That(request, "request").IsNotNull();
 
@@ -172,9 +172,9 @@ namespace MyCouch.Contexts
             return ViewCleanupHttpRequestFactory.Create(request);
         }
 
-        protected virtual ContentResponse ProcessResponse(HttpResponseMessage response)
+        protected virtual TextResponse ProcessResponse(HttpResponseMessage response)
         {
-            return ContentResponseFactory.Create(response);
+            return TextResponseFactory.Create(response);
         }
     }
 }

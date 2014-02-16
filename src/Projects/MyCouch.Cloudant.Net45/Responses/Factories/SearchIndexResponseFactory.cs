@@ -1,39 +1,52 @@
 ﻿using System.Net.Http;
 using EnsureThat;
-using MyCouch.Extensions;
+using MyCouch.Cloudant.Responses.Factories.Materializers;
 using MyCouch.Responses.Factories;
+using MyCouch.Responses.Factories.Materializers;
 using MyCouch.Serialization;
 
 namespace MyCouch.Cloudant.Responses.Factories
 {
     public class SearchIndexResponseFactory : ResponseFactoryBase
     {
-        protected readonly IEntitySerializer EntitySerializer;
+        protected readonly SearchIndexResponseMaterializer SuccessfulResponseMaterializer;
+        protected readonly FailedResponseMaterializer FailedResponseMaterializer;
 
         public SearchIndexResponseFactory(ISerializer serializer, IEntitySerializer entitySerializer)
-            : base(serializer)
         {
+            Ensure.That(serializer, "serializer").IsNotNull();
             Ensure.That(entitySerializer, "entitySerializer").IsNotNull();
 
-            EntitySerializer = entitySerializer;
+            SuccessfulResponseMaterializer = new SearchIndexResponseMaterializer(entitySerializer);
+            FailedResponseMaterializer = new FailedResponseMaterializer(serializer);
         }
 
         public virtual SearchIndexResponse Create(HttpResponseMessage httpResponse)
         {
-            return Materialize(new SearchIndexResponse(), httpResponse, OnSuccessfulResponse, OnFailedResponse);
+            return Materialize(
+                new SearchIndexResponse(),
+                httpResponse,
+                OnMaterializationOfSuccessfulResponseProperties,
+                OnMaterializationOfFailedResponseProperties);
         }
 
         public virtual SearchIndexResponse<TIncludedDoc> Create<TIncludedDoc>(HttpResponseMessage httpResponse)
         {
-            return Materialize(new SearchIndexResponse<TIncludedDoc>(), httpResponse, OnSuccessfulResponse, OnFailedResponse);
+            return Materialize(
+                new SearchIndexResponse<TIncludedDoc>(),
+                httpResponse,
+                OnMaterializationOfSuccessfulResponseProperties,
+                OnMaterializationOfFailedResponseProperties);
         }
 
-        protected async virtual void OnSuccessfulResponse<TIncludedDoc>(SearchIndexResponse<TIncludedDoc> response, HttpResponseMessage httpResponse)
+        protected virtual void OnMaterializationOfSuccessfulResponseProperties<TIncludedDoc>(SearchIndexResponse<TIncludedDoc> response, HttpResponseMessage httpResponse)
         {
-            using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
-            {
-                EntitySerializer.Populate(response, content);
-            }
+            SuccessfulResponseMaterializer.Materialize(response, httpResponse);
+        }
+
+        protected virtual void OnMaterializationOfFailedResponseProperties<TIncludedDoc>(SearchIndexResponse<TIncludedDoc> response, HttpResponseMessage httpResponse)
+        {
+            FailedResponseMaterializer.Materialize(response, httpResponse);
         }
     }
 }
