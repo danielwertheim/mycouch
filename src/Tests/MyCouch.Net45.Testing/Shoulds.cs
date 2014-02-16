@@ -259,7 +259,7 @@ namespace MyCouch.Testing
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
             Response.IsEmpty.Should().BeFalse();
-            Response.Entity.Should().NotBeNull();
+            Response.Content.Should().NotBeNull();
             Response.Id.Should().NotBeNullOrEmpty();
             Response.Id.Should().Be(id);
             Response.Rev.Should().NotBeNullOrEmpty();
@@ -275,13 +275,13 @@ namespace MyCouch.Testing
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
             Response.IsEmpty.Should().BeFalse();
-            Response.Entity.Should().NotBeNull();
+            Response.Content.Should().NotBeNull();
             Response.Id.Should().NotBeNullOrEmpty();
             Response.Id.Should().Be(initialId);
             Response.Rev.Should().NotBeNullOrEmpty();
 
-            idAccessor(Response.Entity).Should().Be(Response.Id);
-            revAccessor(Response.Entity).Should().Be(Response.Rev);
+            idAccessor(Response.Content).Should().Be(Response.Id);
+            revAccessor(Response.Content).Should().Be(Response.Rev);
         }
 
         public void BeSuccessfulPut(string initialId, Func<T, string> idAccessor, Func<T, string> revAccessor)
@@ -294,13 +294,13 @@ namespace MyCouch.Testing
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
             Response.IsEmpty.Should().BeFalse();
-            Response.Entity.Should().NotBeNull();
+            Response.Content.Should().NotBeNull();
             Response.Id.Should().NotBeNullOrEmpty();
             Response.Id.Should().Be(initialId);
             Response.Rev.Should().NotBeNullOrEmpty();
 
-            idAccessor(Response.Entity).Should().Be(Response.Id);
-            revAccessor(Response.Entity).Should().Be(Response.Rev);
+            idAccessor(Response.Content).Should().Be(Response.Id);
+            revAccessor(Response.Content).Should().Be(Response.Rev);
         }
 
         public void Be409Put(string initialId)
@@ -324,13 +324,13 @@ namespace MyCouch.Testing
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
             Response.IsEmpty.Should().BeFalse();
-            Response.Entity.Should().NotBeNull();
+            Response.Content.Should().NotBeNull();
             Response.Id.Should().NotBeNullOrEmpty();
             Response.Id.Should().Be(initialId);
             Response.Rev.Should().NotBeNullOrEmpty();
 
-            idAccessor(Response.Entity).Should().Be(Response.Id);
-            revAccessor(Response.Entity).Should().Be(Response.Rev);
+            idAccessor(Response.Content).Should().Be(Response.Id);
+            revAccessor(Response.Content).Should().Be(Response.Rev);
         }
 
         public void BeSuccessfulDelete(string initialId, Func<T, string> idAccessor, Func<T, string> revAccessor)
@@ -341,13 +341,13 @@ namespace MyCouch.Testing
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
             Response.IsEmpty.Should().BeFalse();
-            Response.Entity.Should().NotBeNull();
+            Response.Content.Should().NotBeNull();
             Response.Id.Should().NotBeNullOrEmpty();
             Response.Id.Should().Be(initialId);
             Response.Rev.Should().NotBeNullOrEmpty();
 
-            idAccessor(Response.Entity).Should().Be(Response.Id);
-            revAccessor(Response.Entity).Should().Be(Response.Rev);
+            idAccessor(Response.Content).Should().Be(Response.Id);
+            revAccessor(Response.Content).Should().Be(Response.Rev);
         }
     }
 
