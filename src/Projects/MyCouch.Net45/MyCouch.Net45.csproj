@@ -92,6 +92,7 @@
     <Compile Include="IViews.cs" />
     <Compile Include="MyCouchException.cs" />
     <Compile Include="MyCouchRuntime.cs" />
+    <Compile Include="MyCouchStore.cs" />
     <Compile Include="MyCouchUriBuilder.cs" />
     <Compile Include="Net\BasicHttpClientConnection.cs" />
     <Compile Include="Net\BytesContent.cs" />
