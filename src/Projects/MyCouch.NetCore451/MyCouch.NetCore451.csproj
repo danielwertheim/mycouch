@@ -230,6 +230,9 @@
     <Compile Include="..\MyCouch.Net45\MyCouchRuntime.cs">
       <Link>MyCouchRuntime.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\MyCouchStore.cs">
+      <Link>MyCouchStore.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\MyCouchUriBuilder.cs">
       <Link>MyCouchUriBuilder.cs</Link>
     </Compile>

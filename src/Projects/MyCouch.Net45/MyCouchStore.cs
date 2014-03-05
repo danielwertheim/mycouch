@@ -27,7 +27,7 @@ namespace MyCouch
             IsDisposed = false;
         }
 
-        public virtual void Dispose()
+        public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
@@ -184,7 +184,9 @@ namespace MyCouch
         }
     }
 
+#if !NETFX_CORE
     [Serializable]
+#endif
     public class QueryResult : QueryResult<string, string>
     {
         public QueryResult(string id, object key, string value = null, string includedDoc = null)
@@ -193,7 +195,9 @@ namespace MyCouch
         }
     }
 
+#if !NETFX_CORE
     [Serializable]
+#endif
     public class QueryResult<TValue, TIncludedDoc>
         where TValue : class
         where TIncludedDoc : class
@@ -212,7 +216,9 @@ namespace MyCouch
         }
     }
 
+#if !NETFX_CORE
     [Serializable]
+#endif
     public class GetHeaderResult
     {
         public string Id { get; private set; }
