@@ -52,7 +52,6 @@
       <HintPath>..\..\packages\Newtonsoft.Json.5.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.IO">
@@ -94,9 +93,6 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\ClientExecuteExtensions.cs">
       <Link>ClientExecuteExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\configurations\ConnectionString.cs">
-      <Link>Configurations\ConnectionString.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\contexts\ApiContextBase.cs">
       <Link>Contexts\ApiContextBase.cs</Link>

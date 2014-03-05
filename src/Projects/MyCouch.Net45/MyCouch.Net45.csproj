@@ -43,7 +43,6 @@
       <HintPath>..\..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Net.Http" />
@@ -57,7 +56,6 @@
     <Compile Include="MyCouchClient.cs" />
     <Compile Include="MyCouchClientBootstraper.cs" />
     <Compile Include="ClientExecuteExtensions.cs" />
-    <Compile Include="Configurations\ConnectionString.cs" />
     <Compile Include="Contexts\ApiContextBase.cs" />
     <Compile Include="Contexts\Attachments.cs" />
     <Compile Include="Contexts\Changes.cs" />

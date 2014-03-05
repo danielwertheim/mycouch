@@ -116,9 +116,6 @@
     <Compile Include="..\MyCouch.Net45\ClientExecuteExtensions.cs">
       <Link>ClientExecuteExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\configurations\ConnectionString.cs">
-      <Link>Configurations\ConnectionString.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Net45\contexts\ApiContextBase.cs">
       <Link>Contexts\ApiContextBase.cs</Link>
     </Compile>
