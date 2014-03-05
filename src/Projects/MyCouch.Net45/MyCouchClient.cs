@@ -37,7 +37,7 @@ namespace MyCouch
             Views = bootstraper.ViewsFn(Connection);
         }
 
-        public virtual void Dispose()
+        public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
@@ -45,9 +45,6 @@ namespace MyCouch
 
         protected virtual void Dispose(bool disposing)
         {
-            if (Connection == null)
-                throw new ObjectDisposedException(typeof(MyCouchClient).Name);
-
             if (!disposing)
                 return;
 
