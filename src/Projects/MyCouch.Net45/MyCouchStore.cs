@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.Net;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
+using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
 using MyCouch.Extensions;
+using MyCouch.Requests.Configurators;
 using MyCouch.Responses;
 
 namespace MyCouch
@@ -120,7 +124,7 @@ namespace MyCouch
             return response.IsSuccess;
         }
 
-        public virtual async Task<GetHeaderResult> GetHeaderAsync(string id, string rev = null)
+        public virtual async Task<DocumentHeader> GetHeaderAsync(string id, string rev = null)
         {
             ThrowIfDisposed();
 
@@ -128,7 +132,7 @@ namespace MyCouch
 
             ThrowIfNotSuccessfulResponse("GetHeaderAsync", response, HttpStatusCode.NotFound);
 
-            return new GetHeaderResult(response.Id, response.Rev);
+            return new DocumentHeader(response.Id, response.Rev);
         }
 
         public virtual async Task<string> GetByIdAsync(string id, string rev = null)
@@ -153,18 +157,47 @@ namespace MyCouch
             return response.Content;
         }
 
-        //TODO: Look at Task Data Flow lib
-        //public virtual async Task<IEnumerable<QueryResult>> QueryAsync(string designDocument, string viewName, Action<QueryViewRequestConfigurator> configurator)
-        //{
-        //    ThrowIfDisposed();
+        public virtual IObservable<ViewQueryResponse.Row> Stream(string designDocument, string viewName, Action<QueryViewRequestConfigurator> configurator)
+        {
+            ThrowIfDisposed();
 
-        //    var response = await Client.Views.QueryAsync(designDocument, viewName, configurator).ForAwait();
+            return Observable.Create<ViewQueryResponse.Row>(o =>
+            {
+                var a = Client.Views.QueryAsync(designDocument, viewName, configurator).ForAwait().GetAwaiter();
+                var response = a.GetResult();
 
-        //    ThrowIfNotSuccessfulResponse("QueryAsync", response);
+                ThrowIfNotSuccessfulResponse("QueryAsync", response);
 
-        //    foreach (var row in response.Rows)
-        //        yield return new QueryResult(row.Id, row.Key, row.Value, row.IncludedDoc);
-        //}
+                foreach (var row in response.Rows)
+                    o.OnNext(row);
+
+                o.OnCompleted();
+
+                return Disposable.Empty;
+            });
+        }
+
+        public virtual IObservable<ViewQueryResponse.Row[]> Query(string designDocument, string viewName, Action<QueryViewRequestConfigurator> configurator)
+        {
+            ThrowIfDisposed();
+
+            return Client.Views.QueryAsync(designDocument, viewName, configurator)
+                .ToObservable()
+                .Select(r => r.Rows);
+
+            //return Observable.Create<ViewQueryResponse.Row[]>(o =>
+            //{
+            //    var a = Client.Views.QueryAsync(designDocument, viewName, configurator).ForAwait().GetAwaiter();
+            //    var response = a.GetResult();
+
+            //    ThrowIfNotSuccessfulResponse("QueryAsync", response);
+
+            //    o.OnNext(response.Rows);
+            //    o.OnCompleted();
+
+            //    return Disposable.Empty;
+            //});
+        }
 
         protected virtual void ThrowIfNotSuccessfulResponse(string action, Response response, params HttpStatusCode[] allowedFailedStatusCodes)
         {
@@ -187,44 +220,12 @@ namespace MyCouch
 #if !NETFX_CORE
     [Serializable]
 #endif
-    public class QueryResult : QueryResult<string, string>
-    {
-        public QueryResult(string id, object key, string value = null, string includedDoc = null)
-            : base(id, key, value, includedDoc)
-        {
-        }
-    }
-
-#if !NETFX_CORE
-    [Serializable]
-#endif
-    public class QueryResult<TValue, TIncludedDoc>
-        where TValue : class
-        where TIncludedDoc : class
-    {
-        public string Id { get; private set; }
-        public object Key { get; private set; }
-        public TValue Value { get; private set; }
-        public TIncludedDoc IncludedDoc { get; private set; }
-
-        public QueryResult(string id, object key, TValue value = null, TIncludedDoc includedDoc = null)
-        {
-            Id = id;
-            Key = key;
-            Value = value;
-            IncludedDoc = includedDoc;
-        }
-    }
-
-#if !NETFX_CORE
-    [Serializable]
-#endif
-    public class GetHeaderResult
+    public class DocumentHeader
     {
         public string Id { get; private set; }
         public string Rev { get; private set; }
 
-        public GetHeaderResult(string id, string rev)
+        public DocumentHeader(string id, string rev)
         {
             Id = id;
             Rev = rev;
