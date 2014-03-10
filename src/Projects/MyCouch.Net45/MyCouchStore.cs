@@ -161,10 +161,9 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
-            return Observable.Create<ViewQueryResponse.Row>(o =>
+            return Observable.Create<ViewQueryResponse.Row>(async o =>
             {
-                var a = Client.Views.QueryAsync(designDocument, viewName, configurator).ForAwait().GetAwaiter();
-                var response = a.GetResult();
+                var response = await Client.Views.QueryAsync(designDocument, viewName, configurator);
 
                 ThrowIfNotSuccessfulResponse("QueryAsync", response);
 
@@ -185,10 +184,9 @@ namespace MyCouch
                 .ToObservable()
                 .Select(r => r.Rows);
 
-            //return Observable.Create<ViewQueryResponse.Row[]>(o =>
+            //return Observable.Create<ViewQueryResponse.Row[]>(async o =>
             //{
-            //    var a = Client.Views.QueryAsync(designDocument, viewName, configurator).ForAwait().GetAwaiter();
-            //    var response = a.GetResult();
+            //    var response = Client.Views.QueryAsync(designDocument, viewName, configurator);
 
             //    ThrowIfNotSuccessfulResponse("QueryAsync", response);
 
