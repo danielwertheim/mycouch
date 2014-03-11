@@ -154,7 +154,7 @@ namespace MyCouch
             return response.Content;
         }
 
-        public virtual IObservable<Row> Stream(Query query)
+        public virtual IObservable<Row> Query(Query query)
         {
             ThrowIfDisposed();
 
@@ -162,7 +162,7 @@ namespace MyCouch
             {
                 var response = await Client.Views.QueryAsync(query);
 
-                ThrowIfNotSuccessfulResponse("Stream", response);
+                ThrowIfNotSuccessfulResponse("Query", response);
 
                 foreach (var row in response.Rows)
                     o.OnNext(new Row(row.Id, row.Key, row.Value, row.IncludedDoc));
@@ -173,7 +173,7 @@ namespace MyCouch
             });
         }
 
-        public virtual IObservable<Row<TValue>> Stream<TValue>(Query query)
+        public virtual IObservable<Row<TValue>> Query<TValue>(Query query)
         {
             ThrowIfDisposed();
 
@@ -181,7 +181,7 @@ namespace MyCouch
             {
                 var response = await Client.Views.QueryAsync<TValue>(query);
 
-                ThrowIfNotSuccessfulResponse("Stream", response);
+                ThrowIfNotSuccessfulResponse("Query", response);
 
                 foreach (var row in response.Rows)
                     o.OnNext(new Row<TValue>(row.Id, row.Key, row.Value, row.IncludedDoc));
@@ -192,7 +192,7 @@ namespace MyCouch
             });
         }
 
-        public virtual IObservable<Row<TValue, TIncludedDoc>> Stream<TValue, TIncludedDoc>(Query query)
+        public virtual IObservable<Row<TValue, TIncludedDoc>> Query<TValue, TIncludedDoc>(Query query)
         {
             ThrowIfDisposed();
 
@@ -200,7 +200,7 @@ namespace MyCouch
             {
                 var response = await Client.Views.QueryAsync<TValue, TIncludedDoc>(query);
 
-                ThrowIfNotSuccessfulResponse("Stream", response);
+                ThrowIfNotSuccessfulResponse("Query", response);
 
                 foreach (var row in response.Rows)
                     o.OnNext(new Row<TValue, TIncludedDoc>(row.Id, row.Key, row.Value, row.IncludedDoc));
