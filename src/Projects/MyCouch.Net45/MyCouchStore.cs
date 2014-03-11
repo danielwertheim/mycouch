@@ -53,6 +53,39 @@ namespace MyCouch
                 throw new ObjectDisposedException(GetType().Name);
         }
 
+        public virtual async Task<DocumentHeader> StoreAsync(string doc)
+        {
+            ThrowIfDisposed();
+
+            var response = await Client.Documents.PostAsync(doc).ForAwait();
+
+            ThrowIfNotSuccessfulResponse("StoreAsync(doc:string)", response);
+
+            return new DocumentHeader(response.Id, response.Rev);
+        }
+
+        public virtual async Task<DocumentHeader> StoreAsync(string id, string doc)
+        {
+            ThrowIfDisposed();
+
+            var response = await Client.Documents.PutAsync(id, doc).ForAwait();
+
+            ThrowIfNotSuccessfulResponse("StoreAsync(id:string, doc:string)", response);
+
+            return new DocumentHeader(response.Id, response.Rev);
+        }
+
+        public virtual async Task<DocumentHeader> StoreAsync(string id, string rev, string doc)
+        {
+            ThrowIfDisposed();
+
+            var response = await Client.Documents.PutAsync(id, rev, doc).ForAwait();
+
+            ThrowIfNotSuccessfulResponse("StoreAsync(id:string, rev:string, doc:string)", response);
+
+            return new DocumentHeader(response.Id, response.Rev);
+        }
+
         public virtual async Task CopyAsync(string srcId, string newId)
         {
             ThrowIfDisposed();
@@ -160,7 +193,7 @@ namespace MyCouch
 
             return Observable.Create<Row>(async o =>
             {
-                var response = await Client.Views.QueryAsync(query);
+                var response = await Client.Views.QueryAsync(query).ForAwait();
 
                 ThrowIfNotSuccessfulResponse("Query", response);
 
@@ -179,7 +212,7 @@ namespace MyCouch
 
             return Observable.Create<Row<TValue>>(async o =>
             {
-                var response = await Client.Views.QueryAsync<TValue>(query);
+                var response = await Client.Views.QueryAsync<TValue>(query).ForAwait();
 
                 ThrowIfNotSuccessfulResponse("Query", response);
 
@@ -198,7 +231,7 @@ namespace MyCouch
 
             return Observable.Create<Row<TValue, TIncludedDoc>>(async o =>
             {
-                var response = await Client.Views.QueryAsync<TValue, TIncludedDoc>(query);
+                var response = await Client.Views.QueryAsync<TValue, TIncludedDoc>(query).ForAwait();
 
                 ThrowIfNotSuccessfulResponse("Query", response);
 

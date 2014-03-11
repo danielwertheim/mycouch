@@ -12,6 +12,9 @@ namespace MyCouch
     public interface IMyCouchStore : IDisposable
     {
         IMyCouchClient Client { get; }
+        Task<DocumentHeader> StoreAsync(string doc);
+        Task<DocumentHeader> StoreAsync(string id, string doc);
+        Task<DocumentHeader> StoreAsync(string id, string rev, string doc);
         Task CopyAsync(string srcId, string newId);
         Task CopyAsync(string srcId, string srcRev, string newId);
         Task ReplaceAsync(string srcId, string trgId, string trgRev);
