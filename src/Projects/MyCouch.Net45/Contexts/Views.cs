@@ -66,39 +66,39 @@ namespace MyCouch.Contexts
             }
         }
 
-        public virtual Task<ViewQueryResponse> QueryAsync(string designDocument, string viewname, Action<QueryViewRequestConfigurator> configurator)
+        public virtual Task<ViewQueryResponse> QueryAsync(string designDocument, string viewName, Action<QueryViewRequestConfigurator> configurator)
         {
             Ensure.That(designDocument, "designDocument").IsNotNullOrWhiteSpace();
-            Ensure.That(viewname, "viewname").IsNotNullOrWhiteSpace();
+            Ensure.That(viewName, "viewName").IsNotNullOrWhiteSpace();
             Ensure.That(configurator, "configurator").IsNotNull();
 
-            var request = CreateQueryViewRequest(designDocument, viewname);
+            var request = CreateQueryViewRequest(designDocument, viewName);
 
             request.Configure(configurator);
 
             return QueryAsync(request);
         }
 
-        public virtual Task<ViewQueryResponse<T>> QueryAsync<T>(string designDocument, string viewname, Action<QueryViewRequestConfigurator> configurator)
+        public virtual Task<ViewQueryResponse<T>> QueryAsync<T>(string designDocument, string viewName, Action<QueryViewRequestConfigurator> configurator)
         {
             Ensure.That(designDocument, "designDocument").IsNotNullOrWhiteSpace();
-            Ensure.That(viewname, "viewname").IsNotNullOrWhiteSpace();
+            Ensure.That(viewName, "viewName").IsNotNullOrWhiteSpace();
             Ensure.That(configurator, "configurator").IsNotNull();
 
-            var request = CreateQueryViewRequest(designDocument, viewname);
+            var request = CreateQueryViewRequest(designDocument, viewName);
 
             request.Configure(configurator);
 
             return QueryAsync<T>(request);
         }
 
-        public virtual Task<ViewQueryResponse<TValue, TIncludedDoc>> QueryAsync<TValue, TIncludedDoc>(string designDocument, string viewname, Action<QueryViewRequestConfigurator> configurator)
+        public virtual Task<ViewQueryResponse<TValue, TIncludedDoc>> QueryAsync<TValue, TIncludedDoc>(string designDocument, string viewName, Action<QueryViewRequestConfigurator> configurator)
         {
             Ensure.That(designDocument, "designDocument").IsNotNullOrWhiteSpace();
-            Ensure.That(viewname, "viewname").IsNotNullOrWhiteSpace();
+            Ensure.That(viewName, "viewName").IsNotNullOrWhiteSpace();
             Ensure.That(configurator, "configurator").IsNotNull();
 
-            var request = CreateQueryViewRequest(designDocument, viewname);
+            var request = CreateQueryViewRequest(designDocument, viewName);
 
             request.Configure(configurator);
 

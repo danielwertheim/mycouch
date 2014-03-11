@@ -27,7 +27,7 @@ namespace MyCouch.Net
             IsDisposed = false;
         }
 
-        public virtual void Dispose()
+        public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
@@ -35,8 +35,6 @@ namespace MyCouch.Net
 
         protected virtual void Dispose(bool disposing)
         {
-            ThrowIfDisposed();
-
             IsDisposed = true;
 
             if (!disposing)
