@@ -99,6 +99,9 @@
     <Compile Include="..\MyCouch.Net45.UnitTests\fakes\ConnectionFake.cs">
       <Link>Fakes\ConnectionFake.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45.UnitTests\QueryConfigurationTests.cs">
+      <Link>QueryConfigurationTests.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45.UnitTests\Requests\BulkRequestTests.cs">
       <Link>Requests\BulkRequestTests.cs</Link>
     </Compile>

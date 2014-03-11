@@ -127,6 +127,9 @@
     <Compile Include="..\MyCouch.Net45\DocumentAttribute.cs">
       <Link>DocumentAttribute.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\DocumentHeader.cs">
+      <Link>DocumentHeader.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\entityschemes\EntityIdMember.cs">
       <Link>EntitySchemes\EntityIdMember.cs</Link>
     </Compile>
@@ -199,6 +202,9 @@
     <Compile Include="..\MyCouch.Net45\IMyCouchClient.cs">
       <Link>IMyCouchClient.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\IMyCouchStore.cs">
+      <Link>IMyCouchStore.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\IViews.cs">
       <Link>IViews.cs</Link>
     </Compile>
@@ -234,6 +240,9 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\net\JsonContent.cs">
       <Link>Net\JsonContent.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Query.cs">
+      <Link>Query.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\BulkRequest.cs">
       <Link>Requests\BulkRequest.cs</Link>
@@ -501,6 +510,9 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\responses\ViewQueryResponse.cs">
       <Link>Responses\ViewQueryResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Row.cs">
+      <Link>Row.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\serialization\conventions\ISerializationConvention.cs">
       <Link>Serialization\Conventions\ISerializationConvention.cs</Link>

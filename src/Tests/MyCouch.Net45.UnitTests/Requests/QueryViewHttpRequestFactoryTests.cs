@@ -3,7 +3,6 @@ using System.Net.Http;
 using FluentAssertions;
 using MyCouch.Requests;
 using MyCouch.Requests.Factories;
-using MyCouch.Testing.TestData;
 using MyCouch.UnitTests.Fakes;
 using Xunit;
 

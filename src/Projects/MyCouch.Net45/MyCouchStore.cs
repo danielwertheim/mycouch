@@ -3,23 +3,18 @@ using System.Linq;
 using System.Net;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
+using EnsureThat;
 using MyCouch.Extensions;
-using MyCouch.Requests.Configurators;
 using MyCouch.Responses;
 
 namespace MyCouch
 {
-    /// <summary>
-    /// A somewhat opinionated abstraction over MyCouch which removes the
-    /// use of Http-responses.
-    /// If a non successful operation, an exception is thrown.
-    /// </summary>
-    public class MyCouchStore : IDisposable
+    public class MyCouchStore : IMyCouchStore
     {
-        public IMyCouchClient Client { get; protected set; }
         protected bool IsDisposed { get; private set; }
+
+        public IMyCouchClient Client { get; protected set; }
 
         public MyCouchStore(string dbUri) : this(new MyCouchClient(dbUri)) { }
 
@@ -27,6 +22,8 @@ namespace MyCouch
 
         public MyCouchStore(IMyCouchClient client)
         {
+            Ensure.That(client, "client").IsNotNull();
+
             Client = client;
             IsDisposed = false;
         }
@@ -141,7 +138,7 @@ namespace MyCouch
 
             var response = await Client.Documents.GetAsync(id, rev).ForAwait();
 
-            ThrowIfNotSuccessfulResponse("GetAsync", response, HttpStatusCode.NotFound);
+            ThrowIfNotSuccessfulResponse("GetByIdAsync", response, HttpStatusCode.NotFound);
 
             return response.Content;
         }
@@ -152,23 +149,23 @@ namespace MyCouch
 
             var response = await Client.Entities.GetAsync<TEntity>(id, rev);
 
-            ThrowIfNotSuccessfulResponse("GetAsync<TEntity>", response, HttpStatusCode.NotFound);
+            ThrowIfNotSuccessfulResponse("GetByIdAsync<TEntity>", response, HttpStatusCode.NotFound);
 
             return response.Content;
         }
 
-        public virtual IObservable<ViewQueryResponse.Row> Stream(string designDocument, string viewName, Action<QueryViewRequestConfigurator> configurator)
+        public virtual IObservable<Row> Stream(Query query)
         {
             ThrowIfDisposed();
 
-            return Observable.Create<ViewQueryResponse.Row>(async o =>
+            return Observable.Create<Row>(async o =>
             {
-                var response = await Client.Views.QueryAsync(designDocument, viewName, configurator);
+                var response = await Client.Views.QueryAsync(query);
 
-                ThrowIfNotSuccessfulResponse("QueryAsync", response);
+                ThrowIfNotSuccessfulResponse("Stream", response);
 
                 foreach (var row in response.Rows)
-                    o.OnNext(row);
+                    o.OnNext(new Row(row.Id, row.Key, row.Value, row.IncludedDoc));
 
                 o.OnCompleted();
 
@@ -176,25 +173,42 @@ namespace MyCouch
             });
         }
 
-        public virtual IObservable<ViewQueryResponse.Row[]> Query(string designDocument, string viewName, Action<QueryViewRequestConfigurator> configurator)
+        public virtual IObservable<Row<TValue>> Stream<TValue>(Query query)
         {
             ThrowIfDisposed();
 
-            return Client.Views.QueryAsync(designDocument, viewName, configurator)
-                .ToObservable()
-                .Select(r => r.Rows);
+            return Observable.Create<Row<TValue>>(async o =>
+            {
+                var response = await Client.Views.QueryAsync<TValue>(query);
 
-            //return Observable.Create<ViewQueryResponse.Row[]>(async o =>
-            //{
-            //    var response = Client.Views.QueryAsync(designDocument, viewName, configurator);
+                ThrowIfNotSuccessfulResponse("Stream", response);
 
-            //    ThrowIfNotSuccessfulResponse("QueryAsync", response);
+                foreach (var row in response.Rows)
+                    o.OnNext(new Row<TValue>(row.Id, row.Key, row.Value, row.IncludedDoc));
 
-            //    o.OnNext(response.Rows);
-            //    o.OnCompleted();
+                o.OnCompleted();
 
-            //    return Disposable.Empty;
-            //});
+                return Disposable.Empty;
+            });
+        }
+
+        public virtual IObservable<Row<TValue, TIncludedDoc>> Stream<TValue, TIncludedDoc>(Query query)
+        {
+            ThrowIfDisposed();
+
+            return Observable.Create<Row<TValue, TIncludedDoc>>(async o =>
+            {
+                var response = await Client.Views.QueryAsync<TValue, TIncludedDoc>(query);
+
+                ThrowIfNotSuccessfulResponse("Stream", response);
+
+                foreach (var row in response.Rows)
+                    o.OnNext(new Row<TValue, TIncludedDoc>(row.Id, row.Key, row.Value, row.IncludedDoc));
+
+                o.OnCompleted();
+
+                return Disposable.Empty;
+            });
         }
 
         protected virtual void ThrowIfNotSuccessfulResponse(string action, Response response, params HttpStatusCode[] allowedFailedStatusCodes)
@@ -212,21 +226,6 @@ namespace MyCouch
                 response.StatusCode,
                 response.Error,
                 response.Reason));
-        }
-    }
-
-#if !NETFX_CORE
-    [Serializable]
-#endif
-    public class DocumentHeader
-    {
-        public string Id { get; private set; }
-        public string Rev { get; private set; }
-
-        public DocumentHeader(string id, string rev)
-        {
-            Id = id;
-            Rev = rev;
         }
     }
 }
