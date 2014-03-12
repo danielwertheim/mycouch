@@ -20,21 +20,21 @@ namespace MyCouch
 
         public MyCouchClient(Uri dbUri) : this(new BasicHttpClientConnection(dbUri)) { }
 
-        public MyCouchClient(IConnection connection, MyCouchClientBootstraper bootstraper = null)
+        public MyCouchClient(IConnection connection, MyCouchClientBootstrapper bootstrapper = null)
         {
             Ensure.That(connection, "connection").IsNotNull();
 
             Connection = connection;
 
-            bootstraper = bootstraper ?? new MyCouchClientBootstraper();
+            bootstrapper = bootstrapper ?? new MyCouchClientBootstrapper();
 
-            Serializer = bootstraper.SerializerFn();
-            Changes = bootstraper.ChangesFn(Connection);
-            Attachments = bootstraper.AttachmentsFn(Connection);
-            Database = bootstraper.DatabasesFn(Connection);
-            Documents = bootstraper.DocumentsFn(Connection);
-            Entities = bootstraper.EntitiesFn(Connection);
-            Views = bootstraper.ViewsFn(Connection);
+            Serializer = bootstrapper.SerializerFn();
+            Changes = bootstrapper.ChangesFn(Connection);
+            Attachments = bootstrapper.AttachmentsFn(Connection);
+            Database = bootstrapper.DatabasesFn(Connection);
+            Documents = bootstrapper.DocumentsFn(Connection);
+            Entities = bootstrapper.EntitiesFn(Connection);
+            Views = bootstrapper.ViewsFn(Connection);
         }
 
         public void Dispose()

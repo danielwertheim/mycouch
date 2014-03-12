@@ -59,7 +59,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="MyCouchCloudantClient.cs" />
-    <Compile Include="MyCouchCloudantClientBootstraper.cs" />
+    <Compile Include="MyCouchCloudantClientBootstrapper.cs" />
     <Compile Include="Contexts\Searches.cs" />
     <Compile Include="IMyCouchCloudantClient.cs" />
     <Compile Include="Requests\Configurators\SearchIndexRequestConfigurator.cs" />

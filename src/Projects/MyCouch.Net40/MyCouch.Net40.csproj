@@ -211,8 +211,8 @@
     <Compile Include="..\MyCouch.Net45\MyCouchClient.cs">
       <Link>MyCouchClient.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\MyCouchClientBootstraper.cs">
-      <Link>MyCouchClientBootstraper.cs</Link>
+    <Compile Include="..\MyCouch.Net45\MyCouchClientBootstrapper.cs">
+      <Link>MyCouchClientBootstrapper.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\MyCouchException.cs">
       <Link>MyCouchException.cs</Link>

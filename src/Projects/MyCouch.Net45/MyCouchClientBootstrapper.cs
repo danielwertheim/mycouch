@@ -7,7 +7,7 @@ using MyCouch.Serialization.Meta;
 
 namespace MyCouch
 {
-    public class MyCouchClientBootstraper
+    public class MyCouchClientBootstrapper
     {
         /// <summary>
         /// Used e.g. for bootstraping components relying on plain serialization, <see cref="ISerializer"/>
@@ -95,7 +95,7 @@ namespace MyCouch
         /// </summary>
         public Func<IConnection, IViews> ViewsFn { get; set; }
 
-        public MyCouchClientBootstraper()
+        public MyCouchClientBootstrapper()
         {
             ConfigureChangesFn();
             ConfigureAttachmentsFn();
