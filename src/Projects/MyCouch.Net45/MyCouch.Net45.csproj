@@ -158,7 +158,6 @@
     <Compile Include="Requests\PutDatabaseRequest.cs" />
     <Compile Include="Requests\PutDocumentRequest.cs" />
     <Compile Include="Requests\PutEntityRequest.cs" />
-    <Compile Include="Requests\QuerySystemViewRequest.cs" />
     <Compile Include="Requests\QueryViewRequest.cs" />
     <Compile Include="Requests\ReplaceDocumentRequest.cs" />
     <Compile Include="Requests\Request.cs" />
@@ -223,6 +222,7 @@
     <Compile Include="Serialization\SerializationContractResolver.cs" />
     <Compile Include="Serialization\Writers\DocumentJsonWriter.cs" />
     <Compile Include="Stale.cs" />
+    <Compile Include="SystemViewIdentity.cs" />
     <Compile Include="ViewIdentity.cs" />
   </ItemGroup>
   <ItemGroup>

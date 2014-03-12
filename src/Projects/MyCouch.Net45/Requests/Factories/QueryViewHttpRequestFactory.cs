@@ -22,7 +22,7 @@ namespace MyCouch.Requests.Factories
 
         protected virtual string GenerateRequestUrl(QueryViewRequest request)
         {
-            if (request is QuerySystemViewRequest)
+            if (request.ViewIdentity is SystemViewIdentity)
             {
                 return string.Format("{0}/{1}{2}",
                     Connection.Address,

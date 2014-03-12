@@ -90,6 +90,15 @@ namespace MyCouch.Requests
         public QueryViewRequest(string designDocument, string viewName)
             : this(new ViewIdentity(designDocument, viewName)) { }
 
+        /// <summary>
+        /// Only system views like all_docs could be
+        /// queried without specifying a designDocument.
+        /// If a custom view is being targetted, use other cTor.
+        /// </summary>
+        /// <param name="viewName"></param>
+        public QueryViewRequest(string viewName)
+            : this(new SystemViewIdentity(viewName)) { }
+
         public QueryViewRequest(ViewIdentity viewIdentity)
         {
             Ensure.That(viewIdentity, "viewIdentity").IsNotNull();

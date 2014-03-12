@@ -401,9 +401,6 @@
     <Compile Include="..\MyCouch.Net45\requests\PutEntityRequest.cs">
       <Link>Requests\PutEntityRequest.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\requests\QuerySystemViewRequest.cs">
-      <Link>Requests\QuerySystemViewRequest.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Net45\requests\QueryViewRequest.cs">
       <Link>Requests\QueryViewRequest.cs</Link>
     </Compile>
@@ -592,6 +589,9 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\Stale.cs">
       <Link>Stale.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\SystemViewIdentity.cs">
+      <Link>SystemViewIdentity.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\ViewIdentity.cs">
       <Link>ViewIdentity.cs</Link>
