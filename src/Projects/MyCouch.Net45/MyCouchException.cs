@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
 using System.Runtime.Serialization;
 
 namespace MyCouch
@@ -7,14 +8,21 @@ namespace MyCouch
 #if !NETFX_CORE
     [Serializable]
 #endif
-    public class MyCouchException : AggregateException
+    public class MyCouchException : Exception
     {
-        public MyCouchException(string message)
-            : base(message)
-        { }
+        public HttpStatusCode HttpStatus { get; private set; }
+        public string Error { get; private set; }
+        public string Reason { get; private set; }
 
-        public MyCouchException(string message, IEnumerable<Exception> innerExceptions)
-            : base(message, innerExceptions)
+        public MyCouchException(HttpMethod httpMethod, HttpStatusCode httpStatus, Uri uri, string error, string reason)
+            : base(string.Format(
+                "MyCouch failed.{0}HttpMethod: {1}.{0}HttpStatus: {2}.{0}Uri:{3}.{0}Error: {4}.{0}Reason: {5}.{0}",
+                Environment.NewLine,
+                httpMethod,
+                httpStatus,
+                uri,
+                error,
+                reason))
         { }
 
 #if !NETFX_CORE

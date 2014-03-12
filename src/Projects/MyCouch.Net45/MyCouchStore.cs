@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Net;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
@@ -59,7 +58,7 @@ namespace MyCouch
 
             var response = await Client.Documents.PostAsync(doc).ForAwait();
 
-            ThrowIfNotSuccessfulResponse("StoreAsync(doc:string)", response);
+            ThrowIfNotSuccessfulResponse(response);
 
             return new DocumentHeader(response.Id, response.Rev);
         }
@@ -70,7 +69,7 @@ namespace MyCouch
 
             var response = await Client.Documents.PutAsync(id, doc).ForAwait();
 
-            ThrowIfNotSuccessfulResponse("StoreAsync(id:string, doc:string)", response);
+            ThrowIfNotSuccessfulResponse(response);
 
             return new DocumentHeader(response.Id, response.Rev);
         }
@@ -81,63 +80,95 @@ namespace MyCouch
 
             var response = await Client.Documents.PutAsync(id, rev, doc).ForAwait();
 
-            ThrowIfNotSuccessfulResponse("StoreAsync(id:string, rev:string, doc:string)", response);
+            ThrowIfNotSuccessfulResponse(response);
 
             return new DocumentHeader(response.Id, response.Rev);
         }
 
-        public virtual async Task CopyAsync(string srcId, string newId)
+        public virtual async Task<T> StoreAsync<T>(T entity) where T : class
+        {
+            Ensure.That(entity, "entity").IsNotNull();
+
+            ThrowIfDisposed();
+
+            var id = Client.Entities.Reflector.IdMember.GetValueFrom(entity);
+            var response = string.IsNullOrEmpty(id)
+                ? await Client.Entities.PostAsync(entity).ForAwait()
+                : await Client.Entities.PutAsync(entity).ForAwait();
+
+            ThrowIfNotSuccessfulResponse(response);
+
+            return response.Content;
+        }
+
+        public virtual async Task<DocumentHeader> CopyAsync(string srcId, string newId)
         {
             ThrowIfDisposed();
 
             var response = await Client.Documents.CopyAsync(srcId, newId).ForAwait();
 
-            ThrowIfNotSuccessfulResponse("CopyAsync", response);
+            ThrowIfNotSuccessfulResponse(response);
+
+            return new DocumentHeader(response.Id, response.Rev);
         }
 
-        public virtual async Task CopyAsync(string srcId, string srcRev, string newId)
+        public virtual async Task<DocumentHeader> CopyAsync(string srcId, string srcRev, string newId)
         {
             ThrowIfDisposed();
 
             var response = await Client.Documents.CopyAsync(srcId, srcRev, newId).ForAwait();
 
-            ThrowIfNotSuccessfulResponse("CopyAsync", response);
+            ThrowIfNotSuccessfulResponse(response);
+
+            return new DocumentHeader(response.Id, response.Rev);
         }
 
-        public virtual async Task ReplaceAsync(string srcId, string trgId, string trgRev)
+        public virtual async Task<DocumentHeader> ReplaceAsync(string srcId, string trgId, string trgRev)
         {
             ThrowIfDisposed();
 
             var response = await Client.Documents.ReplaceAsync(srcId, trgId, trgRev).ForAwait();
 
-            ThrowIfNotSuccessfulResponse("ReplaceAsync", response);
+            ThrowIfNotSuccessfulResponse(response);
+
+            return new DocumentHeader(response.Id, response.Rev);
         }
 
-        public virtual async Task ReplaceAsync(string srcId, string srcRev, string trgId, string trgRev)
+        public virtual async Task<DocumentHeader> ReplaceAsync(string srcId, string srcRev, string trgId, string trgRev)
         {
             ThrowIfDisposed();
 
             var response = await Client.Documents.ReplaceAsync(srcId, srcRev, trgId, trgRev).ForAwait();
 
-            ThrowIfNotSuccessfulResponse("ReplaceAsync", response);
+            ThrowIfNotSuccessfulResponse(response);
+
+            return new DocumentHeader(response.Id, response.Rev);
         }
 
-        public virtual async Task DeleteAsync(string id, string rev)
+        public virtual async Task<bool> DeleteAsync(string id, string rev)
         {
             ThrowIfDisposed();
 
             var response = await Client.Documents.DeleteAsync(id, rev).ForAwait();
+            if (response.StatusCode == HttpStatusCode.NotFound)
+                return false;
 
-            ThrowIfNotSuccessfulResponse("DeleteAsync", response, HttpStatusCode.NotFound);
+            ThrowIfNotSuccessfulResponse(response);
+
+            return true;
         }
 
-        public virtual async Task DeleteAsync<TEntity>(TEntity entity) where TEntity : class
+        public virtual async Task<bool> DeleteAsync<TEntity>(TEntity entity) where TEntity : class
         {
             ThrowIfDisposed();
 
             var response = await Client.Entities.DeleteAsync(entity).ForAwait();
+            if (response.StatusCode == HttpStatusCode.NotFound)
+                return false;
 
-            ThrowIfNotSuccessfulResponse("DeleteAsync<TEntity>", response, HttpStatusCode.NotFound);
+            ThrowIfNotSuccessfulResponse(response);
+
+            return true;
         }
 
         public virtual async Task<bool> ExistsAsync(string id, string rev = null)
@@ -149,7 +180,7 @@ namespace MyCouch
             if (response.StatusCode == HttpStatusCode.NotFound)
                 return false;
 
-            ThrowIfNotSuccessfulResponse("ExistsAsync", response);
+            ThrowIfNotSuccessfulResponse(response);
 
             return response.IsSuccess;
         }
@@ -160,7 +191,10 @@ namespace MyCouch
 
             var response = await Client.Documents.HeadAsync(id, rev).ForAwait();
 
-            ThrowIfNotSuccessfulResponse("GetHeaderAsync", response, HttpStatusCode.NotFound);
+            if (response.StatusCode == HttpStatusCode.NotFound)
+                return null;
+
+            ThrowIfNotSuccessfulResponse(response);
 
             return new DocumentHeader(response.Id, response.Rev);
         }
@@ -171,7 +205,10 @@ namespace MyCouch
 
             var response = await Client.Documents.GetAsync(id, rev).ForAwait();
 
-            ThrowIfNotSuccessfulResponse("GetByIdAsync", response, HttpStatusCode.NotFound);
+            if (response.StatusCode == HttpStatusCode.NotFound)
+                return null;
+
+            ThrowIfNotSuccessfulResponse(response);
 
             return response.Content;
         }
@@ -182,7 +219,10 @@ namespace MyCouch
 
             var response = await Client.Entities.GetAsync<TEntity>(id, rev);
 
-            ThrowIfNotSuccessfulResponse("GetByIdAsync<TEntity>", response, HttpStatusCode.NotFound);
+            if (response.StatusCode == HttpStatusCode.NotFound)
+                return null;
+
+            ThrowIfNotSuccessfulResponse(response);
 
             return response.Content;
         }
@@ -195,7 +235,7 @@ namespace MyCouch
             {
                 var response = await Client.Views.QueryAsync(query).ForAwait();
 
-                ThrowIfNotSuccessfulResponse("Query", response);
+                ThrowIfNotSuccessfulResponse(response);
 
                 foreach (var row in response.Rows)
                     o.OnNext(new Row(row.Id, row.Key, row.Value, row.IncludedDoc));
@@ -214,7 +254,7 @@ namespace MyCouch
             {
                 var response = await Client.Views.QueryAsync<TValue>(query).ForAwait();
 
-                ThrowIfNotSuccessfulResponse("Query", response);
+                ThrowIfNotSuccessfulResponse(response);
 
                 foreach (var row in response.Rows)
                     o.OnNext(new Row<TValue>(row.Id, row.Key, row.Value, row.IncludedDoc));
@@ -233,7 +273,7 @@ namespace MyCouch
             {
                 var response = await Client.Views.QueryAsync<TValue, TIncludedDoc>(query).ForAwait();
 
-                ThrowIfNotSuccessfulResponse("Query", response);
+                ThrowIfNotSuccessfulResponse(response);
 
                 foreach (var row in response.Rows)
                     o.OnNext(new Row<TValue, TIncludedDoc>(row.Id, row.Key, row.Value, row.IncludedDoc));
@@ -244,21 +284,12 @@ namespace MyCouch
             });
         }
 
-        protected virtual void ThrowIfNotSuccessfulResponse(string action, Response response, params HttpStatusCode[] allowedFailedStatusCodes)
+        protected virtual void ThrowIfNotSuccessfulResponse(Response response)
         {
             if (response.IsSuccess)
                 return;
 
-            if (allowedFailedStatusCodes != null && allowedFailedStatusCodes.Contains(response.StatusCode))
-                return;
-
-            throw new MyCouchException(string.Format(
-                "Exception while performing '{1}'{0}Status: {2}{0}Error: {3}{0}Reason: {4}{0}",
-                Environment.NewLine,
-                action,
-                response.StatusCode,
-                response.Error,
-                response.Reason));
+            throw new MyCouchException(response.RequestMethod, response.StatusCode, response.RequestUri, response.Error, response.Reason);
         }
     }
 }
