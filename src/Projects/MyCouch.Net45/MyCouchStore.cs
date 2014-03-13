@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
@@ -15,6 +16,8 @@ namespace MyCouch
 
         public IMyCouchClient Client { get; protected set; }
 
+        public Func<IScheduler> ObservableSubscribeOnScheduler { protected get; set; }
+
         public MyCouchStore(string dbUri) : this(new MyCouchClient(dbUri)) { }
 
         public MyCouchStore(Uri dbUri) : this(new MyCouchClient(dbUri)) { }
@@ -25,6 +28,7 @@ namespace MyCouch
 
             Client = client;
             IsDisposed = false;
+            ObservableSubscribeOnScheduler = () => TaskPoolScheduler.Default;
         }
 
         public void Dispose()
@@ -243,7 +247,7 @@ namespace MyCouch
                 o.OnCompleted();
 
                 return Disposable.Empty;
-            });
+            }).SubscribeOn(ObservableSubscribeOnScheduler());
         }
 
         public virtual IObservable<Row<TValue>> Query<TValue>(Query query)
@@ -262,7 +266,7 @@ namespace MyCouch
                 o.OnCompleted();
 
                 return Disposable.Empty;
-            });
+            }).SubscribeOn(ObservableSubscribeOnScheduler());
         }
 
         public virtual IObservable<Row<TValue, TIncludedDoc>> Query<TValue, TIncludedDoc>(Query query)
@@ -281,7 +285,7 @@ namespace MyCouch
                 o.OnCompleted();
 
                 return Disposable.Empty;
-            });
+            }).SubscribeOn(ObservableSubscribeOnScheduler());
         }
 
         protected virtual void ThrowIfNotSuccessfulResponse(Response response)

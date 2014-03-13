@@ -1,4 +1,5 @@
 using System;
+using System.Reactive.Concurrency;
 using System.Threading.Tasks;
 
 namespace MyCouch
@@ -12,6 +13,7 @@ namespace MyCouch
     public interface IMyCouchStore : IDisposable
     {
         IMyCouchClient Client { get; }
+        Func<IScheduler> ObservableSubscribeOnScheduler { set; }
         Task<DocumentHeader> StoreAsync(string doc);
         Task<DocumentHeader> StoreAsync(string id, string doc);
         Task<DocumentHeader> StoreAsync(string id, string rev, string doc);
