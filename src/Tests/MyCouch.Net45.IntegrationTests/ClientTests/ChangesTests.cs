@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Threading;
 using FluentAssertions;
 using MyCouch.Requests;
@@ -82,20 +83,18 @@ namespace MyCouch.IntegrationTests.ClientTests
             const int expectedNumOfChanges = 3;
             var cancellation = new CancellationTokenSource();
 
-            var changes = SUT.GetAsync(changesRequest, data => {
+            var changes = SUT.GetAsync(changesRequest, cancellation.Token).ForEachAsync((d, i) =>
+            {
                 Interlocked.Increment(ref numOfChanges);
-                if(numOfChanges == expectedNumOfChanges)
+                if (numOfChanges == expectedNumOfChanges)
                     cancellation.Cancel();
-            }, cancellation.Token);
+            });
 
             var postOfDoc = Client.Documents.PostAsync(ClientTestData.Artists.Artist1Json).Result;
             var putOfDoc = Client.Documents.PutAsync(postOfDoc.Id, postOfDoc.Rev, ClientTestData.Artists.Artist1Json).Result;
             var deleteOfDoc = Client.Documents.DeleteAsync(putOfDoc.Id, putOfDoc.Rev).Result;
 
-            //SpinWait.SpinUntil(() => cancellation.IsCancellationRequested);
-            var response = changes.Result;
-
-            response.IsSuccess.Should().BeTrue();
+            changes.Wait();
         }
 
         private string GetLastSequence()
