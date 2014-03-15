@@ -9,7 +9,7 @@ using MyCouch.Testing;
 using MyCouch.Testing.TestData;
 using Xunit;
 
-namespace MyCouch.IntegrationTests.ClientTests
+namespace MyCouch.IntegrationTests.CoreTests
 {
     public class ChangesTests : ClientTestsOf<IChanges>
     {
@@ -86,7 +86,7 @@ namespace MyCouch.IntegrationTests.ClientTests
             var changes = SUT.GetAsync(changesRequest, cancellation.Token).ForEachAsync((d, i) =>
             {
                 Interlocked.Increment(ref numOfChanges);
-                if (numOfChanges == expectedNumOfChanges)
+                if (numOfChanges >= expectedNumOfChanges)
                     cancellation.Cancel();
             });
 

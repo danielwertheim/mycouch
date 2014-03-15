@@ -112,29 +112,32 @@
     <Compile Include="..\MyCouch.Net45.IntegrationTests\ClientTestsOf.cs">
       <Link>ClientTestsOf.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.IntegrationTests\clienttests\AttachmentsTests.cs">
-      <Link>ClientTests\AttachmentsTests.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45.IntegrationTests\ClientTests\ChangesTests.cs">
-      <Link>ClientTests\ChangesTests.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45.IntegrationTests\ClientTests\DatabaseTests.cs">
-      <Link>ClientTests\DatabaseTests.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45.IntegrationTests\clienttests\DocumentsTests.cs">
-      <Link>ClientTests\DocumentsTests.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45.IntegrationTests\clienttests\EntitiesTests.cs">
-      <Link>ClientTests\EntitiesTests.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45.IntegrationTests\clienttests\ViewsTests.cs">
-      <Link>ClientTests\ViewsTests.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Net45.IntegrationTests\CloudantTestsOf.cs">
       <Link>CloudantTestsOf.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.net45.integrationtests\cloudanttests\SearchTests.cs">
       <Link>CloudantTests\SearchTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\CoreTests\AttachmentsTests.cs">
+      <Link>CoreTests\AttachmentsTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\CoreTests\ChangesTests.cs">
+      <Link>CoreTests\ChangesTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\CoreTests\DatabaseTests.cs">
+      <Link>CoreTests\DatabaseTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\CoreTests\DocumentsTests.cs">
+      <Link>CoreTests\DocumentsTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\CoreTests\EntitiesTests.cs">
+      <Link>CoreTests\EntitiesTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\CoreTests\MyCouchStoreTests.cs">
+      <Link>CoreTests\MyCouchStoreTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\CoreTests\ViewsTests.cs">
+      <Link>CoreTests\ViewsTests.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45.IntegrationTests\IntegrationTestsRuntime.cs">
       <Link>IntegrationTestsRuntime.cs</Link>

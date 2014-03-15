@@ -10,7 +10,7 @@ namespace MyCouch.IntegrationTests
         protected readonly TestEnvironment Environment;
         protected IMyCouchClient Client { get; set; }
 
-        protected ClientTestsOf() : this(IntegrationTestsRuntime.ClientEnvironment) { }
+        protected ClientTestsOf() : this(IntegrationTestsRuntime.CoreEnvironment) { }
 
         protected ClientTestsOf(TestEnvironment environment)
         {
@@ -33,6 +33,12 @@ namespace MyCouch.IntegrationTests
             CleanDb();
             Client.Dispose();
             Client = null;
+
+            var disposableSut = SUT as IDisposable;
+            if(disposableSut == null)
+                return;
+
+            disposableSut.Dispose();
         }
 
         protected void CleanDb()

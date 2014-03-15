@@ -11,7 +11,7 @@ namespace MyCouch.IntegrationTests
     {
         private const string TestEnvironmentsBaseUrl = "http://localhost:8991/testenvironments/";
 
-        internal static readonly TestEnvironment ClientEnvironment;
+        internal static readonly TestEnvironment CoreEnvironment;
         internal static readonly TestEnvironment TempClientEnvironment;
         internal static readonly TestEnvironment CloudantClientEnvironment;
 
@@ -19,7 +19,7 @@ namespace MyCouch.IntegrationTests
         {
             using (var c = new HttpClient())
             {
-                ClientEnvironment = GetTestEnvironment(c, "normal");
+                CoreEnvironment = GetTestEnvironment(c, "normal");
                 TempClientEnvironment = GetTestEnvironment(c, "temp");
                 CloudantClientEnvironment = GetTestEnvironment(c, "cloudant");
             }

@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using FluentAssertions;
+using MyCouch.Requests;
 using MyCouch.Testing;
 using MyCouch.Testing.TestData;
-using MyCouch.Requests;
 using Xunit;
 
-namespace MyCouch.IntegrationTests.ClientTests
+namespace MyCouch.IntegrationTests.CoreTests
 {
     public class DocumentsTests : ClientTestsOf<IDocuments>
     {

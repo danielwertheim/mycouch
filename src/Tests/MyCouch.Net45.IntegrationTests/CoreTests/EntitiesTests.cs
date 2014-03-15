@@ -4,7 +4,7 @@ using MyCouch.Testing.Model;
 using MyCouch.Testing.TestData;
 using Xunit;
 
-namespace MyCouch.IntegrationTests.ClientTests
+namespace MyCouch.IntegrationTests.CoreTests
 {
     public class EntitiesTests : ClientTestsOf<IEntities>
     {
