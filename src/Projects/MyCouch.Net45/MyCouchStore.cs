@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
@@ -35,15 +36,12 @@ namespace MyCouch
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+            IsDisposed = true;
         }
 
         protected virtual void Dispose(bool disposing)
         {
-            ThrowIfDisposed();
-
-            IsDisposed = true;
-
-            if (!disposing)
+            if (IsDisposed || !disposing)
                 return;
 
             Client.Dispose();
@@ -231,7 +229,7 @@ namespace MyCouch
             return response.Content;
         }
 
-        public virtual IObservable<Row> Query(Query query)
+        public virtual IObservable<Row> ObserveQuery(Query query)
         {
             ThrowIfDisposed();
 
@@ -250,7 +248,7 @@ namespace MyCouch
             }).SubscribeOn(ObservableSubscribeOnScheduler());
         }
 
-        public virtual IObservable<Row<TValue>> Query<TValue>(Query query)
+        public virtual IObservable<Row<TValue>> ObserveQuery<TValue>(Query query)
         {
             ThrowIfDisposed();
 
@@ -269,7 +267,7 @@ namespace MyCouch
             }).SubscribeOn(ObservableSubscribeOnScheduler());
         }
 
-        public virtual IObservable<Row<TValue, TIncludedDoc>> Query<TValue, TIncludedDoc>(Query query)
+        public virtual IObservable<Row<TValue, TIncludedDoc>> ObserveQuery<TValue, TIncludedDoc>(Query query)
         {
             ThrowIfDisposed();
 
@@ -294,6 +292,36 @@ namespace MyCouch
                 return;
 
             throw new MyCouchException(response.RequestMethod, response.StatusCode, response.RequestUri, response.Error, response.Reason);
+        }
+    }
+
+    public static class ObservableRowExtensions
+    {
+        public static List<Row> ToListOfRows(this IObservable<Row> ob)
+        {
+            var result = new List<Row>();
+
+            ob.ForEachAsync((row, i) => result.Add(row));
+
+            return result;
+        }
+
+        public static List<Row<TValue>> ToListOfRows<TValue>(this IObservable<Row<TValue>> ob)
+        {
+            var result = new List<Row<TValue>>();
+
+            ob.ForEachAsync((row, i) => result.Add(row));
+
+            return result;
+        }
+
+        public static List<Row<TValue, TIncludedDoc>> ToListOfRows<TValue, TIncludedDoc>(this IObservable<Row<TValue, TIncludedDoc>> ob)
+        {
+            var result = new List<Row<TValue, TIncludedDoc>>();
+
+            ob.ForEachAsync((row, i) => result.Add(row));
+
+            return result;
         }
     }
 }
