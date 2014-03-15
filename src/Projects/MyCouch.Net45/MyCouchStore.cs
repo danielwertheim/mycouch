@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
@@ -229,9 +228,44 @@ namespace MyCouch
             return response.Content;
         }
 
-        public virtual IObservable<Row> ObserveQuery(Query query)
+        public virtual IObservable<Row> ObservableQuery(ViewIdentity viewIdentity, Action<Query> queryConfig = null)
         {
             ThrowIfDisposed();
+
+            var query = new Query(viewIdentity);
+            if (queryConfig != null)
+                queryConfig(query);
+
+            return ObservableQuery(query);
+        }
+
+        public virtual IObservable<Row<TValue>> ObservableQuery<TValue>(ViewIdentity viewIdentity, Action<Query> queryConfig = null)
+        {
+            ThrowIfDisposed();
+
+            var query = new Query(viewIdentity);
+            if (queryConfig != null)
+                queryConfig(query);
+
+            return ObservableQuery<TValue>(query);
+        }
+
+        public virtual IObservable<Row<TValue, TIncludedDoc>> ObservableQuery<TValue, TIncludedDoc>(ViewIdentity viewIdentity, Action<Query> queryConfig = null)
+        {
+            ThrowIfDisposed();
+
+            var query = new Query(viewIdentity);
+            if (queryConfig != null)
+                queryConfig(query);
+
+            return ObservableQuery<TValue, TIncludedDoc>(query);
+        }
+
+        public virtual IObservable<Row> ObservableQuery(Query query)
+        {
+            ThrowIfDisposed();
+
+            Ensure.That(query, "query").IsNotNull();
 
             return Observable.Create<Row>(async o =>
             {
@@ -248,9 +282,11 @@ namespace MyCouch
             }).SubscribeOn(ObservableSubscribeOnScheduler());
         }
 
-        public virtual IObservable<Row<TValue>> ObserveQuery<TValue>(Query query)
+        public virtual IObservable<Row<TValue>> ObservableQuery<TValue>(Query query)
         {
             ThrowIfDisposed();
+
+            Ensure.That(query, "query").IsNotNull();
 
             return Observable.Create<Row<TValue>>(async o =>
             {
@@ -267,9 +303,11 @@ namespace MyCouch
             }).SubscribeOn(ObservableSubscribeOnScheduler());
         }
 
-        public virtual IObservable<Row<TValue, TIncludedDoc>> ObserveQuery<TValue, TIncludedDoc>(Query query)
+        public virtual IObservable<Row<TValue, TIncludedDoc>> ObservableQuery<TValue, TIncludedDoc>(Query query)
         {
             ThrowIfDisposed();
+
+            Ensure.That(query, "query").IsNotNull();
 
             return Observable.Create<Row<TValue, TIncludedDoc>>(async o =>
             {
@@ -292,36 +330,6 @@ namespace MyCouch
                 return;
 
             throw new MyCouchException(response.RequestMethod, response.StatusCode, response.RequestUri, response.Error, response.Reason);
-        }
-    }
-
-    public static class ObservableRowExtensions
-    {
-        public static List<Row> ToListOfRows(this IObservable<Row> ob)
-        {
-            var result = new List<Row>();
-
-            ob.ForEachAsync((row, i) => result.Add(row));
-
-            return result;
-        }
-
-        public static List<Row<TValue>> ToListOfRows<TValue>(this IObservable<Row<TValue>> ob)
-        {
-            var result = new List<Row<TValue>>();
-
-            ob.ForEachAsync((row, i) => result.Add(row));
-
-            return result;
-        }
-
-        public static List<Row<TValue, TIncludedDoc>> ToListOfRows<TValue, TIncludedDoc>(this IObservable<Row<TValue, TIncludedDoc>> ob)
-        {
-            var result = new List<Row<TValue, TIncludedDoc>>();
-
-            ob.ForEachAsync((row, i) => result.Add(row));
-
-            return result;
         }
     }
 }

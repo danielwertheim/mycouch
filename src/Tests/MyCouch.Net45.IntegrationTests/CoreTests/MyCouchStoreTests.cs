@@ -22,7 +22,7 @@ namespace MyCouch.IntegrationTests.CoreTests
             var storeJson = SUT.StoreAsync(ClientTestData.Artists.Artist1Json);
             storeJson.Result.Id.Should().Be(ClientTestData.Artists.Artist1Id);
             storeJson.Result.Rev.Should().NotBeNullOrWhiteSpace();
-            
+
             var getJsonById = SUT.GetByIdAsync(storeJson.Result.Id);
             getJsonById.Result.Should().NotBeNullOrWhiteSpace();
 
@@ -61,7 +61,7 @@ namespace MyCouch.IntegrationTests.CoreTests
         IPreserveStatePerFixture,
         IUseFixture<ViewsFixture>
     {
-        protected Artist[] Artists { get; set; }
+        protected Artist[] ArtistsById { get; set; }
 
         public ObservableQueryTests()
         {
@@ -71,351 +71,425 @@ namespace MyCouch.IntegrationTests.CoreTests
         public void SetFixture(ViewsFixture data)
         {
             data.Init(Environment);
-            Artists = data.Artists;
+            ArtistsById = data.Artists;
         }
 
         [Fact]
         public void When_no_key_with_sum_reduce_for_string_response_It_will_be_able_to_sum()
         {
-            var expectedSum = Artists.Sum(a => a.Albums.Count());
-            var query = new Query(ClientTestData.Views.ArtistsTotalNumOfAlbumsViewId).Reduce(true);
+            var expectedSum = ArtistsById.Sum(a => a.Albums.Count());
 
-            SUT.ObserveQuery(query).ForEachAsync((row, i) =>
-            {
-                i.Should().Be(0);
-                row.Value.Should().Be(expectedSum.ToString(MyCouchRuntime.NumberFormat));
-            });
+            SUT.ObservableQuery(ClientTestData.Views.ArtistsTotalNumOfAlbumsViewId, q => q.Reduce(true))
+                .ForEachAsync((row, i) =>
+                {
+                    i.Should().Be(0);
+                    row.Value.Should().Be(expectedSum.ToString(MyCouchRuntime.NumberFormat));
+                })
+                .ContinueWith(t => t.IsFaulted.Should().BeFalse());
         }
 
         [Fact]
         public void When_no_key_with_sum_reduce_for_dynamic_response_It_will_be_able_to_sum()
         {
-            var expectedSum = Artists.Sum(a => a.Albums.Count());
-            var query = new Query(ClientTestData.Views.ArtistsTotalNumOfAlbumsViewId).Reduce(true);
+            var expectedSum = ArtistsById.Sum(a => a.Albums.Count());
 
-            SUT.ObserveQuery<dynamic>(query).ForEachAsync((row, i) =>
-            {
-                i.Should().Be(0);
-                ((long)row.Value).Should().Be(expectedSum);
-            });
+            SUT.ObservableQuery<dynamic>(ClientTestData.Views.ArtistsTotalNumOfAlbumsViewId, q => q.Reduce(true))
+                .ForEachAsync((row, i) =>
+                {
+                    i.Should().Be(0);
+                    ((long)row.Value).Should().Be(expectedSum);
+                })
+                .ContinueWith(t => t.IsFaulted.Should().BeFalse());
         }
 
         [Fact]
         public void When_no_key_with_sum_reduce_for_typed_response_It_will_be_able_to_sum()
         {
-            var expectedSum = Artists.Sum(a => a.Albums.Count());
-            var query = new Query(ClientTestData.Views.ArtistsTotalNumOfAlbumsViewId).Reduce(true);
+            var expectedSum = ArtistsById.Sum(a => a.Albums.Count());
 
-            SUT.ObserveQuery<int>(query).ForEachAsync((row, i) =>
-            {
-                i.Should().Be(0);
-                row.Value.Should().Be(expectedSum);
-            });
+            SUT.ObservableQuery<int>(ClientTestData.Views.ArtistsTotalNumOfAlbumsViewId, q => q.Reduce(true))
+                .ForEachAsync((row, i) =>
+                {
+                    i.Should().Be(0);
+                    row.Value.Should().Be(expectedSum);
+                })
+                .ContinueWith(t => t.IsFaulted.Should().BeFalse());
         }
 
         [Fact]
         public void When_IncludeDocs_and_no_value_is_returned_for_string_response_Then_the_included_docs_are_extracted()
         {
-            var query = new Query(ClientTestData.Views.ArtistsNameNoValueViewId).IncludeDocs(true);
-
             var len = 0;
-            SUT.ObserveQuery(query).ForEachAsync((row, i) =>
-            {
-                len++;
-                CustomAsserts.AreValueEqual(Artists[i], Client.Entities.Serializer.Deserialize<Artist>(row.IncludedDoc));
-            }).ContinueWith(t => len.Should().Be(Artists.Length));
+            SUT.ObservableQuery(ClientTestData.Views.ArtistsNameNoValueViewId, q => q.IncludeDocs(true))
+                .ForEachAsync((row, i) =>
+                {
+                    len++;
+                    ArtistsById[i].ShouldBe().ValueEqual(Client.Entities.Serializer.Deserialize<Artist>(row.IncludedDoc));
+                })
+                .ContinueWith(t => len.Should().Be(ArtistsById.Length));
         }
 
         [Fact]
         public void When_IncludeDocs_and_no_value_is_returned_for_entity_response_Then_the_included_docs_are_extracted()
         {
-            var query = new Query(ClientTestData.Views.ArtistsNameNoValueViewId).IncludeDocs(true);
-
             var len = 0;
-            SUT.ObserveQuery<string, Artist>(query).ForEachAsync((row, i) =>
-            {
-                len++;
-                CustomAsserts.AreValueEqual(Artists[i], row.IncludedDoc);
-            }).ContinueWith(t => len.Should().Be(Artists.Length));
+            SUT.ObservableQuery<string, Artist>(ClientTestData.Views.ArtistsNameNoValueViewId, q => q.IncludeDocs(true))
+                .ForEachAsync((row, i) =>
+                {
+                    len++;
+                    ArtistsById[i].ShouldBe().ValueEqual(row.IncludedDoc);
+                })
+                .ContinueWith(t => len.Should().Be(ArtistsById.Length));
         }
 
         [Fact]
         public void When_IncludeDocs_of_non_array_doc_and_null_value_is_returned_Then_the_neither_included_docs_nor_value_is_extracted()
         {
-            var query = new Query(ClientTestData.Views.ArtistsNameNoValueViewId).IncludeDocs(true);
-
             var len = 0;
-            SUT.ObserveQuery<string[], string[]>(query).ForEachAsync((row, i) =>
-            {
-                len++;
-                row.Value.Should().BeNull();
-                row.IncludedDoc.Should().BeNull();
-            }).ContinueWith(t => len.Should().Be(Artists.Length));
+            SUT.ObservableQuery<string[], string[]>(ClientTestData.Views.ArtistsNameNoValueViewId, q => q.IncludeDocs(true))
+                .ForEachAsync((row, i) =>
+                {
+                    len++;
+                    row.Value.Should().BeNull();
+                    row.IncludedDoc.Should().BeNull();
+                })
+                .ContinueWith(t => len.Should().Be(ArtistsById.Length));
         }
 
-        //[Fact]
-        //public void When_Skipping_2_of_10_using_json_Then_8_rows_are_returned()
-        //{
-        //    var artists = Artists.Skip(2);
-        //    var query = new QueryViewRequest(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Skip(2));
+        [Fact]
+        public void When_Skipping_2_of_10_using_json_Then_8_rows_are_returned()
+        {
+            const int skip = 2;
+            var albums = ArtistsById.Skip(skip).Select(a => Client.Serializer.Serialize(a.Albums)).ToArray();
 
-        //    var response = SUT.QueryAsync(query).Result;
+            var values = SUT.ObservableQuery(ClientTestData.Views.ArtistsAlbumsViewId, q => q.Skip(skip))
+                .ToRowList()
+                .OrderBy(r => r.Id)
+                .Select(r => r.Value)
+                .ToArray();
 
-        //    response.Rows = response.Rows.OrderBy(r => r.Id).ToArray();
-        //    response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Select(a => Client.Serializer.Serialize(a.Albums)).ToArray());
-        //}
+            values.ShouldBe().ValueEqual(albums);
+        }
 
-        //[Fact]
-        //public void When_Skipping_2_of_10_using_json_array_Then_8_rows_are_returned()
-        //{
-        //    var artists = Artists.Skip(2);
-        //    var query = new QueryViewRequest(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Skip(2));
+        [Fact]
+        public void When_Skipping_2_of_10_using_json_array_Then_8_rows_are_returned()
+        {
+            const int skip = 2;
+            var albums = ArtistsById.Skip(skip).Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray();
+            
+            var values = SUT.ObservableQuery<string[]>(ClientTestData.Views.ArtistsAlbumsViewId, q => q.Skip(skip))
+                .ToRowList()
+                .OrderBy(r => r.Id)
+                .Select(r => r.Value)
+                .ToArray();
 
-        //    var response = SUT.QueryAsync<string[]>(query).Result;
+            values.ShouldBe().ValueEqual(albums);
+        }
 
-        //    response.Rows = response.Rows.OrderBy(r => r.Id).ToArray();
-        //    response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray());
-        //}
+        [Fact]
+        public void When_Skipping_2_of_10_using_entities_Then_8_rows_are_returned()
+        {
+            const int skip = 2;
+            var albums = ArtistsById.Skip(skip).Select(a => a.Albums).ToArray();
 
-        //[Fact]
-        //public void When_Skipping_2_of_10_using_entities_Then_8_rows_are_returned()
-        //{
-        //    var artists = Artists.Skip(2);
-        //    var query = new QueryViewRequest(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Skip(2));
+            var values = SUT.ObservableQuery<Album[]>(ClientTestData.Views.ArtistsAlbumsViewId, q => q.Skip(skip))
+                .ToRowList()
+                .OrderBy(r => r.Id)
+                .Select(r => r.Value)
+                .ToArray();
 
-        //    var response = SUT.QueryAsync<Album[]>(query).Result;
+            values.ShouldBe().ValueEqual(albums);
+        }
 
-        //    response.Rows = response.Rows.OrderBy(r => r.Id).ToArray();
-        //    response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Select(a => a.Albums).ToArray());
-        //}
+        [Fact]
+        public void When_Limit_to_2_using_json_Then_2_rows_are_returned()
+        {
+            const int limit = 2;
+            var albums = ArtistsById.Take(limit).Select(a => Client.Serializer.Serialize(a.Albums)).ToArray();
 
-        //[Fact]
-        //public void When_Limit_to_2_using_json_Then_2_rows_are_returned()
-        //{
-        //    var artists = Artists.Take(2);
-        //    var query = new QueryViewRequest(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Limit(2));
+            var values = SUT.ObservableQuery(ClientTestData.Views.ArtistsAlbumsViewId, q => q.Limit(limit))
+                .ToRowList()
+                .OrderBy(r => r.Id)
+                .Select(r => r.Value)
+                .ToArray();
 
-        //    var response = SUT.QueryAsync(query).Result;
+            values.ShouldBe().ValueEqual(albums);
+        }
 
-        //    response.Rows = response.Rows.OrderBy(r => r.Id).ToArray();
-        //    response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Select(a => Client.Serializer.Serialize(a.Albums)).ToArray());
-        //}
+        [Fact]
+        public void When_Limit_to_2_using_json_array_Then_2_rows_are_returned()
+        {
+            const int limit = 2;
+            var albums = ArtistsById.Take(limit).Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray();
 
-        //[Fact]
-        //public void When_Limit_to_2_using_json_array_Then_2_rows_are_returned()
-        //{
-        //    var artists = Artists.Take(2);
-        //    var query = new QueryViewRequest(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Limit(2));
+            var values = SUT.ObservableQuery<string[]>(ClientTestData.Views.ArtistsAlbumsViewId, q => q.Limit(limit))
+                .ToRowList()
+                .OrderBy(r => r.Id)
+                .Select(r => r.Value)
+                .ToArray();
 
-        //    var response = SUT.QueryAsync<string[]>(query).Result;
+            values.ShouldBe().ValueEqual(albums);
+        }
 
-        //    response.Rows = response.Rows.OrderBy(r => r.Id).ToArray();
-        //    response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray());
-        //}
+        [Fact]
+        public void When_Limit_to_2_using_entities_Then_2_rows_are_returned()
+        {
+            const int limit = 2;
+            var albums = ArtistsById.Take(limit).Select(a => a.Albums).ToArray();
 
-        //[Fact]
-        //public void When_Limit_to_2_using_entities_Then_2_rows_are_returned()
-        //{
-        //    var artists = Artists.Take(2);
-        //    var query = new QueryViewRequest(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Limit(2));
+            var values = SUT.ObservableQuery<Album[]>(ClientTestData.Views.ArtistsAlbumsViewId, q => q.Limit(limit))
+                .ToRowList()
+                .OrderBy(r => r.Id)
+                .Select(r => r.Value)
+                .ToArray();
 
-        //    var response = SUT.QueryAsync<Album[]>(query).Result;
+            values.ShouldBe().ValueEqual(albums);
+        }
 
-        //    response.Rows = response.Rows.OrderBy(r => r.Id).ToArray();
-        //    response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Select(a => a.Albums).ToArray());
-        //}
+        [Fact]
+        public void When_Key_is_specified_using_json_Then_the_matching_row_is_returned()
+        {
+            var artist = ArtistsById[2];
 
-        //[Fact]
-        //public void When_Key_is_specified_using_json_Then_the_matching_row_is_returned()
-        //{
-        //    var artist = Artists[2];
-        //    var query = new QueryViewRequest(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Key(artist.Name));
+            var values = SUT.ObservableQuery(ClientTestData.Views.ArtistsAlbumsViewId, q => q.Key(artist.Name))
+                .ToRowList()
+                .OrderBy(r => r.Id)
+                .Select(r => r.Value)
+                .ToArray();
 
-        //    var response = SUT.QueryAsync(query).Result;
+            values.ShouldBe().ValueEqual(new[] {Client.Serializer.Serialize(artist.Albums)});
+        }
 
-        //    response.Should().BeSuccessfulGet(new[] { Client.Serializer.Serialize(artist.Albums) });
-        //}
+        [Fact]
+        public void When_Key_is_specified_using_json_array_Then_the_matching_row_is_returned()
+        {
+            var artist = ArtistsById[2];
 
-        //[Fact]
-        //public void When_Key_is_specified_using_json_array_Then_the_matching_row_is_returned()
-        //{
-        //    var artist = Artists[2];
-        //    var query = new QueryViewRequest(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Key(artist.Name));
+            var values = SUT.ObservableQuery<string[]>(ClientTestData.Views.ArtistsAlbumsViewId, q => q.Key(artist.Name))
+                .ToRowList()
+                .OrderBy(r => r.Id)
+                .Select(r => r.Value)
+                .ToArray();
 
-        //    var response = SUT.QueryAsync<string[]>(query).Result;
+            values.ShouldBe().ValueEqual(new[] { artist.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray() });
+        }
 
-        //    response.Should().BeSuccessfulGet(new[] { artist.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray() });
-        //}
+        [Fact]
+        public void When_Key_is_specified_using_entities_Then_the_matching_row_is_returned()
+        {
+            var artist = ArtistsById[2];
 
-        //[Fact]
-        //public void When_Key_is_specified_using_entities_Then_the_matching_row_is_returned()
-        //{
-        //    var artist = Artists[2];
-        //    var query = new QueryViewRequest(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Key(artist.Name));
+            var values = SUT.ObservableQuery<Album[]>(ClientTestData.Views.ArtistsAlbumsViewId, q => q.Key(artist.Name))
+                .ToRowList()
+                .OrderBy(r => r.Id)
+                .Select(r => r.Value)
+                .ToArray();
 
-        //    var response = SUT.QueryAsync<Album[]>(query).Result;
+            values.ShouldBe().ValueEqual(new[] { artist.Albums });
+        }
 
-        //    response.Should().BeSuccessfulGet(new[] { artist.Albums });
-        //}
+        [Fact]
+        public void When_Keys_are_specified_using_json_Then_matching_rows_are_returned()
+        {
+            var artists = ArtistsById.Skip(2).Take(3).ToArray();
+            var keys = artists.Select(a => a.Name).ToArray();
 
-        //[Fact]
-        //public void When_Keys_are_specified_using_json_Then_matching_rows_are_returned()
-        //{
-        //    var artists = Artists.Skip(2).Take(3).ToArray();
-        //    var keys = artists.Select(a => a.Name).ToArray();
-        //    var query = new QueryViewRequest(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Keys(keys));
+            var values = SUT.ObservableQuery(ClientTestData.Views.ArtistsAlbumsViewId, q => q.Keys(keys))
+                .ToRowList()
+                .OrderBy(r => r.Id)
+                .Select(r => r.Value)
+                .ToArray();
 
-        //    var response = SUT.QueryAsync(query).Result;
+            values.ShouldBe().ValueEqual(artists.Select(a => Client.Serializer.Serialize(a.Albums)).ToArray());
+        }
 
-        //    response.Rows = response.Rows.OrderBy(r => r.Id).ToArray();
-        //    response.Should().BeSuccessfulPost(artists.OrderBy(a => a.ArtistId).Select(a => Client.Serializer.Serialize(a.Albums)).ToArray());
-        //}
+        [Fact]
+        public void When_Keys_are_specified_using_json_array_Then_matching_rows_are_returned()
+        {
+            var artists = ArtistsById.Skip(2).Take(3).ToArray();
+            var keys = artists.Select(a => a.Name).ToArray();
 
-        //[Fact]
-        //public void When_Keys_are_specified_using_json_array_Then_matching_rows_are_returned()
-        //{
-        //    var artists = Artists.Skip(2).Take(3).ToArray();
-        //    var keys = artists.Select(a => a.Name).ToArray();
-        //    var query = new QueryViewRequest(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Keys(keys));
+            var values = SUT.ObservableQuery<string[]>(ClientTestData.Views.ArtistsAlbumsViewId, q => q.Keys(keys))
+                .ToRowList()
+                .OrderBy(r => r.Id)
+                .Select(r => r.Value)
+                .ToArray();
 
-        //    var response = SUT.QueryAsync<string[]>(query).Result;
+            values.ShouldBe().ValueEqual(artists.Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray());
+        }
 
-        //    response.Rows = response.Rows.OrderBy(r => r.Id).ToArray();
-        //    response.Should().BeSuccessfulPost(artists.OrderBy(a => a.ArtistId).Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray());
-        //}
+        [Fact]
+        public void When_Keys_are_specified_using_entities_Then_matching_rows_are_returned()
+        {
+            var artists = ArtistsById.Skip(2).Take(3).ToArray();
+            var keys = artists.Select(a => a.Name).ToArray();
 
-        //[Fact]
-        //public void When_Keys_are_specified_using_entities_Then_matching_rows_are_returned()
-        //{
-        //    var artists = Artists.Skip(2).Take(3).ToArray();
-        //    var keys = artists.Select(a => a.Name).ToArray();
-        //    var query = new QueryViewRequest(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg.Keys(keys));
+            var values = SUT.ObservableQuery<Album[]>(ClientTestData.Views.ArtistsAlbumsViewId, q => q.Keys(keys))
+                .ToRowList()
+                .OrderBy(r => r.Id)
+                .Select(r => r.Value)
+                .ToArray();
 
-        //    var response = SUT.QueryAsync<Album[]>(query).Result;
+            values.ShouldBe().ValueEqual(artists.Select(a => a.Albums).ToArray());
+        }
 
-        //    response.Rows = response.Rows.OrderBy(r => r.Id).ToArray();
-        //    response.Should().BeSuccessfulPost(artists.OrderBy(a => a.ArtistId).Select(a => a.Albums).ToArray());
-        //}
+        [Fact]
+        public void When_StartKey_and_EndKey_are_specified_using_json_Then_matching_rows_are_returned()
+        {
+            var artists = ArtistsById.Skip(2).Take(5).ToArray();
 
-        //[Fact]
-        //public void When_StartKey_and_EndKey_are_specified_using_json_Then_matching_rows_are_returned()
-        //{
-        //    var artists = Artists.Skip(2).Take(5).ToArray();
-        //    var query = new QueryViewRequest(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg
-        //        .StartKey(artists.First().Name)
-        //        .EndKey(artists.Last().Name));
+            var values = SUT.ObservableQuery(
+                ClientTestData.Views.ArtistsAlbumsViewId,
+                q => q
+                    .StartKey(artists.First().Name)
+                    .EndKey(artists.Last().Name)
+                )
+                .ToRowList()
+                .OrderBy(r => r.Id)
+                .Select(r => r.Value)
+                .ToArray();
 
-        //    var response = SUT.QueryAsync(query).Result;
+            values.ShouldBe().ValueEqual(artists.Select(a => Client.Serializer.Serialize(a.Albums)).ToArray());
+        }
 
-        //    response.Rows = response.Rows.OrderBy(r => r.Id).ToArray();
-        //    response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Select(a => Client.Serializer.Serialize(a.Albums)).ToArray());
-        //}
+        [Fact]
+        public void When_StartKey_and_EndKey_are_specified_using_json_array_Then_matching_rows_are_returned()
+        {
+            var artists = ArtistsById.Skip(2).Take(5).ToArray();
 
-        //[Fact]
-        //public void When_StartKey_and_EndKey_are_specified_using_json_array_Then_matching_rows_are_returned()
-        //{
-        //    var artists = Artists.Skip(2).Take(5).ToArray();
-        //    var query = new QueryViewRequest(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg
-        //        .StartKey(artists.First().Name)
-        //        .EndKey(artists.Last().Name));
+            var values = SUT.ObservableQuery<string[]>(
+                ClientTestData.Views.ArtistsAlbumsViewId,
+                q => q
+                    .StartKey(artists.First().Name)
+                    .EndKey(artists.Last().Name)
+                )
+                .ToRowList()
+                .OrderBy(r => r.Id)
+                .Select(r => r.Value)
+                .ToArray();
 
-        //    var response = SUT.QueryAsync<string[]>(query).Result;
+            values.ShouldBe().ValueEqual(artists.Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray());
+        }
 
-        //    response.Rows = response.Rows.OrderBy(r => r.Id).ToArray();
-        //    response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray());
-        //}
+        [Fact]
+        public void When_StartKey_and_EndKey_are_specified_using_entities_Then_matching_rows_are_returned()
+        {
+            var artists = ArtistsById.Skip(2).Take(5).ToArray();
 
-        //[Fact]
-        //public void When_StartKey_and_EndKey_are_specified_using_entities_Then_matching_rows_are_returned()
-        //{
-        //    var artists = Artists.Skip(2).Take(5).ToArray();
-        //    var query = new QueryViewRequest(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg
-        //        .StartKey(artists.First().Name)
-        //        .EndKey(artists.Last().Name));
+            var values = SUT.ObservableQuery<Album[]>(
+                ClientTestData.Views.ArtistsAlbumsViewId,
+                q => q
+                    .StartKey(artists.First().Name)
+                    .EndKey(artists.Last().Name)
+                )
+                .ToRowList()
+                .OrderBy(r => r.Id)
+                .Select(r => r.Value)
+                .ToArray();
 
-        //    var response = SUT.QueryAsync<Album[]>(query).Result;
+            values.ShouldBe().ValueEqual(artists.Select(a => a.Albums).ToArray());
+        }
 
-        //    response.Rows = response.Rows.OrderBy(r => r.Id).ToArray();
-        //    response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Select(a => a.Albums).ToArray());
-        //}
+        [Fact]
+        public void When_StartKey_and_EndKey_with_non_inclusive_end_are_specified_using_json_Then_matching_rows_are_returned()
+        {
+            var artists = ArtistsById.Skip(2).Take(5).ToArray();
 
-        //[Fact]
-        //public void When_StartKey_and_EndKey_with_non_inclusive_end_are_specified_using_json_Then_matching_rows_are_returned()
-        //{
-        //    var artists = Artists.Skip(2).Take(5).ToArray();
-        //    var query = new QueryViewRequest(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg
-        //        .StartKey(artists.First().Name)
-        //        .EndKey(artists.Last().Name)
-        //        .InclusiveEnd(false));
+            var values = SUT.ObservableQuery(
+                ClientTestData.Views.ArtistsAlbumsViewId,
+                q => q
+                    .StartKey(artists.First().Name)
+                    .EndKey(artists.Last().Name)
+                    .InclusiveEnd(false)
+                )
+                .ToRowList()
+                .OrderBy(r => r.Id)
+                .Select(r => r.Value)
+                .ToArray();
 
-        //    var response = SUT.QueryAsync(query).Result;
+            values.ShouldBe().ValueEqual(artists.Take(artists.Length - 1).Select(a => Client.Serializer.Serialize(a.Albums)).ToArray());
+        }
 
-        //    response.Rows = response.Rows.OrderBy(r => r.Id).ToArray();
-        //    response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Take(artists.Length - 1).Select(a => Client.Serializer.Serialize(a.Albums)).ToArray());
-        //}
+        [Fact]
+        public void When_StartKey_and_EndKey_with_non_inclusive_end_are_specified_using_json_array_Then_matching_rows_are_returned()
+        {
+            var artists = ArtistsById.Skip(2).Take(5).ToArray();
 
-        //[Fact]
-        //public void When_StartKey_and_EndKey_with_non_inclusive_end_are_specified_using_json_array_Then_matching_rows_are_returned()
-        //{
-        //    var artists = Artists.Skip(2).Take(5).ToArray();
-        //    var query = new QueryViewRequest(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg
-        //        .StartKey(artists.First().Name)
-        //        .EndKey(artists.Last().Name)
-        //        .InclusiveEnd(false));
+            var values = SUT.ObservableQuery<string[]>(
+                ClientTestData.Views.ArtistsAlbumsViewId,
+                q => q
+                    .StartKey(artists.First().Name)
+                    .EndKey(artists.Last().Name)
+                    .InclusiveEnd(false)
+                )
+                .ToRowList()
+                .OrderBy(r => r.Id)
+                .Select(r => r.Value)
+                .ToArray();
 
-        //    var response = SUT.QueryAsync<string[]>(query).Result;
+            values.ShouldBe().ValueEqual(artists.Take(artists.Length - 1).Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray());
+        }
 
-        //    response.Rows = response.Rows.OrderBy(r => r.Id).ToArray();
-        //    response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Take(artists.Length - 1).Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray());
-        //}
+        [Fact]
+        public void When_StartKey_and_EndKey_with_non_inclusive_end_are_specified_using_entities_Then_matching_rows_are_returned()
+        {
+            var artists = ArtistsById.Skip(2).Take(5).ToArray();
 
-        //[Fact]
-        //public void When_StartKey_and_EndKey_with_non_inclusive_end_are_specified_using_entities_Then_matching_rows_are_returned()
-        //{
-        //    var artists = Artists.Skip(2).Take(5).ToArray();
-        //    var query = new QueryViewRequest(ClientTestData.Views.ArtistsAlbumsViewId).Configure(cfg => cfg
-        //        .StartKey(artists.First().Name)
-        //        .EndKey(artists.Last().Name)
-        //        .InclusiveEnd(false));
+            var values = SUT.ObservableQuery<Album[]>(
+                ClientTestData.Views.ArtistsAlbumsViewId,
+                q => q
+                    .StartKey(artists.First().Name)
+                    .EndKey(artists.Last().Name)
+                    .InclusiveEnd(false)
+                )
+                .ToRowList()
+                .OrderBy(r => r.Id)
+                .Select(r => r.Value)
+                .ToArray();
 
-        //    var response = SUT.QueryAsync<Album[]>(query).Result;
+            values.ShouldBe().ValueEqual(artists.Take(artists.Length - 1).Select(a => a.Albums).ToArray());
+        }
 
-        //    response.Rows = response.Rows.OrderBy(r => r.Id).ToArray();
-        //    response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Take(artists.Length - 1).Select(a => a.Albums).ToArray());
-        //}
+        [Fact]
+        public void When_skip_two_of_ten_It_should_return_the_other_eight()
+        {
+            const int skip = 2;
+            var artists = ArtistsById.Skip(skip).ToArray();
 
-        //[Fact]
-        //public void When_skip_two_of_ten_It_should_return_the_other_eight()
-        //{
-        //    var query = new QueryViewRequest(ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId).Configure(cfg => cfg
-        //        .Skip(2));
+            var values = SUT.ObservableQuery<Artist>(ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId, q => q.Skip(skip))
+                .ToRowList()
+                .OrderBy(r => r.Id)
+                .Select(r => r.Value)
+                .ToArray();
 
-        //    var response = SUT.QueryAsync<Artist>(query).Result;
+            values.ShouldBe().ValueEqual(artists);
+        }
 
-        //    response.Should().BeSuccessfulGet(8);
-        //}
+        [Fact]
+        public void When_limit_is_two_of_ten_It_should_return_the_two_first_artists()
+        {
+            const int limit = 2;
+            var artists = ArtistsById.Take(limit).ToArray();
 
-        //[Fact]
-        //public void When_limit_is_two_of_ten_It_should_return_two()
-        //{
-        //    var query = new QueryViewRequest(ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId).Configure(cfg => cfg
-        //        .Limit(2));
+            var values = SUT.ObservableQuery<Artist>(ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId, q => q.Limit(limit))
+                .ToRowList()
+                .OrderBy(r => r.Id)
+                .Select(r => r.Value)
+                .ToArray();
 
-        //    var response = SUT.QueryAsync<Artist>(query).Result;
+            values.ShouldBe().ValueEqual(artists);
+        }
 
-        //    response.Should().BeSuccessfulGet(2);
-        //}
+        [Fact]
+        public void When_getting_all_artists_It_can_deserialize_artists_properly()
+        {
+            var values = SUT.ObservableQuery<Artist>(ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId)
+                .ToRowList()
+                .OrderBy(r => r.Id)
+                .Select(r => r.Value)
+                .ToArray();
 
-        //[Fact]
-        //public void When_getting_all_artists_It_can_deserialize_artists_properly()
-        //{
-        //    var query = new QueryViewRequest(ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId);
-
-        //    var response = SUT.QueryAsync<Artist>(query).Result;
-
-        //    response.Should().BeSuccessfulGet(
-        //        Artists.OrderBy(a => a.ArtistId).ToArray(),
-        //        i => i.Id);
-        //}
+            values.ShouldBe().ValueEqual(ArtistsById);
+        }
     }
 }

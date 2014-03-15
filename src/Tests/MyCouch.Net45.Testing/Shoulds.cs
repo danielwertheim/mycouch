@@ -13,6 +13,11 @@ namespace MyCouch.Testing
     [DebuggerStepThrough]
     public static class Shoulds
     {
+        public static ObjectAssertions<T> ShouldBe<T>(this T item)
+        {
+            return new ObjectAssertions<T>(item);
+        }
+
         public static ContentResponseAssertions Should(this TextResponse response)
         {
             return new ContentResponseAssertions(response);
@@ -66,6 +71,23 @@ namespace MyCouch.Testing
         public static ChangesResponseAssertions<T> Should<T>(this ChangesResponse<T> response)
         {
             return new ChangesResponseAssertions<T>(response);
+        }
+    }
+
+    public class ObjectAssertions<T>
+    {
+        private readonly T _item;
+
+        public ObjectAssertions(T item)
+        {
+            _item = item;
+        }
+
+        public ObjectAssertions<T> ValueEqual(T expected)
+        {
+            CustomAsserts.AreValueEqual(expected, _item);
+
+            return this;
         }
     }
 

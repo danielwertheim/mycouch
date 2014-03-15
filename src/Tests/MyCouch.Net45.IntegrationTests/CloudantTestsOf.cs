@@ -34,6 +34,12 @@ namespace MyCouch.IntegrationTests
             CleanDb();
             Client.Dispose();
             Client = null;
+
+            var disposableSut = SUT as IDisposable;
+            if (disposableSut == null)
+                return;
+
+            disposableSut.Dispose();
         }
 
         protected void CleanDb()

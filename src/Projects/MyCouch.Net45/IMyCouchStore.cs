@@ -28,8 +28,11 @@ namespace MyCouch
         Task<DocumentHeader> GetHeaderAsync(string id, string rev = null);
         Task<string> GetByIdAsync(string id, string rev = null);
         Task<TEntity> GetByIdAsync<TEntity>(string id, string rev = null) where TEntity : class;
-        IObservable<Row> ObserveQuery(Query query);
-        IObservable<Row<TValue>> ObserveQuery<TValue>(Query query);
-        IObservable<Row<TValue, TIncludedDoc>> ObserveQuery<TValue, TIncludedDoc>(Query query);
+        IObservable<Row> ObservableQuery(Query query);
+        IObservable<Row<TValue>> ObservableQuery<TValue>(Query query);
+        IObservable<Row<TValue, TIncludedDoc>> ObservableQuery<TValue, TIncludedDoc>(Query query);
+        IObservable<Row> ObservableQuery(ViewIdentity viewIdentity, Action<Query> queryConfig = null);
+        IObservable<Row<TValue>> ObservableQuery<TValue>(ViewIdentity viewIdentity, Action<Query> queryConfig = null);
+        IObservable<Row<TValue, TIncludedDoc>> ObservableQuery<TValue, TIncludedDoc>(ViewIdentity viewIdentity, Action<Query> queryConfig = null);
     }
 }

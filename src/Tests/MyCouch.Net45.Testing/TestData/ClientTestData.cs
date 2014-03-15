@@ -81,7 +81,7 @@ namespace MyCouch.Testing.TestData
                     artists.Add(artist);
                 }
 
-                return artists.OrderBy(a => a.Name).ToArray();
+                return artists.OrderBy(a => a.ArtistId).ToArray();
             }
 
             private static Album[] CreateAlbums(int numOf, int artistIndex)
@@ -97,7 +97,7 @@ namespace MyCouch.Testing.TestData
                     });
                 }
 
-                return albums.ToArray();
+                return albums.OrderBy(a => a.Name).ToArray();
             }
         }
 

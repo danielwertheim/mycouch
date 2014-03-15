@@ -136,6 +136,9 @@
     <Compile Include="..\MyCouch.Net45.Testing\model\Artist.cs">
       <Link>Model\Artist.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45.Testing\ObservableRowExtensions.cs">
+      <Link>ObservableRowExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45.Testing\Shoulds.cs">
       <Link>Shoulds.cs</Link>
     </Compile>
