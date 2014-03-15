@@ -1,45 +1,36 @@
 ﻿using System.Net.Http;
-using MyCouch.Extensions;
+using EnsureThat;
+using MyCouch.Responses.Factories.Materializers;
 using MyCouch.Serialization;
 
 namespace MyCouch.Responses.Factories
 {
-    public class AttachmentResponseFactory : ResponseFactoryBase
+    public class AttachmentResponseFactory : ResponseFactoryBase<AttachmentResponse>
     {
+        protected readonly AttachmentResponseMaterializer SuccessfulResponseMaterializer;
+        protected readonly FailedResponseMaterializer FailedResponseMaterializer;
+
         public AttachmentResponseFactory(ISerializer serializer)
-            : base(serializer)
         {
+            Ensure.That(serializer, "serializer").IsNotNull();
+
+            SuccessfulResponseMaterializer = new AttachmentResponseMaterializer();
+            FailedResponseMaterializer = new FailedResponseMaterializer(serializer);
         }
 
-        public virtual AttachmentResponse Create(HttpResponseMessage httpResponse)
+        protected override AttachmentResponse CreateResponseInstance()
         {
-            return Materialize(new AttachmentResponse(), httpResponse, OnSuccessfulResponse, OnFailedResponse);
+            return new AttachmentResponse();
         }
 
-        protected async virtual void OnSuccessfulResponse(AttachmentResponse response, HttpResponseMessage httpResponse)
+        protected override void OnMaterializationOfSuccessfulResponseProperties(AttachmentResponse response, HttpResponseMessage httpResponse)
         {
-            using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
-            {
-                PopulateMissingIdFromRequestUri(response, httpResponse);
-                PopulateMissingNameFromRequestUri(response, httpResponse);
-                PopulateMissingRevFromRequestHeaders(response, httpResponse);
-
-                content.Position = 0;
-
-                response.Content = httpResponse.Content.ReadAsByteArrayAsync().Result;
-            }
+            SuccessfulResponseMaterializer.Materialize(response, httpResponse);
         }
 
-        protected override void PopulateMissingIdFromRequestUri(DocumentHeaderResponse response, HttpResponseMessage httpResponse)
+        protected override void OnMaterializationOfFailedResponseProperties(AttachmentResponse response, HttpResponseMessage httpResponse)
         {
-            if (string.IsNullOrWhiteSpace(response.Id))
-                response.Id = httpResponse.RequestMessage.GetUriSegmentByRightOffset(1);
-        }
-
-        protected virtual void PopulateMissingNameFromRequestUri(AttachmentResponse response, HttpResponseMessage httpResponse)
-        {
-            if (string.IsNullOrWhiteSpace(response.Name))
-                response.Name = httpResponse.RequestMessage.GetUriSegmentByRightOffset();
+            FailedResponseMaterializer.Materialize(response, httpResponse);
         }
     }
 }

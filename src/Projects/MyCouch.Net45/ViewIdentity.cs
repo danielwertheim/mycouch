@@ -22,5 +22,12 @@ namespace MyCouch
             DesignDocument = designDocument;
             Name = name;
         }
+
+        protected ViewIdentity(string name)
+        {
+            Ensure.That(name, "name").IsNotNullOrWhiteSpace();
+
+            Name = name;
+        }
     }
 }

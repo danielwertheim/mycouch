@@ -49,10 +49,10 @@ namespace MyCouch
         /// will be treated as JSON-strings.
         /// </summary>
         /// <param name="designDocument"></param>
-        /// <param name="viewname"></param>
+        /// <param name="viewName"></param>
         /// <param name="configurator"></param>
         /// <returns></returns>
-        Task<ViewQueryResponse> QueryAsync(string designDocument, string viewname, Action<QueryViewRequestConfigurator> configurator);
+        Task<ViewQueryResponse> QueryAsync(string designDocument, string viewName, Action<QueryViewRequestConfigurator> configurator);
 
         /// <summary>
         /// Creates and executes an <see cref="QueryViewRequest"/> on the fly.
@@ -61,10 +61,10 @@ namespace MyCouch
         /// </summary>
         /// <typeparam name="TValue"></typeparam>
         /// <param name="designDocument"></param>
-        /// <param name="viewname"></param>
+        /// <param name="viewName"></param>
         /// <param name="configurator"></param>
         /// <returns></returns>
-        Task<ViewQueryResponse<TValue>> QueryAsync<TValue>(string designDocument, string viewname, Action<QueryViewRequestConfigurator> configurator);
+        Task<ViewQueryResponse<TValue>> QueryAsync<TValue>(string designDocument, string viewName, Action<QueryViewRequestConfigurator> configurator);
 
         /// <summary>
         /// Creates and executes an <see cref="QueryViewRequest"/> on the fly.
@@ -76,9 +76,9 @@ namespace MyCouch
         /// <typeparam name="TValue"></typeparam>
         /// <typeparam name="TIncludedDoc"></typeparam>
         /// <param name="designDocument"></param>
-        /// <param name="viewname"></param>
+        /// <param name="viewName"></param>
         /// <param name="configurator"></param>
         /// <returns></returns>
-        Task<ViewQueryResponse<TValue, TIncludedDoc>> QueryAsync<TValue, TIncludedDoc>(string designDocument, string viewname, Action<QueryViewRequestConfigurator> configurator);
+        Task<ViewQueryResponse<TValue, TIncludedDoc>> QueryAsync<TValue, TIncludedDoc>(string designDocument, string viewName, Action<QueryViewRequestConfigurator> configurator);
     }
 }

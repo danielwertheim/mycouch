@@ -15,7 +15,7 @@ namespace MyCouch.UnitTests.Fakes
             Address = address;
         }
 
-        public virtual void Dispose() { }
+        public void Dispose() { }
 
         public Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest)
         {

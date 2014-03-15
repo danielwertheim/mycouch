@@ -8,7 +8,7 @@ namespace MyCouch.IntegrationTests
     {
         internal static void ClearAllDocuments(this IMyCouchClient client)
         {
-            var query = new QuerySystemViewRequest("_all_docs").Configure(q => q.Stale(Stale.UpdateAfter));
+            var query = new QueryViewRequest("_all_docs").Configure(q => q.Stale(Stale.UpdateAfter));
             var response = client.Views.QueryAsync<dynamic>(query).Result;
 
             BulkDelete(client, response);

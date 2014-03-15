@@ -15,6 +15,7 @@ namespace MyCouch.Requests
         {
             Ensure.That(content, "content").IsNotNullOrWhiteSpace();
 
+            Batch = false;
             Content = content;
         }
     }

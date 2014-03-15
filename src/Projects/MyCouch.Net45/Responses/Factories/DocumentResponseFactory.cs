@@ -1,46 +1,36 @@
-﻿using System.IO;
-using System.Net.Http;
-using System.Text;
-using MyCouch.Extensions;
+﻿using System.Net.Http;
+using EnsureThat;
+using MyCouch.Responses.Factories.Materializers;
 using MyCouch.Serialization;
 
 namespace MyCouch.Responses.Factories
 {
-    public class DocumentResponseFactory : ResponseFactoryBase
+    public class DocumentResponseFactory : ResponseFactoryBase<DocumentResponse>
     {
-        public DocumentResponseFactory(ISerializer serializer)
-            : base(serializer) { }
+        protected readonly DocumentResponseMaterializer SuccessfulResponseMaterializer;
+        protected readonly FailedResponseMaterializer FailedResponseMaterializer;
 
-        public virtual DocumentResponse Create(HttpResponseMessage httpResponse)
+        public DocumentResponseFactory(ISerializer serializer)
         {
-            return Materialize(new DocumentResponse(), httpResponse, OnSuccessfulResponse, OnFailedResponse);
+            Ensure.That(serializer, "serializer").IsNotNull();
+
+            SuccessfulResponseMaterializer = new DocumentResponseMaterializer(serializer);
+            FailedResponseMaterializer = new FailedResponseMaterializer(serializer);
         }
 
-        protected async virtual void OnSuccessfulResponse(DocumentResponse response, HttpResponseMessage httpResponse)
+        protected override DocumentResponse CreateResponseInstance()
         {
-            using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
-            {
-                if (ContentShouldHaveIdAndRev(httpResponse.RequestMessage))
-                    PopulateDocumentHeaderFromResponseStream(response, content);
-                else
-                {
-                    PopulateMissingIdFromRequestUri(response, httpResponse);
-                    PopulateMissingRevFromRequestHeaders(response, httpResponse);
-                }
+            return new DocumentResponse();
+        }
 
-                content.Position = 0;
+        protected override void OnMaterializationOfSuccessfulResponseProperties(DocumentResponse response, HttpResponseMessage httpResponse)
+        {
+            SuccessfulResponseMaterializer.Materialize(response, httpResponse);
+        }
 
-                var sb = new StringBuilder();
-                using (var reader = new StreamReader(content, MyCouchRuntime.DefaultEncoding))
-                {
-                    while (!reader.EndOfStream)
-                    {
-                        sb.Append(reader.ReadLine());
-                    }
-                }
-                response.Content = sb.ToString();
-                sb.Clear();
-            }
+        protected override void OnMaterializationOfFailedResponseProperties(DocumentResponse response, HttpResponseMessage httpResponse)
+        {
+            FailedResponseMaterializer.Materialize(response, httpResponse);
         }
     }
 }

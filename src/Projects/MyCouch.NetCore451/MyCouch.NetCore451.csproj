@@ -116,9 +116,6 @@
     <Compile Include="..\MyCouch.Net45\ClientExecuteExtensions.cs">
       <Link>ClientExecuteExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\configurations\ConnectionString.cs">
-      <Link>Configurations\ConnectionString.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Net45\contexts\ApiContextBase.cs">
       <Link>Contexts\ApiContextBase.cs</Link>
     </Compile>
@@ -128,8 +125,8 @@
     <Compile Include="..\MyCouch.Net45\Contexts\Changes.cs">
       <Link>Contexts\Changes.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\contexts\Databases.cs">
-      <Link>Contexts\Databases.cs</Link>
+    <Compile Include="..\MyCouch.Net45\Contexts\Database.cs">
+      <Link>Contexts\Database.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\contexts\Documents.cs">
       <Link>Contexts\Documents.cs</Link>
@@ -142,6 +139,9 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\DocumentAttribute.cs">
       <Link>DocumentAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\DocumentHeader.cs">
+      <Link>DocumentHeader.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\entityschemes\EntityIdMember.cs">
       <Link>EntitySchemes\EntityIdMember.cs</Link>
@@ -203,8 +203,8 @@
     <Compile Include="..\MyCouch.Net45\IConnection.cs">
       <Link>IConnection.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\IDatabases.cs">
-      <Link>IDatabases.cs</Link>
+    <Compile Include="..\MyCouch.Net45\IDatabase.cs">
+      <Link>IDatabase.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\IDocuments.cs">
       <Link>IDocuments.cs</Link>
@@ -215,20 +215,26 @@
     <Compile Include="..\MyCouch.Net45\IMyCouchClient.cs">
       <Link>IMyCouchClient.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\IMyCouchStore.cs">
+      <Link>IMyCouchStore.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\IViews.cs">
       <Link>IViews.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\MyCouchClient.cs">
       <Link>MyCouchClient.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\MyCouchClientBootstraper.cs">
-      <Link>MyCouchClientBootstraper.cs</Link>
+    <Compile Include="..\MyCouch.Net45\MyCouchClientBootstrapper.cs">
+      <Link>MyCouchClientBootstrapper.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\MyCouchException.cs">
       <Link>MyCouchException.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\MyCouchRuntime.cs">
       <Link>MyCouchRuntime.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\MyCouchStore.cs">
+      <Link>MyCouchStore.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\MyCouchUriBuilder.cs">
       <Link>MyCouchUriBuilder.cs</Link>
@@ -248,8 +254,14 @@
     <Compile Include="..\MyCouch.Net45\net\JsonContent.cs">
       <Link>Net\JsonContent.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Query.cs">
+      <Link>Query.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\requests\BulkRequest.cs">
       <Link>Requests\BulkRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Requests\CompactDatabaseRequest.cs">
+      <Link>Requests\CompactDatabaseRequest.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\requests\configurators\QueryViewRequestConfigurator.cs">
       <Link>Requests\Configurators\QueryViewRequestConfigurator.cs</Link>
@@ -260,14 +272,14 @@
     <Compile Include="..\MyCouch.Net45\requests\DeleteAttachmentRequest.cs">
       <Link>Requests\DeleteAttachmentRequest.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Requests\DeleteDatabaseRequest.cs">
+      <Link>Requests\DeleteDatabaseRequest.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\requests\DeleteDocumentRequest.cs">
       <Link>Requests\DeleteDocumentRequest.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\requests\DeleteEntityRequest.cs">
       <Link>Requests\DeleteEntityRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\requests\DocumentExistsRequest.cs">
-      <Link>Requests\DocumentExistsRequest.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\Factories\AttachmentHttpRequestFactoryBase.cs">
       <Link>Requests\Factories\AttachmentHttpRequestFactoryBase.cs</Link>
@@ -275,20 +287,23 @@
     <Compile Include="..\MyCouch.Net45\Requests\Factories\BulkHttpRequestFactory.cs">
       <Link>Requests\Factories\BulkHttpRequestFactory.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Requests\Factories\CompactDatabaseHttpRequestFactory.cs">
+      <Link>Requests\Factories\CompactDatabaseHttpRequestFactory.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\Factories\CopyDocumentHttpRequestFactory.cs">
       <Link>Requests\Factories\CopyDocumentHttpRequestFactory.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\Factories\DeleteAttachmentHttpRequestFactory.cs">
       <Link>Requests\Factories\DeleteAttachmentHttpRequestFactory.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Requests\Factories\DeleteDatabaseHttpRequestFactory.cs">
+      <Link>Requests\Factories\DeleteDatabaseHttpRequestFactory.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\Factories\DeleteDocumentHttpRequestFactory.cs">
       <Link>Requests\Factories\DeleteDocumentHttpRequestFactory.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\Factories\DeleteEntityHttpRequestFactory.cs">
       <Link>Requests\Factories\DeleteEntityHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\Requests\Factories\DocumentExistsHttpRequestFactory.cs">
-      <Link>Requests\Factories\DocumentExistsHttpRequestFactory.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\Factories\DocumentHttpRequestFactoryBase.cs">
       <Link>Requests\Factories\DocumentHttpRequestFactoryBase.cs</Link>
@@ -302,11 +317,20 @@
     <Compile Include="..\MyCouch.Net45\requests\factories\GetChangesHttpRequestFactory.cs">
       <Link>Requests\Factories\GetChangesHttpRequestFactory.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Requests\Factories\GetDatabaseHttpRequestFactory.cs">
+      <Link>Requests\Factories\GetDatabaseHttpRequestFactory.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\Factories\GetDocumentHttpRequestFactory.cs">
       <Link>Requests\Factories\GetDocumentHttpRequestFactory.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\Factories\GetEntityHttpRequestFactory.cs">
       <Link>Requests\Factories\GetEntityHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Requests\Factories\HeadDatabaseHttpRequestFactory.cs">
+      <Link>Requests\Factories\HeadDatabaseHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Requests\Factories\HeadDocumentHttpRequestFactory.cs">
+      <Link>Requests\Factories\HeadDocumentHttpRequestFactory.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\requests\factories\HttpRequestFactoryBase.cs">
       <Link>Requests\Factories\HttpRequestFactoryBase.cs</Link>
@@ -320,6 +344,9 @@
     <Compile Include="..\MyCouch.Net45\Requests\Factories\PutAttachmentHttpRequestFactory.cs">
       <Link>Requests\Factories\PutAttachmentHttpRequestFactory.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Requests\Factories\PutDatabaseHttpRequestFactory.cs">
+      <Link>Requests\Factories\PutDatabaseHttpRequestFactory.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\Factories\PutDocumentHttpRequestFactory.cs">
       <Link>Requests\Factories\PutDocumentHttpRequestFactory.cs</Link>
     </Compile>
@@ -332,17 +359,29 @@
     <Compile Include="..\MyCouch.Net45\Requests\Factories\ReplaceDocumentHttpRequestFactory.cs">
       <Link>Requests\Factories\ReplaceDocumentHttpRequestFactory.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Requests\Factories\ViewCleanupHttpRequestFactory.cs">
+      <Link>Requests\Factories\ViewCleanupHttpRequestFactory.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\requests\GetAttachmentRequest.cs">
       <Link>Requests\GetAttachmentRequest.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\requests\GetChangesRequest.cs">
       <Link>Requests\GetChangesRequest.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Requests\GetDatabaseRequest.cs">
+      <Link>Requests\GetDatabaseRequest.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\requests\GetDocumentRequest.cs">
       <Link>Requests\GetDocumentRequest.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\requests\GetEntityRequest.cs">
       <Link>Requests\GetEntityRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Requests\HeadDatabaseRequest.cs">
+      <Link>Requests\HeadDatabaseRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Requests\HeadDocumentRequest.cs">
+      <Link>Requests\HeadDocumentRequest.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\requests\PostDocumentRequest.cs">
       <Link>Requests\PostDocumentRequest.cs</Link>
@@ -353,14 +392,14 @@
     <Compile Include="..\MyCouch.Net45\requests\PutAttachmentRequest.cs">
       <Link>Requests\PutAttachmentRequest.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Requests\PutDatabaseRequest.cs">
+      <Link>Requests\PutDatabaseRequest.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\requests\PutDocumentRequest.cs">
       <Link>Requests\PutDocumentRequest.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\requests\PutEntityRequest.cs">
       <Link>Requests\PutEntityRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\requests\QuerySystemViewRequest.cs">
-      <Link>Requests\QuerySystemViewRequest.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\requests\QueryViewRequest.cs">
       <Link>Requests\QueryViewRequest.cs</Link>
@@ -371,20 +410,26 @@
     <Compile Include="..\MyCouch.Net45\Requests\Request.cs">
       <Link>Requests\Request.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Requests\ViewCleanupRequest.cs">
+      <Link>Requests\ViewCleanupRequest.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\responses\AttachmentResponse.cs">
       <Link>Responses\AttachmentResponse.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\responses\BulkResponse.cs">
       <Link>Responses\BulkResponse.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\BytesResponse.cs">
+      <Link>Responses\BytesResponse.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\Responses\ChangesResponse.cs">
       <Link>Responses\ChangesResponse.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\ContentResponse.cs">
+      <Link>Responses\ContentResponse.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\Responses\ContinuousChangesResponse.cs">
       <Link>Responses\ContinuousChangesResponse.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\responses\DatabaseResponse.cs">
-      <Link>Responses\DatabaseResponse.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\responses\DocumentHeaderResponse.cs">
       <Link>Responses\DocumentHeaderResponse.cs</Link>
@@ -407,9 +452,6 @@
     <Compile Include="..\MyCouch.Net45\Responses\Factories\ContinuousChangesResponseFactory.cs">
       <Link>Responses\Factories\ContinuousChangesResponseFactory.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\responses\factories\DatabaseResponseFactory.cs">
-      <Link>Responses\Factories\DatabaseResponseFactory.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Net45\responses\factories\DocumentHeaderResponseFactory.cs">
       <Link>Responses\Factories\DocumentHeaderResponseFactory.cs</Link>
     </Compile>
@@ -419,8 +461,47 @@
     <Compile Include="..\MyCouch.Net45\responses\factories\EntityResponseFactory.cs">
       <Link>Responses\Factories\EntityResponseFactory.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\Factories\Materializers\AttachmentResponseMaterializer.cs">
+      <Link>Responses\Factories\Materializers\AttachmentResponseMaterializer.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\Factories\Materializers\BasicResponseMaterializer.cs">
+      <Link>Responses\Factories\Materializers\BasicResponseMaterializer.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\Factories\Materializers\BulkResponseMaterializer.cs">
+      <Link>Responses\Factories\Materializers\BulkResponseMaterializer.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\Factories\Materializers\ChangesResponseMaterializer.cs">
+      <Link>Responses\Factories\Materializers\ChangesResponseMaterializer.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\Factories\Materializers\DocumentHeaderResponseMaterializer.cs">
+      <Link>Responses\Factories\Materializers\DocumentHeaderResponseMaterializer.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\Factories\Materializers\DocumentResponseMaterializer.cs">
+      <Link>Responses\Factories\Materializers\DocumentResponseMaterializer.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\Factories\Materializers\EntityResponseMaterializer.cs">
+      <Link>Responses\Factories\Materializers\EntityResponseMaterializer.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\Factories\Materializers\FailedDocumentHeaderResponseMaterializer.cs">
+      <Link>Responses\Factories\Materializers\FailedDocumentHeaderResponseMaterializer.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\Factories\Materializers\FailedEntityResponseMaterializer.cs">
+      <Link>Responses\Factories\Materializers\FailedEntityResponseMaterializer.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\Factories\Materializers\FailedResponseMaterializer.cs">
+      <Link>Responses\Factories\Materializers\FailedResponseMaterializer.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\Factories\Materializers\TextResponseMaterializer.cs">
+      <Link>Responses\Factories\Materializers\TextResponseMaterializer.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\Factories\Materializers\ViewQueryResponseMaterializer.cs">
+      <Link>Responses\Factories\Materializers\ViewQueryResponseMaterializer.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\responses\factories\ResponseFactoryBase.cs">
       <Link>Responses\Factories\ResponseFactoryBase.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\Factories\TextResponseFactory.cs">
+      <Link>Responses\Factories\TextResponseFactory.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\responses\factories\ViewQueryResponseFactory.cs">
       <Link>Responses\Factories\ViewQueryResponseFactory.cs</Link>
@@ -434,8 +515,14 @@
     <Compile Include="..\MyCouch.Net45\responses\Response.cs">
       <Link>Responses\Response.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\TextResponse.cs">
+      <Link>Responses\TextResponse.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\responses\ViewQueryResponse.cs">
       <Link>Responses\ViewQueryResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Row.cs">
+      <Link>Row.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\serialization\conventions\ISerializationConvention.cs">
       <Link>Serialization\Conventions\ISerializationConvention.cs</Link>
@@ -503,6 +590,9 @@
     <Compile Include="..\MyCouch.Net45\Stale.cs">
       <Link>Stale.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\SystemViewIdentity.cs">
+      <Link>SystemViewIdentity.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\ViewIdentity.cs">
       <Link>ViewIdentity.cs</Link>
     </Compile>
@@ -512,9 +602,22 @@
     <Reference Include="EnsureThat">
       <HintPath>..\..\packages\Ensure.That.1.0.0\lib\portable-win+net40+sl40+wp71\EnsureThat.dll\EnsureThat.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Newtonsoft.Json.5.0.8\lib\netcore45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.1\lib\netcore45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Core">
+      <HintPath>..\..\packages\Rx-Core.2.2.2\lib\windows8\System.Reactive.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces">
+      <HintPath>..\..\packages\Rx-Interfaces.2.2.2\lib\windows8\System.Reactive.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Linq">
+      <HintPath>..\..\packages\Rx-Linq.2.2.2\lib\windows8\System.Reactive.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.PlatformServices, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Rx-PlatformServices.2.2.3\lib\windows8\System.Reactive.PlatformServices.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

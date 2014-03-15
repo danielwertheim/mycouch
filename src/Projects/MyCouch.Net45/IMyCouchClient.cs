@@ -30,7 +30,7 @@ namespace MyCouch
         /// <summary>
         /// Database oriented API operations.
         /// </summary>
-        IDatabases Databases { get; }
+        IDatabase Database { get; }
 
         /// <summary>
         /// Document oriented API operations, for accessing and managing RAW documents.

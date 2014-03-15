@@ -1,39 +1,36 @@
 ﻿using System.Net.Http;
-using MyCouch.Extensions;
+using EnsureThat;
+using MyCouch.Responses.Factories.Materializers;
 using MyCouch.Serialization;
 
 namespace MyCouch.Responses.Factories
 {
-    public class DocumentHeaderResponseFactory : ResponseFactoryBase
+    public class DocumentHeaderResponseFactory : ResponseFactoryBase<DocumentHeaderResponse>
     {
+        protected readonly DocumentHeaderResponseMaterializer SuccessfulResponseMaterializer;
+        protected readonly FailedDocumentHeaderResponseMaterializer FailedResponseMaterializer;
+
         public DocumentHeaderResponseFactory(ISerializer serializer)
-            : base(serializer)
-        { }
-
-        public virtual DocumentHeaderResponse Create(HttpResponseMessage httpResponse)
         {
-            return Materialize(new DocumentHeaderResponse(), httpResponse, OnSuccessfulResponse, OnFailedResponse);
+            Ensure.That(serializer, "serializer").IsNotNull();
+
+            SuccessfulResponseMaterializer = new DocumentHeaderResponseMaterializer(serializer);
+            FailedResponseMaterializer = new FailedDocumentHeaderResponseMaterializer(serializer);
         }
 
-        protected async virtual void OnSuccessfulResponse(DocumentHeaderResponse response, HttpResponseMessage httpResponse)
+        protected override DocumentHeaderResponse CreateResponseInstance()
         {
-            if (httpResponse.RequestMessage.Method == HttpMethod.Head)
-            {
-                PopulateMissingIdFromRequestUri(response, httpResponse);
-                PopulateMissingRevFromRequestHeaders(response, httpResponse);
-
-                return;
-            }
-
-            using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
-                PopulateDocumentHeaderFromResponseStream(response, content);
+            return new DocumentHeaderResponse();
         }
 
-        protected virtual void OnFailedResponse(DocumentHeaderResponse response, HttpResponseMessage httpResponse)
+        protected override void OnMaterializationOfSuccessfulResponseProperties(DocumentHeaderResponse response, HttpResponseMessage httpResponse)
         {
-            base.OnFailedResponse(response, httpResponse);
+            SuccessfulResponseMaterializer.Materialize(response, httpResponse);
+        }
 
-            PopulateMissingIdFromRequestUri(response, httpResponse);
+        protected override void OnMaterializationOfFailedResponseProperties(DocumentHeaderResponse response, HttpResponseMessage httpResponse)
+        {
+            FailedResponseMaterializer.Materialize(response, httpResponse);
         }
     }
 }

@@ -7,5 +7,6 @@ namespace MyCouch.Responses
 #endif
     public class ContinuousChangesResponse : Response
     {
+        public IObservable<string> Stream { get; set; }
     }
 }

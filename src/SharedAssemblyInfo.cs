@@ -9,11 +9,11 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("Release")]
 #endif
 
-[assembly: AssemblyDescription("MyCouch - async .Net client for CouchDb and Cloudant.")]
+[assembly: AssemblyDescription("MyCouch - the async .Net client for CouchDb and Cloudant.")]
 [assembly: AssemblyCompany("Daniel Wertheim")]
 [assembly: AssemblyCopyright("Copyright © 2014 Daniel Wertheim")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-[assembly: AssemblyVersion("0.21.0.*")]
-[assembly: AssemblyFileVersion("0.21.0")]
+[assembly: AssemblyVersion("0.22.0.*")]
+[assembly: AssemblyFileVersion("0.22.0")]

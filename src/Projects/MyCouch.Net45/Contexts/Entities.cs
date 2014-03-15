@@ -16,10 +16,11 @@ namespace MyCouch.Contexts
     {
         public IEntitySerializer Serializer { get; private set; }
         public IEntityReflector Reflector { get; private set;}
-        protected GetEntityHttpRequestFactory GetEntityHttpRequestFactory { get; set; }
-        protected PostEntityHttpRequestFactory PostEntityHttpRequestFactory { get; set; }
-        protected PutEntityHttpRequestFactory PutEntityHttpRequestFactory { get; set; }
-        protected DeleteEntityHttpRequestFactory DeleteEntityHttpRequestFactory { get; set; }
+
+        protected GetEntityHttpRequestFactory GetHttpRequestFactory { get; set; }
+        protected PostEntityHttpRequestFactory PostHttpRequestFactory { get; set; }
+        protected PutEntityHttpRequestFactory PutHttpRequestFactory { get; set; }
+        protected DeleteEntityHttpRequestFactory DeleteHttpRequestFactory { get; set; }
  
         protected EntityResponseFactory EntityResponseFactory { get; set; }
 
@@ -33,10 +34,10 @@ namespace MyCouch.Contexts
             Serializer = entitySerializer;
             EntityResponseFactory = new EntityResponseFactory(serializer, entitySerializer);
             Reflector = entityReflector;
-            GetEntityHttpRequestFactory = new GetEntityHttpRequestFactory(Connection, Serializer, Reflector);
-            PostEntityHttpRequestFactory = new PostEntityHttpRequestFactory(Connection, Serializer, Reflector);
-            PutEntityHttpRequestFactory = new PutEntityHttpRequestFactory(Connection, Serializer, Reflector);
-            DeleteEntityHttpRequestFactory = new DeleteEntityHttpRequestFactory(Connection, Serializer, Reflector);
+            GetHttpRequestFactory = new GetEntityHttpRequestFactory(Connection, Serializer, Reflector);
+            PostHttpRequestFactory = new PostEntityHttpRequestFactory(Connection, Serializer, Reflector);
+            PutHttpRequestFactory = new PutEntityHttpRequestFactory(Connection, Serializer, Reflector);
+            DeleteHttpRequestFactory = new DeleteEntityHttpRequestFactory(Connection, Serializer, Reflector);
         }
 
         public virtual Task<EntityResponse<T>> GetAsync<T>(string id, string rev = null) where T : class
@@ -114,22 +115,22 @@ namespace MyCouch.Contexts
 
         protected virtual HttpRequest CreateHttpRequest(GetEntityRequest request)
         {
-            return GetEntityHttpRequestFactory.Create(request);
+            return GetHttpRequestFactory.Create(request);
         }
 
         protected virtual HttpRequest CreateHttpRequest<T>(PostEntityRequest<T> request) where T : class
         {
-            return PostEntityHttpRequestFactory.Create(request);
+            return PostHttpRequestFactory.Create(request);
         }
 
         protected virtual HttpRequest CreateHttpRequest<T>(PutEntityRequest<T> request) where T : class
         {
-            return PutEntityHttpRequestFactory.Create(request);
+            return PutHttpRequestFactory.Create(request);
         }
 
         protected virtual HttpRequest CreateHttpRequest<T>(DeleteEntityRequest<T> request) where T : class
         {
-            return DeleteEntityHttpRequestFactory.Create(request);
+            return DeleteHttpRequestFactory.Create(request);
         }
 
         protected virtual EntityResponse<T> ProcessEntityResponse<T>(GetEntityRequest request, HttpResponseMessage response) where T : class
@@ -140,12 +141,12 @@ namespace MyCouch.Contexts
         protected virtual EntityResponse<T> ProcessEntityResponse<T>(PostEntityRequest<T> request, HttpResponseMessage response) where T : class
         {
             var entityResponse = EntityResponseFactory.Create<T>(response);
-            entityResponse.Entity = request.Entity;
+            entityResponse.Content = request.Entity;
 
             if (entityResponse.IsSuccess)
             {
-                Reflector.IdMember.SetValueTo(entityResponse.Entity, entityResponse.Id);
-                Reflector.RevMember.SetValueTo(entityResponse.Entity, entityResponse.Rev);
+                Reflector.IdMember.SetValueTo(entityResponse.Content, entityResponse.Id);
+                Reflector.RevMember.SetValueTo(entityResponse.Content, entityResponse.Rev);
             }
 
             return entityResponse;
@@ -154,10 +155,10 @@ namespace MyCouch.Contexts
         protected virtual EntityResponse<T> ProcessEntityResponse<T>(PutEntityRequest<T> request, HttpResponseMessage response) where T : class
         {
             var entityResponse = EntityResponseFactory.Create<T>(response);
-            entityResponse.Entity = request.Entity;
+            entityResponse.Content = request.Entity;
 
             if (entityResponse.IsSuccess)
-                Reflector.RevMember.SetValueTo(entityResponse.Entity, entityResponse.Rev);
+                Reflector.RevMember.SetValueTo(entityResponse.Content, entityResponse.Rev);
 
             return entityResponse;
         }
@@ -165,10 +166,10 @@ namespace MyCouch.Contexts
         protected virtual EntityResponse<T> ProcessEntityResponse<T>(DeleteEntityRequest<T> request, HttpResponseMessage response) where T : class
         {
             var entityResponse = EntityResponseFactory.Create<T>(response);
-            entityResponse.Entity = request.Entity;
+            entityResponse.Content = request.Entity;
 
             if (entityResponse.IsSuccess)
-                Reflector.RevMember.SetValueTo(entityResponse.Entity, entityResponse.Rev);
+                Reflector.RevMember.SetValueTo(entityResponse.Content, entityResponse.Rev);
 
             return entityResponse;
         }

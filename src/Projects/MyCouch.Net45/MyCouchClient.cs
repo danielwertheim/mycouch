@@ -7,11 +7,13 @@ namespace MyCouch
 {
     public class MyCouchClient : IMyCouchClient
     {
+        protected bool IsDisposed { get; private set; }
+
         public IConnection Connection { get; private set; }
         public ISerializer Serializer { get; private set; }
         public IChanges Changes { get; private set; }
         public IAttachments Attachments { get; private set; }
-        public IDatabases Databases { get; private set; }
+        public IDatabase Database { get; private set; }
         public IDocuments Documents { get; private set; }
         public IEntities Entities { get; protected set; }
         public IViews Views { get; private set; }
@@ -20,39 +22,41 @@ namespace MyCouch
 
         public MyCouchClient(Uri dbUri) : this(new BasicHttpClientConnection(dbUri)) { }
 
-        public MyCouchClient(IConnection connection, MyCouchClientBootstraper bootstraper = null)
+        public MyCouchClient(IConnection connection, MyCouchClientBootstrapper bootstrapper = null)
         {
             Ensure.That(connection, "connection").IsNotNull();
 
             Connection = connection;
 
-            bootstraper = bootstraper ?? new MyCouchClientBootstraper();
+            bootstrapper = bootstrapper ?? new MyCouchClientBootstrapper();
 
-            Serializer = bootstraper.SerializerFn();
-            Changes = bootstraper.ChangesFn(Connection);
-            Attachments = bootstraper.AttachmentsFn(Connection);
-            Databases = bootstraper.DatabasesFn(Connection);
-            Documents = bootstraper.DocumentsFn(Connection);
-            Entities = bootstraper.EntitiesFn(Connection);
-            Views = bootstraper.ViewsFn(Connection);
+            Serializer = bootstrapper.SerializerFn();
+            Changes = bootstrapper.ChangesFn(Connection);
+            Attachments = bootstrapper.AttachmentsFn(Connection);
+            Database = bootstrapper.DatabasesFn(Connection);
+            Documents = bootstrapper.DocumentsFn(Connection);
+            Entities = bootstrapper.EntitiesFn(Connection);
+            Views = bootstrapper.ViewsFn(Connection);
+            IsDisposed = false;
         }
 
-        public virtual void Dispose()
+        public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+            IsDisposed = true;
         }
 
         protected virtual void Dispose(bool disposing)
         {
-            if (Connection == null)
-                throw new ObjectDisposedException(typeof(MyCouchClient).Name);
-
-            if (!disposing)
+            if (IsDisposed || !disposing)
                 return;
 
-            Connection.Dispose();
-            Connection = null;
+            if (Connection != null)
+            {
+                Connection.Dispose();
+                Connection = null;
+            }
         }
     }
 }

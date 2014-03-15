@@ -1,27 +1,36 @@
 ﻿using System.Net.Http;
-using MyCouch.Extensions;
+using EnsureThat;
+using MyCouch.Responses.Factories.Materializers;
 using MyCouch.Serialization;
 
 namespace MyCouch.Responses.Factories
 {
-    public class BulkResponseFactory : ResponseFactoryBase
+    public class BulkResponseFactory : ResponseFactoryBase<BulkResponse>
     {
+        protected readonly BulkResponseMaterializer SuccessfulResponseMaterializer;
+        protected readonly FailedResponseMaterializer FailedResponseMaterializer;
+
         public BulkResponseFactory(ISerializer serializer)
-            : base(serializer)
         {
+            Ensure.That(serializer, "serializer").IsNotNull();
+
+            SuccessfulResponseMaterializer = new BulkResponseMaterializer(serializer);
+            FailedResponseMaterializer = new FailedResponseMaterializer(serializer);
         }
 
-        public virtual BulkResponse Create(HttpResponseMessage httpResponse)
+        protected override BulkResponse CreateResponseInstance()
         {
-            return Materialize(new BulkResponse(), httpResponse, OnSuccessfulResponse, OnFailedResponse);
+            return new BulkResponse();
         }
 
-        protected async virtual void OnSuccessfulResponse(BulkResponse response, HttpResponseMessage httpResponse)
+        protected override void OnMaterializationOfSuccessfulResponseProperties(BulkResponse response, HttpResponseMessage httpResponse)
         {
-            using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
-            {
-                response.Rows = Serializer.Deserialize<BulkResponse.Row[]>(content);
-            }
+            SuccessfulResponseMaterializer.Materialize(response, httpResponse);
+        }
+
+        protected override void OnMaterializationOfFailedResponseProperties(BulkResponse response, HttpResponseMessage httpResponse)
+        {
+            FailedResponseMaterializer.Materialize(response, httpResponse);
         }
     }
 }

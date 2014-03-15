@@ -126,8 +126,8 @@
     <Compile Include="..\MyCouch.Cloudant.Net45\MyCouchCloudantClient.cs">
       <Link>MyCouchCloudantClient.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\MyCouchCloudantClientBootstraper.cs">
-      <Link>MyCouchCloudantClientBootstraper.cs</Link>
+    <Compile Include="..\MyCouch.Cloudant.Net45\MyCouchCloudantClientBootstrapper.cs">
+      <Link>MyCouchCloudantClientBootstrapper.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\Requests\Configurators\SearchIndexRequestConfigurator.cs">
       <Link>Requests\Configurators\SearchIndexRequestConfigurator.cs</Link>
@@ -137,6 +137,9 @@
     </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\Requests\SearchIndexRequest.cs">
       <Link>Requests\SearchIndexRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.cloudant.net45\responses\factories\materializers\SearchIndexResponseMaterializer.cs">
+      <Link>Responses\Factories\Materializers\SearchIndexResponseMaterializer.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\Responses\Factories\SearchIndexResponseFactory.cs">
       <Link>Responses\Factories\SearchIndexResponseFactory.cs</Link>
@@ -154,9 +157,22 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Ensure.That.1.0.0\lib\portable-win+net40+sl40+wp71\EnsureThat.dll\EnsureThat.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Newtonsoft.Json.5.0.8\lib\netcore45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.1\lib\netcore45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Core">
+      <HintPath>..\..\packages\Rx-Core.2.2.2\lib\windows8\System.Reactive.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces">
+      <HintPath>..\..\packages\Rx-Interfaces.2.2.2\lib\windows8\System.Reactive.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Linq">
+      <HintPath>..\..\packages\Rx-Linq.2.2.2\lib\windows8\System.Reactive.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.PlatformServices, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Rx-PlatformServices.2.2.3\lib\windows8\System.Reactive.PlatformServices.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

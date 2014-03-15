@@ -11,7 +11,7 @@ namespace MyCouch.Requests.Factories
         {
             var httpRequest = CreateFor<PostDocumentRequest>(HttpMethod.Post, GenerateRequestUrl(batch: request.Batch));
 
-            httpRequest.SetContent(request.Content);
+            httpRequest.SetJsonContent(request.Content);
 
             return httpRequest;
         }

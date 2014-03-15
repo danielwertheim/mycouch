@@ -14,7 +14,7 @@ namespace MyCouch.Requests.Factories
         {
             var httpRequest = CreateFor<PostEntityRequest<T>>(HttpMethod.Post, GenerateRequestUrl());
 
-            httpRequest.SetContent(SerializeEntity(request.Entity));
+            httpRequest.SetJsonContent(SerializeEntity(request.Entity));
 
             return httpRequest;
         }

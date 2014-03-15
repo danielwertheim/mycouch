@@ -7,16 +7,5 @@ namespace MyCouch.Testing
         protected T SUT { get; set; }
     }
 
-    public abstract class TestsOf : IDisposable
-    {
-        protected TestsOf()
-        {
-            //Now.ValueGenerator = () => TestConstants.FixedDateTime;
-        }
-
-        public virtual void Dispose()
-        {
-            //Now.ValueGenerator = () => TestConstants.FixedDateTime;
-        }
-    }
+    public abstract class TestsOf { }
 }

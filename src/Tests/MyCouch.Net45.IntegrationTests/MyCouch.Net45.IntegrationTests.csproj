@@ -34,14 +34,30 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\FluentAssertions.2.2.0.0\lib\net45\FluentAssertions.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Reactive.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Rx-Core.2.2.2\lib\net45\System.Reactive.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Rx-Interfaces.2.2.2\lib\net45\System.Reactive.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Linq, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Rx-Linq.2.2.2\lib\net45\System.Reactive.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.PlatformServices, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Rx-PlatformServices.2.2.3\lib\net45\System.Reactive.PlatformServices.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="xunit, Version=1.9.2.1705, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
@@ -55,18 +71,18 @@
     </Compile>
     <Compile Include="ClientExtensions.cs" />
     <Compile Include="ClientTestsOf.cs" />
-    <Compile Include="ClientTests\AttachmentsTests.cs" />
-    <Compile Include="ClientTests\ChangesTests.cs" />
-    <Compile Include="ClientTests\DocumentsTests.cs" />
-    <Compile Include="ClientTests\EntitiesTests.cs" />
-    <Compile Include="ClientTests\ViewsTests.cs" />
+    <Compile Include="CoreTests\AttachmentsTests.cs" />
+    <Compile Include="CoreTests\ChangesTests.cs" />
+    <Compile Include="CoreTests\DatabaseTests.cs" />
+    <Compile Include="CoreTests\DocumentsTests.cs" />
+    <Compile Include="CoreTests\EntitiesTests.cs" />
+    <Compile Include="CoreTests\ViewsTests.cs" />
     <Compile Include="CloudantTestsOf.cs" />
     <Compile Include="CloudantTests\SearchTests.cs" />
     <Compile Include="IntegrationTestsRuntime.cs" />
     <Compile Include="IPreserveStatePerFixture.cs" />
+    <Compile Include="CoreTests\MyCouchStoreTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestFixtures\ClientTestsFixture.cs" />
-    <Compile Include="TestFixtures\CloudantTestsFixture.cs" />
     <Compile Include="TestFixtures\SearchFixture.cs" />
     <Compile Include="TestFixtures\ViewsFixture.cs" />
   </ItemGroup>

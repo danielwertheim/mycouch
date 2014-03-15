@@ -13,12 +13,12 @@ namespace MyCouch.Cloudant
         public MyCouchCloudantClient(Uri uri)
             : this(new BasicHttpClientConnection(uri)) { }
 
-        public MyCouchCloudantClient(IConnection connection, MyCouchCloudantClientBootstraper bootstraper = null)
-            : base(connection, bootstraper ?? new MyCouchCloudantClientBootstraper())
+        public MyCouchCloudantClient(IConnection connection, MyCouchCloudantClientBootstrapper bootstrapper = null)
+            : base(connection, bootstrapper ?? new MyCouchCloudantClientBootstrapper())
         {
-            bootstraper = bootstraper ?? new MyCouchCloudantClientBootstraper();
+            bootstrapper = bootstrapper ?? new MyCouchCloudantClientBootstrapper();
 
-            Searches = bootstraper.SearchesFn(Connection);
+            Searches = bootstrapper.SearchesFn(Connection);
         }
     }
 }

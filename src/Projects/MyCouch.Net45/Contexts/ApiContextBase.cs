@@ -22,6 +22,11 @@ namespace MyCouch.Contexts
             return Connection.SendAsync(httpRequest);
         }
 
+        protected virtual Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, CancellationToken cancellationToken)
+        {
+            return Connection.SendAsync(httpRequest, cancellationToken);
+        }
+
         protected virtual Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, HttpCompletionOption completionOption)
         {
             return Connection.SendAsync(httpRequest, completionOption);

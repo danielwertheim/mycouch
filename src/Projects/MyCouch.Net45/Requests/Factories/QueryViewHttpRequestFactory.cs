@@ -16,13 +16,13 @@ namespace MyCouch.Requests.Factories
             Ensure.That(request, "request").IsNotNull();
 
             return request.HasKeys
-                ? CreateFor<QueryViewRequest>(HttpMethod.Post, GenerateRequestUrl(request)).SetContent(GetKeysAsJsonObject(request))
+                ? CreateFor<QueryViewRequest>(HttpMethod.Post, GenerateRequestUrl(request)).SetJsonContent(GetKeysAsJsonObject(request))
                 : CreateFor<QueryViewRequest>(HttpMethod.Get, GenerateRequestUrl(request));
         }
 
         protected virtual string GenerateRequestUrl(QueryViewRequest request)
         {
-            if (request is QuerySystemViewRequest)
+            if (request.ViewIdentity is SystemViewIdentity)
             {
                 return string.Format("{0}/{1}{2}",
                     Connection.Address,

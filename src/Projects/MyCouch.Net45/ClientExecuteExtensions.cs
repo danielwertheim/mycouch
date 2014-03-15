@@ -8,14 +8,44 @@ namespace MyCouch
 {
     public static class ClientExecuteExtensions
     {
+        public static Task<TextResponse> PerformAsync(this IMyCouchClient client, HeadDatabaseRequest request)
+        {
+            return client.Database.HeadAsync(request);
+        }
+
+        public static Task<TextResponse> PerformAsync(this IMyCouchClient client, GetDatabaseRequest request)
+        {
+            return client.Database.GetAsync(request);
+        }
+
+        public static Task<TextResponse> PerformAsync(this IMyCouchClient client, PutDatabaseRequest request)
+        {
+            return client.Database.PutAsync(request);
+        }
+
+        public static Task<TextResponse> PerformAsync(this IMyCouchClient client, DeleteDatabaseRequest request)
+        {
+            return client.Database.DeleteAsync(request);
+        }
+
+        public static Task<TextResponse> PerformAsync(this IMyCouchClient client, CompactDatabaseRequest request)
+        {
+            return client.Database.CompactAsync(request);
+        }
+
+        public static Task<TextResponse> PerformAsync(this IMyCouchClient client, ViewCleanupRequest request)
+        {
+            return client.Database.ViewCleanup(request);
+        }
+
         public static Task<ChangesResponse> PerformAsync(this IMyCouchClient client, GetChangesRequest request)
         {
             return client.Changes.GetAsync(request);
         }
 
-        public static Task<ContinuousChangesResponse> PerformAsync(this IMyCouchClient client, GetChangesRequest request, Action<string> onRead, CancellationToken cancellationToken)
+        public static IObservable<string> PerformAsync(this IMyCouchClient client, GetChangesRequest request, CancellationToken cancellationToken)
         {
-            return client.Changes.GetAsync(request, onRead, cancellationToken);
+            return client.Changes.GetAsync(request, cancellationToken);
         }
 
         public static Task<BulkResponse> PerformAsync(this IMyCouchClient client, BulkRequest request)
@@ -33,9 +63,9 @@ namespace MyCouch
             return client.Documents.ReplaceAsync(request);
         }
 
-        public static Task<DocumentHeaderResponse> PerformAsync(this IMyCouchClient client, DocumentExistsRequest request)
+        public static Task<DocumentHeaderResponse> PerformAsync(this IMyCouchClient client, HeadDocumentRequest request)
         {
-            return client.Documents.ExistsAsync(request);
+            return client.Documents.HeadAsync(request);
         }
 
         public static Task<DocumentResponse> PerformAsync(this IMyCouchClient client, GetDocumentRequest request)

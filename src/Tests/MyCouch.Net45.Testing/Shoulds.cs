@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using FluentAssertions;
 using MyCouch.Cloudant.Responses;
+using MyCouch.Net;
 using MyCouch.Responses;
 
 namespace MyCouch.Testing
@@ -12,6 +13,16 @@ namespace MyCouch.Testing
     [DebuggerStepThrough]
     public static class Shoulds
     {
+        public static ObjectAssertions<T> ShouldBe<T>(this T item)
+        {
+            return new ObjectAssertions<T>(item);
+        }
+
+        public static ContentResponseAssertions Should(this TextResponse response)
+        {
+            return new ContentResponseAssertions(response);
+        }
+
         public static SearcIndexResponseAssertions Should(this SearchIndexResponse response)
         {
             return new SearcIndexResponseAssertions(response);
@@ -60,6 +71,68 @@ namespace MyCouch.Testing
         public static ChangesResponseAssertions<T> Should<T>(this ChangesResponse<T> response)
         {
             return new ChangesResponseAssertions<T>(response);
+        }
+    }
+
+    public class ObjectAssertions<T>
+    {
+        private readonly T _item;
+
+        public ObjectAssertions(T item)
+        {
+            _item = item;
+        }
+
+        public ObjectAssertions<T> ValueEqual(T expected)
+        {
+            CustomAsserts.AreValueEqual(expected, _item);
+
+            return this;
+        }
+    }
+
+    public abstract class ResponseAssertions<T> where T : Response
+    {
+        protected readonly T Response;
+
+        [DebuggerStepThrough]
+        protected ResponseAssertions(T response)
+        {
+            Response = response;
+        }
+
+        public virtual void Be(HttpMethod method, HttpStatusCode statusCode = HttpStatusCode.OK)
+        {
+            Response.RequestMethod.Should().Be(method);
+            Response.IsSuccess.Should().BeTrue();
+            Response.StatusCode.Should().Be(statusCode);
+            Response.Error.Should().BeNull();
+            Response.Reason.Should().BeNull();
+        }
+    }
+
+    public class ContentResponseAssertions : ResponseAssertions<TextResponse>
+    {
+        [DebuggerStepThrough]
+        public ContentResponseAssertions(TextResponse response) : base(response) { }
+
+        public void BeJson(HttpMethod method, HttpStatusCode statusCode, string content)
+        {
+            Be(method, statusCode);
+            Response.ContentType.Should().Be(HttpContentTypes.Json);
+            Response.Content.Should().Be(content);
+        }
+
+        public void BeAnyJson(HttpMethod method, HttpStatusCode statusCode = HttpStatusCode.OK)
+        {
+            Be(method, statusCode);
+            Response.ContentType.Should().Be(HttpContentTypes.Json);
+            Response.Content.Should().NotBeNullOrWhiteSpace();
+        }
+
+        public void BeOkJson(HttpMethod method, HttpStatusCode statusCode = HttpStatusCode.OK)
+        {
+            BeJson(method, statusCode, "{\"ok\":true}");
         }
     }
 
@@ -208,7 +281,7 @@ namespace MyCouch.Testing
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
             Response.IsEmpty.Should().BeFalse();
-            Response.Entity.Should().NotBeNull();
+            Response.Content.Should().NotBeNull();
             Response.Id.Should().NotBeNullOrEmpty();
             Response.Id.Should().Be(id);
             Response.Rev.Should().NotBeNullOrEmpty();
@@ -224,13 +297,13 @@ namespace MyCouch.Testing
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
             Response.IsEmpty.Should().BeFalse();
-            Response.Entity.Should().NotBeNull();
+            Response.Content.Should().NotBeNull();
             Response.Id.Should().NotBeNullOrEmpty();
             Response.Id.Should().Be(initialId);
             Response.Rev.Should().NotBeNullOrEmpty();
 
-            idAccessor(Response.Entity).Should().Be(Response.Id);
-            revAccessor(Response.Entity).Should().Be(Response.Rev);
+            idAccessor(Response.Content).Should().Be(Response.Id);
+            revAccessor(Response.Content).Should().Be(Response.Rev);
         }
 
         public void BeSuccessfulPut(string initialId, Func<T, string> idAccessor, Func<T, string> revAccessor)
@@ -243,13 +316,13 @@ namespace MyCouch.Testing
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
             Response.IsEmpty.Should().BeFalse();
-            Response.Entity.Should().NotBeNull();
+            Response.Content.Should().NotBeNull();
             Response.Id.Should().NotBeNullOrEmpty();
             Response.Id.Should().Be(initialId);
             Response.Rev.Should().NotBeNullOrEmpty();
 
-            idAccessor(Response.Entity).Should().Be(Response.Id);
-            revAccessor(Response.Entity).Should().Be(Response.Rev);
+            idAccessor(Response.Content).Should().Be(Response.Id);
+            revAccessor(Response.Content).Should().Be(Response.Rev);
         }
 
         public void Be409Put(string initialId)
@@ -273,13 +346,13 @@ namespace MyCouch.Testing
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
             Response.IsEmpty.Should().BeFalse();
-            Response.Entity.Should().NotBeNull();
+            Response.Content.Should().NotBeNull();
             Response.Id.Should().NotBeNullOrEmpty();
             Response.Id.Should().Be(initialId);
             Response.Rev.Should().NotBeNullOrEmpty();
 
-            idAccessor(Response.Entity).Should().Be(Response.Id);
-            revAccessor(Response.Entity).Should().Be(Response.Rev);
+            idAccessor(Response.Content).Should().Be(Response.Id);
+            revAccessor(Response.Content).Should().Be(Response.Rev);
         }
 
         public void BeSuccessfulDelete(string initialId, Func<T, string> idAccessor, Func<T, string> revAccessor)
@@ -290,13 +363,13 @@ namespace MyCouch.Testing
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
             Response.IsEmpty.Should().BeFalse();
-            Response.Entity.Should().NotBeNull();
+            Response.Content.Should().NotBeNull();
             Response.Id.Should().NotBeNullOrEmpty();
             Response.Id.Should().Be(initialId);
             Response.Rev.Should().NotBeNullOrEmpty();
 
-            idAccessor(Response.Entity).Should().Be(Response.Id);
-            revAccessor(Response.Entity).Should().Be(Response.Rev);
+            idAccessor(Response.Content).Should().Be(Response.Id);
+            revAccessor(Response.Content).Should().Be(Response.Rev);
         }
     }
 

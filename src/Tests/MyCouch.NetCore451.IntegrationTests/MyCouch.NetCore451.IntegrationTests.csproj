@@ -124,38 +124,38 @@
     <Compile Include="..\MyCouch.Net45.IntegrationTests\ClientTestsOf.cs">
       <Link>ClientTestsOf.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.IntegrationTests\clienttests\AttachmentsTests.cs">
-      <Link>ClientTests\AttachmentsTests.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45.IntegrationTests\ClientTests\ChangesTests.cs">
-      <Link>ClientTests\ChangesTests.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45.IntegrationTests\clienttests\DocumentsTests.cs">
-      <Link>ClientTests\DocumentsTests.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45.IntegrationTests\clienttests\EntitiesTests.cs">
-      <Link>ClientTests\EntitiesTests.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45.IntegrationTests\clienttests\ViewsTests.cs">
-      <Link>ClientTests\ViewsTests.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Net45.IntegrationTests\CloudantTestsOf.cs">
       <Link>CloudantTestsOf.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45.IntegrationTests\CloudantTests\SearchTests.cs">
       <Link>CloudantTests\SearchTests.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\CoreTests\AttachmentsTests.cs">
+      <Link>CoreTests\AttachmentsTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\CoreTests\ChangesTests.cs">
+      <Link>CoreTests\ChangesTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\CoreTests\DatabaseTests.cs">
+      <Link>CoreTests\DatabaseTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\CoreTests\DocumentsTests.cs">
+      <Link>CoreTests\DocumentsTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\CoreTests\EntitiesTests.cs">
+      <Link>CoreTests\EntitiesTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\CoreTests\MyCouchStoreTests.cs">
+      <Link>CoreTests\MyCouchStoreTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\CoreTests\ViewsTests.cs">
+      <Link>CoreTests\ViewsTests.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45.IntegrationTests\IntegrationTestsRuntime.cs">
       <Link>IntegrationTestsRuntime.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45.IntegrationTests\IPreserveStatePerFixture.cs">
       <Link>IPreserveStatePerFixture.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45.IntegrationTests\TestFixtures\ClientTestsFixture.cs">
-      <Link>TestFixtures\ClientTestsFixture.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45.IntegrationTests\TestFixtures\CloudantTestsFixture.cs">
-      <Link>TestFixtures\CloudantTestsFixture.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45.IntegrationTests\TestFixtures\SearchFixture.cs">
       <Link>TestFixtures\SearchFixture.cs</Link>
@@ -205,9 +205,25 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\FluentAssertions.2.2.0.0\lib\winrt45\FluentAssertions.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Newtonsoft.Json.5.0.8\lib\netcore45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.1\lib\netcore45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Rx-Core.2.2.2\lib\windows8\System.Reactive.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Rx-Interfaces.2.2.2\lib\windows8\System.Reactive.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Linq, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Rx-Linq.2.2.2\lib\windows8\System.Reactive.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.PlatformServices, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Rx-PlatformServices.2.2.3\lib\windows8\System.Reactive.PlatformServices.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup />

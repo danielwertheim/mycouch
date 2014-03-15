@@ -1,26 +1,49 @@
-﻿using MyCouch.Cloudant;
-using MyCouch.IntegrationTests.TestFixtures;
+﻿using System;
+using MyCouch.Cloudant;
 using MyCouch.Testing;
-using Xunit;
 
 namespace MyCouch.IntegrationTests
 {
-    public abstract class CloudantTestsOf<T> : TestsOf<T>, IUseFixture<CloudantTestsFixture> where T : class
+    public abstract class CloudantTestsOf<T> :
+        TestsOf<T>,
+        IDisposable where T : class
     {
+        protected readonly TestEnvironment Environment;
         protected IMyCouchCloudantClient Client { get; set; }
 
-        protected abstract void OnTestInit();
+        protected CloudantTestsOf() : this(IntegrationTestsRuntime.CloudantClientEnvironment) { }
 
-        public void SetFixture(CloudantTestsFixture data)
+        protected CloudantTestsOf(TestEnvironment environment)
         {
-            Client = data.Client;
-            OnTestInit();
+            Environment = environment;
+            Client = IntegrationTestsRuntime.CreateCloudantClient(Environment);
+            CleanDb();
         }
 
-        public override void Dispose()
+        public void Dispose()
         {
-            base.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposing)
+                return;
+
+            CleanDb();
+            Client.Dispose();
+            Client = null;
+
+            var disposableSut = SUT as IDisposable;
+            if (disposableSut == null)
+                return;
+
+            disposableSut.Dispose();
+        }
+
+        protected void CleanDb()
+        {
             if (!(this is IPreserveStatePerFixture))
                 Client.ClearAllDocuments();
         }

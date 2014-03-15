@@ -1,52 +1,37 @@
 ﻿using System.Net.Http;
 using EnsureThat;
-using MyCouch.Extensions;
+using MyCouch.Responses.Factories.Materializers;
 using MyCouch.Serialization;
 
 namespace MyCouch.Responses.Factories
 {
     public class EntityResponseFactory : ResponseFactoryBase
     {
-        protected readonly ISerializer EntitySerializer;
+        protected readonly EntityResponseMaterializer SuccessfulResponseMaterializer;
+        protected readonly FailedEntityResponseMaterializer FailedResponseMaterializer;
 
-        public EntityResponseFactory(ISerializer serializer, ISerializer entitySerializer)
-            : base(serializer)
+        public EntityResponseFactory(ISerializer serializer, IEntitySerializer entitySerializer)
         {
+            Ensure.That(serializer, "serializer").IsNotNull();
             Ensure.That(entitySerializer, "entitySerializer").IsNotNull();
 
-            EntitySerializer = entitySerializer;
+            SuccessfulResponseMaterializer = new EntityResponseMaterializer(serializer, entitySerializer);
+            FailedResponseMaterializer = new FailedEntityResponseMaterializer(serializer);
         }
 
         public virtual EntityResponse<T> Create<T>(HttpResponseMessage httpResponse) where T : class
         {
-            return Materialize(new EntityResponse<T>(), httpResponse, OnSuccessfulResponse, OnFailedResponse);
+            return Materialize(new EntityResponse<T>(), httpResponse, OnMaterializationOfSuccessfulResponseProperties, OnMaterializationOfFailedResponseProperties);
         }
 
-        protected async virtual void OnSuccessfulResponse<T>(EntityResponse<T> response, HttpResponseMessage httpResponse) where T : class
+        protected virtual void OnMaterializationOfSuccessfulResponseProperties<T>(EntityResponse<T> response, HttpResponseMessage httpResponse) where T : class
         {
-            using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
-            {
-                if (ContentShouldHaveIdAndRev(httpResponse.RequestMessage))
-                    PopulateDocumentHeaderFromResponseStream(response, content);
-                else
-                {
-                    PopulateMissingIdFromRequestUri(response, httpResponse);
-                    PopulateMissingRevFromRequestHeaders(response, httpResponse);
-                }
-
-                if (response.RequestMethod == HttpMethod.Get)
-                {
-                    content.Position = 0;
-                    response.Entity = EntitySerializer.Deserialize<T>(content);
-                }
-            }
+            SuccessfulResponseMaterializer.Materialize(response, httpResponse);
         }
 
-        protected virtual void OnFailedResponse<T>(EntityResponse<T> response, HttpResponseMessage httpResponse) where T : class
+        protected virtual void OnMaterializationOfFailedResponseProperties<T>(EntityResponse<T> response, HttpResponseMessage httpResponse) where T : class
         {
-            base.OnFailedResponse(response, httpResponse);
-
-            PopulateMissingIdFromRequestUri(response, httpResponse);
+            FailedResponseMaterializer.Materialize(response, httpResponse);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace MyCouch.Requests.Factories
         {
             var createHttpRequest = CreateFor<BulkRequest>(HttpMethod.Post, GenerateRequestUrl(request));
 
-            createHttpRequest.SetContent(request.ToJson());
+            createHttpRequest.SetJsonContent(request.ToJson());
 
             return createHttpRequest;
         }

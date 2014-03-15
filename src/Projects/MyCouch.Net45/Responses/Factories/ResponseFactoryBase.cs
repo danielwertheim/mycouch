@@ -1,76 +1,58 @@
 ﻿using System;
-using System.IO;
 using System.Net.Http;
 using EnsureThat;
-using MyCouch.Extensions;
-using MyCouch.Serialization;
+using MyCouch.Responses.Factories.Materializers;
 
 namespace MyCouch.Responses.Factories
 {
     public abstract class ResponseFactoryBase
     {
-        protected readonly ISerializer Serializer;
+        protected readonly BasicResponseMaterializer BasicResponseMaterializer;
 
-        protected ResponseFactoryBase(ISerializer serializer)
+        protected ResponseFactoryBase()
         {
-            Ensure.That(serializer, "serializer").IsNotNull();
-
-            Serializer = serializer;
+            BasicResponseMaterializer = new BasicResponseMaterializer();
         }
 
-        protected virtual T Materialize<T>(
-            T response,
+        protected virtual TResponse Materialize<TResponse>(
+            TResponse response,
             HttpResponseMessage httpResponse,
-            Action<T, HttpResponseMessage> onSuccessfulResponseMaterializer,
-            Action<T, HttpResponseMessage> onFailedResponseMaterializer) where T : Response
+            Action<TResponse, HttpResponseMessage> onMaterializationOfSuccessfulResponseProperties,
+            Action<TResponse, HttpResponseMessage> onMaterializationOfFailedResponseProperties) where TResponse : Response
         {
-            response.RequestUri = httpResponse.RequestMessage.RequestUri;
-            response.StatusCode = httpResponse.StatusCode;
-            response.RequestMethod = httpResponse.RequestMessage.Method;
-            response.ContentType = httpResponse.Content.Headers.ContentType.ToString();
+            OnMaterializationOfBasicResponseProperties(response, httpResponse);
 
             if (response.IsSuccess)
-                onSuccessfulResponseMaterializer(response, httpResponse);
+                onMaterializationOfSuccessfulResponseProperties(response, httpResponse);
             else
-                onFailedResponseMaterializer(response, httpResponse);
+                onMaterializationOfFailedResponseProperties(response, httpResponse);
 
             return response;
         }
 
-        protected async virtual void OnFailedResponse(Response response, HttpResponseMessage httpResponse)
+        protected virtual void OnMaterializationOfBasicResponseProperties<TResponse>(TResponse response, HttpResponseMessage httpResponse) where TResponse : Response
         {
-            using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
-                PopulateFailedInfoFromResponseStream(response, content);
+            BasicResponseMaterializer.Materialize(response, httpResponse);
+        }
+    }
+
+    public abstract class ResponseFactoryBase<T> : ResponseFactoryBase where T : Response
+    {
+        public virtual T Create(HttpResponseMessage httpResponse)
+        {
+            Ensure.That(httpResponse, "httpResponse").IsNotNull();
+
+            return Materialize(
+                CreateResponseInstance(),
+                httpResponse,
+                OnMaterializationOfSuccessfulResponseProperties,
+                OnMaterializationOfFailedResponseProperties);
         }
 
-        protected virtual bool ContentShouldHaveIdAndRev(HttpRequestMessage request)
-        {
-            return
-                request.Method == HttpMethod.Post ||
-                request.Method == HttpMethod.Put ||
-                request.Method == HttpMethod.Delete;
-        }
+        protected abstract T CreateResponseInstance();
 
-        protected virtual void PopulateFailedInfoFromResponseStream(Response response, Stream content)
-        {
-            Serializer.Populate(response, content);
-        }
+        protected abstract void OnMaterializationOfSuccessfulResponseProperties(T response, HttpResponseMessage httpResponse);
 
-        protected virtual void PopulateMissingIdFromRequestUri(DocumentHeaderResponse response, HttpResponseMessage httpResponse)
-        {
-            if (string.IsNullOrWhiteSpace(response.Id) && httpResponse.RequestMessage.Method != HttpMethod.Post)
-                response.Id = httpResponse.RequestMessage.GetUriSegmentByRightOffset();
-        }
-
-        protected virtual void PopulateMissingRevFromRequestHeaders(DocumentHeaderResponse response, HttpResponseMessage httpResponse)
-        {
-            if (string.IsNullOrWhiteSpace(response.Rev))
-                response.Rev = httpResponse.Headers.GetETag();
-        }
-
-        protected virtual void PopulateDocumentHeaderFromResponseStream(DocumentHeaderResponse response, Stream content)
-        {
-            Serializer.Populate(response, content);
-        }
+        protected abstract void OnMaterializationOfFailedResponseProperties(T response, HttpResponseMessage httpResponse);
     }
 }

@@ -12,11 +12,11 @@ namespace MyCouch.Responses
 
         public override string ToStringDebugVersion()
         {
-            return string.Format("{0}{1}{0}Id: {2}{0}Rev: {3}",
+            return string.Format("{1}{0}Id: {2}{0}Rev: {3}",
                 Environment.NewLine,
                 base.ToStringDebugVersion(),
-                Id ?? "<NULL>",
-                Rev ?? "<NULL>");
+                Id ?? NullValueForDebugOutput,
+                Rev ?? NullValueForDebugOutput);
         }
     }
 }

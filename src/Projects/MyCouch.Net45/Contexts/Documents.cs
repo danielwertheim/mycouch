@@ -16,7 +16,7 @@ namespace MyCouch.Contexts
         protected BulkHttpRequestFactory BulkHttpRequestFactory { get; set; }
         protected CopyDocumentHttpRequestFactory CopyDocumentHttpRequestFactory { get; set; }
         protected ReplaceDocumentHttpRequestFactory ReplaceDocumentHttpRequestFactory { get; set; }
-        protected DocumentExistsHttpRequestFactory DocumentExistsHttpRequestFactory { get; set; }
+        protected HeadDocumentHttpRequestFactory HeadDocumentHttpRequestFactory { get; set; }
         protected GetDocumentHttpRequestFactory GetDocumentHttpRequestFactory { get; set; }
         protected PostDocumentHttpRequestFactory PostDocumentHttpRequestFactory { get; set; }
         protected PutDocumentHttpRequestFactory PutDocumentHttpRequestFactory { get; set; }
@@ -36,7 +36,7 @@ namespace MyCouch.Contexts
             BulkHttpRequestFactory = new BulkHttpRequestFactory(Connection);
             CopyDocumentHttpRequestFactory = new CopyDocumentHttpRequestFactory(Connection);
             ReplaceDocumentHttpRequestFactory = new ReplaceDocumentHttpRequestFactory(Connection);
-            DocumentExistsHttpRequestFactory = new DocumentExistsHttpRequestFactory(Connection);
+            HeadDocumentHttpRequestFactory = new HeadDocumentHttpRequestFactory(Connection);
             GetDocumentHttpRequestFactory = new GetDocumentHttpRequestFactory(Connection);
             PostDocumentHttpRequestFactory = new PostDocumentHttpRequestFactory(Connection);
             PutDocumentHttpRequestFactory = new PutDocumentHttpRequestFactory(Connection);
@@ -106,12 +106,12 @@ namespace MyCouch.Contexts
             }
         }
 
-        public virtual Task<DocumentHeaderResponse> ExistsAsync(string id, string rev = null)
+        public virtual Task<DocumentHeaderResponse> HeadAsync(string id, string rev = null)
         {
-            return ExistsAsync(new DocumentExistsRequest(id, rev));
+            return HeadAsync(new HeadDocumentRequest(id, rev));
         }
 
-        public virtual async Task<DocumentHeaderResponse> ExistsAsync(DocumentExistsRequest request)
+        public virtual async Task<DocumentHeaderResponse> HeadAsync(HeadDocumentRequest request)
         {
             Ensure.That(request, "request").IsNotNull();
 
@@ -216,9 +216,9 @@ namespace MyCouch.Contexts
             return ReplaceDocumentHttpRequestFactory.Create(request);
         }
 
-        protected virtual HttpRequest CreateHttpRequest(DocumentExistsRequest request)
+        protected virtual HttpRequest CreateHttpRequest(HeadDocumentRequest request)
         {
-            return DocumentExistsHttpRequestFactory.Create(request);
+            return HeadDocumentHttpRequestFactory.Create(request);
         }
 
         protected virtual HttpRequest CreateHttpRequest(GetDocumentRequest request)

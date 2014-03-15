@@ -90,14 +90,14 @@ namespace MyCouch
         Task<DocumentHeaderResponse> ReplaceAsync(ReplaceDocumentRequest request);
 
         /// <summary>
-        /// Makes a simple HEAD request which doesn not include the actual JSON document,
+        /// Makes a simple HEAD request which does not include the actual JSON document,
         /// and returns any matched info for the <paramref name="id"/> and the optional
         /// <paramref name="rev"/>.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="rev">optional</param>
         /// <returns></returns>
-        Task<DocumentHeaderResponse> ExistsAsync(string id, string rev = null);
+        Task<DocumentHeaderResponse> HeadAsync(string id, string rev = null);
 
         /// <summary>
         /// Makes a simple HEAD request which doesn not include the actual JSON document,
@@ -105,7 +105,7 @@ namespace MyCouch
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        Task<DocumentHeaderResponse> ExistsAsync(DocumentExistsRequest request);
+        Task<DocumentHeaderResponse> HeadAsync(HeadDocumentRequest request);
 
         /// <summary>
         /// Gets untyped response with the JSON representation of the document.
@@ -126,21 +126,24 @@ namespace MyCouch
         Task<DocumentResponse> GetAsync(GetDocumentRequest request);
 
         /// <summary>
-        /// Inserts sent JSON document as it is. No additional metadata like doctype will be added.
+        /// Inserts sent JSON document as it is.
+        /// Underlying DB will generate _id if non is provided in <paramref name="doc"/>.
         /// </summary>
         /// <param name="doc"></param>
         /// <returns></returns>
         Task<DocumentHeaderResponse> PostAsync(string doc);
 
         /// <summary>
-        /// Inserts sent JSON document as it is. No additional metadata like doctype will be added.
+        /// Inserts sent JSON document as it is.
+        /// Underlying DB will generate _id if non is provided in Content of <paramref name="request"/>.
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
         Task<DocumentHeaderResponse> PostAsync(PostDocumentRequest request);
 
         /// <summary>
-        /// Inserts or Updates. The document <paramref name="doc"/> needs to contain the _id and for updates also the _rev field.
+        /// Inserts or Updates.
+        /// For updates, <paramref name="doc"/> needs the _rev field.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="doc"></param>
@@ -148,7 +151,11 @@ namespace MyCouch
         Task<DocumentHeaderResponse> PutAsync(string id, string doc);
 
         /// <summary>
-        /// Inserts or Updates. The document <paramref name="doc"/> needs to contain the _id but not the _rev, neither for inserts nor for updates.
+        /// Inserts or Updates.
+        /// If _id in <paramref name="doc"/> is different than the one specified in
+        /// <paramref name="doc"/>, the one in <paramref name="id"/> will be used.
+        /// If _rev in <paramref name="rev"/> is different than the one specified in
+        /// <paramref name="doc"/>, the one in <paramref name="rev"/> will be used.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="rev"></param>
@@ -157,8 +164,11 @@ namespace MyCouch
         Task<DocumentHeaderResponse> PutAsync(string id, string rev, string doc);
 
         /// <summary>
-        /// Inserts or Updates. The document in passed <paramref name="request"/>.
-        /// The document needs to contain the _id but not the _rev, neither for inserts nor for updates.
+        /// Inserts or Updates.
+        /// If _id in Content of <paramref name="request"/> is different than the one specified in
+        /// Id of <paramref name="request"/>, the one in Id of <paramref name="request"/> will be used.
+        /// If _rev in Content of <paramref name="request"/> is different than the one specified in
+        /// Rev of <paramref name="request"/>, the one in Rev of <paramref name="request"/> will be used.
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>

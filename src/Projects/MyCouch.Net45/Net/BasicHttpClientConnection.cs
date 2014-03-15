@@ -24,26 +24,27 @@ namespace MyCouch.Net
             Ensure.That(dbUri, "dbUri").IsNotNull();
 
             HttpClient = CreateHttpClient(dbUri);
+            IsDisposed = false;
         }
 
-        public virtual void Dispose()
+        public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+            IsDisposed = true;
         }
 
         protected virtual void Dispose(bool disposing)
         {
-            ThrowIfDisposed();
-
-            IsDisposed = true;
-
-            if (!disposing)
+            if (IsDisposed || !disposing)
                 return;
 
-            HttpClient.CancelPendingRequests();
-            HttpClient.Dispose();
-            HttpClient = null;
+            if (HttpClient != null)
+            {
+                HttpClient.CancelPendingRequests();
+                HttpClient.Dispose();
+                HttpClient = null;
+            }
         }
 
         protected virtual void ThrowIfDisposed()
