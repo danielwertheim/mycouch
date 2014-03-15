@@ -31,18 +31,20 @@ namespace MyCouch.Net
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+            IsDisposed = true;
         }
 
         protected virtual void Dispose(bool disposing)
         {
-            IsDisposed = true;
-
-            if (!disposing)
+            if (IsDisposed || !disposing)
                 return;
 
-            HttpClient.CancelPendingRequests();
-            HttpClient.Dispose();
-            HttpClient = null;
+            if (HttpClient != null)
+            {
+                HttpClient.CancelPendingRequests();
+                HttpClient.Dispose();
+                HttpClient = null;
+            }
         }
 
         protected virtual void ThrowIfDisposed()

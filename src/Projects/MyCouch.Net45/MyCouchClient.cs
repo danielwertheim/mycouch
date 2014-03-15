@@ -7,6 +7,8 @@ namespace MyCouch
 {
     public class MyCouchClient : IMyCouchClient
     {
+        protected bool IsDisposed { get; private set; }
+
         public IConnection Connection { get; private set; }
         public ISerializer Serializer { get; private set; }
         public IChanges Changes { get; private set; }
@@ -35,21 +37,26 @@ namespace MyCouch
             Documents = bootstrapper.DocumentsFn(Connection);
             Entities = bootstrapper.EntitiesFn(Connection);
             Views = bootstrapper.ViewsFn(Connection);
+            IsDisposed = false;
         }
 
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+            IsDisposed = true;
         }
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposing)
+            if (IsDisposed || !disposing)
                 return;
 
-            Connection.Dispose();
-            Connection = null;
+            if (Connection != null)
+            {
+                Connection.Dispose();
+                Connection = null;
+            }
         }
     }
 }
