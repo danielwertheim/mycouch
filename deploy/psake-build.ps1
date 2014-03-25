@@ -1,7 +1,7 @@
 Framework "4.5.1"
 
 Properties {
-    $solution_name = "MyCouch-All"
+    $solution_name = "MyCouch"
     $solution_dir_path = "..\src"
     $solution_path = "$solution_dir_path\$solution_name.sln"
     $project_name = "MyCouch"
