@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using EnsureThat;
 using MyCouch.EntitySchemes;
 using MyCouch.Net;
 using MyCouch.Serialization;
@@ -20,6 +21,15 @@ namespace MyCouch.Requests.Factories
             httpRequest.SetJsonContent(SerializeEntity(request.Entity));
 
             return httpRequest;
+        }
+
+        protected override string GenerateRequestUrl(string id = null, string rev = null)
+        {
+            Ensure.That(id, "id")
+                .WithExtraMessageOf(() => "PUT requests must have an id part of the URL.")
+                .IsNotNullOrWhiteSpace();
+
+            return base.GenerateRequestUrl(id, rev);
         }
     }
 }
