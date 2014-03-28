@@ -15,7 +15,7 @@ Properties {
     $nuget = "nuget.exe"
 }
 
-task default -depends Clean, Build, Copy
+task default -depends Clean, Build, Copy, UnitTest, Nuget-Pack
 
 task Clean {
     Clean-Directory("$build_dir_path")
