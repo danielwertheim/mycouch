@@ -43,6 +43,11 @@ namespace MyCouch
             return client.Changes.GetAsync(request);
         }
 
+        public static Task<ContinuousChangesResponse> PerformAsync(this IMyCouchClient client, GetChangesRequest request, Action<string> onRead, CancellationToken cancellationToken)
+        {
+            return client.Changes.GetAsync(request, onRead, cancellationToken);
+        }
+
         public static IObservable<string> PerformAsync(this IMyCouchClient client, GetChangesRequest request, CancellationToken cancellationToken)
         {
             return client.Changes.GetAsync(request, cancellationToken);
