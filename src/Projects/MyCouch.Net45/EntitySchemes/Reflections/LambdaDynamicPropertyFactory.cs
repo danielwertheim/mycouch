@@ -6,14 +6,28 @@ namespace MyCouch.EntitySchemes.Reflections
 {
     public class LambdaDynamicPropertyFactory : IDynamicPropertyFactory
     {
-        public virtual DynamicProperty PropertyFor(PropertyInfo p)
+        public virtual DynamicProperty PropertyFor(PropertyInfo property)
         {
             return new DynamicProperty(
-                new DynamicStringGetter(CreateLambdaGetter<string>(p.DeclaringType, p)), 
-                new DynamicStringSetter(CreateLambdaSetter<string>(p.DeclaringType, p)));
+                CreateStringGetter(property),
+                CreateStringSetter(property));
         }
 
-        private static Func<object, TProp> CreateLambdaGetter<TProp>(Type type, PropertyInfo property)
+        protected virtual IStringGetter CreateStringGetter(PropertyInfo property)
+        {
+            return property != null && property.CanRead
+                ? new DynamicStringGetter(CreateLambdaGetter<string>(property.DeclaringType, property))
+                : new FakeStringGetter() as IStringGetter;
+        }
+
+        protected virtual IStringSetter CreateStringSetter(PropertyInfo property)
+        {
+            return property != null && property.CanWrite
+                ? new DynamicStringSetter(CreateLambdaSetter<string>(property.DeclaringType, property))
+                : new FakeStringSetter() as IStringSetter;
+        }
+
+        protected virtual Func<object, TProp> CreateLambdaGetter<TProp>(Type type, PropertyInfo property)
         {
             var objExpr = Expression.Parameter(typeof(object), "theItem");
             var castedObjExpr = Expression.Convert(objExpr, type);
@@ -25,18 +39,7 @@ namespace MyCouch.EntitySchemes.Reflections
             return lambda.Compile();
         }
 
-        //private static Func<T, TProp> CreateLambdaGetter<T, TProp>(PropertyInfo property)
-        //{
-        //    var objExpr = Expression.Parameter(typeof(T), "theItem");
-
-        //    var p = Expression.Property(objExpr, property);
-
-        //    var lambda = Expression.Lambda<Func<T, TProp>>(p, objExpr);
-
-        //    return lambda.Compile();
-        //}
-
-        private static Action<object, TProp> CreateLambdaSetter<TProp>(Type type, PropertyInfo property)
+        protected virtual Action<object, TProp> CreateLambdaSetter<TProp>(Type type, PropertyInfo property)
         {
             var objExpr = Expression.Parameter(typeof(object), "theItem");
             var castedObjExpr = Expression.Convert(objExpr, type);
@@ -49,14 +52,5 @@ namespace MyCouch.EntitySchemes.Reflections
                 Expression.Call(castedObjExpr, property.SetMethod, parameter), new[] { objExpr, parameter }).Compile();
 #endif
         }
-
-        //private static Action<T, TProp> CreateLambdaSetter<T, TProp>(PropertyInfo property)
-        //{
-        //    var objExpr = Expression.Parameter(typeof(T), "theItem");
-        //    var parameter = Expression.Parameter(typeof(TProp), "param");
-
-        //    return Expression.Lambda<Action<T, TProp>>(
-        //        Expression.Call(objExpr, property.GetSetMethod(), parameter), new[] { objExpr, parameter }).Compile();
-        //}
     }
 }

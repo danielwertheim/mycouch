@@ -2,7 +2,7 @@
 
 namespace MyCouch.EntitySchemes.Reflections
 {
-    public class DynamicStringGetter
+    public class DynamicStringGetter : IStringGetter
     {
         private readonly Func<object, string> _accessor;
 
