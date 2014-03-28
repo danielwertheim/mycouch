@@ -5,7 +5,12 @@ The asynchronous CouchDb and Cloudant client for .Net - builds on top of the asy
 [MyCouch.AspNet.Identity](https://github.com/danielwertheim/mycouch.aspnet.identity) - an ASP.Net identity provider for CouchDb and Cloudant
 
 ## NuGet ##
-MyCouch is distributed via NuGet. You can [find the CouchDb package here](https://nuget.org/packages/MyCouch/) [and the Cloudant package here](https://nuget.org/packages/MyCouch.Cloudant/). But basically, in a .Net4.0, .Net4.5 or Windows Store app project, open up the Package manager console, and invoke:
+MyCouch is distributed via NuGet.
+
+- [CouchDb package](https://nuget.org/packages/MyCouch/)
+- [Cloudant package](https://nuget.org/packages/MyCouch.Cloudant/)
+
+But basically, in a .Net4.0, .Net4.5 or Windows Store app project, open up the Package manager console, and invoke:
 
     pm:> install-package mycouch
 
@@ -13,7 +18,32 @@ or if you also want some [Cloudant](http://cloudant.com) specific features like 
 
 	pm:> install-package mycouch.cloudant
 
-**Please note!** Some users with old versions of NuGet has reported that dependencies to `Ensure.That` might not be resolved. The solution is to update NuGet.
+```csharp
+using(var client = new MyCouchClient("http://localhost:5984/mydb"))
+{
+    //POST with server generated id
+    await client.Documents.PostAsync("{\"name\":\"Daniel\"}");
+
+	//POST with client generated id - possible but wrong
+    await client.Documents.PostAsync("{\"_id":\"someId", \"name\":\"Daniel\"}");
+
+    //PUT for client generated id
+    await client.Documents.PutAsync("someId", "{\"name\":\"Daniel\"}");
+
+    //PUT for updates
+    await client.Documents.PutAsync("someId", "docRevision", "{\"name\":\"Daniel Wertheim\"}");
+
+	//PUT for updates with _rev in JSON
+    await client.Documents.PutAsync("someId", "{\"_rev\": \"docRevision\", \"name\":\"Daniel Wertheim\"}");
+
+    //Using entities
+    var me = new Person {Id = "SomeId", Name = "Daniel"};
+    await client.Entities.PutAsync(me);
+
+    //Using anonymous entities
+    await client.Entities.PostAsync(new { Name = "Daniel" });
+}
+```
 
 ## Documentation ##
 The documentation is contained in the [project wiki](https://github.com/danielwertheim/mycouch/wiki).
@@ -26,23 +56,15 @@ A [public Trello board](https://trello.com/b/wuDUldwD/mycouch-main) is used inst
 - For Windows store 8.0, currently not included. But let me know and I will assist or fix it.
 - For Windows store 8.1, Visual Studio 2013 is needed.
 
-Please note. **No NuGet packages are checked in**. If you are using the latest version of NuGet (v2.7.1+) **you should be able to just build and the packages will be restored**. If this does not work, you could install the missing NuGet packages using the provided PowerShell script:
-
-    ps:> .\setup-devenv.ps1
-
-or
-
-    cmd:> powershell -executionpolicy unrestricted .\setup-devenv.ps1
-
-For the script to work, you need to have [the NuGet command line](http://nuget.codeplex.com/releases) `(NuGet.exe) registrered in the environment path`, or you need to tweak the script so it knows where it will find your NuGet.exe.
+Please note. **No NuGet packages are checked in**. If you are using the latest version of NuGet (v2.7.1+) **you should be able to just build and the packages will be restored**. If this does not work, you could install the missing NuGet packages using a simple PowerShell script as covered here: http://danielwertheim.se/2013/08/12/nuget-restore-powershell-vs-rake/
 
 ## A word about the integration tests ##
 They are written using **xUnit**. To get started you need to create a database `mycouchtests` and one user `mycouchtester` with password `p@ssword`. The user also must be allowed to create views in the database.
 
 ### Test environments ###
-There is an external dependency for getting up and running with the integration tests (not the unit tests). In the repo, there's a folder in the root named `env`. In there there's a [ScriptCS](http://scriptcs.net) script `server.csx`. It will start a NancyFX web server that serves the integration tests with test environment settings.
+The project `MyCouch.TestServer` is a small self-hosted Nancy server that is used to serve e.g. test environment configurations to the integration tests. Just ensure there's a folder called `env\data` and that it contains three JSON-files (Cloudant is only needed if you want to run thoose tests). Read more about this in `env\README.md`.
 
-The first time you set this up, ensure you have ScriptCS installed and then in the `env` folder just type: `scriptcs -install scriptcs.nancy`. When done, delete the generated `pacakges.config` file and just run the `start.bat` file. The actual configuration is specified in JSON-files under `env\data\[testenvironment].json`.
+The `MyCouch.TestServer` project **is not being built** in `DEBUG` nor for `RELEASE`. Hence the first time you need to explicitly e.g rebuild it via right clicking on it in the Solution Explorer.
 
 ## How-to Contribute ##
 This is described in the wiki, under: ["How-to Contribute"](https://github.com/danielwertheim/mycouch/wiki/how-to-contribute).
