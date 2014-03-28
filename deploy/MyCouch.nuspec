@@ -54,11 +54,11 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="Net40\MyCouch.Net40.dll" target="lib\net40" />
-    <file src="Net40\MyCouch.Net40.xml" target="lib\net40" />
-    <file src="Net45\MyCouch.Net45.dll" target="lib\net45" />
-    <file src="Net45\MyCouch.Net45.xml" target="lib\net45" />
-    <file src="NetCore451\MyCouch.NetCore451.dll" target="lib\netcore451" />
-    <file src="NetCore451\MyCouch.NetCore451.xml" target="lib\netcore451" />
+    <file src="MyCouch.Net40\*.dll" target="lib\net40" />
+    <file src="MyCouch.Net40\*.xml" target="lib\net40" />
+    <file src="MyCouch.Net45\*.dll" target="lib\net45" />
+    <file src="MyCouch.Net45\*.xml" target="lib\net45" />
+    <file src="MyCouch.NetCore451\*.dll" target="lib\netcore451" />
+    <file src="MyCouch.NetCore451\*.xml" target="lib\netcore451" />
   </files>
 </package>

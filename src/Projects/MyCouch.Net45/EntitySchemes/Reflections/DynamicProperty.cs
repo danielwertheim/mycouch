@@ -1,12 +1,17 @@
-﻿namespace MyCouch.EntitySchemes.Reflections
+﻿using EnsureThat;
+
+namespace MyCouch.EntitySchemes.Reflections
 {
     public class DynamicProperty
     {
-        public DynamicStringGetter Getter { get; private set; }
-        public DynamicStringSetter Setter { get; private set; }
+        public IStringGetter Getter { get; private set; }
+        public IStringSetter Setter { get; private set; }
 
-        public DynamicProperty(DynamicStringGetter getter, DynamicStringSetter setter)
+        public DynamicProperty(IStringGetter getter, IStringSetter setter)
         {
+            Ensure.That(getter, "getter").IsNotNull();
+            Ensure.That(setter, "setter").IsNotNull();
+
             Getter = getter;
             Setter = setter;
         }

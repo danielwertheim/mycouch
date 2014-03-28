@@ -33,14 +33,14 @@ namespace MyCouch.EntitySchemes
             GetSetterFor(typeof(T)).SetValue(entity, value);
         }
 
-        protected virtual DynamicStringGetter GetGetterFor(Type type)
+        protected virtual IStringGetter GetGetterFor(Type type)
         {
             return IdPropertyCache.GetOrAdd(
                 type, 
                 t => DynamicPropertyFactory.PropertyFor(GetPropertyFor(type))).Getter;
         }
 
-        protected virtual DynamicStringSetter GetSetterFor(Type type)
+        protected virtual IStringSetter GetSetterFor(Type type)
         {
             return IdPropertyCache.GetOrAdd(
                 type,
@@ -62,6 +62,7 @@ namespace MyCouch.EntitySchemes
 
         protected virtual IEnumerable<PropertyInfo> GetPropertiesFor(Type type)
         {
+            //TODO: Could be tweaked to only use property names with e.g contains(id, rev)
 #if !NETFX_CORE
             return type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
 #else

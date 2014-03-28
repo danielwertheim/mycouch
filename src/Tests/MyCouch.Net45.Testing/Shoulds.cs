@@ -287,7 +287,7 @@ namespace MyCouch.Testing
             Response.Rev.Should().NotBeNullOrEmpty();
         }
 
-        public void BeSuccessfulPost(string initialId, Func<T, string> idAccessor, Func<T, string> revAccessor)
+        public void BeSuccessfulPost(string initialId = null, Func<T, string> idAccessor = null, Func<T, string> revAccessor = null)
         {
             var codes = new[] { HttpStatusCode.Accepted, HttpStatusCode.Created };
 
@@ -298,15 +298,21 @@ namespace MyCouch.Testing
             Response.Reason.Should().BeNull();
             Response.IsEmpty.Should().BeFalse();
             Response.Content.Should().NotBeNull();
+
             Response.Id.Should().NotBeNullOrEmpty();
-            Response.Id.Should().Be(initialId);
+            if(initialId != null)
+                Response.Id.Should().Be(initialId);
+
             Response.Rev.Should().NotBeNullOrEmpty();
 
-            idAccessor(Response.Content).Should().Be(Response.Id);
-            revAccessor(Response.Content).Should().Be(Response.Rev);
+            if(idAccessor != null)
+                idAccessor(Response.Content).Should().Be(Response.Id);
+
+            if(revAccessor != null)
+                revAccessor(Response.Content).Should().Be(Response.Rev);
         }
 
-        public void BeSuccessfulPut(string initialId, Func<T, string> idAccessor, Func<T, string> revAccessor)
+        public void BeSuccessfulPut(string initialId, Func<T, string> idAccessor = null, Func<T, string> revAccessor = null)
         {
             var codes = new[] { HttpStatusCode.Accepted, HttpStatusCode.Created };
 
@@ -321,8 +327,11 @@ namespace MyCouch.Testing
             Response.Id.Should().Be(initialId);
             Response.Rev.Should().NotBeNullOrEmpty();
 
-            idAccessor(Response.Content).Should().Be(Response.Id);
-            revAccessor(Response.Content).Should().Be(Response.Rev);
+            if (idAccessor != null)
+                idAccessor(Response.Content).Should().Be(Response.Id);
+
+            if (revAccessor != null)
+                revAccessor(Response.Content).Should().Be(Response.Rev);
         }
 
         public void Be409Put(string initialId)
@@ -336,7 +345,7 @@ namespace MyCouch.Testing
             Response.Rev.Should().BeNull();
         }
 
-        public void BeSuccessfulPutOfNew(string initialId, Func<T, string> idAccessor, Func<T, string> revAccessor)
+        public void BeSuccessfulPutOfNew(string initialId = null, Func<T, string> idAccessor = null, Func<T, string> revAccessor = null)
         {
             var codes = new[] { HttpStatusCode.Accepted, HttpStatusCode.Created };
 
@@ -347,15 +356,21 @@ namespace MyCouch.Testing
             Response.Reason.Should().BeNull();
             Response.IsEmpty.Should().BeFalse();
             Response.Content.Should().NotBeNull();
+
             Response.Id.Should().NotBeNullOrEmpty();
-            Response.Id.Should().Be(initialId);
+            if(initialId != null)
+                Response.Id.Should().Be(initialId);
+
             Response.Rev.Should().NotBeNullOrEmpty();
 
-            idAccessor(Response.Content).Should().Be(Response.Id);
-            revAccessor(Response.Content).Should().Be(Response.Rev);
+            if (idAccessor != null)
+                idAccessor(Response.Content).Should().Be(Response.Id);
+
+            if (revAccessor != null)
+                revAccessor(Response.Content).Should().Be(Response.Rev);
         }
 
-        public void BeSuccessfulDelete(string initialId, Func<T, string> idAccessor, Func<T, string> revAccessor)
+        public void BeSuccessfulDelete(string initialId, Func<T, string> idAccessor = null, Func<T, string> revAccessor = null)
         {
             Response.RequestMethod.Should().Be(HttpMethod.Delete);
             Response.IsSuccess.Should().BeTrue("StatusCode:" + Response.StatusCode);
@@ -368,8 +383,11 @@ namespace MyCouch.Testing
             Response.Id.Should().Be(initialId);
             Response.Rev.Should().NotBeNullOrEmpty();
 
-            idAccessor(Response.Content).Should().Be(Response.Id);
-            revAccessor(Response.Content).Should().Be(Response.Rev);
+            if (idAccessor != null)
+                idAccessor(Response.Content).Should().Be(Response.Id);
+
+            if (revAccessor != null)
+                revAccessor(Response.Content).Should().Be(Response.Rev);
         }
     }
 

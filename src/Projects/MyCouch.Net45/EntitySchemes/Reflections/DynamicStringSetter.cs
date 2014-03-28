@@ -2,7 +2,7 @@
 
 namespace MyCouch.EntitySchemes.Reflections
 {
-    public class DynamicStringSetter
+    public class DynamicStringSetter : IStringSetter
     {
         private readonly Action<object, string> _accessor;
 

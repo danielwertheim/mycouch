@@ -56,11 +56,11 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="Net40\MyCouch.Cloudant.Net40.dll" target="lib\net40" />
-    <file src="Net40\MyCouch.Cloudant.Net40.xml" target="lib\net40" />
-    <file src="Net45\MyCouch.Cloudant.Net45.dll" target="lib\net45" />
-    <file src="Net45\MyCouch.Cloudant.Net45.xml" target="lib\net45" />
-    <file src="NetCore451\MyCouch.Cloudant.NetCore451.dll" target="lib\netcore451" />
-    <file src="NetCore451\MyCouch.Cloudant.NetCore451.xml" target="lib\netcore451" />
+    <file src="MyCouch.Cloudant.Net40\*.dll" target="lib\net40" />
+    <file src="MyCouch.Cloudant.Net40\*.xml" target="lib\net40" />
+    <file src="MyCouch.Cloudant.Net45\*.dll" target="lib\net45" />
+    <file src="MyCouch.Cloudant.Net45\*.xml" target="lib\net45" />
+    <file src="MyCouch.Cloudant.NetCore451\*.dll" target="lib\netcore451" />
+    <file src="MyCouch.Cloudant.NetCore451\*.xml" target="lib\netcore451" />
   </files>
 </package>

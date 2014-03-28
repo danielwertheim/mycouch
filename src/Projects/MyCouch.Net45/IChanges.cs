@@ -40,6 +40,15 @@ namespace MyCouch
         /// Lets you consume changes continuously from the _changes stream.
         /// </summary>
         /// <param name="request"></param>
+        /// <param name="onRead">Callback invoked when data is retrieved from the stream.</param>
+        /// <param name="cancellationToken">Used to end the reading of the stream.</param>
+        /// <returns></returns>
+        Task<ContinuousChangesResponse> GetAsync(GetChangesRequest request, Action<string> onRead, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Lets you consume changes continuously from the _changes stream.
+        /// </summary>
+        /// <param name="request"></param>
         /// <param name="cancellationToken">Used to end the reading of the stream.</param>
         /// <returns></returns>
         IObservable<string> GetAsync(GetChangesRequest request, CancellationToken cancellationToken);

@@ -179,6 +179,56 @@ namespace MyCouch.UnitTests.Schemes
             SUT.GetValueFrom(model).Should().Be(model.Rev);
         }
 
+        [Fact]
+        public void When_anonymous_type_without_Rev_It_still_functions_and_returns_null()
+        {
+            const string expectedId = null;
+
+            var model = new { Value = 42 };
+
+            SUT.GetValueFrom(model).Should().Be(expectedId);
+        }
+
+        [Fact]
+        public void When_anonymous_type_with_Rev_It_can_extract_the_rev()
+        {
+            const string expectedRev = "MyRev";
+
+            var model = new { Rev = expectedRev, Value = 42 };
+
+            SUT.GetValueFrom(model).Should().Be(expectedRev);
+        }
+
+        [Fact]
+        public void When_anonymous_type_with_DocumentRev_It_can_extract_the_rev()
+        {
+            const string expectedRev = "MyRev";
+
+            var model = new { DocumentRev = expectedRev, Value = 42 };
+
+            SUT.GetValueFrom(model).Should().Be(expectedRev);
+        }
+
+        [Fact]
+        public void When_anonymous_type_with_EntityRev_It_can_extract_the_rev()
+        {
+            const string expectedRev = "MyRev";
+
+            var model = new { EntityRev = expectedRev, Value = 42 };
+
+            SUT.GetValueFrom(model).Should().Be(expectedRev);
+        }
+
+        [Fact]
+        public void When_anonymous_type_with__Rev_It_can_extract_the_rev()
+        {
+            const string expectedRev = "MyRev";
+
+            var model = new { _Rev = expectedRev, Value = 42 };
+
+            SUT.GetValueFrom(model).Should().Be(expectedRev);
+        }
+
         private class ModelForMemberRanking
         {
             public string Rev { get; set; }

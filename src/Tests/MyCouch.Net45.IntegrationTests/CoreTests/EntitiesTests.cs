@@ -14,7 +14,39 @@ namespace MyCouch.IntegrationTests.CoreTests
         }
 
         [Fact]
-        public void When_post_of_a_new_entity_Then_the_document_is_created()
+        public void When_POST_of_a_new_anonymous_without_id_Then_the_document_is_created()
+        {
+            var artist = ClientTestData.Artists.CreateArtist();
+
+            var response = SUT.PostAsync(new { Name = artist.Name }).Result;
+
+            response.Should().BeSuccessfulPost();
+        }
+
+        [Fact]
+        public void When_POST_of_a_new_anonymous_with_id_Then_the_document_is_created()
+        {
+            var artist = ClientTestData.Artists.CreateArtist();
+            var initialId = artist.ArtistId;
+
+            var response = SUT.PostAsync(new { Id = artist.ArtistId, Name = artist.Name }).Result;
+
+            response.Should().BeSuccessfulPost(initialId, e => e.Id);
+        }
+
+        [Fact]
+        public void When_PUT_of_a_new_anonymous_with_id_Then_the_document_is_created()
+        {
+            var artist = ClientTestData.Artists.CreateArtist();
+            var initialId = artist.ArtistId;
+
+            var response = SUT.PutAsync(new { Id = artist.ArtistId, Name = artist.Name }).Result;
+
+            response.Should().BeSuccessfulPutOfNew(initialId, e => e.Id);
+        }
+
+        [Fact]
+        public void When_post_of_a_new_entity_with_id_Then_the_document_is_created()
         {
             var artist = ClientTestData.Artists.CreateArtist();
             var initialId = artist.ArtistId;
@@ -59,7 +91,7 @@ namespace MyCouch.IntegrationTests.CoreTests
         }
 
         [Fact]
-        public void When_delete_of_an_existing_entity_Then_the_document_is_deleted()
+        public void When_DELETE_of_an_existing_entity_Then_the_document_is_deleted()
         {
             var artist = ClientTestData.Artists.CreateArtist();
             var initialId = artist.ArtistId;
@@ -68,6 +100,18 @@ namespace MyCouch.IntegrationTests.CoreTests
             var response = SUT.DeleteAsync(artist).Result;
 
             response.Should().BeSuccessfulDelete(initialId, e => e.ArtistId, e => e.ArtistRev);
+        }
+
+        [Fact]
+        public void When_DELETE_of_an_existing_entity_using_anonymous_Then_the_document_is_deleted()
+        {
+            var artist = ClientTestData.Artists.CreateArtist();
+            var initialId = artist.ArtistId;
+            SUT.PostAsync(artist).Wait();
+
+            var response = SUT.DeleteAsync(new { Id = artist.ArtistId, Rev = artist.ArtistRev }).Result;
+
+            response.Should().BeSuccessfulDelete(initialId);
         }
 
         [Fact]

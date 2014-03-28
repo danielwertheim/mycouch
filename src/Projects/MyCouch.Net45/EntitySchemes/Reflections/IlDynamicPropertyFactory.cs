@@ -2,7 +2,6 @@
 using System;
 using System.Reflection;
 using System.Reflection.Emit;
-using EnsureThat;
 
 namespace MyCouch.EntitySchemes.Reflections
 {
@@ -14,23 +13,23 @@ namespace MyCouch.EntitySchemes.Reflections
 
         public virtual DynamicProperty PropertyFor(PropertyInfo property)
         {
-            Ensure.That(property, "property").IsNotNull();
-
-            return new DynamicProperty(GetterFor(property), SetterFor(property));
+            return new DynamicProperty(
+                CreateStringGetter(property),
+                CreateStringSetter(property));
         }
 
-        protected virtual DynamicStringGetter GetterFor(PropertyInfo property)
+        protected virtual IStringGetter CreateStringGetter(PropertyInfo property)
         {
-            return new DynamicStringGetter(CreateIlGetter(property));
+            return property != null && property.CanRead
+                ? new DynamicStringGetter(CreateIlGetter(property))
+                : new FakeStringGetter() as IStringGetter;
         }
 
-        protected virtual DynamicStringSetter SetterFor(PropertyInfo property)
+        protected virtual IStringSetter CreateStringSetter(PropertyInfo property)
         {
-            var ilSetter = CreateIlSetter(property);
-            if (ilSetter == null)
-                return null;
-
-            return new DynamicStringSetter(ilSetter);
+            return property != null && property.CanWrite
+                ? new DynamicStringSetter(CreateIlSetter(property))
+                : new FakeStringSetter() as IStringSetter;
         }
 
         protected virtual Func<object, string> CreateIlGetter(PropertyInfo property)

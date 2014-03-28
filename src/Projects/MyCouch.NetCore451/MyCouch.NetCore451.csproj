@@ -170,11 +170,23 @@
     <Compile Include="..\MyCouch.Net45\entityschemes\reflections\DynamicStringSetter.cs">
       <Link>EntitySchemes\Reflections\DynamicStringSetter.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\EntitySchemes\Reflections\FakeStringGetter.cs">
+      <Link>EntitySchemes\Reflections\FakeStringGetter.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\EntitySchemes\Reflections\FakeStringSetter.cs">
+      <Link>EntitySchemes\Reflections\FakeStringSetter.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\entityschemes\reflections\IDynamicPropertyFactory.cs">
       <Link>EntitySchemes\Reflections\IDynamicPropertyFactory.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\entityschemes\reflections\IlDynamicPropertyFactory.cs">
       <Link>EntitySchemes\Reflections\IlDynamicPropertyFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\EntitySchemes\Reflections\IStringGetter.cs">
+      <Link>EntitySchemes\Reflections\IStringGetter.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\EntitySchemes\Reflections\IStringSetter.cs">
+      <Link>EntitySchemes\Reflections\IStringSetter.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\entityschemes\reflections\LambdaDynamicPropertyFactory.cs">
       <Link>EntitySchemes\Reflections\LambdaDynamicPropertyFactory.cs</Link>

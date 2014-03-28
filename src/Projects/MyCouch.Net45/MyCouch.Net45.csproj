@@ -67,6 +67,10 @@
     <Compile Include="ChangesFeed.cs" />
     <Compile Include="ChangesStyle.cs" />
     <Compile Include="DocumentHeader.cs" />
+    <Compile Include="EntitySchemes\Reflections\FakeStringGetter.cs" />
+    <Compile Include="EntitySchemes\Reflections\FakeStringSetter.cs" />
+    <Compile Include="EntitySchemes\Reflections\IStringGetter.cs" />
+    <Compile Include="EntitySchemes\Reflections\IStringSetter.cs" />
     <Compile Include="IMyCouchStore.cs" />
     <Compile Include="MyCouchClient.cs" />
     <Compile Include="MyCouchClientBootstrapper.cs" />

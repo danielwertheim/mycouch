@@ -75,7 +75,33 @@ namespace MyCouch.IntegrationTests.CoreTests
         }
 
         [Fact]
-        public virtual void When_getting_Continuous_changes_and_performing_three_changes_It_will_extract_three_changes()
+        public virtual void When_getting_Continuous_changes_via_callback_and_performing_three_changes_It_will_extract_three_changes()
+        {
+            var lastSequence = GetLastSequence();
+            var changesRequest = new GetChangesRequest { Feed = ChangesFeed.Continuous, Since = lastSequence };
+            var numOfChanges = 0;
+            const int expectedNumOfChanges = 3;
+            var cancellation = new CancellationTokenSource();
+
+            var changes = SUT.GetAsync(changesRequest, data =>
+            {
+                Interlocked.Increment(ref numOfChanges);
+                if (numOfChanges == expectedNumOfChanges)
+                    cancellation.Cancel();
+            }, cancellation.Token);
+
+            var postOfDoc = Client.Documents.PostAsync(ClientTestData.Artists.Artist1Json).Result;
+            var putOfDoc = Client.Documents.PutAsync(postOfDoc.Id, postOfDoc.Rev, ClientTestData.Artists.Artist1Json).Result;
+            var deleteOfDoc = Client.Documents.DeleteAsync(putOfDoc.Id, putOfDoc.Rev).Result;
+
+            //SpinWait.SpinUntil(() => cancellation.IsCancellationRequested);
+            var response = changes.Result;
+
+            response.IsSuccess.Should().BeTrue();
+        }
+
+        [Fact]
+        public virtual void When_getting_Continuous_changes_via_observable_and_performing_three_changes_It_will_extract_three_changes()
         {
             var lastSequence = GetLastSequence();
             var changesRequest = new GetChangesRequest { Feed = ChangesFeed.Continuous, Since = lastSequence };

@@ -26,7 +26,7 @@ namespace MyCouch.UnitTests.Schemes
         [Fact]
         public void Verify_MemberRanking()
         {
-            var t = typeof (ModelForMemberRanking);
+            var t = typeof(ModelForMemberRanking);
 
             SUT.GetMemberRankingIndex(t, "FDE29AC2-C452-4493-8D61-5349E2E5B5D5").Should().Be(null);
             SUT.GetMemberRankingIndex(t, "_Id").Should().Be(0);
@@ -49,7 +49,7 @@ namespace MyCouch.UnitTests.Schemes
         {
             var model = new ModelTwo
             {
-                Id = "ModelTwo:Id:1", 
+                Id = "ModelTwo:Id:1",
                 EntityId = "ModelTwo:EntityId:2"
             };
 
@@ -177,6 +177,56 @@ namespace MyCouch.UnitTests.Schemes
             var model = new ModelInheritanceIdChild { Id = "ModelInheritanceIdChild:Id:1" };
 
             SUT.GetValueFrom(model).Should().Be(model.Id);
+        }
+
+        [Fact]
+        public void When_anonymous_type_without_Id_It_still_functions_and_returns_null()
+        {
+            const string expectedId = null;
+
+            var model = new { Value = 42 };
+
+            SUT.GetValueFrom(model).Should().Be(expectedId);
+        }
+
+        [Fact]
+        public void When_anonymous_type_with_Id_It_can_extract_the_id()
+        {
+            const string expectedId = "MyId";
+
+            var model = new { Id = expectedId, Value = 42 };
+
+            SUT.GetValueFrom(model).Should().Be(expectedId);
+        }
+
+        [Fact]
+        public void When_anonymous_type_with_DocumentId_It_can_extract_the_id()
+        {
+            const string expectedId = "MyId";
+
+            var model = new { DocumentId = expectedId, Value = 42 };
+
+            SUT.GetValueFrom(model).Should().Be(expectedId);
+        }
+
+        [Fact]
+        public void When_anonymous_type_with_EntityId_It_can_extract_the_id()
+        {
+            const string expectedId = "MyId";
+
+            var model = new { EntityId = expectedId, Value = 42 };
+
+            SUT.GetValueFrom(model).Should().Be(expectedId);
+        }
+
+        [Fact]
+        public void When_anonymous_type_with__Id_It_can_extract_the_id()
+        {
+            const string expectedId = "MyId";
+
+            var model = new { _Id = expectedId, Value = 42 };
+
+            SUT.GetValueFrom(model).Should().Be(expectedId);
         }
 
         private class ModelForMemberRanking
