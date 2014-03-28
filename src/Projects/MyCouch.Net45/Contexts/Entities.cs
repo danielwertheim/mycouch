@@ -67,7 +67,6 @@ namespace MyCouch.Contexts
         {
             Ensure.That(request, "request").IsNotNull();
 
-
             using (var httpRequest = CreateHttpRequest(request))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())

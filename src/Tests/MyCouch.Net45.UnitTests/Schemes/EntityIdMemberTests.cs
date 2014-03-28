@@ -26,7 +26,7 @@ namespace MyCouch.UnitTests.Schemes
         [Fact]
         public void Verify_MemberRanking()
         {
-            var t = typeof (ModelForMemberRanking);
+            var t = typeof(ModelForMemberRanking);
 
             SUT.GetMemberRankingIndex(t, "FDE29AC2-C452-4493-8D61-5349E2E5B5D5").Should().Be(null);
             SUT.GetMemberRankingIndex(t, "_Id").Should().Be(0);
@@ -49,7 +49,7 @@ namespace MyCouch.UnitTests.Schemes
         {
             var model = new ModelTwo
             {
-                Id = "ModelTwo:Id:1", 
+                Id = "ModelTwo:Id:1",
                 EntityId = "ModelTwo:EntityId:2"
             };
 
