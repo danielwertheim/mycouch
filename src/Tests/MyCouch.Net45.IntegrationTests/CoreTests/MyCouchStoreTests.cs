@@ -79,7 +79,7 @@ namespace MyCouch.IntegrationTests.CoreTests
         {
             var expectedSum = ArtistsById.Sum(a => a.Albums.Count());
 
-            SUT.ObservableQuery(ClientTestData.Views.ArtistsTotalNumOfAlbumsViewId, q => q.Reduce(true))
+            SUT.Query(ClientTestData.Views.ArtistsTotalNumOfAlbumsViewId, q => q.Reduce(true))
                 .ForEachAsync((row, i) =>
                 {
                     i.Should().Be(0);
@@ -93,7 +93,7 @@ namespace MyCouch.IntegrationTests.CoreTests
         {
             var expectedSum = ArtistsById.Sum(a => a.Albums.Count());
 
-            SUT.ObservableQuery<dynamic>(ClientTestData.Views.ArtistsTotalNumOfAlbumsViewId, q => q.Reduce(true))
+            SUT.Query<dynamic>(ClientTestData.Views.ArtistsTotalNumOfAlbumsViewId, q => q.Reduce(true))
                 .ForEachAsync((row, i) =>
                 {
                     i.Should().Be(0);
@@ -107,7 +107,7 @@ namespace MyCouch.IntegrationTests.CoreTests
         {
             var expectedSum = ArtistsById.Sum(a => a.Albums.Count());
 
-            SUT.ObservableQuery<int>(ClientTestData.Views.ArtistsTotalNumOfAlbumsViewId, q => q.Reduce(true))
+            SUT.Query<int>(ClientTestData.Views.ArtistsTotalNumOfAlbumsViewId, q => q.Reduce(true))
                 .ForEachAsync((row, i) =>
                 {
                     i.Should().Be(0);
@@ -120,7 +120,7 @@ namespace MyCouch.IntegrationTests.CoreTests
         public void When_IncludeDocs_and_no_value_is_returned_for_string_response_Then_the_included_docs_are_extracted()
         {
             var len = 0;
-            SUT.ObservableQuery(ClientTestData.Views.ArtistsNameNoValueViewId, q => q.IncludeDocs(true))
+            SUT.Query(ClientTestData.Views.ArtistsNameNoValueViewId, q => q.IncludeDocs(true))
                 .ForEachAsync((row, i) =>
                 {
                     len++;
@@ -133,7 +133,7 @@ namespace MyCouch.IntegrationTests.CoreTests
         public void When_IncludeDocs_and_no_value_is_returned_for_entity_response_Then_the_included_docs_are_extracted()
         {
             var len = 0;
-            SUT.ObservableQuery<string, Artist>(ClientTestData.Views.ArtistsNameNoValueViewId, q => q.IncludeDocs(true))
+            SUT.Query<string, Artist>(ClientTestData.Views.ArtistsNameNoValueViewId, q => q.IncludeDocs(true))
                 .ForEachAsync((row, i) =>
                 {
                     len++;
@@ -146,7 +146,7 @@ namespace MyCouch.IntegrationTests.CoreTests
         public void When_IncludeDocs_of_non_array_doc_and_null_value_is_returned_Then_the_neither_included_docs_nor_value_is_extracted()
         {
             var len = 0;
-            SUT.ObservableQuery<string[], string[]>(ClientTestData.Views.ArtistsNameNoValueViewId, q => q.IncludeDocs(true))
+            SUT.Query<string[], string[]>(ClientTestData.Views.ArtistsNameNoValueViewId, q => q.IncludeDocs(true))
                 .ForEachAsync((row, i) =>
                 {
                     len++;
@@ -162,7 +162,7 @@ namespace MyCouch.IntegrationTests.CoreTests
             const int skip = 2;
             var albums = ArtistsById.Skip(skip).Select(a => Client.Serializer.Serialize(a.Albums)).ToArray();
 
-            var values = SUT.ObservableQuery(ClientTestData.Views.ArtistsAlbumsViewId, q => q.Skip(skip))
+            var values = SUT.Query(ClientTestData.Views.ArtistsAlbumsViewId, q => q.Skip(skip))
                 .ToRowList()
                 .OrderBy(r => r.Id)
                 .Select(r => r.Value)
@@ -177,7 +177,7 @@ namespace MyCouch.IntegrationTests.CoreTests
             const int skip = 2;
             var albums = ArtistsById.Skip(skip).Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray();
             
-            var values = SUT.ObservableQuery<string[]>(ClientTestData.Views.ArtistsAlbumsViewId, q => q.Skip(skip))
+            var values = SUT.Query<string[]>(ClientTestData.Views.ArtistsAlbumsViewId, q => q.Skip(skip))
                 .ToRowList()
                 .OrderBy(r => r.Id)
                 .Select(r => r.Value)
@@ -192,7 +192,7 @@ namespace MyCouch.IntegrationTests.CoreTests
             const int skip = 2;
             var albums = ArtistsById.Skip(skip).Select(a => a.Albums).ToArray();
 
-            var values = SUT.ObservableQuery<Album[]>(ClientTestData.Views.ArtistsAlbumsViewId, q => q.Skip(skip))
+            var values = SUT.Query<Album[]>(ClientTestData.Views.ArtistsAlbumsViewId, q => q.Skip(skip))
                 .ToRowList()
                 .OrderBy(r => r.Id)
                 .Select(r => r.Value)
@@ -207,7 +207,7 @@ namespace MyCouch.IntegrationTests.CoreTests
             const int limit = 2;
             var albums = ArtistsById.Take(limit).Select(a => Client.Serializer.Serialize(a.Albums)).ToArray();
 
-            var values = SUT.ObservableQuery(ClientTestData.Views.ArtistsAlbumsViewId, q => q.Limit(limit))
+            var values = SUT.Query(ClientTestData.Views.ArtistsAlbumsViewId, q => q.Limit(limit))
                 .ToRowList()
                 .OrderBy(r => r.Id)
                 .Select(r => r.Value)
@@ -222,7 +222,7 @@ namespace MyCouch.IntegrationTests.CoreTests
             const int limit = 2;
             var albums = ArtistsById.Take(limit).Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray();
 
-            var values = SUT.ObservableQuery<string[]>(ClientTestData.Views.ArtistsAlbumsViewId, q => q.Limit(limit))
+            var values = SUT.Query<string[]>(ClientTestData.Views.ArtistsAlbumsViewId, q => q.Limit(limit))
                 .ToRowList()
                 .OrderBy(r => r.Id)
                 .Select(r => r.Value)
@@ -237,7 +237,7 @@ namespace MyCouch.IntegrationTests.CoreTests
             const int limit = 2;
             var albums = ArtistsById.Take(limit).Select(a => a.Albums).ToArray();
 
-            var values = SUT.ObservableQuery<Album[]>(ClientTestData.Views.ArtistsAlbumsViewId, q => q.Limit(limit))
+            var values = SUT.Query<Album[]>(ClientTestData.Views.ArtistsAlbumsViewId, q => q.Limit(limit))
                 .ToRowList()
                 .OrderBy(r => r.Id)
                 .Select(r => r.Value)
@@ -251,7 +251,7 @@ namespace MyCouch.IntegrationTests.CoreTests
         {
             var artist = ArtistsById[2];
 
-            var values = SUT.ObservableQuery(ClientTestData.Views.ArtistsAlbumsViewId, q => q.Key(artist.Name))
+            var values = SUT.Query(ClientTestData.Views.ArtistsAlbumsViewId, q => q.Key(artist.Name))
                 .ToRowList()
                 .OrderBy(r => r.Id)
                 .Select(r => r.Value)
@@ -265,7 +265,7 @@ namespace MyCouch.IntegrationTests.CoreTests
         {
             var artist = ArtistsById[2];
 
-            var values = SUT.ObservableQuery<string[]>(ClientTestData.Views.ArtistsAlbumsViewId, q => q.Key(artist.Name))
+            var values = SUT.Query<string[]>(ClientTestData.Views.ArtistsAlbumsViewId, q => q.Key(artist.Name))
                 .ToRowList()
                 .OrderBy(r => r.Id)
                 .Select(r => r.Value)
@@ -279,7 +279,7 @@ namespace MyCouch.IntegrationTests.CoreTests
         {
             var artist = ArtistsById[2];
 
-            var values = SUT.ObservableQuery<Album[]>(ClientTestData.Views.ArtistsAlbumsViewId, q => q.Key(artist.Name))
+            var values = SUT.Query<Album[]>(ClientTestData.Views.ArtistsAlbumsViewId, q => q.Key(artist.Name))
                 .ToRowList()
                 .OrderBy(r => r.Id)
                 .Select(r => r.Value)
@@ -294,7 +294,7 @@ namespace MyCouch.IntegrationTests.CoreTests
             var artists = ArtistsById.Skip(2).Take(3).ToArray();
             var keys = artists.Select(a => a.Name).ToArray();
 
-            var values = SUT.ObservableQuery(ClientTestData.Views.ArtistsAlbumsViewId, q => q.Keys(keys))
+            var values = SUT.Query(ClientTestData.Views.ArtistsAlbumsViewId, q => q.Keys(keys))
                 .ToRowList()
                 .OrderBy(r => r.Id)
                 .Select(r => r.Value)
@@ -309,7 +309,7 @@ namespace MyCouch.IntegrationTests.CoreTests
             var artists = ArtistsById.Skip(2).Take(3).ToArray();
             var keys = artists.Select(a => a.Name).ToArray();
 
-            var values = SUT.ObservableQuery<string[]>(ClientTestData.Views.ArtistsAlbumsViewId, q => q.Keys(keys))
+            var values = SUT.Query<string[]>(ClientTestData.Views.ArtistsAlbumsViewId, q => q.Keys(keys))
                 .ToRowList()
                 .OrderBy(r => r.Id)
                 .Select(r => r.Value)
@@ -324,7 +324,7 @@ namespace MyCouch.IntegrationTests.CoreTests
             var artists = ArtistsById.Skip(2).Take(3).ToArray();
             var keys = artists.Select(a => a.Name).ToArray();
 
-            var values = SUT.ObservableQuery<Album[]>(ClientTestData.Views.ArtistsAlbumsViewId, q => q.Keys(keys))
+            var values = SUT.Query<Album[]>(ClientTestData.Views.ArtistsAlbumsViewId, q => q.Keys(keys))
                 .ToRowList()
                 .OrderBy(r => r.Id)
                 .Select(r => r.Value)
@@ -338,7 +338,7 @@ namespace MyCouch.IntegrationTests.CoreTests
         {
             var artists = ArtistsById.Skip(2).Take(5).ToArray();
 
-            var values = SUT.ObservableQuery(
+            var values = SUT.Query(
                 ClientTestData.Views.ArtistsAlbumsViewId,
                 q => q
                     .StartKey(artists.First().Name)
@@ -357,7 +357,7 @@ namespace MyCouch.IntegrationTests.CoreTests
         {
             var artists = ArtistsById.Skip(2).Take(5).ToArray();
 
-            var values = SUT.ObservableQuery<string[]>(
+            var values = SUT.Query<string[]>(
                 ClientTestData.Views.ArtistsAlbumsViewId,
                 q => q
                     .StartKey(artists.First().Name)
@@ -376,7 +376,7 @@ namespace MyCouch.IntegrationTests.CoreTests
         {
             var artists = ArtistsById.Skip(2).Take(5).ToArray();
 
-            var values = SUT.ObservableQuery<Album[]>(
+            var values = SUT.Query<Album[]>(
                 ClientTestData.Views.ArtistsAlbumsViewId,
                 q => q
                     .StartKey(artists.First().Name)
@@ -395,7 +395,7 @@ namespace MyCouch.IntegrationTests.CoreTests
         {
             var artists = ArtistsById.Skip(2).Take(5).ToArray();
 
-            var values = SUT.ObservableQuery(
+            var values = SUT.Query(
                 ClientTestData.Views.ArtistsAlbumsViewId,
                 q => q
                     .StartKey(artists.First().Name)
@@ -415,7 +415,7 @@ namespace MyCouch.IntegrationTests.CoreTests
         {
             var artists = ArtistsById.Skip(2).Take(5).ToArray();
 
-            var values = SUT.ObservableQuery<string[]>(
+            var values = SUT.Query<string[]>(
                 ClientTestData.Views.ArtistsAlbumsViewId,
                 q => q
                     .StartKey(artists.First().Name)
@@ -435,7 +435,7 @@ namespace MyCouch.IntegrationTests.CoreTests
         {
             var artists = ArtistsById.Skip(2).Take(5).ToArray();
 
-            var values = SUT.ObservableQuery<Album[]>(
+            var values = SUT.Query<Album[]>(
                 ClientTestData.Views.ArtistsAlbumsViewId,
                 q => q
                     .StartKey(artists.First().Name)
@@ -456,7 +456,7 @@ namespace MyCouch.IntegrationTests.CoreTests
             const int skip = 2;
             var artists = ArtistsById.Skip(skip).ToArray();
 
-            var values = SUT.ObservableQuery<Artist>(ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId, q => q.Skip(skip))
+            var values = SUT.Query<Artist>(ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId, q => q.Skip(skip))
                 .ToRowList()
                 .OrderBy(r => r.Id)
                 .Select(r => r.Value)
@@ -471,7 +471,7 @@ namespace MyCouch.IntegrationTests.CoreTests
             const int limit = 2;
             var artists = ArtistsById.Take(limit).ToArray();
 
-            var values = SUT.ObservableQuery<Artist>(ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId, q => q.Limit(limit))
+            var values = SUT.Query<Artist>(ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId, q => q.Limit(limit))
                 .ToRowList()
                 .OrderBy(r => r.Id)
                 .Select(r => r.Value)
@@ -483,7 +483,7 @@ namespace MyCouch.IntegrationTests.CoreTests
         [Fact]
         public void When_getting_all_artists_It_can_deserialize_artists_properly()
         {
-            var values = SUT.ObservableQuery<Artist>(ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId)
+            var values = SUT.Query<Artist>(ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId)
                 .ToRowList()
                 .OrderBy(r => r.Id)
                 .Select(r => r.Value)

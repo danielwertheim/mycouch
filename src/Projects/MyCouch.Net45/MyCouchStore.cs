@@ -228,7 +228,7 @@ namespace MyCouch
             return response.Content;
         }
 
-        public virtual IObservable<Row> ObservableQuery(ViewIdentity viewIdentity, Action<Query> queryConfig = null)
+        public virtual IObservable<Row> Query(ViewIdentity viewIdentity, Action<Query> queryConfig = null)
         {
             ThrowIfDisposed();
 
@@ -236,10 +236,10 @@ namespace MyCouch
             if (queryConfig != null)
                 queryConfig(query);
 
-            return ObservableQuery(query);
+            return Query(query);
         }
 
-        public virtual IObservable<Row<TValue>> ObservableQuery<TValue>(ViewIdentity viewIdentity, Action<Query> queryConfig = null)
+        public virtual IObservable<Row<TValue>> Query<TValue>(ViewIdentity viewIdentity, Action<Query> queryConfig = null)
         {
             ThrowIfDisposed();
 
@@ -247,10 +247,10 @@ namespace MyCouch
             if (queryConfig != null)
                 queryConfig(query);
 
-            return ObservableQuery<TValue>(query);
+            return Query<TValue>(query);
         }
 
-        public virtual IObservable<Row<TValue, TIncludedDoc>> ObservableQuery<TValue, TIncludedDoc>(ViewIdentity viewIdentity, Action<Query> queryConfig = null)
+        public virtual IObservable<Row<TValue, TIncludedDoc>> Query<TValue, TIncludedDoc>(ViewIdentity viewIdentity, Action<Query> queryConfig = null)
         {
             ThrowIfDisposed();
 
@@ -258,10 +258,10 @@ namespace MyCouch
             if (queryConfig != null)
                 queryConfig(query);
 
-            return ObservableQuery<TValue, TIncludedDoc>(query);
+            return Query<TValue, TIncludedDoc>(query);
         }
 
-        public virtual IObservable<Row> ObservableQuery(Query query)
+        public virtual IObservable<Row> Query(Query query)
         {
             ThrowIfDisposed();
 
@@ -282,7 +282,7 @@ namespace MyCouch
             }).SubscribeOn(ObservableSubscribeOnScheduler());
         }
 
-        public virtual IObservable<Row<TValue>> ObservableQuery<TValue>(Query query)
+        public virtual IObservable<Row<TValue>> Query<TValue>(Query query)
         {
             ThrowIfDisposed();
 
@@ -303,7 +303,7 @@ namespace MyCouch
             }).SubscribeOn(ObservableSubscribeOnScheduler());
         }
 
-        public virtual IObservable<Row<TValue, TIncludedDoc>> ObservableQuery<TValue, TIncludedDoc>(Query query)
+        public virtual IObservable<Row<TValue, TIncludedDoc>> Query<TValue, TIncludedDoc>(Query query)
         {
             ThrowIfDisposed();
 
