@@ -50,7 +50,7 @@ namespace MyCouch
 
         public static IObservable<string> PerformAsync(this IMyCouchClient client, GetChangesRequest request, CancellationToken cancellationToken)
         {
-            return client.Changes.GetAsync(request, cancellationToken);
+            return client.Changes.ObserveContinuous(request, cancellationToken);
         }
 
         public static Task<BulkResponse> PerformAsync(this IMyCouchClient client, BulkRequest request)

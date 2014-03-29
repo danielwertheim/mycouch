@@ -109,7 +109,7 @@ namespace MyCouch.IntegrationTests.CoreTests
             const int expectedNumOfChanges = 3;
             var cancellation = new CancellationTokenSource();
 
-            var changes = SUT.GetAsync(changesRequest, cancellation.Token).ForEachAsync((d, i) =>
+            var changes = SUT.ObserveContinuous(changesRequest, cancellation.Token).ForEachAsync((d, i) =>
             {
                 Interlocked.Increment(ref numOfChanges);
                 if (numOfChanges >= expectedNumOfChanges)

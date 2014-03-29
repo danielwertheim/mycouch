@@ -93,7 +93,7 @@ namespace MyCouch.Contexts
             }
         }
 
-        public virtual IObservable<string> GetAsync(GetChangesRequest request, CancellationToken cancellationToken)
+        public virtual IObservable<string> ObserveContinuous(GetChangesRequest request, CancellationToken cancellationToken)
         {
             Ensure.That(request, "request").IsNotNull();
             EnsureContinuousFeedIsRequested(request);

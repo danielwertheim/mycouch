@@ -23,7 +23,7 @@ namespace MyCouch
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        /// <remarks>Only supports Normal and Long-polling feed. For Continuous feed, see <see cref="GetAsync(GetChangesRequest, CancellationToken)"/>.</remarks>
+        /// <remarks>Only supports Normal and Long-polling feed. For Continuous feed, see <see cref="ObserveContinuous"/>.</remarks>
         Task<ChangesResponse> GetAsync(GetChangesRequest request);
         /// <summary>
         /// Lets you consume changes from the _changes stream.
@@ -33,7 +33,7 @@ namespace MyCouch
         /// Supports string for JSON, which is the same as using the non generic overload.</typeparam>
         /// <param name="request"></param>
         /// <returns></returns>
-        /// <remarks>Only supports Normal and Long-polling feed. For Continuous feed, see <see cref="GetAsync(GetChangesRequest, CancellationToken)"/>.</remarks>
+        /// <remarks>Only supports Normal and Long-polling feed. For Continuous feed, see <see cref="ObserveContinuous"/>.</remarks>
         Task<ChangesResponse<TIncludedDoc>> GetAsync<TIncludedDoc>(GetChangesRequest request);
 
         /// <summary>
@@ -51,6 +51,6 @@ namespace MyCouch
         /// <param name="request"></param>
         /// <param name="cancellationToken">Used to end the reading of the stream.</param>
         /// <returns></returns>
-        IObservable<string> GetAsync(GetChangesRequest request, CancellationToken cancellationToken);
+        IObservable<string> ObserveContinuous(GetChangesRequest request, CancellationToken cancellationToken);
     }
 }
