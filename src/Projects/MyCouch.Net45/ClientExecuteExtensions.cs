@@ -43,7 +43,7 @@ namespace MyCouch
             return client.Changes.GetAsync(request);
         }
 
-        public static Task<ContinuousChangesResponse> PerformAsync(this IMyCouchClient client, GetChangesRequest request, Action<string> onRead, CancellationToken cancellationToken)
+        public static Task<ContinuousChangesResponse> PerformAsync(this IMyCouchClient client, GetChangesRequest request, CancellationToken cancellationToken, Action<string> onRead)
         {
             return client.Changes.GetAsync(request, onRead, cancellationToken);
         }
