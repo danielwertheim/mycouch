@@ -5,6 +5,7 @@ namespace MyCouch
 {
     /// <summary>
     /// Used to identify a certain view of a design document.
+    /// For system views like _all_docs, use <see cref="SystemViewIdentity"/>
     /// </summary>
 #if !NETFX_CORE
     [Serializable]
