@@ -9,15 +9,17 @@ namespace MyCouch.Requests.Factories
     {
         protected DocumentHttpRequestFactoryBase(IConnection connection) : base(connection) {}
 
-        protected virtual string GenerateRequestUrl(string id = null, string rev = null, bool batch = false)
+        protected virtual string GenerateRequestUrl(string id = null, string rev = null, params UrlParam[] parameters)
         {
             var queryParameters = new List<string>();
 
             if (rev != null)
                 queryParameters.Add(string.Format("rev={0}", rev));
 
-            if (batch)
-                queryParameters.Add("batch=ok");
+            if (parameters != null && parameters.Any())
+            {
+                queryParameters.AddRange(parameters.Where(p => p != null && p.HasValue).Select(p => string.Concat(p.Key, "=", p.Value)));
+            }
 
             return string.Format("{0}/{1}{2}",
                 Connection.Address,

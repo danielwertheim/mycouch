@@ -10,7 +10,10 @@ namespace MyCouch.Requests.Factories
 
         public virtual HttpRequest Create(PutDocumentRequest request)
         {
-            var httpRequest = CreateFor<PutDocumentRequest>(HttpMethod.Put, GenerateRequestUrl(request.Id, request.Rev, request.Batch));
+            var batchParam = request.Batch ? new UrlParam("batch", "ok") : null;
+            var httpRequest = CreateFor<PutDocumentRequest>(
+                HttpMethod.Put,
+                GenerateRequestUrl(request.Id, request.Rev, batchParam));
 
             httpRequest.SetIfMatch(request.Rev);
             httpRequest.SetJsonContent(request.Content);
@@ -18,13 +21,13 @@ namespace MyCouch.Requests.Factories
             return httpRequest;
         }
 
-        protected override string GenerateRequestUrl(string id = null, string rev = null, bool batch = false)
+        protected override string GenerateRequestUrl(string id = null, string rev = null, params UrlParam[] parameters)
         {
             Ensure.That(id, "id")
                 .WithExtraMessageOf(() => "PUT requests must have an id part of the URL.")
                 .IsNotNullOrWhiteSpace();
 
-            return base.GenerateRequestUrl(id, rev, batch);
+            return base.GenerateRequestUrl(id, rev, parameters);
         }
     }
 }

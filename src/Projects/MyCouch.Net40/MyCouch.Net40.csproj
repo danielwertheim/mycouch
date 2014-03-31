@@ -371,6 +371,9 @@
     <Compile Include="..\MyCouch.Net45\Requests\Factories\ReplaceDocumentHttpRequestFactory.cs">
       <Link>Requests\Factories\ReplaceDocumentHttpRequestFactory.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Requests\Factories\UrlParam.cs">
+      <Link>Requests\Factories\UrlParam.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\Factories\ViewCleanupHttpRequestFactory.cs">
       <Link>Requests\Factories\ViewCleanupHttpRequestFactory.cs</Link>
     </Compile>

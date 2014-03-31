@@ -18,8 +18,8 @@ namespace MyCouch.Requests
         {
             Ensure.That(rev, "rev").IsNotNullOrWhiteSpace();
 
+            Initialize();
             Rev = rev;
-            Batch = false;
         }
 
         public PutDocumentRequest(string id, string content)
@@ -27,8 +27,14 @@ namespace MyCouch.Requests
             Ensure.That(id, "id").IsNotNullOrWhiteSpace();
             Ensure.That(content, "content").IsNotNullOrWhiteSpace();
 
+            Initialize();
             Id = id;
             Content = content;
+        }
+
+        private void Initialize()
+        {
+            Batch = false;
         }
     }
 }

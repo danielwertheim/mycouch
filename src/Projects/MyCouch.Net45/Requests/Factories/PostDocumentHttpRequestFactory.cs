@@ -9,7 +9,10 @@ namespace MyCouch.Requests.Factories
 
         public virtual HttpRequest Create(PostDocumentRequest request)
         {
-            var httpRequest = CreateFor<PostDocumentRequest>(HttpMethod.Post, GenerateRequestUrl(batch: request.Batch));
+            var batchParam = request.Batch ? new UrlParam("batch", "ok") : null;
+            var httpRequest = CreateFor<PostDocumentRequest>(
+                HttpMethod.Post,
+                GenerateRequestUrl(parameters: batchParam));
 
             httpRequest.SetJsonContent(request.Content);
 
