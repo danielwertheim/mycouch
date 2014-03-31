@@ -12,7 +12,7 @@ namespace MyCouch.Requests
         protected IQueryParameters State { get; private set; }
 
         /// <summary>
-        /// Identitfies the view that this Query request will be
+        /// Identitfies the View index that this request will be
         /// performed against.
         /// </summary>
         public ViewIdentity ViewIdentity { get { return State.ViewIdentity; } }

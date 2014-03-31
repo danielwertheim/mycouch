@@ -1,8 +1,8 @@
 namespace MyCouch
 {
     /// <summary>
-    /// The different common parameters that can be specified
-    /// when performing a query against a View (secondary-index).
+    /// The different common query parameters that can be specified
+    /// when performing a query against a View-index.
     /// </summary>
     public interface IQueryParameters
     {
