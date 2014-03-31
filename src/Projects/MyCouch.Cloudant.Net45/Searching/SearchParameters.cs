@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using EnsureThat;
 
 namespace MyCouch.Cloudant.Searching
 {
+#if !NETFX_CORE
+    [Serializable]
+#endif
     public class SearchParameters : ISearchParameters
     {
         public SearchIndexIdentity IndexIdentity { get; private set; }
