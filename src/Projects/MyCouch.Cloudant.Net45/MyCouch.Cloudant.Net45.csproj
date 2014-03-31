@@ -62,11 +62,12 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ISearchParameters.cs" />
     <Compile Include="MyCouchCloudantClient.cs" />
     <Compile Include="MyCouchCloudantClientBootstrapper.cs" />
     <Compile Include="Contexts\Searches.cs" />
     <Compile Include="IMyCouchCloudantClient.cs" />
-    <Compile Include="Requests\Configurators\SearchIndexRequestConfigurator.cs" />
+    <Compile Include="SearchParametersConfigurator.cs" />
     <Compile Include="Requests\Factories\SearchIndexHttpRequestFactory.cs" />
     <Compile Include="Requests\SearchIndexRequest.cs" />
     <Compile Include="Responses\Factories\Materializers\SearchIndexResponseMaterializer.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="SearchIndexIdentity.cs" />
     <Compile Include="ISearches.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Searching\SearchParameters.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MyCouch.Net45\MyCouch.Net45.csproj">

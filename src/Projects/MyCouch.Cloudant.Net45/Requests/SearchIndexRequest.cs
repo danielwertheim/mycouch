@@ -1,27 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
 using EnsureThat;
+using MyCouch.Cloudant.Searching;
 using MyCouch.Requests;
-using MyCouch.Cloudant.Requests.Configurators;
 
 namespace MyCouch.Cloudant.Requests
 {
 #if !NETFX_CORE
     [Serializable]
 #endif
-    public class SearchIndexRequest : Request
+    public class SearchIndexRequest : Request, ISearchParameters
     {
-        public SearchIndexIdentity IndexIdentity { get; private set; }
+        protected ISearchParameters State { get; private set; }
+
+        /// <summary>
+        /// Identitfies the Search index that this request will be
+        /// performed against.
+        /// </summary>
+        public SearchIndexIdentity IndexIdentity { get { return State.IndexIdentity; } }
 
         /// <summary>
         /// The Lucene expression that will be used to query the index.
         /// </summary>
-        public string Expression { get; set; }
+        public string Expression
+        {
+            get { return State.Expression; }
+            set { State.Expression = value; }
+        }
 
         /// <summary>
         /// Allow the results from a stale search index to be used.
         /// </summary>
-        public Stale? Stale { get; set; }
+        public Stale? Stale
+        {
+            get { return State.Stale; }
+            set { State.Stale = value; }
+        }
 
         /// <summary>
         /// A bookmark that was received from a previous search. This
@@ -30,22 +44,38 @@ namespace MyCouch.Cloudant.Requests
         /// empty rows array and the same bookmark. That way you can
         /// determine that you have reached the end of the result list.
         /// </summary>
-        public string Bookmark { get; set; }
-        
+        public string Bookmark
+        {
+            get { return State.Bookmark; }
+            set { State.Bookmark = value; }
+        }
+
         /// <summary>
         /// Sort expressions used to sort the output.
         /// </summary>
-        public List<string> Sort { get; set; }
+        public IList<string> Sort
+        {
+            get { return State.Sort; }
+            set { State.Sort = value; }
+        }
 
         /// <summary>
         /// Include the full content of the documents in the return.
         /// </summary>
-        public bool? IncludeDocs { get; set; }
+        public bool? IncludeDocs
+        {
+            get { return State.IncludeDocs; }
+            set { State.IncludeDocs = value; }
+        }
 
         /// <summary>
         /// Limit the number of the returned documents to the specified number.
         /// </summary>
-        public int? Limit { get; set; }
+        public int? Limit
+        {
+            get { return State.Limit; }
+            set { State.Limit = value; }
+        }
 
         public SearchIndexRequest(string designDocument, string searchIndexName)
             : this(new SearchIndexIdentity(designDocument, searchIndexName)) { }
@@ -54,13 +84,12 @@ namespace MyCouch.Cloudant.Requests
         {
             Ensure.That(indexIdentity, "indexIdentity").IsNotNull();
 
-            IndexIdentity = indexIdentity;
-            Sort = new List<string>();
+            State = new SearchParameters(indexIdentity);
         }
 
-        public virtual SearchIndexRequest Configure(Action<SearchIndexRequestConfigurator> configurator)
+        public virtual SearchIndexRequest Configure(Action<SearchParametersConfigurator> configurator)
         {
-            configurator(new SearchIndexRequestConfigurator(this));
+            configurator(new SearchParametersConfigurator(State));
 
             return this;
         }

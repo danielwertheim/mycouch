@@ -121,8 +121,8 @@
     <Compile Include="..\MyCouch.Net45.UnitTests\Cloudant\Requests\SearchIndexHttpRequestFactoryTests.cs">
       <Link>Cloudant\Requests\SearchIndexHttpRequestFactoryTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.UnitTests\Cloudant\Requests\SearchIndexRequestConfiguratorTests.cs">
-      <Link>Cloudant\Requests\SearchIndexRequestConfiguratorTests.cs</Link>
+    <Compile Include="..\MyCouch.Net45.UnitTests\Cloudant\SearchParametersConfiguratorTests.cs">
+      <Link>Cloudant\SearchParametersConfiguratorTests.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45.UnitTests\Fakes\ConnectionFake.cs">
       <Link>Fakes\ConnectionFake.cs</Link>

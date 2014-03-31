@@ -107,14 +107,14 @@
     <Compile Include="..\MyCouch.Cloudant.Net45\ISearches.cs">
       <Link>ISearches.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\ISearchParameters.cs">
+      <Link>ISearchParameters.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\MyCouchCloudantClient.cs">
       <Link>MyCouchCloudantClient.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\MyCouchCloudantClientBootstrapper.cs">
       <Link>MyCouchCloudantClientBootstrapper.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\configurators\SearchIndexRequestConfigurator.cs">
-      <Link>Requests\Configurators\SearchIndexRequestConfigurator.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\Requests\Factories\SearchIndexHttpRequestFactory.cs">
       <Link>Requests\Factories\SearchIndexHttpRequestFactory.cs</Link>
@@ -133,6 +133,12 @@
     </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\SearchIndexIdentity.cs">
       <Link>SearchIndexIdentity.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\Searching\SearchParameters.cs">
+      <Link>Searching\SearchParameters.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\SearchParametersConfigurator.cs">
+      <Link>SearchParametersConfigurator.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

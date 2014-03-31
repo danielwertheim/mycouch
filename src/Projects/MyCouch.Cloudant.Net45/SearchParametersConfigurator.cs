@@ -1,12 +1,14 @@
-﻿namespace MyCouch.Cloudant.Requests.Configurators
-{
-    public class SearchIndexRequestConfigurator
-    {
-        protected readonly SearchIndexRequest Request;
+﻿using System.Linq;
 
-        public SearchIndexRequestConfigurator(SearchIndexRequest request)
+namespace MyCouch.Cloudant
+{
+    public class SearchParametersConfigurator
+    {
+        protected readonly ISearchParameters Parameters;
+
+        public SearchParametersConfigurator(ISearchParameters parameters)
         {
-            Request = request;
+            Parameters = parameters;
         }
 
         /// <summary>
@@ -14,9 +16,9 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual SearchIndexRequestConfigurator Expression(string value)
+        public virtual SearchParametersConfigurator Expression(string value)
         {
-            Request.Expression = value;
+            Parameters.Expression = value;
 
             return this;
         }
@@ -26,9 +28,9 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual SearchIndexRequestConfigurator Stale(Stale value)
+        public virtual SearchParametersConfigurator Stale(Stale value)
         {
-            Request.Stale = value;
+            Parameters.Stale = value;
 
             return this;
         }
@@ -42,9 +44,9 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual SearchIndexRequestConfigurator Bookmark(string value)
+        public virtual SearchParametersConfigurator Bookmark(string value)
         {
-            Request.Bookmark = value;
+            Parameters.Bookmark = value;
 
             return this;
         }
@@ -54,10 +56,9 @@
         /// </summary>
         /// <param name="sortExpressions"></param>
         /// <returns></returns>
-        public virtual SearchIndexRequestConfigurator Sort(params string[] sortExpressions)
+        public virtual SearchParametersConfigurator Sort(params string[] sortExpressions)
         {
-            Request.Sort.Clear();
-            Request.Sort.AddRange(sortExpressions);
+            Parameters.Sort = sortExpressions.ToList();
 
             return this;
         }
@@ -67,9 +68,9 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual SearchIndexRequestConfigurator IncludeDocs(bool value)
+        public virtual SearchParametersConfigurator IncludeDocs(bool value)
         {
-            Request.IncludeDocs = value;
+            Parameters.IncludeDocs = value;
 
             return this;
         }
@@ -79,9 +80,9 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual SearchIndexRequestConfigurator Limit(int value)
+        public virtual SearchParametersConfigurator Limit(int value)
         {
-            Request.Limit = value;
+            Parameters.Limit = value;
 
             return this;
         }

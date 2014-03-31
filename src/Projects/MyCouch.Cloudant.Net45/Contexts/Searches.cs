@@ -1,9 +1,7 @@
-﻿using System;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Cloudant.Requests;
-using MyCouch.Cloudant.Requests.Configurators;
 using MyCouch.Cloudant.Requests.Factories;
 using MyCouch.Cloudant.Responses;
 using MyCouch.Cloudant.Responses.Factories;
@@ -53,32 +51,6 @@ namespace MyCouch.Cloudant.Contexts
                     return ProcessHttpResponse<TIncludedDoc>(res);
                 }
             }
-        }
-
-        public virtual Task<SearchIndexResponse> SearchAsync(string designDocument, string searchIndexName, Action<SearchIndexRequestConfigurator> configurator)
-        {
-            Ensure.That(designDocument, "designDocument").IsNotNullOrWhiteSpace();
-            Ensure.That(searchIndexName, "searchIndexName").IsNotNullOrWhiteSpace();
-            Ensure.That(configurator, "configurator").IsNotNull();
-
-            var request = CreateSearchIndexRequest(designDocument, searchIndexName);
-
-            request.Configure(configurator);
-
-            return SearchAsync(request);
-        }
-
-        public virtual Task<SearchIndexResponse<TIncludedDoc>> SearchAsync<TIncludedDoc>(string designDocument, string searchIndexName, Action<SearchIndexRequestConfigurator> configurator)
-        {
-            Ensure.That(designDocument, "designDocument").IsNotNullOrWhiteSpace();
-            Ensure.That(searchIndexName, "searchIndexName").IsNotNullOrWhiteSpace();
-            Ensure.That(configurator, "configurator").IsNotNull();
-
-            var request = CreateSearchIndexRequest(designDocument, searchIndexName);
-
-            request.Configure(configurator);
-
-            return SearchAsync<TIncludedDoc>(request);
         }
 
         protected virtual SearchIndexRequest CreateSearchIndexRequest(string designDocument, string searchIndexName)

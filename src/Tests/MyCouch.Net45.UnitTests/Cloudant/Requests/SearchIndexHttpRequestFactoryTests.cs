@@ -101,7 +101,7 @@ namespace MyCouch.UnitTests.Cloudant.Requests
         public void When_Sort_is_assigned_It_should_get_included_in_the_querystring()
         {
             var request = CreateRequest();
-            request.Sort.AddRange(new[] { "diet<string>", "-min_length<number>" });
+            request.Sort = new[] { "diet<string>", "-min_length<number>" };
 
             WithHttpRequestFor(
                 request,
@@ -117,7 +117,7 @@ namespace MyCouch.UnitTests.Cloudant.Requests
             request.Stale = Stale.UpdateAfter;
             request.IncludeDocs = true;
             request.Limit = 10;
-            request.Sort.AddRange(new[] { "diet<string>", "-min_length<number>" });
+            request.Sort = new[] { "diet<string>", "-min_length<number>" };
 
             WithHttpRequestFor(
                 request,

@@ -1,19 +1,19 @@
 ﻿using FluentAssertions;
-using MyCouch.Cloudant.Requests;
-using MyCouch.Cloudant.Requests.Configurators;
+using MyCouch.Cloudant;
+using MyCouch.Cloudant.Searching;
 using Xunit;
 
-namespace MyCouch.UnitTests.Cloudant.Requests
+namespace MyCouch.UnitTests.Cloudant
 {
-    public class SearchIndexRequestConfiguratorTests : UnitTestsOf<SearchIndexRequestConfigurator>
+    public class SearchParametersConfiguratorTests : UnitTestsOf<SearchParametersConfigurator>
     {
-        private readonly SearchIndexRequest _request;
+        private readonly ISearchParameters _parameters;
 
-        public SearchIndexRequestConfiguratorTests()
+        public SearchParametersConfiguratorTests()
         {
-            _request = new SearchIndexRequest("foodesigndocument", "barindexname");
+            _parameters = new SearchParameters(new SearchIndexIdentity("foodesigndocument", "barindexname"));
 
-            SUT = new SearchIndexRequestConfigurator(_request);
+            SUT = new SearchParametersConfigurator(_parameters);
         }
 
         [Fact]
@@ -23,7 +23,7 @@ namespace MyCouch.UnitTests.Cloudant.Requests
 
             SUT.Expression(configuredValue);
 
-            _request.Expression.Should().Be(configuredValue);
+            _parameters.Expression.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -33,7 +33,7 @@ namespace MyCouch.UnitTests.Cloudant.Requests
 
             SUT.Bookmark(configuredValue);
 
-            _request.Bookmark.Should().Be(configuredValue);
+            _parameters.Bookmark.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -43,7 +43,7 @@ namespace MyCouch.UnitTests.Cloudant.Requests
 
             SUT.Sort(configuredValue);
 
-            _request.Sort.Should().ContainInOrder(configuredValue);
+            _parameters.Sort.Should().ContainInOrder(configuredValue);
         }
 
         [Fact]
@@ -55,7 +55,7 @@ namespace MyCouch.UnitTests.Cloudant.Requests
             SUT.Sort(configuredValue1);
             SUT.Sort(configuredValue2);
 
-            _request.Sort.Should().ContainInOrder(configuredValue2);
+            _parameters.Sort.Should().ContainInOrder(configuredValue2);
         }
 
         [Fact]
@@ -65,7 +65,7 @@ namespace MyCouch.UnitTests.Cloudant.Requests
 
             SUT.IncludeDocs(configuredValue);
 
-            _request.IncludeDocs.Should().Be(configuredValue);
+            _parameters.IncludeDocs.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -75,7 +75,7 @@ namespace MyCouch.UnitTests.Cloudant.Requests
 
             SUT.Stale(configuredValue);
 
-            _request.Stale.Should().Be(configuredValue);
+            _parameters.Stale.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -85,7 +85,7 @@ namespace MyCouch.UnitTests.Cloudant.Requests
 
             SUT.Limit(configuredValue);
 
-            _request.Limit.Should().Be(configuredValue);
+            _parameters.Limit.Should().Be(configuredValue);
         }
     }
 }
