@@ -15,6 +15,17 @@ namespace MyCouch.IntegrationTests.CoreTests
         }
 
         [Fact]
+        public void When_GET_of_document_with_no_conflicts_when_including_conflicts_It_returns_the_document()
+        {
+            var postResponse = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
+            var request = new GetDocumentRequest(postResponse.Id) { Conflicts = true };
+
+            var response = SUT.GetAsync(request).Result;
+
+            response.Should().BeSuccessfulGet(postResponse.Id);
+        }
+
+        [Fact]
         public void When_HEAD_of_non_existing_document_The_response_is_empty()
         {
             var response = SUT.HeadAsync("fooId").Result;
@@ -85,7 +96,7 @@ namespace MyCouch.IntegrationTests.CoreTests
 
             response.Should().BeSuccessfulBatchPutOfNew(ClientTestData.Artists.Artist1Id);
         }
-        
+
         [Fact]
         public void When_PUT_of_existing_document_The_document_is_replaced()
         {
@@ -154,7 +165,7 @@ namespace MyCouch.IntegrationTests.CoreTests
             const string newCopyId = "copyTest:1";
 
             SUT.PutAsync(srcArtist.Id, srcArtist.Content).Wait();
-            
+
             var copyResponse = SUT.CopyAsync(artistPost1.Id, artistPost1.Rev, newCopyId).Result;
 
             copyResponse.Id.Should().Be(newCopyId);

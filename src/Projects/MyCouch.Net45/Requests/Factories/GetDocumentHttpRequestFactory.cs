@@ -9,7 +9,10 @@ namespace MyCouch.Requests.Factories
 
         public virtual HttpRequest Create(GetDocumentRequest request)
         {
-            var httpRequest = CreateFor<GetDocumentRequest>(HttpMethod.Get, GenerateRequestUrl(request.Id, request.Rev));
+            var conflictsParam = request.Conflicts ? new UrlParam("conflicts", "true") : null;
+            var httpRequest = CreateFor<GetDocumentRequest>(
+                HttpMethod.Get,
+                GenerateRequestUrl(request.Id, request.Rev, conflictsParam));
 
             httpRequest.SetIfMatch(request.Rev);
 
