@@ -38,17 +38,11 @@ namespace MyCouch.Net
             return this;
         }
 
-        public virtual HttpRequest SetJsonContent()
+        public virtual HttpRequest SetJsonContent(string content = null)
         {
-            Content = new JsonContent();
-
-            return this;
-        }
-
-        public virtual HttpRequest SetJsonContent(string content)
-        {
-            if(!string.IsNullOrWhiteSpace(content))
-                Content = new JsonContent(content);
+            Content = string.IsNullOrWhiteSpace(content)
+                ? new JsonContent()
+                : new JsonContent(content);
 
             return this;
         }
