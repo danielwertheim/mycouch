@@ -127,9 +127,6 @@
     <Compile Include="..\MyCouch.Net45.UnitTests\Requests\QueryViewHttpRequestFactoryTests.cs">
       <Link>Requests\QueryViewHttpRequestFactoryTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.UnitTests\Requests\QueryViewRequestConfiguratorTests.cs">
-      <Link>Requests\QueryViewRequestConfiguratorTests.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Net45.UnitTests\Requests\QueryViewRequestTests.cs">
       <Link>Requests\QueryViewRequestTests.cs</Link>
     </Compile>

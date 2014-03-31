@@ -72,6 +72,7 @@
     <Compile Include="EntitySchemes\Reflections\IStringGetter.cs" />
     <Compile Include="EntitySchemes\Reflections\IStringSetter.cs" />
     <Compile Include="IMyCouchStore.cs" />
+    <Compile Include="IQueryParameters.cs" />
     <Compile Include="MyCouchClient.cs" />
     <Compile Include="MyCouchClientBootstrapper.cs" />
     <Compile Include="ClientExecuteExtensions.cs" />
@@ -118,9 +119,11 @@
     <Compile Include="Net\JsonContent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query.cs" />
+    <Compile Include="Querying\QueryExtensions.cs" />
+    <Compile Include="Querying\QueryParameters.cs" />
+    <Compile Include="QueryParametersConfigurator.cs" />
     <Compile Include="Requests\BulkRequest.cs" />
     <Compile Include="Requests\CompactDatabaseRequest.cs" />
-    <Compile Include="Requests\Configurators\QueryViewRequestConfigurator.cs" />
     <Compile Include="Requests\CopyDocumentRequest.cs" />
     <Compile Include="Requests\HeadDatabaseRequest.cs" />
     <Compile Include="Requests\DeleteAttachmentRequest.cs" />

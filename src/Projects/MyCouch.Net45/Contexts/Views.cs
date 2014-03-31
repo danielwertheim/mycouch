@@ -5,7 +5,6 @@ using EnsureThat;
 using MyCouch.Extensions;
 using MyCouch.Net;
 using MyCouch.Requests;
-using MyCouch.Requests.Configurators;
 using MyCouch.Requests.Factories;
 using MyCouch.Responses;
 using MyCouch.Responses.Factories;
@@ -64,45 +63,6 @@ namespace MyCouch.Contexts
                     return ProcessHttpResponse<TValue, TIncludedDoc>(res);
                 }
             }
-        }
-
-        public virtual Task<ViewQueryResponse> QueryAsync(string designDocument, string viewName, Action<QueryViewRequestConfigurator> configurator)
-        {
-            Ensure.That(designDocument, "designDocument").IsNotNullOrWhiteSpace();
-            Ensure.That(viewName, "viewName").IsNotNullOrWhiteSpace();
-            Ensure.That(configurator, "configurator").IsNotNull();
-
-            var request = CreateQueryViewRequest(designDocument, viewName);
-
-            request.Configure(configurator);
-
-            return QueryAsync(request);
-        }
-
-        public virtual Task<ViewQueryResponse<T>> QueryAsync<T>(string designDocument, string viewName, Action<QueryViewRequestConfigurator> configurator)
-        {
-            Ensure.That(designDocument, "designDocument").IsNotNullOrWhiteSpace();
-            Ensure.That(viewName, "viewName").IsNotNullOrWhiteSpace();
-            Ensure.That(configurator, "configurator").IsNotNull();
-
-            var request = CreateQueryViewRequest(designDocument, viewName);
-
-            request.Configure(configurator);
-
-            return QueryAsync<T>(request);
-        }
-
-        public virtual Task<ViewQueryResponse<TValue, TIncludedDoc>> QueryAsync<TValue, TIncludedDoc>(string designDocument, string viewName, Action<QueryViewRequestConfigurator> configurator)
-        {
-            Ensure.That(designDocument, "designDocument").IsNotNullOrWhiteSpace();
-            Ensure.That(viewName, "viewName").IsNotNullOrWhiteSpace();
-            Ensure.That(configurator, "configurator").IsNotNull();
-
-            var request = CreateQueryViewRequest(designDocument, viewName);
-
-            request.Configure(configurator);
-
-            return QueryAsync<TValue, TIncludedDoc>(request);
         }
 
         protected virtual QueryViewRequest CreateQueryViewRequest(string designDocument, string viewname)

@@ -1,12 +1,12 @@
-﻿namespace MyCouch.Requests.Configurators
+namespace MyCouch
 {
-    public class QueryViewRequestConfigurator
+    public class QueryParametersConfigurator
     {
-        protected readonly QueryViewRequest Request;
+        protected readonly IQueryParameters Parameters;
 
-        public QueryViewRequestConfigurator(QueryViewRequest request)
+        public QueryParametersConfigurator(IQueryParameters parameters)
         {
-            Request = request;
+            Parameters = parameters;
         }
 
         /// <summary>
@@ -14,9 +14,9 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryViewRequestConfigurator Stale(Stale value)
+        public virtual QueryParametersConfigurator Stale(Stale value)
         {
-            Request.Stale = value;
+            Parameters.Stale = value;
 
             return this;
         }
@@ -25,9 +25,9 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryViewRequestConfigurator IncludeDocs(bool value)
+        public virtual QueryParametersConfigurator IncludeDocs(bool value)
         {
-            Request.IncludeDocs = value;
+            Parameters.IncludeDocs = value;
 
             return this;
         }
@@ -36,9 +36,9 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryViewRequestConfigurator Descending(bool value)
+        public virtual QueryParametersConfigurator Descending(bool value)
         {
-            Request.Descending = value;
+            Parameters.Descending = value;
 
             return this;
         }
@@ -47,9 +47,9 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryViewRequestConfigurator Key<T>(T value)
+        public virtual QueryParametersConfigurator Key<T>(T value)
         {
-            Request.Key = value;
+            Parameters.Key = value;
 
             return this;
         }
@@ -58,9 +58,9 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryViewRequestConfigurator Key<T>(T[] value)
+        public virtual QueryParametersConfigurator Key<T>(T[] value)
         {
-            Request.Key = value;
+            Parameters.Key = value;
 
             return this;
         }
@@ -69,9 +69,9 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryViewRequestConfigurator Keys<T>(params T[] value)
+        public virtual QueryParametersConfigurator Keys<T>(params T[] value)
         {
-            Request.Keys = value as object[];
+            Parameters.Keys = value as object[];
 
             return this;
         }
@@ -80,9 +80,9 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryViewRequestConfigurator StartKey<T>(T value)
+        public virtual QueryParametersConfigurator StartKey<T>(T value)
         {
-            Request.StartKey = value;
+            Parameters.StartKey = value;
 
             return this;
         }
@@ -91,9 +91,9 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryViewRequestConfigurator StartKey<T>(T[] value)
+        public virtual QueryParametersConfigurator StartKey<T>(T[] value)
         {
-            Request.StartKey = value;
+            Parameters.StartKey = value;
 
             return this;
         }
@@ -102,9 +102,9 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryViewRequestConfigurator StartKeyDocId(string value)
+        public virtual QueryParametersConfigurator StartKeyDocId(string value)
         {
-            Request.StartKeyDocId = value;
+            Parameters.StartKeyDocId = value;
 
             return this;
         }
@@ -113,9 +113,9 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryViewRequestConfigurator EndKey<T>(T value)
+        public virtual QueryParametersConfigurator EndKey<T>(T value)
         {
-            Request.EndKey = value;
+            Parameters.EndKey = value;
 
             return this;
         }
@@ -124,9 +124,9 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryViewRequestConfigurator EndKey<T>(T[] value)
+        public virtual QueryParametersConfigurator EndKey<T>(T[] value)
         {
-            Request.EndKey = value;
+            Parameters.EndKey = value;
 
             return this;
         }
@@ -135,9 +135,9 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryViewRequestConfigurator EndKeyDocId(string value)
+        public virtual QueryParametersConfigurator EndKeyDocId(string value)
         {
-            Request.EndKeyDocId = value;
+            Parameters.EndKeyDocId = value;
 
             return this;
         }
@@ -146,9 +146,9 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryViewRequestConfigurator InclusiveEnd(bool value)
+        public virtual QueryParametersConfigurator InclusiveEnd(bool value)
         {
-            Request.InclusiveEnd = value;
+            Parameters.InclusiveEnd = value;
 
             return this;
         }
@@ -157,9 +157,9 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryViewRequestConfigurator Skip(int value)
+        public virtual QueryParametersConfigurator Skip(int value)
         {
-            Request.Skip = value;
+            Parameters.Skip = value;
 
             return this;
         }
@@ -168,9 +168,9 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryViewRequestConfigurator Limit(int value)
+        public virtual QueryParametersConfigurator Limit(int value)
         {
-            Request.Limit = value;
+            Parameters.Limit = value;
 
             return this;
         }
@@ -179,10 +179,10 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryViewRequestConfigurator Reduce(bool value)
+        public virtual QueryParametersConfigurator Reduce(bool value)
         {
-            Request.Reduce = value;
-            
+            Parameters.Reduce = value;
+
             return this;
         }
         /// <summary>
@@ -190,9 +190,9 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryViewRequestConfigurator UpdateSeq(bool value)
+        public virtual QueryParametersConfigurator UpdateSeq(bool value)
         {
-            Request.UpdateSeq = value;
+            Parameters.UpdateSeq = value;
 
             return this;
         }
@@ -201,9 +201,9 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryViewRequestConfigurator Group(bool value)
+        public virtual QueryParametersConfigurator Group(bool value)
         {
-            Request.Group = value;
+            Parameters.Group = value;
 
             return this;
         }
@@ -212,9 +212,9 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryViewRequestConfigurator GroupLevel(int value)
+        public virtual QueryParametersConfigurator GroupLevel(int value)
         {
-            Request.GroupLevel = value;
+            Parameters.GroupLevel = value;
 
             return this;
         }

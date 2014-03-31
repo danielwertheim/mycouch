@@ -6,6 +6,7 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Extensions;
+using MyCouch.Querying;
 using MyCouch.Responses;
 
 namespace MyCouch
@@ -228,39 +229,6 @@ namespace MyCouch
             return response.Content;
         }
 
-        public virtual IObservable<Row> Query(ViewIdentity viewIdentity, Action<Query> queryConfig = null)
-        {
-            ThrowIfDisposed();
-
-            var query = new Query(viewIdentity);
-            if (queryConfig != null)
-                queryConfig(query);
-
-            return Query(query);
-        }
-
-        public virtual IObservable<Row<TValue>> Query<TValue>(ViewIdentity viewIdentity, Action<Query> queryConfig = null)
-        {
-            ThrowIfDisposed();
-
-            var query = new Query(viewIdentity);
-            if (queryConfig != null)
-                queryConfig(query);
-
-            return Query<TValue>(query);
-        }
-
-        public virtual IObservable<Row<TValue, TIncludedDoc>> Query<TValue, TIncludedDoc>(ViewIdentity viewIdentity, Action<Query> queryConfig = null)
-        {
-            ThrowIfDisposed();
-
-            var query = new Query(viewIdentity);
-            if (queryConfig != null)
-                queryConfig(query);
-
-            return Query<TValue, TIncludedDoc>(query);
-        }
-
         public virtual IObservable<Row> Query(Query query)
         {
             ThrowIfDisposed();
@@ -269,7 +237,7 @@ namespace MyCouch
 
             return Observable.Create<Row>(async o =>
             {
-                var response = await Client.Views.QueryAsync(query).ForAwait();
+                var response = await Client.Views.QueryAsync(query.ToRequest()).ForAwait();
 
                 ThrowIfNotSuccessfulResponse(response);
 
@@ -290,7 +258,7 @@ namespace MyCouch
 
             return Observable.Create<Row<TValue>>(async o =>
             {
-                var response = await Client.Views.QueryAsync<TValue>(query).ForAwait();
+                var response = await Client.Views.QueryAsync<TValue>(query.ToRequest()).ForAwait();
 
                 ThrowIfNotSuccessfulResponse(response);
 
@@ -311,7 +279,7 @@ namespace MyCouch
 
             return Observable.Create<Row<TValue, TIncludedDoc>>(async o =>
             {
-                var response = await Client.Views.QueryAsync<TValue, TIncludedDoc>(query).ForAwait();
+                var response = await Client.Views.QueryAsync<TValue, TIncludedDoc>(query.ToRequest()).ForAwait();
 
                 ThrowIfNotSuccessfulResponse(response);
 
@@ -324,12 +292,81 @@ namespace MyCouch
             }).SubscribeOn(ObservableSubscribeOnScheduler());
         }
 
+        public virtual async Task<QueryInfo> QueryAsync(Query query, Action<Row> onResult)
+        {
+            ThrowIfDisposed();
+
+            Ensure.That(query, "query").IsNotNull();
+
+            var response = await Client.Views.QueryAsync(query.ToRequest()).ForAwait();
+
+            ThrowIfNotSuccessfulResponse(response);
+
+            foreach (var row in response.Rows)
+                onResult(new Row(row.Id, row.Key, row.Value, row.IncludedDoc));
+
+            return CreateQueryInfoFrom(response);
+        }
+
+        public virtual async Task<QueryInfo> QueryAsync<TValue>(Query query, Action<Row<TValue>> onResult)
+        {
+            ThrowIfDisposed();
+
+            Ensure.That(query, "query").IsNotNull();
+
+            var response = await Client.Views.QueryAsync<TValue>(query.ToRequest()).ForAwait();
+
+            ThrowIfNotSuccessfulResponse(response);
+
+            foreach (var row in response.Rows)
+                onResult(new Row<TValue>(row.Id, row.Key, row.Value, row.IncludedDoc));
+
+            return CreateQueryInfoFrom(response);
+        }
+
+        public virtual async Task<QueryInfo> QueryAsync<TValue, TIncludedDoc>(Query query, Action<Row<TValue, TIncludedDoc>> onResult)
+        {
+            ThrowIfDisposed();
+
+            Ensure.That(query, "query").IsNotNull();
+
+            var response = await Client.Views.QueryAsync<TValue, TIncludedDoc>(query.ToRequest()).ForAwait();
+
+            ThrowIfNotSuccessfulResponse(response);
+
+            foreach (var row in response.Rows)
+                onResult(new Row<TValue, TIncludedDoc>(row.Id, row.Key, row.Value, row.IncludedDoc));
+
+            return CreateQueryInfoFrom(response);
+        }
+
+        protected virtual QueryInfo CreateQueryInfoFrom<TValue, TIncludedDoc>(ViewQueryResponse<TValue, TIncludedDoc> response)
+        {
+            return new QueryInfo(response.TotalRows, response.RowCount, response.OffSet, response.UpdateSeq);
+        }
+
         protected virtual void ThrowIfNotSuccessfulResponse(Response response)
         {
             if (response.IsSuccess)
                 return;
 
             throw new MyCouchException(response.RequestMethod, response.StatusCode, response.RequestUri, response.Error, response.Reason);
+        }
+    }
+
+    public class QueryInfo
+    {
+        public long TotalRows { get; private set; }
+        public string UpdateSeq { get; private set; }
+        public long RowCount { get; private set; }
+        public long OffSet { get; private set; }
+
+        public QueryInfo(long totalRows, long rowCount, long offSet, string updateSeq)
+        {
+            TotalRows = totalRows;
+            RowCount = rowCount;
+            OffSet = offSet;
+            UpdateSeq = updateSeq;
         }
     }
 }

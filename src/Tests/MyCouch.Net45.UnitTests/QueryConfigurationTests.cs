@@ -1,18 +1,19 @@
 ﻿using System;
 using FluentAssertions;
-using MyCouch.Requests;
+using MyCouch.Querying;
 using Xunit;
 
 namespace MyCouch.UnitTests
 {
-    public class QueryConfigurationTests : UnitTestsOf<Query>
+    public class QueryConfigurationTests : UnitTestsOf<QueryParametersConfigurator>
     {
-        private readonly QueryViewRequest _request;
+        private readonly IQueryParameters _parameters;
 
         public QueryConfigurationTests()
         {
-            SUT = new Query("foodesigndocument", "barviewname");
-            _request = SUT;
+            _parameters = new QueryParameters(new ViewIdentity("foodesigndocument", "barviewname"));
+
+            SUT = new QueryParametersConfigurator(_parameters);
         }
 
         [Fact]
@@ -22,7 +23,7 @@ namespace MyCouch.UnitTests
 
             SUT.Descending(configuredValue);
 
-            _request.Descending.Should().Be(configuredValue);
+            _parameters.Descending.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -32,7 +33,7 @@ namespace MyCouch.UnitTests
 
             SUT.IncludeDocs(configuredValue);
 
-            _request.IncludeDocs.Should().Be(configuredValue);
+            _parameters.IncludeDocs.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -42,7 +43,7 @@ namespace MyCouch.UnitTests
 
             SUT.Skip(configuredValue);
 
-            _request.Skip.Should().Be(configuredValue);
+            _parameters.Skip.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -52,7 +53,7 @@ namespace MyCouch.UnitTests
 
             SUT.Limit(configuredValue);
 
-            _request.Limit.Should().Be(configuredValue);
+            _parameters.Limit.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -62,7 +63,7 @@ namespace MyCouch.UnitTests
 
             SUT.Key(configuredValue);
 
-            _request.Key.Should().Be(configuredValue);
+            _parameters.Key.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -72,7 +73,7 @@ namespace MyCouch.UnitTests
 
             SUT.Key(configuredValue);
 
-            _request.Key.Should().Be(configuredValue);
+            _parameters.Key.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -82,7 +83,7 @@ namespace MyCouch.UnitTests
 
             SUT.Key(configuredValue);
 
-            _request.Key.Should().Be(configuredValue);
+            _parameters.Key.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -92,7 +93,7 @@ namespace MyCouch.UnitTests
 
             SUT.Key(configuredValue);
 
-            _request.Key.Should().Be(configuredValue);
+            _parameters.Key.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -102,7 +103,7 @@ namespace MyCouch.UnitTests
 
             SUT.Key(configuredValue);
 
-            _request.Key.Should().Be(configuredValue);
+            _parameters.Key.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -112,7 +113,7 @@ namespace MyCouch.UnitTests
 
             SUT.Key(configuredValue);
 
-            _request.Key.Should().Be(configuredValue);
+            _parameters.Key.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -129,7 +130,7 @@ namespace MyCouch.UnitTests
 
             SUT.Key(configuredValue);
 
-            _request.Key.Should().Be(configuredValue);
+            _parameters.Key.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -139,7 +140,7 @@ namespace MyCouch.UnitTests
 
             SUT.StartKey(configuredValue);
 
-            _request.StartKey.Should().Be(configuredValue);
+            _parameters.StartKey.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -149,7 +150,7 @@ namespace MyCouch.UnitTests
 
             SUT.StartKey(configuredValue);
 
-            _request.StartKey.Should().Be(configuredValue);
+            _parameters.StartKey.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -159,7 +160,7 @@ namespace MyCouch.UnitTests
 
             SUT.StartKey(configuredValue);
 
-            _request.StartKey.Should().Be(configuredValue);
+            _parameters.StartKey.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -169,7 +170,7 @@ namespace MyCouch.UnitTests
 
             SUT.StartKey(configuredValue);
 
-            _request.StartKey.Should().Be(configuredValue);
+            _parameters.StartKey.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -179,7 +180,7 @@ namespace MyCouch.UnitTests
 
             SUT.StartKey(configuredValue);
 
-            _request.StartKey.Should().Be(configuredValue);
+            _parameters.StartKey.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -189,7 +190,7 @@ namespace MyCouch.UnitTests
 
             SUT.StartKey(configuredValue);
 
-            _request.StartKey.Should().Be(configuredValue);
+            _parameters.StartKey.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -206,7 +207,7 @@ namespace MyCouch.UnitTests
 
             SUT.StartKey(configuredValue);
 
-            _request.StartKey.Should().Be(configuredValue);
+            _parameters.StartKey.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -216,7 +217,7 @@ namespace MyCouch.UnitTests
 
             SUT.EndKey(configuredValue);
 
-            _request.EndKey.Should().Be(configuredValue);
+            _parameters.EndKey.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -226,7 +227,7 @@ namespace MyCouch.UnitTests
 
             SUT.EndKey(configuredValue);
 
-            _request.EndKey.Should().Be(configuredValue);
+            _parameters.EndKey.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -236,7 +237,7 @@ namespace MyCouch.UnitTests
 
             SUT.EndKey(configuredValue);
 
-            _request.EndKey.Should().Be(configuredValue);
+            _parameters.EndKey.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -246,7 +247,7 @@ namespace MyCouch.UnitTests
 
             SUT.EndKey(configuredValue);
 
-            _request.EndKey.Should().Be(configuredValue);
+            _parameters.EndKey.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -256,7 +257,7 @@ namespace MyCouch.UnitTests
 
             SUT.EndKey(configuredValue);
 
-            _request.EndKey.Should().Be(configuredValue);
+            _parameters.EndKey.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -266,7 +267,7 @@ namespace MyCouch.UnitTests
 
             SUT.EndKey(configuredValue);
 
-            _request.EndKey.Should().Be(configuredValue);
+            _parameters.EndKey.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -283,7 +284,7 @@ namespace MyCouch.UnitTests
 
             SUT.EndKey(configuredValue);
 
-            _request.EndKey.Should().Be(configuredValue);
+            _parameters.EndKey.Should().Be(configuredValue);
         }
 
         [Fact]
@@ -301,7 +302,7 @@ namespace MyCouch.UnitTests
 
             SUT.Keys(configuredValue);
 
-            _request.Keys.Should().BeEquivalentTo(configuredValue);
+            _parameters.Keys.Should().BeEquivalentTo(configuredValue);
         }
 
         [Fact]
@@ -311,7 +312,7 @@ namespace MyCouch.UnitTests
 
             SUT.Stale(configuredValue);
 
-            _request.Stale.Should().Be(configuredValue);
+            _parameters.Stale.Should().Be(configuredValue);
         }
 
         private enum FooEnum

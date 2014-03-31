@@ -221,6 +221,9 @@
     <Compile Include="..\MyCouch.Net45\IMyCouchStore.cs">
       <Link>IMyCouchStore.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\IQueryParameters.cs">
+      <Link>IQueryParameters.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\IViews.cs">
       <Link>IViews.cs</Link>
     </Compile>
@@ -260,14 +263,20 @@
     <Compile Include="..\MyCouch.Net45\Query.cs">
       <Link>Query.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Querying\QueryExtensions.cs">
+      <Link>Querying\QueryExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Querying\QueryParameters.cs">
+      <Link>Querying\QueryParameters.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\QueryParametersConfigurator.cs">
+      <Link>QueryParametersConfigurator.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\BulkRequest.cs">
       <Link>Requests\BulkRequest.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\CompactDatabaseRequest.cs">
       <Link>Requests\CompactDatabaseRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\Requests\Configurators\QueryViewRequestConfigurator.cs">
-      <Link>Requests\Configurators\QueryViewRequestConfigurator.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\CopyDocumentRequest.cs">
       <Link>Requests\CopyDocumentRequest.cs</Link>
