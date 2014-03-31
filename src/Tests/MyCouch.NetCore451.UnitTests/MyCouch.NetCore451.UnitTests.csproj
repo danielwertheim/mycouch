@@ -136,6 +136,9 @@
     <Compile Include="..\MyCouch.Net45.UnitTests\Requests\GetChangesHttpRequestFactoryTests.cs">
       <Link>Requests\GetChangesHttpRequestFactoryTests.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45.UnitTests\Requests\GetDocumentHttpRequestFactoryTests.cs">
+      <Link>Requests\GetDocumentHttpRequestFactoryTests.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45.UnitTests\Requests\QueryViewHttpRequestFactoryTests.cs">
       <Link>Requests\QueryViewHttpRequestFactoryTests.cs</Link>
     </Compile>

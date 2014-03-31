@@ -76,6 +76,7 @@
     <Compile Include="QueryConfigurationTests.cs" />
     <Compile Include="Requests\BulkRequestTests.cs" />
     <Compile Include="Requests\GetChangesHttpRequestFactoryTests.cs" />
+    <Compile Include="Requests\GetDocumentHttpRequestFactoryTests.cs" />
     <Compile Include="Requests\QueryViewHttpRequestFactoryTests.cs" />
     <Compile Include="Requests\QueryViewRequestTests.cs" />
     <Compile Include="Schemes\EntityIdMemberTests.cs" />
