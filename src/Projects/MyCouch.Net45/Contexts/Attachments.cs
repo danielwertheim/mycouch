@@ -43,8 +43,6 @@ namespace MyCouch.Contexts
 
         public virtual async Task<AttachmentResponse> GetAsync(GetAttachmentRequest request)
         {
-            Ensure.That(request, "request").IsNotNull();
-
             using (var httpRequest = CreateHttpRequest(request))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
@@ -56,8 +54,6 @@ namespace MyCouch.Contexts
 
         public virtual async Task<DocumentHeaderResponse> PutAsync(PutAttachmentRequest request)
         {
-            Ensure.That(request, "request").IsNotNull();
-
             using (var httpRequest = CreateHttpRequest(request))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
@@ -74,8 +70,6 @@ namespace MyCouch.Contexts
 
         public virtual async Task<DocumentHeaderResponse> DeleteAsync(DeleteAttachmentRequest request)
         {
-            Ensure.That(request, "request").IsNotNull();
-
             using (var httpRequest = CreateHttpRequest(request))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())

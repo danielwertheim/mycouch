@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using EnsureThat;
 using MyCouch.Net;
 
 namespace MyCouch.Requests.Factories
@@ -9,6 +10,8 @@ namespace MyCouch.Requests.Factories
 
         public virtual HttpRequest Create(PutAttachmentRequest request)
         {
+            Ensure.That(request, "request").IsNotNull();
+
             var httpRequest = CreateFor<PutAttachmentRequest>(HttpMethod.Put, GenerateRequestUrl(request.DocId, request.DocRev, request.Name));
 
             httpRequest.SetIfMatch(request.DocRev);

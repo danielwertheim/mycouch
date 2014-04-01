@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using EnsureThat;
 using MyCouch.Net;
 
 namespace MyCouch.Requests.Factories
@@ -9,6 +10,8 @@ namespace MyCouch.Requests.Factories
 
         public virtual HttpRequest Create(BulkRequest request)
         {
+            Ensure.That(request, "request").IsNotNull();
+
             var createHttpRequest = CreateFor<BulkRequest>(HttpMethod.Post, GenerateRequestUrl(request));
 
             createHttpRequest.SetJsonContent(request.ToJson());

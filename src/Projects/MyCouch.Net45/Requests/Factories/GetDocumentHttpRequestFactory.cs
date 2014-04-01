@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using EnsureThat;
 using MyCouch.Net;
 
 namespace MyCouch.Requests.Factories
@@ -9,6 +10,8 @@ namespace MyCouch.Requests.Factories
 
         public virtual HttpRequest Create(GetDocumentRequest request)
         {
+            Ensure.That(request, "request").IsNotNull();
+
             var conflictsParam = request.Conflicts ? new UrlParam("conflicts", "true") : null;
             var httpRequest = CreateFor<GetDocumentRequest>(
                 HttpMethod.Get,

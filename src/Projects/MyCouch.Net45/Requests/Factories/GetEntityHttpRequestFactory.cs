@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using EnsureThat;
 using MyCouch.EntitySchemes;
 using MyCouch.Net;
 using MyCouch.Serialization;
@@ -12,6 +13,8 @@ namespace MyCouch.Requests.Factories
 
         public virtual HttpRequest Create(GetEntityRequest request)
         {
+            Ensure.That(request, "request").IsNotNull();
+
             var httpRequest = CreateFor<GetEntityRequest>(HttpMethod.Get, GenerateRequestUrl(request.Id, request.Rev));
 
             httpRequest.SetIfMatch(request.Rev);

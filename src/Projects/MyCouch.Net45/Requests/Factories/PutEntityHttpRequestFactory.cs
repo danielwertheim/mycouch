@@ -13,6 +13,8 @@ namespace MyCouch.Requests.Factories
 
         public virtual HttpRequest Create<T>(PutEntityRequest<T> request) where T : class
         {
+            Ensure.That(request, "request").IsNotNull();
+
             var id = Reflector.IdMember.GetValueFrom(request.Entity);
             var rev = Reflector.RevMember.GetValueFrom(request.Entity);
             var httpRequest = CreateFor<PutEntityRequest<T>>(HttpMethod.Put, GenerateRequestUrl(id, rev));

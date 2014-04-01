@@ -47,8 +47,6 @@ namespace MyCouch.Contexts
 
         public virtual async Task<EntityResponse<T>> GetAsync<T>(GetEntityRequest request) where T : class
         {
-            Ensure.That(request, "request").IsNotNull();
-
             using (var httpRequest = CreateHttpRequest(request))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
@@ -65,8 +63,6 @@ namespace MyCouch.Contexts
 
         public virtual async Task<EntityResponse<T>> PostAsync<T>(PostEntityRequest<T> request) where T : class
         {
-            Ensure.That(request, "request").IsNotNull();
-
             using (var httpRequest = CreateHttpRequest(request))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
@@ -83,8 +79,6 @@ namespace MyCouch.Contexts
 
         public virtual async Task<EntityResponse<T>> PutAsync<T>(PutEntityRequest<T> request) where T : class
         {
-            Ensure.That(request, "request").IsNotNull();
-
             using (var httpRequest = CreateHttpRequest(request))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
@@ -101,8 +95,6 @@ namespace MyCouch.Contexts
 
         public virtual async Task<EntityResponse<T>> DeleteAsync<T>(DeleteEntityRequest<T> request) where T : class
         {
-            Ensure.That(request, "request").IsNotNull();
-
             using (var httpRequest = CreateHttpRequest(request))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())

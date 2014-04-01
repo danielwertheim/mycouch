@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using EnsureThat;
 using MyCouch.Net;
 
 namespace MyCouch.Requests.Factories
@@ -9,6 +10,8 @@ namespace MyCouch.Requests.Factories
 
         public virtual HttpRequest Create(ViewCleanupRequest request)
         {
+            Ensure.That(request, "request").IsNotNull();
+
             var httpRequest = CreateFor<ViewCleanupRequest>(HttpMethod.Post, GenerateRequestUrl());
 
             httpRequest.SetJsonContent();

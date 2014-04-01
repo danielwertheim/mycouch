@@ -49,8 +49,6 @@ namespace MyCouch.Contexts
 
         public virtual async Task<BulkResponse> BulkAsync(BulkRequest request)
         {
-            Ensure.That(request, "request").IsNotNull();
-
             using (var httpRequest = CreateHttpRequest(request))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
@@ -72,8 +70,6 @@ namespace MyCouch.Contexts
 
         public virtual async Task<DocumentHeaderResponse> CopyAsync(CopyDocumentRequest request)
         {
-            Ensure.That(request, "request").IsNotNull();
-
             using (var httpRequest = CreateHttpRequest(request))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
@@ -95,8 +91,6 @@ namespace MyCouch.Contexts
 
         public virtual async Task<DocumentHeaderResponse> ReplaceAsync(ReplaceDocumentRequest request)
         {
-            Ensure.That(request, "request").IsNotNull();
-
             using (var httpRequest = CreateHttpRequest(request))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
@@ -113,8 +107,6 @@ namespace MyCouch.Contexts
 
         public virtual async Task<DocumentHeaderResponse> HeadAsync(HeadDocumentRequest request)
         {
-            Ensure.That(request, "request").IsNotNull();
-
             using (var httpRequest = CreateHttpRequest(request))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
@@ -131,8 +123,6 @@ namespace MyCouch.Contexts
 
         public virtual async Task<DocumentResponse> GetAsync(GetDocumentRequest request)
         {
-            Ensure.That(request, "request").IsNotNull();
-
             using (var httpRequest = CreateHttpRequest(request))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
@@ -149,8 +139,6 @@ namespace MyCouch.Contexts
 
         public virtual async Task<DocumentHeaderResponse> PostAsync(PostDocumentRequest request)
         {
-            Ensure.That(request, "request").IsNotNull();
-
             using (var httpRequest = CreateHttpRequest(request))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
@@ -162,18 +150,16 @@ namespace MyCouch.Contexts
 
         public virtual Task<DocumentHeaderResponse> PutAsync(string id, string doc)
         {
-            return PutAsync(new PutDocumentRequest(id, doc));
+            return PutAsync(PutDocumentRequest.ForCreate(id, doc));
         }
 
         public virtual Task<DocumentHeaderResponse> PutAsync(string id, string rev, string doc)
         {
-            return PutAsync(new PutDocumentRequest(id, rev, doc));
+            return PutAsync(PutDocumentRequest.ForUpdate(id, rev, doc));
         }
 
         public virtual async Task<DocumentHeaderResponse> PutAsync(PutDocumentRequest request)
         {
-            Ensure.That(request, "request").IsNotNull();
-
             using (var httpRequest = CreateHttpRequest(request))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
@@ -190,8 +176,6 @@ namespace MyCouch.Contexts
 
         public virtual async Task<DocumentHeaderResponse> DeleteAsync(DeleteDocumentRequest request)
         {
-            Ensure.That(request, "request").IsNotNull();
-
             using (var httpRequest = CreateHttpRequest(request))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Extensions;
@@ -29,8 +28,6 @@ namespace MyCouch.Contexts
 
         public virtual async Task<ViewQueryResponse> QueryAsync(QueryViewRequest request)
         {
-            Ensure.That(request, "request").IsNotNull();
-
             using (var httpRequest = CreateHttpRequest(request))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
@@ -42,8 +39,6 @@ namespace MyCouch.Contexts
 
         public virtual async Task<ViewQueryResponse<T>> QueryAsync<T>(QueryViewRequest request)
         {
-            Ensure.That(request, "request").IsNotNull();
-
             using (var httpRequest = CreateHttpRequest(request))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
@@ -55,7 +50,6 @@ namespace MyCouch.Contexts
 
         public virtual async Task<ViewQueryResponse<TValue, TIncludedDoc>> QueryAsync<TValue, TIncludedDoc>(QueryViewRequest request)
         {
-
             using (var httpRequest = CreateHttpRequest(request))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())

@@ -10,6 +10,9 @@ namespace MyCouch.Requests.Factories
 
         public virtual HttpRequest Create(PutDocumentRequest request)
         {
+            Ensure.That(request, "request").IsNotNull();
+            Ensure.That(request.Content, "request.Content").IsNotNullOrWhiteSpace();
+
             var batchParam = request.Batch ? new UrlParam("batch", "ok") : null;
             var httpRequest = CreateFor<PutDocumentRequest>(
                 HttpMethod.Put,

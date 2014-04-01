@@ -2,16 +2,59 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using EnsureThat;
 using MyCouch.Net;
 
 namespace MyCouch.Requests.Factories
 {
-    public class GetChangesHttpRequestFactory : HttpRequestFactoryBase
+    public class GetContinuousChangesHttpRequestFactory : GetChangesHttpRequestFactoryBase
     {
-        public GetChangesHttpRequestFactory(IConnection connection) : base(connection) {}
+        public GetContinuousChangesHttpRequestFactory(IConnection connection) : base(connection) { }
+
+        public override HttpRequest Create(GetChangesRequest request)
+        {
+            Ensure.That(request, "request").IsNotNull();
+
+            EnsureContinuousFeedIsRequested(request);
+
+            return base.Create(request);
+        }
+
+        protected virtual void EnsureContinuousFeedIsRequested(GetChangesRequest request)
+        {
+            if (request.Feed.HasValue && request.Feed != ChangesFeed.Continuous)
+                throw new ArgumentException(ExceptionStrings.GetContinuousChangesInvalidFeed, "request");
+        }
+    }
+
+    public class GetChangesHttpRequestFactory : GetChangesHttpRequestFactoryBase
+    {
+        public GetChangesHttpRequestFactory(IConnection connection) : base(connection) { }
+
+        public override HttpRequest Create(GetChangesRequest request)
+        {
+            Ensure.That(request, "request").IsNotNull();
+
+            EnsureNonContinuousFeedIsRequested(request);
+
+            return base.Create(request);
+        }
+
+        protected virtual void EnsureNonContinuousFeedIsRequested(GetChangesRequest request)
+        {
+            if (request.Feed.HasValue && request.Feed == ChangesFeed.Continuous)
+                throw new ArgumentException(ExceptionStrings.GetChangesForNonContinuousFeedOnly, "request");
+        }
+    }
+
+    public abstract class GetChangesHttpRequestFactoryBase : HttpRequestFactoryBase
+    {
+        protected GetChangesHttpRequestFactoryBase(IConnection connection) : base(connection) {}
 
         public virtual HttpRequest Create(GetChangesRequest request)
         {
+            Ensure.That(request, "request").IsNotNull();
+
             return CreateFor<GetChangesRequest>(HttpMethod.Get, GenerateRequestUrl(request));
         }
 

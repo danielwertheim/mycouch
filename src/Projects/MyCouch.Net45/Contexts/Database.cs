@@ -41,8 +41,6 @@ namespace MyCouch.Contexts
 
         public virtual async Task<TextResponse> HeadAsync(HeadDatabaseRequest request)
         {
-            Ensure.That(request, "request").IsNotNull();
-
             using (var httpRequest = CreateHttpRequest(request))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
@@ -59,8 +57,6 @@ namespace MyCouch.Contexts
 
         public virtual async Task<TextResponse> GetAsync(GetDatabaseRequest request)
         {
-            Ensure.That(request, "request").IsNotNull();
-
             using (var httpRequest = CreateHttpRequest(request))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
@@ -77,8 +73,6 @@ namespace MyCouch.Contexts
 
         public virtual async Task<TextResponse> PutAsync(PutDatabaseRequest request)
         {
-            Ensure.That(request, "request").IsNotNull();
-
             using (var httpRequest = CreateHttpRequest(request))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
@@ -95,8 +89,6 @@ namespace MyCouch.Contexts
 
         public virtual async Task<TextResponse> DeleteAsync(DeleteDatabaseRequest request)
         {
-            Ensure.That(request, "request").IsNotNull();
-
             using (var httpRequest = CreateHttpRequest(request))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
@@ -113,8 +105,6 @@ namespace MyCouch.Contexts
 
         public virtual async Task<TextResponse> CompactAsync(CompactDatabaseRequest request)
         {
-            Ensure.That(request, "request").IsNotNull();
-
             using (var httpRequest = CreateHttpRequest(request))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
@@ -131,8 +121,6 @@ namespace MyCouch.Contexts
 
         public virtual async Task<TextResponse> ViewCleanup(ViewCleanupRequest request)
         {
-            Ensure.That(request, "request").IsNotNull();
-
             using (var httpRequest = CreateHttpRequest(request))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())

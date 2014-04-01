@@ -19,6 +19,7 @@ namespace MyCouch.Contexts
     public class Changes : ApiContextBase, IChanges
     {
         protected GetChangesHttpRequestFactory HttpRequestFactory { get; set; }
+        protected GetContinuousChangesHttpRequestFactory ContinuousHttpRequestFactory { get; set; }
         protected ChangesResponseFactory ChangesResponseFactory { get; set; }
         protected ContinuousChangesResponseFactory ContinuousChangesResponseFactory { get; set; }
 
@@ -30,6 +31,7 @@ namespace MyCouch.Contexts
             Ensure.That(serializer, "serializer").IsNotNull();
 
             HttpRequestFactory = new GetChangesHttpRequestFactory(Connection);
+            ContinuousHttpRequestFactory = new GetContinuousChangesHttpRequestFactory(Connection);
             ChangesResponseFactory = new ChangesResponseFactory(serializer);
             ContinuousChangesResponseFactory = new ContinuousChangesResponseFactory(serializer);
             ObservableSubscribeOnScheduler = () => TaskPoolScheduler.Default;
@@ -37,9 +39,6 @@ namespace MyCouch.Contexts
 
         public virtual async Task<ChangesResponse> GetAsync(GetChangesRequest request)
         {
-            Ensure.That(request, "request").IsNotNull();
-            EnsureNonContinuousFeedIsRequested(request);
-
             using (var httpRequest = HttpRequestFactory.Create(request))
             {
                 using (var httpResponse = await SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead).ForAwait())
@@ -51,9 +50,6 @@ namespace MyCouch.Contexts
 
         public virtual async Task<ChangesResponse<TIncludedDoc>> GetAsync<TIncludedDoc>(GetChangesRequest request)
         {
-            Ensure.That(request, "request").IsNotNull();
-            EnsureNonContinuousFeedIsRequested(request);
-
             using (var httpRequest = HttpRequestFactory.Create(request))
             {
                 using (var httpResponse = await SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead).ForAwait())
@@ -65,11 +61,7 @@ namespace MyCouch.Contexts
 
         public virtual async Task<ContinuousChangesResponse> GetAsync(GetChangesRequest request, Action<string> onRead, CancellationToken cancellationToken)
         {
-            Ensure.That(request, "request").IsNotNull();
-            Ensure.That(onRead, "onRead").IsNotNull();
-            EnsureContinuousFeedIsRequested(request);
-
-            using (var httpRequest = HttpRequestFactory.Create(request))
+            using (var httpRequest = ContinuousHttpRequestFactory.Create(request))
             {
                 using (var httpResponse = await SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ForAwait())
                 {
@@ -95,12 +87,11 @@ namespace MyCouch.Contexts
 
         public virtual IObservable<string> ObserveContinuous(GetChangesRequest request, CancellationToken cancellationToken)
         {
-            Ensure.That(request, "request").IsNotNull();
             EnsureContinuousFeedIsRequested(request);
 
             return Observable.Create<string>(async o =>
             {
-                using (var httpRequest = HttpRequestFactory.Create(request))
+                using (var httpRequest = ContinuousHttpRequestFactory.Create(request))
                 {
                     using (var httpResponse = await SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ForAwait())
                     {
@@ -129,14 +120,10 @@ namespace MyCouch.Contexts
 
         protected virtual void EnsureContinuousFeedIsRequested(GetChangesRequest request)
         {
+            Ensure.That(request, "request").IsNotNull();
+
             if (request.Feed.HasValue && request.Feed != ChangesFeed.Continuous)
                 throw new ArgumentException(ExceptionStrings.GetContinuousChangesInvalidFeed, "request");
-        }
-
-        protected virtual void EnsureNonContinuousFeedIsRequested(GetChangesRequest request)
-        {
-            if(request.Feed.HasValue && request.Feed == ChangesFeed.Continuous)
-                throw new ArgumentException(ExceptionStrings.GetChangesForNonContinuousFeedOnly, "request");
         }
     }
 }

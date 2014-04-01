@@ -13,6 +13,8 @@ namespace MyCouch.Requests.Factories
 
         public virtual HttpRequest Create<T>(DeleteEntityRequest<T> request) where T : class
         {
+            Ensure.That(request, "request").IsNotNull();
+
             var entityId = Reflector.IdMember.GetValueFrom(request.Entity);
             Ensure.That(entityId, "entityId").IsNotNullOrWhiteSpace();
 
