@@ -91,7 +91,7 @@ namespace MyCouch.IntegrationTests.CoreTests
         [Fact]
         public void When_PUT_of_new_document_in_batch_mode_The_document_is_replaced()
         {
-            var request = new PutDocumentRequest(ClientTestData.Artists.Artist1Id, ClientTestData.Artists.Artist1Json) { Batch = true };
+            var request = PutDocumentRequest.ForCreate(ClientTestData.Artists.Artist1Id, ClientTestData.Artists.Artist1Json, r => r.Batch = true);
             var response = SUT.PutAsync(request).Result;
 
             response.Should().BeSuccessfulBatchPutOfNew(ClientTestData.Artists.Artist1Id);
@@ -114,7 +114,7 @@ namespace MyCouch.IntegrationTests.CoreTests
             var postResponse = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
             var getResponse = SUT.GetAsync(postResponse.Id).Result;
 
-            var updateRequest = new PutDocumentRequest(getResponse.Id, getResponse.Content) { Batch = true };
+            var updateRequest = PutDocumentRequest.ForCreate(getResponse.Id, getResponse.Content, r => r.Batch = true);
             var response = SUT.PutAsync(updateRequest).Result;
 
             response.Should().BeSuccessfulBatchPut(ClientTestData.Artists.Artist1Id);
