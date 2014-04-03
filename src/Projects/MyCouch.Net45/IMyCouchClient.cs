@@ -11,6 +11,12 @@ namespace MyCouch
     public interface IMyCouchClient : IDisposable
     {
         /// <summary>
+        /// Represents the DbName that MyCouch has parsed out
+        /// from the URL.
+        /// </summary>
+        string DbName { get; }
+
+        /// <summary>
         /// The underlying <see cref="IConnection"/> used to communicate with CouchDb.
         /// </summary>
         IConnection Connection { get; }

@@ -2,6 +2,11 @@
 {
     public static class ExceptionStrings
     {
+        public static string CanNotExtractDbNameFromDbUri
+        {
+            get { return "Could not extract DbName from passed URI: {0}. Please specify using specific contructor."; }
+        }
+
         public static string PutRequestIsMissingIdInUrl
         {
             get { return "PUT requests must have an id part of the URL."; }

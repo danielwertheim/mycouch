@@ -9,6 +9,7 @@ namespace MyCouch
     {
         protected bool IsDisposed { get; private set; }
 
+        public string DbName { get; protected set; }
         public IConnection Connection { get; private set; }
         public ISerializer Serializer { get; private set; }
         public IChanges Changes { get; private set; }
@@ -27,7 +28,24 @@ namespace MyCouch
             Ensure.That(connection, "connection").IsNotNull();
 
             Connection = connection;
+            DbName = ExtractDbName(connection.Address);
 
+            Initialize(bootstrapper);
+        }
+
+        public MyCouchClient(IConnection connection, string dbName, MyCouchClientBootstrapper bootstrapper = null)
+        {
+            Ensure.That(connection, "connection").IsNotNull();
+            Ensure.That(dbName, "dbName").IsNotNullOrWhiteSpace();
+
+            Connection = connection;
+            DbName = dbName;
+
+            Initialize(bootstrapper);
+        }
+
+        private void Initialize(MyCouchClientBootstrapper bootstrapper = null)
+        {
             bootstrapper = bootstrapper ?? new MyCouchClientBootstrapper();
 
             Serializer = bootstrapper.SerializerFn();
@@ -57,6 +75,23 @@ namespace MyCouch
                 Connection.Dispose();
                 Connection = null;
             }
+        }
+
+        private static string ExtractDbName(Uri dbUri)
+        {
+            var dbName = dbUri.LocalPath.TrimStart('/').TrimEnd('/', '?');
+            if(string.IsNullOrWhiteSpace(dbName))
+            {
+#if NETFX_CORE
+                throw new FormatException(
+                    string.Format(ExceptionStrings.CanNotExtractDbNameFromDbUri, dbUri.OriginalString));
+#else
+                throw new UriFormatException(
+                    string.Format(ExceptionStrings.CanNotExtractDbNameFromDbUri, dbUri.OriginalString));
+#endif
+            }
+
+            return dbName;
         }
     }
 }
