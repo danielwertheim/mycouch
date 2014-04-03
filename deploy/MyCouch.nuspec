@@ -14,7 +14,7 @@
 
       It tries to keep the domain language of CouchDb and lets you work with requests and responses but also provides you with an alternative simplifying async API.
       MyCouch lets you work with raw JSON and/or entities/POCOS without requiring any implementation of interfaces or base-classes etc. MyCouch provides you with some model conventions like
-      injection of $doctype to the document. It is plug-gable. If you don't like some piece, then hook in your implementation instead.
+      injection of $doctype to the document. It is pluggable. If you don't like some piece, then hook in your implementation instead.
 
       Supports .Net4.0, .Net4.5 and Windows store apps 8.1 (WinRT).
 
