@@ -103,6 +103,19 @@ namespace MyCouch.Testing.TestData
 
         public static class Views
         {
+            public static readonly ViewIdentity[] AllViewIds;
+
+            static Views()
+            {
+                AllViewIds = new[]
+                {
+                    ArtistsAlbumsViewId,
+                    ArtistsNameNoValueViewId,
+                    ArtistsTotalNumOfAlbumsViewId,
+                    ArtistsNameAsKeyAndDocAsValueId
+                };
+            }
+
             public const string ArtistsViews =
                 "{" +
                     "\"_id\": \"_design/artists\"," +

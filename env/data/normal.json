@@ -1,6 +1,12 @@
-{"Client":{
-    "ServerUrl":"http://localhost:5984",
-    "DbName":"mycouchtests",
-    "User":"mycouchtester",
-    "Password":"p@ssword"}
+{
+    "RunServerClientTests": true,
+    "ServerClient":{
+        "Url":"http://localhost:5984",
+        "User":"sa",
+        "Password":"p@ssword"}
+    "Client":{
+        "ServerUrl":"http://localhost:5984",
+        "DbName":"mycouchtests",
+        "User":"mycouchtester",
+        "Password":"p@ssword"}
 }

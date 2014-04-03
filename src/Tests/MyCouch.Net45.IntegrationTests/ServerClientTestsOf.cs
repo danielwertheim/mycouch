@@ -1,22 +1,21 @@
 ﻿using System;
-using MyCouch.Cloudant;
 using MyCouch.Testing;
 
 namespace MyCouch.IntegrationTests
 {
-    public abstract class CloudantTestsOf<T> :
+    public abstract class ServerClientTestsOf<T> :
         TestsOf<T>,
         IDisposable where T : class
     {
         protected readonly TestEnvironment Environment;
-        protected IMyCouchCloudantClient Client { get; set; }
+        protected IMyCouchClient Client { get; set; }
+        protected IMyCouchServerClient ServerClient { get; set; }
 
-        protected CloudantTestsOf() : this(IntegrationTestsRuntime.CloudantEnvironment) { }
-
-        protected CloudantTestsOf(TestEnvironment environment)
+        protected ServerClientTestsOf()
         {
-            Environment = environment;
-            Client = IntegrationTestsRuntime.CreateCloudantDbClient(Environment);
+            Environment = IntegrationTestsRuntime.NormalEnvironment;
+            Client = IntegrationTestsRuntime.CreateDbClient(Environment);
+            ServerClient = IntegrationTestsRuntime.CreateServerClient(Environment);
             CleanDb();
         }
 
@@ -28,15 +27,15 @@ namespace MyCouch.IntegrationTests
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposing)
+            if(!disposing)
                 return;
 
             CleanDb();
-            Client.Dispose();
-            Client = null;
+            ServerClient.Dispose();
+            ServerClient = null;
 
             var disposableSut = SUT as IDisposable;
-            if (disposableSut == null)
+            if(disposableSut == null)
                 return;
 
             disposableSut.Dispose();

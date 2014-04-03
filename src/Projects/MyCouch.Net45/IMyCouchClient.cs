@@ -3,6 +3,11 @@ using MyCouch.Serialization;
 
 namespace MyCouch
 {
+    /// <summary>
+    /// Connects to a DB instance rather than a server instance
+    /// as <see cref="IMyCouchServerClient"/> does.
+    /// Alternative API is <see cref="IMyCouchStore"/>.
+    /// </summary>
     public interface IMyCouchClient : IDisposable
     {
         /// <summary>

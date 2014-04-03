@@ -134,6 +134,9 @@
     <Compile Include="..\MyCouch.Net45\contexts\Entities.cs">
       <Link>Contexts\Entities.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Contexts\Replication.cs">
+      <Link>Contexts\Replication.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\contexts\Views.cs">
       <Link>Contexts\Views.cs</Link>
     </Compile>
@@ -227,11 +230,17 @@
     <Compile Include="..\MyCouch.Net45\IMyCouchClient.cs">
       <Link>IMyCouchClient.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\IMyCouchServerClient.cs">
+      <Link>IMyCouchServerClient.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\IMyCouchStore.cs">
       <Link>IMyCouchStore.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\IQueryParameters.cs">
       <Link>IQueryParameters.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\IReplication.cs">
+      <Link>IReplication.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\IViews.cs">
       <Link>IViews.cs</Link>
@@ -247,6 +256,9 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\MyCouchRuntime.cs">
       <Link>MyCouchRuntime.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\MyCouchServerClient.cs">
+      <Link>MyCouchServerClient.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\MyCouchStore.cs">
       <Link>MyCouchStore.cs</Link>

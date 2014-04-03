@@ -157,6 +157,9 @@
     <Compile Include="..\MyCouch.Net45.IntegrationTests\IPreserveStatePerFixture.cs">
       <Link>IPreserveStatePerFixture.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\ServerClientTestsOf.cs">
+      <Link>ServerClientTestsOf.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45.IntegrationTests\TestFixtures\SearchFixture.cs">
       <Link>TestFixtures\SearchFixture.cs</Link>
     </Compile>

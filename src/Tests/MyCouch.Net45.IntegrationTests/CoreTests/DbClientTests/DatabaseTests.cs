@@ -7,7 +7,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
 {
     public class DatabaseTests : ClientTestsOf<IDatabase>
     {
-        public DatabaseTests() : base(IntegrationTestsRuntime.TempClientEnvironment)
+        public DatabaseTests() : base(IntegrationTestsRuntime.TempEnvironment)
         {
             SUT = Client.Database;
             SUT.PutAsync().Wait();

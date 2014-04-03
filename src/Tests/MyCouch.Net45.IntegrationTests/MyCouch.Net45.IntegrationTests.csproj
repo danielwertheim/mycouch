@@ -87,6 +87,7 @@
     <Compile Include="IPreserveStatePerFixture.cs" />
     <Compile Include="CoreTests\StoreTests\CallbackQueryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServerClientTestsOf.cs" />
     <Compile Include="TestFixtures\SearchFixture.cs" />
     <Compile Include="TestFixtures\ViewsFixture.cs" />
   </ItemGroup>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using MyCouch.Requests;
 using MyCouch.Testing.Model;
 using MyCouch.Testing.TestData;
@@ -21,7 +22,7 @@ namespace MyCouch.IntegrationTests.TestFixtures
 
             Animals = CloudantTestData.Animals.CreateAll();
 
-            using (var client = IntegrationTestsRuntime.CreateClient(_environment))
+            using (var client = IntegrationTestsRuntime.CreateCloudantDbClient(_environment))
             {
                 client.ClearAllDocuments();
 
@@ -38,9 +39,9 @@ namespace MyCouch.IntegrationTests.TestFixtures
 
                 client.Documents.PostAsync(CloudantTestData.Views.Views101).Wait();
 
-                var queries = CloudantTestData.Views.AllViewIds.Select(id => new QueryViewRequest(id).Configure(q => q.Stale(Stale.UpdateAfter)));
-                foreach (var query in queries)
-                    client.Views.QueryAsync(query).Wait();
+                var queryRequests = CloudantTestData.Views.AllViewIds.Select(id => new QueryViewRequest(id).Configure(q => q.Stale(Stale.UpdateAfter)));
+                var queries = queryRequests.Select(q => client.Views.QueryAsync(q) as Task).ToArray();
+                Task.WaitAll(queries);
             }
         }
 
@@ -58,7 +59,7 @@ namespace MyCouch.IntegrationTests.TestFixtures
             if (_environment == null)
                 return;
 
-            using (var client = IntegrationTestsRuntime.CreateClient(_environment))
+            using (var client = IntegrationTestsRuntime.CreateCloudantDbClient(_environment))
             {
                 client.ClearAllDocuments();
             }

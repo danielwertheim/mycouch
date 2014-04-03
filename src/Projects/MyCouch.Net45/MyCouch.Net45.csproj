@@ -66,13 +66,16 @@
     </Compile>
     <Compile Include="ChangesFeed.cs" />
     <Compile Include="ChangesStyle.cs" />
+    <Compile Include="Contexts\Replication.cs" />
     <Compile Include="DocumentHeader.cs" />
     <Compile Include="EntitySchemes\Reflections\FakeStringGetter.cs" />
     <Compile Include="EntitySchemes\Reflections\FakeStringSetter.cs" />
     <Compile Include="EntitySchemes\Reflections\IStringGetter.cs" />
     <Compile Include="EntitySchemes\Reflections\IStringSetter.cs" />
+    <Compile Include="IMyCouchServerClient.cs" />
     <Compile Include="IMyCouchStore.cs" />
     <Compile Include="IQueryParameters.cs" />
+    <Compile Include="IReplication.cs" />
     <Compile Include="MyCouchClient.cs" />
     <Compile Include="MyCouchClientBootstrapper.cs" />
     <Compile Include="ClientExecuteExtensions.cs" />
@@ -110,6 +113,7 @@
     <Compile Include="IViews.cs" />
     <Compile Include="MyCouchException.cs" />
     <Compile Include="MyCouchRuntime.cs" />
+    <Compile Include="MyCouchServerClient.cs" />
     <Compile Include="MyCouchStore.cs" />
     <Compile Include="MyCouchUriBuilder.cs" />
     <Compile Include="Net\BasicHttpClientConnection.cs" />

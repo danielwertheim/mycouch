@@ -10,12 +10,12 @@ namespace MyCouch.IntegrationTests
         protected readonly TestEnvironment Environment;
         protected IMyCouchClient Client { get; set; }
 
-        protected ClientTestsOf() : this(IntegrationTestsRuntime.CoreEnvironment) { }
+        protected ClientTestsOf() : this(IntegrationTestsRuntime.NormalEnvironment) { }
 
         protected ClientTestsOf(TestEnvironment environment)
         {
             Environment = environment;
-            Client = IntegrationTestsRuntime.CreateClient(Environment);
+            Client = IntegrationTestsRuntime.CreateDbClient(Environment);
             CleanDb();
         }
 

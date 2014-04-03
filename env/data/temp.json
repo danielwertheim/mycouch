@@ -1,6 +1,10 @@
 {
-  "Client":{
-      "ServerUrl":"http://localhost:5984",
-      "DbName":"mycouchtests-temp" },
-   "SupportsDatabaseContextTests": true
+    "RunServerClientTests": false,
+    "ServerClient":{
+        "Url":"http://localhost:5984",
+        "User":"sa",
+        "Password":"p@ssword"}
+    "Client":{
+        "ServerUrl":"http://localhost:5984",
+        "DbName":"mycouchtests-temp" }
 }

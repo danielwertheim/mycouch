@@ -11,17 +11,17 @@ namespace MyCouch.IntegrationTests
     {
         private const string TestEnvironmentsBaseUrl = "http://localhost:8991/testenvironments/";
 
-        internal static readonly TestEnvironment CoreEnvironment;
-        internal static readonly TestEnvironment TempClientEnvironment;
-        internal static readonly TestEnvironment CloudantClientEnvironment;
+        internal static readonly TestEnvironment NormalEnvironment;
+        internal static readonly TestEnvironment TempEnvironment;
+        internal static readonly TestEnvironment CloudantEnvironment;
 
         static IntegrationTestsRuntime()
         {
             using (var c = new HttpClient())
             {
-                CoreEnvironment = GetTestEnvironment(c, "normal");
-                TempClientEnvironment = GetTestEnvironment(c, "temp");
-                CloudantClientEnvironment = GetTestEnvironment(c, "cloudant");
+                NormalEnvironment = GetTestEnvironment(c, "normal");
+                TempEnvironment = GetTestEnvironment(c, "temp");
+                CloudantEnvironment = GetTestEnvironment(c, "cloudant");
             }
         }
 
@@ -44,9 +44,25 @@ namespace MyCouch.IntegrationTests
             }
         }
 
-        internal static IMyCouchClient CreateClient(TestEnvironment environment)
+        internal static IMyCouchServerClient CreateServerClient(TestEnvironment environment)
         {
-            var config = environment.Client;
+            if (!environment.RunServerClientTests)
+                throw new Exception("The Test environment configuration is not configured to run ServerClient tests.");
+
+            var config = environment.ServerClient;
+            var uriBuilder = new MyCouchUriBuilder(config.Url);
+
+            if (config.HasCredentials())
+                uriBuilder.SetBasicCredentials(config.User, config.Password);
+
+            return config.IsAgainstCloudant()
+                ? new MyCouchServerClient(new CustomCloudantConnection(uriBuilder.Build()))
+                : new MyCouchServerClient(uriBuilder.Build());
+        }
+
+        internal static IMyCouchClient CreateDbClient(TestEnvironment environment)
+        {
+            var config = environment.DbClient;
             var uriBuilder = new MyCouchUriBuilder(config.ServerUrl)
                 .SetDbName(config.DbName);
 
@@ -58,12 +74,12 @@ namespace MyCouch.IntegrationTests
                 : new MyCouchClient(uriBuilder.Build());
         }
 
-        internal static IMyCouchCloudantClient CreateCloudantClient(TestEnvironment environment)
+        internal static IMyCouchCloudantClient CreateCloudantDbClient(TestEnvironment environment)
         {
-            if(!CloudantClientEnvironment.Client.IsAgainstCloudant())
-                throw new Exception("The configuration for the Cloudant test environment does not seem to point to a Cloudant Db.");
+            if(!CloudantEnvironment.DbClient.IsAgainstCloudant())
+                throw new Exception("The configuration for the Cloudant test environment for the DbClient does not seem to point to a Cloudant Db.");
 
-            var cfg = CloudantClientEnvironment.Client;
+            var cfg = CloudantEnvironment.DbClient;
             var uriBuilder = new MyCouchUriBuilder(cfg.ServerUrl)
                 .SetDbName(cfg.DbName)
                 .SetBasicCredentials(cfg.User, cfg.Password);
@@ -98,17 +114,35 @@ namespace MyCouch.IntegrationTests
 
     public class TestEnvironment
     {
-        public ClientConfig Client { get; set; }
-        public bool SupportsDatabaseContextTests { get; set; }
-
+        public ServerClientConfig ServerClient { get; set; }
+        public DbClientConfig DbClient { get; set; }
+        public bool RunServerClientTests { get; set; }
         public TestEnvironment()
         {
-            Client = new ClientConfig();
-            SupportsDatabaseContextTests = false;
+            ServerClient = new ServerClientConfig();
+            DbClient = new DbClientConfig();
+            RunServerClientTests = false;
         }
     }
 
-    public class ClientConfig
+    public class ServerClientConfig
+    {
+        public string Url { get; set; }
+        public string User { get; set; }
+        public string Password { get; set; }
+
+        public bool IsAgainstCloudant()
+        {
+            return Url.Contains("cloudant.com");
+        }
+
+        public bool HasCredentials()
+        {
+            return !string.IsNullOrEmpty(User);
+        }
+    }
+
+    public class DbClientConfig
     {
         public string ServerUrl { get; set; }
         public string DbName { get; set; }
