@@ -3,8 +3,8 @@
     "ServerClient":{
         "Url":"http://localhost:5984",
         "User":"sa",
-        "Password":"p@ssword"}
-    "Client":{
+        "Password":"p@ssword"},
+    "DbClient":{
         "ServerUrl":"http://localhost:5984",
         "DbName":"mycouchtests",
         "User":"mycouchtester",

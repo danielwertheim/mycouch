@@ -55,7 +55,7 @@ namespace MyCouch.Net
 
         private HttpClient CreateHttpClient(Uri dbUri)
         {
-            var client = new HttpClient { BaseAddress = dbUri };
+            var client = new HttpClient { BaseAddress = new Uri(dbUri.AbsoluteUri.TrimEnd('/')) };
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(HttpContentTypes.Json));
 
             if (!string.IsNullOrWhiteSpace(dbUri.UserInfo))

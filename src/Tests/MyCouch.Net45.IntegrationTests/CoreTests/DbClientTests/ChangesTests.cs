@@ -94,7 +94,6 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             var putOfDoc = Client.Documents.PutAsync(postOfDoc.Id, postOfDoc.Rev, ClientTestData.Artists.Artist1Json).Result;
             var deleteOfDoc = Client.Documents.DeleteAsync(putOfDoc.Id, putOfDoc.Rev).Result;
 
-            //SpinWait.SpinUntil(() => cancellation.IsCancellationRequested);
             var response = changes.Result;
 
             response.IsSuccess.Should().BeTrue();
