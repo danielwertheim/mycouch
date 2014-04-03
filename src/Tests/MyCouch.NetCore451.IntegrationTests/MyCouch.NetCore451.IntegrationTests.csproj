@@ -130,26 +130,38 @@
     <Compile Include="..\MyCouch.Net45.IntegrationTests\CloudantTests\SearchTests.cs">
       <Link>CloudantTests\SearchTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.IntegrationTests\CoreTests\AttachmentsTests.cs">
-      <Link>CoreTests\AttachmentsTests.cs</Link>
+    <Compile Include="..\mycouch.net45.integrationtests\coretests\dbclienttests\AttachmentsTests.cs">
+      <Link>CoreTests\DbClientTests\AttachmentsTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.IntegrationTests\CoreTests\ChangesTests.cs">
-      <Link>CoreTests\ChangesTests.cs</Link>
+    <Compile Include="..\mycouch.net45.integrationtests\coretests\dbclienttests\ChangesTests.cs">
+      <Link>CoreTests\DbClientTests\ChangesTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.IntegrationTests\CoreTests\DatabaseTests.cs">
-      <Link>CoreTests\DatabaseTests.cs</Link>
+    <Compile Include="..\mycouch.net45.integrationtests\coretests\dbclienttests\DatabaseTests.cs">
+      <Link>CoreTests\DbClientTests\DatabaseTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.IntegrationTests\CoreTests\DocumentsTests.cs">
-      <Link>CoreTests\DocumentsTests.cs</Link>
+    <Compile Include="..\mycouch.net45.integrationtests\coretests\dbclienttests\DocumentsTests.cs">
+      <Link>CoreTests\DbClientTests\DocumentsTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.IntegrationTests\CoreTests\EntitiesTests.cs">
-      <Link>CoreTests\EntitiesTests.cs</Link>
+    <Compile Include="..\mycouch.net45.integrationtests\coretests\dbclienttests\EntitiesTests.cs">
+      <Link>CoreTests\DbClientTests\EntitiesTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.IntegrationTests\CoreTests\MyCouchStoreTests.cs">
-      <Link>CoreTests\MyCouchStoreTests.cs</Link>
+    <Compile Include="..\mycouch.net45.integrationtests\coretests\dbclienttests\ViewsTests.cs">
+      <Link>CoreTests\DbClientTests\ViewsTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.IntegrationTests\CoreTests\ViewsTests.cs">
-      <Link>CoreTests\ViewsTests.cs</Link>
+    <Compile Include="..\mycouch.net45.integrationtests\coretests\serverclienttests\ActiveTasksTests.cs">
+      <Link>CoreTests\ServerClientTests\ActiveTasksTests.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.net45.integrationtests\coretests\serverclienttests\ReplicationTests.cs">
+      <Link>CoreTests\ServerClientTests\ReplicationTests.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.net45.integrationtests\coretests\storetests\CallbackQueryTests.cs">
+      <Link>CoreTests\StoreTests\CallbackQueryTests.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.net45.integrationtests\coretests\storetests\CrudTests.cs">
+      <Link>CoreTests\StoreTests\CrudTests.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.net45.integrationtests\coretests\storetests\ObservableQueryTests.cs">
+      <Link>CoreTests\StoreTests\ObservableQueryTests.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45.IntegrationTests\IntegrationTestsRuntime.cs">
       <Link>IntegrationTestsRuntime.cs</Link>

@@ -3,7 +3,7 @@ using System.Net.Http;
 using MyCouch.Testing;
 using Xunit;
 
-namespace MyCouch.IntegrationTests.CoreTests
+namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
 {
     public class DatabaseTests : ClientTestsOf<IDatabase>
     {
