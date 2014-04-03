@@ -28,7 +28,7 @@ namespace MyCouch.Requests.Factories
         protected override string GenerateRequestUrl(string id = null, string rev = null)
         {
             Ensure.That(id, "id")
-                .WithExtraMessageOf(() => "PUT requests must have an id part of the URL.")
+                .WithExtraMessageOf(() => ExceptionStrings.PutRequestIsMissingIdInUrl)
                 .IsNotNullOrWhiteSpace();
 
             return base.GenerateRequestUrl(id, rev);

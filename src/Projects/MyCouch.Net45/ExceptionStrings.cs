@@ -2,11 +2,10 @@
 {
     public static class ExceptionStrings
     {
-        public static string BasicHttpClientConnectionUriIsMissingDb
+        public static string PutRequestIsMissingIdInUrl
         {
-            get { return "No database seems to be specified."; }
+            get { return "PUT requests must have an id part of the URL."; }
         }
-
         public static string QueryResponseRowsDeserializerNeedsJsonArray
         {
             get { return "When deserializing query response rows, the JSON-reader should point to the Start of an array."; }
