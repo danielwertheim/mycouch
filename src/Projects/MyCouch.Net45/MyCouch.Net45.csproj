@@ -78,7 +78,6 @@
     <Compile Include="IReplication.cs" />
     <Compile Include="MyCouchClient.cs" />
     <Compile Include="MyCouchClientBootstrapper.cs" />
-    <Compile Include="ClientExecuteExtensions.cs" />
     <Compile Include="Contexts\ApiContextBase.cs" />
     <Compile Include="Contexts\Attachments.cs" />
     <Compile Include="Contexts\Changes.cs" />

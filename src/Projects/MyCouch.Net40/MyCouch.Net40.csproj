@@ -104,9 +104,6 @@
     <Compile Include="..\MyCouch.Net45\ChangesStyle.cs">
       <Link>ChangesStyle.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\ClientExecuteExtensions.cs">
-      <Link>ClientExecuteExtensions.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Net45\contexts\ApiContextBase.cs">
       <Link>Contexts\ApiContextBase.cs</Link>
     </Compile>
