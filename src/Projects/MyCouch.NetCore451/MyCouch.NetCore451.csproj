@@ -338,6 +338,12 @@
     <Compile Include="..\MyCouch.Net45\requests\factories\GetChangesHttpRequestFactory.cs">
       <Link>Requests\Factories\GetChangesHttpRequestFactory.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Requests\Factories\GetChangesHttpRequestFactoryBase.cs">
+      <Link>Requests\Factories\GetChangesHttpRequestFactoryBase.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Requests\Factories\GetContinuousChangesHttpRequestFactory.cs">
+      <Link>Requests\Factories\GetContinuousChangesHttpRequestFactory.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\Factories\GetDatabaseHttpRequestFactory.cs">
       <Link>Requests\Factories\GetDatabaseHttpRequestFactory.cs</Link>
     </Compile>
