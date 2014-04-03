@@ -55,7 +55,7 @@ namespace MyCouch.Net
 
         private HttpClient CreateHttpClient(Uri dbUri)
         {
-            var client = new HttpClient { BaseAddress = new Uri(BuildCleanUrl(dbUri)) };
+            var client = new HttpClient { BaseAddress = dbUri };
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(HttpContentTypes.Json));
 
             if (!string.IsNullOrWhiteSpace(dbUri.UserInfo))
@@ -69,25 +69,6 @@ namespace MyCouch.Net
             }
 
             return client;
-        }
-
-        private string BuildCleanUrl(Uri uri)
-        {
-            EnsureValidUri(uri);
-
-            var url = string.Format("{0}://{1}{2}", uri.Scheme, uri.Authority, uri.LocalPath);
-            while (url.EndsWith("/"))
-                url = url.Substring(0, url.Length - 1);
-
-            return url;
-        }
-
-        private void EnsureValidUri(Uri uri)
-        {
-            Ensure.That(uri, "uri").IsNotNull();
-            Ensure.That(uri.LocalPath, "uri.LocalPath")
-                  .IsNotNullOrEmpty()
-                  .WithExtraMessageOf(() => ExceptionStrings.BasicHttpClientConnectionUriIsMissingDb);
         }
 
         public virtual async Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest)
