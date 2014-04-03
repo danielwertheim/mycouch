@@ -54,17 +54,6 @@ namespace MyCouch.UnitTests.Requests
         }
 
         [Fact]
-        public void When_Feed_is_assigned_Continuous_It_should_get_included_in_the_querystring()
-        {
-            var request = CreateRequest();
-            request.Feed = ChangesFeed.Continuous;
-
-            WithHttpRequestFor(
-                request,
-                req => req.RequestUri.Query.Should().Be("?feed=continuous"));
-        }
-
-        [Fact]
         public void When_IncludeDocs_is_assigned_true_It_should_get_included_in_the_querystring()
         {
             var request = CreateRequest();
