@@ -11,9 +11,9 @@ namespace MyCouch.Cloudant
             : this(new Uri(url)) { }
 
         public MyCouchCloudantClient(Uri uri)
-            : this(new BasicHttpClientConnection(uri)) { }
+            : this(new DbClientConnection(uri)) { }
 
-        public MyCouchCloudantClient(IConnection connection, MyCouchCloudantClientBootstrapper bootstrapper = null)
+        public MyCouchCloudantClient(IDbClientConnection connection, MyCouchCloudantClientBootstrapper bootstrapper = null)
             : base(connection, bootstrapper ?? new MyCouchCloudantClientBootstrapper())
         {
             bootstrapper = bootstrapper ?? new MyCouchCloudantClientBootstrapper();

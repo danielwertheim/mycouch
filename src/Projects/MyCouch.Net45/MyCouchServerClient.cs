@@ -12,7 +12,7 @@ namespace MyCouch
 
         public MyCouchServerClient(string serverUrl) : this(new Uri(serverUrl)) { }
 
-        public MyCouchServerClient(Uri serverUri) : this(new BasicHttpClientConnection(serverUri)) { }
+        public MyCouchServerClient(Uri serverUri) : this(new ServerClientConnection(serverUri)) { }
 
         public MyCouchServerClient(IConnection connection)
         {

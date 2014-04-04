@@ -218,6 +218,9 @@
     <Compile Include="..\MyCouch.Net45\IDatabase.cs">
       <Link>IDatabase.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\IDatabases.cs">
+      <Link>IDatabases.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\IDocuments.cs">
       <Link>IDocuments.cs</Link>
     </Compile>
@@ -263,11 +266,14 @@
     <Compile Include="..\MyCouch.Net45\MyCouchUriBuilder.cs">
       <Link>MyCouchUriBuilder.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\net\BasicHttpClientConnection.cs">
-      <Link>Net\BasicHttpClientConnection.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Net45\Net\BytesContent.cs">
       <Link>Net\BytesContent.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Net\Connection.cs">
+      <Link>Net\Connection.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Net\DbClientConnection.cs">
+      <Link>Net\DbClientConnection.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\net\HttpContentTypes.cs">
       <Link>Net\HttpContentTypes.cs</Link>
@@ -277,6 +283,9 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\net\JsonContent.cs">
       <Link>Net\JsonContent.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Net\ServerClientConnection.cs">
+      <Link>Net\ServerClientConnection.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Query.cs">
       <Link>Query.cs</Link>
@@ -445,6 +454,9 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\requests\ReplaceDocumentRequest.cs">
       <Link>Requests\ReplaceDocumentRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Requests\ReplicateDatabaseRequest.cs">
+      <Link>Requests\ReplicateDatabaseRequest.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\Request.cs">
       <Link>Requests\Request.cs</Link>

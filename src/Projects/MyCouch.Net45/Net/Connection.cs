@@ -9,7 +9,7 @@ using MyCouch.Extensions;
 
 namespace MyCouch.Net
 {
-    public class BasicHttpClientConnection : IConnection
+    public abstract class Connection : IConnection
     {
         protected HttpClient HttpClient { get; private set; }
         protected bool IsDisposed { get; private set; }
@@ -19,7 +19,7 @@ namespace MyCouch.Net
             get { return HttpClient.BaseAddress; }
         }
 
-        public BasicHttpClientConnection(Uri dbUri)
+        protected Connection(Uri dbUri)
         {
             Ensure.That(dbUri, "dbUri").IsNotNull();
 

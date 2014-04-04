@@ -12,12 +12,12 @@ using MyCouch.Serialization;
 
 namespace MyCouch.Cloudant.Contexts
 {
-    public class Searches : ApiContextBase, ISearches
+    public class Searches : ApiContextBase<IDbClientConnection>, ISearches
     {
         protected SearchIndexHttpRequestFactory SearchIndexHttpRequestFactory { get; set; }
         protected SearchIndexResponseFactory SearchIndexResponseFactory { get; set; }
 
-        public Searches(IConnection connection, ISerializer serializer, IEntitySerializer entitySerializer)
+        public Searches(IDbClientConnection connection, ISerializer serializer, IEntitySerializer entitySerializer)
             : base(connection)
         {
             Ensure.That(serializer, "serializer").IsNotNull();

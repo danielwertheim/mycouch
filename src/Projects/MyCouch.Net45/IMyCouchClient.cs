@@ -11,15 +11,9 @@ namespace MyCouch
     public interface IMyCouchClient : IDisposable
     {
         /// <summary>
-        /// Represents the DbName that MyCouch has parsed out
-        /// from the URL.
+        /// The underlying <see cref="IDbClientConnection"/> used to communicate with CouchDb.
         /// </summary>
-        string DbName { get; }
-
-        /// <summary>
-        /// The underlying <see cref="IConnection"/> used to communicate with CouchDb.
-        /// </summary>
-        IConnection Connection { get; }
+        IDbClientConnection Connection { get; }
         
         /// <summary>
         /// The Serializer associated with this client instance. Use this if you want

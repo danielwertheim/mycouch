@@ -19,9 +19,9 @@ namespace MyCouch
 
         public Func<IScheduler> ObservableSubscribeOnScheduler { protected get; set; }
 
-        public MyCouchStore(string dbUri) : this(new MyCouchClient(dbUri)) { }
+        public MyCouchStore(string dbUri, string dbName = null) : this(new MyCouchClient(dbUri, dbName)) { }
 
-        public MyCouchStore(Uri dbUri) : this(new MyCouchClient(dbUri)) { }
+        public MyCouchStore(Uri dbUri, string dbName = null) : this(new MyCouchClient(dbUri, dbName)) { }
 
         public MyCouchStore(IMyCouchClient client)
         {

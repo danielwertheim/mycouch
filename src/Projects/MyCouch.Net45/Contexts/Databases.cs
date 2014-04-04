@@ -1,4 +1,4 @@
-﻿using System.Net.Http;
+using System.Net.Http;
 using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Extensions;
@@ -11,7 +11,7 @@ using MyCouch.Serialization;
 
 namespace MyCouch.Contexts
 {
-    public class Database : ApiContextBase<IDbClientConnection>, IDatabase
+    public class Databases : ApiContextBase<IServerClientConnection>, IDatabases
     {
         protected TextResponseFactory TextResponseFactory { get; set; }
         protected GetDatabaseHttpRequestFactory GetHttpRequestFactory { get; set; }
@@ -21,7 +21,7 @@ namespace MyCouch.Contexts
         protected CompactDatabaseHttpRequestFactory CompactHttpRequestFactory { get; set; }
         protected ViewCleanupHttpRequestFactory ViewCleanupHttpRequestFactory { get; set; }
 
-        public Database(IDbClientConnection connection, ISerializer serializer)
+        public Databases(IServerClientConnection connection, ISerializer serializer)
             : base(connection)
         {
             Ensure.That(serializer, "serializer").IsNotNull();
@@ -35,11 +35,6 @@ namespace MyCouch.Contexts
             ViewCleanupHttpRequestFactory = new ViewCleanupHttpRequestFactory(Connection);
         }
 
-        public virtual Task<TextResponse> HeadAsync()
-        {
-            return HeadAsync(new HeadDatabaseRequest());
-        }
-
         public virtual async Task<TextResponse> HeadAsync(HeadDatabaseRequest request)
         {
             using (var httpRequest = CreateHttpRequest(request))
@@ -49,11 +44,6 @@ namespace MyCouch.Contexts
                     return ProcessResponse(res);
                 }
             }
-        }
-
-        public virtual Task<TextResponse> GetAsync()
-        {
-            return GetAsync(new GetDatabaseRequest());
         }
 
         public virtual async Task<TextResponse> GetAsync(GetDatabaseRequest request)
@@ -67,11 +57,6 @@ namespace MyCouch.Contexts
             }
         }
 
-        public virtual Task<TextResponse> PutAsync()
-        {
-            return PutAsync(new PutDatabaseRequest());
-        }
-
         public virtual async Task<TextResponse> PutAsync(PutDatabaseRequest request)
         {
             using (var httpRequest = CreateHttpRequest(request))
@@ -81,11 +66,6 @@ namespace MyCouch.Contexts
                     return ProcessResponse(res);
                 }
             }
-        }
-
-        public virtual Task<TextResponse> DeleteAsync()
-        {
-            return DeleteAsync(new DeleteDatabaseRequest());
         }
 
         public virtual async Task<TextResponse> DeleteAsync(DeleteDatabaseRequest request)
@@ -99,11 +79,6 @@ namespace MyCouch.Contexts
             }
         }
 
-        public virtual Task<TextResponse> CompactAsync()
-        {
-            return CompactAsync(new CompactDatabaseRequest());
-        }
-
         public virtual async Task<TextResponse> CompactAsync(CompactDatabaseRequest request)
         {
             using (var httpRequest = CreateHttpRequest(request))
@@ -113,11 +88,6 @@ namespace MyCouch.Contexts
                     return ProcessResponse(res);
                 }
             }
-        }
-
-        public virtual Task<TextResponse> ViewCleanup()
-        {
-            return ViewCleanup(new ViewCleanupRequest());
         }
 
         public virtual async Task<TextResponse> ViewCleanup(ViewCleanupRequest request)

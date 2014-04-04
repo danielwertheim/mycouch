@@ -56,7 +56,7 @@ namespace MyCouch.IntegrationTests
                 uriBuilder.SetBasicCredentials(config.User, config.Password);
 
             return config.IsAgainstCloudant()
-                ? new MyCouchServerClient(new CustomCloudantConnection(uriBuilder.Build()))
+                ? new MyCouchServerClient(new CustomCloudantDbClientConnection(uriBuilder.Build()))
                 : new MyCouchServerClient(uriBuilder.Build());
         }
 
@@ -70,7 +70,7 @@ namespace MyCouch.IntegrationTests
                 uriBuilder.SetBasicCredentials(config.User, config.Password);
 
             return config.IsAgainstCloudant()
-                ? new MyCouchClient(new CustomCloudantConnection(uriBuilder.Build()))
+                ? new MyCouchClient(new CustomCloudantDbClientConnection(uriBuilder.Build()))
                 : new MyCouchClient(uriBuilder.Build());
         }
 
@@ -84,12 +84,12 @@ namespace MyCouch.IntegrationTests
                 .SetDbName(cfg.DbName)
                 .SetBasicCredentials(cfg.User, cfg.Password);
 
-            return new MyCouchCloudantClient(new CustomCloudantConnection(uriBuilder.Build()));
+            return new MyCouchCloudantClient(new CustomCloudantDbClientConnection(uriBuilder.Build()));
         }
 
-        private class CustomCloudantConnection : BasicHttpClientConnection
+        private class CustomCloudantDbClientConnection : DbClientConnection
         {
-            public CustomCloudantConnection(Uri uri)
+            public CustomCloudantDbClientConnection(Uri uri)
                 : base(uri) { }
 
             protected override HttpRequest OnBeforeSend(HttpRequest httpRequest)

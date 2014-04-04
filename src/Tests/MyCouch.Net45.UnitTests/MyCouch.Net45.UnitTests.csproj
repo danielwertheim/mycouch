@@ -71,7 +71,7 @@
     </Compile>
     <Compile Include="Cloudant\Requests\SearchIndexHttpRequestFactoryTests.cs" />
     <Compile Include="Cloudant\SearchParametersConfiguratorTests.cs" />
-    <Compile Include="DbClientTests.cs" />
+    <Compile Include="Net\DbClientConnectionTests.cs" />
     <Compile Include="Fakes\ConnectionFake.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryConfigurationTests.cs" />

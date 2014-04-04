@@ -1,7 +1,14 @@
-﻿namespace MyCouch.Contexts
+﻿using MyCouch.Requests;
+
+namespace MyCouch.Contexts
 {
-    public class Replication : ApiContextBase, IReplication
+    public class Replication : ApiContextBase<IServerClientConnection>, IReplication
     {
-        public Replication(IConnection connection) : base(connection) { }
+        public Replication(IServerClientConnection connection) : base(connection) { }
+
+        public object ReplicateAsync(ReplicateDatabaseRequest request)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
