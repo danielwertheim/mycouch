@@ -6,7 +6,7 @@ using Xunit;
 
 namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
 {
-    public class AttachmentsTests : ClientTestsOf<IAttachments>
+    public class AttachmentsTests : IntegrationTestsOf<IAttachments>
     {
         public AttachmentsTests()
         {

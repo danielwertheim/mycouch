@@ -121,9 +121,6 @@
     <Compile Include="..\MyCouch.Net45.IntegrationTests\ClientExtensions.cs">
       <Link>ClientExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.IntegrationTests\ClientTestsOf.cs">
-      <Link>ClientTestsOf.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Net45.IntegrationTests\CloudantTestsOf.cs">
       <Link>CloudantTestsOf.cs</Link>
     </Compile>
@@ -165,6 +162,9 @@
     </Compile>
     <Compile Include="..\mycouch.net45.integrationtests\coretests\storetests\ObservableQueryTests.cs">
       <Link>CoreTests\StoreTests\ObservableQueryTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\IntegrationTestsOf.cs">
+      <Link>IntegrationTestsOf.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45.IntegrationTests\IntegrationTestsRuntime.cs">
       <Link>IntegrationTestsRuntime.cs</Link>
@@ -216,6 +216,10 @@
     <ProjectReference Include="..\MyCouch.NetCore451.Testing\MyCouch.NetCore451.Testing.csproj">
       <Project>{a47b5c4d-01be-4c95-9896-1b0a984879ae}</Project>
       <Name>MyCouch.NetCore451.Testing</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MyCouch.Testing\MyCouch.Testing.csproj">
+      <Project>{54e245c4-a9ee-4a54-9e0f-ba60faf131e0}</Project>
+      <Name>MyCouch.Testing</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

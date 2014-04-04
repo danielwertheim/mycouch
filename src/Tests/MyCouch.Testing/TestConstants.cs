@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MyCouch.Testing
+﻿namespace MyCouch.Testing
 {
     public static class TestConstants
     {

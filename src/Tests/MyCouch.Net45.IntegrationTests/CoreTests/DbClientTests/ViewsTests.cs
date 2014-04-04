@@ -10,7 +10,7 @@ using Xunit;
 namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
 {
     public class ViewsTests :
-        ClientTestsOf<IViews>,
+        IntegrationTestsOf<IViews>,
         IPreserveStatePerFixture,
         IUseFixture<ViewsFixture>
     {

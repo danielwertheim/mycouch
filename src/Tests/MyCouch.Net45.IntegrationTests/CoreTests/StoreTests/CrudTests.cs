@@ -5,7 +5,7 @@ using Xunit;
 
 namespace MyCouch.IntegrationTests.CoreTests.StoreTests
 {
-    public class CrudTests : ClientTestsOf<MyCouchStore>
+    public class CrudTests : IntegrationTestsOf<MyCouchStore>
     {
         public CrudTests()
         {

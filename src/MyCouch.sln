@@ -38,7 +38,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCouch.Cloudant.Net45", "P
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCouch.Cloudant.NetCore451", "Projects\MyCouch.Cloudant.NetCore451\MyCouch.Cloudant.NetCore451.csproj", "{850B3C7A-8885-4CCB-AE30-814140F019D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCouch.Testdata", "Tests\MyCouch.Testdata\MyCouch.Testdata.csproj", "{54E245C4-A9EE-4A54-9E0F-BA60FAF131E0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCouch.Testing", "Tests\MyCouch.Testing\MyCouch.Testing.csproj", "{54E245C4-A9EE-4A54-9E0F-BA60FAF131E0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9CF061F2-2E5A-46C5-9CAB-667014B90AF5}"
 EndProject

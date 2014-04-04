@@ -10,7 +10,7 @@ using Xunit;
 namespace MyCouch.IntegrationTests.CoreTests.StoreTests
 {
     public class CallbackQueryTests :
-        ClientTestsOf<MyCouchStore>,
+        IntegrationTestsOf<MyCouchStore>,
         IPreserveStatePerFixture,
         IUseFixture<ViewsFixture>
     {

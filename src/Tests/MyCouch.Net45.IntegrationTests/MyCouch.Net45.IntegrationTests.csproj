@@ -70,7 +70,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ClientExtensions.cs" />
-    <Compile Include="ClientTestsOf.cs" />
+    <Compile Include="IntegrationTestsOf.cs" />
     <Compile Include="CoreTests\DbClientTests\AttachmentsTests.cs" />
     <Compile Include="CoreTests\DbClientTests\ChangesTests.cs" />
     <Compile Include="CoreTests\DbClientTests\DatabaseTests.cs" />
@@ -104,6 +104,10 @@
     <ProjectReference Include="..\MyCouch.Net45.Testing\MyCouch.Net45.Testing.csproj">
       <Project>{adc6ac03-747d-444c-a204-cab1624429c7}</Project>
       <Name>MyCouch.Net45.Testing</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MyCouch.Testing\MyCouch.Testing.csproj">
+      <Project>{54e245c4-a9ee-4a54-9e0f-ba60faf131e0}</Project>
+      <Name>MyCouch.Testing</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

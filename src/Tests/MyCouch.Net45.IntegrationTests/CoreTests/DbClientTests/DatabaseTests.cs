@@ -5,7 +5,7 @@ using Xunit;
 
 namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
 {
-    public class DatabaseTests : ClientTestsOf<IDatabase>
+    public class DatabaseTests : IntegrationTestsOf<IDatabase>
     {
         public DatabaseTests() : base(IntegrationTestsRuntime.TempEnvironment)
         {

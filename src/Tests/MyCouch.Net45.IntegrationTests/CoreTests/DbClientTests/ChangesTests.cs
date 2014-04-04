@@ -11,7 +11,7 @@ using Xunit;
 
 namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
 {
-    public class ChangesTests : ClientTestsOf<IChanges>
+    public class ChangesTests : IntegrationTestsOf<IChanges>
     {
         protected readonly Func<string, int> StringToNumeric = s => int.Parse(new string(s.TakeWhile(Char.IsDigit).ToArray()));
 

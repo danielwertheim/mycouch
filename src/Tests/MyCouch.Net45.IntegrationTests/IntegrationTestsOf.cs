@@ -3,16 +3,16 @@ using MyCouch.Testing;
 
 namespace MyCouch.IntegrationTests
 {
-    public abstract class ClientTestsOf<T> :
+    public abstract class IntegrationTestsOf<T> :
         TestsOf<T>,
         IDisposable where T : class
     {
         protected readonly TestEnvironment Environment;
         protected IMyCouchClient Client { get; set; }
 
-        protected ClientTestsOf() : this(IntegrationTestsRuntime.NormalEnvironment) { }
+        protected IntegrationTestsOf() : this(IntegrationTestsRuntime.NormalEnvironment) { }
 
-        protected ClientTestsOf(TestEnvironment environment)
+        protected IntegrationTestsOf(TestEnvironment environment)
         {
             Environment = environment;
             Client = IntegrationTestsRuntime.CreateDbClient(Environment);
