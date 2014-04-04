@@ -118,13 +118,13 @@
     <Compile Include="MyCouchServerClientBootstrapper.cs" />
     <Compile Include="MyCouchStore.cs" />
     <Compile Include="MyCouchUriBuilder.cs" />
-    <Compile Include="Net\Connection.cs" />
+    <Compile Include="Connection.cs" />
     <Compile Include="Net\BytesContent.cs" />
-    <Compile Include="Net\DbClientConnection.cs" />
+    <Compile Include="DbClientConnection.cs" />
     <Compile Include="Net\HttpContentTypes.cs" />
     <Compile Include="Net\HttpRequest.cs" />
     <Compile Include="Net\JsonContent.cs" />
-    <Compile Include="Net\ServerClientConnection.cs" />
+    <Compile Include="ServerClientConnection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query.cs" />
     <Compile Include="Querying\QueryExtensions.cs" />

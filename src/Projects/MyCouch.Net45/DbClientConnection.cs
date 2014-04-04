@@ -1,7 +1,7 @@
 using System;
 using EnsureThat;
 
-namespace MyCouch.Net
+namespace MyCouch
 {
     public class DbClientConnection : Connection, IDbClientConnection
     {

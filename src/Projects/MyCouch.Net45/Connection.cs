@@ -6,8 +6,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Extensions;
+using MyCouch.Net;
 
-namespace MyCouch.Net
+namespace MyCouch
 {
     public abstract class Connection : IConnection
     {

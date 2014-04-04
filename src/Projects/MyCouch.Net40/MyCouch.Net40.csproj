@@ -104,6 +104,9 @@
     <Compile Include="..\MyCouch.Net45\ChangesStyle.cs">
       <Link>ChangesStyle.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Connection.cs">
+      <Link>Connection.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\contexts\ApiContextBase.cs">
       <Link>Contexts\ApiContextBase.cs</Link>
     </Compile>
@@ -130,6 +133,9 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\contexts\Views.cs">
       <Link>Contexts\Views.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\DbClientConnection.cs">
+      <Link>DbClientConnection.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\DocumentAttribute.cs">
       <Link>DocumentAttribute.cs</Link>
@@ -269,12 +275,6 @@
     <Compile Include="..\MyCouch.Net45\Net\BytesContent.cs">
       <Link>Net\BytesContent.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\Net\Connection.cs">
-      <Link>Net\Connection.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\Net\DbClientConnection.cs">
-      <Link>Net\DbClientConnection.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Net45\Net\DbClientConnectionDbRequestUrlGenerator.cs">
       <Link>Net\DbClientConnectionDbRequestUrlGenerator.cs</Link>
     </Compile>
@@ -289,9 +289,6 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\net\JsonContent.cs">
       <Link>Net\JsonContent.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\Net\ServerClientConnection.cs">
-      <Link>Net\ServerClientConnection.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Net\UrlParam.cs">
       <Link>Net\UrlParam.cs</Link>
@@ -643,6 +640,9 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\Serialization\Writers\DocumentJsonWriter.cs">
       <Link>Serialization\Writers\DocumentJsonWriter.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\ServerClientConnection.cs">
+      <Link>ServerClientConnection.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Stale.cs">
       <Link>Stale.cs</Link>

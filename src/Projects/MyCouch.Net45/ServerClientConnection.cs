@@ -1,6 +1,6 @@
 using System;
 
-namespace MyCouch.Net
+namespace MyCouch
 {
     public class ServerClientConnection : Connection, IServerClientConnection
     {
