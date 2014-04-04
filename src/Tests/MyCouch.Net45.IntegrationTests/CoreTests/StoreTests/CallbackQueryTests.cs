@@ -44,7 +44,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 {
                     t.IsFaulted.Should().BeFalse();
                     numOfRows.Should().Be(1);
-                });
+                }).Wait();
         }
 
         [Fact]
@@ -64,7 +64,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 {
                     t.IsFaulted.Should().BeFalse();
                     numOfRows.Should().Be(1);
-                });
+                }).Wait();
         }
 
         [Fact]
@@ -84,7 +84,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 {
                     t.IsFaulted.Should().BeFalse();
                     numOfRows.Should().Be(1);
-                });
+                }).Wait();
         }
 
         [Fact]
@@ -104,7 +104,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 {
                     t.IsFaulted.Should().BeFalse();
                     len.Should().Be(ArtistsById.Length);
-                });
+                }).Wait();
         }
 
         [Fact]
@@ -124,7 +124,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 {
                     t.IsFaulted.Should().BeFalse();
                     len.Should().Be(ArtistsById.Length);
-                });
+                }).Wait();
         }
 
         [Fact]
@@ -144,7 +144,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 {
                     t.IsFaulted.Should().BeFalse();
                     len.Should().Be(ArtistsById.Length);
-                });
+                }).Wait();
         }
 
         [Fact]
@@ -162,7 +162,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 var values = GetRowValues(rows);
 
                 values.ShouldBe().ValueEqual(albums);
-            });
+            }).Wait();
         }
 
         [Fact]
@@ -180,7 +180,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 var values = GetRowValues(rows);
 
                 values.ShouldBe().ValueEqual(albums);
-            });
+            }).Wait();
         }
 
         [Fact]
@@ -198,7 +198,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 var values = GetRowValues(rows);
 
                 values.ShouldBe().ValueEqual(albums);
-            });
+            }).Wait();
         }
 
         [Fact]
@@ -216,7 +216,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 var values = GetRowValues(rows);
 
                 values.ShouldBe().ValueEqual(albums);
-            });
+            }).Wait();
         }
 
         [Fact]
@@ -234,7 +234,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 var values = GetRowValues(rows);
 
                 values.ShouldBe().ValueEqual(albums);
-            });
+            }).Wait();
         }
 
         [Fact]
@@ -252,7 +252,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 var values = GetRowValues(rows);
 
                 values.ShouldBe().ValueEqual(albums);
-            });
+            }).Wait();
         }
 
         [Fact]
@@ -269,7 +269,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 var values = GetRowValues(rows);
 
                 values.ShouldBe().ValueEqual(new[] { Client.Serializer.Serialize(artist.Albums) });
-            });
+            }).Wait();
         }
 
         [Fact]
@@ -286,7 +286,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 var values = GetRowValues(rows);
 
                 values.ShouldBe().ValueEqual(new[] { artist.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray() });
-            });
+            }).Wait();
         }
 
         [Fact]
@@ -303,7 +303,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 var values = GetRowValues(rows);
 
                 values.ShouldBe().ValueEqual(new[] { artist.Albums });
-            });
+            }).Wait();
         }
 
         [Fact]
@@ -321,7 +321,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 var values = GetRowValues(rows);
 
                 values.ShouldBe().ValueEqual(artists.Select(a => Client.Serializer.Serialize(a.Albums)).ToArray());
-            });
+            }).Wait();
         }
 
         [Fact]
@@ -339,7 +339,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 var values = GetRowValues(rows);
 
                 values.ShouldBe().ValueEqual(artists.Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray());
-            });
+            }).Wait();
         }
 
         [Fact]
@@ -357,7 +357,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 var values = GetRowValues(rows);
 
                 values.ShouldBe().ValueEqual(artists.Select(a => a.Albums).ToArray());
-            });
+            }).Wait();
         }
 
         [Fact]
@@ -376,7 +376,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 var values = GetRowValues(rows);
 
                 values.ShouldBe().ValueEqual(artists.Select(a => Client.Serializer.Serialize(a.Albums)).ToArray());
-            });
+            }).Wait();
         }
 
         [Fact]
@@ -395,7 +395,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 var values = GetRowValues(rows);
 
                 values.ShouldBe().ValueEqual(artists.Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray());
-            });
+            }).Wait();
         }
 
         [Fact]
@@ -414,7 +414,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 var values = GetRowValues(rows);
 
                 values.ShouldBe().ValueEqual(artists.Select(a => a.Albums).ToArray());
-            });
+            }).Wait();
         }
 
         [Fact]
@@ -434,7 +434,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 var values = GetRowValues(rows);
 
                 values.ShouldBe().ValueEqual(artists.Take(artists.Length - 1).Select(a => Client.Serializer.Serialize(a.Albums)).ToArray());
-            });
+            }).Wait();
         }
 
         [Fact]
@@ -454,7 +454,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 var values = GetRowValues(rows);
 
                 values.ShouldBe().ValueEqual(artists.Take(artists.Length - 1).Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray());
-            });
+            }).Wait();
         }
 
         [Fact]
@@ -474,7 +474,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 var values = GetRowValues(rows);
 
                 values.ShouldBe().ValueEqual(artists.Take(artists.Length - 1).Select(a => a.Albums).ToArray());
-            });
+            }).Wait();
         }
 
         [Fact]
@@ -493,7 +493,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 var values = GetRowValues(rows);
 
                 values.ShouldBe().ValueEqual(artists);
-            });
+            }).Wait();
         }
 
         [Fact]
@@ -512,7 +512,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 var values = GetRowValues(rows);
 
                 values.ShouldBe().ValueEqual(artists);
-            });
+            }).Wait();
         }
 
         [Fact]
@@ -528,7 +528,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 var values = GetRowValues(rows);
 
                 values.ShouldBe().ValueEqual(ArtistsById);
-            });
+            }).Wait();
         }
 
         private string[] GetRowValues(IEnumerable<Row> rows)

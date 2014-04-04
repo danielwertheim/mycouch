@@ -44,7 +44,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 {
                     t.IsFaulted.Should().BeFalse();
                     numOfRows.Should().Be(1);
-                });
+                }).Wait();
         }
 
         [Fact]
@@ -64,7 +64,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 {
                     t.IsFaulted.Should().BeFalse();
                     numOfRows.Should().Be(1);
-                });
+                }).Wait();
         }
 
         [Fact]
@@ -84,7 +84,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 {
                     t.IsFaulted.Should().BeFalse();
                     numOfRows.Should().Be(1);
-                });
+                }).Wait();
         }
 
         [Fact]
@@ -103,7 +103,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 {
                     t.IsFaulted.Should().BeFalse();
                     len.Should().Be(ArtistsById.Length);
-                });
+                }).Wait();
         }
 
         [Fact]
@@ -122,7 +122,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 {
                     t.IsFaulted.Should().BeFalse();
                     len.Should().Be(ArtistsById.Length);
-                });
+                }).Wait();
         }
 
         [Fact]
@@ -142,7 +142,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 {
                     t.IsFaulted.Should().BeFalse();
                     len.Should().Be(ArtistsById.Length);
-                });
+                }).Wait();
         }
 
         [Fact]
