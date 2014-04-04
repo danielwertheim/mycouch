@@ -11,9 +11,11 @@ namespace MyCouch.IntegrationTests
         protected IMyCouchClient Client { get; set; }
         protected IMyCouchServerClient ServerClient { get; set; }
 
-        protected ServerClientTestsOf()
+        protected ServerClientTestsOf() : this(IntegrationTestsRuntime.NormalEnvironment) { }
+
+        protected ServerClientTestsOf(TestEnvironment environment)
         {
-            Environment = IntegrationTestsRuntime.NormalEnvironment;
+            Environment = environment;
             Client = IntegrationTestsRuntime.CreateDbClient(Environment);
             ServerClient = IntegrationTestsRuntime.CreateServerClient(Environment);
             CleanDb();

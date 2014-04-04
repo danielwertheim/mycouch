@@ -9,9 +9,26 @@ namespace MyCouch
         /// <summary>
         /// Gets information about the database.
         /// </summary>
+        /// <param name="dbName"></param>
+        /// <returns></returns>
+        Task<TextResponse> GetAsync(string dbName);
+
+        /// <summary>
+        /// Gets information about the database.
+        /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
         Task<TextResponse> GetAsync(GetDatabaseRequest request);
+
+        /// <summary>
+        /// Returns the HTTP Headers containing a minimal amount of information
+        /// about the specified database. Since the response body is empty,
+        /// using the HEAD method is a lightweight way to check if the database
+        /// exists already or not.
+        /// </summary>
+        /// <param name="dbName"></param>
+        /// <returns></returns>
+        Task<TextResponse> HeadAsync(string dbName);
 
         /// <summary>
         /// Returns the HTTP Headers containing a minimal amount of information
@@ -26,6 +43,13 @@ namespace MyCouch
         /// <summary>
         /// Creates the database, but only if it does not already exist.
         /// </summary>
+        /// <param name="dbName"></param>
+        /// <returns></returns>
+        Task<TextResponse> PutAsync(string dbName);
+
+        /// <summary>
+        /// Creates the database, but only if it does not already exist.
+        /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
         Task<TextResponse> PutAsync(PutDatabaseRequest request);
@@ -33,9 +57,23 @@ namespace MyCouch
         /// <summary>
         /// Deletes the database.
         /// </summary>
+        /// <param name="dbName"></param>
+        /// <returns></returns>
+        Task<TextResponse> DeleteAsync(string dbName);
+
+        /// <summary>
+        /// Deletes the database.
+        /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
         Task<TextResponse> DeleteAsync(DeleteDatabaseRequest request);
+
+        /// <summary>
+        /// Requests compaction of the database.
+        /// </summary>
+        /// <param name="dbName"></param>
+        /// <returns></returns>
+        Task<TextResponse> CompactAsync(string dbName);
 
         /// <summary>
         /// Requests compaction of the database.
@@ -48,8 +86,16 @@ namespace MyCouch
         /// Removes view index files that are no longer required by CouchDB as a
         /// result of changed views within design documents.
         /// </summary>
+        /// <param name="dbName"></param>
+        /// <returns></returns>
+        Task<TextResponse> ViewCleanupAsync(string dbName);
+
+        /// <summary>
+        /// Removes view index files that are no longer required by CouchDB as a
+        /// result of changed views within design documents.
+        /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        Task<TextResponse> ViewCleanup(ViewCleanupRequest request);
+        Task<TextResponse> ViewCleanupAsync(ViewCleanupRequest request);
     }
 }

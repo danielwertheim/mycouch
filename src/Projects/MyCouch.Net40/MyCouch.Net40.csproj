@@ -116,6 +116,9 @@
     <Compile Include="..\MyCouch.Net45\Contexts\Database.cs">
       <Link>Contexts\Database.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Contexts\Databases.cs">
+      <Link>Contexts\Databases.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\contexts\Documents.cs">
       <Link>Contexts\Documents.cs</Link>
     </Compile>
@@ -251,11 +254,17 @@
     <Compile Include="..\MyCouch.Net45\MyCouchServerClient.cs">
       <Link>MyCouchServerClient.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\MyCouchServerClientBootstrapper.cs">
+      <Link>MyCouchServerClientBootstrapper.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\MyCouchStore.cs">
       <Link>MyCouchStore.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\MyCouchUriBuilder.cs">
       <Link>MyCouchUriBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Net\AppendingDbRequestUrlGenerator.cs">
+      <Link>Net\AppendingDbRequestUrlGenerator.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Net\BytesContent.cs">
       <Link>Net\BytesContent.cs</Link>
@@ -266,17 +275,26 @@
     <Compile Include="..\MyCouch.Net45\Net\DbClientConnection.cs">
       <Link>Net\DbClientConnection.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Net\DbClientConnectionDbRequestUrlGenerator.cs">
+      <Link>Net\DbClientConnectionDbRequestUrlGenerator.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\net\HttpContentTypes.cs">
       <Link>Net\HttpContentTypes.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\net\HttpRequest.cs">
       <Link>Net\HttpRequest.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Net\IDbRequestUrlGenerator.cs">
+      <Link>Net\IDbRequestUrlGenerator.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\net\JsonContent.cs">
       <Link>Net\JsonContent.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Net\ServerClientConnection.cs">
       <Link>Net\ServerClientConnection.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Net\UrlParam.cs">
+      <Link>Net\UrlParam.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Query.cs">
       <Link>Query.cs</Link>
@@ -394,9 +412,6 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\Factories\ReplaceDocumentHttpRequestFactory.cs">
       <Link>Requests\Factories\ReplaceDocumentHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\Requests\Factories\UrlParam.cs">
-      <Link>Requests\Factories\UrlParam.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\Factories\ViewCleanupHttpRequestFactory.cs">
       <Link>Requests\Factories\ViewCleanupHttpRequestFactory.cs</Link>

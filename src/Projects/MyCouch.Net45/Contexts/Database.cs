@@ -26,23 +26,20 @@ namespace MyCouch.Contexts
         {
             Ensure.That(serializer, "serializer").IsNotNull();
 
+            var dbRequestUrlGenerator = new DbClientConnectionDbRequestUrlGenerator(Connection);
+
             TextResponseFactory = new TextResponseFactory(serializer);
-            GetHttpRequestFactory = new GetDatabaseHttpRequestFactory(Connection);
-            HeadHttpRequestFactory = new HeadDatabaseHttpRequestFactory(Connection);
-            PutHttpRequestFactory = new PutDatabaseHttpRequestFactory(Connection);
-            DeleteHttpRequestFactory = new DeleteDatabaseHttpRequestFactory(Connection);
-            CompactHttpRequestFactory = new CompactDatabaseHttpRequestFactory(Connection);
-            ViewCleanupHttpRequestFactory = new ViewCleanupHttpRequestFactory(Connection);
+            GetHttpRequestFactory = new GetDatabaseHttpRequestFactory(Connection, dbRequestUrlGenerator);
+            HeadHttpRequestFactory = new HeadDatabaseHttpRequestFactory(Connection, dbRequestUrlGenerator);
+            PutHttpRequestFactory = new PutDatabaseHttpRequestFactory(Connection, dbRequestUrlGenerator);
+            DeleteHttpRequestFactory = new DeleteDatabaseHttpRequestFactory(Connection, dbRequestUrlGenerator);
+            CompactHttpRequestFactory = new CompactDatabaseHttpRequestFactory(Connection, dbRequestUrlGenerator);
+            ViewCleanupHttpRequestFactory = new ViewCleanupHttpRequestFactory(Connection, dbRequestUrlGenerator);
         }
 
-        public virtual Task<TextResponse> HeadAsync()
+        public virtual async Task<TextResponse> HeadAsync()
         {
-            return HeadAsync(new HeadDatabaseRequest());
-        }
-
-        public virtual async Task<TextResponse> HeadAsync(HeadDatabaseRequest request)
-        {
-            using (var httpRequest = CreateHttpRequest(request))
+            using (var httpRequest = CreateHttpRequest(new HeadDatabaseRequest(Connection.DbName)))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
                 {
@@ -51,14 +48,9 @@ namespace MyCouch.Contexts
             }
         }
 
-        public virtual Task<TextResponse> GetAsync()
+        public virtual async Task<TextResponse> GetAsync()
         {
-            return GetAsync(new GetDatabaseRequest());
-        }
-
-        public virtual async Task<TextResponse> GetAsync(GetDatabaseRequest request)
-        {
-            using (var httpRequest = CreateHttpRequest(request))
+            using (var httpRequest = CreateHttpRequest(new GetDatabaseRequest(Connection.DbName)))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
                 {
@@ -67,14 +59,9 @@ namespace MyCouch.Contexts
             }
         }
 
-        public virtual Task<TextResponse> PutAsync()
+        public virtual async Task<TextResponse> PutAsync()
         {
-            return PutAsync(new PutDatabaseRequest());
-        }
-
-        public virtual async Task<TextResponse> PutAsync(PutDatabaseRequest request)
-        {
-            using (var httpRequest = CreateHttpRequest(request))
+            using (var httpRequest = CreateHttpRequest(new PutDatabaseRequest(Connection.DbName)))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
                 {
@@ -83,14 +70,9 @@ namespace MyCouch.Contexts
             }
         }
 
-        public virtual Task<TextResponse> DeleteAsync()
+        public virtual async Task<TextResponse> DeleteAsync()
         {
-            return DeleteAsync(new DeleteDatabaseRequest());
-        }
-
-        public virtual async Task<TextResponse> DeleteAsync(DeleteDatabaseRequest request)
-        {
-            using (var httpRequest = CreateHttpRequest(request))
+            using (var httpRequest = CreateHttpRequest(new DeleteDatabaseRequest(Connection.DbName)))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
                 {
@@ -99,14 +81,9 @@ namespace MyCouch.Contexts
             }
         }
 
-        public virtual Task<TextResponse> CompactAsync()
+        public virtual async Task<TextResponse> CompactAsync()
         {
-            return CompactAsync(new CompactDatabaseRequest());
-        }
-
-        public virtual async Task<TextResponse> CompactAsync(CompactDatabaseRequest request)
-        {
-            using (var httpRequest = CreateHttpRequest(request))
+            using (var httpRequest = CreateHttpRequest(new CompactDatabaseRequest(Connection.DbName)))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
                 {
@@ -115,14 +92,9 @@ namespace MyCouch.Contexts
             }
         }
 
-        public virtual Task<TextResponse> ViewCleanup()
+        public virtual async Task<TextResponse> ViewCleanupAsync()
         {
-            return ViewCleanup(new ViewCleanupRequest());
-        }
-
-        public virtual async Task<TextResponse> ViewCleanup(ViewCleanupRequest request)
-        {
-            using (var httpRequest = CreateHttpRequest(request))
+            using (var httpRequest = CreateHttpRequest(new ViewCleanupRequest(Connection.DbName)))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
                 {

@@ -2,6 +2,10 @@
 {
     public static class ExceptionStrings
     {
+        public static string DbRequestUrlIsAgainstOtherDb
+        {
+            get { return "When generating an URL for a request against a database via an IDbConnection, the DbNames must match."; }
+        }
         public static string CanNotExtractDbNameFromDbUri
         {
             get { return "Could not extract DbName from passed URI: {0}. Please specify using specific contructor."; }

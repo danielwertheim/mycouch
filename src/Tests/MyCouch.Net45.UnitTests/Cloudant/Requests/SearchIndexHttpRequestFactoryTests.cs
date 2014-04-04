@@ -12,7 +12,7 @@ namespace MyCouch.UnitTests.Cloudant.Requests
     {
         public SearchIndexHttpRequestFactoryTests()
         {
-            var cnFake = new ConnectionFake(new Uri("https://cdb.foo.com:5984"));
+            var cnFake = new DbClientConnectionFake(new Uri("https://cdb.foo.com:5984/mydb"), "mydb");
 
             SUT = new SearchIndexHttpRequestFactory(cnFake);
         }

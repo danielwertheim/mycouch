@@ -6,13 +6,15 @@ using MyCouch.Net;
 
 namespace MyCouch.UnitTests.Fakes
 {
-    public class ConnectionFake : IConnection
+    public class DbClientConnectionFake : IDbClientConnection
     {
+        public string DbName { get; private set; }
         public Uri Address { get; private set; }
 
-        public ConnectionFake(Uri address)
+        public DbClientConnectionFake(Uri address, string dbName)
         {
             Address = address;
+            DbName = dbName;
         }
 
         public void Dispose() { }

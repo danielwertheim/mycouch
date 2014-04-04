@@ -115,6 +115,7 @@
     <Compile Include="MyCouchException.cs" />
     <Compile Include="MyCouchRuntime.cs" />
     <Compile Include="MyCouchServerClient.cs" />
+    <Compile Include="MyCouchServerClientBootstrapper.cs" />
     <Compile Include="MyCouchStore.cs" />
     <Compile Include="MyCouchUriBuilder.cs" />
     <Compile Include="Net\Connection.cs" />
@@ -132,9 +133,12 @@
     <Compile Include="Requests\BulkRequest.cs" />
     <Compile Include="Requests\CompactDatabaseRequest.cs" />
     <Compile Include="Requests\CopyDocumentRequest.cs" />
+    <Compile Include="Net\AppendingDbRequestUrlGenerator.cs" />
+    <Compile Include="Net\DbClientConnectionDbRequestUrlGenerator.cs" />
     <Compile Include="Requests\Factories\GetChangesHttpRequestFactoryBase.cs" />
     <Compile Include="Requests\Factories\GetContinuousChangesHttpRequestFactory.cs" />
-    <Compile Include="Requests\Factories\UrlParam.cs" />
+    <Compile Include="Net\IDbRequestUrlGenerator.cs" />
+    <Compile Include="Net\UrlParam.cs" />
     <Compile Include="Requests\HeadDatabaseRequest.cs" />
     <Compile Include="Requests\DeleteAttachmentRequest.cs" />
     <Compile Include="Requests\DeleteDatabaseRequest.cs" />

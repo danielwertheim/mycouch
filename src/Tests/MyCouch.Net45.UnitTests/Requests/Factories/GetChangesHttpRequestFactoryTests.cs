@@ -6,13 +6,13 @@ using MyCouch.Requests.Factories;
 using MyCouch.UnitTests.Fakes;
 using Xunit;
 
-namespace MyCouch.UnitTests.Requests
+namespace MyCouch.UnitTests.Requests.Factories
 {
     public class GetChangesHttpRequestFactoryTests : UnitTestsOf<GetChangesHttpRequestFactory>
     {
         public GetChangesHttpRequestFactoryTests()
         {
-            var cnFake = new ConnectionFake(new Uri("https://cdb.foo.com:5984"));
+            var cnFake = new DbClientConnectionFake(new Uri("https://cdb.foo.com:5984/mydb"), "mydb");
 
             SUT = new GetChangesHttpRequestFactory(cnFake);
         }

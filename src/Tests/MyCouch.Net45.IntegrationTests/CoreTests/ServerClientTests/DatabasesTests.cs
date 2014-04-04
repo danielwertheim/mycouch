@@ -3,20 +3,24 @@ using System.Net.Http;
 using MyCouch.Testing;
 using Xunit;
 
-namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
+namespace MyCouch.IntegrationTests.CoreTests.ServerClientTests
 {
-    public class DatabaseTests : ClientTestsOf<IDatabase>
+    public class DatabasesTests : ServerClientTestsOf<IDatabases>
     {
-        public DatabaseTests() : base(IntegrationTestsRuntime.TempEnvironment)
+        private readonly string _tempDbName;
+
+        public DatabasesTests() : base(IntegrationTestsRuntime.TempEnvironment)
         {
-            SUT = Client.Database;
-            SUT.PutAsync().Wait();
+            _tempDbName = Client.Connection.DbName;
+
+            SUT = ServerClient.Databases;
+            SUT.PutAsync(_tempDbName).Wait();
         }
 
         [Fact]
         public void When_Head_of_existing_db_The_response_should_be_200()
         {
-            var response = SUT.HeadAsync().Result;
+            var response = SUT.HeadAsync(_tempDbName).Result;
 
             response.Should().Be(HttpMethod.Head);
         }
@@ -24,7 +28,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
         [Fact]
         public void When_Get_of_existing_db_The_response_should_be_200()
         {
-            var response = SUT.GetAsync().Result;
+            var response = SUT.GetAsync(_tempDbName).Result;
 
             response.Should().BeAnyJson(HttpMethod.Get);
         }
@@ -32,7 +36,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
         [Fact]
         public void When_Delete_of_existing_db_The_response_should_be_200()
         {
-            var response = SUT.DeleteAsync().Result;
+            var response = SUT.DeleteAsync(_tempDbName).Result;
 
             response.Should().BeOkJson(HttpMethod.Delete);
         }
@@ -40,7 +44,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
         [Fact]
         public void When_Compact_of_existing_db_The_response_should_be_202()
         {
-            var response = SUT.CompactAsync().Result;
+            var response = SUT.CompactAsync(_tempDbName).Result;
 
             response.Should().BeOkJson(HttpMethod.Post, HttpStatusCode.Accepted);
         }
@@ -48,7 +52,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
         [Fact]
         public void When_ViewCleanup_and_db_exists_The_response_be()
         {
-            var response = SUT.ViewCleanupAsync().Result;
+            var response = SUT.ViewCleanupAsync(_tempDbName).Result;
 
             response.Should().BeOkJson(HttpMethod.Post, HttpStatusCode.Accepted);
         }

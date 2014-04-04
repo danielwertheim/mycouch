@@ -56,7 +56,7 @@ namespace MyCouch.IntegrationTests
                 uriBuilder.SetBasicCredentials(config.User, config.Password);
 
             return config.IsAgainstCloudant()
-                ? new MyCouchServerClient(new CustomCloudantDbClientConnection(uriBuilder.Build()))
+                ? new MyCouchServerClient(new CustomCloudantServerClientConnection(uriBuilder.Build()))
                 : new MyCouchServerClient(uriBuilder.Build());
         }
 
@@ -89,8 +89,35 @@ namespace MyCouch.IntegrationTests
 
         private class CustomCloudantDbClientConnection : DbClientConnection
         {
-            public CustomCloudantDbClientConnection(Uri uri)
-                : base(uri) { }
+            public CustomCloudantDbClientConnection(Uri uri) : base(uri)
+            {
+            }
+
+            protected override HttpRequest OnBeforeSend(HttpRequest httpRequest)
+            {
+                if (httpRequest.Method == HttpMethod.Post || httpRequest.Method == HttpMethod.Put || httpRequest.Method == HttpMethod.Delete)
+                {
+                    httpRequest.RequestUri = string.IsNullOrEmpty(httpRequest.RequestUri.Query)
+                        ? new Uri(httpRequest.RequestUri + "?w=3")
+                        : new Uri(httpRequest.RequestUri + "&w=3");
+                }
+
+                if (httpRequest.Method == HttpMethod.Get || httpRequest.Method == HttpMethod.Head)
+                {
+                    httpRequest.RequestUri = string.IsNullOrEmpty(httpRequest.RequestUri.Query)
+                        ? new Uri(httpRequest.RequestUri + "?r=1")
+                        : new Uri(httpRequest.RequestUri + "&r=1");
+                }
+                return base.OnBeforeSend(httpRequest);
+            }
+        }
+
+        private class CustomCloudantServerClientConnection : ServerClientConnection
+        {
+            public CustomCloudantServerClientConnection(Uri uri)
+                : base(uri)
+            {
+            }
 
             protected override HttpRequest OnBeforeSend(HttpRequest httpRequest)
             {

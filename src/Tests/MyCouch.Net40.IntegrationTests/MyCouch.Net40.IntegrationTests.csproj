@@ -139,6 +139,9 @@
     <Compile Include="..\MyCouch.Net45.IntegrationTests\CoreTests\ServerClientTests\ActiveTasksTests.cs">
       <Link>CoreTests\ServerClientTests\ActiveTasksTests.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\CoreTests\ServerClientTests\DatabasesTests.cs">
+      <Link>CoreTests\ServerClientTests\DatabasesTests.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45.IntegrationTests\CoreTests\ServerClientTests\ReplicationTests.cs">
       <Link>CoreTests\ServerClientTests\ReplicationTests.cs</Link>
     </Compile>

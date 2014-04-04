@@ -26,13 +26,20 @@ namespace MyCouch.Contexts
         {
             Ensure.That(serializer, "serializer").IsNotNull();
 
+            var dbRequestUrlGenerator = new AppendingDbRequestUrlGenerator(Connection.Address);
+
             TextResponseFactory = new TextResponseFactory(serializer);
-            GetHttpRequestFactory = new GetDatabaseHttpRequestFactory(Connection);
-            HeadHttpRequestFactory = new HeadDatabaseHttpRequestFactory(Connection);
-            PutHttpRequestFactory = new PutDatabaseHttpRequestFactory(Connection);
-            DeleteHttpRequestFactory = new DeleteDatabaseHttpRequestFactory(Connection);
-            CompactHttpRequestFactory = new CompactDatabaseHttpRequestFactory(Connection);
-            ViewCleanupHttpRequestFactory = new ViewCleanupHttpRequestFactory(Connection);
+            GetHttpRequestFactory = new GetDatabaseHttpRequestFactory(Connection, dbRequestUrlGenerator);
+            HeadHttpRequestFactory = new HeadDatabaseHttpRequestFactory(Connection, dbRequestUrlGenerator);
+            PutHttpRequestFactory = new PutDatabaseHttpRequestFactory(Connection, dbRequestUrlGenerator);
+            DeleteHttpRequestFactory = new DeleteDatabaseHttpRequestFactory(Connection, dbRequestUrlGenerator);
+            CompactHttpRequestFactory = new CompactDatabaseHttpRequestFactory(Connection, dbRequestUrlGenerator);
+            ViewCleanupHttpRequestFactory = new ViewCleanupHttpRequestFactory(Connection, dbRequestUrlGenerator);
+        }
+
+        public virtual Task<TextResponse> HeadAsync(string dbName)
+        {
+            return HeadAsync(new HeadDatabaseRequest(dbName));
         }
 
         public virtual async Task<TextResponse> HeadAsync(HeadDatabaseRequest request)
@@ -46,6 +53,11 @@ namespace MyCouch.Contexts
             }
         }
 
+        public virtual Task<TextResponse> GetAsync(string dbName)
+        {
+            return GetAsync(new GetDatabaseRequest(dbName));
+        }
+
         public virtual async Task<TextResponse> GetAsync(GetDatabaseRequest request)
         {
             using (var httpRequest = CreateHttpRequest(request))
@@ -55,6 +67,11 @@ namespace MyCouch.Contexts
                     return ProcessResponse(res);
                 }
             }
+        }
+
+        public virtual Task<TextResponse> PutAsync(string dbName)
+        {
+            return PutAsync(new PutDatabaseRequest(dbName));
         }
 
         public virtual async Task<TextResponse> PutAsync(PutDatabaseRequest request)
@@ -68,6 +85,11 @@ namespace MyCouch.Contexts
             }
         }
 
+        public virtual Task<TextResponse> DeleteAsync(string dbName)
+        {
+            return DeleteAsync(new DeleteDatabaseRequest(dbName));
+        }
+
         public virtual async Task<TextResponse> DeleteAsync(DeleteDatabaseRequest request)
         {
             using (var httpRequest = CreateHttpRequest(request))
@@ -77,6 +99,11 @@ namespace MyCouch.Contexts
                     return ProcessResponse(res);
                 }
             }
+        }
+
+        public virtual Task<TextResponse> CompactAsync(string dbName)
+        {
+            return CompactAsync(new CompactDatabaseRequest(dbName));
         }
 
         public virtual async Task<TextResponse> CompactAsync(CompactDatabaseRequest request)
@@ -90,7 +117,12 @@ namespace MyCouch.Contexts
             }
         }
 
-        public virtual async Task<TextResponse> ViewCleanup(ViewCleanupRequest request)
+        public virtual Task<TextResponse> ViewCleanupAsync(string dbName)
+        {
+            return ViewCleanupAsync(new ViewCleanupRequest(dbName));
+        }
+
+        public virtual async Task<TextResponse> ViewCleanupAsync(ViewCleanupRequest request)
         {
             using (var httpRequest = CreateHttpRequest(request))
             {

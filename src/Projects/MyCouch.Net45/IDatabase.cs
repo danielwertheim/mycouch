@@ -44,6 +44,6 @@ namespace MyCouch
         /// result of changed views within design documents.
         /// </summary>
         /// <returns></returns>
-        Task<TextResponse> ViewCleanup();
+        Task<TextResponse> ViewCleanupAsync();
     }
 }

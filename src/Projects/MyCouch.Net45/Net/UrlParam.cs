@@ -1,7 +1,7 @@
 ﻿using System;
 using EnsureThat;
 
-namespace MyCouch.Requests.Factories
+namespace MyCouch.Net
 {
 #if !NETFX_CORE
     [Serializable]

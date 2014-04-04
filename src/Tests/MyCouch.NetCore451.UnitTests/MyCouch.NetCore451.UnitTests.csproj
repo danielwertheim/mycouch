@@ -124,8 +124,14 @@
     <Compile Include="..\MyCouch.Net45.UnitTests\Cloudant\SearchParametersConfiguratorTests.cs">
       <Link>Cloudant\SearchParametersConfiguratorTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.UnitTests\Fakes\ConnectionFake.cs">
-      <Link>Fakes\ConnectionFake.cs</Link>
+    <Compile Include="..\MyCouch.Net45.UnitTests\Fakes\DbClientConnectionFake.cs">
+      <Link>Fakes\DbClientConnectionFake.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.UnitTests\Net\AppendingDbRequestUrlGeneratorTests.cs">
+      <Link>Net\AppendingDbRequestUrlGeneratorTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.UnitTests\Net\DbClientConnectionDbRequestUrlGeneratorTests.cs">
+      <Link>Net\DbClientConnectionDbRequestUrlGeneratorTests.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.net45.unittests\net\DbClientConnectionTests.cs">
       <Link>Net\DbClientConnectionTests.cs</Link>
@@ -136,17 +142,35 @@
     <Compile Include="..\MyCouch.Net45.UnitTests\Requests\BulkRequestTests.cs">
       <Link>Requests\BulkRequestTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.UnitTests\Requests\GetChangesHttpRequestFactoryTests.cs">
-      <Link>Requests\GetChangesHttpRequestFactoryTests.cs</Link>
+    <Compile Include="..\MyCouch.Net45.UnitTests\Requests\Factories\CompactDatabaseHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\CompactDatabaseHttpRequestFactoryTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.UnitTests\Requests\GetContinuousChangesHttpRequestFactoryTests.cs">
-      <Link>Requests\GetContinuousChangesHttpRequestFactoryTests.cs</Link>
+    <Compile Include="..\MyCouch.Net45.UnitTests\Requests\Factories\DeleteDatabaseHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\DeleteDatabaseHttpRequestFactoryTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.UnitTests\Requests\GetDocumentHttpRequestFactoryTests.cs">
-      <Link>Requests\GetDocumentHttpRequestFactoryTests.cs</Link>
+    <Compile Include="..\mycouch.net45.unittests\requests\factories\GetChangesHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\GetChangesHttpRequestFactoryTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.UnitTests\Requests\QueryViewHttpRequestFactoryTests.cs">
-      <Link>Requests\QueryViewHttpRequestFactoryTests.cs</Link>
+    <Compile Include="..\mycouch.net45.unittests\requests\factories\GetContinuousChangesHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\GetContinuousChangesHttpRequestFactoryTests.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.net45.unittests\requests\factories\GetDatabaseHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\GetDatabaseHttpRequestFactoryTests.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.net45.unittests\requests\factories\GetDocumentHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\GetDocumentHttpRequestFactoryTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.UnitTests\Requests\Factories\HeadDatabaseHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\HeadDatabaseHttpRequestFactoryTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.UnitTests\Requests\Factories\PutDatabaseHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\PutDatabaseHttpRequestFactoryTests.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.net45.unittests\requests\factories\QueryViewHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\QueryViewHttpRequestFactoryTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.UnitTests\Requests\Factories\ViewCleanupHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\ViewCleanupHttpRequestFactoryTests.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45.UnitTests\Requests\QueryViewRequestTests.cs">
       <Link>Requests\QueryViewRequestTests.cs</Link>

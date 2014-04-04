@@ -80,6 +80,7 @@
     <Compile Include="CloudantTestsOf.cs" />
     <Compile Include="CloudantTests\SearchTests.cs" />
     <Compile Include="CoreTests\ServerClientTests\ActiveTasksTests.cs" />
+    <Compile Include="CoreTests\ServerClientTests\DatabasesTests.cs" />
     <Compile Include="CoreTests\ServerClientTests\ReplicationTests.cs" />
     <Compile Include="CoreTests\StoreTests\CrudTests.cs" />
     <Compile Include="CoreTests\StoreTests\ObservableQueryTests.cs" />

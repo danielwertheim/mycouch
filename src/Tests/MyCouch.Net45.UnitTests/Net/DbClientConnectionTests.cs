@@ -18,9 +18,9 @@ namespace MyCouch.UnitTests.Net
             };
 
 #if NETFX_CORE
-            a.ShouldThrow<FormatException>().And.Message.Should().Be(string.Format(ExceptionStrings.CanNotExtractDbNameFromDbUri, uri.OriginalString));
+            a.ShouldThrow<FormatException>().WithMessage(string.Format(ExceptionStrings.CanNotExtractDbNameFromDbUri, uri.OriginalString));
 #else
-            a.ShouldThrow<UriFormatException>().And.Message.Should().Be(string.Format(ExceptionStrings.CanNotExtractDbNameFromDbUri, uri.OriginalString));
+            a.ShouldThrow<UriFormatException>().WithMessage(string.Format(ExceptionStrings.CanNotExtractDbNameFromDbUri, uri.OriginalString));
 #endif
         }
 

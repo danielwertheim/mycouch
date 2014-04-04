@@ -1,5 +1,5 @@
 {
-    "RunServerClientTests": false,
+    "RunServerClientTests": true,
     "ServerClient":{
         "Url":"http://localhost:5984",
         "User":"sa",
