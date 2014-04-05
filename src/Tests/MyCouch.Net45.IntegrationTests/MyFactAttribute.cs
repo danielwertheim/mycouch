@@ -10,7 +10,7 @@ namespace MyCouch.IntegrationTests
             if(!scenarios.Any() || IntegrationTestsRuntime.Environment.SupportsEverything)
                 return;
 
-            if (!scenarios.All(r => IntegrationTestsRuntime.Environment.Supports.Any(s => r == s)))
+            if (!scenarios.All(r => IntegrationTestsRuntime.Environment.HasSupportFor(r)))
                 Skip = string.Format("TestEnvironment does not support ALL test scenario(s): '{0}'.", string.Join("|", scenarios));
         }
     }
