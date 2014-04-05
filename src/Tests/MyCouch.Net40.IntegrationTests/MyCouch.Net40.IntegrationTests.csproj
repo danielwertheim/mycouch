@@ -109,9 +109,6 @@
     <Compile Include="..\MyCouch.Net45.IntegrationTests\ClientExtensions.cs">
       <Link>ClientExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.IntegrationTests\CloudantTestsOf.cs">
-      <Link>CloudantTestsOf.cs</Link>
-    </Compile>
     <Compile Include="..\mycouch.net45.integrationtests\cloudanttests\SearchTests.cs">
       <Link>CloudantTests\SearchTests.cs</Link>
     </Compile>
@@ -160,8 +157,8 @@
     <Compile Include="..\MyCouch.Net45.IntegrationTests\IPreserveStatePerFixture.cs">
       <Link>IPreserveStatePerFixture.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.IntegrationTests\ServerClientTestsOf.cs">
-      <Link>ServerClientTestsOf.cs</Link>
+    <Compile Include="..\MyCouch.Net45.IntegrationTests\MyFactAttribute.cs">
+      <Link>MyFactAttribute.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45.IntegrationTests\TestFixtures\SearchFixture.cs">
       <Link>TestFixtures\SearchFixture.cs</Link>

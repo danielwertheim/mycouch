@@ -18,7 +18,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
 
         public ObservableQueryTests()
         {
-            SUT = new MyCouchStore(Client);
+            SUT = new MyCouchStore(DbClient);
         }
 
         public void SetFixture(ViewsFixture data)
@@ -27,7 +27,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
             ArtistsById = data.Artists;
         }
 
-        [Fact]
+        [MyFact(TestScenarios.MyCouchStore)]
         public void When_no_key_with_sum_reduce_for_string_response_It_will_be_able_to_sum()
         {
             var expectedSum = ArtistsById.Sum(a => a.Albums.Count());
@@ -47,7 +47,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 }).Wait();
         }
 
-        [Fact]
+        [MyFact(TestScenarios.MyCouchStore)]
         public void When_no_key_with_sum_reduce_for_dynamic_response_It_will_be_able_to_sum()
         {
             var expectedSum = ArtistsById.Sum(a => a.Albums.Count());
@@ -67,7 +67,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 }).Wait();
         }
 
-        [Fact]
+        [MyFact(TestScenarios.MyCouchStore)]
         public void When_no_key_with_sum_reduce_for_typed_response_It_will_be_able_to_sum()
         {
             var expectedSum = ArtistsById.Sum(a => a.Albums.Count());
@@ -87,7 +87,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 }).Wait();
         }
 
-        [Fact]
+        [MyFact(TestScenarios.MyCouchStore)]
         public void When_IncludeDocs_and_no_value_is_returned_for_string_response_Then_the_included_docs_are_extracted()
         {
             var len = 0;
@@ -97,7 +97,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 .ForEachAsync((r, i) =>
                 {
                     len++;
-                    ArtistsById[i].ShouldBe().ValueEqual(Client.Entities.Serializer.Deserialize<Artist>(r.IncludedDoc));
+                    ArtistsById[i].ShouldBe().ValueEqual(DbClient.Entities.Serializer.Deserialize<Artist>(r.IncludedDoc));
                 })
                 .ContinueWith(t =>
                 {
@@ -106,7 +106,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 }).Wait();
         }
 
-        [Fact]
+        [MyFact(TestScenarios.MyCouchStore)]
         public void When_IncludeDocs_and_no_value_is_returned_for_entity_response_Then_the_included_docs_are_extracted()
         {
             var len = 0;
@@ -125,7 +125,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 }).Wait();
         }
 
-        [Fact]
+        [MyFact(TestScenarios.MyCouchStore)]
         public void When_IncludeDocs_of_non_array_doc_and_null_value_is_returned_Then_the_neither_included_docs_nor_value_is_extracted()
         {
             var len = 0;
@@ -145,11 +145,11 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 }).Wait();
         }
 
-        [Fact]
+        [MyFact(TestScenarios.MyCouchStore)]
         public void When_Skipping_2_of_10_using_json_Then_8_rows_are_returned()
         {
             const int skip = 2;
-            var albums = ArtistsById.Skip(skip).Select(a => Client.Serializer.Serialize(a.Albums)).ToArray();
+            var albums = ArtistsById.Skip(skip).Select(a => DbClient.Serializer.Serialize(a.Albums)).ToArray();
             var query = new Query(ClientTestData.Views.ArtistsAlbumsViewId).Configure(q => q.Skip(skip));
             
             var values = SUT.Query(query)
@@ -161,11 +161,11 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
             values.ShouldBe().ValueEqual(albums);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.MyCouchStore)]
         public void When_Skipping_2_of_10_using_json_array_Then_8_rows_are_returned()
         {
             const int skip = 2;
-            var albums = ArtistsById.Skip(skip).Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray();
+            var albums = ArtistsById.Skip(skip).Select(a => a.Albums.Select(i => DbClient.Serializer.Serialize(i)).ToArray()).ToArray();
             var query = new Query(ClientTestData.Views.ArtistsAlbumsViewId).Configure(q => q.Skip(skip));
 
             var values = SUT.Query<string[]>(query)
@@ -177,7 +177,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
             values.ShouldBe().ValueEqual(albums);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.MyCouchStore)]
         public void When_Skipping_2_of_10_using_entities_Then_8_rows_are_returned()
         {
             const int skip = 2;
@@ -193,11 +193,11 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
             values.ShouldBe().ValueEqual(albums);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.MyCouchStore)]
         public void When_Limit_to_2_using_json_Then_2_rows_are_returned()
         {
             const int limit = 2;
-            var albums = ArtistsById.Take(limit).Select(a => Client.Serializer.Serialize(a.Albums)).ToArray();
+            var albums = ArtistsById.Take(limit).Select(a => DbClient.Serializer.Serialize(a.Albums)).ToArray();
             var query = new Query(ClientTestData.Views.ArtistsAlbumsViewId).Configure(q => q.Limit(limit));
 
             var values = SUT.Query(query)
@@ -209,11 +209,11 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
             values.ShouldBe().ValueEqual(albums);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.MyCouchStore)]
         public void When_Limit_to_2_using_json_array_Then_2_rows_are_returned()
         {
             const int limit = 2;
-            var albums = ArtistsById.Take(limit).Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray();
+            var albums = ArtistsById.Take(limit).Select(a => a.Albums.Select(i => DbClient.Serializer.Serialize(i)).ToArray()).ToArray();
             var query = new Query(ClientTestData.Views.ArtistsAlbumsViewId).Configure(q => q.Limit(limit));
             
             var values = SUT.Query<string[]>(query)
@@ -225,7 +225,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
             values.ShouldBe().ValueEqual(albums);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.MyCouchStore)]
         public void When_Limit_to_2_using_entities_Then_2_rows_are_returned()
         {
             const int limit = 2;
@@ -241,7 +241,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
             values.ShouldBe().ValueEqual(albums);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.MyCouchStore)]
         public void When_Key_is_specified_using_json_Then_the_matching_row_is_returned()
         {
             var artist = ArtistsById[2];
@@ -253,10 +253,10 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 .Select(r => r.Value)
                 .ToArray();
 
-            values.ShouldBe().ValueEqual(new[] { Client.Serializer.Serialize(artist.Albums) });
+            values.ShouldBe().ValueEqual(new[] { DbClient.Serializer.Serialize(artist.Albums) });
         }
 
-        [Fact]
+        [MyFact(TestScenarios.MyCouchStore)]
         public void When_Key_is_specified_using_json_array_Then_the_matching_row_is_returned()
         {
             var artist = ArtistsById[2];
@@ -268,10 +268,10 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 .Select(r => r.Value)
                 .ToArray();
 
-            values.ShouldBe().ValueEqual(new[] { artist.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray() });
+            values.ShouldBe().ValueEqual(new[] { artist.Albums.Select(i => DbClient.Serializer.Serialize(i)).ToArray() });
         }
 
-        [Fact]
+        [MyFact(TestScenarios.MyCouchStore)]
         public void When_Key_is_specified_using_entities_Then_the_matching_row_is_returned()
         {
             var artist = ArtistsById[2];
@@ -286,7 +286,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
             values.ShouldBe().ValueEqual(new[] { artist.Albums });
         }
 
-        [Fact]
+        [MyFact(TestScenarios.MyCouchStore)]
         public void When_Keys_are_specified_using_json_Then_matching_rows_are_returned()
         {
             var artists = ArtistsById.Skip(2).Take(3).ToArray();
@@ -299,10 +299,10 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 .Select(r => r.Value)
                 .ToArray();
 
-            values.ShouldBe().ValueEqual(artists.Select(a => Client.Serializer.Serialize(a.Albums)).ToArray());
+            values.ShouldBe().ValueEqual(artists.Select(a => DbClient.Serializer.Serialize(a.Albums)).ToArray());
         }
 
-        [Fact]
+        [MyFact(TestScenarios.MyCouchStore)]
         public void When_Keys_are_specified_using_json_array_Then_matching_rows_are_returned()
         {
             var artists = ArtistsById.Skip(2).Take(3).ToArray();
@@ -315,10 +315,10 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 .Select(r => r.Value)
                 .ToArray();
 
-            values.ShouldBe().ValueEqual(artists.Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray());
+            values.ShouldBe().ValueEqual(artists.Select(a => a.Albums.Select(i => DbClient.Serializer.Serialize(i)).ToArray()).ToArray());
         }
 
-        [Fact]
+        [MyFact(TestScenarios.MyCouchStore)]
         public void When_Keys_are_specified_using_entities_Then_matching_rows_are_returned()
         {
             var artists = ArtistsById.Skip(2).Take(3).ToArray();
@@ -334,7 +334,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
             values.ShouldBe().ValueEqual(artists.Select(a => a.Albums).ToArray());
         }
 
-        [Fact]
+        [MyFact(TestScenarios.MyCouchStore)]
         public void When_StartKey_and_EndKey_are_specified_using_json_Then_matching_rows_are_returned()
         {
             var artists = ArtistsById.Skip(2).Take(5).ToArray();
@@ -348,10 +348,10 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 .Select(r => r.Value)
                 .ToArray();
 
-            values.ShouldBe().ValueEqual(artists.Select(a => Client.Serializer.Serialize(a.Albums)).ToArray());
+            values.ShouldBe().ValueEqual(artists.Select(a => DbClient.Serializer.Serialize(a.Albums)).ToArray());
         }
 
-        [Fact]
+        [MyFact(TestScenarios.MyCouchStore)]
         public void When_StartKey_and_EndKey_are_specified_using_json_array_Then_matching_rows_are_returned()
         {
             var artists = ArtistsById.Skip(2).Take(5).ToArray();
@@ -365,10 +365,10 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 .Select(r => r.Value)
                 .ToArray();
 
-            values.ShouldBe().ValueEqual(artists.Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray());
+            values.ShouldBe().ValueEqual(artists.Select(a => a.Albums.Select(i => DbClient.Serializer.Serialize(i)).ToArray()).ToArray());
         }
 
-        [Fact]
+        [MyFact(TestScenarios.MyCouchStore)]
         public void When_StartKey_and_EndKey_are_specified_using_entities_Then_matching_rows_are_returned()
         {
             var artists = ArtistsById.Skip(2).Take(5).ToArray();
@@ -385,7 +385,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
             values.ShouldBe().ValueEqual(artists.Select(a => a.Albums).ToArray());
         }
 
-        [Fact]
+        [MyFact(TestScenarios.MyCouchStore)]
         public void When_StartKey_and_EndKey_with_non_inclusive_end_are_specified_using_json_Then_matching_rows_are_returned()
         {
             var artists = ArtistsById.Skip(2).Take(5).ToArray();
@@ -400,10 +400,10 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 .Select(r => r.Value)
                 .ToArray();
 
-            values.ShouldBe().ValueEqual(artists.Take(artists.Length - 1).Select(a => Client.Serializer.Serialize(a.Albums)).ToArray());
+            values.ShouldBe().ValueEqual(artists.Take(artists.Length - 1).Select(a => DbClient.Serializer.Serialize(a.Albums)).ToArray());
         }
 
-        [Fact]
+        [MyFact(TestScenarios.MyCouchStore)]
         public void When_StartKey_and_EndKey_with_non_inclusive_end_are_specified_using_json_array_Then_matching_rows_are_returned()
         {
             var artists = ArtistsById.Skip(2).Take(5).ToArray();
@@ -418,10 +418,10 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 .Select(r => r.Value)
                 .ToArray();
 
-            values.ShouldBe().ValueEqual(artists.Take(artists.Length - 1).Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray());
+            values.ShouldBe().ValueEqual(artists.Take(artists.Length - 1).Select(a => a.Albums.Select(i => DbClient.Serializer.Serialize(i)).ToArray()).ToArray());
         }
 
-        [Fact]
+        [MyFact(TestScenarios.MyCouchStore)]
         public void When_StartKey_and_EndKey_with_non_inclusive_end_are_specified_using_entities_Then_matching_rows_are_returned()
         {
             var artists = ArtistsById.Skip(2).Take(5).ToArray();
@@ -439,7 +439,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
             values.ShouldBe().ValueEqual(artists.Take(artists.Length - 1).Select(a => a.Albums).ToArray());
         }
 
-        [Fact]
+        [MyFact(TestScenarios.MyCouchStore)]
         public void When_skip_two_of_ten_It_should_return_the_other_eight()
         {
             const int skip = 2;
@@ -456,7 +456,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
             values.ShouldBe().ValueEqual(artists);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.MyCouchStore)]
         public void When_limit_is_two_of_ten_It_should_return_the_two_first_artists()
         {
             const int limit = 2;
@@ -473,7 +473,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
             values.ShouldBe().ValueEqual(artists);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.MyCouchStore)]
         public void When_getting_all_artists_It_can_deserialize_artists_properly()
         {
             var query = new Query(ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId);

@@ -17,64 +17,64 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
 
         public ChangesTests()
         {
-            SUT = Client.Changes;
+            SUT = DbClient.Changes;
         }
 
-        [Fact]
+        [MyFact(TestScenarios.ChangesContext)]
         public void When_getting_Normal_changes_with_included_doc_after_a_post_It_contains_the_included_doc()
         {
             var changesRequest = new GetChangesRequest { Feed = ChangesFeed.Normal };
             var changes0 = SUT.GetAsync(changesRequest).Result;
             changes0.Should().BeSuccessfulGet();
 
-            var postOfDoc = Client.Documents.PostAsync(ClientTestData.Artists.Artist1Json).Result;
+            var postOfDoc = DbClient.Documents.PostAsync(ClientTestData.Artists.Artist1Json).Result;
 
             var changesRequestWithInclude = new GetChangesRequest { Feed = ChangesFeed.Normal, IncludeDocs = true };
             var changesAfterPostOfDoc = SUT.GetAsync(changesRequestWithInclude).Result;
             VerifyChanges(changes0, changesAfterPostOfDoc, postOfDoc.Id, postOfDoc.Rev, shouldBeDeleted: false);
 
             var change = changesAfterPostOfDoc.Results.OrderBy(c => StringToNumeric(c.Seq)).Last();
-            var postedDoc = Client.Documents.GetAsync(postOfDoc.Id, postOfDoc.Rev).Result.Content;
+            var postedDoc = DbClient.Documents.GetAsync(postOfDoc.Id, postOfDoc.Rev).Result.Content;
 
             change.IncludedDoc.Should().Be(postedDoc);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.ChangesContext)]
         public void When_getting_Normal_changes_after_each_change_It_contains_info_about_each_change()
         {
             var changesRequest = new GetChangesRequest { Feed = ChangesFeed.Normal };
             var changes0 = SUT.GetAsync(changesRequest).Result;
             changes0.Should().BeSuccessfulGet();
 
-            var postOfDoc = Client.Documents.PostAsync(ClientTestData.Artists.Artist1Json).Result;
+            var postOfDoc = DbClient.Documents.PostAsync(ClientTestData.Artists.Artist1Json).Result;
             var changesAfterPostOfDoc = SUT.GetAsync(changesRequest).Result;
             VerifyChanges(changes0, changesAfterPostOfDoc, postOfDoc.Id, postOfDoc.Rev, shouldBeDeleted: false);
 
-            var putOfDoc = Client.Documents.PutAsync(postOfDoc.Id, postOfDoc.Rev, ClientTestData.Artists.Artist1Json).Result;
+            var putOfDoc = DbClient.Documents.PutAsync(postOfDoc.Id, postOfDoc.Rev, ClientTestData.Artists.Artist1Json).Result;
             var changesAfterPutOfDoc = SUT.GetAsync(changesRequest).Result;
             VerifyChanges(changesAfterPostOfDoc, changesAfterPutOfDoc, putOfDoc.Id, putOfDoc.Rev, shouldBeDeleted: false);
 
-            var deleteOfDoc = Client.Documents.DeleteAsync(putOfDoc.Id, putOfDoc.Rev).Result;
+            var deleteOfDoc = DbClient.Documents.DeleteAsync(putOfDoc.Id, putOfDoc.Rev).Result;
             var changesAfterDeleteOfDoc = SUT.GetAsync(changesRequest).Result;
             VerifyChanges(changesAfterPutOfDoc, changesAfterDeleteOfDoc, deleteOfDoc.Id, deleteOfDoc.Rev, shouldBeDeleted: true);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.ChangesContext)]
         public void When_getting_Normal_changes_after_all_changes_has_been_done_It_contains_only_info_about_the_last_change()
         {
             var changesRequest = new GetChangesRequest { Feed = ChangesFeed.Normal };
             var changes0 = SUT.GetAsync(changesRequest).Result;
             changes0.Should().BeSuccessfulGet();
 
-            var postOfDoc = Client.Documents.PostAsync(ClientTestData.Artists.Artist1Json).Result;
-            var putOfDoc = Client.Documents.PutAsync(postOfDoc.Id, postOfDoc.Rev, ClientTestData.Artists.Artist1Json).Result;
-            var deleteOfDoc = Client.Documents.DeleteAsync(putOfDoc.Id, putOfDoc.Rev).Result;
+            var postOfDoc = DbClient.Documents.PostAsync(ClientTestData.Artists.Artist1Json).Result;
+            var putOfDoc = DbClient.Documents.PutAsync(postOfDoc.Id, postOfDoc.Rev, ClientTestData.Artists.Artist1Json).Result;
+            var deleteOfDoc = DbClient.Documents.DeleteAsync(putOfDoc.Id, putOfDoc.Rev).Result;
 
             var changesAfterLastOperation = SUT.GetAsync(changesRequest).Result;
             VerifyChanges(changes0, changesAfterLastOperation, deleteOfDoc.Id, deleteOfDoc.Rev, shouldBeDeleted: true);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.ChangesContext)]
         public virtual void When_getting_Continuous_changes_via_callback_and_performing_three_changes_It_will_extract_three_changes()
         {
             var lastSequence = GetLastSequence();
@@ -90,16 +90,16 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
                     cancellation.Cancel();
             }, cancellation.Token);
 
-            var postOfDoc = Client.Documents.PostAsync(ClientTestData.Artists.Artist1Json).Result;
-            var putOfDoc = Client.Documents.PutAsync(postOfDoc.Id, postOfDoc.Rev, ClientTestData.Artists.Artist1Json).Result;
-            var deleteOfDoc = Client.Documents.DeleteAsync(putOfDoc.Id, putOfDoc.Rev).Result;
+            var postOfDoc = DbClient.Documents.PostAsync(ClientTestData.Artists.Artist1Json).Result;
+            var putOfDoc = DbClient.Documents.PutAsync(postOfDoc.Id, postOfDoc.Rev, ClientTestData.Artists.Artist1Json).Result;
+            var deleteOfDoc = DbClient.Documents.DeleteAsync(putOfDoc.Id, putOfDoc.Rev).Result;
 
             var response = changes.Result;
 
             response.IsSuccess.Should().BeTrue();
         }
 
-        [Fact]
+        [MyFact(TestScenarios.ChangesContext)]
         public virtual void When_getting_Continuous_changes_via_observable_and_performing_three_changes_It_will_extract_three_changes()
         {
             var lastSequence = GetLastSequence();
@@ -115,9 +115,9 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
                     cancellation.Cancel();
             });
 
-            var postOfDoc = Client.Documents.PostAsync(ClientTestData.Artists.Artist1Json).Result;
-            var putOfDoc = Client.Documents.PutAsync(postOfDoc.Id, postOfDoc.Rev, ClientTestData.Artists.Artist1Json).Result;
-            var deleteOfDoc = Client.Documents.DeleteAsync(putOfDoc.Id, putOfDoc.Rev).Result;
+            var postOfDoc = DbClient.Documents.PostAsync(ClientTestData.Artists.Artist1Json).Result;
+            var putOfDoc = DbClient.Documents.PutAsync(postOfDoc.Id, postOfDoc.Rev, ClientTestData.Artists.Artist1Json).Result;
+            var deleteOfDoc = DbClient.Documents.DeleteAsync(putOfDoc.Id, putOfDoc.Rev).Result;
 
             changes.Wait();
         }

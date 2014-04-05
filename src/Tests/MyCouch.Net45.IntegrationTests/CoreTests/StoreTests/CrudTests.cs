@@ -1,7 +1,6 @@
 using FluentAssertions;
 using MyCouch.Testing.Model;
 using MyCouch.Testing.TestData;
-using Xunit;
 
 namespace MyCouch.IntegrationTests.CoreTests.StoreTests
 {
@@ -9,10 +8,10 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
     {
         public CrudTests()
         {
-            SUT = new MyCouchStore(Client);
+            SUT = new MyCouchStore(DbClient);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.MyCouchStore)]
         public virtual void FlowTestOfJson()
         {
             var storeJson = SUT.StoreAsync(ClientTestData.Artists.Artist1Json);
@@ -29,7 +28,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
             deleteByIdAndRev.Result.Should().BeTrue();
         }
 
-        [Fact]
+        [MyFact(TestScenarios.MyCouchStore)]
         public virtual void FlowTestOfEntities()
         {
             var storeEntity = SUT.StoreAsync(ClientTestData.Artists.Artist2);

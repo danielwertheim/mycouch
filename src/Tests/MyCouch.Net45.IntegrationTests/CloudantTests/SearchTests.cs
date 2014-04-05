@@ -11,7 +11,7 @@ using Xunit;
 namespace MyCouch.IntegrationTests.CloudantTests
 {
     public class SearchTests :
-        CloudantTestsOf<ISearches>,
+        IntegrationTestsOf<ISearches>,
         IPreserveStatePerFixture,
         IUseFixture<SearchFixture>
     {
@@ -19,7 +19,7 @@ namespace MyCouch.IntegrationTests.CloudantTests
 
         public SearchTests()
         {
-            SUT = Client.Searches;
+            SUT = CloudantDbClient.Searches;
         }
 
         public void SetFixture(SearchFixture data)
@@ -100,7 +100,7 @@ namespace MyCouch.IntegrationTests.CloudantTests
 
             response.Should().BeSuccessfulGet(numOfRows: 1);
 
-            var doc = Client.Documents.GetAsync(response.Rows[0].Id).Result;
+            var doc = CloudantDbClient.Documents.GetAsync(response.Rows[0].Id).Result;
             response.Rows[0].IncludedDoc.Should().Be(doc.Content);
         }
 

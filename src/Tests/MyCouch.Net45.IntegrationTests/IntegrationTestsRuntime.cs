@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using MyCouch.Cloudant;
@@ -11,17 +12,13 @@ namespace MyCouch.IntegrationTests
     {
         private const string TestEnvironmentsBaseUrl = "http://localhost:8991/testenvironments/";
 
-        internal static readonly TestEnvironment NormalEnvironment;
-        internal static readonly TestEnvironment TempEnvironment;
-        internal static readonly TestEnvironment CloudantEnvironment;
+        internal static readonly TestEnvironment Environment;
 
         static IntegrationTestsRuntime()
         {
             using (var c = new HttpClient())
             {
-                NormalEnvironment = GetTestEnvironment(c, "normal");
-                TempEnvironment = GetTestEnvironment(c, "temp");
-                CloudantEnvironment = GetTestEnvironment(c, "cloudant");
+                Environment = GetTestEnvironment(c, "normal");
             }
         }
 
@@ -46,9 +43,6 @@ namespace MyCouch.IntegrationTests
 
         internal static IMyCouchServerClient CreateServerClient(TestEnvironment environment)
         {
-            if (!environment.RunServerClientTests)
-                throw new Exception("The Test environment configuration is not configured to run ServerClient tests.");
-
             var config = environment.ServerClient;
             var uriBuilder = new MyCouchUriBuilder(config.Url);
 
@@ -66,7 +60,7 @@ namespace MyCouch.IntegrationTests
             var uriBuilder = new MyCouchUriBuilder(config.ServerUrl)
                 .SetDbName(config.DbName);
 
-            if(config.HasCredentials())
+            if (config.HasCredentials())
                 uriBuilder.SetBasicCredentials(config.User, config.Password);
 
             return config.IsAgainstCloudant()
@@ -76,10 +70,7 @@ namespace MyCouch.IntegrationTests
 
         internal static IMyCouchCloudantClient CreateCloudantDbClient(TestEnvironment environment)
         {
-            if(!CloudantEnvironment.DbClient.IsAgainstCloudant())
-                throw new Exception("The configuration for the Cloudant test environment for the DbClient does not seem to point to a Cloudant Db.");
-
-            var cfg = CloudantEnvironment.DbClient;
+            var cfg = Environment.DbClient;
             var uriBuilder = new MyCouchUriBuilder(cfg.ServerUrl)
                 .SetDbName(cfg.DbName)
                 .SetBasicCredentials(cfg.User, cfg.Password);
@@ -89,7 +80,8 @@ namespace MyCouch.IntegrationTests
 
         private class CustomCloudantDbClientConnection : DbClientConnection
         {
-            public CustomCloudantDbClientConnection(Uri uri) : base(uri)
+            public CustomCloudantDbClientConnection(Uri uri)
+                : base(uri)
             {
             }
 
@@ -139,16 +131,46 @@ namespace MyCouch.IntegrationTests
         }
     }
 
+    public static class TestScenarios
+    {
+        public const string AttachmentsContext = "attachmentscontext";
+        public const string ChangesContext = "changescontext";
+        public const string DatabaseContext = "databasecontext";
+        public const string DatabasesContext = "databasescontext";
+        public const string DocumentsContext = "documentscontext";
+        public const string EntitiesContext = "entitiescontext";
+        public const string ReplicationContext = "replicationcontext";
+        public const string ViewsContext = "viewscontext";
+
+        public const string MyCouchStore = "mycouchstore";
+
+        public const string CreateDb = "createdb";
+        public const string DeleteDb = "deletedb";
+    }
+
     public class TestEnvironment
     {
         public ServerClientConfig ServerClient { get; set; }
         public DbClientConfig DbClient { get; set; }
-        public bool RunServerClientTests { get; set; }
+        public string TempDbName { get; set; }
+        public string[] Supports { get; set; }
+
+        public bool SupportsEverything
+        {
+            get { return Supports.Contains("*"); }
+        }
+
         public TestEnvironment()
         {
             ServerClient = new ServerClientConfig();
             DbClient = new DbClientConfig();
-            RunServerClientTests = false;
+            Supports = new[] { "*" };
+            TempDbName = "mycouchtests-temp";
+        }
+
+        public virtual bool HasSupportFor(string requirement)
+        {
+            return SupportsEverything || Supports.Contains(requirement, StringComparer.OrdinalIgnoreCase);
         }
     }
 

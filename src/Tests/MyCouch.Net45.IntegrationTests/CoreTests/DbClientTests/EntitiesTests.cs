@@ -2,7 +2,6 @@
 using MyCouch.Testing;
 using MyCouch.Testing.Model;
 using MyCouch.Testing.TestData;
-using Xunit;
 
 namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
 {
@@ -10,10 +9,10 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
     {
         public EntitiesTests()
         {
-            SUT = Client.Entities;
+            SUT = DbClient.Entities;
         }
 
-        [Fact]
+        [MyFact(TestScenarios.EntitiesContext)]
         public void When_POST_of_a_new_anonymous_without_id_Then_the_document_is_created()
         {
             var artist = ClientTestData.Artists.CreateArtist();
@@ -23,7 +22,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             response.Should().BeSuccessfulPost();
         }
 
-        [Fact]
+        [MyFact(TestScenarios.EntitiesContext)]
         public void When_POST_of_a_new_anonymous_with_id_Then_the_document_is_created()
         {
             var artist = ClientTestData.Artists.CreateArtist();
@@ -34,7 +33,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             response.Should().BeSuccessfulPost(initialId, e => e.Id);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.EntitiesContext)]
         public void When_PUT_of_a_new_anonymous_with_id_Then_the_document_is_created()
         {
             var artist = ClientTestData.Artists.CreateArtist();
@@ -45,7 +44,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             response.Should().BeSuccessfulPutOfNew(initialId, e => e.Id);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.EntitiesContext)]
         public void When_post_of_a_new_entity_with_id_Then_the_document_is_created()
         {
             var artist = ClientTestData.Artists.CreateArtist();
@@ -56,7 +55,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             response.Should().BeSuccessfulPost(initialId, e => e.ArtistId, e => e.ArtistRev);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.EntitiesContext)]
         public void When_put_of_a_new_entity_Then_the_document_is_created()
         {
             var artist = ClientTestData.Artists.CreateArtist();
@@ -67,7 +66,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             response.Should().BeSuccessfulPutOfNew(initialId, e => e.ArtistId, e => e.ArtistRev);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.EntitiesContext)]
         public void When_put_of_an_existing_entity_Then_the_document_is_replaced()
         {
             var artist = ClientTestData.Artists.CreateArtist();
@@ -79,7 +78,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             response.Should().BeSuccessfulPut(initialId, e => e.ArtistId, e => e.ArtistRev);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.EntitiesContext)]
         public void When_put_of_an_existing_entity_Using_wrong_rev_Then_a_conflict_is_detected()
         {
             var postResponse = SUT.PostAsync(ClientTestData.Artists.Artist1).Result;
@@ -90,7 +89,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             response.Should().Be409Put(ClientTestData.Artists.Artist1Id);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.EntitiesContext)]
         public void When_DELETE_of_an_existing_entity_Then_the_document_is_deleted()
         {
             var artist = ClientTestData.Artists.CreateArtist();
@@ -102,7 +101,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             response.Should().BeSuccessfulDelete(initialId, e => e.ArtistId, e => e.ArtistRev);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.EntitiesContext)]
         public void When_DELETE_of_an_existing_entity_using_anonymous_Then_the_document_is_deleted()
         {
             var artist = ClientTestData.Artists.CreateArtist();
@@ -114,7 +113,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             response.Should().BeSuccessfulDelete(initialId);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.EntitiesContext)]
         public void Flow_tests()
         {
             var artists = ClientTestData.Artists.CreateArtists(2);
@@ -146,7 +145,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             SUT.DeleteAsync(put2.Result.Content).Result.Should().BeSuccessfulDelete(put2.Result.Id, e => e.ArtistId, e => e.ArtistRev);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.EntitiesContext)]
         public void When_put_of_a_new_entity_extending_a_document_Then_the_entity_will_be_created()
         {
             var id = "956cba86-a20c-4a85-a8b4-a7039ba771c8";
@@ -157,7 +156,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             response.Should().BeSuccessfulPutOfNew(id, i => i._id, i => i._rev);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.EntitiesContext)]
         public void When_put_of_an_existing_entity_extending_a_document_Then_the_entity_will_be_updated()
         {
             var id = "b638d1c5-772a-48f4-b6ee-f2c1f7d5e410";
@@ -169,7 +168,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             response.Should().BeSuccessfulPut(id, i => i._id, i => i._rev);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.EntitiesContext)]
         public void When_put_of_a_new_and_then_a_put_of_an_existing_entity_extending_a_document_Then_the_entity_will_first_be_created_and_then_updated()
         {
             var id = "b638d1c5-772a-48f4-b6ee-f2c1f7d5e410";

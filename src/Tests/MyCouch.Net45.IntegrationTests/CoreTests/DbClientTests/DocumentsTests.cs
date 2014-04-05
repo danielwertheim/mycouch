@@ -3,7 +3,6 @@ using FluentAssertions;
 using MyCouch.Requests;
 using MyCouch.Testing;
 using MyCouch.Testing.TestData;
-using Xunit;
 
 namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
 {
@@ -11,10 +10,10 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
     {
         public DocumentsTests()
         {
-            SUT = Client.Documents;
+            SUT = DbClient.Documents;
         }
 
-        [Fact]
+        [MyFact(TestScenarios.DocumentsContext)]
         public void When_GET_of_document_with_no_conflicts_when_including_conflicts_It_returns_the_document()
         {
             var postResponse = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
@@ -25,7 +24,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             response.Should().BeSuccessfulGet(postResponse.Id);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.DocumentsContext)]
         public void When_HEAD_of_non_existing_document_The_response_is_empty()
         {
             var response = SUT.HeadAsync("fooId").Result;
@@ -33,7 +32,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             response.Should().BeHead404("fooId");
         }
 
-        [Fact]
+        [MyFact(TestScenarios.DocumentsContext)]
         public void When_HEAD_using_not_matching_rev_The_response_is_empty()
         {
             var postResponse = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
@@ -43,7 +42,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             response.Should().BeHead404(postResponse.Id);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.DocumentsContext)]
         public void When_HEAD_using_matching_id_The_response_is_ok()
         {
             var postResponse = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
@@ -53,7 +52,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             response.Should().BeHead200(postResponse.Id, postResponse.Rev);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.DocumentsContext)]
         public void When_HEAD_using_matching_id_and_rev_The_response_is_ok()
         {
             var postResponse = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
@@ -63,7 +62,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             response.Should().BeHead200(postResponse.Id, postResponse.Rev);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.DocumentsContext)]
         public void When_POST_of_new_document_The_document_is_persisted()
         {
             var response = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
@@ -71,7 +70,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             response.Should().BeSuccessfulPost(ClientTestData.Artists.Artist1Id);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.DocumentsContext)]
         public void When_POST_of_new_document_in_batch_mode_The_document_is_persisted()
         {
             var request = new PostDocumentRequest(ClientTestData.Artists.Artist1Json) { Batch = true };
@@ -80,7 +79,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             response.Should().BeSuccessfulBatchPost(ClientTestData.Artists.Artist1Id);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.DocumentsContext)]
         public void When_PUT_of_new_document_The_document_is_replaced()
         {
             var response = SUT.PutAsync(ClientTestData.Artists.Artist1Id, ClientTestData.Artists.Artist1Json).Result;
@@ -88,7 +87,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             response.Should().BeSuccessfulPutOfNew(ClientTestData.Artists.Artist1Id);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.DocumentsContext)]
         public void When_PUT_of_new_document_in_batch_mode_The_document_is_replaced()
         {
             var request = PutDocumentRequest.ForCreate(ClientTestData.Artists.Artist1Id, ClientTestData.Artists.Artist1Json, r => r.Batch = true);
@@ -97,7 +96,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             response.Should().BeSuccessfulBatchPutOfNew(ClientTestData.Artists.Artist1Id);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.DocumentsContext)]
         public void When_PUT_of_existing_document_The_document_is_replaced()
         {
             var postResponse = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
@@ -108,7 +107,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             response.Should().BeSuccessfulPut(ClientTestData.Artists.Artist1Id);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.DocumentsContext)]
         public void Can_PUT_of_existing_document_in_batch_mode()
         {
             var postResponse = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
@@ -120,7 +119,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             response.Should().BeSuccessfulBatchPut(ClientTestData.Artists.Artist1Id);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.DocumentsContext)]
         public void When_PUT_of_existing_document_Using_wrong_rev_A_conflict_is_detected()
         {
             var postResponse = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
@@ -130,7 +129,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             response.Should().Be409Put(ClientTestData.Artists.Artist1Id);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.DocumentsContext)]
         public void When_DELETE_of_existing_document_Using_id_and_rev_The_document_is_deleted()
         {
             var r = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
@@ -140,7 +139,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             response.Should().BeSuccessfulDelete(ClientTestData.Artists.Artist1Id);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.DocumentsContext)]
         public void When_COPY_using_srcId_The_document_is_copied()
         {
             var artistPost = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
@@ -157,7 +156,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
                 .Replace("\"_rev\":\"" + srcArtist.Rev + "\"", "\"_rev\":\"" + copyResponse.Rev + "\""));
         }
 
-        [Fact]
+        [MyFact(TestScenarios.DocumentsContext)]
         public void When_COPY_using_srcId_and_srcRev_The_document_is_copied()
         {
             var artistPost1 = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
@@ -176,7 +175,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
                 .Replace("\"_rev\":\"" + srcArtist.Rev + "\"", "\"_rev\":\"" + copyResponse.Rev + "\""));
         }
 
-        [Fact]
+        [MyFact(TestScenarios.DocumentsContext)]
         public void When_REPLACE_using_srcId_The_document_is_replacing_target()
         {
             var artist1Post = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
@@ -193,7 +192,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
                 .Replace("\"_rev\":\"" + srcArtist1.Rev + "\"", "\"_rev\":\"" + replaceResponse.Rev + "\""));
         }
 
-        [Fact]
+        [MyFact(TestScenarios.DocumentsContext)]
         public void When_REPLACE_using_srcId_and_srcRev_The_document_is_replacing_target()
         {
             var artist1Post = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
@@ -210,7 +209,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
                 .Replace("\"_rev\":\"" + srcArtist1.Rev + "\"", "\"_rev\":\"" + replaceResponse.Rev + "\""));
         }
 
-        [Fact]
+        [MyFact(TestScenarios.DocumentsContext)]
         public void Flow_tests()
         {
             var post1 = SUT.PostAsync(ClientTestData.Artists.Artist1Json);
@@ -225,14 +224,14 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             get1.Result.Should().BeSuccessfulGet(post1.Result.Id);
             get2.Result.Should().BeSuccessfulGet(post2.Result.Id);
 
-            var kv1 = Client.Serializer.Deserialize<IDictionary<string, dynamic>>(get1.Result.Content);
+            var kv1 = DbClient.Serializer.Deserialize<IDictionary<string, dynamic>>(get1.Result.Content);
             kv1["year"] = 2000;
-            var docUpd1 = Client.Serializer.Serialize(kv1);
+            var docUpd1 = DbClient.Serializer.Serialize(kv1);
             var put1 = SUT.PutAsync(get1.Result.Id, docUpd1);
 
-            var kv2 = Client.Serializer.Deserialize<IDictionary<string, dynamic>>(get2.Result.Content);
+            var kv2 = DbClient.Serializer.Deserialize<IDictionary<string, dynamic>>(get2.Result.Content);
             kv2["year"] = 2001;
-            var docUpd2 = Client.Serializer.Serialize(kv2);
+            var docUpd2 = DbClient.Serializer.Serialize(kv2);
             var put2 = SUT.PutAsync(get2.Result.Id, docUpd2);
 
             put1.Result.Should().BeSuccessfulPut(get1.Result.Id);

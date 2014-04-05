@@ -1,4 +1,5 @@
 ﻿using System;
+using MyCouch.Cloudant;
 using MyCouch.Testing;
 
 namespace MyCouch.IntegrationTests
@@ -8,14 +9,17 @@ namespace MyCouch.IntegrationTests
         IDisposable where T : class
     {
         protected readonly TestEnvironment Environment;
-        protected IMyCouchClient Client { get; set; }
+        protected IMyCouchServerClient ServerClient { get; set; }
+        protected IMyCouchClient DbClient { get; set; }
+        protected IMyCouchCloudantClient CloudantDbClient { get; set; }
 
-        protected IntegrationTestsOf() : this(IntegrationTestsRuntime.NormalEnvironment) { }
-
-        protected IntegrationTestsOf(TestEnvironment environment)
+        protected IntegrationTestsOf()
         {
-            Environment = environment;
-            Client = IntegrationTestsRuntime.CreateDbClient(Environment);
+            Environment = IntegrationTestsRuntime.Environment;
+            ServerClient = IntegrationTestsRuntime.CreateServerClient(Environment);
+            DbClient = IntegrationTestsRuntime.CreateDbClient(Environment);
+            CloudantDbClient = IntegrationTestsRuntime.CreateCloudantDbClient(Environment);
+
             CleanDb();
         }
 
@@ -31,8 +35,15 @@ namespace MyCouch.IntegrationTests
                 return;
 
             CleanDb();
-            Client.Dispose();
-            Client = null;
+
+            ServerClient.Dispose();
+            ServerClient = null;
+
+            DbClient.Dispose();
+            DbClient = null;
+
+            CloudantDbClient.Dispose();
+            CloudantDbClient = null;
 
             var disposableSut = SUT as IDisposable;
             if(disposableSut == null)
@@ -44,7 +55,7 @@ namespace MyCouch.IntegrationTests
         protected void CleanDb()
         {
             if (!(this is IPreserveStatePerFixture))
-                Client.ClearAllDocuments();
+                DbClient.ClearAllDocuments();
         }
     }
 }

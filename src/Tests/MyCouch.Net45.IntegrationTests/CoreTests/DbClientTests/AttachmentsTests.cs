@@ -10,10 +10,10 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
     {
         public AttachmentsTests()
         {
-            SUT = Client.Attachments;
+            SUT = DbClient.Attachments;
         }
 
-        [Fact]
+        [MyFact(TestScenarios.AttachmentsContext)]
         public void When_PUT_of_a_new_attachment_and_new_document_The_response_is_ok()
         {
             var putRequest = new PutAttachmentRequest(
@@ -27,10 +27,10 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             putAttachmentAndDocResponse.Should().BeSuccessfulPut(ClientTestData.Artists.Artist1Id);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.AttachmentsContext)]
         public void When_PUT_of_a_new_attachment_The_response_is_ok()
         {
-            var postDocResponse = Client.Documents.PostAsync(ClientTestData.Artists.Artist1Json).Result;
+            var postDocResponse = DbClient.Documents.PostAsync(ClientTestData.Artists.Artist1Json).Result;
             var putRequest = new PutAttachmentRequest(
                 postDocResponse.Id,
                 postDocResponse.Rev, 
@@ -43,10 +43,10 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             putAttachmentResponse.Should().BeSuccessfulPut(ClientTestData.Artists.Artist1Id);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.AttachmentsContext)]
         public void When_DELETE_of_an_existing_attachment_The_response_is_ok()
         {
-            var putDocResponse = Client.Documents.PostAsync(ClientTestData.Artists.Artist1Json).Result;
+            var putDocResponse = DbClient.Documents.PostAsync(ClientTestData.Artists.Artist1Json).Result;
 
             var putRequest = new PutAttachmentRequest(
                 putDocResponse.Id,
@@ -65,10 +65,10 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             deleteResponse.Should().BeSuccessfulDelete(ClientTestData.Artists.Artist1Id);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.AttachmentsContext)]
         public void When_GET_of_an_existing_attachment_Using_id_The_attachment_is_returned_correctly()
         {
-            var putDocResponse = Client.Documents.PostAsync(ClientTestData.Artists.Artist1Json).Result;
+            var putDocResponse = DbClient.Documents.PostAsync(ClientTestData.Artists.Artist1Json).Result;
 
             var putRequest = new PutAttachmentRequest(
                 putDocResponse.Id,
@@ -87,10 +87,10 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             getAttachmentResponse.Content.Should().Equal(ClientTestData.Attachments.One.Bytes);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.AttachmentsContext)]
         public void When_GET_of_an_existing_attachment_Using_id_and_rev_The_attachment_is_returned_correctly()
         {
-            var putDocResponse = Client.Documents.PostAsync(ClientTestData.Artists.Artist1Json).Result;
+            var putDocResponse = DbClient.Documents.PostAsync(ClientTestData.Artists.Artist1Json).Result;
 
             var putRequest = new PutAttachmentRequest(
                 putDocResponse.Id,
@@ -110,10 +110,10 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             getAttachmentResponse.Content.Should().Equal(ClientTestData.Attachments.One.Bytes);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.AttachmentsContext)]
         public void When_GET_of_an_existing_attachment_the_content_type_is_returned_correctly()
         {
-            var putDocResponse = Client.Documents.PostAsync(ClientTestData.Artists.Artist1Json).Result;
+            var putDocResponse = DbClient.Documents.PostAsync(ClientTestData.Artists.Artist1Json).Result;
 
             var putRequest = new PutAttachmentRequest(
                 putDocResponse.Id,
@@ -132,10 +132,10 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             getAttachmentResponse.ContentType.Should().Be(ClientTestData.Attachments.One.ContentType);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.AttachmentsContext)]
         public void Flow_tests()
         {
-            var putDocResponse = Client.Documents.PostAsync(ClientTestData.Artists.Artist1Json).Result;
+            var putDocResponse = DbClient.Documents.PostAsync(ClientTestData.Artists.Artist1Json).Result;
 
             var putRequest = new PutAttachmentRequest(
                 putDocResponse.Id,

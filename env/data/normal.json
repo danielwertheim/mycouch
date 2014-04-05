@@ -1,5 +1,11 @@
 {
-    "RunServerClientTests": false,
+    "Supports": [
+        "attachmentscontext", "changescontext",
+        "databasecontext", "databasescontext",
+        "documentscontext", "entitiescontext",
+        "replicationcontext", "viewscontext",
+        "mycouchstore", "createdb", "deletedb"],
+    "TempDbName":"mycouchtests-temp",
     "ServerClient":{
         "Url":"http://localhost:5984",
         "User":"sa",

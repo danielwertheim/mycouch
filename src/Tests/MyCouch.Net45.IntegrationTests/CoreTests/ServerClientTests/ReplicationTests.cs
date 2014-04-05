@@ -1,12 +1,10 @@
 ﻿using System;
-using MyCouch.Requests;
-using Xunit;
 
 namespace MyCouch.IntegrationTests.CoreTests.ServerClientTests
 {
-    public class ReplicationTests : ServerClientTestsOf<IReplication>
+    public class ReplicationTests : IntegrationTestsOf<IReplication>
     {
-        [Fact]
+        [MyFact(TestScenarios.ReplicationContext)]
         public void When_Replicate_between_existing_dbs_The_response_indicates_success()
         {
             throw new NotImplementedException();

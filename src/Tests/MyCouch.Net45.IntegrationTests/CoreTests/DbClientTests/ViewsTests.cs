@@ -18,7 +18,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
 
         public ViewsTests()
         {
-            SUT = Client.Views;
+            SUT = DbClient.Views;
         }
 
         public void SetFixture(ViewsFixture data)
@@ -27,7 +27,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             Artists = data.Artists;
         }
 
-        [Fact]
+        [MyFact(TestScenarios.ViewsContext)]
         public void When_no_key_with_sum_reduce_for_string_response_It_will_be_able_to_sum()
         {
             var expectedSum = Artists.Sum(a => a.Albums.Count());
@@ -39,7 +39,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             response.Rows[0].Value.Should().Be(expectedSum.ToString(MyCouchRuntime.NumberFormat));
         }
 
-        [Fact]
+        [MyFact(TestScenarios.ViewsContext)]
         public void When_no_key_with_sum_reduce_for_dynamic_response_It_will_be_able_to_sum()
         {
             var expectedSum = Artists.Sum(a => a.Albums.Count());
@@ -51,7 +51,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             ((long)response.Rows[0].Value).Should().Be(expectedSum);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.ViewsContext)]
         public void When_no_key_with_sum_reduce_for_typed_response_It_will_be_able_to_sum()
         {
             var expectedSum = Artists.Sum(a => a.Albums.Count());
@@ -63,7 +63,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             response.Rows[0].Value.Should().Be(expectedSum);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.ViewsContext)]
         public void When_IncludeDocs_and_no_value_is_returned_for_string_response_Then_the_included_docs_are_extracted()
         {
             var query = new QueryViewRequest(ClientTestData.Views.ArtistsNameNoValueViewId).Configure(cfg => cfg.IncludeDocs(true));
@@ -74,11 +74,11 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             for (var i = 0; i < response.RowCount; i++)
             {
                 response.Rows[i].Value.Should().BeNull();
-                CustomAsserts.AreValueEqual(Artists[i], Client.Entities.Serializer.Deserialize<Artist>(response.Rows[i].IncludedDoc));
+                CustomAsserts.AreValueEqual(Artists[i], DbClient.Entities.Serializer.Deserialize<Artist>(response.Rows[i].IncludedDoc));
             }
         }
 
-        [Fact]
+        [MyFact(TestScenarios.ViewsContext)]
         public void When_IncludeDocs_and_no_value_is_returned_for_entity_response_Then_the_included_docs_are_extracted()
         {
             var query = new QueryViewRequest(ClientTestData.Views.ArtistsNameNoValueViewId).Configure(cfg => cfg.IncludeDocs(true));
@@ -93,7 +93,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             }
         }
 
-        [Fact]
+        [MyFact(TestScenarios.ViewsContext)]
         public void When_IncludeDocs_of_non_array_doc_and_null_value_is_returned_Then_the_neither_included_docs_nor_value_is_extracted()
         {
             var query = new QueryViewRequest(ClientTestData.Views.ArtistsNameNoValueViewId).Configure(cfg => cfg.IncludeDocs(true));
@@ -108,7 +108,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             }
         }
 
-        [Fact]
+        [MyFact(TestScenarios.ViewsContext)]
         public void When_Skipping_2_of_10_using_json_Then_8_rows_are_returned()
         {
             var artists = Artists.Skip(2);
@@ -117,10 +117,10 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             var response = SUT.QueryAsync(query).Result;
 
             response.Rows = response.Rows.OrderBy(r => r.Id).ToArray();
-            response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Select(a => Client.Serializer.Serialize(a.Albums)).ToArray());
+            response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Select(a => DbClient.Serializer.Serialize(a.Albums)).ToArray());
         }
 
-        [Fact]
+        [MyFact(TestScenarios.ViewsContext)]
         public void When_Skipping_2_of_10_using_json_array_Then_8_rows_are_returned()
         {
             var artists = Artists.Skip(2);
@@ -129,10 +129,10 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             var response = SUT.QueryAsync<string[]>(query).Result;
 
             response.Rows = response.Rows.OrderBy(r => r.Id).ToArray();
-            response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray());
+            response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Select(a => a.Albums.Select(i => DbClient.Serializer.Serialize(i)).ToArray()).ToArray());
         }
 
-        [Fact]
+        [MyFact(TestScenarios.ViewsContext)]
         public void When_Skipping_2_of_10_using_entities_Then_8_rows_are_returned()
         {
             var artists = Artists.Skip(2);
@@ -144,7 +144,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Select(a => a.Albums).ToArray());
         }
 
-        [Fact]
+        [MyFact(TestScenarios.ViewsContext)]
         public void When_Limit_to_2_using_json_Then_2_rows_are_returned()
         {
             var artists = Artists.Take(2);
@@ -153,10 +153,10 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             var response = SUT.QueryAsync(query).Result;
 
             response.Rows = response.Rows.OrderBy(r => r.Id).ToArray();
-            response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Select(a => Client.Serializer.Serialize(a.Albums)).ToArray());
+            response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Select(a => DbClient.Serializer.Serialize(a.Albums)).ToArray());
         }
 
-        [Fact]
+        [MyFact(TestScenarios.ViewsContext)]
         public void When_Limit_to_2_using_json_array_Then_2_rows_are_returned()
         {
             var artists = Artists.Take(2);
@@ -165,10 +165,10 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             var response = SUT.QueryAsync<string[]>(query).Result;
 
             response.Rows = response.Rows.OrderBy(r => r.Id).ToArray();
-            response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray());
+            response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Select(a => a.Albums.Select(i => DbClient.Serializer.Serialize(i)).ToArray()).ToArray());
         }
 
-        [Fact]
+        [MyFact(TestScenarios.ViewsContext)]
         public void When_Limit_to_2_using_entities_Then_2_rows_are_returned()
         {
             var artists = Artists.Take(2);
@@ -180,7 +180,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Select(a => a.Albums).ToArray());
         }
 
-        [Fact]
+        [MyFact(TestScenarios.ViewsContext)]
         public void When_Key_is_specified_using_json_Then_the_matching_row_is_returned()
         {
             var artist = Artists[2];
@@ -188,10 +188,10 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
 
             var response = SUT.QueryAsync(query).Result;
 
-            response.Should().BeSuccessfulGet(new[] { Client.Serializer.Serialize(artist.Albums) });
+            response.Should().BeSuccessfulGet(new[] { DbClient.Serializer.Serialize(artist.Albums) });
         }
 
-        [Fact]
+        [MyFact(TestScenarios.ViewsContext)]
         public void When_Key_is_specified_using_json_array_Then_the_matching_row_is_returned()
         {
             var artist = Artists[2];
@@ -199,10 +199,10 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
 
             var response = SUT.QueryAsync<string[]>(query).Result;
 
-            response.Should().BeSuccessfulGet(new[] { artist.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray() });
+            response.Should().BeSuccessfulGet(new[] { artist.Albums.Select(i => DbClient.Serializer.Serialize(i)).ToArray() });
         }
 
-        [Fact]
+        [MyFact(TestScenarios.ViewsContext)]
         public void When_Key_is_specified_using_entities_Then_the_matching_row_is_returned()
         {
             var artist = Artists[2];
@@ -213,7 +213,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             response.Should().BeSuccessfulGet(new[] { artist.Albums });
         }
 
-        [Fact]
+        [MyFact(TestScenarios.ViewsContext)]
         public void When_Keys_are_specified_using_json_Then_matching_rows_are_returned()
         {
             var artists = Artists.Skip(2).Take(3).ToArray();
@@ -223,10 +223,10 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             var response = SUT.QueryAsync(query).Result;
 
             response.Rows = response.Rows.OrderBy(r => r.Id).ToArray();
-            response.Should().BeSuccessfulPost(artists.OrderBy(a => a.ArtistId).Select(a => Client.Serializer.Serialize(a.Albums)).ToArray());
+            response.Should().BeSuccessfulPost(artists.OrderBy(a => a.ArtistId).Select(a => DbClient.Serializer.Serialize(a.Albums)).ToArray());
         }
 
-        [Fact]
+        [MyFact(TestScenarios.ViewsContext)]
         public void When_Keys_are_specified_using_json_array_Then_matching_rows_are_returned()
         {
             var artists = Artists.Skip(2).Take(3).ToArray();
@@ -236,10 +236,10 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             var response = SUT.QueryAsync<string[]>(query).Result;
 
             response.Rows = response.Rows.OrderBy(r => r.Id).ToArray();
-            response.Should().BeSuccessfulPost(artists.OrderBy(a => a.ArtistId).Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray());
+            response.Should().BeSuccessfulPost(artists.OrderBy(a => a.ArtistId).Select(a => a.Albums.Select(i => DbClient.Serializer.Serialize(i)).ToArray()).ToArray());
         }
 
-        [Fact]
+        [MyFact(TestScenarios.ViewsContext)]
         public void When_Keys_are_specified_using_entities_Then_matching_rows_are_returned()
         {
             var artists = Artists.Skip(2).Take(3).ToArray();
@@ -252,7 +252,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             response.Should().BeSuccessfulPost(artists.OrderBy(a => a.ArtistId).Select(a => a.Albums).ToArray());
         }
 
-        [Fact]
+        [MyFact(TestScenarios.ViewsContext)]
         public void When_StartKey_and_EndKey_are_specified_using_json_Then_matching_rows_are_returned()
         {
             var artists = Artists.Skip(2).Take(5).ToArray();
@@ -263,10 +263,10 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             var response = SUT.QueryAsync(query).Result;
 
             response.Rows = response.Rows.OrderBy(r => r.Id).ToArray();
-            response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Select(a => Client.Serializer.Serialize(a.Albums)).ToArray());
+            response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Select(a => DbClient.Serializer.Serialize(a.Albums)).ToArray());
         }
 
-        [Fact]
+        [MyFact(TestScenarios.ViewsContext)]
         public void When_StartKey_and_EndKey_are_specified_using_json_array_Then_matching_rows_are_returned()
         {
             var artists = Artists.Skip(2).Take(5).ToArray();
@@ -277,10 +277,10 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             var response = SUT.QueryAsync<string[]>(query).Result;
 
             response.Rows = response.Rows.OrderBy(r => r.Id).ToArray();
-            response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray());
+            response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Select(a => a.Albums.Select(i => DbClient.Serializer.Serialize(i)).ToArray()).ToArray());
         }
 
-        [Fact]
+        [MyFact(TestScenarios.ViewsContext)]
         public void When_StartKey_and_EndKey_are_specified_using_entities_Then_matching_rows_are_returned()
         {
             var artists = Artists.Skip(2).Take(5).ToArray();
@@ -294,7 +294,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Select(a => a.Albums).ToArray());
         }
 
-        [Fact]
+        [MyFact(TestScenarios.ViewsContext)]
         public void When_StartKey_and_EndKey_with_non_inclusive_end_are_specified_using_json_Then_matching_rows_are_returned()
         {
             var artists = Artists.Skip(2).Take(5).ToArray();
@@ -306,10 +306,10 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             var response = SUT.QueryAsync(query).Result;
 
             response.Rows = response.Rows.OrderBy(r => r.Id).ToArray();
-            response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Take(artists.Length - 1).Select(a => Client.Serializer.Serialize(a.Albums)).ToArray());
+            response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Take(artists.Length - 1).Select(a => DbClient.Serializer.Serialize(a.Albums)).ToArray());
         }
 
-        [Fact]
+        [MyFact(TestScenarios.ViewsContext)]
         public void When_StartKey_and_EndKey_with_non_inclusive_end_are_specified_using_json_array_Then_matching_rows_are_returned()
         {
             var artists = Artists.Skip(2).Take(5).ToArray();
@@ -321,10 +321,10 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             var response = SUT.QueryAsync<string[]>(query).Result;
 
             response.Rows = response.Rows.OrderBy(r => r.Id).ToArray();
-            response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Take(artists.Length - 1).Select(a => a.Albums.Select(i => Client.Serializer.Serialize(i)).ToArray()).ToArray());
+            response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Take(artists.Length - 1).Select(a => a.Albums.Select(i => DbClient.Serializer.Serialize(i)).ToArray()).ToArray());
         }
 
-        [Fact]
+        [MyFact(TestScenarios.ViewsContext)]
         public void When_StartKey_and_EndKey_with_non_inclusive_end_are_specified_using_entities_Then_matching_rows_are_returned()
         {
             var artists = Artists.Skip(2).Take(5).ToArray();
@@ -339,7 +339,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             response.Should().BeSuccessfulGet(artists.OrderBy(a => a.ArtistId).Take(artists.Length - 1).Select(a => a.Albums).ToArray());
         }
 
-        [Fact]
+        [MyFact(TestScenarios.ViewsContext)]
         public void When_skip_two_of_ten_It_should_return_the_other_eight()
         {
             var query = new QueryViewRequest(ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId).Configure(cfg => cfg
@@ -350,7 +350,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             response.Should().BeSuccessfulGet(8);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.ViewsContext)]
         public void When_limit_is_two_of_ten_It_should_return_two()
         {
             var query = new QueryViewRequest(ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId).Configure(cfg => cfg
@@ -361,7 +361,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             response.Should().BeSuccessfulGet(2);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.ViewsContext)]
         public void When_getting_all_artists_It_can_deserialize_artists_properly()
         {
             var query = new QueryViewRequest(ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId);
