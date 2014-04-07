@@ -141,7 +141,9 @@ namespace MyCouch.IntegrationTests
         public const string EntitiesContext = "entitiescontext";
         public const string ReplicationContext = "replicationcontext";
         public const string ViewsContext = "viewscontext";
+        public const string SearchesContext = "searchescontext";
 
+        public const string Cloudant = "cloudant";
         public const string MyCouchStore = "mycouchstore";
 
         public const string CreateDb = "createdb";
