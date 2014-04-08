@@ -8,23 +8,22 @@
     <copyright>Copyright 2014 Daniel Wertheim</copyright>
     <summary>Simple async CouchDb and Cloudant client.</summary>
     <description>
+      MyCouch is the simple asynchronous CouchDb and Cloudant client for .Net - building on top of the asynchronous HTTP client and uses JSON.Net to provide flexible serialization behaviour.
+
       This package contains support for Cloudant specific features. If you want pure CouchDb support go with the "MyCouch" package instead.
 
-      MyCouch is the simple asynchronous CouchDb and Cloudant client for .Net - building on top of the asynchronous HTTP client and uses JSON.Net to provide flexible serialization behaviour.
       It tries to keep the domain language of CouchDb and lets you work with requests and responses but also provides you with an alternative simplifying async API.
       MyCouch lets you work with raw JSON and/or entities/POCOS without requiring any implementation of interfaces or base-classes etc. MyCouch provides you with some model conventions like
       injection of $doctype to the document. It is pluggable. If you don't like some piece, then hook in your implementation instead.
 
       Supports .Net4.0, .Net4.5 and Windows store apps 8.1 (WinRT).
-
-      Please NOTE. If you don't have NuGet up to date, some users has experienced issues with resolving dependencies.
     </description>
     <iconUrl>http://www.mycouchclient.com/logos/mycouch-nuget.png</iconUrl>
     <projectUrl>https://github.com/danielwertheim/MyCouch</projectUrl>
     <licenseUrl>https://github.com/danielwertheim/MyCouch#license</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <releaseNotes>Can be found on project site: https://github.com/danielwertheim/mycouch/wiki/release-notes</releaseNotes>
-    <tags>couchdb cloudant lucene nosql json document-db documents poco async asynchronous winrt</tags>
+    <tags>couchdb cloudant lucene nosql poco async asynchronous winrt</tags>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System.Configuration" targetFramework="net40" />
       <frameworkAssembly assemblyName="System.Configuration" targetFramework="net45" />

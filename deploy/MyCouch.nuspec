@@ -17,15 +17,13 @@
       injection of $doctype to the document. It is pluggable. If you don't like some piece, then hook in your implementation instead.
 
       Supports .Net4.0, .Net4.5 and Windows store apps 8.1 (WinRT).
-
-      Please NOTE. If you don't have NuGet up to date, some users has experienced issues with resolving dependencies.
     </description>
     <iconUrl>http://www.mycouchclient.com/logos/mycouch-nuget.png</iconUrl>
     <projectUrl>https://github.com/danielwertheim/MyCouch</projectUrl>
     <licenseUrl>https://github.com/danielwertheim/MyCouch#license</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <releaseNotes>Can be found on project site: https://github.com/danielwertheim/mycouch/wiki/release-notes</releaseNotes>
-    <tags>couchdb cloudant nosql json document-db documents poco async asynchronous winrt</tags>
+    <tags>couchdb cloudant nosql poco async asynchronous winrt</tags>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System.Configuration" targetFramework="net40" />
       <frameworkAssembly assemblyName="System.Configuration" targetFramework="net45" />
