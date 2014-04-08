@@ -8,7 +8,7 @@ namespace MyCouch.Requests.Factories
         protected readonly IEntitySerializer Serializer;
         protected readonly IEntityReflector Reflector;
 
-        protected EntityHttpRequestFactoryBase(IConnection connection, IEntitySerializer serializer, IEntityReflector reflector)
+        protected EntityHttpRequestFactoryBase(IDbClientConnection connection, IEntitySerializer serializer, IEntityReflector reflector)
             : base(connection)
         {
             Serializer = serializer;

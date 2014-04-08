@@ -9,7 +9,7 @@ namespace MyCouch.Requests.Factories
 {
     public abstract class GetChangesHttpRequestFactoryBase : HttpRequestFactoryBase
     {
-        protected GetChangesHttpRequestFactoryBase(IConnection connection) : base(connection) {}
+        protected GetChangesHttpRequestFactoryBase(IDbClientConnection connection) : base(connection) { }
 
         public virtual HttpRequest Create(GetChangesRequest request)
         {

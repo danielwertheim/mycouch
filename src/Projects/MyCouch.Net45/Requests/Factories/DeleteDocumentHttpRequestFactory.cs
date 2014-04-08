@@ -6,7 +6,7 @@ namespace MyCouch.Requests.Factories
 {
     public class DeleteDocumentHttpRequestFactory : DocumentHttpRequestFactoryBase
     {
-        public DeleteDocumentHttpRequestFactory(IConnection connection) : base(connection) {}
+        public DeleteDocumentHttpRequestFactory(IDbClientConnection connection) : base(connection) { }
 
         public virtual HttpRequest Create(DeleteDocumentRequest request)
         {

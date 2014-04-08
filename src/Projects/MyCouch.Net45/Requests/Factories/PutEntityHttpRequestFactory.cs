@@ -8,7 +8,7 @@ namespace MyCouch.Requests.Factories
 {
     public class PutEntityHttpRequestFactory : EntityHttpRequestFactoryBase
     {
-        public PutEntityHttpRequestFactory(IConnection connection, IEntitySerializer serializer, IEntityReflector reflector)
+        public PutEntityHttpRequestFactory(IDbClientConnection connection, IEntitySerializer serializer, IEntityReflector reflector)
             : base(connection, serializer, reflector) {}
 
         public virtual HttpRequest Create<T>(PutEntityRequest<T> request) where T : class

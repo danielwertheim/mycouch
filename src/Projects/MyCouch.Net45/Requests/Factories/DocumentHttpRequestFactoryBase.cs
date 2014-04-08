@@ -8,7 +8,7 @@ namespace MyCouch.Requests.Factories
 {
     public abstract class DocumentHttpRequestFactoryBase : HttpRequestFactoryBase
     {
-        protected DocumentHttpRequestFactoryBase(IConnection connection) : base(connection) {}
+        protected DocumentHttpRequestFactoryBase(IDbClientConnection connection) : base(connection) { }
 
         protected virtual string GenerateRequestUrl(string id = null, string rev = null, params UrlParam[] parameters)
         {

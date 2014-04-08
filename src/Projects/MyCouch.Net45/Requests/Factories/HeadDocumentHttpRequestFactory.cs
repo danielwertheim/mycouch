@@ -6,7 +6,7 @@ namespace MyCouch.Requests.Factories
 {
     public class HeadDocumentHttpRequestFactory : DocumentHttpRequestFactoryBase
     {
-        public HeadDocumentHttpRequestFactory(IConnection connection) : base(connection) { }
+        public HeadDocumentHttpRequestFactory(IDbClientConnection connection) : base(connection) { }
 
         public virtual HttpRequest Create(HeadDocumentRequest request)
         {

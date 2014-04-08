@@ -9,7 +9,7 @@ namespace MyCouch.Requests.Factories
 {
     public class QueryViewHttpRequestFactory : HttpRequestFactoryBase
     {
-        public QueryViewHttpRequestFactory(IConnection connection) : base(connection) { }
+        public QueryViewHttpRequestFactory(IDbClientConnection connection) : base(connection) { }
 
         public virtual HttpRequest Create(QueryViewRequest request)
         {

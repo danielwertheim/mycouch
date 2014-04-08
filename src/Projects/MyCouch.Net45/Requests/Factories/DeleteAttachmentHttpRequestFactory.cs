@@ -6,7 +6,7 @@ namespace MyCouch.Requests.Factories
 {
     public class DeleteAttachmentHttpRequestFactory : AttachmentHttpRequestFactoryBase
     {
-        public DeleteAttachmentHttpRequestFactory(IConnection connection) : base(connection) { }
+        public DeleteAttachmentHttpRequestFactory(IDbClientConnection connection) : base(connection) { }
 
         public virtual HttpRequest Create(DeleteAttachmentRequest request)
         {
