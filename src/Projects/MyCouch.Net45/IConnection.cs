@@ -6,13 +6,6 @@ using MyCouch.Net;
 
 namespace MyCouch
 {
-    public interface IDbClientConnection : IConnection
-    {
-        string DbName { get; }
-    }
-
-    public interface IServerClientConnection : IConnection { }
-
     public interface IConnection : IDisposable
     {
         Uri Address { get; }

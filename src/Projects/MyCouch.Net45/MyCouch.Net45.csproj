@@ -74,10 +74,12 @@
     <Compile Include="EntitySchemes\Reflections\IStringGetter.cs" />
     <Compile Include="EntitySchemes\Reflections\IStringSetter.cs" />
     <Compile Include="IDatabases.cs" />
+    <Compile Include="IDbClientConnection.cs" />
     <Compile Include="IMyCouchServerClient.cs" />
     <Compile Include="IMyCouchStore.cs" />
     <Compile Include="IQueryParameters.cs" />
     <Compile Include="IReplication.cs" />
+    <Compile Include="IServerClientConnection.cs" />
     <Compile Include="MyCouchClient.cs" />
     <Compile Include="MyCouchClientBootstrapper.cs" />
     <Compile Include="Contexts\ApiContextBase.cs" />

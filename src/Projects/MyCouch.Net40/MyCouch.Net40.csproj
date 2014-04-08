@@ -221,6 +221,9 @@
     <Compile Include="..\MyCouch.Net45\IDatabases.cs">
       <Link>IDatabases.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\IDbClientConnection.cs">
+      <Link>IDbClientConnection.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\IDocuments.cs">
       <Link>IDocuments.cs</Link>
     </Compile>
@@ -241,6 +244,9 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\IReplication.cs">
       <Link>IReplication.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\IServerClientConnection.cs">
+      <Link>IServerClientConnection.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\IViews.cs">
       <Link>IViews.cs</Link>
