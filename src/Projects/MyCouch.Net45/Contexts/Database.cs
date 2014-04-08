@@ -26,15 +26,15 @@ namespace MyCouch.Contexts
         {
             Ensure.That(serializer, "serializer").IsNotNull();
 
-            var dbRequestUrlGenerator = new DbClientConnectionDbRequestUrlGenerator(Connection);
+            var requestUrlGenerator = new DbClientConnectionRequestUrlGenerator(Connection);
 
             TextResponseFactory = new TextResponseFactory(serializer);
-            GetHttpRequestFactory = new GetDatabaseHttpRequestFactory(Connection, dbRequestUrlGenerator);
-            HeadHttpRequestFactory = new HeadDatabaseHttpRequestFactory(Connection, dbRequestUrlGenerator);
-            PutHttpRequestFactory = new PutDatabaseHttpRequestFactory(Connection, dbRequestUrlGenerator);
-            DeleteHttpRequestFactory = new DeleteDatabaseHttpRequestFactory(Connection, dbRequestUrlGenerator);
-            CompactHttpRequestFactory = new CompactDatabaseHttpRequestFactory(Connection, dbRequestUrlGenerator);
-            ViewCleanupHttpRequestFactory = new ViewCleanupHttpRequestFactory(Connection, dbRequestUrlGenerator);
+            GetHttpRequestFactory = new GetDatabaseHttpRequestFactory(Connection, requestUrlGenerator);
+            HeadHttpRequestFactory = new HeadDatabaseHttpRequestFactory(Connection, requestUrlGenerator);
+            PutHttpRequestFactory = new PutDatabaseHttpRequestFactory(Connection, requestUrlGenerator);
+            DeleteHttpRequestFactory = new DeleteDatabaseHttpRequestFactory(Connection, requestUrlGenerator);
+            CompactHttpRequestFactory = new CompactDatabaseHttpRequestFactory(Connection, requestUrlGenerator);
+            ViewCleanupHttpRequestFactory = new ViewCleanupHttpRequestFactory(Connection, requestUrlGenerator);
         }
 
         public virtual async Task<TextResponse> HeadAsync()

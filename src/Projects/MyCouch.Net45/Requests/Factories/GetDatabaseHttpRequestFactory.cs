@@ -6,13 +6,13 @@ namespace MyCouch.Requests.Factories
 {
     public class GetDatabaseHttpRequestFactory : HttpRequestFactoryBase
     {
-        protected IDbRequestUrlGenerator DbRequestUrlGenerator { get; private set; }
+        protected IRequestUrlGenerator RequestUrlGenerator { get; private set; }
 
-        public GetDatabaseHttpRequestFactory(IConnection connection, IDbRequestUrlGenerator dbRequestUrlGenerator) : base(connection)
+        public GetDatabaseHttpRequestFactory(IConnection connection, IRequestUrlGenerator requestUrlGenerator) : base(connection)
         {
-            Ensure.That(dbRequestUrlGenerator, "dbRequestUrlGenerator").IsNotNull();
+            Ensure.That(requestUrlGenerator, "requestUrlGenerator").IsNotNull();
 
-            DbRequestUrlGenerator = dbRequestUrlGenerator;
+            RequestUrlGenerator = requestUrlGenerator;
         }
 
         public virtual HttpRequest Create(GetDatabaseRequest request)
@@ -26,7 +26,7 @@ namespace MyCouch.Requests.Factories
 
         protected virtual string GenerateRequestUrl(GetDatabaseRequest request)
         {
-            return DbRequestUrlGenerator.Generate(request.DbName);
+            return RequestUrlGenerator.Generate(request.DbName);
         }
     }
 }

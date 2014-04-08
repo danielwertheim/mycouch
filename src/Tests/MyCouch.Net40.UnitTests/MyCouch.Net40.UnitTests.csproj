@@ -115,8 +115,8 @@
     <Compile Include="..\MyCouch.Net45.UnitTests\Fakes\DbClientConnectionFake.cs">
       <Link>Fakes\DbClientConnectionFake.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.UnitTests\Net\AppendingDbRequestUrlGeneratorTests.cs">
-      <Link>Net\AppendingDbRequestUrlGeneratorTests.cs</Link>
+    <Compile Include="..\MyCouch.Net45.UnitTests\Net\AppendingRequestUrlGeneratorTests.cs">
+      <Link>Net\AppendingRequestUrlGeneratorTests.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45.UnitTests\Net\DbClientConnectionDbRequestUrlGeneratorTests.cs">
       <Link>Net\DbClientConnectionDbRequestUrlGeneratorTests.cs</Link>

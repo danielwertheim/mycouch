@@ -1,6 +1,6 @@
 namespace MyCouch.Net
 {
-    public interface IDbRequestUrlGenerator
+    public interface IRequestUrlGenerator
     {
         string Generate(string dbName);
     }

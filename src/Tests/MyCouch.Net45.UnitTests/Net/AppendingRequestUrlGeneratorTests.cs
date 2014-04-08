@@ -5,15 +5,15 @@ using Xunit;
 
 namespace MyCouch.UnitTests.Net
 {
-    public class AppendingDbRequestUrlGeneratorTests : UnitTestsOf<AppendingDbRequestUrlGenerator>
+    public class AppendingRequestUrlGeneratorTests : UnitTestsOf<AppendingRequestUrlGenerator>
     {
         private readonly Uri _fakeUri;
 
-        public AppendingDbRequestUrlGeneratorTests()
+        public AppendingRequestUrlGeneratorTests()
         {
             _fakeUri = new Uri("http://foo.com:5984");
 
-            SUT = new AppendingDbRequestUrlGenerator(_fakeUri);
+            SUT = new AppendingRequestUrlGenerator(_fakeUri);
         }
 
         [Fact]

@@ -16,7 +16,7 @@ namespace MyCouch.UnitTests.Requests.Factories
         public void When_db_client_connection_It_generates_correct_url()
         {
             var connection = new DbClientConnection(_dbUriFake);
-            SUT = new CompactDatabaseHttpRequestFactory(connection, new DbClientConnectionDbRequestUrlGenerator(connection));
+            SUT = new CompactDatabaseHttpRequestFactory(connection, new DbClientConnectionRequestUrlGenerator(connection));
 
             var r = SUT.Create(new CompactDatabaseRequest(connection.DbName));
 
@@ -27,7 +27,7 @@ namespace MyCouch.UnitTests.Requests.Factories
         public void When_server_client_connection_It_generates_correct_url()
         {
             var connection = new ServerClientConnection(_serverUriFake);
-            SUT = new CompactDatabaseHttpRequestFactory(connection, new AppendingDbRequestUrlGenerator(connection.Address));
+            SUT = new CompactDatabaseHttpRequestFactory(connection, new AppendingRequestUrlGenerator(connection.Address));
 
             var r = SUT.Create(new CompactDatabaseRequest("otherdb"));
 

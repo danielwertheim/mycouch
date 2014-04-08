@@ -135,11 +135,11 @@
     <Compile Include="Requests\BulkRequest.cs" />
     <Compile Include="Requests\CompactDatabaseRequest.cs" />
     <Compile Include="Requests\CopyDocumentRequest.cs" />
-    <Compile Include="Net\AppendingDbRequestUrlGenerator.cs" />
-    <Compile Include="Net\DbClientConnectionDbRequestUrlGenerator.cs" />
+    <Compile Include="Net\AppendingRequestUrlGenerator.cs" />
+    <Compile Include="Net\DbClientConnectionRequestUrlGenerator.cs" />
     <Compile Include="Requests\Factories\GetChangesHttpRequestFactoryBase.cs" />
     <Compile Include="Requests\Factories\GetContinuousChangesHttpRequestFactory.cs" />
-    <Compile Include="Net\IDbRequestUrlGenerator.cs" />
+    <Compile Include="Net\IRequestUrlGenerator.cs" />
     <Compile Include="Net\UrlParam.cs" />
     <Compile Include="Requests\HeadDatabaseRequest.cs" />
     <Compile Include="Requests\DeleteAttachmentRequest.cs" />

@@ -6,13 +6,13 @@ namespace MyCouch.Requests.Factories
 {
     public class CompactDatabaseHttpRequestFactory : HttpRequestFactoryBase
     {
-        protected IDbRequestUrlGenerator DbRequestUrlGenerator { get; private set; }
+        protected IRequestUrlGenerator RequestUrlGenerator { get; private set; }
 
-        public CompactDatabaseHttpRequestFactory(IConnection connection, IDbRequestUrlGenerator dbRequestUrlGenerator) : base(connection)
+        public CompactDatabaseHttpRequestFactory(IConnection connection, IRequestUrlGenerator requestUrlGenerator) : base(connection)
         {
-            Ensure.That(dbRequestUrlGenerator, "dbRequestUrlGenerator").IsNotNull();
+            Ensure.That(requestUrlGenerator, "RequestUrlGenerator").IsNotNull();
 
-            DbRequestUrlGenerator = dbRequestUrlGenerator;
+            RequestUrlGenerator = requestUrlGenerator;
         }
 
         public virtual HttpRequest Create(CompactDatabaseRequest request)
@@ -28,7 +28,7 @@ namespace MyCouch.Requests.Factories
 
         protected virtual string GenerateRequestUrl(CompactDatabaseRequest request)
         {
-            return string.Concat(DbRequestUrlGenerator.Generate(request.DbName), "/_compact");
+            return string.Concat(RequestUrlGenerator.Generate(request.DbName), "/_compact");
         }
     }
 }

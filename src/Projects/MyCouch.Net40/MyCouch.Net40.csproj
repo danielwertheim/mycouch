@@ -275,14 +275,14 @@
     <Compile Include="..\MyCouch.Net45\MyCouchUriBuilder.cs">
       <Link>MyCouchUriBuilder.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\Net\AppendingDbRequestUrlGenerator.cs">
-      <Link>Net\AppendingDbRequestUrlGenerator.cs</Link>
+    <Compile Include="..\MyCouch.Net45\Net\AppendingRequestUrlGenerator.cs">
+      <Link>Net\AppendingRequestUrlGenerator.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Net\BytesContent.cs">
       <Link>Net\BytesContent.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\Net\DbClientConnectionDbRequestUrlGenerator.cs">
-      <Link>Net\DbClientConnectionDbRequestUrlGenerator.cs</Link>
+    <Compile Include="..\MyCouch.Net45\Net\DbClientConnectionRequestUrlGenerator.cs">
+      <Link>Net\DbClientConnectionRequestUrlGenerator.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\net\HttpContentTypes.cs">
       <Link>Net\HttpContentTypes.cs</Link>
@@ -290,8 +290,8 @@
     <Compile Include="..\MyCouch.Net45\net\HttpRequest.cs">
       <Link>Net\HttpRequest.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\Net\IDbRequestUrlGenerator.cs">
-      <Link>Net\IDbRequestUrlGenerator.cs</Link>
+    <Compile Include="..\MyCouch.Net45\Net\IRequestUrlGenerator.cs">
+      <Link>Net\IRequestUrlGenerator.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\net\JsonContent.cs">
       <Link>Net\JsonContent.cs</Link>

@@ -6,7 +6,7 @@ using Xunit;
 
 namespace MyCouch.UnitTests.Net
 {
-    public class DbClientConnectionDbRequestUrlGeneratorTests : UnitTestsOf<DbClientConnectionDbRequestUrlGenerator>
+    public class DbClientConnectionDbRequestUrlGeneratorTests : UnitTestsOf<DbClientConnectionRequestUrlGenerator>
     {
         private readonly DbClientConnectionFake _fakeConnection;
 
@@ -14,7 +14,7 @@ namespace MyCouch.UnitTests.Net
         {
             _fakeConnection = new DbClientConnectionFake(new Uri("http://foo.com:5984/thedb"), "thedb");
 
-            SUT = new DbClientConnectionDbRequestUrlGenerator(_fakeConnection);
+            SUT = new DbClientConnectionRequestUrlGenerator(_fakeConnection);
         }
 
         [Fact]

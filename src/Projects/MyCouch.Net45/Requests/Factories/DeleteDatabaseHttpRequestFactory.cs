@@ -6,13 +6,13 @@ namespace MyCouch.Requests.Factories
 {
     public class DeleteDatabaseHttpRequestFactory : HttpRequestFactoryBase
     {
-        protected IDbRequestUrlGenerator DbRequestUrlGenerator { get; private set; }
+        protected IRequestUrlGenerator RequestUrlGenerator { get; private set; }
 
-        public DeleteDatabaseHttpRequestFactory(IConnection connection, IDbRequestUrlGenerator dbRequestUrlGenerator) : base(connection)
+        public DeleteDatabaseHttpRequestFactory(IConnection connection, IRequestUrlGenerator requestUrlGenerator) : base(connection)
         {
-            Ensure.That(dbRequestUrlGenerator, "dbRequestUrlGenerator").IsNotNull();
+            Ensure.That(requestUrlGenerator, "RequestUrlGenerator").IsNotNull();
 
-            DbRequestUrlGenerator = dbRequestUrlGenerator;
+            RequestUrlGenerator = requestUrlGenerator;
         }
 
         public virtual HttpRequest Create(DeleteDatabaseRequest request)
@@ -26,7 +26,7 @@ namespace MyCouch.Requests.Factories
 
         protected virtual string GenerateRequestUrl(DeleteDatabaseRequest request)
         {
-            return DbRequestUrlGenerator.Generate(request.DbName);
+            return RequestUrlGenerator.Generate(request.DbName);
         }
     }
 }

@@ -3,11 +3,11 @@ using EnsureThat;
 
 namespace MyCouch.Net
 {
-    public class AppendingDbRequestUrlGenerator : IDbRequestUrlGenerator
+    public class AppendingRequestUrlGenerator : IRequestUrlGenerator
     {
         private readonly string _basePath;
 
-        public AppendingDbRequestUrlGenerator(Uri baseAddress)
+        public AppendingRequestUrlGenerator(Uri baseAddress)
         {
             Ensure.That(baseAddress, "baseAddress").IsNotNull();
 

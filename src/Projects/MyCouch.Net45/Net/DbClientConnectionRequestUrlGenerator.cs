@@ -3,11 +3,11 @@ using EnsureThat;
 
 namespace MyCouch.Net
 {
-    public class DbClientConnectionDbRequestUrlGenerator : IDbRequestUrlGenerator
+    public class DbClientConnectionRequestUrlGenerator : IRequestUrlGenerator
     {
         private readonly IDbClientConnection _connection;
 
-        public DbClientConnectionDbRequestUrlGenerator(IDbClientConnection connection)
+        public DbClientConnectionRequestUrlGenerator(IDbClientConnection connection)
         {
             Ensure.That(connection, "connection").IsNotNull();
 
