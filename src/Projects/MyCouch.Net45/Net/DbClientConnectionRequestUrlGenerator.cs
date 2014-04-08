@@ -14,9 +14,9 @@ namespace MyCouch.Net
             _connection = connection;
         }
 
-        public string Generate(string dbName)
+        public string Generate(string resourceName)
         {
-            if (_connection.DbName != dbName)
+            if (_connection.DbName != resourceName)
                 throw new InvalidOperationException(ExceptionStrings.DbRequestUrlIsAgainstOtherDb);
 
             return _connection.Address.AbsoluteUri;

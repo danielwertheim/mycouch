@@ -2,6 +2,6 @@ namespace MyCouch.Net
 {
     public interface IRequestUrlGenerator
     {
-        string Generate(string dbName);
+        string Generate(string resourceName);
     }
 }
