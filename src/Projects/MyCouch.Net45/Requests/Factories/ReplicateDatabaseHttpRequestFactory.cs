@@ -1,6 +1,7 @@
 ﻿using System.Net.Http;
 using System.Text;
 using EnsureThat;
+using MyCouch.Extensions;
 using MyCouch.Net;
 using MyCouch.Responses;
 
@@ -43,6 +44,13 @@ namespace MyCouch.Requests.Factories
             json.AppendFormat(JsonScheme.MemberStringValueFormat, "source", request.Source);
             json.Append(JsonScheme.MemberDelimiter);
             json.AppendFormat(JsonScheme.MemberStringValueFormat, "target", request.Target);
+
+            if (request.CreateTarget.HasValue)
+            {
+                json.Append(JsonScheme.MemberDelimiter);
+                json.AppendFormat(JsonScheme.MemberValueFormat, "create_target", request.CreateTarget.Value.ToJsonString());
+            }
+
             json.Append(JsonScheme.EndObject);
 
             return json.ToString();

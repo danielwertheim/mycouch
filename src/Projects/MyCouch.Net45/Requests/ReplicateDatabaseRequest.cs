@@ -10,6 +10,7 @@ namespace MyCouch.Requests
     {
         public string Source { get; private set; }
         public string Target { get; private set; }
+        public bool? CreateTarget { get; set; }
 
         public ReplicateDatabaseRequest(string source, string target)
         {
