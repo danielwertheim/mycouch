@@ -86,7 +86,6 @@
     <Compile Include="CoreTests\StoreTests\CallbackQueryTests.cs" />
     <Compile Include="MyFactAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestFixtures\ReplicationDbsFixture.cs" />
     <Compile Include="TestFixtures\SearchFixture.cs" />
     <Compile Include="TestFixtures\ViewsFixture.cs" />
   </ItemGroup>
