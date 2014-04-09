@@ -69,7 +69,6 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ClientExtensions.cs" />
     <Compile Include="IntegrationTestsOf.cs" />
     <Compile Include="CoreTests\DbClientTests\AttachmentsTests.cs" />
     <Compile Include="CoreTests\DbClientTests\ChangesTests.cs" />
@@ -80,7 +79,6 @@
     <Compile Include="CloudantTests\SearchTests.cs" />
     <Compile Include="CoreTests\ServerClientTests\ActiveTasksTests.cs" />
     <Compile Include="CoreTests\ServerClientTests\DatabasesTests.cs" />
-    <Compile Include="CoreTests\ServerClientTests\ReplicationTests.cs" />
     <Compile Include="CoreTests\StoreTests\CrudTests.cs" />
     <Compile Include="CoreTests\StoreTests\ObservableQueryTests.cs" />
     <Compile Include="IntegrationTestsRuntime.cs" />
@@ -88,6 +86,7 @@
     <Compile Include="CoreTests\StoreTests\CallbackQueryTests.cs" />
     <Compile Include="MyFactAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestFixtures\ReplicationDbsFixture.cs" />
     <Compile Include="TestFixtures\SearchFixture.cs" />
     <Compile Include="TestFixtures\ViewsFixture.cs" />
   </ItemGroup>

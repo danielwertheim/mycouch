@@ -14,27 +14,31 @@ namespace MyCouch.Contexts
     public class Databases : ApiContextBase<IServerClientConnection>, IDatabases
     {
         protected TextResponseFactory TextResponseFactory { get; set; }
+        protected ReplicationResponseFactory ReplicationResponseFactory { get; set; }
+
         protected GetDatabaseHttpRequestFactory GetHttpRequestFactory { get; set; }
         protected HeadDatabaseHttpRequestFactory HeadHttpRequestFactory { get; set; }
         protected PutDatabaseHttpRequestFactory PutHttpRequestFactory { get; set; }
         protected DeleteDatabaseHttpRequestFactory DeleteHttpRequestFactory { get; set; }
         protected CompactDatabaseHttpRequestFactory CompactHttpRequestFactory { get; set; }
         protected ViewCleanupHttpRequestFactory ViewCleanupHttpRequestFactory { get; set; }
+        protected ReplicateDatabaseHttpRequestFactory ReplicateDatabaseHttpRequestFactory { get; set; }
 
         public Databases(IServerClientConnection connection, ISerializer serializer)
             : base(connection)
         {
             Ensure.That(serializer, "serializer").IsNotNull();
 
-            var requestUrlGenerator = new AppendingRequestUrlGenerator(Connection.Address);
-
             TextResponseFactory = new TextResponseFactory(serializer);
-            GetHttpRequestFactory = new GetDatabaseHttpRequestFactory(Connection, requestUrlGenerator);
-            HeadHttpRequestFactory = new HeadDatabaseHttpRequestFactory(Connection, requestUrlGenerator);
-            PutHttpRequestFactory = new PutDatabaseHttpRequestFactory(Connection, requestUrlGenerator);
-            DeleteHttpRequestFactory = new DeleteDatabaseHttpRequestFactory(Connection, requestUrlGenerator);
-            CompactHttpRequestFactory = new CompactDatabaseHttpRequestFactory(Connection, requestUrlGenerator);
-            ViewCleanupHttpRequestFactory = new ViewCleanupHttpRequestFactory(Connection, requestUrlGenerator);
+            ReplicationResponseFactory = new ReplicationResponseFactory(serializer);
+
+            GetHttpRequestFactory = new GetDatabaseHttpRequestFactory(Connection);
+            HeadHttpRequestFactory = new HeadDatabaseHttpRequestFactory(Connection);
+            PutHttpRequestFactory = new PutDatabaseHttpRequestFactory(Connection);
+            DeleteHttpRequestFactory = new DeleteDatabaseHttpRequestFactory(Connection);
+            CompactHttpRequestFactory = new CompactDatabaseHttpRequestFactory(Connection);
+            ViewCleanupHttpRequestFactory = new ViewCleanupHttpRequestFactory(Connection);
+            ReplicateDatabaseHttpRequestFactory = new ReplicateDatabaseHttpRequestFactory(Connection);
         }
 
         public virtual Task<TextResponse> HeadAsync(string dbName)
@@ -48,7 +52,7 @@ namespace MyCouch.Contexts
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
                 {
-                    return ProcessResponse(res);
+                    return ProcessTextResponse(res);
                 }
             }
         }
@@ -64,7 +68,7 @@ namespace MyCouch.Contexts
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
                 {
-                    return ProcessResponse(res);
+                    return ProcessTextResponse(res);
                 }
             }
         }
@@ -80,7 +84,7 @@ namespace MyCouch.Contexts
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
                 {
-                    return ProcessResponse(res);
+                    return ProcessTextResponse(res);
                 }
             }
         }
@@ -96,7 +100,7 @@ namespace MyCouch.Contexts
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
                 {
-                    return ProcessResponse(res);
+                    return ProcessTextResponse(res);
                 }
             }
         }
@@ -112,7 +116,7 @@ namespace MyCouch.Contexts
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
                 {
-                    return ProcessResponse(res);
+                    return ProcessTextResponse(res);
                 }
             }
         }
@@ -128,7 +132,23 @@ namespace MyCouch.Contexts
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
                 {
-                    return ProcessResponse(res);
+                    return ProcessTextResponse(res);
+                }
+            }
+        }
+
+        public virtual Task<ReplicationResponse> ReplicateAsync(string source, string target)
+        {
+            return ReplicateAsync(new ReplicateDatabaseRequest(source, target));
+        }
+
+        public virtual async Task<ReplicationResponse> ReplicateAsync(ReplicateDatabaseRequest request)
+        {
+            using (var httpRequest = CreateHttpRequest(request))
+            {
+                using (var res = await SendAsync(httpRequest).ForAwait())
+                {
+                    return ProcessReplicationResponse(res);
                 }
             }
         }
@@ -163,9 +183,19 @@ namespace MyCouch.Contexts
             return ViewCleanupHttpRequestFactory.Create(request);
         }
 
-        protected virtual TextResponse ProcessResponse(HttpResponseMessage response)
+        protected virtual HttpRequest CreateHttpRequest(ReplicateDatabaseRequest request)
+        {
+            return ReplicateDatabaseHttpRequestFactory.Create(request);
+        }
+
+        protected virtual TextResponse ProcessTextResponse(HttpResponseMessage response)
         {
             return TextResponseFactory.Create(response);
+        }
+
+        protected virtual ReplicationResponse ProcessReplicationResponse(HttpResponseMessage response)
+        {
+            return ReplicationResponseFactory.Create(response);
         }
     }
 }

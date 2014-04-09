@@ -106,9 +106,6 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.IntegrationTests\ClientExtensions.cs">
-      <Link>ClientExtensions.cs</Link>
-    </Compile>
     <Compile Include="..\mycouch.net45.integrationtests\cloudanttests\SearchTests.cs">
       <Link>CloudantTests\SearchTests.cs</Link>
     </Compile>
@@ -135,9 +132,6 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45.IntegrationTests\CoreTests\ServerClientTests\DatabasesTests.cs">
       <Link>CoreTests\ServerClientTests\DatabasesTests.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45.IntegrationTests\CoreTests\ServerClientTests\ReplicationTests.cs">
-      <Link>CoreTests\ServerClientTests\ReplicationTests.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45.IntegrationTests\CoreTests\StoreTests\CallbackQueryTests.cs">
       <Link>CoreTests\StoreTests\CallbackQueryTests.cs</Link>

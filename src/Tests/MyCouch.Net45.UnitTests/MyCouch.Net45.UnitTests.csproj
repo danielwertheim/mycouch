@@ -87,6 +87,7 @@
     <Compile Include="Requests\Factories\HeadDatabaseHttpRequestFactoryTests.cs" />
     <Compile Include="Requests\Factories\PutDatabaseHttpRequestFactoryTests.cs" />
     <Compile Include="Requests\Factories\QueryViewHttpRequestFactoryTests.cs" />
+    <Compile Include="Requests\Factories\ReplicateDatabaseHttpRequestFactoryTests.cs" />
     <Compile Include="Requests\Factories\ViewCleanupHttpRequestFactoryTests.cs" />
     <Compile Include="Requests\QueryViewRequestTests.cs" />
     <Compile Include="Schemes\EntityIdMemberTests.cs" />

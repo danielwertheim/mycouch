@@ -23,8 +23,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
 
         public void SetFixture(ViewsFixture data)
         {
-            data.Init(Environment);
-            ArtistsById = data.Artists;
+            ArtistsById = data.Init(Environment);
         }
 
         [MyFact(TestScenarios.MyCouchStore)]

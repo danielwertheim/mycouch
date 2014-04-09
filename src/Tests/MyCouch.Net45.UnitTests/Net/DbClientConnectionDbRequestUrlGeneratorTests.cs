@@ -1,26 +1,25 @@
 using System;
 using FluentAssertions;
 using MyCouch.Net;
-using MyCouch.UnitTests.Fakes;
 using Xunit;
 
 namespace MyCouch.UnitTests.Net
 {
-    public class DbClientConnectionDbRequestUrlGeneratorTests : UnitTestsOf<DbClientConnectionRequestUrlGenerator>
+    public class DbClientConnectionDbRequestUrlGeneratorTests : UnitTestsOf<ConstantRequestUrlGenerator>
     {
-        private readonly DbClientConnectionFake _fakeConnection;
+        private readonly Uri _fakeDbUri;
 
         public DbClientConnectionDbRequestUrlGeneratorTests()
         {
-            _fakeConnection = new DbClientConnectionFake(new Uri("http://foo.com:5984/thedb"), "thedb");
+            _fakeDbUri = new Uri("http://foo.com:5984/thedb");
 
-            SUT = new DbClientConnectionRequestUrlGenerator(_fakeConnection);
+            SUT = new ConstantRequestUrlGenerator(_fakeDbUri, "thedb");
         }
 
         [Fact]
         public void When_generating_for_same_db_It_returns_db_specific_url()
         {
-            SUT.Generate("thedb").Should().Be(_fakeConnection.Address.AbsoluteUri);
+            SUT.Generate("thedb").Should().Be(_fakeDbUri.AbsoluteUri);
         }
 
         [Fact]
@@ -28,7 +27,7 @@ namespace MyCouch.UnitTests.Net
         {
             Action a = () => SUT.Generate("904dee5404b34537b61ba05ce3f683cf");
 
-            a.ShouldThrow<InvalidOperationException>().WithMessage(ExceptionStrings.DbRequestUrlIsAgainstOtherDb);
+            a.ShouldThrow<InvalidOperationException>().WithMessage(ExceptionStrings.ConstantRequestUrlGenerationAgainstOtherDb);
         }
     }
 }

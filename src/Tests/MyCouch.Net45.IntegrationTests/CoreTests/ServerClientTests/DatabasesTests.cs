@@ -1,6 +1,10 @@
-﻿using System.Net;
+﻿using System;
+using System.Linq;
+using System.Net;
 using System.Net.Http;
+using FluentAssertions;
 using MyCouch.Testing;
+using MyCouch.Testing.TestData;
 
 namespace MyCouch.IntegrationTests.CoreTests.ServerClientTests
 {
@@ -11,22 +15,10 @@ namespace MyCouch.IntegrationTests.CoreTests.ServerClientTests
             SUT = ServerClient.Databases;
         }
 
-        [MyFact(TestScenarios.DatabasesContext, TestScenarios.CreateDb, TestScenarios.DeleteDb)]
-        public void Can_create_and_drop_db()
-        {
-            SUT.DeleteAsync(Environment.TempDbName).Wait();
-
-            var putResponse = SUT.PutAsync(Environment.TempDbName).Result;
-            putResponse.Should().Be(HttpMethod.Put, HttpStatusCode.Created);
-
-            var deleteResponse = SUT.DeleteAsync(Environment.TempDbName).Result;
-            deleteResponse.Should().Be(HttpMethod.Delete);
-        }
-
         [MyFact(TestScenarios.DatabasesContext)]
         public void When_Head_of_existing_db_The_response_should_be_200()
         {
-            var response = SUT.HeadAsync(DbClient.Connection.DbName).Result;
+            var response = SUT.HeadAsync(Environment.PrimaryDbName).Result;
 
             response.Should().Be(HttpMethod.Head);
         }
@@ -34,15 +26,15 @@ namespace MyCouch.IntegrationTests.CoreTests.ServerClientTests
         [MyFact(TestScenarios.DatabasesContext)]
         public void When_Get_of_existing_db_The_response_should_be_200()
         {
-            var response = SUT.GetAsync(DbClient.Connection.DbName).Result;
+            var response = SUT.GetAsync(Environment.PrimaryDbName).Result;
 
             response.Should().BeAnyJson(HttpMethod.Get);
         }
 
-        [MyFact(TestScenarios.DatabasesContext)]
+        [MyFact(TestScenarios.DatabasesContext, TestScenarios.CompactDbs)]
         public void When_Compact_of_existing_db_The_response_should_be_202()
         {
-            var response = SUT.CompactAsync(DbClient.Connection.DbName).Result;
+            var response = SUT.CompactAsync(Environment.TempDbName).Result;
 
             response.Should().BeOkJson(HttpMethod.Post, HttpStatusCode.Accepted);
         }
@@ -50,9 +42,27 @@ namespace MyCouch.IntegrationTests.CoreTests.ServerClientTests
         [MyFact(TestScenarios.DatabasesContext)]
         public void When_ViewCleanup_and_db_exists_The_response_be()
         {
-            var response = SUT.ViewCleanupAsync(DbClient.Connection.DbName).Result;
+            var response = SUT.ViewCleanupAsync(Environment.TempDbName).Result;
 
             response.Should().BeOkJson(HttpMethod.Post, HttpStatusCode.Accepted);
+        }
+
+        [MyFact(TestScenarios.DatabasesContext, TestScenarios.Replication)]
+        public void When_Replicate_and_no_changes_exists_The_response_indicates_success()
+        {
+            var response = SUT.ReplicateAsync(Environment.PrimaryDbName, Environment.SecondaryDbName).Result;
+
+            response.Should().BeSuccessfulButEmptyReplication();
+        }
+
+        [MyFact(TestScenarios.DatabasesContext, TestScenarios.Replication)]
+        public void When_Replicate_and_changes_exists_The_response_indicates_success()
+        {
+            DbClient.Documents.PostAsync(ClientTestData.Artists.Artist1Json);
+
+            var response = SUT.ReplicateAsync(Environment.PrimaryDbName, Environment.SecondaryDbName).Result;
+
+            response.Should().BeSuccessfulNonEmptyReplication();
         }
     }
 }

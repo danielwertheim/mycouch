@@ -26,15 +26,13 @@ namespace MyCouch.Contexts
         {
             Ensure.That(serializer, "serializer").IsNotNull();
 
-            var requestUrlGenerator = new DbClientConnectionRequestUrlGenerator(Connection);
-
             TextResponseFactory = new TextResponseFactory(serializer);
-            GetHttpRequestFactory = new GetDatabaseHttpRequestFactory(Connection, requestUrlGenerator);
-            HeadHttpRequestFactory = new HeadDatabaseHttpRequestFactory(Connection, requestUrlGenerator);
-            PutHttpRequestFactory = new PutDatabaseHttpRequestFactory(Connection, requestUrlGenerator);
-            DeleteHttpRequestFactory = new DeleteDatabaseHttpRequestFactory(Connection, requestUrlGenerator);
-            CompactHttpRequestFactory = new CompactDatabaseHttpRequestFactory(Connection, requestUrlGenerator);
-            ViewCleanupHttpRequestFactory = new ViewCleanupHttpRequestFactory(Connection, requestUrlGenerator);
+            GetHttpRequestFactory = new GetDatabaseHttpRequestFactory(Connection);
+            HeadHttpRequestFactory = new HeadDatabaseHttpRequestFactory(Connection);
+            PutHttpRequestFactory = new PutDatabaseHttpRequestFactory(Connection);
+            DeleteHttpRequestFactory = new DeleteDatabaseHttpRequestFactory(Connection);
+            CompactHttpRequestFactory = new CompactDatabaseHttpRequestFactory(Connection);
+            ViewCleanupHttpRequestFactory = new ViewCleanupHttpRequestFactory(Connection);
         }
 
         public virtual async Task<TextResponse> HeadAsync()

@@ -9,31 +9,27 @@ namespace MyCouch.IntegrationTests.TestFixtures
 {
     public class SearchFixture : IDisposable
     {
-        private TestEnvironment _environment;
+        private Animal[] _animals;
 
-        public Animal[] Animals { get; protected set; }
-
-        public void Init(TestEnvironment environment)
+        public Animal[] Init(TestEnvironment environment)
         {
-            if (_environment != null)
-                return;
+            if (_animals != null && _animals.Any())
+                return _animals;
 
-            _environment = environment;
+            IntegrationTestsRuntime.EnsureCleanEnvironment();
 
-            Animals = CloudantTestData.Animals.CreateAll();
+            _animals = CloudantTestData.Animals.CreateAll();
 
-            using (var client = IntegrationTestsRuntime.CreateCloudantDbClient(_environment))
+            using (var client = IntegrationTestsRuntime.CreateDbClient())
             {
-                client.ClearAllDocuments();
-
                 var bulk = new BulkRequest();
-                bulk.Include(Animals.Select(i => client.Entities.Serializer.Serialize(i)).ToArray());
+                bulk.Include(_animals.Select(i => client.Entities.Serializer.Serialize(i)).ToArray());
 
                 var bulkResponse = client.Documents.BulkAsync(bulk).Result;
 
                 foreach (var row in bulkResponse.Rows)
                 {
-                    var animal = Animals.Single(i => i.AnimalId == row.Id);
+                    var animal = _animals.Single(i => i.AnimalId == row.Id);
                     client.Entities.Reflector.RevMember.SetValueTo(animal, row.Rev);
                 }
 
@@ -43,6 +39,8 @@ namespace MyCouch.IntegrationTests.TestFixtures
                 var queries = queryRequests.Select(q => client.Views.QueryAsync(q) as Task).ToArray();
                 Task.WaitAll(queries);
             }
+
+            return _animals;
         }
 
         public void Dispose()
@@ -56,13 +54,7 @@ namespace MyCouch.IntegrationTests.TestFixtures
             if (!disposing)
                 return;
 
-            if (_environment == null)
-                return;
-
-            using (var client = IntegrationTestsRuntime.CreateCloudantDbClient(_environment))
-            {
-                client.ClearAllDocuments();
-            }
+            IntegrationTestsRuntime.EnsureCleanEnvironment();
         }
     }
 }

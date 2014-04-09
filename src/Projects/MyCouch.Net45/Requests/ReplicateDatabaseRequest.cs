@@ -6,10 +6,10 @@ namespace MyCouch.Requests
 #if !NETFX_CORE
     [Serializable]
 #endif
-    public class ReplicateDatabaseRequest
+    public class ReplicateDatabaseRequest : Request
     {
-        public string Source { get; set; }
-        public string Target { get; set; }
+        public string Source { get; private set; }
+        public string Target { get; private set; }
 
         public ReplicateDatabaseRequest(string source, string target)
         {

@@ -3,16 +3,13 @@
         "attachmentscontext", "changescontext",
         "databasecontext", "databasescontext",
         "documentscontext", "entitiescontext",
-        "replicationcontext", "viewscontext",
-        "mycouchstore", "createdb", "deletedb"],
-    "TempDbName":"mycouchtests-temp",
-    "ServerClient":{
-        "Url":"http://localhost:5984",
-        "User":"sa",
-        "Password":"p@ssword"},
-    "DbClient":{
-        "ServerUrl":"http://localhost:5984",
-        "DbName":"mycouchtests",
-        "User":"mycouchtester",
-        "Password":"p@ssword"}
+        "viewscontext",
+        "mycouchstore",
+        "createdbs", "deletedbs", "compactdbs", "replication"],
+    "ServerUrl": "http://localhost:5984",
+    "PrimaryDbName": "mycouchtests_pri",
+    "SecondaryDbName": "mycouchtests_sec",
+    "TempDbName": "mycouchtests_tmp",
+    "User":"sa",
+    "Password":"p@ssword"
 }

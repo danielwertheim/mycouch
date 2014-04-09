@@ -9,18 +9,17 @@ namespace MyCouch.IntegrationTests
         IDisposable where T : class
     {
         protected readonly TestEnvironment Environment;
-        protected IMyCouchServerClient ServerClient { get; set; }
-        protected IMyCouchClient DbClient { get; set; }
-        protected IMyCouchCloudantClient CloudantDbClient { get; set; }
+        protected IMyCouchServerClient ServerClient { get; private set; }
+        protected IMyCouchClient DbClient { get; private set; }
+        protected IMyCouchCloudantClient CloudantDbClient { get { return DbClient as IMyCouchCloudantClient; } }
 
         protected IntegrationTestsOf()
         {
             Environment = IntegrationTestsRuntime.Environment;
-            ServerClient = IntegrationTestsRuntime.CreateServerClient(Environment);
-            DbClient = IntegrationTestsRuntime.CreateDbClient(Environment);
-            CloudantDbClient = IntegrationTestsRuntime.CreateCloudantDbClient(Environment);
+            ServerClient = IntegrationTestsRuntime.CreateServerClient();
+            DbClient = IntegrationTestsRuntime.CreateDbClient();
 
-            CleanDb();
+            EnsureCleanEnvironment();
         }
 
         public void Dispose()
@@ -34,16 +33,14 @@ namespace MyCouch.IntegrationTests
             if(!disposing)
                 return;
 
-            CleanDb();
-
             ServerClient.Dispose();
             ServerClient = null;
 
             DbClient.Dispose();
             DbClient = null;
 
-            CloudantDbClient.Dispose();
-            CloudantDbClient = null;
+            if(CloudantDbClient != null)
+                CloudantDbClient.Dispose();
 
             var disposableSut = SUT as IDisposable;
             if(disposableSut == null)
@@ -52,10 +49,10 @@ namespace MyCouch.IntegrationTests
             disposableSut.Dispose();
         }
 
-        protected void CleanDb()
+        protected void EnsureCleanEnvironment()
         {
             if (!(this is IPreserveStatePerFixture))
-                DbClient.ClearAllDocuments();
+                IntegrationTestsRuntime.EnsureCleanEnvironment();
         }
     }
 }

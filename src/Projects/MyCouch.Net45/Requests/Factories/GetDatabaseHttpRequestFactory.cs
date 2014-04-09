@@ -8,11 +8,16 @@ namespace MyCouch.Requests.Factories
     {
         protected IRequestUrlGenerator RequestUrlGenerator { get; private set; }
 
-        public GetDatabaseHttpRequestFactory(IConnection connection, IRequestUrlGenerator requestUrlGenerator) : base(connection)
+        public GetDatabaseHttpRequestFactory(IDbClientConnection connection)
+            : base(connection)
         {
-            Ensure.That(requestUrlGenerator, "requestUrlGenerator").IsNotNull();
+            RequestUrlGenerator = new ConstantRequestUrlGenerator(connection.Address, connection.DbName);
+        }
 
-            RequestUrlGenerator = requestUrlGenerator;
+        public GetDatabaseHttpRequestFactory(IServerClientConnection connection)
+            : base(connection)
+        {
+            RequestUrlGenerator = new AppendingRequestUrlGenerator(connection.Address);
         }
 
         public virtual HttpRequest Create(GetDatabaseRequest request)

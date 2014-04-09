@@ -23,14 +23,14 @@ namespace MyCouch.Testing
             return new ContentResponseAssertions(response);
         }
 
-        public static SearcIndexResponseAssertions Should(this SearchIndexResponse response)
+        public static SearchIndexResponseAssertions Should(this SearchIndexResponse response)
         {
-            return new SearcIndexResponseAssertions(response);
+            return new SearchIndexResponseAssertions(response);
         }
 
-        public static SearcIndexResponseAssertions<TIncludedDoc> Should<TIncludedDoc>(this SearchIndexResponse<TIncludedDoc> response)
+        public static SearchIndexResponseAssertions<TIncludedDoc> Should<TIncludedDoc>(this SearchIndexResponse<TIncludedDoc> response)
         {
-            return new SearcIndexResponseAssertions<TIncludedDoc>(response);
+            return new SearchIndexResponseAssertions<TIncludedDoc>(response);
         }
 
         public static ViewQueryResponseAssertions Should(this ViewQueryResponse response)
@@ -72,6 +72,11 @@ namespace MyCouch.Testing
         {
             return new ChangesResponseAssertions<T>(response);
         }
+
+        public static ReplicationResponseAssertions Should(this ReplicationResponse response)
+        {
+            return new ReplicationResponseAssertions(response);
+        }
     }
 
     public class ObjectAssertions<T>
@@ -111,6 +116,39 @@ namespace MyCouch.Testing
         }
     }
 
+    public class ReplicationResponseAssertions : ResponseAssertions<ReplicationResponse>
+    {
+        [DebuggerStepThrough]
+        public ReplicationResponseAssertions(ReplicationResponse response) : base(response) { }
+
+        public void BeSuccessfulButEmptyReplication()
+        {
+            Response.Should().Be(HttpMethod.Post);
+            Response.NoChanges.Should().BeTrue();
+        }
+
+        public void BeSuccessfulNonEmptyReplication()
+        {
+            Response.Should().Be(HttpMethod.Post);
+            Response.NoChanges.Should().BeFalse();
+            Response.ReplicationIdVersion.Should().BeGreaterThan(0);
+            Response.History.Should().NotBeEmpty();
+            Response.SessionId.Should().NotBeNullOrWhiteSpace();
+            Response.History.First().SessionId.Should().Be(Response.SessionId);
+            Response.History.First().EndLastSeq.Should().Be(Response.SourceLastSeq);
+
+            foreach (var history in Response.History)
+            {
+                history.SessionId.Should().NotBeNullOrWhiteSpace();
+                history.StartTime.Should().BeAfter(DateTime.MinValue);
+                history.EndTime.Should().BeAfter(DateTime.MinValue);
+                history.EndLastSeq.Should().NotBeNullOrWhiteSpace();
+                history.StartLastSeq.Should().NotBeNullOrWhiteSpace();
+                history.RecordedSeq.Should().NotBeNullOrWhiteSpace();
+            }
+        }
+    }
+
     public class ContentResponseAssertions : ResponseAssertions<TextResponse>
     {
         [DebuggerStepThrough]
@@ -136,18 +174,18 @@ namespace MyCouch.Testing
         }
     }
 
-    public class SearcIndexResponseAssertions : SearcIndexResponseAssertions<string>
+    public class SearchIndexResponseAssertions : SearchIndexResponseAssertions<string>
     {
         [DebuggerStepThrough]
-        public SearcIndexResponseAssertions(SearchIndexResponse response) : base(response) { }
+        public SearchIndexResponseAssertions(SearchIndexResponse response) : base(response) { }
     }
 
-    public class SearcIndexResponseAssertions<TIncludedDoc>
+    public class SearchIndexResponseAssertions<TIncludedDoc>
     {
         protected readonly SearchIndexResponse<TIncludedDoc> Response;
 
         [DebuggerStepThrough]
-        public SearcIndexResponseAssertions(SearchIndexResponse<TIncludedDoc> response)
+        public SearchIndexResponseAssertions(SearchIndexResponse<TIncludedDoc> response)
         {
             Response = response;
         }

@@ -104,9 +104,6 @@
     <Compile Include="..\MyCouch.Net45\ChangesStyle.cs">
       <Link>ChangesStyle.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\Connection.cs">
-      <Link>Connection.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Net45\contexts\ApiContextBase.cs">
       <Link>Contexts\ApiContextBase.cs</Link>
     </Compile>
@@ -128,14 +125,8 @@
     <Compile Include="..\MyCouch.Net45\contexts\Entities.cs">
       <Link>Contexts\Entities.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\Contexts\Replication.cs">
-      <Link>Contexts\Replication.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Net45\contexts\Views.cs">
       <Link>Contexts\Views.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\DbClientConnection.cs">
-      <Link>DbClientConnection.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\DocumentAttribute.cs">
       <Link>DocumentAttribute.cs</Link>
@@ -242,9 +233,6 @@
     <Compile Include="..\MyCouch.Net45\IQueryParameters.cs">
       <Link>IQueryParameters.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\IReplication.cs">
-      <Link>IReplication.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Net45\IServerClientConnection.cs">
       <Link>IServerClientConnection.cs</Link>
     </Compile>
@@ -281,8 +269,14 @@
     <Compile Include="..\MyCouch.Net45\Net\BytesContent.cs">
       <Link>Net\BytesContent.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\Net\DbClientConnectionRequestUrlGenerator.cs">
-      <Link>Net\DbClientConnectionRequestUrlGenerator.cs</Link>
+    <Compile Include="..\MyCouch.Net45\Net\Connection.cs">
+      <Link>Net\Connection.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Net\ConstantRequestUrlGenerator.cs">
+      <Link>Net\ConstantRequestUrlGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Net\DbClientConnection.cs">
+      <Link>Net\DbClientConnection.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\net\HttpContentTypes.cs">
       <Link>Net\HttpContentTypes.cs</Link>
@@ -295,6 +289,9 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\net\JsonContent.cs">
       <Link>Net\JsonContent.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Net\ServerClientConnection.cs">
+      <Link>Net\ServerClientConnection.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Net\UrlParam.cs">
       <Link>Net\UrlParam.cs</Link>
@@ -415,6 +412,9 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\Factories\ReplaceDocumentHttpRequestFactory.cs">
       <Link>Requests\Factories\ReplaceDocumentHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Requests\Factories\ReplicateDatabaseHttpRequestFactory.cs">
+      <Link>Requests\Factories\ReplicateDatabaseHttpRequestFactory.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\Factories\ViewCleanupHttpRequestFactory.cs">
       <Link>Requests\Factories\ViewCleanupHttpRequestFactory.cs</Link>
@@ -551,11 +551,17 @@
     <Compile Include="..\MyCouch.Net45\Responses\Factories\Materializers\FailedResponseMaterializer.cs">
       <Link>Responses\Factories\Materializers\FailedResponseMaterializer.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\Factories\Materializers\ReplicationResponseMaterializer.cs">
+      <Link>Responses\Factories\Materializers\ReplicationResponseMaterializer.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\Responses\Factories\Materializers\TextResponseMaterializer.cs">
       <Link>Responses\Factories\Materializers\TextResponseMaterializer.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Responses\Factories\Materializers\ViewQueryResponseMaterializer.cs">
       <Link>Responses\Factories\Materializers\ViewQueryResponseMaterializer.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\Factories\ReplicationResponseFactory.cs">
+      <Link>Responses\Factories\ReplicationResponseFactory.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\responses\factories\ResponseFactoryBase.cs">
       <Link>Responses\Factories\ResponseFactoryBase.cs</Link>
@@ -571,6 +577,9 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\Responses\JsonScheme.cs">
       <Link>Responses\JsonScheme.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\ReplicationResponse.cs">
+      <Link>Responses\ReplicationResponse.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\responses\Response.cs">
       <Link>Responses\Response.cs</Link>
@@ -646,9 +655,6 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\Serialization\Writers\DocumentJsonWriter.cs">
       <Link>Serialization\Writers\DocumentJsonWriter.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\ServerClientConnection.cs">
-      <Link>ServerClientConnection.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Stale.cs">
       <Link>Stale.cs</Link>

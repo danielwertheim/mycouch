@@ -169,6 +169,9 @@
     <Compile Include="..\mycouch.net45.unittests\requests\factories\QueryViewHttpRequestFactoryTests.cs">
       <Link>Requests\Factories\QueryViewHttpRequestFactoryTests.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45.UnitTests\Requests\Factories\ReplicateDatabaseHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\ReplicateDatabaseHttpRequestFactoryTests.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45.UnitTests\Requests\Factories\ViewCleanupHttpRequestFactoryTests.cs">
       <Link>Requests\Factories\ViewCleanupHttpRequestFactoryTests.cs</Link>
     </Compile>
