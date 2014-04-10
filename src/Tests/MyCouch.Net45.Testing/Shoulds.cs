@@ -127,7 +127,20 @@ namespace MyCouch.Testing
             Response.NoChanges.Should().BeTrue();
         }
 
-        public void BeSuccessfulNonEmptyReplication()
+        public void BeSuccessfulContinousReplication()
+        {
+            Response.Should().Be(HttpMethod.Post, HttpStatusCode.Accepted);
+            Response.LocalId.Should().NotBeNullOrWhiteSpace();
+        }
+
+        public void BeSuccessfulCancelledContinousReplication(string localId)
+        {
+            Response.Should().Be(HttpMethod.Post, HttpStatusCode.OK);
+            Response.LocalId.Should().NotBeNullOrWhiteSpace();
+            Response.LocalId.Should().Be(localId);
+        }
+
+        public void BeSuccessfulNonEmptyReplication(int expectedNumOfReplDocs)
         {
             Response.Should().Be(HttpMethod.Post);
             Response.NoChanges.Should().BeFalse();
@@ -145,6 +158,12 @@ namespace MyCouch.Testing
                 history.EndLastSeq.Should().NotBeNullOrWhiteSpace();
                 history.StartLastSeq.Should().NotBeNullOrWhiteSpace();
                 history.RecordedSeq.Should().NotBeNullOrWhiteSpace();
+
+                history.MissingFound.Should().Be(expectedNumOfReplDocs);
+                history.MissingChecked.Should().Be(expectedNumOfReplDocs);
+                history.DocsRead.Should().Be(expectedNumOfReplDocs);
+                history.DocsWritten.Should().Be(expectedNumOfReplDocs);
+                history.DocWriteFailures.Should().Be(0);
             }
         }
     }

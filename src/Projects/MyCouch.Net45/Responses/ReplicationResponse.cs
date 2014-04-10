@@ -23,6 +23,9 @@ namespace MyCouch.Responses
         [JsonProperty(JsonScheme.History)]
         public HistoryInfo[] History { get; set; }
 
+        [JsonProperty(JsonScheme.LocalId)]
+        public string LocalId { get; set; }
+
 #if !NETFX_CORE
         [Serializable]
 #endif

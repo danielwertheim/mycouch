@@ -96,5 +96,16 @@ namespace MyCouch.UnitTests.Requests.Factories
 
             r.Content.ReadAsStringAsync().Result.Should().Be("{\"source\":\"fakedb1\",\"target\":\"fakedb2\",\"doc_ids\":[\"d1\",\"d2\"]}");
         }
+
+        [Fact]
+        public void When_used_with_ServerClientConnection_and_Continuous_is_true_It_generates_request_body_with_continuous_true()
+        {
+            var connection = new ServerClientConnectionFake(new Uri("http://foo.com:5984"));
+            SUT = new ReplicateDatabaseHttpRequestFactory(connection);
+
+            var r = SUT.Create(new ReplicateDatabaseRequest("fakedb1", "fakedb2") { Continuous = true });
+
+            r.Content.ReadAsStringAsync().Result.Should().Be("{\"source\":\"fakedb1\",\"target\":\"fakedb2\",\"continuous\":true}");
+        }
     }
 }

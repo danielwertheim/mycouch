@@ -12,6 +12,7 @@ namespace MyCouch.Requests
         public string Target { get; private set; }
         public string[] DocIds { get; set; }
         public bool? CreateTarget { get; set; }
+        public bool? Continuous { get; set; }
         public bool? Cancel { get; set; }
         public string Proxy { get; set; }
 
