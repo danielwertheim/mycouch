@@ -74,5 +74,16 @@ namespace MyCouch.UnitTests.Requests.Factories
 
             r.Content.ReadAsStringAsync().Result.Should().Be("{\"source\":\"fakedb1\",\"target\":\"fakedb2\",\"cancel\":false}");
         }
+
+        [Fact]
+        public void When_used_with_ServerClientConnection_and_DocIds_are_specified_It_generates_request_body_with_doc_ids()
+        {
+            var connection = new ServerClientConnectionFake(new Uri("http://foo.com:5984"));
+            SUT = new ReplicateDatabaseHttpRequestFactory(connection);
+
+            var r = SUT.Create(new ReplicateDatabaseRequest("fakedb1", "fakedb2") { DocIds = new[]{"d1", "d2"} });
+
+            r.Content.ReadAsStringAsync().Result.Should().Be("{\"source\":\"fakedb1\",\"target\":\"fakedb2\",\"doc_ids\":[\"d1\",\"d2\"]}");
+        }
     }
 }

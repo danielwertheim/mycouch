@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System.Linq;
+using System.Net.Http;
 using System.Text;
 using EnsureThat;
 using MyCouch.Extensions;
@@ -44,6 +45,15 @@ namespace MyCouch.Requests.Factories
             json.AppendFormat(JsonScheme.MemberStringValueFormat, "source", request.Source);
             json.Append(JsonScheme.MemberDelimiter);
             json.AppendFormat(JsonScheme.MemberStringValueFormat, "target", request.Target);
+
+            if (request.DocIds != null && request.DocIds.Any())
+            {
+                var docIdsString = string.Join(",", request.DocIds
+                    .Where(id => !string.IsNullOrWhiteSpace(id))
+                    .Select(id => string.Format("\"{0}\"", id)));
+                json.Append(JsonScheme.MemberDelimiter);
+                json.AppendFormat(JsonScheme.MemberArrayValueFormat, "doc_ids", docIdsString);
+            }
 
             if (request.CreateTarget.HasValue)
             {

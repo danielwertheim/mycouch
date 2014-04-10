@@ -10,6 +10,7 @@ namespace MyCouch.Requests
     {
         public string Source { get; private set; }
         public string Target { get; private set; }
+        public string[] DocIds { get; set; }
         public bool? CreateTarget { get; set; }
         public bool? Cancel { get; set; }
 
