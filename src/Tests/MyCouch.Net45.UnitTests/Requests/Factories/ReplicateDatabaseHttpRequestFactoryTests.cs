@@ -52,5 +52,27 @@ namespace MyCouch.UnitTests.Requests.Factories
 
             r.Content.ReadAsStringAsync().Result.Should().Be("{\"source\":\"fakedb1\",\"target\":\"fakedb2\",\"create_target\":false}");
         }
+
+        [Fact]
+        public void When_used_with_ServerClientConnection_and_Cancel_is_true_It_generates_request_body_with_cancel_true()
+        {
+            var connection = new ServerClientConnectionFake(new Uri("http://foo.com:5984"));
+            SUT = new ReplicateDatabaseHttpRequestFactory(connection);
+
+            var r = SUT.Create(new ReplicateDatabaseRequest("fakedb1", "fakedb2") { Cancel = true });
+
+            r.Content.ReadAsStringAsync().Result.Should().Be("{\"source\":\"fakedb1\",\"target\":\"fakedb2\",\"cancel\":true}");
+        }
+
+        [Fact]
+        public void When_used_with_ServerClientConnection_and_Cancel_is_false_It_generates_request_body_with_cancel_false()
+        {
+            var connection = new ServerClientConnectionFake(new Uri("http://foo.com:5984"));
+            SUT = new ReplicateDatabaseHttpRequestFactory(connection);
+
+            var r = SUT.Create(new ReplicateDatabaseRequest("fakedb1", "fakedb2") { Cancel = false });
+
+            r.Content.ReadAsStringAsync().Result.Should().Be("{\"source\":\"fakedb1\",\"target\":\"fakedb2\",\"cancel\":false}");
+        }
     }
 }

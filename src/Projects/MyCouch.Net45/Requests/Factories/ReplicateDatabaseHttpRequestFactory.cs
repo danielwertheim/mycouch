@@ -51,6 +51,12 @@ namespace MyCouch.Requests.Factories
                 json.AppendFormat(JsonScheme.MemberValueFormat, "create_target", request.CreateTarget.Value.ToJsonString());
             }
 
+            if (request.Cancel.HasValue)
+            {
+                json.Append(JsonScheme.MemberDelimiter);
+                json.AppendFormat(JsonScheme.MemberValueFormat, "cancel", request.Cancel.Value.ToJsonString());
+            }
+
             json.Append(JsonScheme.EndObject);
 
             return json.ToString();
