@@ -21,11 +21,11 @@ namespace MyCouch.Requests.Factories
         {
             Ensure.That(request, "request").IsNotNull();
 
-            var createHttpRequest = CreateFor<ReplicateDatabaseRequest>(HttpMethod.Post, GenerateRequestUrl(request));
+            var httpRequest = CreateFor<ReplicateDatabaseRequest>(HttpMethod.Post, GenerateRequestUrl(request));
 
-            createHttpRequest.SetJsonContent(GenerateBody(request));
+            httpRequest.SetJsonContent(GenerateRequestBody(request));
 
-            return createHttpRequest;
+            return httpRequest;
         }
 
         protected virtual string GenerateRequestUrl(ReplicateDatabaseRequest request)
@@ -33,7 +33,7 @@ namespace MyCouch.Requests.Factories
             return RequestUrlGenerator.Generate("_replicate");
         }
 
-        protected virtual string GenerateBody(ReplicateDatabaseRequest request)
+        protected virtual string GenerateRequestBody(ReplicateDatabaseRequest request)
         {
             Ensure.That(request, "request").IsNotNull();
             Ensure.That(request.Source, "request.Source").IsNotNullOrWhiteSpace();
