@@ -350,7 +350,7 @@ namespace MyCouch
             if (response.IsSuccess)
                 return;
 
-            throw new MyCouchException(response);
+            throw new MyCouchResponseException(response);
         }
     }
 

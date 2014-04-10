@@ -113,7 +113,7 @@
     <Compile Include="IDocuments.cs" />
     <Compile Include="IEntities.cs" />
     <Compile Include="IViews.cs" />
-    <Compile Include="MyCouchException.cs" />
+    <Compile Include="MyCouchResponseException.cs" />
     <Compile Include="MyCouchRuntime.cs" />
     <Compile Include="MyCouchServerClient.cs" />
     <Compile Include="MyCouchServerClientBootstrapper.cs" />

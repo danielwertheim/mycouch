@@ -160,7 +160,7 @@ namespace MyCouch.IntegrationTests
             {
                 var put = client.Databases.PutAsync(dbName).Result;
                 if (!put.IsSuccess)
-                    throw new MyCouchException(put);
+                    throw new MyCouchResponseException(put);
             }
         }
 
@@ -173,7 +173,7 @@ namespace MyCouch.IntegrationTests
 
                 var delete = client.Databases.DeleteAsync(dbName).Result;
                 if (!delete.IsSuccess)
-                    throw new MyCouchException(delete);
+                    throw new MyCouchResponseException(delete);
             }
         }
 
