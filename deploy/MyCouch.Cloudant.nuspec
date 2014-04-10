@@ -23,7 +23,7 @@
     <licenseUrl>https://github.com/danielwertheim/MyCouch#license</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <releaseNotes>Can be found on project site: https://github.com/danielwertheim/mycouch/wiki/release-notes</releaseNotes>
-    <tags>couchdb cloudant lucene nosql poco async asynchronous winrt</tags>
+    <tags>couchdb cloudant lucene nosql</tags>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System.Configuration" targetFramework="net40" />
       <frameworkAssembly assemblyName="System.Configuration" targetFramework="net45" />
