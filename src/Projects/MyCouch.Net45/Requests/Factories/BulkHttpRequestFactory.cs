@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using System.Text;
 using EnsureThat;
 using MyCouch.Net;
 
@@ -12,16 +13,33 @@ namespace MyCouch.Requests.Factories
         {
             Ensure.That(request, "request").IsNotNull();
 
-            var createHttpRequest = CreateFor<BulkRequest>(HttpMethod.Post, GenerateRequestUrl(request));
+            var httpRequest = CreateFor<BulkRequest>(HttpMethod.Post, GenerateRequestUrl(request));
 
-            createHttpRequest.SetJsonContent(request.ToJson());
+            httpRequest.SetJsonContent(GenerateRequestBody(request));
 
-            return createHttpRequest;
+            return httpRequest;
         }
 
         protected virtual string GenerateRequestUrl(BulkRequest request)
         {
             return string.Format("{0}/_bulk_docs", Connection.Address);
+        }
+
+        protected virtual string GenerateRequestBody(BulkRequest request)
+        {
+            var sb = new StringBuilder();
+            var documents = request.GetDocuments();
+
+            sb.Append("{\"docs\":[");
+            for (var i = 0; i < documents.Length; i++)
+            {
+                sb.Append(documents[i]);
+                if (i < documents.Length - 1)
+                    sb.Append(",");
+            }
+            sb.Append("]}");
+
+            return sb.ToString();
         }
     }
 }

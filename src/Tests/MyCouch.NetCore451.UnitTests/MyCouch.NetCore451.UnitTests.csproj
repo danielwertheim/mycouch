@@ -139,8 +139,8 @@
     <Compile Include="..\MyCouch.Net45.UnitTests\QueryConfigurationTests.cs">
       <Link>QueryConfigurationTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.UnitTests\Requests\BulkRequestTests.cs">
-      <Link>Requests\BulkRequestTests.cs</Link>
+    <Compile Include="..\MyCouch.Net45.UnitTests\Requests\Factories\BulkHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\BulkHttpRequestFactoryTests.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45.UnitTests\Requests\Factories\CompactDatabaseHttpRequestFactoryTests.cs">
       <Link>Requests\Factories\CompactDatabaseHttpRequestFactoryTests.cs</Link>

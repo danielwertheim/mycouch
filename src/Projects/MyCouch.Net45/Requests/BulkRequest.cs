@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
+using System.Linq;
 
 namespace MyCouch.Requests
 {
@@ -10,11 +9,22 @@ namespace MyCouch.Requests
 #endif
     public class BulkRequest : Request
     {
-        protected readonly List<string> Docs;
+        protected List<string> Documents { get; private set; }
+
+        public virtual bool IsEmpty { get { return !Documents.Any(); } }
 
         public BulkRequest()
         {
-            Docs = new List<string>();
+            Documents = new List<string>();
+        }
+
+        /// <summary>
+        /// Returns the documents that are included in this bulk request.
+        /// </summary>
+        /// <returns></returns>
+        public virtual string[] GetDocuments()
+        {
+            return Documents.ToArray();
         }
 
         /// <summary>
@@ -25,7 +35,7 @@ namespace MyCouch.Requests
         /// <returns></returns>
         public virtual BulkRequest Include(params string[] docs)
         {
-            Docs.AddRange(docs);
+            Documents.AddRange(docs);
 
             return this;
         }
@@ -41,25 +51,6 @@ namespace MyCouch.Requests
             Include(string.Format("{{\"_id\":\"{0}\",\"_rev\":\"{1}\",\"_deleted\":true}}", id, rev));
 
             return this;
-        }
-
-        public virtual string ToJson()
-        {
-            var sb = new StringBuilder();
-
-            using (var wr = new StringWriter(sb))
-            {
-                wr.Write("{\"docs\":[");
-                for (var i = 0; i < Docs.Count; i++)
-                {
-                    wr.Write(Docs[i]);
-                    if (i < Docs.Count - 1)
-                        wr.Write(",");
-                }
-                wr.Write("]}");
-            }
-
-            return sb.ToString();
         }
     }
 }
