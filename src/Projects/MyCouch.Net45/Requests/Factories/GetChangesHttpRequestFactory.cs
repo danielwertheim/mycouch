@@ -6,7 +6,7 @@ namespace MyCouch.Requests.Factories
 {
     public class GetChangesHttpRequestFactory : GetChangesHttpRequestFactoryBase
     {
-        public GetChangesHttpRequestFactory(IConnection connection) : base(connection) { }
+        public GetChangesHttpRequestFactory(IDbClientConnection connection) : base(connection) { }
 
         public override HttpRequest Create(GetChangesRequest request)
         {

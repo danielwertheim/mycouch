@@ -2,11 +2,25 @@
 {
     public static class ExceptionStrings
     {
-        public static string BasicHttpClientConnectionUriIsMissingDb
+        public static string ConstantRequestUrlGenerationAgainstOtherDb
         {
-            get { return "No database seems to be specified."; }
+            get { return "Seems like an URL is being generated against wrong resource."; }
         }
 
+        public static string CanNotExtractDbNameFromDbUri
+        {
+            get { return "Could not extract DbName from passed URI: {0}. Please specify using specific contructor."; }
+        }
+
+        public static string ServerClientSeemsToConnectToDb
+        {
+            get { return "The URI: {0}, seems to specify a DB. A server client should not have a DB specified."; }
+        }
+
+        public static string PutRequestIsMissingIdInUrl
+        {
+            get { return "PUT requests must have an id part of the URL."; }
+        }
         public static string QueryResponseRowsDeserializerNeedsJsonArray
         {
             get { return "When deserializing query response rows, the JSON-reader should point to the Start of an array."; }

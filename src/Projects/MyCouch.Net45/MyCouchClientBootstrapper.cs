@@ -68,32 +68,32 @@ namespace MyCouch
         /// <summary>
         /// Used e.g. for bootstraping <see cref="IMyCouchClient.Changes"/>.
         /// </summary>
-        public Func<IConnection, IChanges> ChangesFn { get; set; }
+        public Func<IDbClientConnection, IChanges> ChangesFn { get; set; }
 
         /// <summary>
         /// Used e.g. for bootstraping <see cref="IMyCouchClient.Attachments"/>.
         /// </summary>
-        public Func<IConnection, IAttachments> AttachmentsFn { get; set; }
+        public Func<IDbClientConnection, IAttachments> AttachmentsFn { get; set; }
 
         /// <summary>
         /// Used e.g. for bootstraping <see cref="IMyCouchClient.Database"/>.
         /// </summary>
-        public Func<IConnection, IDatabase> DatabasesFn { get; set; }
+        public Func<IDbClientConnection, IDatabase> DatabasesFn { get; set; }
 
         /// <summary>
         /// Used e.g. for bootstraping <see cref="IMyCouchClient.Documents"/>.
         /// </summary>
-        public Func<IConnection, IDocuments> DocumentsFn { get; set; }
+        public Func<IDbClientConnection, IDocuments> DocumentsFn { get; set; }
 
         /// <summary>
         /// Used e.g. for bootstraping <see cref="IMyCouchClient.Entities"/>.
         /// </summary>
-        public Func<IConnection, IEntities> EntitiesFn { get; set; }
+        public Func<IDbClientConnection, IEntities> EntitiesFn { get; set; }
 
         /// <summary>
         /// Used e.g. for bootstraping <see cref="IMyCouchClient.Views"/>.
         /// </summary>
-        public Func<IConnection, IViews> ViewsFn { get; set; }
+        public Func<IDbClientConnection, IViews> ViewsFn { get; set; }
 
         public MyCouchClientBootstrapper()
         {

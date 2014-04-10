@@ -1,8 +1,13 @@
 # MyCouch #
 The asynchronous CouchDb and Cloudant client for .Net - builds on top of the asynchronous HTTP client and uses JSON.Net to provide flexible serialization behaviour. It tries to keep the domain language of CouchDb instead of bringing in generic repositories and other confusing stuff. MyCouch lets you work with raw JSON and/or entities/POCOS without requiring any implementation of interfaces, baseclasses etc. MyCouch provides you with some model conventions like injection of `$doctype` to the document. It is plug-gable. If you don't like some piece, then hook in your implementation instead.
 
-## Documentation ##
+## NOTE! ##
+**It's your data.** Ensure to **test against isolated test-environments and test-accounts first** e.g. a separate Cloudant account, specific CouchDb instances etc.
+
+## Documentation, Roadmap, Milestones & Issues ##
 The documentation is contained in the [project wiki](https://github.com/danielwertheim/mycouch/wiki).
+
+The ["Issues list" here on GitHub](https://github.com/danielwertheim/mycouch/issues) is used for tracking issues and headings.
 
 ## More MyCouch projects ##
 [MyCouch.AspNet.Identity](https://github.com/danielwertheim/mycouch.aspnet.identity) - an ASP.Net identity provider for CouchDb and Cloudant
@@ -49,9 +54,6 @@ using(var client = new MyCouchClient("http://localhost:5984/mydb"))
     await client.Entities.PostAsync(new { Name = "Daniel" });
 }
 ```
-
-## Trello board
-A [public Trello board](https://trello.com/b/wuDUldwD/mycouch-main) is used instead of a "roadmap".
 
 ## Get up and running with the source ##
 - For .Net4.0 and .Net4.5, Visual Studio 2012 is needed.

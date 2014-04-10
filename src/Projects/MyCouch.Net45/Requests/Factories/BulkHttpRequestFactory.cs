@@ -6,7 +6,7 @@ namespace MyCouch.Requests.Factories
 {
     public class BulkHttpRequestFactory : HttpRequestFactoryBase
     {
-        public BulkHttpRequestFactory(IConnection connection) : base(connection) { }
+        public BulkHttpRequestFactory(IDbClientConnection connection) : base(connection) { }
 
         public virtual HttpRequest Create(BulkRequest request)
         {

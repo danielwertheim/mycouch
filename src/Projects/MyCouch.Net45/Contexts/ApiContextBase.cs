@@ -6,11 +6,11 @@ using MyCouch.Net;
 
 namespace MyCouch.Contexts
 {
-    public abstract class ApiContextBase
+    public abstract class ApiContextBase<TConnection> where TConnection : class, IConnection
     {
-        protected readonly IConnection Connection;
+        protected TConnection Connection { get; private set; }
 
-        protected ApiContextBase(IConnection connection)
+        protected ApiContextBase(TConnection connection)
         {
             Ensure.That(connection, "connection").IsNotNull();
 

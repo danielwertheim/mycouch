@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using MyCouch.Cloudant;
 using MyCouch.Net;
+using MyCouch.Requests;
+using MyCouch.Responses;
 using Newtonsoft.Json;
 
 namespace MyCouch.IntegrationTests
@@ -11,18 +14,17 @@ namespace MyCouch.IntegrationTests
     {
         private const string TestEnvironmentsBaseUrl = "http://localhost:8991/testenvironments/";
 
-        internal static readonly TestEnvironment CoreEnvironment;
-        internal static readonly TestEnvironment TempClientEnvironment;
-        internal static readonly TestEnvironment CloudantClientEnvironment;
+        internal static readonly TestEnvironment Environment;
 
         static IntegrationTestsRuntime()
         {
             using (var c = new HttpClient())
             {
-                CoreEnvironment = GetTestEnvironment(c, "normal");
-                TempClientEnvironment = GetTestEnvironment(c, "temp");
-                CloudantClientEnvironment = GetTestEnvironment(c, "cloudant");
+                Environment = GetTestEnvironment(c, "normal");
             }
+
+            if(Environment.IsAgainstCloudant() && !Environment.HasSupportFor(TestScenarios.Cloudant))
+                throw new NotSupportedException("The test environment's ServerClient and/or DbClient is configured to run against Cloudant, but the environment has no support for Cloudant.");
         }
 
         private static TestEnvironment GetTestEnvironment(HttpClient client, string envName)
@@ -40,41 +42,48 @@ namespace MyCouch.IntegrationTests
             }
             catch (Exception ex)
             {
-                throw new AggregateException("Could not load test environment settings for: " + TestEnvironmentsBaseUrl + envName, ex);
+                throw new Exception("Could not load test environment settings for: " + TestEnvironmentsBaseUrl + envName, ex);
             }
         }
 
-        internal static IMyCouchClient CreateClient(TestEnvironment environment)
+        internal static IMyCouchServerClient CreateServerClient()
         {
-            var config = environment.Client;
-            var uriBuilder = new MyCouchUriBuilder(config.ServerUrl)
-                .SetDbName(config.DbName);
+            var config = Environment;
+            var uriBuilder = new MyCouchUriBuilder(config.ServerUrl);
 
-            if(config.HasCredentials())
+            if (config.HasCredentials())
                 uriBuilder.SetBasicCredentials(config.User, config.Password);
 
             return config.IsAgainstCloudant()
-                ? new MyCouchClient(new CustomCloudantConnection(uriBuilder.Build()))
+                ? new MyCouchServerClient(new CustomCloudantServerClientConnection(uriBuilder.Build()))
+                : new MyCouchServerClient(uriBuilder.Build());
+        }
+
+        internal static IMyCouchClient CreateDbClient()
+        {
+            return CreateDbClient(Environment.PrimaryDbName);
+        }
+
+        private static IMyCouchClient CreateDbClient(string dbName)
+        {
+            var config = Environment;
+            var uriBuilder = new MyCouchUriBuilder(config.ServerUrl)
+                .SetDbName(dbName);
+
+            if (config.HasCredentials())
+                uriBuilder.SetBasicCredentials(config.User, config.Password);
+
+            return config.IsAgainstCloudant()
+                ? new MyCouchCloudantClient(new CustomCloudantDbClientConnection(uriBuilder.Build()))
                 : new MyCouchClient(uriBuilder.Build());
         }
 
-        internal static IMyCouchCloudantClient CreateCloudantClient(TestEnvironment environment)
+        private class CustomCloudantDbClientConnection : DbClientConnection
         {
-            if(!CloudantClientEnvironment.Client.IsAgainstCloudant())
-                throw new Exception("The configuration for the Cloudant test environment does not seem to point to a Cloudant Db.");
-
-            var cfg = CloudantClientEnvironment.Client;
-            var uriBuilder = new MyCouchUriBuilder(cfg.ServerUrl)
-                .SetDbName(cfg.DbName)
-                .SetBasicCredentials(cfg.User, cfg.Password);
-
-            return new MyCouchCloudantClient(new CustomCloudantConnection(uriBuilder.Build()));
-        }
-
-        private class CustomCloudantConnection : BasicHttpClientConnection
-        {
-            public CustomCloudantConnection(Uri uri)
-                : base(uri) { }
+            public CustomCloudantDbClientConnection(Uri uri)
+                : base(uri)
+            {
+            }
 
             protected override HttpRequest OnBeforeSend(HttpRequest httpRequest)
             {
@@ -94,35 +103,171 @@ namespace MyCouch.IntegrationTests
                 return base.OnBeforeSend(httpRequest);
             }
         }
+
+        private class CustomCloudantServerClientConnection : ServerClientConnection
+        {
+            public CustomCloudantServerClientConnection(Uri uri)
+                : base(uri)
+            {
+            }
+
+            protected override HttpRequest OnBeforeSend(HttpRequest httpRequest)
+            {
+                if (httpRequest.Method == HttpMethod.Post || httpRequest.Method == HttpMethod.Put || httpRequest.Method == HttpMethod.Delete)
+                {
+                    httpRequest.RequestUri = string.IsNullOrEmpty(httpRequest.RequestUri.Query)
+                        ? new Uri(httpRequest.RequestUri + "?w=3")
+                        : new Uri(httpRequest.RequestUri + "&w=3");
+                }
+
+                if (httpRequest.Method == HttpMethod.Get || httpRequest.Method == HttpMethod.Head)
+                {
+                    httpRequest.RequestUri = string.IsNullOrEmpty(httpRequest.RequestUri.Query)
+                        ? new Uri(httpRequest.RequestUri + "?r=1")
+                        : new Uri(httpRequest.RequestUri + "&r=1");
+                }
+                return base.OnBeforeSend(httpRequest);
+            }
+        }
+
+        internal static void EnsureCleanEnvironment()
+        {
+            if (Environment.HasSupportFor(TestScenarios.DeleteDbs))
+            {
+                DeleteExistingDb(Environment.PrimaryDbName);
+                DeleteExistingDb(Environment.SecondaryDbName);
+                DeleteExistingDb(Environment.TempDbName);
+            }
+            else
+            {
+                ClearAllDocuments(Environment.PrimaryDbName);
+                ClearAllDocuments(Environment.SecondaryDbName);
+                ClearAllDocuments(Environment.TempDbName);
+            }
+
+            if (Environment.HasSupportFor(TestScenarios.CreateDbs))
+            {
+                CreateDb(Environment.PrimaryDbName);
+                CreateDb(Environment.SecondaryDbName);
+                CreateDb(Environment.TempDbName);
+            }
+
+        }
+
+        private static void CreateDb(string dbName)
+        {
+            using (var client = CreateServerClient())
+            {
+                var put = client.Databases.PutAsync(dbName).Result;
+                if (!put.IsSuccess)
+                    throw new MyCouchException(put);
+            }
+        }
+
+        private static void DeleteExistingDb(string dbName)
+        {
+            using (var client = CreateServerClient())
+            {
+                if (client.Databases.HeadAsync(dbName).Result.StatusCode == HttpStatusCode.NotFound)
+                    return;
+
+                var delete = client.Databases.DeleteAsync(dbName).Result;
+                if (!delete.IsSuccess)
+                    throw new MyCouchException(delete);
+            }
+        }
+
+        private static void ClearAllDocuments(string dbName)
+        {
+            using (var client = CreateDbClient(dbName))
+            {
+                if (client.Database.HeadAsync().Result.StatusCode == HttpStatusCode.NotFound)
+                    return;
+
+                var query = new QueryViewRequest("_all_docs").Configure(q => q.Stale(Stale.UpdateAfter));
+                var response = client.Views.QueryAsync<dynamic>(query).Result;
+
+                BulkDelete(client, response);
+
+                response = client.Views.QueryAsync<dynamic>(query).Result;
+
+                BulkDelete(client, response);
+            }
+        }
+
+        private static void BulkDelete(IMyCouchClient client, ViewQueryResponse<dynamic> response)
+        {
+            if (response.IsEmpty)
+                return;
+
+            var bulkRequest = new BulkRequest();
+
+            foreach (var row in response.Rows)
+                bulkRequest.Delete(row.Id, row.Value.rev.ToString());
+
+            client.Documents.BulkAsync(bulkRequest).Wait();
+        }
+    }
+
+    public static class TestScenarios
+    {
+        public const string AttachmentsContext = "attachmentscontext";
+        public const string ChangesContext = "changescontext";
+        public const string DatabaseContext = "databasecontext";
+        public const string DatabasesContext = "databasescontext";
+        public const string DocumentsContext = "documentscontext";
+        public const string EntitiesContext = "entitiescontext";
+        public const string ViewsContext = "viewscontext";
+        public const string SearchesContext = "searchescontext";
+
+        public const string Cloudant = "cloudant";
+        public const string MyCouchStore = "mycouchstore";
+
+        public const string CreateDbs = "createdbs";
+        public const string DeleteDbs = "deletedbs";
+        public const string CompactDbs = "compactdbs";
+        public const string Replication = "replication";
     }
 
     public class TestEnvironment
     {
-        public ClientConfig Client { get; set; }
-        public bool SupportsDatabaseContextTests { get; set; }
-
-        public TestEnvironment()
-        {
-            Client = new ClientConfig();
-            SupportsDatabaseContextTests = false;
-        }
-    }
-
-    public class ClientConfig
-    {
+        public string[] Supports { get; set; }
         public string ServerUrl { get; set; }
-        public string DbName { get; set; }
+        public string PrimaryDbName { get; set; }
+        public string SecondaryDbName { get; set; }
+        public string TempDbName { get; set; }
         public string User { get; set; }
         public string Password { get; set; }
+        
+        public bool HasCredentials()
+        {
+            return !string.IsNullOrEmpty(User);
+        }
 
         public bool IsAgainstCloudant()
         {
             return ServerUrl.Contains("cloudant.com");
         }
 
-        public bool HasCredentials()
+        public bool SupportsEverything
         {
-            return !string.IsNullOrEmpty(User);
+            get { return Supports.Contains("*"); }
+        }
+
+        public TestEnvironment()
+        {
+            Supports = new[] { "*" };
+            ServerUrl = "http://localhost:5984";
+            PrimaryDbName = "mycouchtests_pri";
+            SecondaryDbName = "mycouchtests_sec";
+            TempDbName = PrimaryDbName + "_tmp";
+            User = "sa";
+            Password = "p@ssword";
+        }
+
+        public virtual bool HasSupportFor(params string[] requirements)
+        {
+            return SupportsEverything || requirements.All(r => Supports.Contains(r, StringComparer.OrdinalIgnoreCase));
         }
     }
 }

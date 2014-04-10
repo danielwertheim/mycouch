@@ -6,20 +6,32 @@ namespace MyCouch.Requests.Factories
 {
     public class PutDatabaseHttpRequestFactory : HttpRequestFactoryBase
     {
-        public PutDatabaseHttpRequestFactory(IConnection connection) : base(connection) { }
+        protected IRequestUrlGenerator RequestUrlGenerator { get; private set; }
+
+        public PutDatabaseHttpRequestFactory(IDbClientConnection connection)
+            : base(connection)
+        {
+            RequestUrlGenerator = new ConstantRequestUrlGenerator(connection.Address, connection.DbName);
+        }
+
+        public PutDatabaseHttpRequestFactory(IServerClientConnection connection)
+            : base(connection)
+        {
+            RequestUrlGenerator = new AppendingRequestUrlGenerator(connection.Address);
+        }
 
         public virtual HttpRequest Create(PutDatabaseRequest request)
         {
             Ensure.That(request, "request").IsNotNull();
 
-            var httpRequest = CreateFor<PutDatabaseRequest>(HttpMethod.Put, GenerateRequestUrl());
+            var httpRequest = CreateFor<PutDatabaseRequest>(HttpMethod.Put, GenerateRequestUrl(request));
 
             return httpRequest;
         }
 
-        protected virtual string GenerateRequestUrl()
+        protected virtual string GenerateRequestUrl(PutDatabaseRequest request)
         {
-            return Connection.Address.ToString();
+            return RequestUrlGenerator.Generate(request.DbName);
         }
     }
 }

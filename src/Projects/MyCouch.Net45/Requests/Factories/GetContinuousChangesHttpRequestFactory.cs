@@ -6,7 +6,7 @@ namespace MyCouch.Requests.Factories
 {
     public class GetContinuousChangesHttpRequestFactory : GetChangesHttpRequestFactoryBase
     {
-        public GetContinuousChangesHttpRequestFactory(IConnection connection) : base(connection) { }
+        public GetContinuousChangesHttpRequestFactory(IDbClientConnection connection) : base(connection) { }
 
         public override HttpRequest Create(GetChangesRequest request)
         {

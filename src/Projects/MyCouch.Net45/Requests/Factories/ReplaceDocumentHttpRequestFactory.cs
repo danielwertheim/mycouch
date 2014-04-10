@@ -6,7 +6,7 @@ namespace MyCouch.Requests.Factories
 {
     public class ReplaceDocumentHttpRequestFactory : DocumentHttpRequestFactoryBase
     {
-        public ReplaceDocumentHttpRequestFactory(IConnection connection) : base(connection) { }
+        public ReplaceDocumentHttpRequestFactory(IDbClientConnection connection) : base(connection) { }
 
         public virtual HttpRequest Create(ReplaceDocumentRequest request)
         {

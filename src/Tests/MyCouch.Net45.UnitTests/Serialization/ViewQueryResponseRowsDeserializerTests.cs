@@ -6,7 +6,6 @@ using MyCouch.EntitySchemes.Reflections;
 using MyCouch.Responses;
 using MyCouch.Serialization;
 using MyCouch.Serialization.Meta;
-using MyCouch.Testdata;
 using MyCouch.Testing;
 using MyCouch.Testing.Model;
 using MyCouch.Testing.TestData;

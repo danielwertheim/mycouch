@@ -68,5 +68,10 @@ namespace MyCouch.Extensions
         {
             return DateTime.Parse(value, null, DateTimeStyles.RoundtripKind);
         }
+
+        public static string ToJsonString(this bool value)
+        {
+            return value.ToString().ToLower();
+        }
     }
 }

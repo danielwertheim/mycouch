@@ -5,7 +5,7 @@ namespace MyCouch.Cloudant
 {
     public class MyCouchCloudantClientBootstrapper : MyCouchClientBootstrapper
     {
-        public Func<IConnection, ISearches> SearchesFn { get; set; }
+        public Func<IDbClientConnection, ISearches> SearchesFn { get; set; }
 
         public MyCouchCloudantClientBootstrapper()
         {

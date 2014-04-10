@@ -6,7 +6,7 @@ namespace MyCouch.Requests.Factories
 {
     public class PutAttachmentHttpRequestFactory : AttachmentHttpRequestFactoryBase
     {
-        public PutAttachmentHttpRequestFactory(IConnection connection) : base(connection) { }
+        public PutAttachmentHttpRequestFactory(IDbClientConnection connection) : base(connection) { }
 
         public virtual HttpRequest Create(PutAttachmentRequest request)
         {

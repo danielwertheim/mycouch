@@ -6,7 +6,7 @@ namespace MyCouch.Requests.Factories
 {
     public class PutDocumentHttpRequestFactory : DocumentHttpRequestFactoryBase
     {
-        public PutDocumentHttpRequestFactory(IConnection connection) : base(connection) { }
+        public PutDocumentHttpRequestFactory(IDbClientConnection connection) : base(connection) { }
 
         public virtual HttpRequest Create(PutDocumentRequest request)
         {
@@ -27,7 +27,7 @@ namespace MyCouch.Requests.Factories
         protected override string GenerateRequestUrl(string id = null, string rev = null, params UrlParam[] parameters)
         {
             Ensure.That(id, "id")
-                .WithExtraMessageOf(() => "PUT requests must have an id part of the URL.")
+                .WithExtraMessageOf(() => ExceptionStrings.PutRequestIsMissingIdInUrl)
                 .IsNotNullOrWhiteSpace();
 
             return base.GenerateRequestUrl(id, rev, parameters);

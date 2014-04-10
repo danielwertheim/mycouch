@@ -8,7 +8,7 @@ namespace MyCouch.Requests.Factories
 {
     public class DeleteEntityHttpRequestFactory : EntityHttpRequestFactoryBase
     {
-        public DeleteEntityHttpRequestFactory(IConnection connection, IEntitySerializer serializer, IEntityReflector reflector)
+        public DeleteEntityHttpRequestFactory(IDbClientConnection connection, IEntitySerializer serializer, IEntityReflector reflector)
             : base(connection, serializer, reflector) {}
 
         public virtual HttpRequest Create<T>(DeleteEntityRequest<T> request) where T : class

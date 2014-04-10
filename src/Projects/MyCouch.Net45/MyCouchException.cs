@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Http;
 using System.Runtime.Serialization;
+using MyCouch.Responses;
 
 namespace MyCouch
 {
@@ -13,6 +14,10 @@ namespace MyCouch
         public HttpStatusCode HttpStatus { get; private set; }
         public string Error { get; private set; }
         public string Reason { get; private set; }
+
+        public MyCouchException(Response response)
+            : this(response.RequestMethod, response.StatusCode, response.RequestUri, response.Error, response.Reason)
+        { }
 
         public MyCouchException(HttpMethod httpMethod, HttpStatusCode httpStatus, Uri uri, string error, string reason)
             : base(string.Format(

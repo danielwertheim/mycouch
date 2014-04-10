@@ -11,7 +11,7 @@ using Xunit;
 namespace MyCouch.IntegrationTests.CloudantTests
 {
     public class SearchTests :
-        CloudantTestsOf<ISearches>,
+        IntegrationTestsOf<ISearches>,
         IPreserveStatePerFixture,
         IUseFixture<SearchFixture>
     {
@@ -19,16 +19,15 @@ namespace MyCouch.IntegrationTests.CloudantTests
 
         public SearchTests()
         {
-            SUT = Client.Searches;
+            SUT = CloudantDbClient.Searches;
         }
 
         public void SetFixture(SearchFixture data)
         {
-            data.Init(Environment);
-            Animals = data.Animals;
+            Animals = data.Init(Environment);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.Cloudant, TestScenarios.SearchesContext)]
         public void Can_search_on_default_index_using_simple_expression()
         {
             var searchRequest = new SearchIndexRequest(CloudantTestData.Views.Views101AnimalsSearchIndexId).Configure(q => q
@@ -48,7 +47,7 @@ namespace MyCouch.IntegrationTests.CloudantTests
             response.Rows[0].IncludedDoc.Should().BeNull();
         }
 
-        [Fact]
+        [MyFact(TestScenarios.Cloudant, TestScenarios.SearchesContext)]
         public void Can_search_on_more_complex_expressions()
         {
             var searchRequest = new SearchIndexRequest(CloudantTestData.Views.Views101AnimalsSearchIndexId).Configure(q => q
@@ -67,7 +66,7 @@ namespace MyCouch.IntegrationTests.CloudantTests
             response.Rows[0].IncludedDoc.Should().BeNull();
         }
 
-        [Fact]
+        [MyFact(TestScenarios.Cloudant, TestScenarios.SearchesContext)]
         public void Can_sort()
         {
             var searchRequest = new SearchIndexRequest(CloudantTestData.Views.Views101AnimalsSearchIndexId).Configure(q => q
@@ -89,7 +88,7 @@ namespace MyCouch.IntegrationTests.CloudantTests
             response.Rows[1].Fields["minLength"].Should().Be(0.28);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.Cloudant, TestScenarios.SearchesContext)]
         public void Can_include_docs()
         {
             var searchRequest = new SearchIndexRequest(CloudantTestData.Views.Views101AnimalsSearchIndexId).Configure(q => q
@@ -100,11 +99,11 @@ namespace MyCouch.IntegrationTests.CloudantTests
 
             response.Should().BeSuccessfulGet(numOfRows: 1);
 
-            var doc = Client.Documents.GetAsync(response.Rows[0].Id).Result;
+            var doc = CloudantDbClient.Documents.GetAsync(response.Rows[0].Id).Result;
             response.Rows[0].IncludedDoc.Should().Be(doc.Content);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.Cloudant, TestScenarios.SearchesContext)]
         public void Can_include_docs_to_specific_entity()
         {
             var searchRequest = new SearchIndexRequest(CloudantTestData.Views.Views101AnimalsSearchIndexId).Configure(q => q
@@ -121,7 +120,7 @@ namespace MyCouch.IntegrationTests.CloudantTests
             CustomAsserts.AreValueEqual(orgDoc, returnedDoc);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.Cloudant, TestScenarios.SearchesContext)]
         public void Can_limit()
         {
             var searchRequest = new SearchIndexRequest(CloudantTestData.Views.Views101AnimalsSearchIndexId).Configure(q => q
@@ -134,7 +133,7 @@ namespace MyCouch.IntegrationTests.CloudantTests
             response.TotalRows.Should().Be(8);
         }
 
-        [Fact]
+        [MyFact(TestScenarios.Cloudant, TestScenarios.SearchesContext)]
         public void Can_navigate_using_bookmarks()
         {
             var searchRequest = new SearchIndexRequest(CloudantTestData.Views.Views101AnimalsSearchIndexId).Configure(q => q

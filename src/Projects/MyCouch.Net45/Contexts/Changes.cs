@@ -16,7 +16,7 @@ using MyCouch.Serialization;
 
 namespace MyCouch.Contexts
 {
-    public class Changes : ApiContextBase, IChanges
+    public class Changes : ApiContextBase<IDbClientConnection>, IChanges
     {
         protected GetChangesHttpRequestFactory HttpRequestFactory { get; set; }
         protected GetContinuousChangesHttpRequestFactory ContinuousHttpRequestFactory { get; set; }
@@ -25,7 +25,7 @@ namespace MyCouch.Contexts
 
         public Func<IScheduler> ObservableSubscribeOnScheduler { protected get; set; }
 
-        public Changes(IConnection connection, ISerializer serializer)
+        public Changes(IDbClientConnection connection, ISerializer serializer)
             : base(connection)
         {
             Ensure.That(serializer, "serializer").IsNotNull();

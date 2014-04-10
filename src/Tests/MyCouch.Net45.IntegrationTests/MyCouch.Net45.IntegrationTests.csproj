@@ -69,19 +69,22 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ClientExtensions.cs" />
-    <Compile Include="ClientTestsOf.cs" />
-    <Compile Include="CoreTests\AttachmentsTests.cs" />
-    <Compile Include="CoreTests\ChangesTests.cs" />
-    <Compile Include="CoreTests\DatabaseTests.cs" />
-    <Compile Include="CoreTests\DocumentsTests.cs" />
-    <Compile Include="CoreTests\EntitiesTests.cs" />
-    <Compile Include="CoreTests\ViewsTests.cs" />
-    <Compile Include="CloudantTestsOf.cs" />
+    <Compile Include="IntegrationTestsOf.cs" />
+    <Compile Include="CoreTests\DbClientTests\AttachmentsTests.cs" />
+    <Compile Include="CoreTests\DbClientTests\ChangesTests.cs" />
+    <Compile Include="CoreTests\DbClientTests\DatabaseTests.cs" />
+    <Compile Include="CoreTests\DbClientTests\DocumentsTests.cs" />
+    <Compile Include="CoreTests\DbClientTests\EntitiesTests.cs" />
+    <Compile Include="CoreTests\DbClientTests\ViewsTests.cs" />
     <Compile Include="CloudantTests\SearchTests.cs" />
+    <Compile Include="CoreTests\ServerClientTests\ActiveTasksTests.cs" />
+    <Compile Include="CoreTests\ServerClientTests\DatabasesTests.cs" />
+    <Compile Include="CoreTests\StoreTests\CrudTests.cs" />
+    <Compile Include="CoreTests\StoreTests\ObservableQueryTests.cs" />
     <Compile Include="IntegrationTestsRuntime.cs" />
     <Compile Include="IPreserveStatePerFixture.cs" />
-    <Compile Include="CoreTests\MyCouchStoreTests.cs" />
+    <Compile Include="CoreTests\StoreTests\CallbackQueryTests.cs" />
+    <Compile Include="MyFactAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestFixtures\SearchFixture.cs" />
     <Compile Include="TestFixtures\ViewsFixture.cs" />
@@ -98,6 +101,10 @@
     <ProjectReference Include="..\MyCouch.Net45.Testing\MyCouch.Net45.Testing.csproj">
       <Project>{adc6ac03-747d-444c-a204-cab1624429c7}</Project>
       <Name>MyCouch.Net45.Testing</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MyCouch.Testing\MyCouch.Testing.csproj">
+      <Project>{54e245c4-a9ee-4a54-9e0f-ba60faf131e0}</Project>
+      <Name>MyCouch.Testing</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -3,12 +3,17 @@ using MyCouch.Serialization;
 
 namespace MyCouch
 {
+    /// <summary>
+    /// Connects to a DB instance rather than a server instance
+    /// as <see cref="IMyCouchServerClient"/> does.
+    /// Alternative API is <see cref="IMyCouchStore"/>.
+    /// </summary>
     public interface IMyCouchClient : IDisposable
     {
         /// <summary>
-        /// The underlying <see cref="IConnection"/> used to communicate with CouchDb.
+        /// The underlying <see cref="IDbClientConnection"/> used to communicate with CouchDb.
         /// </summary>
-        IConnection Connection { get; }
+        IDbClientConnection Connection { get; }
         
         /// <summary>
         /// The Serializer associated with this client instance. Use this if you want

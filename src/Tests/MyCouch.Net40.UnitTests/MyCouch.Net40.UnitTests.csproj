@@ -112,8 +112,17 @@
     <Compile Include="..\MyCouch.Net45.UnitTests\Cloudant\SearchParametersConfiguratorTests.cs">
       <Link>Cloudant\SearchParametersConfiguratorTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.UnitTests\fakes\ConnectionFake.cs">
-      <Link>Fakes\ConnectionFake.cs</Link>
+    <Compile Include="..\MyCouch.Net45.UnitTests\Fakes\DbClientConnectionFake.cs">
+      <Link>Fakes\DbClientConnectionFake.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.UnitTests\Net\AppendingRequestUrlGeneratorTests.cs">
+      <Link>Net\AppendingRequestUrlGeneratorTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.UnitTests\Net\DbClientConnectionDbRequestUrlGeneratorTests.cs">
+      <Link>Net\DbClientConnectionDbRequestUrlGeneratorTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.UnitTests\Net\DbClientConnectionTests.cs">
+      <Link>Net\DbClientConnectionTests.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45.UnitTests\QueryConfigurationTests.cs">
       <Link>QueryConfigurationTests.cs</Link>
@@ -121,14 +130,38 @@
     <Compile Include="..\MyCouch.Net45.UnitTests\Requests\BulkRequestTests.cs">
       <Link>Requests\BulkRequestTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.UnitTests\Requests\GetChangesHttpRequestFactoryTests.cs">
-      <Link>Requests\GetChangesHttpRequestFactoryTests.cs</Link>
+    <Compile Include="..\MyCouch.Net45.UnitTests\Requests\Factories\CompactDatabaseHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\CompactDatabaseHttpRequestFactoryTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.UnitTests\Requests\GetDocumentHttpRequestFactoryTests.cs">
-      <Link>Requests\GetDocumentHttpRequestFactoryTests.cs</Link>
+    <Compile Include="..\MyCouch.Net45.UnitTests\Requests\Factories\DeleteDatabaseHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\DeleteDatabaseHttpRequestFactoryTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.UnitTests\Requests\QueryViewHttpRequestFactoryTests.cs">
-      <Link>Requests\QueryViewHttpRequestFactoryTests.cs</Link>
+    <Compile Include="..\MyCouch.Net45.UnitTests\Requests\Factories\GetChangesHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\GetChangesHttpRequestFactoryTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.UnitTests\Requests\Factories\GetContinuousChangesHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\GetContinuousChangesHttpRequestFactoryTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.UnitTests\Requests\Factories\GetDatabaseHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\GetDatabaseHttpRequestFactoryTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.UnitTests\Requests\Factories\GetDocumentHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\GetDocumentHttpRequestFactoryTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.UnitTests\Requests\Factories\HeadDatabaseHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\HeadDatabaseHttpRequestFactoryTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.UnitTests\Requests\Factories\PutDatabaseHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\PutDatabaseHttpRequestFactoryTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.UnitTests\Requests\Factories\QueryViewHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\QueryViewHttpRequestFactoryTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.UnitTests\Requests\Factories\ReplicateDatabaseHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\ReplicateDatabaseHttpRequestFactoryTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45.UnitTests\Requests\Factories\ViewCleanupHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\ViewCleanupHttpRequestFactoryTests.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45.UnitTests\Requests\QueryViewRequestTests.cs">
       <Link>Requests\QueryViewRequestTests.cs</Link>
@@ -172,9 +205,9 @@
       <Project>{dd577175-035c-49d5-a8c8-e57ab2d87e16}</Project>
       <Name>MyCouch.Net40.Testing</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MyCouch.Testdata\MyCouch.Testdata.csproj">
+    <ProjectReference Include="..\MyCouch.Testing\MyCouch.Testing.csproj">
       <Project>{54e245c4-a9ee-4a54-9e0f-ba60faf131e0}</Project>
-      <Name>MyCouch.Testdata</Name>
+      <Name>MyCouch.Testing</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

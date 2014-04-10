@@ -9,7 +9,7 @@ namespace MyCouch
     {
         protected bool IsDisposed { get; private set; }
 
-        public IConnection Connection { get; private set; }
+        public IDbClientConnection Connection { get; private set; }
         public ISerializer Serializer { get; private set; }
         public IChanges Changes { get; private set; }
         public IAttachments Attachments { get; private set; }
@@ -18,11 +18,11 @@ namespace MyCouch
         public IEntities Entities { get; protected set; }
         public IViews Views { get; private set; }
 
-        public MyCouchClient(string dbUri) : this(new Uri(dbUri)) { }
+        public MyCouchClient(string dbUri, string dbName = null) : this(new Uri(dbUri), dbName) { }
 
-        public MyCouchClient(Uri dbUri) : this(new BasicHttpClientConnection(dbUri)) { }
+        public MyCouchClient(Uri dbUri, string dbName = null) : this(new DbClientConnection(dbUri, dbName)) { }
 
-        public MyCouchClient(IConnection connection, MyCouchClientBootstrapper bootstrapper = null)
+        public MyCouchClient(IDbClientConnection connection, MyCouchClientBootstrapper bootstrapper = null)
         {
             Ensure.That(connection, "connection").IsNotNull();
 

@@ -8,7 +8,7 @@ namespace MyCouch.Requests.Factories
 {
     public class PutEntityHttpRequestFactory : EntityHttpRequestFactoryBase
     {
-        public PutEntityHttpRequestFactory(IConnection connection, IEntitySerializer serializer, IEntityReflector reflector)
+        public PutEntityHttpRequestFactory(IDbClientConnection connection, IEntitySerializer serializer, IEntityReflector reflector)
             : base(connection, serializer, reflector) {}
 
         public virtual HttpRequest Create<T>(PutEntityRequest<T> request) where T : class
@@ -28,7 +28,7 @@ namespace MyCouch.Requests.Factories
         protected override string GenerateRequestUrl(string id = null, string rev = null)
         {
             Ensure.That(id, "id")
-                .WithExtraMessageOf(() => "PUT requests must have an id part of the URL.")
+                .WithExtraMessageOf(() => ExceptionStrings.PutRequestIsMissingIdInUrl)
                 .IsNotNullOrWhiteSpace();
 
             return base.GenerateRequestUrl(id, rev);

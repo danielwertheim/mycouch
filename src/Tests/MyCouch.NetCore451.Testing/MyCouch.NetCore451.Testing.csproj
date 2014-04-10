@@ -119,6 +119,10 @@
       <Project>{07fea184-bce6-4224-a9d7-b8d3ff5bb439}</Project>
       <Name>MyCouch.NetCore451</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MyCouch.Testing\MyCouch.Testing.csproj">
+      <Project>{54e245c4-a9ee-4a54-9e0f-ba60faf131e0}</Project>
+      <Name>MyCouch.Testing</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\SharedAssemblyInfo.cs">
@@ -127,32 +131,17 @@
     <Compile Include="..\MyCouch.Net45.Testing\CustomAsserts.cs">
       <Link>CustomAsserts.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.Testing\Model\Album.cs">
-      <Link>Model\Album.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45.Testing\Model\Animal.cs">
-      <Link>Model\Animal.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45.Testing\model\Artist.cs">
-      <Link>Model\Artist.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Net45.Testing\ObservableRowExtensions.cs">
       <Link>ObservableRowExtensions.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45.Testing\Shoulds.cs">
       <Link>Shoulds.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45.Testing\TestConstants.cs">
-      <Link>TestConstants.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Net45.Testing\testdata\ClientTestData.cs">
       <Link>TestData\ClientTestData.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45.Testing\TestData\CloudantTestData.cs">
       <Link>TestData\CloudantTestData.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45.Testing\TestsOf.cs">
-      <Link>TestsOf.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45.Testing\TypeExtensions.cs">
       <Link>TypeExtensions.cs</Link>
