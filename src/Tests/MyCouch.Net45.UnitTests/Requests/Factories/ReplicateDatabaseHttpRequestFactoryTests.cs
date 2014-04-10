@@ -9,12 +9,15 @@ namespace MyCouch.UnitTests.Requests.Factories
 {
     public class ReplicateDatabaseHttpRequestFactoryTests : UnitTestsOf<ReplicateDatabaseHttpRequestFactory>
     {
-        [Fact]
-        public void When_used_with_ServerClientConnection_It_generates_replication_url()
+        public ReplicateDatabaseHttpRequestFactoryTests()
         {
             var connection = new ServerClientConnectionFake(new Uri("http://foo.com:5984"));
             SUT = new ReplicateDatabaseHttpRequestFactory(connection);
+        }
 
+        [Fact]
+        public void When_used_with_ServerClientConnection_It_generates_replication_url()
+        {
             var r = SUT.Create(new ReplicateDatabaseRequest("fakedb1", "fakedb2"));
 
             r.RequestUri.AbsoluteUri.Should().Be("http://foo.com:5984/_replicate");
@@ -23,9 +26,6 @@ namespace MyCouch.UnitTests.Requests.Factories
         [Fact]
         public void When_used_with_ServerClientConnection_It_generates_request_body_for_request_with_source_and_target()
         {
-            var connection = new ServerClientConnectionFake(new Uri("http://foo.com:5984"));
-            SUT = new ReplicateDatabaseHttpRequestFactory(connection);
-
             var r = SUT.Create(new ReplicateDatabaseRequest("fakedb1", "fakedb2"));
 
             r.Content.ReadAsStringAsync().Result.Should().Be("{\"source\":\"fakedb1\",\"target\":\"fakedb2\"}");
@@ -34,9 +34,6 @@ namespace MyCouch.UnitTests.Requests.Factories
         [Fact]
         public void When_used_with_ServerClientConnection_and_CreateTarget_is_true_It_generates_request_body_with_create_target_true()
         {
-            var connection = new ServerClientConnectionFake(new Uri("http://foo.com:5984"));
-            SUT = new ReplicateDatabaseHttpRequestFactory(connection);
-
             var r = SUT.Create(new ReplicateDatabaseRequest("fakedb1", "fakedb2") { CreateTarget = true });
 
             r.Content.ReadAsStringAsync().Result.Should().Be("{\"source\":\"fakedb1\",\"target\":\"fakedb2\",\"create_target\":true}");
@@ -45,9 +42,6 @@ namespace MyCouch.UnitTests.Requests.Factories
         [Fact]
         public void When_used_with_ServerClientConnection_and_CreateTarget_is_false_It_generates_request_body_with_create_target_false()
         {
-            var connection = new ServerClientConnectionFake(new Uri("http://foo.com:5984"));
-            SUT = new ReplicateDatabaseHttpRequestFactory(connection);
-
             var r = SUT.Create(new ReplicateDatabaseRequest("fakedb1", "fakedb2") { CreateTarget = false });
 
             r.Content.ReadAsStringAsync().Result.Should().Be("{\"source\":\"fakedb1\",\"target\":\"fakedb2\",\"create_target\":false}");
@@ -56,9 +50,6 @@ namespace MyCouch.UnitTests.Requests.Factories
         [Fact]
         public void When_used_with_ServerClientConnection_and_Cancel_is_true_It_generates_request_body_with_cancel_true()
         {
-            var connection = new ServerClientConnectionFake(new Uri("http://foo.com:5984"));
-            SUT = new ReplicateDatabaseHttpRequestFactory(connection);
-
             var r = SUT.Create(new ReplicateDatabaseRequest("fakedb1", "fakedb2") { Cancel = true });
 
             r.Content.ReadAsStringAsync().Result.Should().Be("{\"source\":\"fakedb1\",\"target\":\"fakedb2\",\"cancel\":true}");
@@ -67,9 +58,6 @@ namespace MyCouch.UnitTests.Requests.Factories
         [Fact]
         public void When_used_with_ServerClientConnection_and_Cancel_is_false_It_generates_request_body_with_cancel_false()
         {
-            var connection = new ServerClientConnectionFake(new Uri("http://foo.com:5984"));
-            SUT = new ReplicateDatabaseHttpRequestFactory(connection);
-
             var r = SUT.Create(new ReplicateDatabaseRequest("fakedb1", "fakedb2") { Cancel = false });
 
             r.Content.ReadAsStringAsync().Result.Should().Be("{\"source\":\"fakedb1\",\"target\":\"fakedb2\",\"cancel\":false}");
@@ -78,9 +66,6 @@ namespace MyCouch.UnitTests.Requests.Factories
         [Fact]
         public void When_used_with_ServerClientConnection_and_Proxy_is_specified_It_generates_request_body_with_proxy()
         {
-            var connection = new ServerClientConnectionFake(new Uri("http://foo.com:5984"));
-            SUT = new ReplicateDatabaseHttpRequestFactory(connection);
-
             var r = SUT.Create(new ReplicateDatabaseRequest("fakedb1", "fakedb2") { Proxy = "https://myproxy.com" });
 
             r.Content.ReadAsStringAsync().Result.Should().Be("{\"source\":\"fakedb1\",\"target\":\"fakedb2\",\"proxy\":\"https://myproxy.com\"}");
@@ -89,9 +74,6 @@ namespace MyCouch.UnitTests.Requests.Factories
         [Fact]
         public void When_used_with_ServerClientConnection_and_DocIds_are_specified_It_generates_request_body_with_doc_ids()
         {
-            var connection = new ServerClientConnectionFake(new Uri("http://foo.com:5984"));
-            SUT = new ReplicateDatabaseHttpRequestFactory(connection);
-
             var r = SUT.Create(new ReplicateDatabaseRequest("fakedb1", "fakedb2") { DocIds = new[]{"d1", "d2"} });
 
             r.Content.ReadAsStringAsync().Result.Should().Be("{\"source\":\"fakedb1\",\"target\":\"fakedb2\",\"doc_ids\":[\"d1\",\"d2\"]}");
@@ -100,9 +82,6 @@ namespace MyCouch.UnitTests.Requests.Factories
         [Fact]
         public void When_used_with_ServerClientConnection_and_Continuous_is_true_It_generates_request_body_with_continuous_true()
         {
-            var connection = new ServerClientConnectionFake(new Uri("http://foo.com:5984"));
-            SUT = new ReplicateDatabaseHttpRequestFactory(connection);
-
             var r = SUT.Create(new ReplicateDatabaseRequest("fakedb1", "fakedb2") { Continuous = true });
 
             r.Content.ReadAsStringAsync().Result.Should().Be("{\"source\":\"fakedb1\",\"target\":\"fakedb2\",\"continuous\":true}");
