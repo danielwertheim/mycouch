@@ -65,7 +65,7 @@ namespace MyCouch.IntegrationTests.CoreTests.ServerClientTests
 
             var response = SUT.ReplicateAsync(Environment.PrimaryDbName, Environment.SecondaryDbName).Result;
 
-            response.Should().BeSuccessfulNonEmptyReplication(2);
+            response.Should().BeSuccessfulNonEmptyReplication();
         }
 
         [MyFact(TestScenarios.DatabasesContext, TestScenarios.Replication)]
@@ -81,7 +81,7 @@ namespace MyCouch.IntegrationTests.CoreTests.ServerClientTests
 
             var response = SUT.ReplicateAsync(request).Result;
 
-            response.Should().BeSuccessfulNonEmptyReplication(2);
+            response.Should().BeSuccessfulNonEmptyReplication();
         }
 
         [MyFact(TestScenarios.DatabasesContext, TestScenarios.Replication)]
@@ -97,7 +97,7 @@ namespace MyCouch.IntegrationTests.CoreTests.ServerClientTests
 
             var response = SUT.ReplicateAsync(request).Result;
 
-            response.Should().BeSuccessfulNonEmptyReplication(1);
+            response.Should().BeSuccessfulNonEmptyReplication();
         }
 
         [MyFact(TestScenarios.DatabasesContext, TestScenarios.Replication)]
