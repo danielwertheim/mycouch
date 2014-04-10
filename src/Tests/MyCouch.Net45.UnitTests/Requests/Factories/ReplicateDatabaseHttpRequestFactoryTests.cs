@@ -76,6 +76,17 @@ namespace MyCouch.UnitTests.Requests.Factories
         }
 
         [Fact]
+        public void When_used_with_ServerClientConnection_and_Proxy_is_specified_It_generates_request_body_with_proxy()
+        {
+            var connection = new ServerClientConnectionFake(new Uri("http://foo.com:5984"));
+            SUT = new ReplicateDatabaseHttpRequestFactory(connection);
+
+            var r = SUT.Create(new ReplicateDatabaseRequest("fakedb1", "fakedb2") { Proxy = "https://myproxy.com" });
+
+            r.Content.ReadAsStringAsync().Result.Should().Be("{\"source\":\"fakedb1\",\"target\":\"fakedb2\",\"proxy\":\"https://myproxy.com\"}");
+        }
+
+        [Fact]
         public void When_used_with_ServerClientConnection_and_DocIds_are_specified_It_generates_request_body_with_doc_ids()
         {
             var connection = new ServerClientConnectionFake(new Uri("http://foo.com:5984"));

@@ -55,6 +55,12 @@ namespace MyCouch.Requests.Factories
                 json.AppendFormat(JsonScheme.MemberArrayValueFormat, "doc_ids", docIdsString);
             }
 
+            if (!string.IsNullOrWhiteSpace(request.Proxy))
+            {
+                json.Append(JsonScheme.MemberDelimiter);
+                json.AppendFormat(JsonScheme.MemberStringValueFormat, "proxy", request.Proxy);
+            }
+
             if (request.CreateTarget.HasValue)
             {
                 json.Append(JsonScheme.MemberDelimiter);

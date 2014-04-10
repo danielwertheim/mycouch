@@ -13,6 +13,7 @@ namespace MyCouch.Requests
         public string[] DocIds { get; set; }
         public bool? CreateTarget { get; set; }
         public bool? Cancel { get; set; }
+        public string Proxy { get; set; }
 
         public ReplicateDatabaseRequest(string source, string target)
         {
