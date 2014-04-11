@@ -15,6 +15,7 @@ namespace MyCouch.Requests
         public bool? Continuous { get; set; }
         public bool? Cancel { get; set; }
         public string Proxy { get; set; }
+        public string Filter { get; set; }
 
         public ReplicateDatabaseRequest(string source, string target)
         {

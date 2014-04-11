@@ -61,6 +61,12 @@ namespace MyCouch.Requests.Factories
                 json.AppendFormat(JsonScheme.MemberStringValueFormat, "proxy", request.Proxy);
             }
 
+            if (!string.IsNullOrWhiteSpace(request.Filter))
+            {
+                json.Append(JsonScheme.MemberDelimiter);
+                json.AppendFormat(JsonScheme.MemberStringValueFormat, "filter", request.Filter);
+            }
+
             if (request.CreateTarget.HasValue)
             {
                 json.Append(JsonScheme.MemberDelimiter);

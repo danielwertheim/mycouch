@@ -94,5 +94,13 @@ namespace MyCouch.UnitTests.Requests.Factories
 
             r.Content.ReadAsStringAsync().Result.Should().Be("{\"source\":\"fakedb1\",\"target\":\"fakedb2\",\"continuous\":false}");
         }
+
+        [Fact]
+        public void When_filter_is_specified_It_generates_request_body_with_filter()
+        {
+            var r = SUT.Create(new ReplicateDatabaseRequest("fakedb1", "fakedb2") { Filter = "mydesigndoc/myfilter" });
+
+            r.Content.ReadAsStringAsync().Result.Should().Be("{\"source\":\"fakedb1\",\"target\":\"fakedb2\",\"filter\":\"mydesigndoc/myfilter\"}");
+        }
     }
 }
