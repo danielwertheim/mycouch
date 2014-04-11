@@ -22,7 +22,7 @@ namespace MyCouch.Contexts
             Ensure.That(serializer, "serializer").IsNotNull();
             Ensure.That(entitySerializer, "entitySerializer").IsNotNull();
 
-            QueryViewHttpRequestFactory = new QueryViewHttpRequestFactory(Connection);
+            QueryViewHttpRequestFactory = new QueryViewHttpRequestFactory(Connection, serializer);
             ViewQueryResponseFactory = new ViewQueryResponseFactory(serializer, entitySerializer);
         }
 

@@ -9,7 +9,14 @@ namespace MyCouch.Requests.Factories
 {
     public abstract class GetChangesHttpRequestFactoryBase : HttpRequestFactoryBase
     {
-        protected GetChangesHttpRequestFactoryBase(IDbClientConnection connection) : base(connection) { }
+        protected ConstantRequestUrlGenerator RequestUrlGenerator { get; private set; }
+
+        protected GetChangesHttpRequestFactoryBase(IDbClientConnection connection)
+        {
+            Ensure.That(connection, "connection").IsNotNull();
+
+            RequestUrlGenerator = new ConstantRequestUrlGenerator(connection.Address, connection.DbName);
+        }
 
         public virtual HttpRequest Create(GetChangesRequest request)
         {
@@ -21,7 +28,7 @@ namespace MyCouch.Requests.Factories
         protected virtual string GenerateRequestUrl(GetChangesRequest request)
         {
             return string.Format("{0}/_changes{1}",
-                Connection.Address,
+                RequestUrlGenerator.Generate(),
                 GenerateQueryString(request));
         }
 
@@ -47,10 +54,10 @@ namespace MyCouch.Requests.Factories
         {
             var kvs = new Dictionary<string, string>();
 
-            if(request.Feed.HasValue)
+            if (request.Feed.HasValue)
                 kvs.Add(KeyNames.Feed, request.Feed.Value.AsString());
 
-            if (HasValue(request.Since))
+            if (!string.IsNullOrWhiteSpace(request.Since))
                 kvs.Add(KeyNames.Since, request.Since);
 
             if (request.IncludeDocs.HasValue)
@@ -60,13 +67,13 @@ namespace MyCouch.Requests.Factories
                 kvs.Add(KeyNames.Descending, request.Descending.Value.ToString().ToLower());
 
             if (request.Limit.HasValue)
-                kvs.Add(KeyNames.Limit, request.Limit.Value.ToString(MyCouchRuntime.NumberFormat));
+                kvs.Add(KeyNames.Limit, request.Limit.Value.ToString(MyCouchRuntime.FormatingCulture.NumberFormat));
 
             if (request.Heartbeat.HasValue)
-                kvs.Add(KeyNames.HeartBeat, request.Heartbeat.Value.ToString(MyCouchRuntime.NumberFormat));
+                kvs.Add(KeyNames.HeartBeat, request.Heartbeat.Value.ToString(MyCouchRuntime.FormatingCulture.NumberFormat));
 
             if (request.Timeout.HasValue)
-                kvs.Add(KeyNames.Timeout, request.Timeout.Value.ToString(MyCouchRuntime.NumberFormat));
+                kvs.Add(KeyNames.Timeout, request.Timeout.Value.ToString(MyCouchRuntime.FormatingCulture.NumberFormat));
 
             if (request.Filter != null)
                 kvs.Add(KeyNames.Filter, request.Filter);

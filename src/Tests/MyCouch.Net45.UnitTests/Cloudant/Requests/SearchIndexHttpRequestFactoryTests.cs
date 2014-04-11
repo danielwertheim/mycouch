@@ -3,6 +3,7 @@ using System.Net.Http;
 using FluentAssertions;
 using MyCouch.Cloudant.Requests;
 using MyCouch.Cloudant.Requests.Factories;
+using MyCouch.Serialization;
 using MyCouch.UnitTests.Fakes;
 using Xunit;
 
@@ -14,7 +15,7 @@ namespace MyCouch.UnitTests.Cloudant.Requests
         {
             var cnFake = new DbClientConnectionFake(new Uri("https://cdb.foo.com:5984/mydb"), "mydb");
 
-            SUT = new SearchIndexHttpRequestFactory(cnFake);
+            SUT = new SearchIndexHttpRequestFactory(cnFake, new DefaultSerializer(new SerializationConfiguration()));
         }
 
         [Fact]

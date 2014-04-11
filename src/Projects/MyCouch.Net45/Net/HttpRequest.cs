@@ -15,7 +15,7 @@ namespace MyCouch.Net
     {
         public static class CustomHeaders
         {
-            public const string RequestType = "mycouch-type";
+            public const string RequestType = "mycouch-request-type";
             public const string RequestEntityType = "mycouch-entitytype";
         }
 

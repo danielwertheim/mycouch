@@ -37,7 +37,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 .ForEachAsync((r, i) =>
                 {
                     numOfRows++;
-                    AssertionExtensions.Should((string) r.Value).Be(expectedSum.ToString(MyCouchRuntime.NumberFormat));
+                    AssertionExtensions.Should((string)r.Value).Be(expectedSum.ToString(MyCouchRuntime.FormatingCulture.NumberFormat));
                 })
                 .ContinueWith(t =>
                 {

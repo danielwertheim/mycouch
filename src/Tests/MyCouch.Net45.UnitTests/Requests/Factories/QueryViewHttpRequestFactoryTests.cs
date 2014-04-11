@@ -3,6 +3,7 @@ using System.Net.Http;
 using FluentAssertions;
 using MyCouch.Requests;
 using MyCouch.Requests.Factories;
+using MyCouch.Serialization;
 using MyCouch.UnitTests.Fakes;
 using Xunit;
 
@@ -14,7 +15,7 @@ namespace MyCouch.UnitTests.Requests.Factories
         {
             var cnFake = new DbClientConnectionFake(new Uri("https://cdb.foo.com:5984/mydb"), "mydb");
 
-            SUT = new QueryViewHttpRequestFactory(cnFake);
+            SUT = new QueryViewHttpRequestFactory(cnFake, new DefaultSerializer(new SerializationConfiguration()));
         }
 
         [Fact]
@@ -47,7 +48,7 @@ namespace MyCouch.UnitTests.Requests.Factories
 
             WithHttpRequestFor(
                 request,
-                req => req.Content.ReadAsStringAsync().Result.Should().Be("{\"keys\":[\"fake_key\",\"Two\",1,3.14,true,false,\"2008-07-17T09:21:30\",[\"complex1\",42]]}"));
+                req => req.Content.ReadAsStringAsync().Result.Should().Be("{\"keys\":[\"fake_key\",\"Two\",1,3.14,true,false,\"2008-07-17T09:21:30.05\",[\"complex1\",42]]}"));
         }
 
         [Fact]
@@ -278,7 +279,7 @@ namespace MyCouch.UnitTests.Requests.Factories
 
             WithHttpRequestFor(
                 request,
-                req => req.RequestUri.Query.Should().Be("?key=%222008-07-17T09%3A21%3A30%22"));
+                req => req.RequestUri.Query.Should().Be("?key=%222008-07-17T09%3A21%3A30.05%22"));
         }
 
         [Fact]
@@ -355,7 +356,7 @@ namespace MyCouch.UnitTests.Requests.Factories
 
             WithHttpRequestFor(
                 request,
-                req => req.RequestUri.Query.Should().Be("?startkey=%222008-07-17T09%3A21%3A30%22"));
+                req => req.RequestUri.Query.Should().Be("?startkey=%222008-07-17T09%3A21%3A30.05%22"));
         }
 
         [Fact]
@@ -443,7 +444,7 @@ namespace MyCouch.UnitTests.Requests.Factories
 
             WithHttpRequestFor(
                 request,
-                req => req.RequestUri.Query.Should().Be("?endkey=%222008-07-17T09%3A21%3A30%22"));
+                req => req.RequestUri.Query.Should().Be("?endkey=%222008-07-17T09%3A21%3A30.05%22"));
         }
 
         [Fact]

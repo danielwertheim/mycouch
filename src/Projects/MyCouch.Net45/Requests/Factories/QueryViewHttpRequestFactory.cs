@@ -4,19 +4,30 @@ using System.Linq;
 using System.Net.Http;
 using MyCouch.EnsureThat;
 using MyCouch.Net;
+using MyCouch.Serialization;
 
 namespace MyCouch.Requests.Factories
 {
     public class QueryViewHttpRequestFactory : HttpRequestFactoryBase
     {
-        public QueryViewHttpRequestFactory(IDbClientConnection connection) : base(connection) { }
+        protected ConstantRequestUrlGenerator RequestUrlGenerator { get; private set; }
+        protected ISerializer Serializer { get; private set; }
+
+        public QueryViewHttpRequestFactory(IDbClientConnection connection, ISerializer serializer)
+        {
+            Ensure.That(connection, "connection").IsNotNull();
+            Ensure.That(serializer, "serializer").IsNotNull();
+
+            RequestUrlGenerator = new ConstantRequestUrlGenerator(connection.Address, connection.DbName);
+            Serializer = serializer;
+        }
 
         public virtual HttpRequest Create(QueryViewRequest request)
         {
             Ensure.That(request, "request").IsNotNull();
 
             return request.HasKeys
-                ? CreateFor<QueryViewRequest>(HttpMethod.Post, GenerateRequestUrl(request)).SetJsonContent(GetKeysAsJsonObject(request))
+                ? CreateFor<QueryViewRequest>(HttpMethod.Post, GenerateRequestUrl(request)).SetJsonContent(GenerateRequestBody(request))
                 : CreateFor<QueryViewRequest>(HttpMethod.Get, GenerateRequestUrl(request));
         }
 
@@ -25,48 +36,35 @@ namespace MyCouch.Requests.Factories
             if (request.ViewIdentity is SystemViewIdentity)
             {
                 return string.Format("{0}/{1}{2}",
-                    Connection.Address,
+                    RequestUrlGenerator.Generate(),
                     request.ViewIdentity.Name,
-                    GenerateQueryString(request));
+                    GenerateRequestUrlQueryString(request));
             }
 
             return string.Format("{0}/_design/{1}/_view/{2}{3}",
-                Connection.Address,
+                RequestUrlGenerator.Generate(),
                 request.ViewIdentity.DesignDocument,
                 request.ViewIdentity.Name,
-                GenerateQueryString(request));
+                GenerateRequestUrlQueryString(request));
         }
 
-        /// <summary>
-        /// Returns <see cref="QueryViewRequest.Keys"/> as compatible JSON document for use e.g.
-        /// with POST of keys against views.
-        /// </summary>
-        /// <returns></returns>
-        protected virtual string GetKeysAsJsonObject(QueryViewRequest query)
+        protected virtual string GenerateRequestBody(QueryViewRequest request)
         {
-            if (!query.HasKeys)
-                return "{}";
-
-            return string.Format("{{\"keys\":[{0}]}}",
-                string.Join(",", query.Keys.Select(k => FormatValue(k))));
+            return request.HasKeys
+                ? Serializer.Serialize(new { keys = request.Keys })
+                : "{}";
         }
 
-        protected virtual string GenerateQueryString(QueryViewRequest request)
+        protected virtual string GenerateRequestUrlQueryString(QueryViewRequest request)
         {
             var p = GenerateQueryStringParams(request);
 
             return string.IsNullOrEmpty(p) ? string.Empty : string.Concat("?", p);
         }
 
-        /// <summary>
-        /// Generates <see cref="QueryViewRequest"/> configured values as querystring params.
-        /// </summary>
-        /// <remarks><see cref="QueryViewRequest.Keys"/> are not included in this string.</remarks>
-        /// <returns></returns>
         protected virtual string GenerateQueryStringParams(QueryViewRequest request)
         {
-            return string.Join("&", ConvertRequestToJsonCompatibleKeyValues(request)
-                .Where(kv => kv.Key != KeyNames.Keys)
+            return string.Join("&", GenerateJsonCompatibleKeyValues(request)
                 .Select(kv => string.Format("{0}={1}", kv.Key, Uri.EscapeDataString(kv.Value))));
         }
 
@@ -75,65 +73,58 @@ namespace MyCouch.Requests.Factories
         /// The values are formatted to JSON-compatible strings.
         /// </summary>
         /// <returns></returns>
-        protected virtual IDictionary<string, string> ConvertRequestToJsonCompatibleKeyValues(QueryViewRequest request)
+        protected virtual IDictionary<string, string> GenerateJsonCompatibleKeyValues(QueryViewRequest request)
         {
             var kvs = new Dictionary<string, string>();
 
             if (request.IncludeDocs.HasValue)
-                kvs.Add(KeyNames.IncludeDocs, request.IncludeDocs.Value.ToString().ToLower());
+                kvs.Add(KeyNames.IncludeDocs, Serializer.ToJson(request.IncludeDocs.Value));
 
             if (request.Descending.HasValue)
-                kvs.Add(KeyNames.Descending, request.Descending.Value.ToString().ToLower());
+                kvs.Add(KeyNames.Descending, Serializer.ToJson(request.Descending.Value));
 
             if (request.Reduce.HasValue)
-                kvs.Add(KeyNames.Reduce, request.Reduce.Value.ToString().ToLower());
+                kvs.Add(KeyNames.Reduce, Serializer.ToJson(request.Reduce.Value));
 
             if (request.InclusiveEnd.HasValue)
-                kvs.Add(KeyNames.InclusiveEnd, request.InclusiveEnd.Value.ToString().ToLower());
+                kvs.Add(KeyNames.InclusiveEnd, Serializer.ToJson(request.InclusiveEnd.Value));
 
             if (request.UpdateSeq.HasValue)
-                kvs.Add(KeyNames.UpdateSeq, request.UpdateSeq.Value.ToString().ToLower());
+                kvs.Add(KeyNames.UpdateSeq, Serializer.ToJson(request.UpdateSeq.Value));
 
             if (request.Group.HasValue)
-                kvs.Add(KeyNames.Group, request.Group.Value.ToString().ToLower());
+                kvs.Add(KeyNames.Group, Serializer.ToJson(request.Group.Value));
 
             if (request.GroupLevel.HasValue)
-                kvs.Add(KeyNames.GroupLevel, request.GroupLevel.Value.ToString(MyCouchRuntime.NumberFormat));
+                kvs.Add(KeyNames.GroupLevel, Serializer.ToJson(request.GroupLevel.Value));
 
             if (request.Stale.HasValue)
                 kvs.Add(KeyNames.Stale, request.Stale.Value.AsString());
 
-            if (HasValue(request.Key))
-                kvs.Add(KeyNames.Key, FormatValue(request.Key));
+            if (request.Key != null)
+                kvs.Add(KeyNames.Key, Serializer.ToJson(request.Key));
 
-            if (HasValue(request.Keys))
-                kvs.Add(KeyNames.Keys, FormatValues(request.Keys));
+            if (request.StartKey != null)
+                kvs.Add(KeyNames.StartKey, Serializer.ToJson(request.StartKey));
 
-            if (HasValue(request.StartKey))
-                kvs.Add(KeyNames.StartKey, FormatValue(request.StartKey));
+            if (!string.IsNullOrWhiteSpace(request.StartKeyDocId))
+                kvs.Add(KeyNames.StartKeyDocId, Serializer.ToJson(request.StartKeyDocId));
 
-            if (HasValue(request.StartKeyDocId))
-                kvs.Add(KeyNames.StartKeyDocId, FormatValue(request.StartKeyDocId));
+            if (request.EndKey != null)
+                kvs.Add(KeyNames.EndKey, Serializer.ToJson(request.EndKey));
 
-            if (HasValue(request.EndKey))
-                kvs.Add(KeyNames.EndKey, FormatValue(request.EndKey));
-
-            if (HasValue(request.EndKeyDocId))
-                kvs.Add(KeyNames.EndKeyDocId, FormatValue(request.EndKeyDocId));
+            if (!string.IsNullOrWhiteSpace(request.EndKeyDocId))
+                kvs.Add(KeyNames.EndKeyDocId, Serializer.ToJson(request.EndKeyDocId));
 
             if (request.Limit.HasValue)
-                kvs.Add(KeyNames.Limit, request.Limit.Value.ToString(MyCouchRuntime.NumberFormat));
+                kvs.Add(KeyNames.Limit, Serializer.ToJson(request.Limit.Value));
 
             if (request.Skip.HasValue)
-                kvs.Add(KeyNames.Skip, request.Skip.Value.ToString(MyCouchRuntime.NumberFormat));
+                kvs.Add(KeyNames.Skip, Serializer.ToJson(request.Skip.Value));
 
             return kvs;
         }
 
-        /// <summary>
-        /// Contains the string representation (Key) of
-        /// individual options for <see cref="QueryViewRequest"/>.
-        /// </summary>
         protected static class KeyNames
         {
             public const string IncludeDocs = "include_docs";
@@ -145,7 +136,6 @@ namespace MyCouch.Requests.Factories
             public const string GroupLevel = "group_level";
             public const string Stale = "stale";
             public const string Key = "key";
-            public const string Keys = "keys";
             public const string StartKey = "startkey";
             public const string StartKeyDocId = "startkey_docid";
             public const string EndKey = "endkey";

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using MyCouch.EnsureThat;
 using MyCouch.Extensions;
 using MyCouch.Net;
 
@@ -8,7 +9,14 @@ namespace MyCouch.Requests.Factories
 {
     public abstract class DocumentHttpRequestFactoryBase : HttpRequestFactoryBase
     {
-        protected DocumentHttpRequestFactoryBase(IDbClientConnection connection) : base(connection) { }
+        protected ConstantRequestUrlGenerator RequestUrlGenerator { get; private set; }
+
+        protected DocumentHttpRequestFactoryBase(IDbClientConnection connection)
+        {
+            Ensure.That(connection, "connection").IsNotNull();
+
+            RequestUrlGenerator = new ConstantRequestUrlGenerator(connection.Address, connection.DbName);
+        }
 
         protected virtual string GenerateRequestUrl(string id = null, string rev = null, params UrlParam[] parameters)
         {
@@ -23,7 +31,7 @@ namespace MyCouch.Requests.Factories
             }
 
             return string.Format("{0}/{1}{2}",
-                Connection.Address,
+                RequestUrlGenerator.Generate(),
                 id != null ? Uri.EscapeDataString(id) : string.Empty,
                 queryParameters.Any() ? string.Join("&", queryParameters).PrependWith("?") : string.Empty);
         }

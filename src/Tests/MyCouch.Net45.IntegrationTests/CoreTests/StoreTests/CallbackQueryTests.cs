@@ -37,7 +37,7 @@ namespace MyCouch.IntegrationTests.CoreTests.StoreTests
                 r =>
                 {
                     numOfRows++;
-                    r.Value.Should().Be(expectedSum.ToString(MyCouchRuntime.NumberFormat));
+                    r.Value.Should().Be(expectedSum.ToString(MyCouchRuntime.FormatingCulture.NumberFormat));
                 })
                 .ContinueWith(t =>
                 {
