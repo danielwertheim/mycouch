@@ -48,6 +48,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IntegrationTests", "Integra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCouch.TestServer", "Tests\MyCouch.TestServer\MyCouch.TestServer.csproj", "{29A9ACD9-D38B-4FB1-9627-B34149ADEEA7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCouch.Core", "Projects\MyCouch.Core\MyCouch.Core.csproj", "{AA77E573-5AE5-44A8-A8D8-FB1250D403F4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -274,6 +276,16 @@ Global
 		{29A9ACD9-D38B-4FB1-9627-B34149ADEEA7}.Release|ARM.ActiveCfg = Release|Any CPU
 		{29A9ACD9-D38B-4FB1-9627-B34149ADEEA7}.Release|x64.ActiveCfg = Release|Any CPU
 		{29A9ACD9-D38B-4FB1-9627-B34149ADEEA7}.Release|x86.ActiveCfg = Release|Any CPU
+		{AA77E573-5AE5-44A8-A8D8-FB1250D403F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA77E573-5AE5-44A8-A8D8-FB1250D403F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA77E573-5AE5-44A8-A8D8-FB1250D403F4}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{AA77E573-5AE5-44A8-A8D8-FB1250D403F4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{AA77E573-5AE5-44A8-A8D8-FB1250D403F4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{AA77E573-5AE5-44A8-A8D8-FB1250D403F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA77E573-5AE5-44A8-A8D8-FB1250D403F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA77E573-5AE5-44A8-A8D8-FB1250D403F4}.Release|ARM.ActiveCfg = Release|Any CPU
+		{AA77E573-5AE5-44A8-A8D8-FB1250D403F4}.Release|x64.ActiveCfg = Release|Any CPU
+		{AA77E573-5AE5-44A8-A8D8-FB1250D403F4}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using MyCouch.EnsureThat;
 #if NETFX_CORE
 using System.Reflection;
 #endif
 using System.Linq;
-using EnsureThat;
 using MyCouch.EntitySchemes;
 using MyCouch.Responses;
 using Newtonsoft.Json;

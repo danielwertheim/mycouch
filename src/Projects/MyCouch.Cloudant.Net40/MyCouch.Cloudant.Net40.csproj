@@ -32,9 +32,6 @@
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EnsureThat">
-      <HintPath>..\..\packages\Ensure.That.1.0.0\lib\portable-win+net40+sl40+wp71\EnsureThat.dll\EnsureThat.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Threading.Tasks">
       <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.166\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
       <Private>True</Private>
@@ -146,6 +143,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MyCouch.Core\MyCouch.Core.csproj">
+      <Project>{aa77e573-5ae5-44a8-a8d8-fb1250d403f4}</Project>
+      <Name>MyCouch.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MyCouch.Net40\MyCouch.Net40.csproj">
       <Project>{f6f6b78c-3213-452c-834b-2d2c8ae69685}</Project>
       <Name>MyCouch.Net40</Name>

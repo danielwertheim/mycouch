@@ -1,11 +1,11 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
-using EnsureThat;
 using MyCouch.Cloudant.Requests;
 using MyCouch.Cloudant.Requests.Factories;
 using MyCouch.Cloudant.Responses;
 using MyCouch.Cloudant.Responses.Factories;
 using MyCouch.Contexts;
+using MyCouch.EnsureThat;
 using MyCouch.Extensions;
 using MyCouch.Net;
 using MyCouch.Serialization;

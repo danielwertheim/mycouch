@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
-using EnsureThat;
 using MyCouch.Cloudant.Responses.Factories.Materializers;
+using MyCouch.EnsureThat;
 using MyCouch.Responses.Factories;
 using MyCouch.Responses.Factories.Materializers;
 using MyCouch.Serialization;
