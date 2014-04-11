@@ -5,12 +5,20 @@ using System.Net.Http;
 using MyCouch.EnsureThat;
 using MyCouch.Net;
 using MyCouch.Requests.Factories;
+using MyCouch.Serialization;
 
 namespace MyCouch.Cloudant.Requests.Factories
 {
     public class SearchIndexHttpRequestFactory : HttpRequestFactoryBase
     {
-        public SearchIndexHttpRequestFactory(IConnection connection) : base(connection) { }
+        protected ISerializer Serializer { get; private set; }
+
+        public SearchIndexHttpRequestFactory(IConnection connection, ISerializer serializer) : base(connection)
+        {
+            Ensure.That(serializer, "serializer").IsNotNull();
+
+            Serializer = serializer;
+        }
 
         public virtual HttpRequest Create(SearchIndexRequest request)
         {
@@ -25,60 +33,47 @@ namespace MyCouch.Cloudant.Requests.Factories
                 Connection.Address,
                 request.IndexIdentity.DesignDocument,
                 request.IndexIdentity.Name,
-                GenerateQueryString(request));
+                GenerateRequestUrlQueryString(request));
         }
 
-        protected virtual string GenerateQueryString(SearchIndexRequest request)
+        protected virtual string GenerateRequestUrlQueryString(SearchIndexRequest request)
         {
             var p = GenerateQueryStringParams(request);
 
             return string.IsNullOrEmpty(p) ? string.Empty : string.Concat("?", p);
         }
 
-        /// <summary>
-        /// Generates <see cref="SearchIndexRequest"/> configured values as querystring params.
-        /// </summary>
-        /// <returns></returns>
         protected virtual string GenerateQueryStringParams(SearchIndexRequest request)
         {
-            return string.Join("&", ConvertRequestToJsonCompatibleKeyValues(request)
+            return string.Join("&", GenerateJsonCompatibleKeyValues(request)
                 .Select(kv => string.Format("{0}={1}", kv.Key, Uri.EscapeDataString(kv.Value))));
         }
 
-        /// <summary>
-        /// Returns all configured options of <see cref="SearchIndexRequest"/> as key values.
-        /// The values are formatted to JSON-compatible strings.
-        /// </summary>
-        /// <returns></returns>
-        protected virtual IDictionary<string, string> ConvertRequestToJsonCompatibleKeyValues(SearchIndexRequest request)
+        protected virtual IDictionary<string, string> GenerateJsonCompatibleKeyValues(SearchIndexRequest request)
         {
             var kvs = new Dictionary<string, string>();
 
-            if (HasValue(request.Expression))
+            if (!string.IsNullOrWhiteSpace(request.Expression))
                 kvs.Add(KeyNames.Expression, request.Expression);
 
-            if (HasValue(request.Sort))
-                kvs.Add(KeyNames.Sort, FormatValues(request.Sort));
+            if (request.HasSortings())
+                kvs.Add(KeyNames.Sort, Serializer.ToJsonArray(request.Sort.ToArray()));
 
-            if (HasValue(request.Bookmark))
+            if (!string.IsNullOrWhiteSpace(request.Bookmark))
                 kvs.Add(KeyNames.Bookmark, request.Bookmark);
 
             if (request.Stale.HasValue)
                 kvs.Add(KeyNames.Stale, request.Stale.Value.AsString());
 
             if (request.Limit.HasValue)
-                kvs.Add(KeyNames.Limit, request.Limit.Value.ToString(MyCouchRuntime.NumberFormat));
+                kvs.Add(KeyNames.Limit, Serializer.ToJson(request.Limit.Value));
 
             if (request.IncludeDocs.HasValue)
-                kvs.Add(KeyNames.IncludeDocs, FormatValue(request.IncludeDocs.Value));
+                kvs.Add(KeyNames.IncludeDocs, Serializer.ToJson(request.IncludeDocs.Value));
 
             return kvs;
         }
 
-        /// <summary>
-        /// Contains the string representation (Key) of
-        /// individual options for <see cref="SearchIndexRequest"/>.
-        /// </summary>
         protected static class KeyNames
         {
             public const string Expression = "q";

@@ -83,28 +83,28 @@ namespace MyCouch.Responses
             {
                 return Key == null
                     ? null
-                    : (int?)int.Parse(Key.ToString(), MyCouchRuntime.NumberFormat);
+                    : (int?)int.Parse(Key.ToString(), MyCouchRuntime.FormatingCulture.NumberFormat);
             }
 
             public long? KeyAsLong()
             {
                 return Key == null
                     ? null
-                    : (long?)long.Parse(Key.ToString(), MyCouchRuntime.NumberFormat);
+                    : (long?)long.Parse(Key.ToString(), MyCouchRuntime.FormatingCulture.NumberFormat);
             }
 
             public double? KeyAsDouble()
             {
                 return Key == null
                     ? null
-                    : (double?)double.Parse(Key.ToString(), MyCouchRuntime.NumberFormat);
+                    : (double?)double.Parse(Key.ToString(), MyCouchRuntime.FormatingCulture.NumberFormat);
             }
 
             public decimal? KeyAsDecimal()
             {
                 return Key == null
                     ? null
-                    : (decimal?)decimal.Parse(Key.ToString(), MyCouchRuntime.NumberFormat);
+                    : (decimal?)decimal.Parse(Key.ToString(), MyCouchRuntime.FormatingCulture.NumberFormat);
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using MyCouch.Cloudant.Searching;
 using MyCouch.EnsureThat;
 using MyCouch.Requests;
@@ -92,6 +93,11 @@ namespace MyCouch.Cloudant.Requests
             configurator(new SearchParametersConfigurator(State));
 
             return this;
+        }
+
+        public virtual bool HasSortings()
+        {
+            return Sort != null && Sort.Any();
         }
     }
 }

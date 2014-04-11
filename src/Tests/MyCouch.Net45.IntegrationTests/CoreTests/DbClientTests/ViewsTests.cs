@@ -35,7 +35,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             var response = SUT.QueryAsync(query).Result;
 
             response.Should().BeSuccessfulGet(numOfRows: 1);
-            response.Rows[0].Value.Should().Be(expectedSum.ToString(MyCouchRuntime.NumberFormat));
+            response.Rows[0].Value.Should().Be(expectedSum.ToString(MyCouchRuntime.FormatingCulture.NumberFormat));
         }
 
         [MyFact(TestScenarios.ViewsContext)]
