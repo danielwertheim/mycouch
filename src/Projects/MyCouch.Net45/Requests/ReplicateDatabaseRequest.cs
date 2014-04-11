@@ -28,5 +28,15 @@ namespace MyCouch.Requests
             Target = target;
             QueryParams = new Dictionary<string, object>();
         }
+
+        public virtual bool HasDocIds()
+        {
+            return DocIds != null && DocIds.Length > 0;
+        }
+
+        public virtual bool HasQueryParams()
+        {
+            return QueryParams != null && QueryParams.Count > 0;
+        }
     }
 }

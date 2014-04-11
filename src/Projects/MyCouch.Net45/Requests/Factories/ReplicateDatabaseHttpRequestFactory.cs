@@ -1,10 +1,7 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using MyCouch.EnsureThat;
-using MyCouch.Extensions;
 using MyCouch.Net;
-using MyCouch.Responses;
 using MyCouch.Serialization;
 
 namespace MyCouch.Requests.Factories
@@ -14,7 +11,8 @@ namespace MyCouch.Requests.Factories
         protected IRequestUrlGenerator RequestUrlGenerator { get; private set; }
         protected ISerializer Serializer { get; private set; }
 
-        public ReplicateDatabaseHttpRequestFactory(IServerClientConnection connection, ISerializer serializer) : base(connection)
+        public ReplicateDatabaseHttpRequestFactory(IServerClientConnection connection, ISerializer serializer)
+            : base(connection)
         {
             Ensure.That(serializer, "serializer").IsNotNull();
 
@@ -44,61 +42,30 @@ namespace MyCouch.Requests.Factories
             Ensure.That(request.Source, "request.Source").IsNotNullOrWhiteSpace();
             Ensure.That(request.Target, "request.Target").IsNotNullOrWhiteSpace();
 
-            var json = new StringBuilder();
+            var tmp = new Dictionary<string, object> { { "source", request.Source }, { "target", request.Target } };
 
-            json.Append(JsonScheme.StartObject);
-            json.AppendFormat(JsonScheme.MemberStringValueFormat, "source", request.Source);
-            json.Append(JsonScheme.MemberDelimiter);
-            json.AppendFormat(JsonScheme.MemberStringValueFormat, "target", request.Target);
-
-            if (request.DocIds != null && request.DocIds.Any())
-            {
-                var docIdsString = string.Join(",", request.DocIds
-                    .Where(id => !string.IsNullOrWhiteSpace(id))
-                    .Select(id => string.Format("\"{0}\"", id)));
-                json.Append(JsonScheme.MemberDelimiter);
-                json.AppendFormat(JsonScheme.MemberArrayValueFormat, "doc_ids", docIdsString);
-            }
+            if (request.HasDocIds())
+                tmp.Add("doc_ids", request.DocIds);
 
             if (!string.IsNullOrWhiteSpace(request.Proxy))
-            {
-                json.Append(JsonScheme.MemberDelimiter);
-                json.AppendFormat(JsonScheme.MemberStringValueFormat, "proxy", request.Proxy);
-            }
+                tmp.Add("proxy", request.Proxy);
 
             if (request.CreateTarget.HasValue)
-            {
-                json.Append(JsonScheme.MemberDelimiter);
-                json.AppendFormat(JsonScheme.MemberValueFormat, "create_target", request.CreateTarget.Value.ToJsonString());
-            }
+                tmp.Add("create_target", request.CreateTarget);
 
             if (request.Continuous.HasValue)
-            {
-                json.Append(JsonScheme.MemberDelimiter);
-                json.AppendFormat(JsonScheme.MemberValueFormat, "continuous", request.Continuous.Value.ToJsonString());
-            }
+                tmp.Add("continuous", request.Continuous.Value);
 
             if (request.Cancel.HasValue)
-            {
-                json.Append(JsonScheme.MemberDelimiter);
-                json.AppendFormat(JsonScheme.MemberValueFormat, "cancel", request.Cancel.Value.ToJsonString());
-            }
+                tmp.Add("cancel", request.Cancel.Value);
 
             if (!string.IsNullOrWhiteSpace(request.Filter))
-            {
-                json.Append(JsonScheme.MemberDelimiter);
-                json.AppendFormat(JsonScheme.MemberStringValueFormat, "filter", request.Filter);
-            }
+                tmp.Add("filter", request.Filter);
 
-            if (request.QueryParams != null && request.QueryParams.Any())
-            {
-                json.Append(JsonScheme.MemberDelimiter);
-                json.AppendFormat(JsonScheme.MemberObjectValueFormat, "query_params", Serializer.Serialize(request.QueryParams));
-            }
+            if (request.HasQueryParams())
+                tmp.Add("query_params", request.QueryParams);
 
-            json.Append(JsonScheme.EndObject);
-
-            return json.ToString();
+            return Serializer.Serialize(tmp);
         }
     }
 }

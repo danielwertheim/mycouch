@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using MyCouch.EnsureThat;
-using MyCouch.Extensions;
 using MyCouch.Net;
 using MyCouch.Requests.Factories;
 
@@ -71,7 +70,7 @@ namespace MyCouch.Cloudant.Requests.Factories
                 kvs.Add(KeyNames.Limit, request.Limit.Value.ToString(MyCouchRuntime.NumberFormat));
 
             if (request.IncludeDocs.HasValue)
-                kvs.Add(KeyNames.IncludeDocs, request.IncludeDocs.Value.ToJsonString());
+                kvs.Add(KeyNames.IncludeDocs, FormatValue(request.IncludeDocs.Value));
 
             return kvs;
         }

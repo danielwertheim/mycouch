@@ -2,16 +2,6 @@
 {
     public static class JsonScheme
     {
-        public const string StartObject = "{";
-        public const string EndObject = "}";
-        public const string MemberDelimiter = ",";
-        public const string MemberValueFormat = "\"{0}\":{1}";
-        public const string MemberStringValueFormat = "\"{0}\":\"{1}\"";
-        public const string MemberArrayValueFormat = "\"{0}\":[{1}]";
-        public const string MemberObjectValueFormat = "\"{0}\":{1}";
-
-        public const string Id = "id";
-        public const string Rev = "rev";
         public const string Error = "error";
         public const string Reason = "reason";
         public const string UpdateSeq = "update_seq";
