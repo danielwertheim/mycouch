@@ -86,5 +86,13 @@ namespace MyCouch.UnitTests.Requests.Factories
 
             r.Content.ReadAsStringAsync().Result.Should().Be("{\"source\":\"fakedb1\",\"target\":\"fakedb2\",\"continuous\":true}");
         }
+
+        [Fact]
+        public void When_continuous_is_false_It_generates_request_body_with_continuous_false()
+        {
+            var r = SUT.Create(new ReplicateDatabaseRequest("fakedb1", "fakedb2") { Continuous = false });
+
+            r.Content.ReadAsStringAsync().Result.Should().Be("{\"source\":\"fakedb1\",\"target\":\"fakedb2\",\"continuous\":false}");
+        }
     }
 }
