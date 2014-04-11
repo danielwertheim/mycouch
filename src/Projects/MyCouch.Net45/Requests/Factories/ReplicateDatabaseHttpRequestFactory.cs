@@ -42,30 +42,47 @@ namespace MyCouch.Requests.Factories
             Ensure.That(request.Source, "request.Source").IsNotNullOrWhiteSpace();
             Ensure.That(request.Target, "request.Target").IsNotNullOrWhiteSpace();
 
-            var tmp = new Dictionary<string, object> { { "source", request.Source }, { "target", request.Target } };
+            var tmp = new Dictionary<string, object>
+            {
+                { KeyNames.Source, request.Source },
+                { KeyNames.Target, request.Target }
+            };
 
             if (request.HasDocIds())
-                tmp.Add("doc_ids", request.DocIds);
+                tmp.Add(KeyNames.DocIds, request.DocIds);
 
             if (!string.IsNullOrWhiteSpace(request.Proxy))
-                tmp.Add("proxy", request.Proxy);
+                tmp.Add(KeyNames.Proxy, request.Proxy);
 
             if (request.CreateTarget.HasValue)
-                tmp.Add("create_target", request.CreateTarget);
+                tmp.Add(KeyNames.CreateTarget, request.CreateTarget);
 
             if (request.Continuous.HasValue)
-                tmp.Add("continuous", request.Continuous.Value);
+                tmp.Add(KeyNames.Continuous, request.Continuous.Value);
 
             if (request.Cancel.HasValue)
-                tmp.Add("cancel", request.Cancel.Value);
+                tmp.Add(KeyNames.Cancel, request.Cancel.Value);
 
             if (!string.IsNullOrWhiteSpace(request.Filter))
-                tmp.Add("filter", request.Filter);
+                tmp.Add(KeyNames.Filter, request.Filter);
 
             if (request.HasQueryParams())
-                tmp.Add("query_params", request.QueryParams);
+                tmp.Add(KeyNames.QueryParams, request.QueryParams);
 
             return Serializer.Serialize(tmp);
+        }
+
+        protected static class KeyNames
+        {
+            public const string Source = "source";
+            public const string Target = "target";
+            public const string DocIds = "doc_ids";
+            public const string Proxy = "proxy";
+            public const string CreateTarget = "create_target";
+            public const string Continuous = "continuous";
+            public const string Cancel = "cancel";
+            public const string Filter = "filter";
+            public const string QueryParams = "query_params";
         }
     }
 }
