@@ -11,14 +11,14 @@ namespace MyCouch
         /// </summary>
         /// <param name="dbName"></param>
         /// <returns></returns>
-        Task<TextResponse> GetAsync(string dbName);
+        Task<GetDatabaseResponse> GetAsync(string dbName);
 
         /// <summary>
         /// Gets information about the database.
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        Task<TextResponse> GetAsync(GetDatabaseRequest request);
+        Task<GetDatabaseResponse> GetAsync(GetDatabaseRequest request);
 
         /// <summary>
         /// Returns the HTTP Headers containing a minimal amount of information
