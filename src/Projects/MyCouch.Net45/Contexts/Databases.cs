@@ -38,7 +38,7 @@ namespace MyCouch.Contexts
             DeleteHttpRequestFactory = new DeleteDatabaseHttpRequestFactory(Connection);
             CompactHttpRequestFactory = new CompactDatabaseHttpRequestFactory(Connection);
             ViewCleanupHttpRequestFactory = new ViewCleanupHttpRequestFactory(Connection);
-            ReplicateDatabaseHttpRequestFactory = new ReplicateDatabaseHttpRequestFactory(Connection);
+            ReplicateDatabaseHttpRequestFactory = new ReplicateDatabaseHttpRequestFactory(Connection, serializer);
         }
 
         public virtual Task<TextResponse> HeadAsync(string dbName)

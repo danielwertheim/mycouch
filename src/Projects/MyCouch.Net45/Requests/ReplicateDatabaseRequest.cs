@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using MyCouch.EnsureThat;
 
 namespace MyCouch.Requests
@@ -16,6 +17,7 @@ namespace MyCouch.Requests
         public bool? Cancel { get; set; }
         public string Proxy { get; set; }
         public string Filter { get; set; }
+        public IDictionary<string, object> QueryParams { get; set; }
 
         public ReplicateDatabaseRequest(string source, string target)
         {
@@ -24,6 +26,7 @@ namespace MyCouch.Requests
 
             Source = source;
             Target = target;
+            QueryParams = new Dictionary<string, object>();
         }
     }
 }

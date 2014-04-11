@@ -5,16 +5,21 @@ using MyCouch.EnsureThat;
 using MyCouch.Extensions;
 using MyCouch.Net;
 using MyCouch.Responses;
+using MyCouch.Serialization;
 
 namespace MyCouch.Requests.Factories
 {
     public class ReplicateDatabaseHttpRequestFactory : HttpRequestFactoryBase
     {
         protected IRequestUrlGenerator RequestUrlGenerator { get; private set; }
+        protected ISerializer Serializer { get; private set; }
 
-        public ReplicateDatabaseHttpRequestFactory(IServerClientConnection connection) : base(connection)
+        public ReplicateDatabaseHttpRequestFactory(IServerClientConnection connection, ISerializer serializer) : base(connection)
         {
+            Ensure.That(serializer, "serializer").IsNotNull();
+
             RequestUrlGenerator = new AppendingRequestUrlGenerator(connection.Address);
+            Serializer = serializer;
         }
 
         public virtual HttpRequest Create(ReplicateDatabaseRequest request)
@@ -61,12 +66,6 @@ namespace MyCouch.Requests.Factories
                 json.AppendFormat(JsonScheme.MemberStringValueFormat, "proxy", request.Proxy);
             }
 
-            if (!string.IsNullOrWhiteSpace(request.Filter))
-            {
-                json.Append(JsonScheme.MemberDelimiter);
-                json.AppendFormat(JsonScheme.MemberStringValueFormat, "filter", request.Filter);
-            }
-
             if (request.CreateTarget.HasValue)
             {
                 json.Append(JsonScheme.MemberDelimiter);
@@ -83,6 +82,18 @@ namespace MyCouch.Requests.Factories
             {
                 json.Append(JsonScheme.MemberDelimiter);
                 json.AppendFormat(JsonScheme.MemberValueFormat, "cancel", request.Cancel.Value.ToJsonString());
+            }
+
+            if (!string.IsNullOrWhiteSpace(request.Filter))
+            {
+                json.Append(JsonScheme.MemberDelimiter);
+                json.AppendFormat(JsonScheme.MemberStringValueFormat, "filter", request.Filter);
+            }
+
+            if (request.QueryParams != null && request.QueryParams.Any())
+            {
+                json.Append(JsonScheme.MemberDelimiter);
+                json.AppendFormat(JsonScheme.MemberObjectValueFormat, "query_params", Serializer.Serialize(request.QueryParams));
             }
 
             json.Append(JsonScheme.EndObject);

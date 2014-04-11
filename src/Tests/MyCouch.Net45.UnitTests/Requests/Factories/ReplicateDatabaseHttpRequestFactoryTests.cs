@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using FluentAssertions;
 using MyCouch.Requests;
 using MyCouch.Requests.Factories;
+using MyCouch.Serialization;
 using MyCouch.UnitTests.Fakes;
 using Xunit;
 
@@ -12,7 +14,7 @@ namespace MyCouch.UnitTests.Requests.Factories
         public ReplicateDatabaseHttpRequestFactoryTests()
         {
             var connection = new ServerClientConnectionFake(new Uri("http://foo.com:5984"));
-            SUT = new ReplicateDatabaseHttpRequestFactory(connection);
+            SUT = new ReplicateDatabaseHttpRequestFactory(connection, new DefaultSerializer(new SerializationConfiguration()));
         }
 
         [Fact]
@@ -101,6 +103,16 @@ namespace MyCouch.UnitTests.Requests.Factories
             var r = SUT.Create(new ReplicateDatabaseRequest("fakedb1", "fakedb2") { Filter = "mydesigndoc/myfilter" });
 
             r.Content.ReadAsStringAsync().Result.Should().Be("{\"source\":\"fakedb1\",\"target\":\"fakedb2\",\"filter\":\"mydesigndoc/myfilter\"}");
+        }
+
+        [Fact]
+        public void When_query_params_are_specified_It_generates_request_body_with_query_params_object()
+        {
+            var qp = new Dictionary<string, object> { { "key1", "stringvalue" }, { "key2", 42 }, { "key3", 3.14 }, { "key4", new DateTime(2014, 04, 11, 08, 45, 33) } };
+            var r = SUT.Create(new ReplicateDatabaseRequest("fakedb1", "fakedb2") { QueryParams = qp });
+
+            r.Content.ReadAsStringAsync().Result.Should().Be("{\"source\":\"fakedb1\",\"target\":\"fakedb2\",\"query_params\":{"
+                + "\"key1\":\"stringvalue\",\"key2\":42,\"key3\":3.14,\"key4\":\"2014-04-11T08:45:33\"}}");
         }
     }
 }

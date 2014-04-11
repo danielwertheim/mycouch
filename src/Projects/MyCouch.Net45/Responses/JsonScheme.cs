@@ -8,6 +8,7 @@
         public const string MemberValueFormat = "\"{0}\":{1}";
         public const string MemberStringValueFormat = "\"{0}\":\"{1}\"";
         public const string MemberArrayValueFormat = "\"{0}\":[{1}]";
+        public const string MemberObjectValueFormat = "\"{0}\":{1}";
 
         public const string Id = "id";
         public const string Rev = "rev";
