@@ -79,6 +79,10 @@
     <Compile Include="Searching\SearchParameters.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MyCouch.Core\MyCouch.Core.csproj">
+      <Project>{aa77e573-5ae5-44a8-a8d8-fb1250d403f4}</Project>
+      <Name>MyCouch.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MyCouch.Net45\MyCouch.Net45.csproj">
       <Project>{564701b5-d8f3-4b69-981f-559f8867fb76}</Project>
       <Name>MyCouch.Net45</Name>

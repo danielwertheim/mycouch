@@ -146,6 +146,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MyCouch.Core\MyCouch.Core.csproj">
+      <Project>{aa77e573-5ae5-44a8-a8d8-fb1250d403f4}</Project>
+      <Name>MyCouch.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MyCouch.Net40\MyCouch.Net40.csproj">
       <Project>{f6f6b78c-3213-452c-834b-2d2c8ae69685}</Project>
       <Name>MyCouch.Net40</Name>
