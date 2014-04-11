@@ -1,10 +1,18 @@
 ﻿using MyCouch.EnsureThat;
+using MyCouch.Net;
 
 namespace MyCouch.Requests.Factories
 {
     public abstract class AttachmentHttpRequestFactoryBase : HttpRequestFactoryBase
     {
-        protected AttachmentHttpRequestFactoryBase(IDbClientConnection connection) : base(connection) { }
+        protected ConstantRequestUrlGenerator RequestUrlGenerator { get; private set; }
+
+        protected AttachmentHttpRequestFactoryBase(IDbClientConnection connection)
+        {
+            Ensure.That(connection, "connection").IsNotNull();
+
+            RequestUrlGenerator = new ConstantRequestUrlGenerator(connection.Address, connection.DbName);
+        }
 
         protected virtual string GenerateRequestUrl(string docId, string docRev, string attachmentName)
         {
@@ -13,7 +21,7 @@ namespace MyCouch.Requests.Factories
                 .IsNotNullOrWhiteSpace();
 
             return string.Format("{0}/{1}/{2}{3}",
-                Connection.Address,
+                RequestUrlGenerator.Generate(),
                 docId,
                 attachmentName,
                 docRev == null ? string.Empty : string.Concat("?rev=", docRev));

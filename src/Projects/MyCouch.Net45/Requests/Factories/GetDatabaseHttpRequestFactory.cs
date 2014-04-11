@@ -9,14 +9,16 @@ namespace MyCouch.Requests.Factories
         protected IRequestUrlGenerator RequestUrlGenerator { get; private set; }
 
         public GetDatabaseHttpRequestFactory(IDbClientConnection connection)
-            : base(connection)
         {
+            Ensure.That(connection, "connection").IsNotNull();
+
             RequestUrlGenerator = new ConstantRequestUrlGenerator(connection.Address, connection.DbName);
         }
 
         public GetDatabaseHttpRequestFactory(IServerClientConnection connection)
-            : base(connection)
         {
+            Ensure.That(connection, "connection").IsNotNull();
+
             RequestUrlGenerator = new AppendingRequestUrlGenerator(connection.Address);
         }
 

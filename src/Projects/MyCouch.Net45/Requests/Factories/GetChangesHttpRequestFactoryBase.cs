@@ -9,7 +9,14 @@ namespace MyCouch.Requests.Factories
 {
     public abstract class GetChangesHttpRequestFactoryBase : HttpRequestFactoryBase
     {
-        protected GetChangesHttpRequestFactoryBase(IDbClientConnection connection) : base(connection) { }
+        protected ConstantRequestUrlGenerator RequestUrlGenerator { get; private set; }
+
+        protected GetChangesHttpRequestFactoryBase(IDbClientConnection connection)
+        {
+            Ensure.That(connection, "connection").IsNotNull();
+
+            RequestUrlGenerator = new ConstantRequestUrlGenerator(connection.Address, connection.DbName);
+        }
 
         public virtual HttpRequest Create(GetChangesRequest request)
         {
@@ -21,7 +28,7 @@ namespace MyCouch.Requests.Factories
         protected virtual string GenerateRequestUrl(GetChangesRequest request)
         {
             return string.Format("{0}/_changes{1}",
-                Connection.Address,
+                RequestUrlGenerator.Generate(),
                 GenerateQueryString(request));
         }
 
@@ -47,7 +54,7 @@ namespace MyCouch.Requests.Factories
         {
             var kvs = new Dictionary<string, string>();
 
-            if(request.Feed.HasValue)
+            if (request.Feed.HasValue)
                 kvs.Add(KeyNames.Feed, request.Feed.Value.AsString());
 
             if (!string.IsNullOrWhiteSpace(request.Since))

@@ -9,13 +9,11 @@ namespace MyCouch.Requests.Factories
         protected IRequestUrlGenerator RequestUrlGenerator { get; private set; }
 
         public ViewCleanupHttpRequestFactory(IDbClientConnection connection)
-            : base(connection)
         {
             RequestUrlGenerator = new ConstantRequestUrlGenerator(connection.Address, connection.DbName);
         }
 
         public ViewCleanupHttpRequestFactory(IServerClientConnection connection)
-            : base(connection)
         {
             RequestUrlGenerator = new AppendingRequestUrlGenerator(connection.Address);
         }

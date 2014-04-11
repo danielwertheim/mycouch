@@ -12,8 +12,8 @@ namespace MyCouch.Requests.Factories
         protected ISerializer Serializer { get; private set; }
 
         public ReplicateDatabaseHttpRequestFactory(IServerClientConnection connection, ISerializer serializer)
-            : base(connection)
         {
+            Ensure.That(connection, "connection").IsNotNull();
             Ensure.That(serializer, "serializer").IsNotNull();
 
             RequestUrlGenerator = new AppendingRequestUrlGenerator(connection.Address);

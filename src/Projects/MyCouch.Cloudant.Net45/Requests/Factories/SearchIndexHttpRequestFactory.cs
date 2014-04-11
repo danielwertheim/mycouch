@@ -11,12 +11,15 @@ namespace MyCouch.Cloudant.Requests.Factories
 {
     public class SearchIndexHttpRequestFactory : HttpRequestFactoryBase
     {
+        protected ConstantRequestUrlGenerator RequestUrlGenerator { get; private set; }
         protected ISerializer Serializer { get; private set; }
 
-        public SearchIndexHttpRequestFactory(IConnection connection, ISerializer serializer) : base(connection)
+        public SearchIndexHttpRequestFactory(IDbClientConnection connection, ISerializer serializer)
         {
+            Ensure.That(connection, "connection").IsNotNull();
             Ensure.That(serializer, "serializer").IsNotNull();
 
+            RequestUrlGenerator = new ConstantRequestUrlGenerator(connection.Address, connection.DbName);
             Serializer = serializer;
         }
 
@@ -30,7 +33,7 @@ namespace MyCouch.Cloudant.Requests.Factories
         protected virtual string GenerateRequestUrl(SearchIndexRequest request)
         {
             return string.Format("{0}/_design/{1}/_search/{2}{3}",
-                Connection.Address,
+                RequestUrlGenerator.Generate(),
                 request.IndexIdentity.DesignDocument,
                 request.IndexIdentity.Name,
                 GenerateRequestUrlQueryString(request));

@@ -10,13 +10,15 @@ namespace MyCouch.Requests.Factories
 {
     public class QueryViewHttpRequestFactory : HttpRequestFactoryBase
     {
+        protected ConstantRequestUrlGenerator RequestUrlGenerator { get; private set; }
         protected ISerializer Serializer { get; private set; }
 
         public QueryViewHttpRequestFactory(IDbClientConnection connection, ISerializer serializer)
-            : base(connection)
         {
+            Ensure.That(connection, "connection").IsNotNull();
             Ensure.That(serializer, "serializer").IsNotNull();
 
+            RequestUrlGenerator = new ConstantRequestUrlGenerator(connection.Address, connection.DbName);
             Serializer = serializer;
         }
 
@@ -34,13 +36,13 @@ namespace MyCouch.Requests.Factories
             if (request.ViewIdentity is SystemViewIdentity)
             {
                 return string.Format("{0}/{1}{2}",
-                    Connection.Address,
+                    RequestUrlGenerator.Generate(),
                     request.ViewIdentity.Name,
                     GenerateRequestUrlQueryString(request));
             }
 
             return string.Format("{0}/_design/{1}/_view/{2}{3}",
-                Connection.Address,
+                RequestUrlGenerator.Generate(),
                 request.ViewIdentity.DesignDocument,
                 request.ViewIdentity.Name,
                 GenerateRequestUrlQueryString(request));

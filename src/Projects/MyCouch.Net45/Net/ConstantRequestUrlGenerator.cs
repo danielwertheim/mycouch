@@ -17,12 +17,17 @@ namespace MyCouch.Net
             DbName = dbName;
         }
 
-        public string Generate(string resourceName)
+        public virtual string Generate()
+        {
+            return DbUri.AbsoluteUri;
+        }
+
+        public virtual string Generate(string resourceName)
         {
             if (DbName != resourceName)
                 throw new InvalidOperationException(ExceptionStrings.ConstantRequestUrlGenerationAgainstOtherDb);
 
-            return DbUri.AbsoluteUri;
+            return Generate();
         }
     }
 }

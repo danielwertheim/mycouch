@@ -7,7 +7,14 @@ namespace MyCouch.Requests.Factories
 {
     public class BulkHttpRequestFactory : HttpRequestFactoryBase
     {
-        public BulkHttpRequestFactory(IDbClientConnection connection) : base(connection) { }
+        protected ConstantRequestUrlGenerator RequestUrlGenerator { get; private set; }
+
+        public BulkHttpRequestFactory(IDbClientConnection connection)
+        {
+            Ensure.That(connection, "connection").IsNotNull();
+
+            RequestUrlGenerator = new ConstantRequestUrlGenerator(connection.Address, connection.DbName);
+        }
 
         public virtual HttpRequest Create(BulkRequest request)
         {
@@ -22,7 +29,7 @@ namespace MyCouch.Requests.Factories
 
         protected virtual string GenerateRequestUrl(BulkRequest request)
         {
-            return string.Format("{0}/_bulk_docs", Connection.Address);
+            return string.Format("{0}/_bulk_docs", RequestUrlGenerator.Generate());
         }
 
         protected virtual string GenerateRequestBody(BulkRequest request)
