@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EnsureThat
+namespace MyCouch.EnsureThat
 {
     public static class ExceptionFactory
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using EnsureThat;
 using MyCouch.Cloudant.Searching;
+using MyCouch.EnsureThat;
 using MyCouch.Requests;
 
 namespace MyCouch.Cloudant.Requests

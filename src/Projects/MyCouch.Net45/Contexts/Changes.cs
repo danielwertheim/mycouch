@@ -6,7 +6,7 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using EnsureThat;
+using MyCouch.EnsureThat;
 using MyCouch.Extensions;
 using MyCouch.Requests;
 using MyCouch.Requests.Factories;

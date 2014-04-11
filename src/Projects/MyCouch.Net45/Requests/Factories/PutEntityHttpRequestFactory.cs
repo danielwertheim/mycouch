@@ -1,5 +1,5 @@
 ﻿using System.Net.Http;
-using EnsureThat;
+using MyCouch.EnsureThat;
 using MyCouch.EntitySchemes;
 using MyCouch.Net;
 using MyCouch.Serialization;

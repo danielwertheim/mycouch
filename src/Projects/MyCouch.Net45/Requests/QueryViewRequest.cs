@@ -1,5 +1,5 @@
 ﻿using System;
-using EnsureThat;
+using MyCouch.EnsureThat;
 using MyCouch.Querying;
 
 namespace MyCouch.Requests

@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 using System.Text;
-using EnsureThat;
+using MyCouch.EnsureThat;
 using MyCouch.Net;
 
 namespace MyCouch.Requests.Factories

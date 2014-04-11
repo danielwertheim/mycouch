@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using System.Text;
-using EnsureThat;
+using MyCouch.EnsureThat;
 using MyCouch.Serialization.Readers;
 using Newtonsoft.Json;
 

@@ -1,8 +1,8 @@
 using System.Diagnostics;
 using System.Text.RegularExpressions;
-using EnsureThat.Resources;
+using MyCouch.EnsureThat.Resources;
 
-namespace EnsureThat
+namespace MyCouch.EnsureThat
 {
     public static class EnsureStringExtensions
     {

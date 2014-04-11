@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using EnsureThat;
+using MyCouch.EnsureThat;
 using MyCouch.Serialization.Meta;
 using MyCouch.Serialization.Writers;
 using Newtonsoft.Json;

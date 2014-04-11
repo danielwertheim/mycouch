@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
-using EnsureThat;
+using MyCouch.EnsureThat;
 using MyCouch.EntitySchemes;
 using MyCouch.Extensions;
 using MyCouch.Net;

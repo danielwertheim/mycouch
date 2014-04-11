@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EnsureThat.Resources {
+namespace MyCouch.EnsureThat.Resources {
     using System;
     
     

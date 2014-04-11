@@ -1,4 +1,4 @@
-namespace EnsureThat
+namespace MyCouch.EnsureThat
 {
     internal static class StringExtensions
     {

@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Net.Http;
 using System.Text;
-using EnsureThat;
+using MyCouch.EnsureThat;
 using MyCouch.Extensions;
 using MyCouch.Serialization;
 

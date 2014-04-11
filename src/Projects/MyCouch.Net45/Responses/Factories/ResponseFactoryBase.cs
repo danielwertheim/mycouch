@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Net.Http;
-using EnsureThat;
+using MyCouch.EnsureThat;
 using MyCouch.Responses.Factories.Materializers;
 
 namespace MyCouch.Responses.Factories
