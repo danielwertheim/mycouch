@@ -36,11 +36,40 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
+    <EmbeddedResource Include="EnsureThat\Resources\ExceptionMessages.resx">
+      <CustomToolNamespace>EnsureThat.Resources</CustomToolNamespace>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ExceptionMessages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="EnsureThat\CustomMessageExtensions.cs" />
+    <Compile Include="EnsureThat\Ensure.cs" />
+    <Compile Include="EnsureThat\EnsureBoolExtensions.cs" />
+    <Compile Include="EnsureThat\EnsureCollectionExtensions.cs" />
+    <Compile Include="EnsureThat\EnsureDateTimeExtensions.cs" />
+    <Compile Include="EnsureThat\EnsureDecimalExtensions.cs" />
+    <Compile Include="EnsureThat\EnsureDoubleExtensions.cs" />
+    <Compile Include="EnsureThat\EnsureGuidExtensions.cs" />
+    <Compile Include="EnsureThat\EnsureIntExtensions.cs" />
+    <Compile Include="EnsureThat\EnsureLongExtensions.cs" />
+    <Compile Include="EnsureThat\EnsureNullableValueTypeExtensions.cs" />
+    <Compile Include="EnsureThat\EnsureObjectExtensions.cs" />
+    <Compile Include="EnsureThat\EnsureShortExtensions.cs" />
+    <Compile Include="EnsureThat\EnsureStringExtensions.cs" />
+    <Compile Include="EnsureThat\EnsureTypeExtensions.cs" />
+    <Compile Include="EnsureThat\ExceptionFactory.cs" />
+    <Compile Include="EnsureThat\Param.cs" />
+    <Compile Include="EnsureThat\Resources\ExceptionMessages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ExceptionMessages.resx</DependentUpon>
+    </Compile>
+    <Compile Include="EnsureThat\StringExtensions.cs" />
+    <Compile Include="EnsureThat\TypeParam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
