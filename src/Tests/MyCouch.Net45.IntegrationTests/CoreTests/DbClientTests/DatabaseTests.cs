@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Net.Http;
 using MyCouch.Testing;
+using MyCouch.Testing.TestData;
 
 namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
 {
@@ -21,11 +22,17 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
         }
 
         [MyFact(TestScenarios.DatabasesContext)]
-        public void When_Get_of_existing_db_The_response_should_be_200()
+        public void When_Get_of_existing_db_with_insert_update_and_delete_ops_The_response_should_be_200()
         {
+            var a1 = DbClient.Documents.PostAsync(ClientTestData.Artists.Artist1Json).Result;
+            var a1Updated = DbClient.Documents.PutAsync(a1.Id, a1.Rev, ClientTestData.Artists.Artist1Json).Result;
+
+            var a2 = DbClient.Documents.PostAsync(ClientTestData.Artists.Artist2Json).Result;
+            var a2Deleted = DbClient.Documents.DeleteAsync(a2.Id, a2.Rev).Result;
+
             var response = SUT.GetAsync().Result;
 
-            response.Should().BeAnyJson(HttpMethod.Get);
+            response.Should().BeSuccessful(DbClient.Connection.DbName);
         }
 
         [MyFact(TestScenarios.DatabasesContext)]

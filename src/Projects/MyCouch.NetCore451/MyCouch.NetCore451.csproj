@@ -533,6 +533,9 @@
     <Compile Include="..\MyCouch.Net45\responses\factories\EntityResponseFactory.cs">
       <Link>Responses\Factories\EntityResponseFactory.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\Factories\GetDatabaseResponseFactory.cs">
+      <Link>Responses\Factories\GetDatabaseResponseFactory.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\Responses\Factories\Materializers\AttachmentResponseMaterializer.cs">
       <Link>Responses\Factories\Materializers\AttachmentResponseMaterializer.cs</Link>
     </Compile>
@@ -563,8 +566,8 @@
     <Compile Include="..\MyCouch.Net45\Responses\Factories\Materializers\FailedResponseMaterializer.cs">
       <Link>Responses\Factories\Materializers\FailedResponseMaterializer.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\Responses\Factories\Materializers\ReplicationResponseMaterializer.cs">
-      <Link>Responses\Factories\Materializers\ReplicationResponseMaterializer.cs</Link>
+    <Compile Include="..\MyCouch.Net45\Responses\Factories\Materializers\SimpleDeserializingResponseMaterializer.cs">
+      <Link>Responses\Factories\Materializers\SimpleDeserializingResponseMaterializer.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Responses\Factories\Materializers\TextResponseMaterializer.cs">
       <Link>Responses\Factories\Materializers\TextResponseMaterializer.cs</Link>
@@ -583,6 +586,9 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\responses\factories\ViewQueryResponseFactory.cs">
       <Link>Responses\Factories\ViewQueryResponseFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\GetDatabaseResponse.cs">
+      <Link>Responses\GetDatabaseResponse.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Responses\IResponseRow.cs">
       <Link>Responses\IResponseRow.cs</Link>
@@ -625,6 +631,9 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\serialization\converters\MultiTypeDeserializationJsonConverter.cs">
       <Link>Serialization\Converters\MultiTypeDeserializationJsonConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Serialization\Converters\UnixEpochDateTimeConverter.cs">
+      <Link>Serialization\Converters\UnixEpochDateTimeConverter.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\serialization\DefaultSerializer.cs">
       <Link>Serialization\DefaultSerializer.cs</Link>

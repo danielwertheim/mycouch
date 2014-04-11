@@ -14,6 +14,8 @@ namespace MyCouch.Contexts
     public class Database : ApiContextBase<IDbClientConnection>, IDatabase
     {
         protected TextResponseFactory TextResponseFactory { get; set; }
+        protected GetDatabaseResponseFactory GetDatabaseResponseFactory { get; set; }
+
         protected GetDatabaseHttpRequestFactory GetHttpRequestFactory { get; set; }
         protected HeadDatabaseHttpRequestFactory HeadHttpRequestFactory { get; set; }
         protected PutDatabaseHttpRequestFactory PutHttpRequestFactory { get; set; }
@@ -27,6 +29,8 @@ namespace MyCouch.Contexts
             Ensure.That(serializer, "serializer").IsNotNull();
 
             TextResponseFactory = new TextResponseFactory(serializer);
+            GetDatabaseResponseFactory = new GetDatabaseResponseFactory(serializer);
+
             GetHttpRequestFactory = new GetDatabaseHttpRequestFactory(Connection);
             HeadHttpRequestFactory = new HeadDatabaseHttpRequestFactory(Connection);
             PutHttpRequestFactory = new PutDatabaseHttpRequestFactory(Connection);
@@ -41,18 +45,18 @@ namespace MyCouch.Contexts
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
                 {
-                    return ProcessResponse(res);
+                    return ProcessTextResponse(res);
                 }
             }
         }
 
-        public virtual async Task<TextResponse> GetAsync()
+        public virtual async Task<GetDatabaseResponse> GetAsync()
         {
             using (var httpRequest = CreateHttpRequest(new GetDatabaseRequest(Connection.DbName)))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
                 {
-                    return ProcessResponse(res);
+                    return ProcessGetDatabaseResponse(res);
                 }
             }
         }
@@ -63,7 +67,7 @@ namespace MyCouch.Contexts
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
                 {
-                    return ProcessResponse(res);
+                    return ProcessTextResponse(res);
                 }
             }
         }
@@ -74,7 +78,7 @@ namespace MyCouch.Contexts
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
                 {
-                    return ProcessResponse(res);
+                    return ProcessTextResponse(res);
                 }
             }
         }
@@ -85,7 +89,7 @@ namespace MyCouch.Contexts
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
                 {
-                    return ProcessResponse(res);
+                    return ProcessTextResponse(res);
                 }
             }
         }
@@ -96,7 +100,7 @@ namespace MyCouch.Contexts
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
                 {
-                    return ProcessResponse(res);
+                    return ProcessTextResponse(res);
                 }
             }
         }
@@ -131,9 +135,14 @@ namespace MyCouch.Contexts
             return ViewCleanupHttpRequestFactory.Create(request);
         }
 
-        protected virtual TextResponse ProcessResponse(HttpResponseMessage response)
+        protected virtual TextResponse ProcessTextResponse(HttpResponseMessage response)
         {
             return TextResponseFactory.Create(response);
+        }
+
+        protected virtual GetDatabaseResponse ProcessGetDatabaseResponse(HttpResponseMessage response)
+        {
+            return GetDatabaseResponseFactory.Create(response);
         }
     }
 }

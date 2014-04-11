@@ -123,8 +123,10 @@
     <Compile Include="Net\HttpRequest.cs" />
     <Compile Include="Net\JsonContent.cs" />
     <Compile Include="Requests\Factories\ReplicateDatabaseHttpRequestFactory.cs" />
-    <Compile Include="Responses\Factories\Materializers\ReplicationResponseMaterializer.cs" />
+    <Compile Include="Responses\Factories\GetDatabaseResponseFactory.cs" />
+    <Compile Include="Responses\Factories\Materializers\SimpleDeserializingResponseMaterializer.cs" />
     <Compile Include="Responses\Factories\ReplicationResponseFactory.cs" />
+    <Compile Include="Responses\GetDatabaseResponse.cs" />
     <Compile Include="Responses\ReplicationResponse.cs" />
     <Compile Include="Net\ServerClientConnection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -234,6 +236,7 @@
     <Compile Include="Serialization\Conventions\SerializationConventions.cs" />
     <Compile Include="Serialization\Converters\KeyJsonConverter.cs" />
     <Compile Include="Serialization\Converters\MultiTypeDeserializationJsonConverter.cs" />
+    <Compile Include="Serialization\Converters\UnixEpochDateTimeConverter.cs" />
     <Compile Include="Serialization\DefaultSerializer.cs" />
     <Compile Include="Serialization\DocumentSerializer.cs" />
     <Compile Include="Serialization\EntityContractResolver.cs" />

@@ -1,16 +1,16 @@
-﻿using System.Net.Http;
+using System.Net.Http;
 using MyCouch.EnsureThat;
 using MyCouch.Responses.Factories.Materializers;
 using MyCouch.Serialization;
 
 namespace MyCouch.Responses.Factories
 {
-    public class ReplicationResponseFactory : ResponseFactoryBase<ReplicationResponse>
+    public class GetDatabaseResponseFactory : ResponseFactoryBase<GetDatabaseResponse>
     {
         protected readonly SimpleDeserializingResponseMaterializer SuccessfulResponseMaterializer;
         protected readonly FailedResponseMaterializer FailedResponseMaterializer;
 
-        public ReplicationResponseFactory(ISerializer serializer)
+        public GetDatabaseResponseFactory(ISerializer serializer)
         {
             Ensure.That(serializer, "serializer").IsNotNull();
 
@@ -18,17 +18,17 @@ namespace MyCouch.Responses.Factories
             FailedResponseMaterializer = new FailedResponseMaterializer(serializer);
         }
 
-        protected override ReplicationResponse CreateResponseInstance()
+        protected override GetDatabaseResponse CreateResponseInstance()
         {
-            return new ReplicationResponse();
+            return new GetDatabaseResponse();
         }
 
-        protected override void OnMaterializationOfSuccessfulResponseProperties(ReplicationResponse response, HttpResponseMessage httpResponse)
+        protected override void OnMaterializationOfSuccessfulResponseProperties(GetDatabaseResponse response, HttpResponseMessage httpResponse)
         {
             SuccessfulResponseMaterializer.Materialize(response, httpResponse);
         }
 
-        protected override void OnMaterializationOfFailedResponseProperties(ReplicationResponse response, HttpResponseMessage httpResponse)
+        protected override void OnMaterializationOfFailedResponseProperties(GetDatabaseResponse response, HttpResponseMessage httpResponse)
         {
             FailedResponseMaterializer.Materialize(response, httpResponse);
         }

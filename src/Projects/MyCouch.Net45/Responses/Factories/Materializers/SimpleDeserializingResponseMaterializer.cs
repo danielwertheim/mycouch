@@ -5,18 +5,18 @@ using MyCouch.Serialization;
 
 namespace MyCouch.Responses.Factories.Materializers
 {
-    public class ReplicationResponseMaterializer
+    public class SimpleDeserializingResponseMaterializer
     {
-        protected readonly ISerializer Serializer;
+        protected ISerializer Serializer { get; private set; }
 
-        public ReplicationResponseMaterializer(ISerializer serializer)
+        public SimpleDeserializingResponseMaterializer(ISerializer serializer)
         {
             Ensure.That(serializer, "serializer").IsNotNull();
 
             Serializer = serializer;
         }
 
-        public virtual async void Materialize(ReplicationResponse response, HttpResponseMessage httpResponse)
+        public virtual async void Materialize<TResponse>(TResponse response, HttpResponseMessage httpResponse) where TResponse : Response
         {
             using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
             {

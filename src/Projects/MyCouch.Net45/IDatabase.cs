@@ -12,7 +12,7 @@ namespace MyCouch
         /// Gets information about the database.
         /// </summary>
         /// <returns></returns>
-        Task<TextResponse> GetAsync();
+        Task<GetDatabaseResponse> GetAsync();
 
         /// <summary>
         /// Returns the HTTP Headers containing a minimal amount of information

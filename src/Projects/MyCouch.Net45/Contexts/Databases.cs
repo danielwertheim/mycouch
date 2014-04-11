@@ -14,6 +14,7 @@ namespace MyCouch.Contexts
     public class Databases : ApiContextBase<IServerClientConnection>, IDatabases
     {
         protected TextResponseFactory TextResponseFactory { get; set; }
+        protected GetDatabaseResponseFactory GetDatabaseResponseFactory { get; set; }
         protected ReplicationResponseFactory ReplicationResponseFactory { get; set; }
 
         protected GetDatabaseHttpRequestFactory GetHttpRequestFactory { get; set; }
@@ -30,6 +31,7 @@ namespace MyCouch.Contexts
             Ensure.That(serializer, "serializer").IsNotNull();
 
             TextResponseFactory = new TextResponseFactory(serializer);
+            GetDatabaseResponseFactory = new GetDatabaseResponseFactory(serializer);
             ReplicationResponseFactory = new ReplicationResponseFactory(serializer);
 
             GetHttpRequestFactory = new GetDatabaseHttpRequestFactory(Connection);
@@ -41,28 +43,28 @@ namespace MyCouch.Contexts
             ReplicateDatabaseHttpRequestFactory = new ReplicateDatabaseHttpRequestFactory(Connection, serializer);
         }
 
+        public virtual Task<GetDatabaseResponse> GetAsync(string dbName)
+        {
+            return GetAsync(new GetDatabaseRequest(dbName));
+        }
+
+        public virtual async Task<GetDatabaseResponse> GetAsync(GetDatabaseRequest request)
+        {
+            using (var httpRequest = CreateHttpRequest(request))
+            {
+                using (var res = await SendAsync(httpRequest).ForAwait())
+                {
+                    return ProcessGetDatabaseResponse(res);
+                }
+            }
+        }
+
         public virtual Task<TextResponse> HeadAsync(string dbName)
         {
             return HeadAsync(new HeadDatabaseRequest(dbName));
         }
 
         public virtual async Task<TextResponse> HeadAsync(HeadDatabaseRequest request)
-        {
-            using (var httpRequest = CreateHttpRequest(request))
-            {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessTextResponse(res);
-                }
-            }
-        }
-
-        public virtual Task<TextResponse> GetAsync(string dbName)
-        {
-            return GetAsync(new GetDatabaseRequest(dbName));
-        }
-
-        public virtual async Task<TextResponse> GetAsync(GetDatabaseRequest request)
         {
             using (var httpRequest = CreateHttpRequest(request))
             {
@@ -191,6 +193,11 @@ namespace MyCouch.Contexts
         protected virtual TextResponse ProcessTextResponse(HttpResponseMessage response)
         {
             return TextResponseFactory.Create(response);
+        }
+
+        protected virtual GetDatabaseResponse ProcessGetDatabaseResponse(HttpResponseMessage response)
+        {
+            return GetDatabaseResponseFactory.Create(response);
         }
 
         protected virtual ReplicationResponse ProcessReplicationResponse(HttpResponseMessage response)

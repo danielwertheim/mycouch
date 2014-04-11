@@ -73,6 +73,11 @@ namespace MyCouch.Testing
             return new ChangesResponseAssertions<T>(response);
         }
 
+        public static GetDatabaseResponseAssertions Should(this GetDatabaseResponse response)
+        {
+            return new GetDatabaseResponseAssertions(response);
+        }
+
         public static ReplicationResponseAssertions Should(this ReplicationResponse response)
         {
             return new ReplicationResponseAssertions(response);
@@ -113,6 +118,28 @@ namespace MyCouch.Testing
             Response.StatusCode.Should().Be(statusCode);
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
+        }
+    }
+
+    public class GetDatabaseResponseAssertions : ResponseAssertions<GetDatabaseResponse>
+    {
+        [DebuggerStepThrough]
+        public GetDatabaseResponseAssertions(GetDatabaseResponse response) : base(response) { }
+
+        public void BeSuccessful(string dbName)
+        {
+            Response.Should().Be(HttpMethod.Get);
+            Response.IsSuccess.Should().BeTrue();
+            Response.DbName.Should().NotBeNullOrWhiteSpace();
+            Response.DbName.Should().Be(dbName);
+            Response.CommittedUpdateSeq.Should().NotBeNullOrWhiteSpace();
+            Response.UpdateSeq.Should().NotBeNullOrWhiteSpace();
+            Response.DataSize.Should().BeGreaterThan(0);
+            Response.DiskSize.Should().BeGreaterThan(0);
+            Response.DocCount.Should().BeGreaterThan(0);
+            Response.DocDelCount.Should().BeGreaterThan(0);
+            Response.DiskFormatVersion.Should().BeGreaterThan(0);
+            Response.InstanceStartTime.Should().BeCloseTo(DateTime.UtcNow, (int)TimeSpan.FromSeconds(30).TotalMilliseconds);
         }
     }
 
