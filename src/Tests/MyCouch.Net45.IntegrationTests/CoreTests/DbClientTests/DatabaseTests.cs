@@ -13,7 +13,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             SUT.PutAsync().Wait();
         }
 
-        [MyFact(TestScenarios.DatabasesContext)]
+        [MyFact(TestScenarios.DatabaseContext)]
         public void When_Head_of_existing_db_The_response_should_be_200()
         {
             var response = SUT.HeadAsync().Result;
@@ -21,7 +21,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             response.Should().Be(HttpMethod.Head);
         }
 
-        [MyFact(TestScenarios.DatabasesContext)]
+        [MyFact(TestScenarios.DatabaseContext)]
         public void When_Get_of_existing_db_with_insert_update_and_delete_ops_The_response_should_be_200()
         {
             var a1 = DbClient.Documents.PostAsync(ClientTestData.Artists.Artist1Json).Result;
@@ -35,7 +35,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             response.Should().BeSuccessful(DbClient.Connection.DbName);
         }
 
-        [MyFact(TestScenarios.DatabasesContext)]
+        [MyFact(TestScenarios.DatabaseContext, TestScenarios.CompactDbs)]
         public void When_Compact_of_existing_db_The_response_should_be_202()
         {
             var response = SUT.CompactAsync().Result;
@@ -43,7 +43,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
             response.Should().BeAcceptedPost(DbClient.Connection.DbName);
         }
 
-        [MyFact(TestScenarios.DatabasesContext)]
+        [MyFact(TestScenarios.DatabaseContext)]
         public void When_ViewCleanup_and_db_exists_The_response_be()
         {
             var response = SUT.ViewCleanupAsync().Result;
