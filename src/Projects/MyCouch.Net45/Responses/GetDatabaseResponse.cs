@@ -35,7 +35,7 @@ namespace MyCouch.Responses
 
         [JsonProperty(JsonScheme.InstanceStartTime)]
         [JsonConverter(typeof(UnixEpochDateTimeConverter))]
-        public DateTime InstanceStartTime { get; set; }
+        public DateTime InstanceStartTimeUtc { get; set; }
 
         [JsonProperty(JsonScheme.DiskFormatVersion)]
         public int DiskFormatVersion { get; set; }

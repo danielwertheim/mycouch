@@ -158,7 +158,7 @@ namespace MyCouch.Testing
             Response.DocCount.Should().BeGreaterThan(0);
             Response.DocDelCount.Should().BeGreaterThan(0);
             Response.DiskFormatVersion.Should().BeGreaterThan(0);
-            Response.InstanceStartTime.Should().BeCloseTo(DateTime.UtcNow, (int)TimeSpan.FromSeconds(30).TotalMilliseconds);
+            Response.InstanceStartTimeUtc.Should().BeCloseTo(DateTime.UtcNow, (int)TimeSpan.FromSeconds(30).TotalMilliseconds);
         }
     }
 
