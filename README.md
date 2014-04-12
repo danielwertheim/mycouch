@@ -1,9 +1,6 @@
 # MyCouch #
 The asynchronous CouchDb and Cloudant client for .Net - builds on top of the asynchronous HTTP client and uses JSON.Net to provide flexible serialization behaviour. It tries to keep the domain language of CouchDb instead of bringing in generic repositories and other confusing stuff. MyCouch lets you work with raw JSON and/or entities/POCOS without requiring any implementation of interfaces, baseclasses etc. MyCouch provides you with some model conventions like injection of `$doctype` to the document. It is plug-gable. If you don't like some piece, then hook in your implementation instead.
 
-## NOTE! ##
-**It's your data.** Ensure to **test against isolated test-environments and test-accounts first** e.g. a separate Cloudant account, specific CouchDb instances etc.
-
 ## Documentation, Roadmap, Milestones & Issues ##
 The documentation is contained in the [project wiki](https://github.com/danielwertheim/mycouch/wiki).
 
@@ -63,7 +60,7 @@ using(var client = new MyCouchClient("http://localhost:5984/mydb"))
 Please note. **No NuGet packages are checked in**. If you are using the latest version of NuGet (v2.7.1+) **you should be able to just build and the packages will be restored**. If this does not work, you could install the missing NuGet packages using a simple PowerShell script [as covered here](http://danielwertheim.se/2013/08/12/nuget-restore-powershell-vs-rake)
 
 ## Test environments ##
-The project `MyCouch.TestServer` is a small self-hosted Nancy server that is used to serve e.g. test environment configurations to the integration tests. Just ensure there's a folder called `env\data` and that it contains three JSON-files (Cloudant is only needed if you want to run thoose tests). Read more about this in `env\README.md`.
+The project `MyCouch.TestServer` is a small self-hosted Nancy server that is used to serve e.g. test environment configurations to the integration tests. Just ensure there's a folder called `env\data` and that its `normal.json` configuration file is configured correctly. Read more about this in `env\README.md`.
 
 The `MyCouch.TestServer` project **is not being built** in `DEBUG` nor for `RELEASE`. Hence the first time you need to explicitly e.g rebuild it via right clicking on it in the Solution Explorer.
 
@@ -72,6 +69,9 @@ This is described in the wiki, under: ["How-to Contribute"](https://github.com/d
 
 ## Issues, questions, etc ##
 So you have issues or questions... Great! That means someone is using it. Use the issues function here at the project page or contact me via mail: firstname@lastname.se; or Twitter: [@danielwertheim](https://twitter.com/danielwertheim)
+
+## NOTE! ##
+**It's your data.** Ensure to **test against isolated test-environments and test-accounts first** e.g. a separate Cloudant account, specific CouchDb instances etc.
 
 ## License ##
 The MIT License (MIT)
