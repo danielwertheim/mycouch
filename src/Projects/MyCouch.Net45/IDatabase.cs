@@ -21,29 +21,29 @@ namespace MyCouch
         /// exists already or not.
         /// </summary>
         /// <returns></returns>
-        Task<TextResponse> HeadAsync();
+        Task<DatabaseHeaderResponse> HeadAsync();
 
         /// <summary>
         /// Creates the database, but only if it does not already exist.
         /// </summary>
-        Task<TextResponse> PutAsync();
+        Task<DatabaseHeaderResponse> PutAsync();
 
         /// <summary>
         /// Deletes the database.
         /// </summary>
-        Task<TextResponse> DeleteAsync();
+        Task<DatabaseHeaderResponse> DeleteAsync();
 
         /// <summary>
         /// Requests compaction of the database.
         /// </summary>
         /// <returns></returns>
-        Task<TextResponse> CompactAsync();
+        Task<DatabaseHeaderResponse> CompactAsync();
 
         /// <summary>
         /// Removes view index files that are no longer required by CouchDB as a
         /// result of changed views within design documents.
         /// </summary>
         /// <returns></returns>
-        Task<TextResponse> ViewCleanupAsync();
+        Task<DatabaseHeaderResponse> ViewCleanupAsync();
     }
 }

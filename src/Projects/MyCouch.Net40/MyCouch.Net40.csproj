@@ -488,6 +488,9 @@
     <Compile Include="..\MyCouch.Net45\Responses\ContinuousChangesResponse.cs">
       <Link>Responses\ContinuousChangesResponse.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\DatabaseHeaderResponse.cs">
+      <Link>Responses\DatabaseHeaderResponse.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\responses\DocumentHeaderResponse.cs">
       <Link>Responses\DocumentHeaderResponse.cs</Link>
     </Compile>
@@ -508,6 +511,9 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\Responses\Factories\ContinuousChangesResponseFactory.cs">
       <Link>Responses\Factories\ContinuousChangesResponseFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\Factories\DatabaseHeaderResponseFactory.cs">
+      <Link>Responses\Factories\DatabaseHeaderResponseFactory.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\responses\factories\DocumentHeaderResponseFactory.cs">
       <Link>Responses\Factories\DocumentHeaderResponseFactory.cs</Link>

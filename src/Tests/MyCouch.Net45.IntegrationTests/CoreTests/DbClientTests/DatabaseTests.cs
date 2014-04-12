@@ -40,7 +40,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
         {
             var response = SUT.CompactAsync().Result;
 
-            response.Should().BeOkJson(HttpMethod.Post, HttpStatusCode.Accepted);
+            response.Should().BeAcceptedPost(DbClient.Connection.DbName);
         }
 
         [MyFact(TestScenarios.DatabasesContext)]
@@ -48,7 +48,7 @@ namespace MyCouch.IntegrationTests.CoreTests.DbClientTests
         {
             var response = SUT.ViewCleanupAsync().Result;
 
-            response.Should().BeOkJson(HttpMethod.Post, HttpStatusCode.Accepted);
+            response.Should().BeAcceptedPost(DbClient.Connection.DbName);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace MyCouch.Contexts
 {
     public class Database : ApiContextBase<IDbClientConnection>, IDatabase
     {
-        protected TextResponseFactory TextResponseFactory { get; set; }
+        protected DatabaseHeaderResponseFactory DatabaseHeaderResponseFactory { get; set; }
         protected GetDatabaseResponseFactory GetDatabaseResponseFactory { get; set; }
 
         protected GetDatabaseHttpRequestFactory GetHttpRequestFactory { get; set; }
@@ -28,7 +28,7 @@ namespace MyCouch.Contexts
         {
             Ensure.That(serializer, "serializer").IsNotNull();
 
-            TextResponseFactory = new TextResponseFactory(serializer);
+            DatabaseHeaderResponseFactory = new DatabaseHeaderResponseFactory(serializer);
             GetDatabaseResponseFactory = new GetDatabaseResponseFactory(serializer);
 
             GetHttpRequestFactory = new GetDatabaseHttpRequestFactory(Connection);
@@ -39,13 +39,13 @@ namespace MyCouch.Contexts
             ViewCleanupHttpRequestFactory = new ViewCleanupHttpRequestFactory(Connection);
         }
 
-        public virtual async Task<TextResponse> HeadAsync()
+        public virtual async Task<DatabaseHeaderResponse> HeadAsync()
         {
             using (var httpRequest = CreateHttpRequest(new HeadDatabaseRequest(Connection.DbName)))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
                 {
-                    return ProcessTextResponse(res);
+                    return ProcessDatabaseHeaderResponse(res);
                 }
             }
         }
@@ -61,46 +61,46 @@ namespace MyCouch.Contexts
             }
         }
 
-        public virtual async Task<TextResponse> PutAsync()
+        public virtual async Task<DatabaseHeaderResponse> PutAsync()
         {
             using (var httpRequest = CreateHttpRequest(new PutDatabaseRequest(Connection.DbName)))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
                 {
-                    return ProcessTextResponse(res);
+                    return ProcessDatabaseHeaderResponse(res);
                 }
             }
         }
 
-        public virtual async Task<TextResponse> DeleteAsync()
+        public virtual async Task<DatabaseHeaderResponse> DeleteAsync()
         {
             using (var httpRequest = CreateHttpRequest(new DeleteDatabaseRequest(Connection.DbName)))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
                 {
-                    return ProcessTextResponse(res);
+                    return ProcessDatabaseHeaderResponse(res);
                 }
             }
         }
 
-        public virtual async Task<TextResponse> CompactAsync()
+        public virtual async Task<DatabaseHeaderResponse> CompactAsync()
         {
             using (var httpRequest = CreateHttpRequest(new CompactDatabaseRequest(Connection.DbName)))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
                 {
-                    return ProcessTextResponse(res);
+                    return ProcessDatabaseHeaderResponse(res);
                 }
             }
         }
 
-        public virtual async Task<TextResponse> ViewCleanupAsync()
+        public virtual async Task<DatabaseHeaderResponse> ViewCleanupAsync()
         {
             using (var httpRequest = CreateHttpRequest(new ViewCleanupRequest(Connection.DbName)))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
                 {
-                    return ProcessTextResponse(res);
+                    return ProcessDatabaseHeaderResponse(res);
                 }
             }
         }
@@ -135,9 +135,9 @@ namespace MyCouch.Contexts
             return ViewCleanupHttpRequestFactory.Create(request);
         }
 
-        protected virtual TextResponse ProcessTextResponse(HttpResponseMessage response)
+        protected virtual DatabaseHeaderResponse ProcessDatabaseHeaderResponse(HttpResponseMessage response)
         {
-            return TextResponseFactory.Create(response);
+            return DatabaseHeaderResponseFactory.Create(response);
         }
 
         protected virtual GetDatabaseResponse ProcessGetDatabaseResponse(HttpResponseMessage response)

@@ -123,6 +123,8 @@
     <Compile Include="Net\HttpRequest.cs" />
     <Compile Include="Net\JsonContent.cs" />
     <Compile Include="Requests\Factories\ReplicateDatabaseHttpRequestFactory.cs" />
+    <Compile Include="Responses\DatabaseHeaderResponse.cs" />
+    <Compile Include="Responses\Factories\DatabaseHeaderResponseFactory.cs" />
     <Compile Include="Responses\Factories\GetDatabaseResponseFactory.cs" />
     <Compile Include="Responses\Factories\Materializers\SimpleDeserializingResponseMaterializer.cs" />
     <Compile Include="Responses\Factories\ReplicationResponseFactory.cs" />

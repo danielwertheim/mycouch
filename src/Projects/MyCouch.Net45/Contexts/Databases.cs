@@ -13,7 +13,7 @@ namespace MyCouch.Contexts
 {
     public class Databases : ApiContextBase<IServerClientConnection>, IDatabases
     {
-        protected TextResponseFactory TextResponseFactory { get; set; }
+        protected DatabaseHeaderResponseFactory DatabaseHeaderResponseFactory { get; set; }
         protected GetDatabaseResponseFactory GetDatabaseResponseFactory { get; set; }
         protected ReplicationResponseFactory ReplicationResponseFactory { get; set; }
 
@@ -30,7 +30,7 @@ namespace MyCouch.Contexts
         {
             Ensure.That(serializer, "serializer").IsNotNull();
 
-            TextResponseFactory = new TextResponseFactory(serializer);
+            DatabaseHeaderResponseFactory = new DatabaseHeaderResponseFactory(serializer);
             GetDatabaseResponseFactory = new GetDatabaseResponseFactory(serializer);
             ReplicationResponseFactory = new ReplicationResponseFactory(serializer);
 
@@ -59,82 +59,82 @@ namespace MyCouch.Contexts
             }
         }
 
-        public virtual Task<TextResponse> HeadAsync(string dbName)
+        public virtual Task<DatabaseHeaderResponse> HeadAsync(string dbName)
         {
             return HeadAsync(new HeadDatabaseRequest(dbName));
         }
 
-        public virtual async Task<TextResponse> HeadAsync(HeadDatabaseRequest request)
+        public virtual async Task<DatabaseHeaderResponse> HeadAsync(HeadDatabaseRequest request)
         {
             using (var httpRequest = CreateHttpRequest(request))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
                 {
-                    return ProcessTextResponse(res);
+                    return ProcessDatabaseHeaderResponse(res);
                 }
             }
         }
 
-        public virtual Task<TextResponse> PutAsync(string dbName)
+        public virtual Task<DatabaseHeaderResponse> PutAsync(string dbName)
         {
             return PutAsync(new PutDatabaseRequest(dbName));
         }
 
-        public virtual async Task<TextResponse> PutAsync(PutDatabaseRequest request)
+        public virtual async Task<DatabaseHeaderResponse> PutAsync(PutDatabaseRequest request)
         {
             using (var httpRequest = CreateHttpRequest(request))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
                 {
-                    return ProcessTextResponse(res);
+                    return ProcessDatabaseHeaderResponse(res);
                 }
             }
         }
 
-        public virtual Task<TextResponse> DeleteAsync(string dbName)
+        public virtual Task<DatabaseHeaderResponse> DeleteAsync(string dbName)
         {
             return DeleteAsync(new DeleteDatabaseRequest(dbName));
         }
 
-        public virtual async Task<TextResponse> DeleteAsync(DeleteDatabaseRequest request)
+        public virtual async Task<DatabaseHeaderResponse> DeleteAsync(DeleteDatabaseRequest request)
         {
             using (var httpRequest = CreateHttpRequest(request))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
                 {
-                    return ProcessTextResponse(res);
+                    return ProcessDatabaseHeaderResponse(res);
                 }
             }
         }
 
-        public virtual Task<TextResponse> CompactAsync(string dbName)
+        public virtual Task<DatabaseHeaderResponse> CompactAsync(string dbName)
         {
             return CompactAsync(new CompactDatabaseRequest(dbName));
         }
 
-        public virtual async Task<TextResponse> CompactAsync(CompactDatabaseRequest request)
+        public virtual async Task<DatabaseHeaderResponse> CompactAsync(CompactDatabaseRequest request)
         {
             using (var httpRequest = CreateHttpRequest(request))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
                 {
-                    return ProcessTextResponse(res);
+                    return ProcessDatabaseHeaderResponse(res);
                 }
             }
         }
 
-        public virtual Task<TextResponse> ViewCleanupAsync(string dbName)
+        public virtual Task<DatabaseHeaderResponse> ViewCleanupAsync(string dbName)
         {
             return ViewCleanupAsync(new ViewCleanupRequest(dbName));
         }
 
-        public virtual async Task<TextResponse> ViewCleanupAsync(ViewCleanupRequest request)
+        public virtual async Task<DatabaseHeaderResponse> ViewCleanupAsync(ViewCleanupRequest request)
         {
             using (var httpRequest = CreateHttpRequest(request))
             {
                 using (var res = await SendAsync(httpRequest).ForAwait())
                 {
-                    return ProcessTextResponse(res);
+                    return ProcessDatabaseHeaderResponse(res);
                 }
             }
         }
@@ -190,9 +190,9 @@ namespace MyCouch.Contexts
             return ReplicateDatabaseHttpRequestFactory.Create(request);
         }
 
-        protected virtual TextResponse ProcessTextResponse(HttpResponseMessage response)
+        protected virtual DatabaseHeaderResponse ProcessDatabaseHeaderResponse(HttpResponseMessage response)
         {
-            return TextResponseFactory.Create(response);
+            return DatabaseHeaderResponseFactory.Create(response);
         }
 
         protected virtual GetDatabaseResponse ProcessGetDatabaseResponse(HttpResponseMessage response)

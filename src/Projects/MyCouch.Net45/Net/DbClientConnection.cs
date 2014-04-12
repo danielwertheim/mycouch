@@ -1,5 +1,6 @@
 using System;
 using MyCouch.EnsureThat;
+using MyCouch.Extensions;
 
 namespace MyCouch.Net
 {
@@ -17,7 +18,7 @@ namespace MyCouch.Net
 
         private string ExtractDbName()
         {
-            var dbName = Address.LocalPath.TrimStart('/').TrimEnd('/', '?');
+            var dbName = Address.ExtractDbName();
             if (string.IsNullOrWhiteSpace(dbName))
             {
 #if NETFX_CORE

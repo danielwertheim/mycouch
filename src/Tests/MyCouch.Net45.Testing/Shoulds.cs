@@ -73,6 +73,11 @@ namespace MyCouch.Testing
             return new ChangesResponseAssertions<T>(response);
         }
 
+        public static DatabaseHeaderResponseAssertions Should(this DatabaseHeaderResponse response)
+        {
+            return new DatabaseHeaderResponseAssertions(response);
+        }
+
         public static GetDatabaseResponseAssertions Should(this GetDatabaseResponse response)
         {
             return new GetDatabaseResponseAssertions(response);
@@ -118,6 +123,20 @@ namespace MyCouch.Testing
             Response.StatusCode.Should().Be(statusCode);
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
+        }
+    }
+
+    public class DatabaseHeaderResponseAssertions : ResponseAssertions<DatabaseHeaderResponse>
+    {
+        [DebuggerStepThrough]
+        public DatabaseHeaderResponseAssertions(DatabaseHeaderResponse response) : base(response) { }
+
+        public void BeAcceptedPost(string dbName)
+        {
+            Response.Should().Be(HttpMethod.Post, HttpStatusCode.Accepted);
+            Response.IsSuccess.Should().BeTrue();
+            Response.DbName.Should().NotBeNullOrWhiteSpace();
+            Response.DbName.Should().Be(dbName);
         }
     }
 

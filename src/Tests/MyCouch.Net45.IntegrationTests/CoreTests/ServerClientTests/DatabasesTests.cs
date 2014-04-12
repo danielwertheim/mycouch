@@ -40,7 +40,7 @@ namespace MyCouch.IntegrationTests.CoreTests.ServerClientTests
         {
             var response = SUT.CompactAsync(Environment.TempDbName).Result;
 
-            response.Should().BeOkJson(HttpMethod.Post, HttpStatusCode.Accepted);
+            response.Should().BeAcceptedPost(Environment.TempDbName);
         }
 
         [MyFact(TestScenarios.DatabasesContext)]
@@ -48,7 +48,7 @@ namespace MyCouch.IntegrationTests.CoreTests.ServerClientTests
         {
             var response = SUT.ViewCleanupAsync(Environment.TempDbName).Result;
 
-            response.Should().BeOkJson(HttpMethod.Post, HttpStatusCode.Accepted);
+            response.Should().BeAcceptedPost(Environment.TempDbName);
         }
 
         [MyFact(TestScenarios.DatabasesContext, TestScenarios.Replication)]
