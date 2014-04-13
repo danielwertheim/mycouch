@@ -1,5 +1,7 @@
 ﻿using System;
+#if !PCL
 using System.Collections.Concurrent;
+#endif
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -10,15 +12,23 @@ namespace MyCouch.EntitySchemes
 {
     public abstract class EntityMember : IEntityMember 
     {
-        protected readonly IDynamicPropertyFactory DynamicPropertyFactory;
-        protected readonly ConcurrentDictionary<Type, DynamicProperty> IdPropertyCache;
-
+        protected IDynamicPropertyFactory DynamicPropertyFactory { get; private set; }
+#if !PCL
+        //TODO: Switch for Immutable cause of Windows phone not having concurrent.
+        protected ConcurrentDictionary<Type, DynamicProperty> IdPropertyCache { get; private set; }
+#else
+        protected Dictionary<Type, DynamicProperty> IdPropertyCache { get; private set; }
+#endif
         protected EntityMember(IDynamicPropertyFactory dynamicPropertyFactory)
         {
             Ensure.That(dynamicPropertyFactory, "dynamicPropertyFactory").IsNotNull();
 
             DynamicPropertyFactory = dynamicPropertyFactory;
+#if !PCL
             IdPropertyCache = new ConcurrentDictionary<Type, DynamicProperty>();
+#else
+            IdPropertyCache = new Dictionary<Type, DynamicProperty>();
+#endif
         }
 
         public abstract int? GetMemberRankingIndex(Type entityType, string membername);
@@ -35,16 +45,46 @@ namespace MyCouch.EntitySchemes
 
         protected virtual IStringGetter GetGetterFor(Type type)
         {
+#if !PCL
             return IdPropertyCache.GetOrAdd(
                 type, 
                 t => DynamicPropertyFactory.PropertyFor(GetPropertyFor(type))).Getter;
+#else
+            if (IdPropertyCache.ContainsKey(type))
+                return IdPropertyCache[type].Getter;
+
+            lock (IdPropertyCache)
+            {
+                if (IdPropertyCache.ContainsKey(type))
+                    return IdPropertyCache[type].Getter;
+
+                var r = DynamicPropertyFactory.PropertyFor(GetPropertyFor(type));
+                IdPropertyCache.Add(type, r);
+                return r.Getter;
+            }
+#endif
         }
 
         protected virtual IStringSetter GetSetterFor(Type type)
         {
+#if !PCL
             return IdPropertyCache.GetOrAdd(
                 type,
                 t => DynamicPropertyFactory.PropertyFor(GetPropertyFor(type))).Setter;
+#else
+            if (IdPropertyCache.ContainsKey(type))
+                return IdPropertyCache[type].Setter;
+
+            lock (IdPropertyCache)
+            {
+                if (IdPropertyCache.ContainsKey(type))
+                    return IdPropertyCache[type].Setter;
+
+                var r = DynamicPropertyFactory.PropertyFor(GetPropertyFor(type));
+                IdPropertyCache.Add(type, r);
+                return r.Setter;
+            }
+#endif
         }
 
         protected virtual PropertyInfo GetPropertyFor(Type type)

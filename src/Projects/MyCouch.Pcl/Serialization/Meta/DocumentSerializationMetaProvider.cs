@@ -2,7 +2,11 @@
 #if net40
 using System.Linq;
 #endif
+#if !PCL
 using System.Collections.Concurrent;
+#else
+using System.Collections.Generic;
+#endif
 using System.Reflection;
 
 namespace MyCouch.Serialization.Meta
@@ -11,16 +15,39 @@ namespace MyCouch.Serialization.Meta
     {
         protected const string AnonymousTypePrefix = "<>";
 
-        protected readonly ConcurrentDictionary<Type, DocumentSerializationMeta> Cache;
-
+#if !PCL
+        //TODO: Switch for Immutable cause of Windows phone not having concurrent.
+        protected ConcurrentDictionary<Type, DocumentSerializationMeta> Cache { get; private set; }
+#else
+        protected Dictionary<Type, DocumentSerializationMeta> Cache { get; private set; }
+#endif
         public DocumentSerializationMetaProvider()
         {
+#if !PCL
             Cache = new ConcurrentDictionary<Type, DocumentSerializationMeta>();
+#else
+            Cache = new Dictionary<Type, DocumentSerializationMeta>();
+#endif
         }
 
         public virtual DocumentSerializationMeta Get(Type docType)
         {
+#if !PCL
             return Cache.GetOrAdd(docType, CreateFor);
+#else
+            if (Cache.ContainsKey(docType))
+                return Cache[docType];
+
+            lock (Cache)
+            {
+                if (Cache.ContainsKey(docType))
+                    return Cache[docType];
+
+                var r = CreateFor(docType);
+                Cache.Add(docType, r);
+                return r;
+            }
+#endif
         }
 
         protected virtual DocumentSerializationMeta CreateFor(Type docType)
