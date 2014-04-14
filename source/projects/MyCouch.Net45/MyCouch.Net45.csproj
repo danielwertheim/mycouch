@@ -60,595 +60,203 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\ChangesFeed.cs">
-      <Link>ChangesFeed.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\ChangesStyle.cs">
-      <Link>ChangesStyle.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\contexts\ApiContextBase.cs">
-      <Link>Contexts\ApiContextBase.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\contexts\Attachments.cs">
-      <Link>Contexts\Attachments.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\contexts\Changes.cs">
-      <Link>Contexts\Changes.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\contexts\Database.cs">
-      <Link>Contexts\Database.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\contexts\Databases.cs">
-      <Link>Contexts\Databases.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\contexts\Documents.cs">
-      <Link>Contexts\Documents.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\contexts\Entities.cs">
-      <Link>Contexts\Entities.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\contexts\Views.cs">
-      <Link>Contexts\Views.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\DocumentAttribute.cs">
-      <Link>DocumentAttribute.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\DocumentHeader.cs">
-      <Link>DocumentHeader.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\entityschemes\EntityIdMember.cs">
-      <Link>EntitySchemes\EntityIdMember.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\entityschemes\EntityMember.cs">
-      <Link>EntitySchemes\EntityMember.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\entityschemes\EntityReflector.cs">
-      <Link>EntitySchemes\EntityReflector.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\entityschemes\EntityRevMember.cs">
-      <Link>EntitySchemes\EntityRevMember.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\entityschemes\IEntityMember.cs">
-      <Link>EntitySchemes\IEntityMember.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\entityschemes\IEntityReflector.cs">
-      <Link>EntitySchemes\IEntityReflector.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\entityschemes\reflections\DynamicProperty.cs">
-      <Link>EntitySchemes\Reflections\DynamicProperty.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\entityschemes\reflections\DynamicStringGetter.cs">
-      <Link>EntitySchemes\Reflections\DynamicStringGetter.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\entityschemes\reflections\DynamicStringSetter.cs">
-      <Link>EntitySchemes\Reflections\DynamicStringSetter.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\entityschemes\reflections\FakeStringGetter.cs">
-      <Link>EntitySchemes\Reflections\FakeStringGetter.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\entityschemes\reflections\FakeStringSetter.cs">
-      <Link>EntitySchemes\Reflections\FakeStringSetter.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\entityschemes\reflections\IDynamicPropertyFactory.cs">
-      <Link>EntitySchemes\Reflections\IDynamicPropertyFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\entityschemes\reflections\IlDynamicPropertyFactory.cs">
-      <Link>EntitySchemes\Reflections\IlDynamicPropertyFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\entityschemes\reflections\IStringGetter.cs">
-      <Link>EntitySchemes\Reflections\IStringGetter.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\entityschemes\reflections\IStringSetter.cs">
-      <Link>EntitySchemes\Reflections\IStringSetter.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\entityschemes\reflections\LambdaDynamicPropertyFactory.cs">
-      <Link>EntitySchemes\Reflections\LambdaDynamicPropertyFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\ExceptionStrings.cs">
-      <Link>ExceptionStrings.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\extensions\HttpExtensions.cs">
-      <Link>Extensions\HttpExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\extensions\ObjectExtensions.cs">
-      <Link>Extensions\ObjectExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\extensions\StringExtensions.cs">
-      <Link>Extensions\StringExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\extensions\TaskExtensions.cs">
-      <Link>Extensions\TaskExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\extensions\UriExtensions.cs">
-      <Link>Extensions\UriExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\IAttachments.cs">
-      <Link>IAttachments.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\IChanges.cs">
-      <Link>IChanges.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\IConnection.cs">
-      <Link>IConnection.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\IDatabase.cs">
-      <Link>IDatabase.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\IDatabases.cs">
-      <Link>IDatabases.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\IDbClientConnection.cs">
-      <Link>IDbClientConnection.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\IDocuments.cs">
-      <Link>IDocuments.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\IEntities.cs">
-      <Link>IEntities.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\IMyCouchClient.cs">
-      <Link>IMyCouchClient.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\IMyCouchServerClient.cs">
-      <Link>IMyCouchServerClient.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\IMyCouchStore.cs">
-      <Link>IMyCouchStore.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\IQueryParameters.cs">
-      <Link>IQueryParameters.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\IReplication.cs">
-      <Link>IReplication.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\IServerClientConnection.cs">
-      <Link>IServerClientConnection.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\IViews.cs">
-      <Link>IViews.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\MyCouchClient.cs">
-      <Link>MyCouchClient.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\MyCouchClientBootstrapper.cs">
-      <Link>MyCouchClientBootstrapper.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\MyCouchResponseException.cs">
-      <Link>MyCouchResponseException.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\MyCouchRuntime.cs">
-      <Link>MyCouchRuntime.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\MyCouchServerClient.cs">
-      <Link>MyCouchServerClient.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\MyCouchServerClientBootstrapper.cs">
-      <Link>MyCouchServerClientBootstrapper.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\MyCouchStore.cs">
-      <Link>MyCouchStore.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\MyCouchUriBuilder.cs">
-      <Link>MyCouchUriBuilder.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\net\AppendingRequestUrlGenerator.cs">
-      <Link>Net\AppendingRequestUrlGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\net\BytesContent.cs">
-      <Link>Net\BytesContent.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\net\Connection.cs">
-      <Link>Net\Connection.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\net\ConstantRequestUrlGenerator.cs">
-      <Link>Net\ConstantRequestUrlGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\net\DbClientConnection.cs">
-      <Link>Net\DbClientConnection.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\net\HttpContentTypes.cs">
-      <Link>Net\HttpContentTypes.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\net\HttpRequest.cs">
-      <Link>Net\HttpRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\net\IRequestUrlGenerator.cs">
-      <Link>Net\IRequestUrlGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\net\JsonContent.cs">
-      <Link>Net\JsonContent.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\net\ServerClientConnection.cs">
-      <Link>Net\ServerClientConnection.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\net\UrlParam.cs">
-      <Link>Net\UrlParam.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\Query.cs">
-      <Link>Query.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\querying\QueryExtensions.cs">
-      <Link>Querying\QueryExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\querying\QueryParameters.cs">
-      <Link>Querying\QueryParameters.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\QueryParametersConfigurator.cs">
-      <Link>QueryParametersConfigurator.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\BulkRequest.cs">
-      <Link>Requests\BulkRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\CompactDatabaseRequest.cs">
-      <Link>Requests\CompactDatabaseRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\CopyDocumentRequest.cs">
-      <Link>Requests\CopyDocumentRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\DeleteAttachmentRequest.cs">
-      <Link>Requests\DeleteAttachmentRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\DeleteDatabaseRequest.cs">
-      <Link>Requests\DeleteDatabaseRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\DeleteDocumentRequest.cs">
-      <Link>Requests\DeleteDocumentRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\DeleteEntityRequest.cs">
-      <Link>Requests\DeleteEntityRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\factories\AttachmentHttpRequestFactoryBase.cs">
-      <Link>Requests\Factories\AttachmentHttpRequestFactoryBase.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\factories\BulkHttpRequestFactory.cs">
-      <Link>Requests\Factories\BulkHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\factories\CompactDatabaseHttpRequestFactory.cs">
-      <Link>Requests\Factories\CompactDatabaseHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\factories\CopyDocumentHttpRequestFactory.cs">
-      <Link>Requests\Factories\CopyDocumentHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\factories\DeleteAttachmentHttpRequestFactory.cs">
-      <Link>Requests\Factories\DeleteAttachmentHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\factories\DeleteDatabaseHttpRequestFactory.cs">
-      <Link>Requests\Factories\DeleteDatabaseHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\factories\DeleteDocumentHttpRequestFactory.cs">
-      <Link>Requests\Factories\DeleteDocumentHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\factories\DeleteEntityHttpRequestFactory.cs">
-      <Link>Requests\Factories\DeleteEntityHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\factories\DocumentHttpRequestFactoryBase.cs">
-      <Link>Requests\Factories\DocumentHttpRequestFactoryBase.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\factories\EntityHttpRequestFactoryBase.cs">
-      <Link>Requests\Factories\EntityHttpRequestFactoryBase.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\factories\GetAttachmentHttpRequestFactory.cs">
-      <Link>Requests\Factories\GetAttachmentHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\factories\GetChangesHttpRequestFactory.cs">
-      <Link>Requests\Factories\GetChangesHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\factories\GetChangesHttpRequestFactoryBase.cs">
-      <Link>Requests\Factories\GetChangesHttpRequestFactoryBase.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\factories\GetContinuousChangesHttpRequestFactory.cs">
-      <Link>Requests\Factories\GetContinuousChangesHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\factories\GetDatabaseHttpRequestFactory.cs">
-      <Link>Requests\Factories\GetDatabaseHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\factories\GetDocumentHttpRequestFactory.cs">
-      <Link>Requests\Factories\GetDocumentHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\factories\GetEntityHttpRequestFactory.cs">
-      <Link>Requests\Factories\GetEntityHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\factories\HeadDatabaseHttpRequestFactory.cs">
-      <Link>Requests\Factories\HeadDatabaseHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\factories\HeadDocumentHttpRequestFactory.cs">
-      <Link>Requests\Factories\HeadDocumentHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\factories\HttpRequestFactoryBase.cs">
-      <Link>Requests\Factories\HttpRequestFactoryBase.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\factories\PostDocumentHttpRequestFactory.cs">
-      <Link>Requests\Factories\PostDocumentHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\factories\PostEntityHttpRequestFactory.cs">
-      <Link>Requests\Factories\PostEntityHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\factories\PutAttachmentHttpRequestFactory.cs">
-      <Link>Requests\Factories\PutAttachmentHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\factories\PutDatabaseHttpRequestFactory.cs">
-      <Link>Requests\Factories\PutDatabaseHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\factories\PutDocumentHttpRequestFactory.cs">
-      <Link>Requests\Factories\PutDocumentHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\factories\PutEntityHttpRequestFactory.cs">
-      <Link>Requests\Factories\PutEntityHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\factories\QueryViewHttpRequestFactory.cs">
-      <Link>Requests\Factories\QueryViewHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\factories\ReplaceDocumentHttpRequestFactory.cs">
-      <Link>Requests\Factories\ReplaceDocumentHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\factories\ReplicateDatabaseHttpRequestFactory.cs">
-      <Link>Requests\Factories\ReplicateDatabaseHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\factories\ViewCleanupHttpRequestFactory.cs">
-      <Link>Requests\Factories\ViewCleanupHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\GetAttachmentRequest.cs">
-      <Link>Requests\GetAttachmentRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\GetChangesRequest.cs">
-      <Link>Requests\GetChangesRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\GetDatabaseRequest.cs">
-      <Link>Requests\GetDatabaseRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\GetDocumentRequest.cs">
-      <Link>Requests\GetDocumentRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\GetEntityRequest.cs">
-      <Link>Requests\GetEntityRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\HeadDatabaseRequest.cs">
-      <Link>Requests\HeadDatabaseRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\HeadDocumentRequest.cs">
-      <Link>Requests\HeadDocumentRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\PostDocumentRequest.cs">
-      <Link>Requests\PostDocumentRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\PostEntityRequest.cs">
-      <Link>Requests\PostEntityRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\PutAttachmentRequest.cs">
-      <Link>Requests\PutAttachmentRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\PutDatabaseRequest.cs">
-      <Link>Requests\PutDatabaseRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\PutDocumentRequest.cs">
-      <Link>Requests\PutDocumentRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\PutEntityRequest.cs">
-      <Link>Requests\PutEntityRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\QueryViewRequest.cs">
-      <Link>Requests\QueryViewRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\ReplaceDocumentRequest.cs">
-      <Link>Requests\ReplaceDocumentRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\ReplicateDatabaseRequest.cs">
-      <Link>Requests\ReplicateDatabaseRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\Request.cs">
-      <Link>Requests\Request.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\ViewCleanupRequest.cs">
-      <Link>Requests\ViewCleanupRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\AttachmentResponse.cs">
-      <Link>Responses\AttachmentResponse.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\BulkResponse.cs">
-      <Link>Responses\BulkResponse.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\BytesResponse.cs">
-      <Link>Responses\BytesResponse.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\ChangesResponse.cs">
-      <Link>Responses\ChangesResponse.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\ContentResponse.cs">
-      <Link>Responses\ContentResponse.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\ContinuousChangesResponse.cs">
-      <Link>Responses\ContinuousChangesResponse.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\DatabaseHeaderResponse.cs">
-      <Link>Responses\DatabaseHeaderResponse.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\DocumentHeaderResponse.cs">
-      <Link>Responses\DocumentHeaderResponse.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\DocumentResponse.cs">
-      <Link>Responses\DocumentResponse.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\EntityResponse.cs">
-      <Link>Responses\EntityResponse.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\factories\AttachmentResponseFactory.cs">
-      <Link>Responses\Factories\AttachmentResponseFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\factories\BulkResponseFactory.cs">
-      <Link>Responses\Factories\BulkResponseFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\factories\ChangesResponseFactory.cs">
-      <Link>Responses\Factories\ChangesResponseFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\factories\ContinuousChangesResponseFactory.cs">
-      <Link>Responses\Factories\ContinuousChangesResponseFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\factories\DatabaseHeaderResponseFactory.cs">
-      <Link>Responses\Factories\DatabaseHeaderResponseFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\factories\DocumentHeaderResponseFactory.cs">
-      <Link>Responses\Factories\DocumentHeaderResponseFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\factories\DocumentResponseFactory.cs">
-      <Link>Responses\Factories\DocumentResponseFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\factories\EntityResponseFactory.cs">
-      <Link>Responses\Factories\EntityResponseFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\factories\GetDatabaseResponseFactory.cs">
-      <Link>Responses\Factories\GetDatabaseResponseFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\factories\materializers\AttachmentResponseMaterializer.cs">
-      <Link>Responses\Factories\Materializers\AttachmentResponseMaterializer.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\factories\materializers\BasicResponseMaterializer.cs">
-      <Link>Responses\Factories\Materializers\BasicResponseMaterializer.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\factories\materializers\BulkResponseMaterializer.cs">
-      <Link>Responses\Factories\Materializers\BulkResponseMaterializer.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\factories\materializers\ChangesResponseMaterializer.cs">
-      <Link>Responses\Factories\Materializers\ChangesResponseMaterializer.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\factories\materializers\DocumentHeaderResponseMaterializer.cs">
-      <Link>Responses\Factories\Materializers\DocumentHeaderResponseMaterializer.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\factories\materializers\DocumentResponseMaterializer.cs">
-      <Link>Responses\Factories\Materializers\DocumentResponseMaterializer.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\factories\materializers\EntityResponseMaterializer.cs">
-      <Link>Responses\Factories\Materializers\EntityResponseMaterializer.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\factories\materializers\FailedDocumentHeaderResponseMaterializer.cs">
-      <Link>Responses\Factories\Materializers\FailedDocumentHeaderResponseMaterializer.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\factories\materializers\FailedEntityResponseMaterializer.cs">
-      <Link>Responses\Factories\Materializers\FailedEntityResponseMaterializer.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\factories\materializers\FailedResponseMaterializer.cs">
-      <Link>Responses\Factories\Materializers\FailedResponseMaterializer.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\factories\materializers\SimpleDeserializingResponseMaterializer.cs">
-      <Link>Responses\Factories\Materializers\SimpleDeserializingResponseMaterializer.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\factories\materializers\TextResponseMaterializer.cs">
-      <Link>Responses\Factories\Materializers\TextResponseMaterializer.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\factories\materializers\ViewQueryResponseMaterializer.cs">
-      <Link>Responses\Factories\Materializers\ViewQueryResponseMaterializer.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\factories\ReplicationResponseFactory.cs">
-      <Link>Responses\Factories\ReplicationResponseFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\factories\ResponseFactoryBase.cs">
-      <Link>Responses\Factories\ResponseFactoryBase.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\factories\TextResponseFactory.cs">
-      <Link>Responses\Factories\TextResponseFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\factories\ViewQueryResponseFactory.cs">
-      <Link>Responses\Factories\ViewQueryResponseFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\GetDatabaseResponse.cs">
-      <Link>Responses\GetDatabaseResponse.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\IResponseRow.cs">
-      <Link>Responses\IResponseRow.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\JsonScheme.cs">
-      <Link>Responses\JsonScheme.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\ReplicationResponse.cs">
-      <Link>Responses\ReplicationResponse.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\Response.cs">
-      <Link>Responses\Response.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\TextResponse.cs">
-      <Link>Responses\TextResponse.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\responses\ViewQueryResponse.cs">
-      <Link>Responses\ViewQueryResponse.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\Row.cs">
-      <Link>Row.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\serialization\conventions\ISerializationConvention.cs">
-      <Link>Serialization\Conventions\ISerializationConvention.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\serialization\conventions\ISerializationConventionWriter.cs">
-      <Link>Serialization\Conventions\ISerializationConventionWriter.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\serialization\conventions\SerializationConventions.cs">
-      <Link>Serialization\Conventions\SerializationConventions.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\serialization\conventions\SerializationConventionWriter.cs">
-      <Link>Serialization\Conventions\SerializationConventionWriter.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\serialization\conventions\StringSerializationConvention.cs">
-      <Link>Serialization\Conventions\StringSerializationConvention.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\serialization\converters\KeyJsonConverter.cs">
-      <Link>Serialization\Converters\KeyJsonConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\serialization\converters\MultiTypeDeserializationJsonConverter.cs">
-      <Link>Serialization\Converters\MultiTypeDeserializationJsonConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\serialization\converters\UnixEpochDateTimeConverter.cs">
-      <Link>Serialization\Converters\UnixEpochDateTimeConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\serialization\DefaultSerializer.cs">
-      <Link>Serialization\DefaultSerializer.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\serialization\DocumentSerializer.cs">
-      <Link>Serialization\DocumentSerializer.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\serialization\EntityContractResolver.cs">
-      <Link>Serialization\EntityContractResolver.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\serialization\EntitySerializer.cs">
-      <Link>Serialization\EntitySerializer.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\serialization\IDocumentSerializer.cs">
-      <Link>Serialization\IDocumentSerializer.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\serialization\IEntitySerializer.cs">
-      <Link>Serialization\IEntitySerializer.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\serialization\ISerializer.cs">
-      <Link>Serialization\ISerializer.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\serialization\meta\DocumentSerializationMeta.cs">
-      <Link>Serialization\Meta\DocumentSerializationMeta.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\serialization\meta\DocumentSerializationMetaProvider.cs">
-      <Link>Serialization\Meta\DocumentSerializationMetaProvider.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\serialization\meta\IDocumentSerializationMetaProvider.cs">
-      <Link>Serialization\Meta\IDocumentSerializationMetaProvider.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\serialization\readers\MyCouchJsonReader.cs">
-      <Link>Serialization\Readers\MyCouchJsonReader.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\serialization\SerializationConfiguration.cs">
-      <Link>Serialization\SerializationConfiguration.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\serialization\SerializationContractResolver.cs">
-      <Link>Serialization\SerializationContractResolver.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\serialization\writers\DocumentJsonWriter.cs">
-      <Link>Serialization\Writers\DocumentJsonWriter.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\Stale.cs">
-      <Link>Stale.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\SystemViewIdentity.cs">
-      <Link>SystemViewIdentity.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\ViewIdentity.cs">
-      <Link>ViewIdentity.cs</Link>
-    </Compile>
+    <Compile Include="ChangesFeed.cs" />
+    <Compile Include="ChangesStyle.cs" />
+    <Compile Include="Contexts\ApiContextBase.cs" />
+    <Compile Include="Contexts\Attachments.cs" />
+    <Compile Include="Contexts\Changes.cs" />
+    <Compile Include="Contexts\Database.cs" />
+    <Compile Include="Contexts\Databases.cs" />
+    <Compile Include="Contexts\Documents.cs" />
+    <Compile Include="Contexts\Entities.cs" />
+    <Compile Include="Contexts\Views.cs" />
+    <Compile Include="DocumentAttribute.cs" />
+    <Compile Include="DocumentHeader.cs" />
+    <Compile Include="EntitySchemes\EntityIdMember.cs" />
+    <Compile Include="EntitySchemes\EntityMember.cs" />
+    <Compile Include="EntitySchemes\EntityReflector.cs" />
+    <Compile Include="EntitySchemes\EntityRevMember.cs" />
+    <Compile Include="EntitySchemes\IEntityMember.cs" />
+    <Compile Include="EntitySchemes\IEntityReflector.cs" />
+    <Compile Include="EntitySchemes\Reflections\DynamicProperty.cs" />
+    <Compile Include="EntitySchemes\Reflections\DynamicStringGetter.cs" />
+    <Compile Include="EntitySchemes\Reflections\DynamicStringSetter.cs" />
+    <Compile Include="EntitySchemes\Reflections\FakeStringGetter.cs" />
+    <Compile Include="EntitySchemes\Reflections\FakeStringSetter.cs" />
+    <Compile Include="EntitySchemes\Reflections\IDynamicPropertyFactory.cs" />
+    <Compile Include="EntitySchemes\Reflections\IlDynamicPropertyFactory.cs" />
+    <Compile Include="EntitySchemes\Reflections\IStringGetter.cs" />
+    <Compile Include="EntitySchemes\Reflections\IStringSetter.cs" />
+    <Compile Include="EntitySchemes\Reflections\LambdaDynamicPropertyFactory.cs" />
+    <Compile Include="ExceptionStrings.cs" />
+    <Compile Include="Extensions\HttpExtensions.cs" />
+    <Compile Include="Extensions\ObjectExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\TaskExtensions.cs" />
+    <Compile Include="Extensions\UriExtensions.cs" />
+    <Compile Include="IAttachments.cs" />
+    <Compile Include="IChanges.cs" />
+    <Compile Include="IConnection.cs" />
+    <Compile Include="IDatabase.cs" />
+    <Compile Include="IDatabases.cs" />
+    <Compile Include="IDbClientConnection.cs" />
+    <Compile Include="IDocuments.cs" />
+    <Compile Include="IEntities.cs" />
+    <Compile Include="IMyCouchClient.cs" />
+    <Compile Include="IMyCouchServerClient.cs" />
+    <Compile Include="IMyCouchStore.cs" />
+    <Compile Include="IQueryParameters.cs" />
+    <Compile Include="IReplication.cs" />
+    <Compile Include="IServerClientConnection.cs" />
+    <Compile Include="IViews.cs" />
+    <Compile Include="MyCouchClient.cs" />
+    <Compile Include="MyCouchClientBootstrapper.cs" />
+    <Compile Include="MyCouchResponseException.cs" />
+    <Compile Include="MyCouchRuntime.cs" />
+    <Compile Include="MyCouchServerClient.cs" />
+    <Compile Include="MyCouchServerClientBootstrapper.cs" />
+    <Compile Include="MyCouchStore.cs" />
+    <Compile Include="MyCouchUriBuilder.cs" />
+    <Compile Include="Net\AppendingRequestUrlGenerator.cs" />
+    <Compile Include="Net\BytesContent.cs" />
+    <Compile Include="Net\Connection.cs" />
+    <Compile Include="Net\ConstantRequestUrlGenerator.cs" />
+    <Compile Include="Net\DbClientConnection.cs" />
+    <Compile Include="Net\HttpContentTypes.cs" />
+    <Compile Include="Net\HttpRequest.cs" />
+    <Compile Include="Net\IRequestUrlGenerator.cs" />
+    <Compile Include="Net\JsonContent.cs" />
+    <Compile Include="Net\ServerClientConnection.cs" />
+    <Compile Include="Net\UrlParam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Query.cs" />
+    <Compile Include="Querying\QueryExtensions.cs" />
+    <Compile Include="Querying\QueryParameters.cs" />
+    <Compile Include="QueryParametersConfigurator.cs" />
+    <Compile Include="Requests\BulkRequest.cs" />
+    <Compile Include="Requests\CompactDatabaseRequest.cs" />
+    <Compile Include="Requests\CopyDocumentRequest.cs" />
+    <Compile Include="Requests\DeleteAttachmentRequest.cs" />
+    <Compile Include="Requests\DeleteDatabaseRequest.cs" />
+    <Compile Include="Requests\DeleteDocumentRequest.cs" />
+    <Compile Include="Requests\DeleteEntityRequest.cs" />
+    <Compile Include="Requests\Factories\AttachmentHttpRequestFactoryBase.cs" />
+    <Compile Include="Requests\Factories\BulkHttpRequestFactory.cs" />
+    <Compile Include="Requests\Factories\CompactDatabaseHttpRequestFactory.cs" />
+    <Compile Include="Requests\Factories\CopyDocumentHttpRequestFactory.cs" />
+    <Compile Include="Requests\Factories\DeleteAttachmentHttpRequestFactory.cs" />
+    <Compile Include="Requests\Factories\DeleteDatabaseHttpRequestFactory.cs" />
+    <Compile Include="Requests\Factories\DeleteDocumentHttpRequestFactory.cs" />
+    <Compile Include="Requests\Factories\DeleteEntityHttpRequestFactory.cs" />
+    <Compile Include="Requests\Factories\DocumentHttpRequestFactoryBase.cs" />
+    <Compile Include="Requests\Factories\EntityHttpRequestFactoryBase.cs" />
+    <Compile Include="Requests\Factories\GetAttachmentHttpRequestFactory.cs" />
+    <Compile Include="Requests\Factories\GetChangesHttpRequestFactory.cs" />
+    <Compile Include="Requests\Factories\GetChangesHttpRequestFactoryBase.cs" />
+    <Compile Include="Requests\Factories\GetContinuousChangesHttpRequestFactory.cs" />
+    <Compile Include="Requests\Factories\GetDatabaseHttpRequestFactory.cs" />
+    <Compile Include="Requests\Factories\GetDocumentHttpRequestFactory.cs" />
+    <Compile Include="Requests\Factories\GetEntityHttpRequestFactory.cs" />
+    <Compile Include="Requests\Factories\HeadDatabaseHttpRequestFactory.cs" />
+    <Compile Include="Requests\Factories\HeadDocumentHttpRequestFactory.cs" />
+    <Compile Include="Requests\Factories\HttpRequestFactoryBase.cs" />
+    <Compile Include="Requests\Factories\PostDocumentHttpRequestFactory.cs" />
+    <Compile Include="Requests\Factories\PostEntityHttpRequestFactory.cs" />
+    <Compile Include="Requests\Factories\PutAttachmentHttpRequestFactory.cs" />
+    <Compile Include="Requests\Factories\PutDatabaseHttpRequestFactory.cs" />
+    <Compile Include="Requests\Factories\PutDocumentHttpRequestFactory.cs" />
+    <Compile Include="Requests\Factories\PutEntityHttpRequestFactory.cs" />
+    <Compile Include="Requests\Factories\QueryViewHttpRequestFactory.cs" />
+    <Compile Include="Requests\Factories\ReplaceDocumentHttpRequestFactory.cs" />
+    <Compile Include="Requests\Factories\ReplicateDatabaseHttpRequestFactory.cs" />
+    <Compile Include="Requests\Factories\ViewCleanupHttpRequestFactory.cs" />
+    <Compile Include="Requests\GetAttachmentRequest.cs" />
+    <Compile Include="Requests\GetChangesRequest.cs" />
+    <Compile Include="Requests\GetDatabaseRequest.cs" />
+    <Compile Include="Requests\GetDocumentRequest.cs" />
+    <Compile Include="Requests\GetEntityRequest.cs" />
+    <Compile Include="Requests\HeadDatabaseRequest.cs" />
+    <Compile Include="Requests\HeadDocumentRequest.cs" />
+    <Compile Include="Requests\PostDocumentRequest.cs" />
+    <Compile Include="Requests\PostEntityRequest.cs" />
+    <Compile Include="Requests\PutAttachmentRequest.cs" />
+    <Compile Include="Requests\PutDatabaseRequest.cs" />
+    <Compile Include="Requests\PutDocumentRequest.cs" />
+    <Compile Include="Requests\PutEntityRequest.cs" />
+    <Compile Include="Requests\QueryViewRequest.cs" />
+    <Compile Include="Requests\ReplaceDocumentRequest.cs" />
+    <Compile Include="Requests\ReplicateDatabaseRequest.cs" />
+    <Compile Include="Requests\Request.cs" />
+    <Compile Include="Requests\ViewCleanupRequest.cs" />
+    <Compile Include="Responses\AttachmentResponse.cs" />
+    <Compile Include="Responses\BulkResponse.cs" />
+    <Compile Include="Responses\BytesResponse.cs" />
+    <Compile Include="Responses\ChangesResponse.cs" />
+    <Compile Include="Responses\ContentResponse.cs" />
+    <Compile Include="Responses\ContinuousChangesResponse.cs" />
+    <Compile Include="Responses\DatabaseHeaderResponse.cs" />
+    <Compile Include="Responses\DocumentHeaderResponse.cs" />
+    <Compile Include="Responses\DocumentResponse.cs" />
+    <Compile Include="Responses\EntityResponse.cs" />
+    <Compile Include="Responses\Factories\AttachmentResponseFactory.cs" />
+    <Compile Include="Responses\Factories\BulkResponseFactory.cs" />
+    <Compile Include="Responses\Factories\ChangesResponseFactory.cs" />
+    <Compile Include="Responses\Factories\ContinuousChangesResponseFactory.cs" />
+    <Compile Include="Responses\Factories\DatabaseHeaderResponseFactory.cs" />
+    <Compile Include="Responses\Factories\DocumentHeaderResponseFactory.cs" />
+    <Compile Include="Responses\Factories\DocumentResponseFactory.cs" />
+    <Compile Include="Responses\Factories\EntityResponseFactory.cs" />
+    <Compile Include="Responses\Factories\GetDatabaseResponseFactory.cs" />
+    <Compile Include="Responses\Materializers\AttachmentResponseMaterializer.cs" />
+    <Compile Include="Responses\Materializers\BasicResponseMaterializer.cs" />
+    <Compile Include="Responses\Materializers\BulkResponseMaterializer.cs" />
+    <Compile Include="Responses\Materializers\ChangesResponseMaterializer.cs" />
+    <Compile Include="Responses\Materializers\DocumentHeaderResponseMaterializer.cs" />
+    <Compile Include="Responses\Materializers\DocumentResponseMaterializer.cs" />
+    <Compile Include="Responses\Materializers\EntityResponseMaterializer.cs" />
+    <Compile Include="Responses\Materializers\FailedDocumentHeaderResponseMaterializer.cs" />
+    <Compile Include="Responses\Materializers\FailedEntityResponseMaterializer.cs" />
+    <Compile Include="Responses\Materializers\FailedResponseMaterializer.cs" />
+    <Compile Include="Responses\Materializers\SimpleDeserializingResponseMaterializer.cs" />
+    <Compile Include="Responses\Materializers\TextResponseMaterializer.cs" />
+    <Compile Include="Responses\Materializers\ViewQueryResponseMaterializer.cs" />
+    <Compile Include="Responses\Factories\ReplicationResponseFactory.cs" />
+    <Compile Include="Responses\Factories\ResponseFactoryBase.cs" />
+    <Compile Include="Responses\Factories\TextResponseFactory.cs" />
+    <Compile Include="Responses\Factories\ViewQueryResponseFactory.cs" />
+    <Compile Include="Responses\GetDatabaseResponse.cs" />
+    <Compile Include="Responses\IResponseRow.cs" />
+    <Compile Include="Responses\JsonScheme.cs" />
+    <Compile Include="Responses\ReplicationResponse.cs" />
+    <Compile Include="Responses\Response.cs" />
+    <Compile Include="Responses\TextResponse.cs" />
+    <Compile Include="Responses\ViewQueryResponse.cs" />
+    <Compile Include="Row.cs" />
+    <Compile Include="Serialization\Conventions\ISerializationConvention.cs" />
+    <Compile Include="Serialization\Conventions\ISerializationConventionWriter.cs" />
+    <Compile Include="Serialization\Conventions\SerializationConventions.cs" />
+    <Compile Include="Serialization\Conventions\SerializationConventionWriter.cs" />
+    <Compile Include="Serialization\Conventions\StringSerializationConvention.cs" />
+    <Compile Include="Serialization\Converters\KeyJsonConverter.cs" />
+    <Compile Include="Serialization\Converters\MultiTypeDeserializationJsonConverter.cs" />
+    <Compile Include="Serialization\Converters\UnixEpochDateTimeConverter.cs" />
+    <Compile Include="Serialization\DefaultSerializer.cs" />
+    <Compile Include="Serialization\DocumentSerializer.cs" />
+    <Compile Include="Serialization\EntityContractResolver.cs" />
+    <Compile Include="Serialization\EntitySerializer.cs" />
+    <Compile Include="Serialization\IDocumentSerializer.cs" />
+    <Compile Include="Serialization\IEntitySerializer.cs" />
+    <Compile Include="Serialization\ISerializer.cs" />
+    <Compile Include="Serialization\Meta\DocumentSerializationMeta.cs" />
+    <Compile Include="Serialization\Meta\DocumentSerializationMetaProvider.cs" />
+    <Compile Include="Serialization\Meta\IDocumentSerializationMetaProvider.cs" />
+    <Compile Include="Serialization\DocumentJsonReader.cs" />
+    <Compile Include="Serialization\SerializationConfiguration.cs" />
+    <Compile Include="Serialization\SerializationContractResolver.cs" />
+    <Compile Include="Serialization\DocumentJsonWriter.cs" />
+    <Compile Include="Stale.cs" />
+    <Compile Include="SystemViewIdentity.cs" />
+    <Compile Include="ViewIdentity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

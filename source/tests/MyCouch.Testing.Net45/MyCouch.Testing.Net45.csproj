@@ -33,6 +33,10 @@
     <Reference Include="FluentAssertions">
       <HintPath>..\..\packages\FluentAssertions.2.2.0.0\lib\net45\FluentAssertions.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
@@ -59,16 +63,41 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="CustomAsserts.cs" />
+    <Compile Include="JsonTestdata.Designer.cs">
+      <DependentUpon>JsonTestdata.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Model\Album.cs" />
+    <Compile Include="Model\Animal.cs" />
+    <Compile Include="Model\Artist.cs" />
+    <Compile Include="ObservableRowExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Shoulds.cs" />
+    <Compile Include="TestData\ClientTestData.cs" />
+    <Compile Include="TestData\CloudantTestData.cs" />
+    <Compile Include="TestsOf.cs" />
+    <Compile Include="TypeExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\projects\MyCouch.Cloudant.Net45\MyCouch.Cloudant.Net45.csproj">
+      <Project>{93089f62-c493-460c-945d-4f32cd94b450}</Project>
+      <Name>MyCouch.Cloudant.Net45</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\projects\MyCouch.Net45\MyCouch.Net45.csproj">
       <Project>{7f6e9978-92f3-4b66-95dd-ada46b2a3bc5}</Project>
       <Name>MyCouch.Net45</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="JsonTestdata.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>JsonTestdata.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

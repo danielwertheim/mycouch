@@ -42,6 +42,42 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Testing.Net45\CustomAsserts.cs">
+      <Link>CustomAsserts.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Testing.Net45\JsonTestdata.Designer.cs">
+      <Link>JsonTestdata.Designer.cs</Link>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>JsonTestdata.resx</DependentUpon>
+    </Compile>
+    <Compile Include="..\MyCouch.Testing.Net45\Model\Album.cs">
+      <Link>Model\Album.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Testing.Net45\Model\Animal.cs">
+      <Link>Model\Animal.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Testing.Net45\Model\Artist.cs">
+      <Link>Model\Artist.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Testing.Net45\ObservableRowExtensions.cs">
+      <Link>ObservableRowExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Testing.Net45\Shoulds.cs">
+      <Link>Shoulds.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Testing.Net45\TestData\ClientTestData.cs">
+      <Link>TestData\ClientTestData.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Testing.Net45\TestData\CloudantTestData.cs">
+      <Link>TestData\CloudantTestData.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Testing.Net45\TestsOf.cs">
+      <Link>TestsOf.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Testing.Net45\TypeExtensions.cs">
+      <Link>TypeExtensions.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -53,6 +89,9 @@
     </Reference>
     <Reference Include="Microsoft.Threading.Tasks.Extensions">
       <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\portable-net45+win8+wp8+wpa81\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.2\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http">
       <HintPath>..\..\packages\Microsoft.Net.Http.2.2.20\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.dll</HintPath>
@@ -86,10 +125,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\projects\MyCouch.Cloudant.Pcl\MyCouch.Cloudant.Pcl.csproj">
+      <Project>{5a0d4e69-6a48-49d6-8b68-89c7b3ea6603}</Project>
+      <Name>MyCouch.Cloudant.Pcl</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\projects\MyCouch.Pcl\MyCouch.Pcl.csproj">
       <Project>{da67c219-8fd3-4da8-892f-1d31dd473243}</Project>
       <Name>MyCouch.Pcl</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\MyCouch.Testing.Net45\JsonTestdata.resx">
+      <Link>JsonTestdata.resx</Link>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>JsonTestdata.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
