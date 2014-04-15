@@ -16,7 +16,7 @@
       MyCouch lets you work with raw JSON and/or entities/POCOS without requiring any implementation of interfaces or base-classes etc. MyCouch provides you with some model conventions like
       injection of $doctype to the document. It is pluggable. If you don't like some piece, then hook in your implementation instead.
 
-      Supports .Net4.0, .Net4.5 and Windows store apps 8.1 (WinRT).
+      Supports .Net4.0, .Net4.5 and Windows store 8.0 and 8.1 (WinRT).
     </description>
     <iconUrl>http://www.mycouchclient.com/logos/mycouch-nuget.png</iconUrl>
     <projectUrl>https://github.com/danielwertheim/MyCouch</projectUrl>
@@ -34,10 +34,8 @@
          <dependency id="MyCouch" version="[$version$]" />
          <dependency id="Ensure.That" version="1.0.0" />
          <dependency id="Newtonsoft.Json" version="6.0.2" />
-         <dependency id="Microsoft.Bcl" version="1.1.7" />
-         <dependency id="Microsoft.Bcl.Async" version="1.0.166" />
-         <dependency id="Microsoft.Bcl.Build" version="1.0.14" />
-         <dependency id="Microsoft.Net.Http" version="2.2.19" />
+         <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
+         <dependency id="Microsoft.Net.Http" version="2.2.20" />
          <dependency id="Rx-Main" version="2.2.2" />
        </group>
        <group targetFramework="net45">
@@ -46,7 +44,7 @@
          <dependency id="Newtonsoft.Json" version="6.0.2" />
          <dependency id="Rx-Main" version="2.2.2" />
        </group>
-       <group targetFramework="netcore451">
+       <group targetFramework="portable-netcore45+netcore451">
          <dependency id="MyCouch" version="[$version$]" />
          <dependency id="Ensure.That" version="1.0.0" />
          <dependency id="Newtonsoft.Json" version="6.0.2" />
@@ -59,7 +57,7 @@
     <file src="MyCouch.Cloudant.Net40\*.xml" target="lib\net40" />
     <file src="MyCouch.Cloudant.Net45\*.dll" target="lib\net45" />
     <file src="MyCouch.Cloudant.Net45\*.xml" target="lib\net45" />
-    <file src="MyCouch.Cloudant.NetCore451\*.dll" target="lib\netcore451" />
-    <file src="MyCouch.Cloudant.NetCore451\*.xml" target="lib\netcore451" />
+    <file src="MyCouch.Cloudant.Pcl\*.dll" target="lib\portable-netcore45+netcore451" />
+    <file src="MyCouch.Cloudant.Pcl\*.xml" target="lib\portable-netcore45+netcore451" />
   </files>
 </package>
