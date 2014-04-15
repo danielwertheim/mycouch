@@ -1,0 +1,288 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FCC98E63-0240-4538-A898-1838988AC476}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MyCouch.UnitTests</RootNamespace>
+    <AssemblyName>MyCouch.UnitTests.Pcl.Ws81</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <TargetPlatformVersion>8.1</TargetPlatformVersion>
+    <MinimumVisualStudioVersion>12</MinimumVisualStudioVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <PackageCertificateKeyFile>MyCouch.UnitTests.Pcl.Ws81_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <AppxBundle>Never</AppxBundle>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;PCL</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;PCL</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <OutputPath>bin\ARM\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;PCL</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;PCL</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AppXPackage>True</AppXPackage>
+    <AppxPackageIncludePrivateSymbols>true</AppxPackageIncludePrivateSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <!--A reference to the entire .Net Framework and Windows SDK are automatically included-->
+    <SDKReference Include="TestPlatform, Version=11.0" />
+    <SDKReference Include="XUnit, Version=2.0">
+      <Name>XUnit for Managed Projects</Name>
+    </SDKReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.unittests.net45\cloudant\requests\SearchIndexHttpRequestFactoryTests.cs">
+      <Link>Cloudant\Requests\SearchIndexHttpRequestFactoryTests.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.unittests.net45\cloudant\SearchParametersConfiguratorTests.cs">
+      <Link>Cloudant\SearchParametersConfiguratorTests.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.unittests.net45\entityschemes\EntityIdMemberTests.cs">
+      <Link>EntitySchemes\EntityIdMemberTests.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.unittests.net45\entityschemes\EntityRevMemberTests.cs">
+      <Link>EntitySchemes\EntityRevMemberTests.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.unittests.net45\fakes\DbClientConnectionFake.cs">
+      <Link>Fakes\DbClientConnectionFake.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.unittests.net45\net\AppendingRequestUrlGeneratorTests.cs">
+      <Link>Net\AppendingRequestUrlGeneratorTests.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.unittests.net45\net\ConstantRequestUrlGeneratorTests.cs">
+      <Link>Net\ConstantRequestUrlGeneratorTests.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.unittests.net45\net\DbClientConnectionTests.cs">
+      <Link>Net\DbClientConnectionTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.UnitTests.Net45\QueryConfigurationTests.cs">
+      <Link>QueryConfigurationTests.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.unittests.net45\requests\factories\BulkHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\BulkHttpRequestFactoryTests.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.unittests.net45\requests\factories\CompactDatabaseHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\CompactDatabaseHttpRequestFactoryTests.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.unittests.net45\requests\factories\DeleteDatabaseHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\DeleteDatabaseHttpRequestFactoryTests.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.unittests.net45\requests\factories\GetChangesHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\GetChangesHttpRequestFactoryTests.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.unittests.net45\requests\factories\GetContinuousChangesHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\GetContinuousChangesHttpRequestFactoryTests.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.unittests.net45\requests\factories\GetDatabaseHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\GetDatabaseHttpRequestFactoryTests.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.unittests.net45\requests\factories\GetDocumentHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\GetDocumentHttpRequestFactoryTests.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.unittests.net45\requests\factories\HeadDatabaseHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\HeadDatabaseHttpRequestFactoryTests.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.unittests.net45\requests\factories\PutDatabaseHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\PutDatabaseHttpRequestFactoryTests.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.unittests.net45\requests\factories\QueryViewHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\QueryViewHttpRequestFactoryTests.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.unittests.net45\requests\factories\ReplicateDatabaseHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\ReplicateDatabaseHttpRequestFactoryTests.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.unittests.net45\requests\factories\ViewCleanupHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\ViewCleanupHttpRequestFactoryTests.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.unittests.net45\requests\QueryViewRequestTests.cs">
+      <Link>Requests\QueryViewRequestTests.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.unittests.net45\serialization\DocumentSerializerTests.cs">
+      <Link>Serialization\DocumentSerializerTests.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.unittests.net45\serialization\EntitySerializationTests.cs">
+      <Link>Serialization\EntitySerializationTests.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.unittests.net45\serialization\SerializerTests.cs">
+      <Link>Serialization\SerializerTests.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.unittests.net45\serialization\ViewQueryResponseRowsDeserializerTests.cs">
+      <Link>Serialization\ViewQueryResponseRowsDeserializerTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.UnitTests.Net45\UnitTestsOf.cs">
+      <Link>UnitTestsOf.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.UnitTests.Net45\UriBuilderTests.cs">
+      <Link>UriBuilderTests.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+    <None Include="MyCouch.UnitTests.Pcl.Ws81_TemporaryKey.pfx" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\UnitTestLogo.scale-100.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\UnitTestSmallLogo.scale-100.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\UnitTestSplashScreen.scale-100.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\UnitTestStoreLogo.scale-100.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\projects\MyCouch.Cloudant.Pcl\MyCouch.Cloudant.Pcl.csproj">
+      <Project>{5a0d4e69-6a48-49d6-8b68-89c7b3ea6603}</Project>
+      <Name>MyCouch.Cloudant.Pcl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\projects\MyCouch.Pcl\MyCouch.Pcl.csproj">
+      <Project>{da67c219-8fd3-4da8-892f-1d31dd473243}</Project>
+      <Name>MyCouch.Pcl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MyCouch.Testing.Pcl\MyCouch.Testing.Pcl.csproj">
+      <Project>{ec6f9e25-3ab6-4fab-88ec-5df86895d600}</Project>
+      <Name>MyCouch.Testing.Pcl</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="FluentAssertions">
+      <HintPath>..\..\packages\Portable.FluentAssertions.2.0.1.1\lib\portable-win+net45+MonoAndroid16+MonoMac40+MonoTouch40+sl40+wp71\FluentAssertions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks">
+      <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\win8\Microsoft.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions">
+      <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\win8\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.2\lib\netcore45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Core">
+      <HintPath>..\..\packages\Rx-Core.2.2.2\lib\windows8\System.Reactive.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces">
+      <HintPath>..\..\packages\Rx-Interfaces.2.2.2\lib\windows8\System.Reactive.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Linq, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Rx-Linq.2.2.2\lib\windows8\System.Reactive.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.PlatformServices, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Rx-PlatformServices.2.2.3\lib\windows8\System.Reactive.PlatformServices.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
+    <VisualStudioVersion>12.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
+  <PropertyGroup>
+    <SDKReferenceDirectoryRoot>$(SolutionDir)\libs;$(SDKReferenceDirectoryRoot)</SDKReferenceDirectoryRoot>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>  
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,6 +1,0 @@
-{
-  "Client":{
-      "ServerUrl":"http://localhost:5984",
-      "DbName":"mycouchtests-temp" },
-   "SupportsDatabaseContextTests": true
-}
