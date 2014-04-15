@@ -6,17 +6,17 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{6316F00D-28E4-4188-973E-FB407F8551AC}</ProjectGuid>
+    <ProjectGuid>{FF00B599-128F-4103-8F87-02BF548BABEB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MyCouch.IntegrationTests</RootNamespace>
-    <AssemblyName>MyCouch.IntegrationTests.Pcl.Ws81</AssemblyName>
+    <RootNamespace>MyCouch.UnitTests</RootNamespace>
+    <AssemblyName>MyCouch.UnitTests.Pcl.Ws80</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
-    <TargetPlatformVersion>8.1</TargetPlatformVersion>
+    <TargetPlatformVersion>8.0</TargetPlatformVersion>
     <MinimumVisualStudioVersion>12</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <PackageCertificateKeyFile>MyCouch.IntegrationTests.Pcl.Ws81_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>MyCouch.UnitTests.Pcl.Win80_TemporaryKey.pfx</PackageCertificateKeyFile>
     <AppxBundle>Never</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -117,56 +117,89 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.integrationtests.net45\cloudanttests\SearchTests.cs">
-      <Link>CloudantTests\SearchTests.cs</Link>
+    <Compile Include="..\mycouch.unittests.net45\cloudant\requests\SearchIndexHttpRequestFactoryTests.cs">
+      <Link>Cloudant\Requests\SearchIndexHttpRequestFactoryTests.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.integrationtests.net45\coretests\AttachmentsTests.cs">
-      <Link>CoreTests\AttachmentsTests.cs</Link>
+    <Compile Include="..\mycouch.unittests.net45\cloudant\SearchParametersConfiguratorTests.cs">
+      <Link>Cloudant\SearchParametersConfiguratorTests.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.integrationtests.net45\coretests\ChangesTests.cs">
-      <Link>CoreTests\ChangesTests.cs</Link>
+    <Compile Include="..\mycouch.unittests.net45\entityschemes\EntityIdMemberTests.cs">
+      <Link>EntitySchemes\EntityIdMemberTests.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.integrationtests.net45\coretests\DatabasesTests.cs">
-      <Link>CoreTests\DatabasesTests.cs</Link>
+    <Compile Include="..\mycouch.unittests.net45\entityschemes\EntityRevMemberTests.cs">
+      <Link>EntitySchemes\EntityRevMemberTests.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.integrationtests.net45\coretests\DatabaseTests.cs">
-      <Link>CoreTests\DatabaseTests.cs</Link>
+    <Compile Include="..\mycouch.unittests.net45\fakes\DbClientConnectionFake.cs">
+      <Link>Fakes\DbClientConnectionFake.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.integrationtests.net45\coretests\DocumentsTests.cs">
-      <Link>CoreTests\DocumentsTests.cs</Link>
+    <Compile Include="..\mycouch.unittests.net45\net\AppendingRequestUrlGeneratorTests.cs">
+      <Link>Net\AppendingRequestUrlGeneratorTests.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.integrationtests.net45\coretests\EntitiesTests.cs">
-      <Link>CoreTests\EntitiesTests.cs</Link>
+    <Compile Include="..\mycouch.unittests.net45\net\ConstantRequestUrlGeneratorTests.cs">
+      <Link>Net\ConstantRequestUrlGeneratorTests.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.integrationtests.net45\coretests\MyCouchStoreCallbackQueryTests.cs">
-      <Link>CoreTests\MyCouchStoreCallbackQueryTests.cs</Link>
+    <Compile Include="..\mycouch.unittests.net45\net\DbClientConnectionTests.cs">
+      <Link>Net\DbClientConnectionTests.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.integrationtests.net45\coretests\MyCouchStoreCrudTests.cs">
-      <Link>CoreTests\MyCouchStoreCrudTests.cs</Link>
+    <Compile Include="..\MyCouch.UnitTests.Net45\QueryConfigurationTests.cs">
+      <Link>QueryConfigurationTests.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.integrationtests.net45\coretests\MyCouchStoreObservableQueryTests.cs">
-      <Link>CoreTests\MyCouchStoreObservableQueryTests.cs</Link>
+    <Compile Include="..\mycouch.unittests.net45\requests\factories\BulkHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\BulkHttpRequestFactoryTests.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.integrationtests.net45\coretests\ViewsTests.cs">
-      <Link>CoreTests\ViewsTests.cs</Link>
+    <Compile Include="..\mycouch.unittests.net45\requests\factories\CompactDatabaseHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\CompactDatabaseHttpRequestFactoryTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests.Net45\IntegrationTestsOf.cs">
-      <Link>IntegrationTestsOf.cs</Link>
+    <Compile Include="..\mycouch.unittests.net45\requests\factories\DeleteDatabaseHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\DeleteDatabaseHttpRequestFactoryTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests.Net45\IntegrationTestsRuntime.cs">
-      <Link>IntegrationTestsRuntime.cs</Link>
+    <Compile Include="..\mycouch.unittests.net45\requests\factories\GetChangesHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\GetChangesHttpRequestFactoryTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests.Net45\IPreserveStatePerFixture.cs">
-      <Link>IPreserveStatePerFixture.cs</Link>
+    <Compile Include="..\mycouch.unittests.net45\requests\factories\GetContinuousChangesHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\GetContinuousChangesHttpRequestFactoryTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests.Net45\MyFactAttribute.cs">
-      <Link>MyFactAttribute.cs</Link>
+    <Compile Include="..\mycouch.unittests.net45\requests\factories\GetDatabaseHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\GetDatabaseHttpRequestFactoryTests.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.integrationtests.net45\testfixtures\SearchFixture.cs">
-      <Link>TestFixtures\SearchFixture.cs</Link>
+    <Compile Include="..\mycouch.unittests.net45\requests\factories\GetDocumentHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\GetDocumentHttpRequestFactoryTests.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.integrationtests.net45\testfixtures\ViewsFixture.cs">
-      <Link>TestFixtures\ViewsFixture.cs</Link>
+    <Compile Include="..\mycouch.unittests.net45\requests\factories\HeadDatabaseHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\HeadDatabaseHttpRequestFactoryTests.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.unittests.net45\requests\factories\PutDatabaseHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\PutDatabaseHttpRequestFactoryTests.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.unittests.net45\requests\factories\QueryViewHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\QueryViewHttpRequestFactoryTests.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.unittests.net45\requests\factories\ReplicateDatabaseHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\ReplicateDatabaseHttpRequestFactoryTests.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.unittests.net45\requests\factories\ViewCleanupHttpRequestFactoryTests.cs">
+      <Link>Requests\Factories\ViewCleanupHttpRequestFactoryTests.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.unittests.net45\requests\QueryViewRequestTests.cs">
+      <Link>Requests\QueryViewRequestTests.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.unittests.net45\serialization\DocumentSerializerTests.cs">
+      <Link>Serialization\DocumentSerializerTests.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.unittests.net45\serialization\EntitySerializationTests.cs">
+      <Link>Serialization\EntitySerializationTests.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.unittests.net45\serialization\SerializerTests.cs">
+      <Link>Serialization\SerializerTests.cs</Link>
+    </Compile>
+    <Compile Include="..\mycouch.unittests.net45\serialization\ViewQueryResponseRowsDeserializerTests.cs">
+      <Link>Serialization\ViewQueryResponseRowsDeserializerTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.UnitTests.Net45\UnitTestsOf.cs">
+      <Link>UnitTestsOf.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.UnitTests.Net45\UriBuilderTests.cs">
+      <Link>UriBuilderTests.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -174,7 +207,7 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="MyCouch.IntegrationTests.Pcl.Ws81_TemporaryKey.pfx" />
+    <None Include="MyCouch.UnitTests.Pcl.Win80_TemporaryKey.pfx" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -206,7 +239,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="FluentAssertions">
+    <Reference Include="FluentAssertions, Version=2.0.1.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Portable.FluentAssertions.2.0.1.1\lib\portable-win+net45+MonoAndroid16+MonoMac40+MonoTouch40+sl40+wp71\FluentAssertions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Threading.Tasks">
@@ -215,7 +249,8 @@
     <Reference Include="Microsoft.Threading.Tasks.Extensions">
       <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\win8\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Newtonsoft.Json.6.0.2\lib\netcore45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http.Extensions">
@@ -224,17 +259,19 @@
     <Reference Include="System.Net.Http.Primitives">
       <HintPath>..\..\packages\Microsoft.Net.Http.2.2.20\lib\win8\System.Net.Http.Primitives.dll</HintPath>
     </Reference>
-    <Reference Include="System.Reactive.Core">
+    <Reference Include="System.Reactive.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Rx-Core.2.2.2\lib\windows8\System.Reactive.Core.dll</HintPath>
     </Reference>
     <Reference Include="System.Reactive.Interfaces, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Rx-Interfaces.2.2.2\lib\windows8\System.Reactive.Interfaces.dll</HintPath>
     </Reference>
-    <Reference Include="System.Reactive.Linq">
+    <Reference Include="System.Reactive.Linq, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Rx-Linq.2.2.2\lib\windows8\System.Reactive.Linq.dll</HintPath>
     </Reference>
-    <Reference Include="System.Reactive.PlatformServices">
+    <Reference Include="System.Reactive.PlatformServices, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Rx-PlatformServices.2.2.3\lib\windows8\System.Reactive.PlatformServices.dll</HintPath>
     </Reference>
   </ItemGroup>
@@ -242,14 +279,14 @@
     <VisualStudioVersion>12.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <PropertyGroup>
+    <SDKReferenceDirectoryRoot>$(SolutionDir)\libs;$(SDKReferenceDirectoryRoot)</SDKReferenceDirectoryRoot>
+  </PropertyGroup>
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
   <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
     <Error Condition="!Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
     <Error Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
   </Target>
-  <PropertyGroup>
-    <SDKReferenceDirectoryRoot>$(SolutionDir)\libs;$(SDKReferenceDirectoryRoot)</SDKReferenceDirectoryRoot>
-  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
