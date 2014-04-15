@@ -2,7 +2,7 @@ Framework "4.5.1"
 
 Properties {
     $solution_name = "MyCouch"
-    $solution_dir_path = "..\src"
+    $solution_dir_path = "..\source"
     $solution_path = "$solution_dir_path\$solution_name.sln"
     $project_name = "MyCouch"
     $project_name_cloudant = "MyCouch.Cloudant"
@@ -29,17 +29,18 @@ task Build {
 task Copy {
     CopyTo-Build("$project_name.Net40")
     CopyTo-Build("$project_name.Net45")
-    CopyTo-Build("$project_name.NetCore451")
+    CopyTo-Build("$project_name.Pcl")
     
     CopyTo-Build("$project_name_cloudant.Net40")
     CopyTo-Build("$project_name_cloudant.Net45")
-    CopyTo-Build("$project_name_cloudant.NetCore451")
+    CopyTo-Build("$project_name_cloudant.Pcl")
 }
 
 task UnitTest {
     UnitTest-ProjecT("Net40")
     UnitTest-ProjecT("Net45")
-    UnitTest-ProjecT("NetCore451")
+    UnitTest-ProjecT("Pcl.Ws80")
+    UnitTest-ProjecT("Pcl.Ws81")
 }
 
 task NuGet-Pack {
@@ -48,7 +49,7 @@ task NuGet-Pack {
 }
 
 Function UnitTest-Project($t) {
-    & $testrunner "$solution_dir_path\Tests\$project_name.$t.UnitTests\bin\$build_config\$project_name.$t.UnitTests.dll"
+    & $testrunner "$solution_dir_path\tests\$project_name.UnitTests.$t\bin\$build_config\$project_name.UnitTests.$t.dll"
 }
 
 Function NuGet-Pack-Project($t) {
@@ -76,7 +77,7 @@ Function CopyTo-Build($t) {
     $trg = "$build_dir_path\$t"
     EnsureClean-Directory($trg)
     
-    CopyTo-Directory "$solution_dir_path\Projects\$t\bin\$build_config\$t.*" $trg
+    CopyTo-Directory "$solution_dir_path\projects\$t\bin\$build_config\$t.*" $trg
 }
 
 Function CopyTo-Directory($src, $trg) {
