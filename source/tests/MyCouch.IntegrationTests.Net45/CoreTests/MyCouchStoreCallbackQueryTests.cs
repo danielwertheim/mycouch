@@ -12,11 +12,7 @@ namespace MyCouch.IntegrationTests.CoreTests
     public class MyCouchStoreCallbackQueryTests :
         IntegrationTestsOf<MyCouchStore>,
         IPreserveStatePerFixture,
-#if !PCL
         IUseFixture<ViewsFixture>
-#else
-        IClassFixture<ViewsFixture>
-#endif
     {
         protected Artist[] ArtistsById { get; set; }
 

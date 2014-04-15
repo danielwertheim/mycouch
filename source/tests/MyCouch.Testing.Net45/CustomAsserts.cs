@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Reflection;
 using FluentAssertions;
-using Xunit;
 
 namespace MyCouch.Testing
 {
@@ -45,7 +44,7 @@ namespace MyCouch.Testing
 
             if (type.IsSimpleType())
             {
-                Assert.Equal(a, b);
+                a.Should().Be(b);
                 return;
             }
 

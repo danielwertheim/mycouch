@@ -13,11 +13,7 @@ namespace MyCouch.IntegrationTests.CloudantTests
     public class SearchTests :
         IntegrationTestsOf<ISearches>,
         IPreserveStatePerFixture,
-#if !PCL
         IUseFixture<SearchFixture>
-#else
-        IClassFixture<SearchFixture>
-#endif
     {
         protected Animal[] Animals { get; set; }
 
@@ -42,7 +38,7 @@ namespace MyCouch.IntegrationTests.CloudantTests
             response.Should().BeSuccessfulGet(numOfRows: 1);
             response.Bookmark.Should().NotBeNullOrEmpty();
             response.Rows[0].Id.Should().Be("kookaburra");
-            response.Rows[0].Order.Should().BeEquivalentTo(new[] {1.4054651260375977, 0});
+            response.Rows[0].Order.Should().BeEquivalentTo(new[] { 1.4054651260375977, 0 });
             response.Rows[0].Fields.Count.Should().Be(4);
             response.Rows[0].Fields["diet"].Should().Be("carnivore");
             response.Rows[0].Fields["minLength"].Should().Be(0.28);
