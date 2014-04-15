@@ -97,8 +97,8 @@ namespace MyCouch.IntegrationTests
                 if (httpRequest.Method == HttpMethod.Get || httpRequest.Method == HttpMethod.Head)
                 {
                     httpRequest.RequestUri = string.IsNullOrEmpty(httpRequest.RequestUri.Query)
-                        ? new Uri(httpRequest.RequestUri + "?r=1")
-                        : new Uri(httpRequest.RequestUri + "&r=1");
+                        ? new Uri(httpRequest.RequestUri + "?r=3")
+                        : new Uri(httpRequest.RequestUri + "&r=3");
                 }
                 return base.OnBeforeSend(httpRequest);
             }
