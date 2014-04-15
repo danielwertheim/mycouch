@@ -160,6 +160,22 @@ namespace MyCouch.Testing
             Response.DiskFormatVersion.Should().BeGreaterThan(0);
             Response.InstanceStartTimeUtc.Should().BeCloseTo(DateTime.UtcNow, (int)TimeSpan.FromSeconds(30).TotalMilliseconds);
         }
+
+        public void BeSuccessfulCloudant(string dbName)
+        {
+            Response.Should().Be(HttpMethod.Get);
+            Response.IsSuccess.Should().BeTrue();
+            Response.DbName.Should().NotBeNullOrEmpty();
+            Response.DbName.Should().Be(dbName);
+            Response.CommittedUpdateSeq.Should().BeNull();
+            Response.UpdateSeq.Should().NotBeNullOrEmpty();
+            Response.DataSize.Should().Be(0);
+            Response.DiskSize.Should().BeGreaterThan(0);
+            Response.DocCount.Should().BeGreaterThan(0);
+            Response.DocDelCount.Should().BeGreaterThan(0);
+            Response.DiskFormatVersion.Should().BeGreaterThan(0);
+            Response.InstanceStartTimeUtc.HasValue.Should().BeFalse();
+        }
     }
 
     public class ReplicationResponseAssertions : ResponseAssertions<ReplicationResponse>

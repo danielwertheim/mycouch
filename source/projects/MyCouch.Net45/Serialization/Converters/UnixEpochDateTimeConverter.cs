@@ -7,7 +7,7 @@ namespace MyCouch.Serialization.Converters
     {
         public override bool CanConvert(Type objectType)
         {
-            return objectType == typeof(DateTime);
+            return objectType == typeof(DateTime) || objectType == typeof(DateTime?);
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
@@ -23,6 +23,9 @@ namespace MyCouch.Serialization.Converters
             var microseconds = reader.Value is string
                 ? long.Parse((string)reader.Value)
                 : (long)reader.Value;
+
+            if (microseconds == 0)
+                return null;
 
             return new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Local).AddMilliseconds(microseconds / 1000);
         }
