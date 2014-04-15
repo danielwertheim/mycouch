@@ -44,11 +44,10 @@
          <dependency id="Newtonsoft.Json" version="6.0.2" />
          <dependency id="Rx-Main" version="2.2.2" />
        </group>
-       <group targetFramework="portable-win+wp80">
+       <group targetFramework="portable-netcore45+netcore451">
          <dependency id="MyCouch" version="[$version$]" />
          <dependency id="Ensure.That" version="1.0.0" />
          <dependency id="Newtonsoft.Json" version="6.0.2" />
-         <dependency id="Microsoft.Net.Http" version="2.2.20" />
          <dependency id="Rx-Main" version="2.2.2" />
        </group>
     </dependencies>
@@ -58,7 +57,7 @@
     <file src="MyCouch.Cloudant.Net40\*.xml" target="lib\net40" />
     <file src="MyCouch.Cloudant.Net45\*.dll" target="lib\net45" />
     <file src="MyCouch.Cloudant.Net45\*.xml" target="lib\net45" />
-    <file src="MyCouch.Cloudant.Pcl\*.dll" target="lib\portable-win+wp80" />
-    <file src="MyCouch.Cloudant.Pcl\*.xml" target="lib\portable-win+wp80" />
+    <file src="MyCouch.Cloudant.Pcl\*.dll" target="lib\portable-netcore45+netcore451" />
+    <file src="MyCouch.Cloudant.Pcl\*.xml" target="lib\portable-netcore45+netcore451" />
   </files>
 </package>
