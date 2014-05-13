@@ -20,6 +20,7 @@ namespace MyCouch.IntegrationTests.CoreTests
     {
         protected Artist[] ArtistsById { get; set; }
 
+#if net40
         public ViewsTests()
         {
             SUT = DbClient.Views;
@@ -29,7 +30,13 @@ namespace MyCouch.IntegrationTests.CoreTests
         {
             ArtistsById = data.Init(Environment);
         }
-
+#else
+        public ViewsTests(ViewsFixture fixture)
+        {
+            SUT = DbClient.Views;
+            ArtistsById = fixture.Init(Environment);
+        }
+#endif
         [MyFact(TestScenarios.ViewsContext)]
         public void When_no_key_with_sum_reduce_for_string_response_It_will_be_able_to_sum()
         {
