@@ -13,7 +13,11 @@ namespace MyCouch.IntegrationTests.CloudantTests
     public class SearchTests :
         IntegrationTestsOf<ISearches>,
         IPreserveStatePerFixture,
+#if net40
         IUseFixture<SearchFixture>
+#else
+        IClassFixture<SearchFixture>
+#endif
     {
         protected Animal[] Animals { get; set; }
 

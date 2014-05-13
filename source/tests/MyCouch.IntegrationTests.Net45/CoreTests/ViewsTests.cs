@@ -12,7 +12,11 @@ namespace MyCouch.IntegrationTests.CoreTests
     public class ViewsTests :
         IntegrationTestsOf<IViews>,
         IPreserveStatePerFixture,
+#if net40
         IUseFixture<ViewsFixture>
+#else
+        IClassFixture<ViewsFixture>
+#endif
     {
         protected Artist[] ArtistsById { get; set; }
 
