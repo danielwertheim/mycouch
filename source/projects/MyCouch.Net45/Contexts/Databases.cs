@@ -50,12 +50,11 @@ namespace MyCouch.Contexts
 
         public virtual async Task<GetDatabaseResponse> GetAsync(GetDatabaseRequest request)
         {
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessGetDatabaseResponse(res);
-                }
+                return ProcessGetDatabaseResponse(res);
             }
         }
 
@@ -66,12 +65,11 @@ namespace MyCouch.Contexts
 
         public virtual async Task<DatabaseHeaderResponse> HeadAsync(HeadDatabaseRequest request)
         {
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessDatabaseHeaderResponse(res);
-                }
+                return ProcessDatabaseHeaderResponse(res);
             }
         }
 
@@ -82,12 +80,11 @@ namespace MyCouch.Contexts
 
         public virtual async Task<DatabaseHeaderResponse> PutAsync(PutDatabaseRequest request)
         {
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessDatabaseHeaderResponse(res);
-                }
+                return ProcessDatabaseHeaderResponse(res);
             }
         }
 
@@ -98,12 +95,11 @@ namespace MyCouch.Contexts
 
         public virtual async Task<DatabaseHeaderResponse> DeleteAsync(DeleteDatabaseRequest request)
         {
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessDatabaseHeaderResponse(res);
-                }
+                return ProcessDatabaseHeaderResponse(res);
             }
         }
 
@@ -114,12 +110,11 @@ namespace MyCouch.Contexts
 
         public virtual async Task<DatabaseHeaderResponse> CompactAsync(CompactDatabaseRequest request)
         {
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessDatabaseHeaderResponse(res);
-                }
+                return ProcessDatabaseHeaderResponse(res);
             }
         }
 
@@ -130,12 +125,11 @@ namespace MyCouch.Contexts
 
         public virtual async Task<DatabaseHeaderResponse> ViewCleanupAsync(ViewCleanupRequest request)
         {
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessDatabaseHeaderResponse(res);
-                }
+                return ProcessDatabaseHeaderResponse(res);
             }
         }
 
@@ -146,12 +140,11 @@ namespace MyCouch.Contexts
 
         public virtual async Task<ReplicationResponse> ReplicateAsync(ReplicateDatabaseRequest request)
         {
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessReplicationResponse(res);
-                }
+                return ProcessReplicationResponse(res);
             }
         }
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
@@ -19,11 +18,11 @@ namespace MyCouch.Net
             get { return HttpClient.BaseAddress; }
         }
 
-        protected Connection(Uri dbUri)
+        protected Connection(Uri uri)
         {
-            Ensure.That(dbUri, "uri").IsNotNull();
+            Ensure.That(uri, "uri").IsNotNull();
 
-            HttpClient = CreateHttpClient(dbUri);
+            HttpClient = CreateHttpClient(uri);
             IsDisposed = false;
         }
 
@@ -74,35 +73,57 @@ namespace MyCouch.Net
         {
             ThrowIfDisposed();
 
-            return await HttpClient.SendAsync(OnBeforeSend(httpRequest)).ForAwait();
+            using (var message = CreateHttpRequestMessage(httpRequest))
+            {
+                return await HttpClient.SendAsync(message).ForAwait();
+            }
         }
 
         public virtual async Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
-            return await HttpClient.SendAsync(OnBeforeSend(httpRequest), cancellationToken).ForAwait();
+            using (var message = CreateHttpRequestMessage(httpRequest))
+            {
+                return await HttpClient.SendAsync(message, cancellationToken).ForAwait();
+            }
         }
 
         public virtual async Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, HttpCompletionOption completionOption)
         {
             ThrowIfDisposed();
 
-            return await HttpClient.SendAsync(OnBeforeSend(httpRequest), completionOption).ForAwait();
+            using (var message = CreateHttpRequestMessage(httpRequest))
+            {
+                return await HttpClient.SendAsync(message, completionOption).ForAwait();
+            }
         }
 
         public virtual async Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, HttpCompletionOption completionOption, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
-            return await HttpClient.SendAsync(OnBeforeSend(httpRequest), completionOption, cancellationToken).ForAwait();
+            using (var message = CreateHttpRequestMessage(httpRequest))
+            {
+                return await HttpClient.SendAsync(message, completionOption, cancellationToken).ForAwait();
+            }
         }
 
-        protected virtual HttpRequest OnBeforeSend(HttpRequest httpRequest)
+        protected virtual HttpRequestMessage CreateHttpRequestMessage(HttpRequest httpRequest)
         {
             ThrowIfDisposed();
 
-            return httpRequest.RemoveRequestType();
+            httpRequest.RemoveRequestType();
+
+            var message = new HttpRequestMessage(httpRequest.Method, new Uri(Address, httpRequest.RelativeUrl))
+            {
+                Content = httpRequest.Content,
+            };
+
+            foreach (var kv in httpRequest.Headers)
+                message.Headers.TryAddWithoutValidation(kv.Key, kv.Value);
+
+            return message;
         }
     }
 }

@@ -43,23 +43,21 @@ namespace MyCouch.Contexts
 
         public virtual async Task<AttachmentResponse> GetAsync(GetAttachmentRequest request)
         {
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessAttachmentResponse(res);
-                }
+                return ProcessAttachmentResponse(res);
             }
         }
 
         public virtual async Task<DocumentHeaderResponse> PutAsync(PutAttachmentRequest request)
         {
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessDocumentHeaderResponse(res);
-                }
+                return ProcessDocumentHeaderResponse(res);
             }
         }
 
@@ -70,12 +68,11 @@ namespace MyCouch.Contexts
 
         public virtual async Task<DocumentHeaderResponse> DeleteAsync(DeleteAttachmentRequest request)
         {
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessDocumentHeaderResponse(res);
-                }
+                return ProcessDocumentHeaderResponse(res);
             }
         }
 

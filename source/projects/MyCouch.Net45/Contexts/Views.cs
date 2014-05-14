@@ -28,34 +28,31 @@ namespace MyCouch.Contexts
 
         public virtual async Task<ViewQueryResponse> QueryAsync(QueryViewRequest request)
         {
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessHttpResponse(res);
-                }
+                return ProcessHttpResponse(res);
             }
         }
 
-        public virtual async Task<ViewQueryResponse<T>> QueryAsync<T>(QueryViewRequest request)
+        public virtual async Task<ViewQueryResponse<TValue>> QueryAsync<TValue>(QueryViewRequest request)
         {
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessHttpResponse<T>(res);
-                }
+                return ProcessHttpResponse<TValue>(res);
             }
         }
 
         public virtual async Task<ViewQueryResponse<TValue, TIncludedDoc>> QueryAsync<TValue, TIncludedDoc>(QueryViewRequest request)
         {
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessHttpResponse<TValue, TIncludedDoc>(res);
-                }
+                return ProcessHttpResponse<TValue, TIncludedDoc>(res);
             }
         }
 

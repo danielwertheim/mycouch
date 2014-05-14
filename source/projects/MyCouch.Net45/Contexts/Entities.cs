@@ -47,12 +47,11 @@ namespace MyCouch.Contexts
 
         public virtual async Task<EntityResponse<T>> GetAsync<T>(GetEntityRequest request) where T : class
         {
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessEntityResponse<T>(request, res);
-                }
+                return ProcessEntityResponse<T>(request, res);
             }
         }
 
@@ -63,12 +62,11 @@ namespace MyCouch.Contexts
 
         public virtual async Task<EntityResponse<T>> PostAsync<T>(PostEntityRequest<T> request) where T : class
         {
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessEntityResponse(request, res);
-                }
+                return ProcessEntityResponse(request, res);
             }
         }
 
@@ -79,12 +77,11 @@ namespace MyCouch.Contexts
 
         public virtual async Task<EntityResponse<T>> PutAsync<T>(PutEntityRequest<T> request) where T : class
         {
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessEntityResponse(request, res);
-                }
+                return ProcessEntityResponse(request, res);
             }
         }
 
@@ -95,12 +92,11 @@ namespace MyCouch.Contexts
 
         public virtual async Task<EntityResponse<T>> DeleteAsync<T>(DeleteEntityRequest<T> request) where T : class
         {
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessEntityResponse(request, res);
-                }
+                return ProcessEntityResponse(request, res);
             }
         }
 

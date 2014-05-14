@@ -31,12 +31,11 @@ namespace MyCouch.Cloudant.Contexts
         {
             Ensure.That(request, "request").IsNotNull();
 
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessHttpResponse(res);
-                }
+                return ProcessHttpResponse(res);
             }
         }
 
@@ -44,12 +43,11 @@ namespace MyCouch.Cloudant.Contexts
         {
             Ensure.That(request, "request").IsNotNull();
 
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessHttpResponse<TIncludedDoc>(res);
-                }
+                return ProcessHttpResponse<TIncludedDoc>(res);
             }
         }
 
