@@ -129,6 +129,8 @@
     <Compile Include="Net\JsonContent.cs" />
     <Compile Include="Net\ServerClientConnection.cs" />
     <Compile Include="Net\UrlParam.cs" />
+    <Compile Include="Net\UrlParams.cs" />
+    <Compile Include="Net\UrlSegment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query.cs" />
     <Compile Include="Querying\QueryExtensions.cs" />
@@ -149,8 +151,6 @@
     <Compile Include="Requests\Factories\DeleteDatabaseHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\DeleteDocumentHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\DeleteEntityHttpRequestFactory.cs" />
-    <Compile Include="Requests\Factories\DocumentHttpRequestFactoryBase.cs" />
-    <Compile Include="Requests\Factories\EntityHttpRequestFactoryBase.cs" />
     <Compile Include="Requests\Factories\GetAttachmentHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\GetChangesHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\GetChangesHttpRequestFactoryBase.cs" />
@@ -160,13 +160,13 @@
     <Compile Include="Requests\Factories\GetEntityHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\HeadDatabaseHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\HeadDocumentHttpRequestFactory.cs" />
-    <Compile Include="Requests\Factories\HttpRequestFactoryBase.cs" />
     <Compile Include="Requests\Factories\PostDocumentHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\PostEntityHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\PutAttachmentHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\PutDatabaseHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\PutDocumentHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\PutEntityHttpRequestFactory.cs" />
+    <Compile Include="Net\QueryString.cs" />
     <Compile Include="Requests\Factories\QueryViewHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\ReplaceDocumentHttpRequestFactory.cs" />
     <Compile Include="Requests\Factories\ReplicateDatabaseHttpRequestFactory.cs" />

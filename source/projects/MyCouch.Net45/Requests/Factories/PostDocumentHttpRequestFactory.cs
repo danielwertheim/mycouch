@@ -4,23 +4,24 @@ using MyCouch.Net;
 
 namespace MyCouch.Requests.Factories
 {
-    public class PostDocumentHttpRequestFactory : DocumentHttpRequestFactoryBase
+    public class PostDocumentHttpRequestFactory
     {
-        public PostDocumentHttpRequestFactory(IDbClientConnection connection) : base(connection) { }
-
         public virtual HttpRequest Create(PostDocumentRequest request)
         {
             Ensure.That(request, "request").IsNotNull();
-            Ensure.That(request.Content, "request.Content").IsNotNullOrWhiteSpace();
 
-            var batchParam = request.Batch ? new UrlParam("batch", "ok") : null;
-            var httpRequest = CreateFor<PostDocumentRequest>(
-                HttpMethod.Post,
-                GenerateRequestUrl(parameters: batchParam));
+            return new HttpRequest(HttpMethod.Post, GenerateRelativeUrl(request))
+                .SetRequestTypeHeader(request.GetType())
+                .SetJsonContent(request.Content);
+        }
 
-            httpRequest.SetJsonContent(request.Content);
+        protected virtual string GenerateRelativeUrl(PostDocumentRequest request)
+        {
+            var urlParams = new UrlParams();
 
-            return httpRequest;
+            urlParams.AddIfTrue("batch", request.Batch, "ok");
+
+            return string.Format("/{0}", new QueryString(urlParams));
         }
     }
 }

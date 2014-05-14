@@ -1,22 +1,32 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using EnsureThat;
 using MyCouch.Net;
 
 namespace MyCouch.Requests.Factories
 {
-    public class ReplaceDocumentHttpRequestFactory : DocumentHttpRequestFactoryBase
+    public class ReplaceDocumentHttpRequestFactory
     {
-        public ReplaceDocumentHttpRequestFactory(IDbClientConnection connection) : base(connection) { }
-
         public virtual HttpRequest Create(ReplaceDocumentRequest request)
         {
             Ensure.That(request, "request").IsNotNull();
 
-            var httpRequest = CreateFor<ReplaceDocumentRequest>(new HttpMethod("COPY"), GenerateRequestUrl(request.SrcId, request.SrcRev));
+            var httpRequest = new HttpRequest(new HttpMethod("COPY"), GenerateRelativeUrl(request))
+                .SetRequestTypeHeader(request.GetType())
+                .SetIfMatchHeader(request.SrcRev);
 
-            httpRequest.Headers.Add("Destination", string.Concat(request.TrgId, "?rev=", request.TrgRev));
+            httpRequest.Headers.Add("Destination", string.Concat(Uri.EscapeDataString(request.TrgId), "?rev=", request.TrgRev));
 
             return httpRequest;
+        }
+
+        protected virtual string GenerateRelativeUrl(ReplaceDocumentRequest request)
+        {
+            var urlParams = new UrlParams();
+
+            urlParams.AddRequired("rev", request.SrcRev);
+
+            return string.Format("/{0}{1}", new UrlSegment(request.SrcId), new QueryString(urlParams));
         }
     }
 }

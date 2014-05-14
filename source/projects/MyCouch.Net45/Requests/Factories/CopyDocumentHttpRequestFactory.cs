@@ -4,19 +4,28 @@ using MyCouch.Net;
 
 namespace MyCouch.Requests.Factories
 {
-    public class CopyDocumentHttpRequestFactory : DocumentHttpRequestFactoryBase
+    public class CopyDocumentHttpRequestFactory
     {
-        public CopyDocumentHttpRequestFactory(IDbClientConnection connection) : base(connection) { }
-
         public virtual HttpRequest Create(CopyDocumentRequest request)
         {
             Ensure.That(request, "request").IsNotNull();
 
-            var httpRequest = CreateFor<CopyDocumentRequest>(new HttpMethod("COPY"), GenerateRequestUrl(request.SrcId, request.SrcRev));
+            var httpRequest = new HttpRequest(new HttpMethod("COPY"), GenerateRelativeUrl(request))
+                .SetRequestTypeHeader(request.GetType())
+                .SetIfMatchHeader(request.SrcRev);
 
             httpRequest.Headers.Add("Destination", request.NewId);
 
             return httpRequest;
+        }
+
+        protected virtual string GenerateRelativeUrl(CopyDocumentRequest request)
+        {
+            var urlParams = new UrlParams();
+
+            urlParams.AddRequired("rev", request.SrcRev);
+
+            return string.Format("/{0}{1}", new UrlSegment(request.SrcId), new QueryString(urlParams));
         }
     }
 }

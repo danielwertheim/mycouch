@@ -9,15 +9,14 @@ using EnsureThat;
 
 namespace MyCouch.Net
 {
-#if !PCL
-    [Serializable]
-#endif
     public class HttpRequest
     {
         public HttpMethod Method { get; private set; }
         public string RelativeUrl { get; private set; }
         public IDictionary<string, string> Headers { get; private set; }
         public HttpContent Content { get; private set; }
+
+        public HttpRequest(HttpMethod method) : this(method, "/") {}
 
         public HttpRequest(HttpMethod method, string relativeUrl)
         {
@@ -28,10 +27,12 @@ namespace MyCouch.Net
             Headers = new Dictionary<string, string> { { "Accept", HttpContentTypes.Json } };
         }
 
-        public virtual void SetIfMatch(string rev)
+        public virtual HttpRequest SetIfMatchHeader(string rev)
         {
             if (!string.IsNullOrWhiteSpace(rev))
                 Headers.Add("If-Match", rev);
+
+            return this;
         }
 
         public virtual HttpRequest SetContent(byte[] content, string contentType)
@@ -51,7 +52,7 @@ namespace MyCouch.Net
             return this;
         }
 
-        public virtual HttpRequest SetRequestType(Type requestType)
+        public virtual HttpRequest SetRequestTypeHeader(Type requestType)
         {
             Headers.Add(CustomHeaders.RequestType, GetRequestTypeName(requestType));
 #if !PCL
@@ -92,7 +93,7 @@ namespace MyCouch.Net
 #endif
         }
 
-        public virtual void RemoveRequestType()
+        public virtual void RemoveRequestTypeHeader()
         {
             if (Headers.ContainsKey(CustomHeaders.RequestType))
                 Headers.Remove(CustomHeaders.RequestType);

@@ -4,19 +4,24 @@ using MyCouch.Net;
 
 namespace MyCouch.Requests.Factories
 {
-    public class DeleteDocumentHttpRequestFactory : DocumentHttpRequestFactoryBase
+    public class DeleteDocumentHttpRequestFactory
     {
-        public DeleteDocumentHttpRequestFactory(IDbClientConnection connection) : base(connection) { }
-
         public virtual HttpRequest Create(DeleteDocumentRequest request)
         {
             Ensure.That(request, "request").IsNotNull();
 
-            var httpRequest = CreateFor<DeleteDocumentRequest>(HttpMethod.Delete, GenerateRequestUrl(request.Id, request.Rev));
+            return new HttpRequest(HttpMethod.Delete, GenerateRelativeUrl(request))
+                .SetRequestTypeHeader(request.GetType())
+                .SetIfMatchHeader(request.Rev);
+        }
 
-            httpRequest.SetIfMatch(request.Rev);
+        protected virtual string GenerateRelativeUrl(DeleteDocumentRequest request)
+        {
+            var urlParams = new UrlParams();
 
-            return httpRequest;
+            urlParams.AddRequired("rev", request.Rev);
+
+            return string.Format("/{0}{1}", new UrlSegment(request.Id), new QueryString(urlParams));
         }
     }
 }

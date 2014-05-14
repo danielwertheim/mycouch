@@ -113,7 +113,7 @@ namespace MyCouch.Net
         {
             ThrowIfDisposed();
 
-            httpRequest.RemoveRequestType();
+            httpRequest.RemoveRequestTypeHeader();
 
             var message = new HttpRequestMessage(httpRequest.Method, new Uri(Address, httpRequest.RelativeUrl))
             {

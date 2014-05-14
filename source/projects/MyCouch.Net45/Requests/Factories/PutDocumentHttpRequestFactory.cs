@@ -4,33 +4,26 @@ using MyCouch.Net;
 
 namespace MyCouch.Requests.Factories
 {
-    public class PutDocumentHttpRequestFactory : DocumentHttpRequestFactoryBase
+    public class PutDocumentHttpRequestFactory
     {
-        public PutDocumentHttpRequestFactory(IDbClientConnection connection) : base(connection) { }
-
         public virtual HttpRequest Create(PutDocumentRequest request)
         {
             Ensure.That(request, "request").IsNotNull();
-            Ensure.That(request.Content, "request.Content").IsNotNullOrWhiteSpace();
 
-            var batchParam = request.Batch ? new UrlParam("batch", "ok") : null;
-            var httpRequest = CreateFor<PutDocumentRequest>(
-                HttpMethod.Put,
-                GenerateRequestUrl(request.Id, request.Rev, batchParam));
-
-            httpRequest.SetIfMatch(request.Rev);
-            httpRequest.SetJsonContent(request.Content);
-
-            return httpRequest;
+            return new HttpRequest(HttpMethod.Put, GenerateRelativeUrl(request))
+                .SetRequestTypeHeader(request.GetType())
+                .SetIfMatchHeader(request.Rev)
+                .SetJsonContent(request.Content);
         }
 
-        protected override string GenerateRequestUrl(string id = null, string rev = null, params UrlParam[] parameters)
+        protected virtual string GenerateRelativeUrl(PutDocumentRequest request)
         {
-            Ensure.That(id, "id")
-                .WithExtraMessageOf(() => ExceptionStrings.PutRequestIsMissingIdInUrl)
-                .IsNotNullOrWhiteSpace();
+            var urlParams = new UrlParams();
 
-            return base.GenerateRequestUrl(id, rev, parameters);
+            urlParams.AddIfNotNullOrWhiteSpace("rev", request.Rev);
+            urlParams.AddIfTrue("batch", request.Batch, "ok");
+
+            return string.Format("/{0}{1}", new UrlSegment(request.Id), new QueryString(urlParams));
         }
     }
 }

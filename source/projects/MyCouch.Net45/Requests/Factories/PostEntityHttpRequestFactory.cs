@@ -1,25 +1,42 @@
 ﻿using System.Net.Http;
 using EnsureThat;
-using MyCouch.EntitySchemes;
 using MyCouch.Net;
 using MyCouch.Serialization;
 
 namespace MyCouch.Requests.Factories
 {
-    public class PostEntityHttpRequestFactory : EntityHttpRequestFactoryBase
+    public class PostEntityHttpRequestFactory
     {
-        public PostEntityHttpRequestFactory(IDbClientConnection connection, IEntitySerializer serializer, IEntityReflector reflector)
-            : base(connection, serializer, reflector) { }
+        protected IEntitySerializer Serializer { get; private set; }
+
+        protected PostEntityHttpRequestFactory(IEntitySerializer serializer)
+        {
+            Ensure.That(serializer, "serializer").IsNotNull();
+
+            Serializer = serializer;
+        }
 
         public virtual HttpRequest Create<T>(PostEntityRequest<T> request) where T : class
         {
             Ensure.That(request, "request").IsNotNull();
 
-            var httpRequest = CreateFor<PostEntityRequest<T>>(HttpMethod.Post, GenerateRequestUrl());
+            return new HttpRequest(HttpMethod.Post, GenerateRelativeUrl(request))
+                .SetRequestTypeHeader(request.GetType())
+                .SetJsonContent(SerializeEntity(request.Entity));
+        }
 
-            httpRequest.SetJsonContent(SerializeEntity(request.Entity));
+        protected virtual string SerializeEntity<T>(T entity) where T : class
+        {
+            return Serializer.Serialize(entity);
+        }
 
-            return httpRequest;
+        protected virtual string GenerateRelativeUrl<T>(PostEntityRequest<T> request) where T : class
+        {
+            var urlParams = new UrlParams();
+
+            urlParams.AddIfTrue("batch", request.Batch, "ok");
+
+            return string.Format("/{0}", new QueryString(urlParams));
         }
     }
 }

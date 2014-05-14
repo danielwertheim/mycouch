@@ -4,22 +4,25 @@ using MyCouch.Net;
 
 namespace MyCouch.Requests.Factories
 {
-    public class GetDocumentHttpRequestFactory : DocumentHttpRequestFactoryBase
+    public class GetDocumentHttpRequestFactory
     {
-        public GetDocumentHttpRequestFactory(IDbClientConnection connection) : base(connection) { }
-
         public virtual HttpRequest Create(GetDocumentRequest request)
         {
             Ensure.That(request, "request").IsNotNull();
 
-            var conflictsParam = request.Conflicts ? new UrlParam("conflicts", "true") : null;
-            var httpRequest = CreateFor<GetDocumentRequest>(
-                HttpMethod.Get,
-                GenerateRequestUrl(request.Id, request.Rev, conflictsParam));
+            return new HttpRequest(HttpMethod.Get, GenerateRelativeUrl(request))
+                .SetRequestTypeHeader(request.GetType())
+                .SetIfMatchHeader(request.Rev);
+        }
 
-            httpRequest.SetIfMatch(request.Rev);
+        protected virtual string GenerateRelativeUrl(GetDocumentRequest request)
+        {
+            var urlParams = new UrlParams();
 
-            return httpRequest;
+            urlParams.AddIfNotNullOrWhiteSpace("rev", request.Rev);
+            urlParams.AddIfTrue("conflicts", request.Conflicts);
+
+            return string.Format("/{0}{1}", new UrlSegment(request.Id), new QueryString(urlParams));
         }
     }
 }

@@ -1,25 +1,26 @@
 ﻿using System.Net.Http;
 using EnsureThat;
-using MyCouch.EntitySchemes;
 using MyCouch.Net;
-using MyCouch.Serialization;
 
 namespace MyCouch.Requests.Factories
 {
-    public class GetEntityHttpRequestFactory : EntityHttpRequestFactoryBase
+    public class GetEntityHttpRequestFactory
     {
-        public GetEntityHttpRequestFactory(IDbClientConnection connection, IEntitySerializer serializer, IEntityReflector reflector)
-            : base(connection, serializer, reflector) {}
-
         public virtual HttpRequest Create(GetEntityRequest request)
         {
             Ensure.That(request, "request").IsNotNull();
 
-            var httpRequest = CreateFor<GetEntityRequest>(HttpMethod.Get, GenerateRequestUrl(request.Id, request.Rev));
+            return new HttpRequest(HttpMethod.Get, GenerateRelativeUrl(request))
+                .SetRequestTypeHeader(request.GetType())
+                .SetIfMatchHeader(request.Rev);
+        }
 
-            httpRequest.SetIfMatch(request.Rev);
+        protected virtual string GenerateRelativeUrl(GetEntityRequest request)
+        {
+            var urlParams = new UrlParams();
+            urlParams.AddIfNotNullOrWhiteSpace("rev", request.Rev);
 
-            return httpRequest;
+            return string.Format("/{0}{1}", new UrlSegment(request.Id), new QueryString(urlParams));
         }
     }
 }

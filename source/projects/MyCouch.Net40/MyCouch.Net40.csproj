@@ -294,11 +294,20 @@
     <Compile Include="..\mycouch.net45\net\JsonContent.cs">
       <Link>Net\JsonContent.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Net\QueryString.cs">
+      <Link>Net\QueryString.cs</Link>
+    </Compile>
     <Compile Include="..\mycouch.net45\net\ServerClientConnection.cs">
       <Link>Net\ServerClientConnection.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.net45\net\UrlParam.cs">
       <Link>Net\UrlParam.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Net\UrlParams.cs">
+      <Link>Net\UrlParams.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Net\UrlSegment.cs">
+      <Link>Net\UrlSegment.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Query.cs">
       <Link>Query.cs</Link>
@@ -357,12 +366,6 @@
     <Compile Include="..\mycouch.net45\requests\factories\DeleteEntityHttpRequestFactory.cs">
       <Link>Requests\Factories\DeleteEntityHttpRequestFactory.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.net45\requests\factories\DocumentHttpRequestFactoryBase.cs">
-      <Link>Requests\Factories\DocumentHttpRequestFactoryBase.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.net45\requests\factories\EntityHttpRequestFactoryBase.cs">
-      <Link>Requests\Factories\EntityHttpRequestFactoryBase.cs</Link>
-    </Compile>
     <Compile Include="..\mycouch.net45\requests\factories\GetAttachmentHttpRequestFactory.cs">
       <Link>Requests\Factories\GetAttachmentHttpRequestFactory.cs</Link>
     </Compile>
@@ -389,9 +392,6 @@
     </Compile>
     <Compile Include="..\mycouch.net45\requests\factories\HeadDocumentHttpRequestFactory.cs">
       <Link>Requests\Factories\HeadDocumentHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.net45\requests\factories\HttpRequestFactoryBase.cs">
-      <Link>Requests\Factories\HttpRequestFactoryBase.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.net45\requests\factories\PostDocumentHttpRequestFactory.cs">
       <Link>Requests\Factories\PostDocumentHttpRequestFactory.cs</Link>
