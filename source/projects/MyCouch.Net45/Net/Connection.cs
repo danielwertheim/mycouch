@@ -53,34 +53,21 @@ namespace MyCouch.Net
                 throw new ObjectDisposedException(GetType().Name);
         }
 
-        private HttpClient CreateHttpClient(Uri uri)
+        protected HttpClient CreateHttpClient(Uri uri)
         {
-            var basicAuthString = GetBasicAuthenticationStringFrom(uri);
             var client = new HttpClient
             {
-                BaseAddress = new Uri(uri.AbsoluteUri.TrimEnd('/'))
+                BaseAddress = new Uri(uri.GetAbsoluteUriExceptUserInfo().TrimEnd(new[] { '/' }))
             };
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(HttpContentTypes.Json));
 
+            var basicAuthString = uri.GetBasicAuthString();
             if (basicAuthString != null)
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", basicAuthString.Value);
             }
 
             return client;
-        }
-
-        private BasicAuthString GetBasicAuthenticationStringFrom(Uri uri)
-        {
-            if (string.IsNullOrWhiteSpace(uri.UserInfo))
-                return null;
-
-            var parts = uri.UserInfo
-                .Split(new[] { ":" }, StringSplitOptions.RemoveEmptyEntries)
-                .Select(p => Uri.UnescapeDataString(p))
-                .ToArray();
-
-            return new BasicAuthString(parts[0], parts[1]);
         }
 
         public virtual async Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest)

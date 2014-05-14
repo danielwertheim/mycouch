@@ -6,6 +6,11 @@ namespace MyCouch.Extensions
 {
     public static class StringExtensions
     {
+        public static string AsBase64Encoded(this string value)
+        {
+            return Convert.ToBase64String(Encoding.UTF8.GetBytes(value));
+        }
+
         public static string PrependWith(this string value, string prefix)
         {
             return string.Concat(prefix, value);

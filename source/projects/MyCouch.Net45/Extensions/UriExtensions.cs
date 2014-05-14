@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using MyCouch.Net;
 
 namespace MyCouch.Extensions
 {
@@ -7,9 +8,17 @@ namespace MyCouch.Extensions
     {
         public static string GetAbsoluteUriExceptUserInfo(this Uri uri)
         {
-            return string.IsNullOrEmpty(uri.UserInfo)
-                ? uri.AbsoluteUri
-                : uri.GetComponents(UriComponents.AbsoluteUri & ~UriComponents.UserInfo, UriFormat.UriEscaped);
+            return uri.GetComponents(UriComponents.AbsoluteUri & ~UriComponents.UserInfo, UriFormat.UriEscaped);
+        }
+
+        public static BasicAuthString GetBasicAuthString(this Uri uri)
+        {
+            if (string.IsNullOrWhiteSpace(uri.UserInfo))
+                return null;
+
+            var parts = GetUserInfoParts(uri);
+
+            return new BasicAuthString(parts[0], parts[1]);
         }
 
         public static string[] GetUserInfoParts(this Uri uri)
@@ -22,7 +31,7 @@ namespace MyCouch.Extensions
 
         public static string ExtractDbName(this Uri value)
         {
-            return value.LocalPath.TrimStart('/').TrimEnd('/', '?').Split("/".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
+            return value.LocalPath.TrimStart('/').TrimEnd('/', '?').Split("/".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).LastOrDefault();
         }
     }
 }

@@ -16,7 +16,7 @@ namespace MyCouch.UnitTests.Extensions
         }
 
         [Fact]
-        public void Getting_absolute_uri_excluding_user_info_When_no_user_info_exists_It_should_remove_user_info()
+        public void Getting_absolute_uri_excluding_user_info_When_no_user_info_exists_It_should_return_uri()
         {
             var r = new Uri("http://localhost:5984/resource/1").GetAbsoluteUriExceptUserInfo();
 
@@ -46,6 +46,30 @@ namespace MyCouch.UnitTests.Extensions
 
             r.Should().NotBeNull();
             r.Should().BeEmpty();
+        }
+
+        [Fact]
+        public void Getting_basic_auth_string_When_encoded_user_and_password_are_provided_It_returns_a_basic_auth_string()
+        {
+            var r = new Uri("http://s%40:p%40ssword@localhost:5984").GetBasicAuthString();
+
+            r.Value.Should().Be("s@:p@ssword".AsBase64Encoded());
+        }
+
+        [Fact]
+        public void Getting_basic_auth_string_When_non_encoded_user_and_password_are_provided_It_returns_a_basic_auth_string()
+        {
+            var r = new Uri("http://foo:bar@localhost:5984").GetBasicAuthString();
+
+            r.Value.Should().Be("foo:bar".AsBase64Encoded());
+        }
+
+        [Fact]
+        public void Getting_basic_auth_string_When_nothing_is_provided_It_returns_null()
+        {
+            var r = new Uri("http://localhost:5984").GetBasicAuthString();
+
+            r.Should().BeNull();
         }
     }
 }
