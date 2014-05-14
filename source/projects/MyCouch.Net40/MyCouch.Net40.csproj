@@ -267,6 +267,9 @@
     <Compile Include="..\mycouch.net45\net\AppendingRequestUrlGenerator.cs">
       <Link>Net\AppendingRequestUrlGenerator.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Net\BasicAuthString.cs">
+      <Link>Net\BasicAuthString.cs</Link>
+    </Compile>
     <Compile Include="..\mycouch.net45\net\BytesContent.cs">
       <Link>Net\BytesContent.cs</Link>
     </Compile>

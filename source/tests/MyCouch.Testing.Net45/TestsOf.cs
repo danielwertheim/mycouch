@@ -1,11 +1,9 @@
-﻿using System;
-
-namespace MyCouch.Testing
+﻿namespace MyCouch.Testing
 {
-    public abstract class TestsOf<T> : TestsOf where T : class
+    public abstract class TestsOf<T> : Tests where T : class
     {
         protected T SUT { get; set; }
     }
 
-    public abstract class TestsOf { }
+    public abstract class Tests { }
 }

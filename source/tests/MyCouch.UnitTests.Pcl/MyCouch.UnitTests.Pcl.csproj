@@ -51,11 +51,17 @@
     <Compile Include="..\mycouch.unittests.net45\entityschemes\EntityRevMemberTests.cs">
       <Link>EntitySchemes\EntityRevMemberTests.cs</Link>
     </Compile>
+    <Compile Include="..\mycouch.unittests.net45\extensions\UriExtensionsTests.cs">
+      <Link>Extensions\UriExtensionsTests.cs</Link>
+    </Compile>
     <Compile Include="..\mycouch.unittests.net45\fakes\DbClientConnectionFake.cs">
       <Link>Fakes\DbClientConnectionFake.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.unittests.net45\net\AppendingRequestUrlGeneratorTests.cs">
       <Link>Net\AppendingRequestUrlGeneratorTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.UnitTests.Net45\Net\BasicAuthStringTests.cs">
+      <Link>Net\BasicAuthStringTests.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.unittests.net45\net\ConstantRequestUrlGeneratorTests.cs">
       <Link>Net\ConstantRequestUrlGeneratorTests.cs</Link>

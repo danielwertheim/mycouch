@@ -21,7 +21,7 @@ namespace MyCouch.Net
 
         protected Connection(Uri dbUri)
         {
-            Ensure.That(dbUri, "dbUri").IsNotNull();
+            Ensure.That(dbUri, "uri").IsNotNull();
 
             HttpClient = CreateHttpClient(dbUri);
             IsDisposed = false;
@@ -53,22 +53,34 @@ namespace MyCouch.Net
                 throw new ObjectDisposedException(GetType().Name);
         }
 
-        private HttpClient CreateHttpClient(Uri dbUri)
+        private HttpClient CreateHttpClient(Uri uri)
         {
-            var client = new HttpClient { BaseAddress = new Uri(dbUri.AbsoluteUri.TrimEnd('/')) };
+            var basicAuthString = GetBasicAuthenticationStringFrom(uri);
+            var client = new HttpClient
+            {
+                BaseAddress = new Uri(uri.AbsoluteUri.TrimEnd('/'))
+            };
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(HttpContentTypes.Json));
 
-            if (!string.IsNullOrWhiteSpace(dbUri.UserInfo))
+            if (basicAuthString != null)
             {
-                var parts = dbUri.UserInfo
-                    .Split(new[] { ":" }, StringSplitOptions.RemoveEmptyEntries)
-                    .Select(p => Uri.UnescapeDataString(p))
-                    .ToArray();
-
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", string.Join(":", parts).AsBase64Encoded());
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", basicAuthString.Value);
             }
 
             return client;
+        }
+
+        private BasicAuthString GetBasicAuthenticationStringFrom(Uri uri)
+        {
+            if (string.IsNullOrWhiteSpace(uri.UserInfo))
+                return null;
+
+            var parts = uri.UserInfo
+                .Split(new[] { ":" }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(p => Uri.UnescapeDataString(p))
+                .ToArray();
+
+            return new BasicAuthString(parts[0], parts[1]);
         }
 
         public virtual async Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest)

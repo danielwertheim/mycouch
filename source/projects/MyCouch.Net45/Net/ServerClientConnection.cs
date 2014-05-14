@@ -1,4 +1,5 @@
 using System;
+using MyCouch.Extensions;
 
 namespace MyCouch.Net
 {
@@ -6,7 +7,8 @@ namespace MyCouch.Net
     {
         public ServerClientConnection(Uri dbUri) : base(dbUri)
         {
-            var dbName = Address.LocalPath.TrimStart('/').TrimEnd('/', '?');
+            var dbName = Address.ExtractDbName();
+
             if (!string.IsNullOrWhiteSpace(dbName))
             {
 #if PCL

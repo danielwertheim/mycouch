@@ -119,6 +119,7 @@
     <Compile Include="MyCouchUriBuilder.cs" />
     <Compile Include="Net\AppendingRequestUrlGenerator.cs" />
     <Compile Include="Net\BytesContent.cs" />
+    <Compile Include="Net\BasicAuthString.cs" />
     <Compile Include="Net\Connection.cs" />
     <Compile Include="Net\ConstantRequestUrlGenerator.cs" />
     <Compile Include="Net\DbClientConnection.cs" />

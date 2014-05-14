@@ -76,8 +76,10 @@
     </Compile>
     <Compile Include="Cloudant\Requests\SearchIndexHttpRequestFactoryTests.cs" />
     <Compile Include="Cloudant\SearchParametersConfiguratorTests.cs" />
+    <Compile Include="Extensions\UriExtensionsTests.cs" />
     <Compile Include="Fakes\DbClientConnectionFake.cs" />
     <Compile Include="Net\AppendingRequestUrlGeneratorTests.cs" />
+    <Compile Include="Net\BasicAuthStringTests.cs" />
     <Compile Include="Net\ConstantRequestUrlGeneratorTests.cs" />
     <Compile Include="Net\DbClientConnectionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
