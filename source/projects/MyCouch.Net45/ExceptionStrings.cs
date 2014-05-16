@@ -17,10 +17,6 @@
             get { return "The URI: {0}, seems to specify a DB. A server client should not have a DB specified."; }
         }
 
-        public static string PutRequestIsMissingIdInUrl
-        {
-            get { return "PUT requests must have an id part of the URL."; }
-        }
         public static string QueryResponseRowsDeserializerNeedsJsonArray
         {
             get { return "When deserializing query response rows, the JSON-reader should point to the Start of an array."; }

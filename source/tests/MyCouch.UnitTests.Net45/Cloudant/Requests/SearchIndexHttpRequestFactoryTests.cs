@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Net.Http;
 using FluentAssertions;
 using MyCouch.Cloudant.Requests;
 using MyCouch.Cloudant.Requests.Factories;
+using MyCouch.Net;
 using MyCouch.Serialization;
-using MyCouch.UnitTests.Fakes;
+using MyCouch.Testing;
 using Xunit;
 
 namespace MyCouch.UnitTests.Cloudant.Requests
@@ -13,9 +13,7 @@ namespace MyCouch.UnitTests.Cloudant.Requests
     {
         public SearchIndexHttpRequestFactoryTests()
         {
-            var cnFake = new DbClientConnectionFake(new Uri("https://cdb.foo.com:5984/mydb"), "mydb");
-
-            SUT = new SearchIndexHttpRequestFactory(cnFake, new DefaultSerializer(new SerializationConfiguration()));
+            SUT = new SearchIndexHttpRequestFactory(new DefaultSerializer(new SerializationConfiguration()));
         }
 
         [Fact]
@@ -28,7 +26,7 @@ namespace MyCouch.UnitTests.Cloudant.Requests
                 req =>
                 {
                     req.Content.Should().BeNull();
-                    req.RequestUri.Query.Should().Be(string.Empty);
+                    req.RelativeUrl.ToTestUriFromRelative().Query.Should().Be(string.Empty);
                 });
         }
 
@@ -40,7 +38,7 @@ namespace MyCouch.UnitTests.Cloudant.Requests
 
             WithHttpRequestFor(
                 request,
-                req => req.RequestUri.Query.Should().Be("?q=Some%20value"));
+                req => req.RelativeUrl.ToTestUriFromRelative().Query.Should().Be("?q=Some%20value"));
         }
 
         [Fact]
@@ -51,7 +49,7 @@ namespace MyCouch.UnitTests.Cloudant.Requests
 
             WithHttpRequestFor(
                 request,
-                req => req.RequestUri.Query.Should().Be("?bookmark=g1AAAADOeJzLYWBgYM5gTmGQT0lKzi9KdUhJMtbLSs1LLUst0kvOyS9NScwr0ctLLckBKmRKZEiy____f1YGk5v9l1kRDUCxRCaideexAEmGBiAFNGM_2JBvNSdBYomMJBpyAGLIfxRDmLIAxz9DAg"));
+                req => req.RelativeUrl.ToTestUriFromRelative().Query.Should().Be("?bookmark=g1AAAADOeJzLYWBgYM5gTmGQT0lKzi9KdUhJMtbLSs1LLUst0kvOyS9NScwr0ctLLckBKmRKZEiy____f1YGk5v9l1kRDUCxRCaideexAEmGBiAFNGM_2JBvNSdBYomMJBpyAGLIfxRDmLIAxz9DAg"));
         }
 
         [Fact]
@@ -62,7 +60,7 @@ namespace MyCouch.UnitTests.Cloudant.Requests
 
             WithHttpRequestFor(
                 request,
-                req => req.RequestUri.Query.Should().Be("?include_docs=true"));
+                req => req.RelativeUrl.ToTestUriFromRelative().Query.Should().Be("?include_docs=true"));
         }
 
         [Fact]
@@ -73,7 +71,7 @@ namespace MyCouch.UnitTests.Cloudant.Requests
 
             WithHttpRequestFor(
                 request,
-                req => req.RequestUri.Query.Should().Be("?include_docs=false"));
+                req => req.RelativeUrl.ToTestUriFromRelative().Query.Should().Be("?include_docs=false"));
         }
 
         [Fact]
@@ -84,7 +82,7 @@ namespace MyCouch.UnitTests.Cloudant.Requests
 
             WithHttpRequestFor(
                 request,
-                req => req.RequestUri.Query.Should().Be("?stale=update_after"));
+                req => req.RelativeUrl.ToTestUriFromRelative().Query.Should().Be("?stale=update_after"));
         }
 
         [Fact]
@@ -95,7 +93,7 @@ namespace MyCouch.UnitTests.Cloudant.Requests
 
             WithHttpRequestFor(
                 request,
-                req => req.RequestUri.Query.Should().Be("?limit=17"));
+                req => req.RelativeUrl.ToTestUriFromRelative().Query.Should().Be("?limit=17"));
         }
 
         [Fact]
@@ -106,7 +104,7 @@ namespace MyCouch.UnitTests.Cloudant.Requests
 
             WithHttpRequestFor(
                 request,
-                req => req.RequestUri.Query.Should().Be("?sort=%5B%22diet%3Cstring%3E%22%2C%22-min_length%3Cnumber%3E%22%5D"));
+                req => req.RelativeUrl.ToTestUriFromRelative().Query.Should().Be("?sort=%5B%22diet%3Cstring%3E%22%2C%22-min_length%3Cnumber%3E%22%5D"));
         }
 
         [Fact]
@@ -122,7 +120,7 @@ namespace MyCouch.UnitTests.Cloudant.Requests
 
             WithHttpRequestFor(
                 request,
-                req => req.RequestUri.Query.Should().Be("?q=class%3Amammal&sort=%5B%22diet%3Cstring%3E%22%2C%22-min_length%3Cnumber%3E%22%5D&bookmark=Some%20bookmark&stale=update_after&limit=10&include_docs=true"));
+                req => req.RelativeUrl.ToTestUriFromRelative().Query.Should().Be("?q=class%3Amammal&sort=%5B%22diet%3Cstring%3E%22%2C%22-min_length%3Cnumber%3E%22%5D&bookmark=Some%20bookmark&stale=update_after&limit=10&include_docs=true"));
         }
 
         protected virtual SearchIndexRequest CreateRequest()
@@ -130,10 +128,10 @@ namespace MyCouch.UnitTests.Cloudant.Requests
             return new SearchIndexRequest("foodesigndoc", "indexname");
         }
 
-        protected virtual void WithHttpRequestFor(SearchIndexRequest request, Action<HttpRequestMessage> a)
+        protected virtual void WithHttpRequestFor(SearchIndexRequest request, Action<HttpRequest> a)
         {
-            using (var req = SUT.Create(request))
-                a(req);
+            var req = SUT.Create(request);
+            a(req);
         }
     }
 }

@@ -23,7 +23,7 @@ namespace MyCouch.Cloudant.Contexts
             Ensure.That(serializer, "serializer").IsNotNull();
             Ensure.That(entitySerializer, "entitySerializer").IsNotNull();
 
-            SearchIndexHttpRequestFactory = new SearchIndexHttpRequestFactory(Connection, serializer);
+            SearchIndexHttpRequestFactory = new SearchIndexHttpRequestFactory(serializer);
             SearchIndexResponseFactory = new SearchIndexResponseFactory(serializer, entitySerializer);
         }
 

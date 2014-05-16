@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Extensions;
+using MyCouch.HttpRequestFactories;
 using MyCouch.Net;
 using MyCouch.Requests;
-using MyCouch.Requests.Factories;
 using MyCouch.Responses;
 using MyCouch.Responses.Factories;
 using MyCouch.Serialization;
@@ -33,14 +33,14 @@ namespace MyCouch.Contexts
             Ensure.That(serializer, "serializer").IsNotNull();
 
             Serializer = serializer;
-            BulkHttpRequestFactory = new BulkHttpRequestFactory(Connection);
-            CopyDocumentHttpRequestFactory = new CopyDocumentHttpRequestFactory(Connection);
-            ReplaceDocumentHttpRequestFactory = new ReplaceDocumentHttpRequestFactory(Connection);
-            HeadDocumentHttpRequestFactory = new HeadDocumentHttpRequestFactory(Connection);
-            GetDocumentHttpRequestFactory = new GetDocumentHttpRequestFactory(Connection);
-            PostDocumentHttpRequestFactory = new PostDocumentHttpRequestFactory(Connection);
-            PutDocumentHttpRequestFactory = new PutDocumentHttpRequestFactory(Connection);
-            DeleteDocumentHttpRequestFactory = new DeleteDocumentHttpRequestFactory(Connection);
+            BulkHttpRequestFactory = new BulkHttpRequestFactory();
+            CopyDocumentHttpRequestFactory = new CopyDocumentHttpRequestFactory();
+            ReplaceDocumentHttpRequestFactory = new ReplaceDocumentHttpRequestFactory();
+            HeadDocumentHttpRequestFactory = new HeadDocumentHttpRequestFactory();
+            GetDocumentHttpRequestFactory = new GetDocumentHttpRequestFactory();
+            PostDocumentHttpRequestFactory = new PostDocumentHttpRequestFactory();
+            PutDocumentHttpRequestFactory = new PutDocumentHttpRequestFactory();
+            DeleteDocumentHttpRequestFactory = new DeleteDocumentHttpRequestFactory();
 
             DocumentReponseFactory = new DocumentResponseFactory(Serializer);
             DocumentHeaderReponseFactory = new DocumentHeaderResponseFactory(Serializer);

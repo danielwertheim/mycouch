@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Extensions;
+using MyCouch.HttpRequestFactories;
 using MyCouch.Net;
 using MyCouch.Requests;
-using MyCouch.Requests.Factories;
 using MyCouch.Responses;
 using MyCouch.Responses.Factories;
 using MyCouch.Serialization;
@@ -31,12 +31,12 @@ namespace MyCouch.Contexts
             DatabaseHeaderResponseFactory = new DatabaseHeaderResponseFactory(serializer);
             GetDatabaseResponseFactory = new GetDatabaseResponseFactory(serializer);
 
-            GetHttpRequestFactory = new GetDatabaseHttpRequestFactory(Connection);
-            HeadHttpRequestFactory = new HeadDatabaseHttpRequestFactory(Connection);
-            PutHttpRequestFactory = new PutDatabaseHttpRequestFactory(Connection);
-            DeleteHttpRequestFactory = new DeleteDatabaseHttpRequestFactory(Connection);
-            CompactHttpRequestFactory = new CompactDatabaseHttpRequestFactory(Connection);
-            ViewCleanupHttpRequestFactory = new ViewCleanupHttpRequestFactory(Connection);
+            GetHttpRequestFactory = new GetDatabaseHttpRequestFactory();
+            HeadHttpRequestFactory = new HeadDatabaseHttpRequestFactory();
+            PutHttpRequestFactory = new PutDatabaseHttpRequestFactory();
+            DeleteHttpRequestFactory = new DeleteDatabaseHttpRequestFactory();
+            CompactHttpRequestFactory = new CompactDatabaseHttpRequestFactory();
+            ViewCleanupHttpRequestFactory = new ViewCleanupHttpRequestFactory();
         }
 
         public virtual async Task<DatabaseHeaderResponse> HeadAsync()

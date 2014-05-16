@@ -2,12 +2,12 @@
 using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Extensions;
+using MyCouch.HttpRequestFactories;
 using MyCouch.Net;
 using MyCouch.Requests;
 using MyCouch.Responses;
 using MyCouch.Responses.Factories;
 using MyCouch.Serialization;
-using MyCouch.Requests.Factories;
 
 namespace MyCouch.Contexts
 {
@@ -26,9 +26,9 @@ namespace MyCouch.Contexts
 
             AttachmentResponseFactory = new AttachmentResponseFactory(serializer);
             DocumentHeaderResponseFactory = new DocumentHeaderResponseFactory(serializer);
-            GetAttachmentHttpRequestFactory = new GetAttachmentHttpRequestFactory(Connection);
-            PutAttachmentHttpRequestFactory = new PutAttachmentHttpRequestFactory(Connection);
-            DeleteAttachmentHttpRequestFactory = new DeleteAttachmentHttpRequestFactory(Connection);
+            GetAttachmentHttpRequestFactory = new GetAttachmentHttpRequestFactory();
+            PutAttachmentHttpRequestFactory = new PutAttachmentHttpRequestFactory();
+            DeleteAttachmentHttpRequestFactory = new DeleteAttachmentHttpRequestFactory();
         }
 
         public virtual Task<AttachmentResponse> GetAsync(string docId, string attachmentName)

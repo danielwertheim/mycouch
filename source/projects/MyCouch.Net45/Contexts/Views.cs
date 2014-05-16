@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Extensions;
+using MyCouch.HttpRequestFactories;
 using MyCouch.Net;
 using MyCouch.Requests;
-using MyCouch.Requests.Factories;
 using MyCouch.Responses;
 using MyCouch.Responses.Factories;
 using MyCouch.Serialization;
@@ -22,7 +22,7 @@ namespace MyCouch.Contexts
             Ensure.That(serializer, "serializer").IsNotNull();
             Ensure.That(entitySerializer, "entitySerializer").IsNotNull();
 
-            QueryViewHttpRequestFactory = new QueryViewHttpRequestFactory(Connection, serializer);
+            QueryViewHttpRequestFactory = new QueryViewHttpRequestFactory(serializer);
             ViewQueryResponseFactory = new ViewQueryResponseFactory(serializer, entitySerializer);
         }
 

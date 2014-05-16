@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.EntitySchemes;
 using MyCouch.Extensions;
+using MyCouch.HttpRequestFactories;
 using MyCouch.Net;
 using MyCouch.Requests;
-using MyCouch.Requests.Factories;
 using MyCouch.Responses;
 using MyCouch.Responses.Factories;
 using MyCouch.Serialization;
@@ -34,10 +34,10 @@ namespace MyCouch.Contexts
             Serializer = entitySerializer;
             EntityResponseFactory = new EntityResponseFactory(serializer, entitySerializer);
             Reflector = entityReflector;
-            GetHttpRequestFactory = new GetEntityHttpRequestFactory(Connection, Serializer, Reflector);
-            PostHttpRequestFactory = new PostEntityHttpRequestFactory(Connection, Serializer, Reflector);
-            PutHttpRequestFactory = new PutEntityHttpRequestFactory(Connection, Serializer, Reflector);
-            DeleteHttpRequestFactory = new DeleteEntityHttpRequestFactory(Connection, Serializer, Reflector);
+            GetHttpRequestFactory = new GetEntityHttpRequestFactory();
+            PostHttpRequestFactory = new PostEntityHttpRequestFactory(Serializer);
+            PutHttpRequestFactory = new PutEntityHttpRequestFactory(Reflector, Serializer);
+            DeleteHttpRequestFactory = new DeleteEntityHttpRequestFactory(Reflector);
         }
 
         public virtual Task<EntityResponse<T>> GetAsync<T>(string id, string rev = null) where T : class

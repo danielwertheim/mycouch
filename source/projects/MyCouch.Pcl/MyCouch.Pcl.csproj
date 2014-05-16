@@ -144,6 +144,102 @@
     <Compile Include="..\MyCouch.Net45\Extensions\UriExtensions.cs">
       <Link>Extensions\UriExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\HttpRequestFactories\BulkHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\BulkHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\HttpRequestFactories\CompactDatabaseHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\CompactDatabaseHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\HttpRequestFactories\CompactDatabaseServerHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\CompactDatabaseServerHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\HttpRequestFactories\CopyDocumentHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\CopyDocumentHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\HttpRequestFactories\DeleteAttachmentHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\DeleteAttachmentHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\HttpRequestFactories\DeleteDatabaseHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\DeleteDatabaseHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\HttpRequestFactories\DeleteDatabaseServerHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\DeleteDatabaseServerHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\HttpRequestFactories\DeleteDocumentHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\DeleteDocumentHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\HttpRequestFactories\DeleteEntityHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\DeleteEntityHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\HttpRequestFactories\GetAttachmentHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\GetAttachmentHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\HttpRequestFactories\GetChangesHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\GetChangesHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\HttpRequestFactories\GetChangesHttpRequestFactoryBase.cs">
+      <Link>HttpRequestFactories\GetChangesHttpRequestFactoryBase.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\HttpRequestFactories\GetContinuousChangesHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\GetContinuousChangesHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\HttpRequestFactories\GetDatabaseHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\GetDatabaseHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\HttpRequestFactories\GetDatabaseServerHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\GetDatabaseServerHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\HttpRequestFactories\GetDocumentHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\GetDocumentHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\HttpRequestFactories\GetEntityHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\GetEntityHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\HttpRequestFactories\HeadDatabaseHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\HeadDatabaseHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\HttpRequestFactories\HeadDatabaseServerHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\HeadDatabaseServerHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\HttpRequestFactories\HeadDocumentHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\HeadDocumentHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\HttpRequestFactories\PostDocumentHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\PostDocumentHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\HttpRequestFactories\PostEntityHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\PostEntityHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\HttpRequestFactories\PutAttachmentHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\PutAttachmentHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\HttpRequestFactories\PutDatabaseHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\PutDatabaseHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\HttpRequestFactories\PutDatabaseServerHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\PutDatabaseServerHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\HttpRequestFactories\PutDocumentHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\PutDocumentHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\HttpRequestFactories\PutEntityHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\PutEntityHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\HttpRequestFactories\QueryViewHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\QueryViewHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\HttpRequestFactories\ReplaceDocumentHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\ReplaceDocumentHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\HttpRequestFactories\ReplicateDatabaseServerHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\ReplicateDatabaseServerHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\HttpRequestFactories\ViewCleanupHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\ViewCleanupHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\HttpRequestFactories\ViewCleanupServerHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\ViewCleanupServerHttpRequestFactory.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\IAttachments.cs">
       <Link>IAttachments.cs</Link>
     </Compile>
@@ -213,9 +309,6 @@
     <Compile Include="..\MyCouch.Net45\MyCouchUriBuilder.cs">
       <Link>MyCouchUriBuilder.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\Net\AppendingRequestUrlGenerator.cs">
-      <Link>Net\AppendingRequestUrlGenerator.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Net45\Net\BasicAuthString.cs">
       <Link>Net\BasicAuthString.cs</Link>
     </Compile>
@@ -225,9 +318,6 @@
     <Compile Include="..\MyCouch.Net45\Net\Connection.cs">
       <Link>Net\Connection.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\Net\ConstantRequestUrlGenerator.cs">
-      <Link>Net\ConstantRequestUrlGenerator.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Net45\Net\DbClientConnection.cs">
       <Link>Net\DbClientConnection.cs</Link>
     </Compile>
@@ -236,9 +326,6 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\Net\HttpRequest.cs">
       <Link>Net\HttpRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\Net\IRequestUrlGenerator.cs">
-      <Link>Net\IRequestUrlGenerator.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Net\JsonContent.cs">
       <Link>Net\JsonContent.cs</Link>
@@ -290,87 +377,6 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\DeleteEntityRequest.cs">
       <Link>Requests\DeleteEntityRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\Requests\Factories\AttachmentHttpRequestFactoryBase.cs">
-      <Link>Requests\Factories\AttachmentHttpRequestFactoryBase.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\Requests\Factories\BulkHttpRequestFactory.cs">
-      <Link>Requests\Factories\BulkHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\Requests\Factories\CompactDatabaseHttpRequestFactory.cs">
-      <Link>Requests\Factories\CompactDatabaseHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\Requests\Factories\CopyDocumentHttpRequestFactory.cs">
-      <Link>Requests\Factories\CopyDocumentHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\Requests\Factories\DeleteAttachmentHttpRequestFactory.cs">
-      <Link>Requests\Factories\DeleteAttachmentHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\Requests\Factories\DeleteDatabaseHttpRequestFactory.cs">
-      <Link>Requests\Factories\DeleteDatabaseHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\Requests\Factories\DeleteDocumentHttpRequestFactory.cs">
-      <Link>Requests\Factories\DeleteDocumentHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\Requests\Factories\DeleteEntityHttpRequestFactory.cs">
-      <Link>Requests\Factories\DeleteEntityHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\Requests\Factories\GetAttachmentHttpRequestFactory.cs">
-      <Link>Requests\Factories\GetAttachmentHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\Requests\Factories\GetChangesHttpRequestFactory.cs">
-      <Link>Requests\Factories\GetChangesHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\Requests\Factories\GetChangesHttpRequestFactoryBase.cs">
-      <Link>Requests\Factories\GetChangesHttpRequestFactoryBase.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\Requests\Factories\GetContinuousChangesHttpRequestFactory.cs">
-      <Link>Requests\Factories\GetContinuousChangesHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\Requests\Factories\GetDatabaseHttpRequestFactory.cs">
-      <Link>Requests\Factories\GetDatabaseHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\Requests\Factories\GetDocumentHttpRequestFactory.cs">
-      <Link>Requests\Factories\GetDocumentHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\Requests\Factories\GetEntityHttpRequestFactory.cs">
-      <Link>Requests\Factories\GetEntityHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\Requests\Factories\HeadDatabaseHttpRequestFactory.cs">
-      <Link>Requests\Factories\HeadDatabaseHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\Requests\Factories\HeadDocumentHttpRequestFactory.cs">
-      <Link>Requests\Factories\HeadDocumentHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\Requests\Factories\PostDocumentHttpRequestFactory.cs">
-      <Link>Requests\Factories\PostDocumentHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\Requests\Factories\PostEntityHttpRequestFactory.cs">
-      <Link>Requests\Factories\PostEntityHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\Requests\Factories\PutAttachmentHttpRequestFactory.cs">
-      <Link>Requests\Factories\PutAttachmentHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\Requests\Factories\PutDatabaseHttpRequestFactory.cs">
-      <Link>Requests\Factories\PutDatabaseHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\Requests\Factories\PutDocumentHttpRequestFactory.cs">
-      <Link>Requests\Factories\PutDocumentHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\Requests\Factories\PutEntityHttpRequestFactory.cs">
-      <Link>Requests\Factories\PutEntityHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\Requests\Factories\QueryViewHttpRequestFactory.cs">
-      <Link>Requests\Factories\QueryViewHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\Requests\Factories\ReplaceDocumentHttpRequestFactory.cs">
-      <Link>Requests\Factories\ReplaceDocumentHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\Requests\Factories\ReplicateDatabaseHttpRequestFactory.cs">
-      <Link>Requests\Factories\ReplicateDatabaseHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\Requests\Factories\ViewCleanupHttpRequestFactory.cs">
-      <Link>Requests\Factories\ViewCleanupHttpRequestFactory.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\GetAttachmentRequest.cs">
       <Link>Requests\GetAttachmentRequest.cs</Link>
@@ -655,6 +661,7 @@
       <HintPath>..\..\packages\Rx-PlatformServices.2.2.4\lib\portable-windows8+net45+wp8\System.Reactive.PlatformServices.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

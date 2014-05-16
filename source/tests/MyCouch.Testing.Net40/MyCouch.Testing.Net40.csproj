@@ -112,6 +112,9 @@
     <Compile Include="..\MyCouch.Testing.Net45\Shoulds.cs">
       <Link>Shoulds.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Testing.Net45\StringExtensions.cs">
+      <Link>StringExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\mycouch.testing.net45\testdata\ClientTestData.cs">
       <Link>TestData\ClientTestData.cs</Link>
     </Compile>

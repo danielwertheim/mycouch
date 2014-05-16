@@ -8,8 +8,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Extensions;
+using MyCouch.HttpRequestFactories;
 using MyCouch.Requests;
-using MyCouch.Requests.Factories;
 using MyCouch.Responses;
 using MyCouch.Responses.Factories;
 using MyCouch.Serialization;
@@ -30,8 +30,8 @@ namespace MyCouch.Contexts
         {
             Ensure.That(serializer, "serializer").IsNotNull();
 
-            HttpRequestFactory = new GetChangesHttpRequestFactory(Connection);
-            ContinuousHttpRequestFactory = new GetContinuousChangesHttpRequestFactory(Connection);
+            HttpRequestFactory = new GetChangesHttpRequestFactory();
+            ContinuousHttpRequestFactory = new GetContinuousChangesHttpRequestFactory();
             ChangesResponseFactory = new ChangesResponseFactory(serializer);
             ContinuousChangesResponseFactory = new ContinuousChangesResponseFactory(serializer);
             ObservableSubscribeOnScheduler = () => TaskPoolScheduler.Default;
