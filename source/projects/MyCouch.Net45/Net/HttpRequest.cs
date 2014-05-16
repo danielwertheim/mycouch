@@ -9,6 +9,9 @@ using EnsureThat;
 
 namespace MyCouch.Net
 {
+#if !PCL
+    [Serializable]
+#endif
     public class HttpRequest
     {
         public HttpMethod Method { get; private set; }
