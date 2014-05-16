@@ -13,7 +13,7 @@ namespace MyCouch.IntegrationTests.CloudantTests
     public class SearchTests :
         IntegrationTestsOf<ISearches>,
         IPreserveStatePerFixture,
-#if net40
+#if !PCL
         IUseFixture<SearchFixture>
 #else
         IClassFixture<SearchFixture>
@@ -21,7 +21,7 @@ namespace MyCouch.IntegrationTests.CloudantTests
     {
         protected Animal[] Animals { get; set; }
 
-#if net40
+#if !PCL
         public SearchTests()
         {
             SUT = CloudantDbClient.Searches;

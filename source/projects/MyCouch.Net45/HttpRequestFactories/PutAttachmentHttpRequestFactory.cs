@@ -23,7 +23,7 @@ namespace MyCouch.HttpRequestFactories
         {
             var urlParams = new UrlParams();
 
-            urlParams.AddRequired("rev", request.DocRev);
+            urlParams.AddIfNotNullOrWhiteSpace("rev", request.DocRev);
 
             return string.Format("/{0}/{1}{2}",
                 new UrlSegment(request.DocId),

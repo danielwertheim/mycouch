@@ -16,7 +16,7 @@ namespace MyCouch.HttpRequestFactories
                 .SetRequestTypeHeader(request.GetType())
                 .SetIfMatchHeader(request.SrcRev);
 
-            httpRequest.Headers.Add("Destination", string.Concat(Uri.EscapeDataString(request.TrgId), "?rev=", request.TrgRev));
+            httpRequest.Headers.Add("Destination", string.Concat(request.TrgId, "?rev=", request.TrgRev));
 
             return httpRequest;
         }
@@ -25,7 +25,7 @@ namespace MyCouch.HttpRequestFactories
         {
             var urlParams = new UrlParams();
 
-            urlParams.AddRequired("rev", request.SrcRev);
+            urlParams.AddIfNotNullOrWhiteSpace("rev", request.SrcRev);
 
             return string.Format("/{0}{1}", new UrlSegment(request.SrcId), new QueryString(urlParams));
         }

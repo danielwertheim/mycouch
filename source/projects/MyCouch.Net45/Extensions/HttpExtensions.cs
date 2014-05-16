@@ -9,11 +9,9 @@ namespace MyCouch.Extensions
         public static string GetUriSegmentByRightOffset(this HttpRequestMessage request, int offset = 0)
         {
             var segments = request.RequestUri.Segments;
-            var val = segments[segments.Length - (1 + offset)];
+            var val = Uri.UnescapeDataString(segments[segments.Length - (1 + offset)]);
 
-            return val.EndsWith("/")
-                ? Uri.UnescapeDataString(val.Substring(0, val.Length - 1))
-                : Uri.UnescapeDataString(val);
+            return val.TrimEnd('/');
         }
 
         public static string GetETag(this HttpResponseHeaders headers)

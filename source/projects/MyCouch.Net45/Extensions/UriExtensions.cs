@@ -31,7 +31,7 @@ namespace MyCouch.Extensions
 
         public static string ExtractDbName(this Uri value)
         {
-            return value.LocalPath.TrimStart('/').TrimEnd('/', '?').Split("/".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).LastOrDefault();
+            return value.LocalPath.TrimStart('/').TrimEnd('/', '?').Split("/".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
         }
     }
 }

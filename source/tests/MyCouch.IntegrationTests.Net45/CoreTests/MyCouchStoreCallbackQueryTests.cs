@@ -12,7 +12,7 @@ namespace MyCouch.IntegrationTests.CoreTests
     public class MyCouchStoreCallbackQueryTests :
         IntegrationTestsOf<MyCouchStore>,
         IPreserveStatePerFixture,
-#if net40
+#if !PCL
         IUseFixture<ViewsFixture>
 #else
         IClassFixture<ViewsFixture>
@@ -20,7 +20,7 @@ namespace MyCouch.IntegrationTests.CoreTests
     {
         protected Artist[] ArtistsById { get; set; }
 
-#if net40
+#if !PCL
         public MyCouchStoreCallbackQueryTests()
         {
             SUT = new MyCouchStore(DbClient);

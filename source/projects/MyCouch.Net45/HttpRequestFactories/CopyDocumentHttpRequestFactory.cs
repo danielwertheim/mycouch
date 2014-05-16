@@ -24,7 +24,7 @@ namespace MyCouch.HttpRequestFactories
         {
             var urlParams = new UrlParams();
 
-            urlParams.AddRequired("rev", request.SrcRev);
+            urlParams.AddIfNotNullOrWhiteSpace("rev", request.SrcRev);
 
             return string.Format("/{0}{1}", new UrlSegment(request.SrcId), new QueryString(urlParams));
         }

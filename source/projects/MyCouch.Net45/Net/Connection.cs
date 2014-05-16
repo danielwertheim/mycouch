@@ -115,7 +115,7 @@ namespace MyCouch.Net
 
             httpRequest.RemoveRequestTypeHeader();
 
-            var message = new HttpRequestMessage(httpRequest.Method, new Uri(Address, httpRequest.RelativeUrl))
+            var message = new HttpRequestMessage(httpRequest.Method, GenerateRequestUri(httpRequest))
             {
                 Content = httpRequest.Content,
             };
@@ -124,6 +124,11 @@ namespace MyCouch.Net
                 message.Headers.TryAddWithoutValidation(kv.Key, kv.Value);
 
             return message;
+        }
+
+        protected virtual string GenerateRequestUri(HttpRequest httpRequest)
+        {
+            return string.Format("{0}/{1}", Address.ToString().TrimEnd('/'), httpRequest.RelativeUrl.TrimStart('/'));
         }
     }
 }
