@@ -22,14 +22,14 @@ namespace MyCouch.HttpRequestFactories
         {
             Ensure.That(request, "request").IsNotNull();
 
-            return new HttpRequest(HttpMethod.Post, GenerateRelativeUrl(request))
+            return new HttpRequest(HttpMethod.Put, GenerateRelativeUrl(request))
                 .SetRequestTypeHeader(request.GetType())
                 .SetJsonContent(GenerateRequestBody(request));
         }
 
         protected virtual string GenerateRelativeUrl(ReplicateDatabaseRequest request)
         {
-            return "/_replicate";
+            return "/_replicator/" + new UrlSegment(request.Id);
         }
 
         protected virtual string GenerateRequestBody(ReplicateDatabaseRequest request)
@@ -55,9 +55,6 @@ namespace MyCouch.HttpRequestFactories
 
             if (request.Continuous.HasValue)
                 tmp.Add(KeyNames.Continuous, request.Continuous.Value);
-
-            if (request.Cancel.HasValue)
-                tmp.Add(KeyNames.Cancel, request.Cancel.Value);
 
             if (!string.IsNullOrWhiteSpace(request.Filter))
                 tmp.Add(KeyNames.Filter, request.Filter);

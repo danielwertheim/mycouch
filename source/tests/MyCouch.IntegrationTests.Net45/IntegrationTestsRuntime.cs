@@ -158,6 +158,8 @@ namespace MyCouch.IntegrationTests
                 CreateDb(Environment.TempDbName);
             }
 
+            if(Environment.HasSupportFor(TestScenarios.Replication))
+                ClearAllDocuments("_replicator");
         }
 
         private static void CreateDb(string dbName)
@@ -209,9 +211,15 @@ namespace MyCouch.IntegrationTests
             var bulkRequest = new BulkRequest();
 
             foreach (var row in response.Rows)
-                bulkRequest.Delete(row.Id, row.Value.rev.ToString());
+            {
+                if (row.Id.ToLower() == "_design/_replicator")
+                    continue;
 
-            client.Documents.BulkAsync(bulkRequest).Wait();
+                bulkRequest.Delete(row.Id, row.Value.rev.ToString());
+            }
+
+            if(!bulkRequest.IsEmpty)
+                client.Documents.BulkAsync(bulkRequest).Wait();
         }
     }
 

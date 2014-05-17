@@ -133,9 +133,9 @@ namespace MyCouch.Contexts
             }
         }
 
-        public virtual Task<ReplicationResponse> ReplicateAsync(string source, string target)
+        public virtual Task<ReplicationResponse> ReplicateAsync(string id, string source, string target)
         {
-            return ReplicateAsync(new ReplicateDatabaseRequest(source, target));
+            return ReplicateAsync(new ReplicateDatabaseRequest(id, source, target));
         }
 
         public virtual async Task<ReplicationResponse> ReplicateAsync(ReplicateDatabaseRequest request)

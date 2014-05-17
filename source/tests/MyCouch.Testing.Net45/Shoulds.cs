@@ -116,11 +116,16 @@ namespace MyCouch.Testing
             Response = response;
         }
 
-        public virtual void Be(HttpMethod method, HttpStatusCode statusCode = HttpStatusCode.OK)
+        public virtual void Be(HttpMethod method, params HttpStatusCode[] statusCodes)
         {
             Response.RequestMethod.Should().Be(method);
             Response.IsSuccess.Should().BeTrue();
-            Response.StatusCode.Should().Be(statusCode);
+
+            if (statusCodes.Any())
+                statusCodes.Should().Contain(Response.StatusCode);
+            else
+                Response.StatusCode.Should().Be(HttpStatusCode.OK);
+            
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
         }
@@ -183,50 +188,11 @@ namespace MyCouch.Testing
         [DebuggerStepThrough]
         public ReplicationResponseAssertions(ReplicationResponse response) : base(response) { }
 
-        public void BeSuccessfulButEmptyReplication()
+        public void BeSuccessfulReplication(string expectedId)
         {
-            Response.Should().Be(HttpMethod.Post);
-            Response.NoChanges.Should().BeTrue();
-        }
-
-        public void BeSuccessfulContinousReplication()
-        {
-            Response.Should().Be(HttpMethod.Post, HttpStatusCode.Accepted);
-            Response.LocalId.Should().NotBeNullOrEmpty();
-        }
-
-        public void BeSuccessfulCancelledContinousReplication(string localId)
-        {
-            Response.Should().Be(HttpMethod.Post, HttpStatusCode.OK);
-            Response.LocalId.Should().NotBeNullOrEmpty();
-            Response.LocalId.Should().Be(localId);
-        }
-
-        public void BeSuccessfulNonEmptyReplication()
-        {
-            Response.Should().Be(HttpMethod.Post);
-            Response.NoChanges.Should().BeFalse();
-            Response.ReplicationIdVersion.Should().BeGreaterThan(0);
-            Response.History.Should().NotBeEmpty();
-            Response.SessionId.Should().NotBeNullOrEmpty();
-            Response.History.First().SessionId.Should().Be(Response.SessionId);
-            Response.History.First().EndLastSeq.Should().Be(Response.SourceLastSeq);
-
-            foreach (var history in Response.History)
-            {
-                history.SessionId.Should().NotBeNullOrEmpty();
-                history.StartTime.Should().BeAfter(DateTime.MinValue);
-                history.EndTime.Should().BeAfter(DateTime.MinValue);
-                history.EndLastSeq.Should().NotBeNullOrEmpty();
-                history.StartLastSeq.Should().NotBeNullOrEmpty();
-                history.RecordedSeq.Should().NotBeNullOrEmpty();
-
-                history.MissingFound.Should().BeGreaterThan(0);
-                history.MissingChecked.Should().BeGreaterThan(0);
-                history.DocsRead.Should().BeGreaterThan(0);
-                history.DocsWritten.Should().BeGreaterThan(0);
-                history.DocWriteFailures.Should().Be(0);
-            }
+            Response.Should().Be(HttpMethod.Put, HttpStatusCode.Accepted, HttpStatusCode.Created);
+            Response.Id.Should().Be(expectedId);
+            Response.Rev.Should().NotBeNullOrWhiteSpace();
         }
     }
 
