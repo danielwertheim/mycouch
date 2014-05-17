@@ -46,7 +46,7 @@ namespace MyCouch.EntitySchemes.Reflections
             var parameter = Expression.Parameter(typeof(TProp), "param");
 #if !PCL
             return Expression.Lambda<Action<object, TProp>>(
-                Expression.Call(castedObjExpr, property.GetSetMethod(), parameter), new[] { objExpr, parameter }).Compile();
+                Expression.Call(castedObjExpr, property.GetSetMethod(true), parameter), new[] { objExpr, parameter }).Compile();
 #else
             return Expression.Lambda<Action<object, TProp>>(
                 Expression.Call(castedObjExpr, property.SetMethod, parameter), new[] { objExpr, parameter }).Compile();
