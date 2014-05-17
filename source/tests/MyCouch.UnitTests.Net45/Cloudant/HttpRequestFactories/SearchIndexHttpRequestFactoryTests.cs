@@ -1,19 +1,20 @@
 ﻿using System;
 using FluentAssertions;
+using MyCouch.Cloudant;
 using MyCouch.Cloudant.Requests;
 using MyCouch.Cloudant.Requests.Factories;
 using MyCouch.Net;
-using MyCouch.Serialization;
 using MyCouch.Testing;
 using Xunit;
 
-namespace MyCouch.UnitTests.Cloudant.Requests
+namespace MyCouch.UnitTests.Cloudant.HttpRequestFactories
 {
     public class SearchIndexHttpRequestFactoryTests : UnitTestsOf<SearchIndexHttpRequestFactory>
     {
         public SearchIndexHttpRequestFactoryTests()
         {
-            SUT = new SearchIndexHttpRequestFactory(new DefaultSerializer(new SerializationConfiguration()));
+            var boostrapper = new MyCouchCloudantClientBootstrapper();
+            SUT = new SearchIndexHttpRequestFactory(boostrapper.EntitySerializerFn());
         }
 
         [Fact]

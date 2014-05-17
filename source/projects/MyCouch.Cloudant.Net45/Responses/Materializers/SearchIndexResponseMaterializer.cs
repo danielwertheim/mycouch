@@ -7,20 +7,20 @@ namespace MyCouch.Cloudant.Responses.Materializers
 {
     public class SearchIndexResponseMaterializer
     {
-        protected readonly IEntitySerializer EntitySerializer;
+        protected readonly ISerializer Serializer;
 
-        public SearchIndexResponseMaterializer(IEntitySerializer entitySerializer)
+        public SearchIndexResponseMaterializer(ISerializer serializer)
         {
-            Ensure.That(entitySerializer, "entitySerializer").IsNotNull();
+            Ensure.That(serializer, "serializer").IsNotNull();
 
-            EntitySerializer = entitySerializer;
+            Serializer = serializer;
         }
 
         public virtual async void Materialize<TIncludedDoc>(SearchIndexResponse<TIncludedDoc> response, HttpResponseMessage httpResponse)
         {
             using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
             {
-                EntitySerializer.Populate(response, content);
+                Serializer.Populate(response, content);
             }
         }
     }

@@ -9,7 +9,8 @@ namespace MyCouch.UnitTests.Serialization
     {
         public DocumentSerializerTests()
         {
-            SUT = new DocumentSerializer(new SerializationConfiguration(), new DocumentSerializationMetaProvider());
+            var configuration = new SerializationConfiguration(new SerializationContractResolver(), new DocumentSerializationMetaProvider());
+            SUT = new DefaultSerializer(configuration);
         }
 
         [Fact]

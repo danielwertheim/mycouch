@@ -19,7 +19,7 @@ namespace MyCouch.UnitTests.Serialization
 
         private static SerializationConfiguration CreateSerializationConfiguration()
         {
-            return new SerializationConfiguration(new SerializationContractResolver());
+            return new SerializationConfiguration(new SerializationContractResolver(), new DocumentSerializationMetaProvider());
         }
     }
 
@@ -31,7 +31,7 @@ namespace MyCouch.UnitTests.Serialization
         {
             var entityReflector = new EntityReflector(new LambdaDynamicPropertyFactory());
 
-            return new SerializationConfiguration(new EntityContractResolver(entityReflector));
+            return new SerializationConfiguration(new EntityContractResolver(entityReflector), new DocumentSerializationMetaProvider());
         }
     }
 
@@ -44,19 +44,16 @@ namespace MyCouch.UnitTests.Serialization
         {
             var entityReflector = new EntityReflector(new IlDynamicPropertyFactory());
 
-            return new SerializationConfiguration(new EntityContractResolver(entityReflector));
+            return new SerializationConfiguration(new EntityContractResolver(entityReflector), new DocumentSerializationMetaProvider());
         }
     }
 #endif
 
     public abstract class ViewQueryResponseRowsDeserializerTests : UnitTestsOf<DefaultSerializer>
     {
-        protected readonly SerializationConfiguration SerializationConfiguration;
-
         protected ViewQueryResponseRowsDeserializerTests(SerializationConfiguration serializationConfiguration)
         {
-            SerializationConfiguration = serializationConfiguration;
-            SUT = new DefaultSerializer(SerializationConfiguration);
+            SUT = new DefaultSerializer(serializationConfiguration);
         }
 
         [Fact]

@@ -21,6 +21,25 @@ namespace MyCouch.Serialization
             InternalSerializer = JsonSerializer.Create(Configuration.Settings);
         }
 
+        protected virtual JsonTextWriter CreateWriter(TextWriter writer)
+        {
+            return new JsonTextWriter(writer);
+        }
+
+        protected virtual JsonTextWriter CreateWriterFor<T>(TextWriter writer)
+        {
+            var documentMeta = Configuration.DocumentMetaProvider.Get(typeof(T));
+
+            return documentMeta == null
+                ? CreateWriter(writer)
+                : new DocumentJsonWriter(documentMeta, writer, Configuration.Conventions);
+        }
+
+        protected virtual JsonTextReader CreateReaderFor(TextReader reader)
+        {
+            return new DocumentJsonReader(reader);
+        }
+
         public virtual string Serialize<T>(T item) where T : class
         {
             var content = new StringBuilder(256);
@@ -39,23 +58,13 @@ namespace MyCouch.Serialization
             var content = new StringBuilder(16);
             using (var stringWriter = new StringWriter(content, MyCouchRuntime.FormatingCulture.NumberFormat))
             {
-                using (var jsonWriter = Configuration.ApplyConfigToWriter(CreateWriterFor(stringWriter)))
+                using (var jsonWriter = Configuration.ApplyConfigToWriter(CreateWriter(stringWriter)))
                 {
                     InternalSerializer.Serialize(jsonWriter, value);
                 }
             }
             return content.ToString();
-        }
-
-        protected virtual JsonTextWriter CreateWriterFor(TextWriter writer)
-        {
-            return new JsonTextWriter(writer);
-        }
-
-        protected virtual JsonTextWriter CreateWriterFor<T>(TextWriter writer)
-        {
-            return new JsonTextWriter(writer);
-        }
+        }        
 
         public virtual T Deserialize<T>(string data) where T : class
         {
@@ -83,12 +92,7 @@ namespace MyCouch.Serialization
                     return InternalSerializer.Deserialize<T>(jsonReader);
                 }
             }
-        }
-
-        protected virtual JsonTextReader CreateReaderFor(TextReader reader)
-        {
-            return new DocumentJsonReader(reader);
-        }
+        }        
 
         public virtual void Populate<T>(T item, Stream data) where T : class
         {

@@ -300,9 +300,6 @@
     <Compile Include="..\MyCouch.Net45\MyCouchServerClient.cs">
       <Link>MyCouchServerClient.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\MyCouchServerClientBootstrapper.cs">
-      <Link>MyCouchServerClientBootstrapper.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Net45\MyCouchStore.cs">
       <Link>MyCouchStore.cs</Link>
     </Compile>
@@ -597,20 +594,8 @@
     <Compile Include="..\MyCouch.Net45\Serialization\DocumentJsonWriter.cs">
       <Link>Serialization\DocumentJsonWriter.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\Serialization\DocumentSerializer.cs">
-      <Link>Serialization\DocumentSerializer.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Net45\Serialization\EntityContractResolver.cs">
       <Link>Serialization\EntityContractResolver.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\Serialization\EntitySerializer.cs">
-      <Link>Serialization\EntitySerializer.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\Serialization\IDocumentSerializer.cs">
-      <Link>Serialization\IDocumentSerializer.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\Serialization\IEntitySerializer.cs">
-      <Link>Serialization\IEntitySerializer.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Serialization\ISerializer.cs">
       <Link>Serialization\ISerializer.cs</Link>
@@ -620,6 +605,9 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\Serialization\Meta\DocumentSerializationMetaProvider.cs">
       <Link>Serialization\Meta\DocumentSerializationMetaProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Serialization\Meta\EmptyDocumentSerializationMetaProvider.cs">
+      <Link>Serialization\Meta\EmptyDocumentSerializationMetaProvider.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Serialization\Meta\IDocumentSerializationMetaProvider.cs">
       <Link>Serialization\Meta\IDocumentSerializationMetaProvider.cs</Link>

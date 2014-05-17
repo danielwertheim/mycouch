@@ -17,14 +17,13 @@ namespace MyCouch.Cloudant.Contexts
         protected SearchIndexHttpRequestFactory SearchIndexHttpRequestFactory { get; set; }
         protected SearchIndexResponseFactory SearchIndexResponseFactory { get; set; }
 
-        public Searches(IDbClientConnection connection, ISerializer serializer, IEntitySerializer entitySerializer)
+        public Searches(IDbClientConnection connection, ISerializer serializer)
             : base(connection)
         {
             Ensure.That(serializer, "serializer").IsNotNull();
-            Ensure.That(entitySerializer, "entitySerializer").IsNotNull();
 
             SearchIndexHttpRequestFactory = new SearchIndexHttpRequestFactory(serializer);
-            SearchIndexResponseFactory = new SearchIndexResponseFactory(serializer, entitySerializer);
+            SearchIndexResponseFactory = new SearchIndexResponseFactory(serializer);
         }
 
         public virtual async Task<SearchIndexResponse> SearchAsync(SearchIndexRequest request)

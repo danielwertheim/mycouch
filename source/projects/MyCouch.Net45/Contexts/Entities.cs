@@ -14,7 +14,7 @@ namespace MyCouch.Contexts
 {
     public class Entities : ApiContextBase<IDbClientConnection>, IEntities
     {
-        public IEntitySerializer Serializer { get; private set; }
+        public ISerializer Serializer { get; private set; }
         public IEntityReflector Reflector { get; private set;}
 
         protected GetEntityHttpRequestFactory GetHttpRequestFactory { get; set; }
@@ -24,15 +24,14 @@ namespace MyCouch.Contexts
  
         protected EntityResponseFactory EntityResponseFactory { get; set; }
 
-        public Entities(IDbClientConnection connection, ISerializer serializer, IEntitySerializer entitySerializer, IEntityReflector entityReflector)
+        public Entities(IDbClientConnection connection, ISerializer serializer, IEntityReflector entityReflector)
             : base(connection)
         {
             Ensure.That(serializer, "serializer").IsNotNull();
-            Ensure.That(entitySerializer, "entitySerializer").IsNotNull();
             Ensure.That(entityReflector, "entityReflector").IsNotNull();
 
-            Serializer = entitySerializer;
-            EntityResponseFactory = new EntityResponseFactory(serializer, entitySerializer);
+            Serializer = serializer;
+            EntityResponseFactory = new EntityResponseFactory(serializer);
             Reflector = entityReflector;
             GetHttpRequestFactory = new GetEntityHttpRequestFactory();
             PostHttpRequestFactory = new PostEntityHttpRequestFactory(Serializer);

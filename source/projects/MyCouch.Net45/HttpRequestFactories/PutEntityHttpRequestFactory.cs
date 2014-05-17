@@ -10,9 +10,9 @@ namespace MyCouch.HttpRequestFactories
     public class PutEntityHttpRequestFactory
     {
         protected IEntityReflector Reflector { get; private set; }
-        protected IEntitySerializer Serializer { get; private set; }
+        protected ISerializer Serializer { get; private set; }
 
-        public PutEntityHttpRequestFactory(IEntityReflector reflector, IEntitySerializer serializer)
+        public PutEntityHttpRequestFactory(IEntityReflector reflector, ISerializer serializer)
         {
             Ensure.That(reflector, "reflector").IsNotNull();
             Ensure.That(serializer, "serializer").IsNotNull();

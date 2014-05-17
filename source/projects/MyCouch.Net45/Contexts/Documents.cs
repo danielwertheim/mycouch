@@ -25,9 +25,9 @@ namespace MyCouch.Contexts
         protected DocumentHeaderResponseFactory DocumentHeaderReponseFactory { get; set; }
         protected BulkResponseFactory BulkReponseFactory { get; set; }
 
-        public IDocumentSerializer Serializer { get; private set; }
+        public ISerializer Serializer { get; private set; }
 
-        public Documents(IDbClientConnection connection, IDocumentSerializer serializer)
+        public Documents(IDbClientConnection connection, ISerializer serializer)
             : base(connection)
         {
             Ensure.That(serializer, "serializer").IsNotNull();

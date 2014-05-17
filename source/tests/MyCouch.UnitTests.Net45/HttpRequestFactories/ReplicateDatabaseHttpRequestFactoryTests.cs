@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using FluentAssertions;
 using MyCouch.HttpRequestFactories;
 using MyCouch.Requests;
-using MyCouch.Serialization;
 using Xunit;
 
 namespace MyCouch.UnitTests.HttpRequestFactories
@@ -12,7 +11,8 @@ namespace MyCouch.UnitTests.HttpRequestFactories
     {
         public ReplicateDatabaseHttpRequestFactoryTests()
         {
-            SUT = new ReplicateDatabaseServerHttpRequestFactory(new DefaultSerializer(new SerializationConfiguration()));
+            var boostrapper = new MyCouchClientBootstrapper();
+            SUT = new ReplicateDatabaseServerHttpRequestFactory(boostrapper.SerializerFn());
         }
 
         [Fact]

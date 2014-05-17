@@ -7,20 +7,20 @@ namespace MyCouch.Responses.Materializers
 {
     public class ViewQueryResponseMaterializer
     {
-        protected readonly IEntitySerializer EntitySerializer;
+        protected readonly ISerializer Serializer;
 
-        public ViewQueryResponseMaterializer(IEntitySerializer entitySerializer)
+        public ViewQueryResponseMaterializer(ISerializer serializer)
         {
-            Ensure.That(entitySerializer, "entitySerializer").IsNotNull();
+            Ensure.That(serializer, "serializer").IsNotNull();
 
-            EntitySerializer = entitySerializer;
+            Serializer = serializer;
         }
 
         public virtual async void Materialize<TValue, TIncludedDoc>(ViewQueryResponse<TValue, TIncludedDoc> response, HttpResponseMessage httpResponse)
         {
             using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
             {
-                EntitySerializer.Populate(response, content);
+                Serializer.Populate(response, content);
             }
         }
     }

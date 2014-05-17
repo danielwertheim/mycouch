@@ -16,14 +16,13 @@ namespace MyCouch.Contexts
         protected QueryViewHttpRequestFactory QueryViewHttpRequestFactory { get; set; }
         protected ViewQueryResponseFactory ViewQueryResponseFactory { get; set; }
 
-        public Views(IDbClientConnection connection, ISerializer serializer, IEntitySerializer entitySerializer)
+        public Views(IDbClientConnection connection, ISerializer serializer)
             : base(connection)
         {
             Ensure.That(serializer, "serializer").IsNotNull();
-            Ensure.That(entitySerializer, "entitySerializer").IsNotNull();
 
             QueryViewHttpRequestFactory = new QueryViewHttpRequestFactory(serializer);
-            ViewQueryResponseFactory = new ViewQueryResponseFactory(serializer, entitySerializer);
+            ViewQueryResponseFactory = new ViewQueryResponseFactory(serializer);
         }
 
         public virtual async Task<ViewQueryResponse> QueryAsync(QueryViewRequest request)

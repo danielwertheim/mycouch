@@ -9,15 +9,12 @@ namespace MyCouch.Responses.Materializers
     public class EntityResponseMaterializer
     {
         protected readonly ISerializer Serializer;
-        protected readonly IEntitySerializer EntitySerializer;
 
-        public EntityResponseMaterializer(ISerializer serializer, IEntitySerializer entitySerializer)
+        public EntityResponseMaterializer(ISerializer serializer)
         {
             Ensure.That(serializer, "serializer").IsNotNull();
-            Ensure.That(entitySerializer, "entitySerializer").IsNotNull();
 
             Serializer = serializer;
-            EntitySerializer = entitySerializer;
         }
 
         public virtual void Materialize<T>(EntityResponse<T> response, HttpResponseMessage httpResponse) where T : class
@@ -40,7 +37,7 @@ namespace MyCouch.Responses.Materializers
                 if (response.RequestMethod == HttpMethod.Get)
                 {
                     content.Position = 0;
-                    response.Content = EntitySerializer.Deserialize<T>(content);
+                    response.Content = Serializer.Deserialize<T>(content);
                 }
             }
         }

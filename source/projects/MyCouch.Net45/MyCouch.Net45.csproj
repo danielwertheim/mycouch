@@ -114,7 +114,6 @@
     <Compile Include="MyCouchResponseException.cs" />
     <Compile Include="MyCouchRuntime.cs" />
     <Compile Include="MyCouchServerClient.cs" />
-    <Compile Include="MyCouchServerClientBootstrapper.cs" />
     <Compile Include="MyCouchStore.cs" />
     <Compile Include="MyCouchUriBuilder.cs" />
     <Compile Include="Net\BytesContent.cs" />
@@ -244,14 +243,11 @@
     <Compile Include="Serialization\Converters\MultiTypeDeserializationJsonConverter.cs" />
     <Compile Include="Serialization\Converters\UnixEpochDateTimeConverter.cs" />
     <Compile Include="Serialization\DefaultSerializer.cs" />
-    <Compile Include="Serialization\DocumentSerializer.cs" />
     <Compile Include="Serialization\EntityContractResolver.cs" />
-    <Compile Include="Serialization\EntitySerializer.cs" />
-    <Compile Include="Serialization\IDocumentSerializer.cs" />
-    <Compile Include="Serialization\IEntitySerializer.cs" />
     <Compile Include="Serialization\ISerializer.cs" />
     <Compile Include="Serialization\Meta\DocumentSerializationMeta.cs" />
     <Compile Include="Serialization\Meta\DocumentSerializationMetaProvider.cs" />
+    <Compile Include="Serialization\Meta\EmptyDocumentSerializationMetaProvider.cs" />
     <Compile Include="Serialization\Meta\IDocumentSerializationMetaProvider.cs" />
     <Compile Include="Serialization\DocumentJsonReader.cs" />
     <Compile Include="Serialization\SerializationConfiguration.cs" />

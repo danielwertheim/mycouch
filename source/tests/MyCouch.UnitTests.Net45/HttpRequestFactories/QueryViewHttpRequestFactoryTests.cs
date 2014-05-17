@@ -3,7 +3,6 @@ using FluentAssertions;
 using MyCouch.HttpRequestFactories;
 using MyCouch.Net;
 using MyCouch.Requests;
-using MyCouch.Serialization;
 using MyCouch.Testing;
 using Xunit;
 
@@ -13,7 +12,8 @@ namespace MyCouch.UnitTests.HttpRequestFactories
     {
         public QueryViewHttpRequestFactoryTests()
         {
-            SUT = new QueryViewHttpRequestFactory(new DefaultSerializer(new SerializationConfiguration()));
+            var boostrapper = new MyCouchClientBootstrapper();
+            SUT = new QueryViewHttpRequestFactory(boostrapper.EntitySerializerFn());
         }
 
         [Fact]

@@ -8,9 +8,9 @@ namespace MyCouch.HttpRequestFactories
 {
     public class PostEntityHttpRequestFactory
     {
-        protected IEntitySerializer Serializer { get; private set; }
+        protected ISerializer Serializer { get; private set; }
 
-        public PostEntityHttpRequestFactory(IEntitySerializer serializer)
+        public PostEntityHttpRequestFactory(ISerializer serializer)
         {
             Ensure.That(serializer, "serializer").IsNotNull();
 

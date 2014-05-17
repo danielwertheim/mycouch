@@ -33,7 +33,7 @@ namespace MyCouch
             Serializer = bootstrapper.SerializerFn();
             Changes = bootstrapper.ChangesFn(Connection);
             Attachments = bootstrapper.AttachmentsFn(Connection);
-            Database = bootstrapper.DatabasesFn(Connection);
+            Database = bootstrapper.DatabaseFn(Connection);
             Documents = bootstrapper.DocumentsFn(Connection);
             Entities = bootstrapper.EntitiesFn(Connection);
             Views = bootstrapper.ViewsFn(Connection);
