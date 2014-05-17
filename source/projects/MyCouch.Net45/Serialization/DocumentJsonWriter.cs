@@ -9,9 +9,9 @@ namespace MyCouch.Serialization
     public class DocumentJsonWriter : JsonTextWriter
     {
         protected readonly DocumentSerializationMeta DocumentMeta;
-        protected bool HasWrittenDocumentMeta { get; set; }
         protected readonly SerializationConventions Conventions;
         protected readonly ISerializationConventionWriter ConventionWriter;
+        protected bool HasWrittenDocumentMeta { get; set; }
 
         public DocumentJsonWriter(DocumentSerializationMeta documentMeta, TextWriter textWriter, SerializationConventions conventions)
             : base(textWriter)
@@ -29,7 +29,7 @@ namespace MyCouch.Serialization
         {
             base.WriteStartObject();
 
-            if (Conventions == null || HasWrittenDocumentMeta)
+            if (HasWrittenDocumentMeta || !Conventions.HasConventions)
                 return;
 
             HasWrittenDocumentMeta = true;

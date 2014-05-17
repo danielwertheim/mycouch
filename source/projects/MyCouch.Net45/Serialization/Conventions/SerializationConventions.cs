@@ -6,6 +6,11 @@
         public ISerializationConvention DocNamespace { get; set; }
         public ISerializationConvention DocVersion { get; set; }
 
+        public virtual bool HasConventions
+        {
+            get { return DocType != null || DocNamespace != null || DocVersion != null; }
+        }
+
         public SerializationConventions()
         {
             DocType = new StringSerializationConvention(

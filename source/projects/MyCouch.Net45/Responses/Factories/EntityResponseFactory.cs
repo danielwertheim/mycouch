@@ -10,12 +10,11 @@ namespace MyCouch.Responses.Factories
         protected readonly EntityResponseMaterializer SuccessfulResponseMaterializer;
         protected readonly FailedEntityResponseMaterializer FailedResponseMaterializer;
 
-        public EntityResponseFactory(ISerializer serializer, IEntitySerializer entitySerializer)
+        public EntityResponseFactory(ISerializer serializer)
         {
             Ensure.That(serializer, "serializer").IsNotNull();
-            Ensure.That(entitySerializer, "entitySerializer").IsNotNull();
 
-            SuccessfulResponseMaterializer = new EntityResponseMaterializer(serializer, entitySerializer);
+            SuccessfulResponseMaterializer = new EntityResponseMaterializer(serializer);
             FailedResponseMaterializer = new FailedEntityResponseMaterializer(serializer);
         }
 

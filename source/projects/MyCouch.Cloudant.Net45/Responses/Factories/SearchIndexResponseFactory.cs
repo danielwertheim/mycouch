@@ -12,12 +12,11 @@ namespace MyCouch.Cloudant.Responses.Factories
         protected readonly SearchIndexResponseMaterializer SuccessfulResponseMaterializer;
         protected readonly FailedResponseMaterializer FailedResponseMaterializer;
 
-        public SearchIndexResponseFactory(ISerializer serializer, IEntitySerializer entitySerializer)
+        public SearchIndexResponseFactory(ISerializer serializer)
         {
             Ensure.That(serializer, "serializer").IsNotNull();
-            Ensure.That(entitySerializer, "entitySerializer").IsNotNull();
 
-            SuccessfulResponseMaterializer = new SearchIndexResponseMaterializer(entitySerializer);
+            SuccessfulResponseMaterializer = new SearchIndexResponseMaterializer(serializer);
             FailedResponseMaterializer = new FailedResponseMaterializer(serializer);
         }
 

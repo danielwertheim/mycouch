@@ -19,7 +19,7 @@ namespace MyCouch
         /// If you want the native, non convention based serializer, check <see cref="IMyCouchClient.Serializer"/>
         /// If you want full entity convention based serializer, check <see cref="IEntities.Serializer"/>
         /// </remarks>
-        IDocumentSerializer Serializer { get; }
+        ISerializer Serializer { get; }
 
         /// <summary>
         /// Lets you use the underlying bulk API to insert, update and delete

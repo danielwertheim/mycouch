@@ -13,14 +13,14 @@ namespace MyCouch.Serialization.Conventions
             InnerWriter = jsonWriter;
         }
 
-        public ISerializationConventionWriter WriteName(string name)
+        public virtual ISerializationConventionWriter WriteName(string name)
         {
             InnerWriter.WritePropertyName(name);
 
             return this;
         }
 
-        public ISerializationConventionWriter WriteValue(string value)
+        public virtual ISerializationConventionWriter WriteValue(string value)
         {
             InnerWriter.WriteValue(value);
 

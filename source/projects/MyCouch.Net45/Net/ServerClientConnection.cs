@@ -1,12 +1,14 @@
 using System;
+using MyCouch.Extensions;
 
 namespace MyCouch.Net
 {
     public class ServerClientConnection : Connection, IServerClientConnection
     {
-        public ServerClientConnection(Uri dbUri) : base(dbUri)
+        public ServerClientConnection(Uri serverUri) : base(serverUri)
         {
-            var dbName = Address.LocalPath.TrimStart('/').TrimEnd('/', '?');
+            var dbName = Address.ExtractDbName();
+
             if (!string.IsNullOrWhiteSpace(dbName))
             {
 #if PCL

@@ -12,7 +12,7 @@ namespace MyCouch.UnitTests.Serialization
         public EntitySerializationWithLambdaPropertyFactoryTests()
         {
             var entityReflector = new EntityReflector(new LambdaDynamicPropertyFactory());
-            SUT = new EntitySerializer(CreateSerializationConfiguration(entityReflector), CreateDocumentSerializationMetaProvider());
+            SUT = new DefaultSerializer(CreateSerializationConfiguration(entityReflector));
         }
     }
 #if !PCL
@@ -21,21 +21,16 @@ namespace MyCouch.UnitTests.Serialization
         public EntitySerializationWithIlPropertyFactoryTests()
         {
             var entityReflector = new EntityReflector(new IlDynamicPropertyFactory());
-            SUT = new EntitySerializer(CreateSerializationConfiguration(entityReflector), CreateDocumentSerializationMetaProvider());
+            SUT = new DefaultSerializer(CreateSerializationConfiguration(entityReflector));
         }
     }
 #endif
 
-    public abstract class EntitySerializationTests : SerializerTests<EntitySerializer>
+    public abstract class EntitySerializationTests : SerializerTests<DefaultSerializer>
     {
         protected static SerializationConfiguration CreateSerializationConfiguration(EntityReflector entityReflector)
         {
-            return new SerializationConfiguration(new EntityContractResolver(entityReflector));
-        }
-
-        protected static IDocumentSerializationMetaProvider CreateDocumentSerializationMetaProvider()
-        {
-            return new DocumentSerializationMetaProvider();
+            return new SerializationConfiguration(new EntityContractResolver(entityReflector), new DocumentSerializationMetaProvider());
         }
 
         [Fact]

@@ -8,7 +8,7 @@ namespace MyCouch.Extensions
     {
         public static string AsBase64Encoded(this string value)
         {
-            return Convert.ToBase64String(MyCouchRuntime.DefaultEncoding.GetBytes(value));
+            return Convert.ToBase64String(Encoding.UTF8.GetBytes(value));
         }
 
         public static string PrependWith(this string value, string prefix)

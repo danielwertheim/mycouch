@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
@@ -19,11 +18,11 @@ namespace MyCouch.Net
             get { return HttpClient.BaseAddress; }
         }
 
-        protected Connection(Uri dbUri)
+        protected Connection(Uri uri)
         {
-            Ensure.That(dbUri, "dbUri").IsNotNull();
+            Ensure.That(uri, "uri").IsNotNull();
 
-            HttpClient = CreateHttpClient(dbUri);
+            HttpClient = CreateHttpClient(uri);
             IsDisposed = false;
         }
 
@@ -53,19 +52,18 @@ namespace MyCouch.Net
                 throw new ObjectDisposedException(GetType().Name);
         }
 
-        private HttpClient CreateHttpClient(Uri dbUri)
+        protected HttpClient CreateHttpClient(Uri uri)
         {
-            var client = new HttpClient { BaseAddress = new Uri(dbUri.AbsoluteUri.TrimEnd('/')) };
+            var client = new HttpClient
+            {
+                BaseAddress = new Uri(uri.GetAbsoluteUriExceptUserInfo().TrimEnd(new[] { '/' }))
+            };
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(HttpContentTypes.Json));
 
-            if (!string.IsNullOrWhiteSpace(dbUri.UserInfo))
+            var basicAuthString = uri.GetBasicAuthString();
+            if (basicAuthString != null)
             {
-                var parts = dbUri.UserInfo
-                    .Split(new[] { ":" }, StringSplitOptions.RemoveEmptyEntries)
-                    .Select(p => Uri.UnescapeDataString(p))
-                    .ToArray();
-
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", string.Join(":", parts).AsBase64Encoded());
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", basicAuthString.Value);
             }
 
             return client;
@@ -75,35 +73,70 @@ namespace MyCouch.Net
         {
             ThrowIfDisposed();
 
-            return await HttpClient.SendAsync(OnBeforeSend(httpRequest)).ForAwait();
+            OnBeforeSend(httpRequest);
+
+            using (var message = CreateHttpRequestMessage(httpRequest))
+            {
+                return await HttpClient.SendAsync(message).ForAwait();
+            }
         }
 
         public virtual async Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
-            return await HttpClient.SendAsync(OnBeforeSend(httpRequest), cancellationToken).ForAwait();
+            OnBeforeSend(httpRequest);
+
+            using (var message = CreateHttpRequestMessage(httpRequest))
+            {
+                return await HttpClient.SendAsync(message, cancellationToken).ForAwait();
+            }
         }
 
         public virtual async Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, HttpCompletionOption completionOption)
         {
             ThrowIfDisposed();
 
-            return await HttpClient.SendAsync(OnBeforeSend(httpRequest), completionOption).ForAwait();
+            OnBeforeSend(httpRequest);
+
+            using (var message = CreateHttpRequestMessage(httpRequest))
+            {
+                return await HttpClient.SendAsync(message, completionOption).ForAwait();
+            }
         }
 
         public virtual async Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, HttpCompletionOption completionOption, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
-            return await HttpClient.SendAsync(OnBeforeSend(httpRequest), completionOption, cancellationToken).ForAwait();
+            OnBeforeSend(httpRequest);
+
+            using (var message = CreateHttpRequestMessage(httpRequest))
+            {
+                return await HttpClient.SendAsync(message, completionOption, cancellationToken).ForAwait();
+            }
         }
 
-        protected virtual HttpRequest OnBeforeSend(HttpRequest httpRequest)
+        protected virtual HttpRequestMessage CreateHttpRequestMessage(HttpRequest httpRequest)
         {
-            ThrowIfDisposed();
+            httpRequest.RemoveRequestTypeHeader();
 
-            return httpRequest.RemoveRequestType();
+            var message = new HttpRequestMessage(httpRequest.Method, GenerateRequestUri(httpRequest))
+            {
+                Content = httpRequest.Content,
+            };
+
+            foreach (var kv in httpRequest.Headers)
+                message.Headers.TryAddWithoutValidation(kv.Key, kv.Value);
+
+            return message;
+        }
+
+        protected virtual void OnBeforeSend(HttpRequest httpRequest) { }
+
+        protected virtual string GenerateRequestUri(HttpRequest httpRequest)
+        {
+            return string.Format("{0}/{1}", Address.ToString().TrimEnd('/'), httpRequest.RelativeUrl.TrimStart('/'));
         }
     }
 }

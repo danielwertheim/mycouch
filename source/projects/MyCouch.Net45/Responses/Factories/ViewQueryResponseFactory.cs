@@ -10,12 +10,11 @@ namespace MyCouch.Responses.Factories
         protected readonly ViewQueryResponseMaterializer SuccessfulResponseMaterializer;
         protected readonly FailedResponseMaterializer FailedResponseMaterializer;
 
-        public ViewQueryResponseFactory(ISerializer serializer, IEntitySerializer entitySerializer)
+        public ViewQueryResponseFactory(ISerializer serializer)
         {
             Ensure.That(serializer, "serializer").IsNotNull();
-            Ensure.That(entitySerializer, "entitySerializer").IsNotNull();
 
-            SuccessfulResponseMaterializer = new ViewQueryResponseMaterializer(entitySerializer);
+            SuccessfulResponseMaterializer = new ViewQueryResponseMaterializer(serializer);
             FailedResponseMaterializer = new FailedResponseMaterializer(serializer);
         }
 

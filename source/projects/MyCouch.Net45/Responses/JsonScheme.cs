@@ -2,6 +2,8 @@
 {
     public static class JsonScheme
     {
+        public const string Id = "id";
+        public const string Rev = "rev";
         public const string Error = "error";
         public const string Reason = "reason";
         public const string UpdateSeq = "update_seq";
