@@ -73,6 +73,8 @@ namespace MyCouch.Net
         {
             ThrowIfDisposed();
 
+            OnBeforeSend(httpRequest);
+
             using (var message = CreateHttpRequestMessage(httpRequest))
             {
                 return await HttpClient.SendAsync(message).ForAwait();
@@ -82,6 +84,8 @@ namespace MyCouch.Net
         public virtual async Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
+
+            OnBeforeSend(httpRequest);
 
             using (var message = CreateHttpRequestMessage(httpRequest))
             {
@@ -93,6 +97,8 @@ namespace MyCouch.Net
         {
             ThrowIfDisposed();
 
+            OnBeforeSend(httpRequest);
+
             using (var message = CreateHttpRequestMessage(httpRequest))
             {
                 return await HttpClient.SendAsync(message, completionOption).ForAwait();
@@ -103,6 +109,8 @@ namespace MyCouch.Net
         {
             ThrowIfDisposed();
 
+            OnBeforeSend(httpRequest);
+
             using (var message = CreateHttpRequestMessage(httpRequest))
             {
                 return await HttpClient.SendAsync(message, completionOption, cancellationToken).ForAwait();
@@ -111,8 +119,6 @@ namespace MyCouch.Net
 
         protected virtual HttpRequestMessage CreateHttpRequestMessage(HttpRequest httpRequest)
         {
-            ThrowIfDisposed();
-
             httpRequest.RemoveRequestTypeHeader();
 
             var message = new HttpRequestMessage(httpRequest.Method, GenerateRequestUri(httpRequest))
@@ -125,6 +131,8 @@ namespace MyCouch.Net
 
             return message;
         }
+
+        protected virtual void OnBeforeSend(HttpRequest httpRequest) { }
 
         protected virtual string GenerateRequestUri(HttpRequest httpRequest)
         {
