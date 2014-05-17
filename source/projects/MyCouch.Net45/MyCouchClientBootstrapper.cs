@@ -51,6 +51,11 @@ namespace MyCouch
         public Func<IServerClientConnection, IDatabases> DatabasesFn { get; set; }
 
         /// <summary>
+        /// Used e.g. for bootstraping <see cref="IMyCouchServerClient.Replicator"/>.
+        /// </summary>
+        public Func<IServerClientConnection, IReplicator> ReplicatorFn { get; set; }
+
+        /// <summary>
         /// Used e.g. for bootstraping <see cref="IMyCouchClient.Documents"/>.
         /// </summary>
         public Func<IDbClientConnection, IDocuments> DocumentsFn { get; set; }
@@ -71,6 +76,7 @@ namespace MyCouch
             ConfigureAttachmentsFn();
             ConfigureDatabaseFn();
             ConfigureDatabasesFn();
+            ConfigureReplicatorFn();
             ConfigureDocumentsFn();
             ConfigureEntitiesFn();
             ConfigureViewsFn();
@@ -99,6 +105,11 @@ namespace MyCouch
         protected virtual void ConfigureDatabasesFn()
         {
             DatabasesFn = cn => new Databases(cn, SerializerFn());
+        }
+
+        protected virtual void ConfigureReplicatorFn()
+        {
+            ReplicatorFn = cn => new Replicator(cn, SerializerFn());
         }
 
         protected virtual void ConfigureDocumentsFn()

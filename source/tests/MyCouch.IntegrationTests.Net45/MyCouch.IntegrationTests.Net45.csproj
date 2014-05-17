@@ -73,6 +73,7 @@
     <Compile Include="CoreTests\DatabaseTests.cs" />
     <Compile Include="CoreTests\DocumentsTests.cs" />
     <Compile Include="CoreTests\EntitiesTests.cs" />
+    <Compile Include="CoreTests\ReplicatorTests.cs" />
     <Compile Include="CoreTests\ViewsTests.cs" />
     <Compile Include="CoreTests\DatabasesTests.cs" />
     <Compile Include="CoreTests\MyCouchStoreCallbackQueryTests.cs" />

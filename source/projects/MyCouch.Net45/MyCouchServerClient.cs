@@ -12,6 +12,7 @@ namespace MyCouch
         public IServerClientConnection Connection { get; private set; }
         public ISerializer Serializer { get; private set; }
         public IDatabases Databases { get; private set; }
+        public IReplicator Replicator { get; private set; }
 
         public MyCouchServerClient(string serverUrl) : this(new Uri(serverUrl)) { }
 
@@ -27,6 +28,7 @@ namespace MyCouch
 
             Serializer = bootstrapper.SerializerFn();
             Databases = bootstrapper.DatabasesFn(Connection);
+            Replicator = bootstrapper.ReplicatorFn(Connection);
             IsDisposed = false;
         }
 

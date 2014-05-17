@@ -15,7 +15,6 @@ namespace MyCouch.Contexts
     {
         protected DatabaseHeaderResponseFactory DatabaseHeaderResponseFactory { get; set; }
         protected GetDatabaseResponseFactory GetDatabaseResponseFactory { get; set; }
-        protected ReplicationResponseFactory ReplicationResponseFactory { get; set; }
 
         protected GetDatabaseServerHttpRequestFactory GetHttpRequestFactory { get; set; }
         protected HeadDatabaseServerHttpRequestFactory HeadHttpRequestFactory { get; set; }
@@ -23,7 +22,6 @@ namespace MyCouch.Contexts
         protected DeleteDatabaseServerHttpRequestFactory DeleteHttpRequestFactory { get; set; }
         protected CompactDatabaseServerHttpRequestFactory CompactHttpRequestFactory { get; set; }
         protected ViewCleanupServerHttpRequestFactory ViewCleanupHttpRequestFactory { get; set; }
-        protected ReplicateDatabaseServerHttpRequestFactory ReplicateDatabaseHttpRequestFactory { get; set; }
 
         public Databases(IServerClientConnection connection, ISerializer serializer)
             : base(connection)
@@ -32,7 +30,6 @@ namespace MyCouch.Contexts
 
             DatabaseHeaderResponseFactory = new DatabaseHeaderResponseFactory(serializer);
             GetDatabaseResponseFactory = new GetDatabaseResponseFactory(serializer);
-            ReplicationResponseFactory = new ReplicationResponseFactory(serializer);
 
             GetHttpRequestFactory = new GetDatabaseServerHttpRequestFactory();
             HeadHttpRequestFactory = new HeadDatabaseServerHttpRequestFactory();
@@ -40,7 +37,6 @@ namespace MyCouch.Contexts
             DeleteHttpRequestFactory = new DeleteDatabaseServerHttpRequestFactory();
             CompactHttpRequestFactory = new CompactDatabaseServerHttpRequestFactory();
             ViewCleanupHttpRequestFactory = new ViewCleanupServerHttpRequestFactory();
-            ReplicateDatabaseHttpRequestFactory = new ReplicateDatabaseServerHttpRequestFactory(serializer);
         }
 
         public virtual Task<GetDatabaseResponse> GetAsync(string dbName)
@@ -133,21 +129,6 @@ namespace MyCouch.Contexts
             }
         }
 
-        public virtual Task<ReplicationResponse> ReplicateAsync(string id, string source, string target)
-        {
-            return ReplicateAsync(new ReplicateDatabaseRequest(id, source, target));
-        }
-
-        public virtual async Task<ReplicationResponse> ReplicateAsync(ReplicateDatabaseRequest request)
-        {
-            var httpRequest = CreateHttpRequest(request);
-
-            using (var res = await SendAsync(httpRequest).ForAwait())
-            {
-                return ProcessReplicationResponse(res);
-            }
-        }
-
         protected virtual HttpRequest CreateHttpRequest(GetDatabaseRequest request)
         {
             return GetHttpRequestFactory.Create(request);
@@ -178,11 +159,6 @@ namespace MyCouch.Contexts
             return ViewCleanupHttpRequestFactory.Create(request);
         }
 
-        protected virtual HttpRequest CreateHttpRequest(ReplicateDatabaseRequest request)
-        {
-            return ReplicateDatabaseHttpRequestFactory.Create(request);
-        }
-
         protected virtual DatabaseHeaderResponse ProcessDatabaseHeaderResponse(HttpResponseMessage response)
         {
             return DatabaseHeaderResponseFactory.Create(response);
@@ -191,11 +167,6 @@ namespace MyCouch.Contexts
         protected virtual GetDatabaseResponse ProcessGetDatabaseResponse(HttpResponseMessage response)
         {
             return GetDatabaseResponseFactory.Create(response);
-        }
-
-        protected virtual ReplicationResponse ProcessReplicationResponse(HttpResponseMessage response)
-        {
-            return ReplicationResponseFactory.Create(response);
         }
     }
 }

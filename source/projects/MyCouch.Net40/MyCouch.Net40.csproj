@@ -120,6 +120,9 @@
     <Compile Include="..\mycouch.net45\contexts\Entities.cs">
       <Link>Contexts\Entities.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Contexts\Replicator.cs">
+      <Link>Contexts\Replicator.cs</Link>
+    </Compile>
     <Compile Include="..\mycouch.net45\contexts\Views.cs">
       <Link>Contexts\Views.cs</Link>
     </Compile>
@@ -327,8 +330,8 @@
     <Compile Include="..\MyCouch.Net45\IQueryParameters.cs">
       <Link>IQueryParameters.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\IReplication.cs">
-      <Link>IReplication.cs</Link>
+    <Compile Include="..\MyCouch.Net45\IReplicator.cs">
+      <Link>IReplicator.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\IServerClientConnection.cs">
       <Link>IServerClientConnection.cs</Link>

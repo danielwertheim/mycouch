@@ -69,6 +69,7 @@
     <Compile Include="Contexts\Databases.cs" />
     <Compile Include="Contexts\Documents.cs" />
     <Compile Include="Contexts\Entities.cs" />
+    <Compile Include="Contexts\Replicator.cs" />
     <Compile Include="Contexts\Views.cs" />
     <Compile Include="DocumentAttribute.cs" />
     <Compile Include="DocumentHeader.cs" />
@@ -106,7 +107,7 @@
     <Compile Include="IMyCouchServerClient.cs" />
     <Compile Include="IMyCouchStore.cs" />
     <Compile Include="IQueryParameters.cs" />
-    <Compile Include="IReplication.cs" />
+    <Compile Include="IReplicator.cs" />
     <Compile Include="IServerClientConnection.cs" />
     <Compile Include="IViews.cs" />
     <Compile Include="MyCouchClient.cs" />

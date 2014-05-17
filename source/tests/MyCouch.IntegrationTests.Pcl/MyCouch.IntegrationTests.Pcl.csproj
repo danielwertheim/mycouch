@@ -81,6 +81,9 @@
     <Compile Include="..\mycouch.integrationtests.net45\coretests\MyCouchStoreObservableQueryTests.cs">
       <Link>CoreTests\MyCouchStoreObservableQueryTests.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.IntegrationTests.Net45\CoreTests\ReplicatorTests.cs">
+      <Link>CoreTests\ReplicatorTests.cs</Link>
+    </Compile>
     <Compile Include="..\mycouch.integrationtests.net45\coretests\ViewsTests.cs">
       <Link>CoreTests\ViewsTests.cs</Link>
     </Compile>
