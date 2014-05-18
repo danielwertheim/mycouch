@@ -10,6 +10,9 @@
         public const string Error = "error";
         public const string Reason = "reason";
         public const string UpdateSeq = "update_seq";
+        public const string Offset = "offset";
+        public const string Rows = "rows";
+        public const string Key = "key";
         public const string IncludedDoc = "doc";
         public const string LastSeq = "last_seq";
         public const string TotalRows = "total_rows";

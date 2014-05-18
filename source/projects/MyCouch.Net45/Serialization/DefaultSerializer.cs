@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using EnsureThat;
+using MyCouch.EntitySchemes;
+using MyCouch.Serialization.Meta;
 using Newtonsoft.Json;
 
 namespace MyCouch.Serialization
@@ -12,13 +14,35 @@ namespace MyCouch.Serialization
     {
         protected readonly SerializationConfiguration Configuration;
         protected readonly JsonSerializer InternalSerializer;
+        protected readonly IDocumentSerializationMetaProvider DocumentMetaProvider;
+        protected readonly IEntityReflector EntityReflector;
 
-        public DefaultSerializer(SerializationConfiguration configuration)
+        public DefaultSerializer(SerializationConfiguration configuration, IDocumentSerializationMetaProvider documentMetaProvider, IEntityReflector entityReflector = null)
         {
             Ensure.That(configuration, "configuration").IsNotNull();
+            Ensure.That(documentMetaProvider, "documentMetaProvider").IsNotNull();
 
             Configuration = configuration;
+            DocumentMetaProvider = documentMetaProvider;
+            EntityReflector = entityReflector;
             InternalSerializer = JsonSerializer.Create(Configuration.Settings);
+        }
+
+        protected virtual JsonTextWriter CreateWriterFor<T>(TextWriter writer)
+        {
+            return CreateWriterFor(typeof (T), writer);
+        }
+
+        protected virtual JsonTextWriter CreateWriterFor(Type docType, TextWriter writer)
+        {
+            if (EntityReflector == null)
+                return CreateWriter(writer);
+
+            var documentMeta = DocumentMetaProvider.Get(docType);
+
+            return documentMeta == null
+                ? CreateWriter(writer)
+                : new DocumentJsonWriter(writer, documentMeta, Configuration.Conventions, EntityReflector);
         }
 
         protected virtual JsonTextWriter CreateWriter(TextWriter writer)
@@ -26,18 +50,21 @@ namespace MyCouch.Serialization
             return new JsonTextWriter(writer);
         }
 
-        protected virtual JsonTextWriter CreateWriterFor<T>(TextWriter writer)
+        protected virtual JsonTextReader CreateReaderFor<T>(TextReader reader)
         {
-            var documentMeta = Configuration.DocumentMetaProvider.Get(typeof(T));
-
-            return documentMeta == null
-                ? CreateWriter(writer)
-                : new DocumentJsonWriter(documentMeta, writer, Configuration.Conventions);
+            return CreateReader(typeof (T), reader);
         }
 
-        protected virtual JsonTextReader CreateReaderFor(TextReader reader)
+        protected virtual JsonTextReader CreateReader(Type type, TextReader reader)
         {
-            return new DocumentJsonReader(reader);
+            return EntityReflector == null
+                ? CreateReader(reader)
+                : new DocumentJsonReader(reader, type, EntityReflector);
+        }
+
+        protected virtual JsonTextReader CreateReader(TextReader reader)
+        {
+            return new JsonTextReader(reader);
         }
 
         public virtual string Serialize<T>(T item) where T : class
@@ -56,7 +83,7 @@ namespace MyCouch.Serialization
         protected virtual string SerializeValue<T>(T value)
         {
             var content = new StringBuilder(16);
-            using (var stringWriter = new StringWriter(content, MyCouchRuntime.FormatingCulture.NumberFormat))
+            using (var stringWriter = new StringWriter(content, MyCouchRuntime.FormatingCulture))
             {
                 using (var jsonWriter = Configuration.ApplyConfigToWriter(CreateWriter(stringWriter)))
                 {
@@ -66,28 +93,28 @@ namespace MyCouch.Serialization
             return content.ToString();
         }
 
-        public virtual T Deserialize<T>(string data) where T : class
+        public virtual T Deserialize<T>(string data)
         {
             if (string.IsNullOrWhiteSpace(data))
-                return null;
+                return default(T);
 
             using (var sr = new StringReader(data))
             {
-                using (var jsonReader = Configuration.ApplyConfigToReader(CreateReaderFor(sr)))
+                using (var jsonReader = Configuration.ApplyConfigToReader(CreateReaderFor<T>(sr)))
                 {
                     return InternalSerializer.Deserialize<T>(jsonReader);
                 }
             }
         }
 
-        public virtual T Deserialize<T>(Stream data) where T : class
+        public virtual T Deserialize<T>(Stream data)
         {
             if (StreamIsEmpty(data))
-                return null;
+                return default(T);
 
             using (var sr = new StreamReader(data, MyCouchRuntime.DefaultEncoding))
             {
-                using (var jsonReader = Configuration.ApplyConfigToReader(CreateReaderFor(sr)))
+                using (var jsonReader = Configuration.ApplyConfigToReader(CreateReaderFor<T>(sr)))
                 {
                     return InternalSerializer.Deserialize<T>(jsonReader);
                 }
@@ -108,7 +135,7 @@ namespace MyCouch.Serialization
 
                 using (var sr = new StreamReader(copy, MyCouchRuntime.DefaultEncoding))
                 {
-                    using (var jsonReader = Configuration.ApplyConfigToReader(CreateReaderFor(sr)))
+                    using (var jsonReader = Configuration.ApplyConfigToReader(CreateReaderFor<T>(sr)))
                     {
                         return InternalSerializer.Deserialize<T>(jsonReader);
                     }
@@ -123,7 +150,7 @@ namespace MyCouch.Serialization
 
             using (var sr = new StreamReader(data, MyCouchRuntime.DefaultEncoding))
             {
-                using (var jsonReader = Configuration.ApplyConfigToReader(CreateReaderFor(sr)))
+                using (var jsonReader = Configuration.ApplyConfigToReader(CreateReaderFor<T>(sr)))
                 {
                     InternalSerializer.Populate(jsonReader, item);
                 }
@@ -137,7 +164,7 @@ namespace MyCouch.Serialization
 
             using (var sr = new StringReader(data))
             {
-                using (var jsonReader = Configuration.ApplyConfigToReader(CreateReaderFor(sr)))
+                using (var jsonReader = Configuration.ApplyConfigToReader(CreateReaderFor<T>(sr)))
                 {
                     InternalSerializer.Populate(jsonReader, item);
                 }

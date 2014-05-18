@@ -31,8 +31,8 @@ namespace MyCouch.Contexts
             Ensure.That(entityReflector, "entityReflector").IsNotNull();
 
             Serializer = serializer;
-            EntityResponseFactory = new EntityResponseFactory(serializer);
             Reflector = entityReflector;
+            EntityResponseFactory = new EntityResponseFactory(serializer, Reflector);
             GetHttpRequestFactory = new GetEntityHttpRequestFactory();
             PostHttpRequestFactory = new PostEntityHttpRequestFactory(Serializer);
             PutHttpRequestFactory = new PutEntityHttpRequestFactory(Reflector, Serializer);

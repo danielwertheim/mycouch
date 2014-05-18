@@ -21,14 +21,9 @@ namespace MyCouch
         public Func<ISerializer> SerializerFn { get; set; }
 
         /// <summary>
-        /// Used e.g. for bootstraping <see cref="IDocuments.Serializer"/>.
+        /// Used e.g. for bootstraping <see cref="IMyCouchClient.DocumentSerializer"/>.
         /// </summary>
         public Func<ISerializer> DocumentSerializerFn { get; set; }
-
-        /// <summary>
-        /// Used e.g. for bootstraping <see cref="IEntities.Serializer"/>.
-        /// </summary>
-        public Func<ISerializer> EntitySerializerFn { get; set; }
 
         /// <summary>
         /// Used e.g. for bootstraping <see cref="IMyCouchClient.Changes"/>.
@@ -83,7 +78,6 @@ namespace MyCouch
 
             ConfigureSerializerFn();
             ConfigureDocumentSerializerFn();
-            ConfigureEntitySerializerFn();
             ConfigureEntityReflectorFn();
         }
 
@@ -116,14 +110,14 @@ namespace MyCouch
         {
             DocumentsFn = cn => new Documents(
                 cn,
-                DocumentSerializerFn());
+                SerializerFn());
         }
 
         protected virtual void ConfigureEntitiesFn()
         {
             EntitiesFn = cn => new Entities(
                 cn,
-                EntitySerializerFn(),
+                DocumentSerializerFn(),
                 EntityReflectorFn());
         }
 
@@ -131,7 +125,7 @@ namespace MyCouch
         {
             ViewsFn = cn => new Views(
                 cn,
-                EntitySerializerFn());
+                DocumentSerializerFn());
         }
 
         protected virtual void ConfigureEntityReflectorFn()
@@ -150,9 +144,9 @@ namespace MyCouch
             {
                 var contractResolver = new SerializationContractResolver();
                 var documentMetaProvider = new EmptyDocumentSerializationMetaProvider();
-                var configuration = new SerializationConfiguration(contractResolver, documentMetaProvider);
+                var configuration = new SerializationConfiguration(contractResolver);
 
-                return new DefaultSerializer(configuration);
+                return new DefaultSerializer(configuration, documentMetaProvider);
             });
             SerializerFn = () => serializer.Value;
         }
@@ -163,24 +157,11 @@ namespace MyCouch
             {
                 var contractResolver = new SerializationContractResolver();
                 var documentMetaProvider = new DocumentSerializationMetaProvider();
-                var configuration = new SerializationConfiguration(contractResolver, documentMetaProvider);
+                var configuration = new SerializationConfiguration(contractResolver);
 
-                return new DefaultSerializer(configuration);
+                return new DefaultSerializer(configuration, documentMetaProvider, EntityReflectorFn());
             });
             DocumentSerializerFn = () => serializer.Value;
-        }
-
-        protected virtual void ConfigureEntitySerializerFn()
-        {
-            var serializer = new Lazy<ISerializer>(() =>
-            {
-                var contractResolver = new EntityContractResolver(EntityReflectorFn());
-                var documentMetaProvider = new DocumentSerializationMetaProvider();
-                var configuration = new SerializationConfiguration(contractResolver, documentMetaProvider);
-
-                return new DefaultSerializer(configuration);
-            });
-            EntitySerializerFn = () => serializer.Value;
         }
     }
 }

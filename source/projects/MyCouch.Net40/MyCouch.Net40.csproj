@@ -558,9 +558,6 @@
     <Compile Include="..\mycouch.net45\responses\GetDatabaseResponse.cs">
       <Link>Responses\GetDatabaseResponse.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.net45\responses\IResponseRow.cs">
-      <Link>Responses\IResponseRow.cs</Link>
-    </Compile>
     <Compile Include="..\mycouch.net45\responses\JsonScheme.cs">
       <Link>Responses\JsonScheme.cs</Link>
     </Compile>
@@ -650,9 +647,6 @@
     </Compile>
     <Compile Include="..\mycouch.net45\serialization\DocumentJsonWriter.cs">
       <Link>Serialization\DocumentJsonWriter.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.net45\serialization\EntityContractResolver.cs">
-      <Link>Serialization\EntityContractResolver.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.net45\serialization\ISerializer.cs">
       <Link>Serialization\ISerializer.cs</Link>

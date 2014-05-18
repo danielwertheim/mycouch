@@ -16,7 +16,7 @@ namespace MyCouch.Responses
 #if !PCL
         [Serializable]
 #endif
-        public class Row : IResponseRow
+        public class Row
         {
             public string Id { get; set; }
             public string Rev { get; set; }

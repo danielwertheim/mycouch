@@ -90,8 +90,7 @@
     <Compile Include="Requests\QueryViewRequestTests.cs" />
     <Compile Include="EntitySchemes\EntityIdMemberTests.cs" />
     <Compile Include="EntitySchemes\EntityRevMemberTests.cs" />
-    <Compile Include="Serialization\DocumentSerializerTests.cs" />
-    <Compile Include="Serialization\EntitySerializationTests.cs" />
+    <Compile Include="Serialization\DocumentSerializationTests.cs" />
     <Compile Include="Serialization\SerializerTests.cs" />
     <Compile Include="Serialization\ViewQueryResponseRowsDeserializerTests.cs" />
     <Compile Include="UnitTestsOf.cs" />

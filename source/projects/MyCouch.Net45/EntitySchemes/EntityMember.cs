@@ -32,13 +32,18 @@ namespace MyCouch.EntitySchemes
 
         public abstract int? GetMemberRankingIndex(Type entityType, string membername);
 
-        public virtual string GetValueFrom<T>(T entity)
+        public virtual string GetValueFrom<T>(T entity) where T : class
         {
-            return GetGetterFor(typeof(T)).GetValue(entity);
+            return entity == null
+                ? default(string)
+                : GetGetterFor(typeof(T)).GetValue(entity);
         }
 
-        public void SetValueTo<T>(T entity, string value)
+        public void SetValueTo<T>(T entity, string value) where T : class
         {
+            if(entity == null)
+                return;
+
             GetSetterFor(typeof(T)).SetValue(entity, value);
         }
 
@@ -88,7 +93,7 @@ namespace MyCouch.EntitySchemes
 #endif
         }
 
-        protected virtual PropertyInfo GetPropertyFor(Type type)
+        public virtual PropertyInfo GetPropertyFor(Type type)
         {
             return GetPropertiesFor(type).Select(p => new
             {

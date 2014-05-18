@@ -1,6 +1,7 @@
 ﻿using System.Net.Http;
 using System.Net.Http.Headers;
 using EnsureThat;
+using MyCouch.EntitySchemes;
 using MyCouch.Extensions;
 using MyCouch.Serialization;
 
@@ -9,27 +10,30 @@ namespace MyCouch.Responses.Materializers
     public class EntityResponseMaterializer
     {
         protected readonly ISerializer Serializer;
+        protected readonly IEntityReflector EntityReflector;
 
-        public EntityResponseMaterializer(ISerializer serializer)
+        public EntityResponseMaterializer(ISerializer serializer, IEntityReflector entityReflector)
         {
             Ensure.That(serializer, "serializer").IsNotNull();
+            Ensure.That(entityReflector, "entityReflector").IsNotNull();
 
             Serializer = serializer;
+            EntityReflector = entityReflector;
         }
 
-        public virtual void Materialize<T>(EntityResponse<T> response, HttpResponseMessage httpResponse) where T : class
-        {
-            SetContent(response, httpResponse);
-        }
-
-        protected virtual async void SetContent<T>(EntityResponse<T> response, HttpResponseMessage httpResponse) where T : class
+        public virtual async void Materialize<T>(EntityResponse<T> response, HttpResponseMessage httpResponse) where T : class
         {
             using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
             {
                 if (response.RequestMethod == HttpMethod.Get)
-                    response.Content = Serializer.DeserializeCopied<T>(content);
+                {
+                    response.Content = Serializer.Deserialize<T>(content);
+                    response.Id = EntityReflector.IdMember.GetValueFrom(response.Content);
+                    response.Rev = EntityReflector.RevMember.GetValueFrom(response.Content);
+                }
+                else
+                    Serializer.Populate(response, content);
 
-                Serializer.Populate(response, content);
                 SetMissingIdFromRequestUri(response, httpResponse.RequestMessage);
                 SetMissingRevFromRequestHeaders(response, httpResponse.Headers);
             }

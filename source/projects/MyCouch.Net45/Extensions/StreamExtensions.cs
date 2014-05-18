@@ -6,10 +6,8 @@ namespace MyCouch.Extensions
     {
         public static string ReadAsString(this Stream content)
         {
-            using (var reader = new StreamReader(content, MyCouchRuntime.DefaultEncoding))
-            {
-                return reader.ReadToEnd().TrimEnd();
-            }
+            var reader = new StreamReader(content, MyCouchRuntime.DefaultEncoding);
+            return reader.ReadToEnd().TrimEnd();
         }
     }
 }

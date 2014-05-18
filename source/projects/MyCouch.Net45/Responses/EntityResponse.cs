@@ -34,10 +34,10 @@ namespace MyCouch.Responses
     public class GetEntityResponse<T> : EntityResponse<T> where T : class
     {
         [JsonProperty(JsonScheme._Id)]
-        public virtual string Id { get; set; }
+        public override string Id { get; set; }
 
         [JsonProperty(JsonScheme._Rev)]
-        public virtual string Rev { get; set; }
+        public override string Rev { get; set; }
 
         [JsonProperty(JsonScheme.Conflicts)]
         public virtual string[] Conflicts { get; set; }

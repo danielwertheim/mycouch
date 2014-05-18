@@ -13,47 +13,35 @@ using Xunit;
 
 namespace MyCouch.UnitTests.Serialization
 {
-    public class ViewQueryResponseRowsDeserializerWithSimpleContractResolverTests : ViewQueryResponseRowsDeserializerTests
-    {
-        public ViewQueryResponseRowsDeserializerWithSimpleContractResolverTests() : base(CreateSerializationConfiguration()) { }
-
-        private static SerializationConfiguration CreateSerializationConfiguration()
-        {
-            return new SerializationConfiguration(new SerializationContractResolver(), new DocumentSerializationMetaProvider());
-        }
-    }
-
     public class ViewQueryResponseRowsDeserializerWithEntityContractResolverUsingLambdasTests : ViewQueryResponseRowsDeserializerTests
     {
-        public ViewQueryResponseRowsDeserializerWithEntityContractResolverUsingLambdasTests() : base(CreateSerializationConfiguration()) { }
+        public ViewQueryResponseRowsDeserializerWithEntityContractResolverUsingLambdasTests()
+            : base(CreateEntityReflector()) { }
 
-        private static SerializationConfiguration CreateSerializationConfiguration()
+        private static IEntityReflector CreateEntityReflector()
         {
-            var entityReflector = new EntityReflector(new LambdaDynamicPropertyFactory());
-
-            return new SerializationConfiguration(new EntityContractResolver(entityReflector), new DocumentSerializationMetaProvider());
+            return new EntityReflector(new LambdaDynamicPropertyFactory());
         }
     }
 
 #if !PCL
     public class ViewQueryResponseRowsDeserializerWithEntityContractResolverUsingIlTests : ViewQueryResponseRowsDeserializerTests
     {
-        public ViewQueryResponseRowsDeserializerWithEntityContractResolverUsingIlTests() : base(CreateSerializationConfiguration()) { }
+        public ViewQueryResponseRowsDeserializerWithEntityContractResolverUsingIlTests()
+            : base(CreateEntityReflector()) { }
 
-        private static SerializationConfiguration CreateSerializationConfiguration()
+        private static IEntityReflector CreateEntityReflector()
         {
-            var entityReflector = new EntityReflector(new IlDynamicPropertyFactory());
-
-            return new SerializationConfiguration(new EntityContractResolver(entityReflector), new DocumentSerializationMetaProvider());
+            return new EntityReflector(new IlDynamicPropertyFactory());
         }
     }
 #endif
 
     public abstract class ViewQueryResponseRowsDeserializerTests : UnitTestsOf<DefaultSerializer>
     {
-        protected ViewQueryResponseRowsDeserializerTests(SerializationConfiguration serializationConfiguration)
+        protected ViewQueryResponseRowsDeserializerTests(IEntityReflector entityReflector)
         {
-            SUT = new DefaultSerializer(serializationConfiguration);
+            SUT = new DefaultSerializer(new SerializationConfiguration(new SerializationContractResolver()), new DocumentSerializationMetaProvider(), entityReflector);
         }
 
         [Fact]

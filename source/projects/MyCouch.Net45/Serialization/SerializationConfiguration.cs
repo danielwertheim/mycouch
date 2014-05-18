@@ -1,6 +1,5 @@
 using EnsureThat;
 using MyCouch.Serialization.Conventions;
-using MyCouch.Serialization.Meta;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
@@ -11,12 +10,10 @@ namespace MyCouch.Serialization
     {
         public JsonSerializerSettings Settings { get; protected set; }
         public SerializationConventions Conventions { get; protected set; }
-        public IDocumentSerializationMetaProvider DocumentMetaProvider { get; protected set; }
 
-        public SerializationConfiguration(IContractResolver contractResolver, IDocumentSerializationMetaProvider documentMetaProvider)
+        public SerializationConfiguration(IContractResolver contractResolver)
         {
             Ensure.That(contractResolver, "contractResolver").IsNotNull();
-            Ensure.That(documentMetaProvider, "documentMetaProvider").IsNotNull();
 
             Settings = new JsonSerializerSettings
             {
@@ -32,7 +29,6 @@ namespace MyCouch.Serialization
             };
             Settings.Converters.Add(new StringEnumConverter());
             Conventions = new SerializationConventions();
-            DocumentMetaProvider = documentMetaProvider;
         }
 
         public virtual T ApplyConfigToWriter<T>(T writer) where T : JsonWriter

@@ -14,7 +14,7 @@ namespace MyCouch.UnitTests.Cloudant.HttpRequestFactories
         public SearchIndexHttpRequestFactoryTests()
         {
             var boostrapper = new MyCouchCloudantClientBootstrapper();
-            SUT = new SearchIndexHttpRequestFactory(boostrapper.EntitySerializerFn());
+            SUT = new SearchIndexHttpRequestFactory(boostrapper.DocumentSerializerFn());
         }
 
         [Fact]

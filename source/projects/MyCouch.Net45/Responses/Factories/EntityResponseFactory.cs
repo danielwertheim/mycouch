@@ -1,5 +1,5 @@
 ﻿using System.Net.Http;
-using EnsureThat;
+using MyCouch.EntitySchemes;
 using MyCouch.Responses.Materializers;
 using MyCouch.Serialization;
 
@@ -10,11 +10,9 @@ namespace MyCouch.Responses.Factories
         protected readonly EntityResponseMaterializer SuccessfulResponseMaterializer;
         protected readonly FailedEntityResponseMaterializer FailedResponseMaterializer;
 
-        public EntityResponseFactory(ISerializer serializer)
+        public EntityResponseFactory(ISerializer serializer, IEntityReflector entityReflector)
         {
-            Ensure.That(serializer, "serializer").IsNotNull();
-
-            SuccessfulResponseMaterializer = new EntityResponseMaterializer(serializer);
+            SuccessfulResponseMaterializer = new EntityResponseMaterializer(serializer, entityReflector);
             FailedResponseMaterializer = new FailedEntityResponseMaterializer(serializer);
         }
 

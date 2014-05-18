@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using EnsureThat;
 using MyCouch.Extensions;
@@ -19,15 +20,17 @@ namespace MyCouch.Responses.Materializers
 
         public virtual async void Materialize(DocumentResponse response, HttpResponseMessage httpResponse)
         {
+            if(response.RequestMethod != HttpMethod.Get)
+                throw new ArgumentException(GetType().Name + " only supports materializing GET responses for raw documents.");
+
             using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
             {
-                if (response.RequestMethod == HttpMethod.Get)
-                {
-                    response.Content = content.ReadAsString();
-                    Serializer.Populate(response, response.Content);
-                }
-                else
-                    Serializer.Populate(response, content);
+                response.Content = content.ReadAsString();
+
+                content.Position = 0;
+                var t = Serializer.Deserialize<Temp>(content);
+                response.Id = t._id;
+                response.Rev = t._rev;
 
                 SetMissingIdFromRequestUri(response, httpResponse.RequestMessage);
                 SetMissingRevFromRequestHeaders(response, httpResponse.Headers);
@@ -44,6 +47,12 @@ namespace MyCouch.Responses.Materializers
         {
             if (string.IsNullOrWhiteSpace(response.Rev))
                 response.Rev = responseHeaders.GetETag();
+        }
+
+        private class Temp
+        {
+            public string _id { get; set; }
+            public string _rev { get; set; }
         }
     }
 }

@@ -229,7 +229,6 @@
     <Compile Include="Responses\Factories\TextResponseFactory.cs" />
     <Compile Include="Responses\Factories\ViewQueryResponseFactory.cs" />
     <Compile Include="Responses\GetDatabaseResponse.cs" />
-    <Compile Include="Responses\IResponseRow.cs" />
     <Compile Include="Responses\JsonScheme.cs" />
     <Compile Include="Responses\ReplicationResponse.cs" />
     <Compile Include="Responses\Response.cs" />
@@ -245,7 +244,6 @@
     <Compile Include="Serialization\Converters\MultiTypeDeserializationJsonConverter.cs" />
     <Compile Include="Serialization\Converters\UnixEpochDateTimeConverter.cs" />
     <Compile Include="Serialization\DefaultSerializer.cs" />
-    <Compile Include="Serialization\EntityContractResolver.cs" />
     <Compile Include="Serialization\ISerializer.cs" />
     <Compile Include="Serialization\Meta\DocumentSerializationMeta.cs" />
     <Compile Include="Serialization\Meta\DocumentSerializationMetaProvider.cs" />

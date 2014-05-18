@@ -16,7 +16,7 @@ namespace MyCouch.Cloudant
         {
             SearchesFn = cn => new Searches(
                 cn,
-                EntitySerializerFn());
+                DocumentSerializerFn());
         }
     }
 }

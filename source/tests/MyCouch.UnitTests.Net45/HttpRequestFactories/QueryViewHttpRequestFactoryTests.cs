@@ -13,7 +13,7 @@ namespace MyCouch.UnitTests.HttpRequestFactories
         public QueryViewHttpRequestFactoryTests()
         {
             var boostrapper = new MyCouchClientBootstrapper();
-            SUT = new QueryViewHttpRequestFactory(boostrapper.EntitySerializerFn());
+            SUT = new QueryViewHttpRequestFactory(boostrapper.DocumentSerializerFn());
         }
 
         [Fact]

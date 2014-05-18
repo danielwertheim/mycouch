@@ -39,7 +39,7 @@ namespace MyCouch.Cloudant.Responses
 #if !PCL
         [Serializable]
 #endif
-        public class Row : IResponseRow
+        public class Row
         {
             public string Id { get; set; }
             public double[] Order { get; set; }

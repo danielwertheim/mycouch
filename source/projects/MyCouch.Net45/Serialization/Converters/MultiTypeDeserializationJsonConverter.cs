@@ -25,6 +25,14 @@ namespace MyCouch.Serialization.Converters
             if (objectType == typeof(string[]))
                 return ReadJsonAsStringArray(reader);
 
+            var documentJsonReader = reader as DocumentJsonReader;
+            if (documentJsonReader != null)
+            {
+                object o = null;
+                documentJsonReader.RunWithNewTempRoot(objectType, () => o = serializer.Deserialize(documentJsonReader, objectType));
+                return o;
+            }
+
             return serializer.Deserialize(reader, objectType);
         }
 
@@ -70,7 +78,6 @@ namespace MyCouch.Serialization.Converters
 
             return rowValues.ToArray();
         }
-
 
         public override bool CanConvert(Type objectType)
         {

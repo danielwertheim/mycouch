@@ -25,6 +25,7 @@ namespace MyCouch.Responses
         public long RowCount { get { return IsEmpty ? 0 : Rows.Length; } }
         [JsonProperty(JsonScheme.UpdateSeq)]
         public string UpdateSeq { get; set; }
+        [JsonProperty(JsonScheme.Offset)]
         public long OffSet { get; set; }
         public Row[] Rows { get; set; }
         public bool IsEmpty
@@ -46,7 +47,7 @@ namespace MyCouch.Responses
 #if !PCL
         [Serializable]
 #endif
-        public class Row : IResponseRow
+        public class Row
         {
             public string Id { get; set; }
 

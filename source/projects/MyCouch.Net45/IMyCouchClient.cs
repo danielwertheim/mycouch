@@ -16,11 +16,21 @@ namespace MyCouch
         IDbClientConnection Connection { get; }
         
         /// <summary>
-        /// The Serializer associated with this client instance. Use this if you want
-        /// to serialize or deserialize using the same behavior that the provider has.
+        /// More or less Vanilla configured serializer.
         /// </summary>
-        /// <remarks>If you want a serializer that supports entity conventions, check <see cref="IEntities.Serializer"/></remarks>
+        /// <remarks>If you want a serializer that supports entity conventions etc and is used
+        /// to work with results from <see cref="Entities"/> and
+        /// <see cref="Views"/>, then check <see cref="DocumentSerializer"/></remarks>
         ISerializer Serializer { get; }
+
+        /// <summary>
+        /// Supports entity conventions etc that is used in the contexts of
+        /// <see cref="Views"/>
+        /// <see cref="Entities"/>
+        /// <see cref="Documents"/>
+        /// </summary>
+        /// <remarks>For vanilla serializer, <see cref="Serializer"/>.</remarks>
+        ISerializer DocumentSerializer { get; }
 
         /// <summary>
         /// Changes oriented API operations, for getting or subscribinh to changes in the database.
