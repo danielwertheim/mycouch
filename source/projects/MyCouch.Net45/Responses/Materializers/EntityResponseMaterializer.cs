@@ -25,11 +25,17 @@ namespace MyCouch.Responses.Materializers
         {
             using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
             {
-                if (response.RequestMethod == HttpMethod.Get)
+                var get = response as GetEntityResponse<T>;
+                if (get != null)
                 {
-                    response.Content = Serializer.Deserialize<T>(content);
+                    response.Content = Serializer.DeserializeCopied<T>(content);
                     response.Id = EntityReflector.IdMember.GetValueFrom(response.Content);
                     response.Rev = EntityReflector.RevMember.GetValueFrom(response.Content);
+
+                    var tmp = Serializer.Deserialize<Temp>(content);
+                    get.Conflicts = tmp._conflicts;
+                    get.Id = get.Id ?? tmp.Id;
+                    get.Rev = get.Rev ?? tmp.Rev;
                 }
                 else
                     Serializer.Populate(response, content);
@@ -49,6 +55,13 @@ namespace MyCouch.Responses.Materializers
         {
             if (string.IsNullOrWhiteSpace(response.Rev))
                 response.Rev = responseHeaders.GetETag();
+        }
+
+        private class Temp
+        {
+            public string Id { get; set; }
+            public string Rev { get; set; }
+            public string[] _conflicts { get; set; }
         }
     }
 }

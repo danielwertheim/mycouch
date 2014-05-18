@@ -31,6 +31,7 @@ namespace MyCouch.Responses.Materializers
                 var t = Serializer.Deserialize<Temp>(content);
                 response.Id = t._id;
                 response.Rev = t._rev;
+                response.Conflicts = t._conflicts;
 
                 SetMissingIdFromRequestUri(response, httpResponse.RequestMessage);
                 SetMissingRevFromRequestHeaders(response, httpResponse.Headers);
@@ -53,6 +54,7 @@ namespace MyCouch.Responses.Materializers
         {
             public string _id { get; set; }
             public string _rev { get; set; }
+            public string[] _conflicts { get; set; }
         }
     }
 }
