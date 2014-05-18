@@ -103,9 +103,8 @@ namespace MyCouch.EntitySchemes
 
         protected virtual IEnumerable<PropertyInfo> GetPropertiesFor(Type type)
         {
-            //TODO: Could be tweaked to only use property names with e.g contains(id, rev)
 #if !PCL
-            return type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            return type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 #else
             return type.GetRuntimeProperties();
 #endif

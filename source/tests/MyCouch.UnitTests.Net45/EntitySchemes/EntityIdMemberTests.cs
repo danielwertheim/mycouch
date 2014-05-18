@@ -229,6 +229,16 @@ namespace MyCouch.UnitTests.EntitySchemes
             SUT.GetValueFrom(model).Should().Be(expectedId);
         }
 
+        [Fact]
+        public void When_private_setter_It_can_set_values()
+        {
+            var model = new ModelWithPrivateSetter();
+
+            SUT.SetValueTo(model, "test");
+
+            model.Id.Should().Be("test");
+        }
+
         private class ModelForMemberRanking
         {
             public string Id { get; set; }
@@ -336,6 +346,11 @@ namespace MyCouch.UnitTests.EntitySchemes
 
         private class ModelInheritanceIdChild : ModelInheritanceIdBase
         {
+        }
+
+        private class ModelWithPrivateSetter
+        {
+            public string Id { get; private set; }
         }
     }
 }

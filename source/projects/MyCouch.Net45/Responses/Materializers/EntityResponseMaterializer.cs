@@ -1,5 +1,5 @@
-﻿using System.IO;
-using System.Net.Http;
+﻿using System.Net.Http;
+using System.Net.Http.Headers;
 using EnsureThat;
 using MyCouch.Extensions;
 using MyCouch.Serialization;
@@ -26,45 +26,25 @@ namespace MyCouch.Responses.Materializers
         {
             using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
             {
-                if (ContentShouldContainIdAndRev(httpResponse.RequestMessage))
-                    SetDocumentHeaderFromResponseStream(response, content);
-                else
-                {
-                    SetMissingIdFromRequestUri(response, httpResponse);
-                    SetMissingRevFromRequestHeaders(response, httpResponse);
-                }
-
                 if (response.RequestMethod == HttpMethod.Get)
-                {
-                    content.Position = 0;
-                    response.Content = Serializer.Deserialize<T>(content);
-                }
+                    response.Content = Serializer.DeserializeCopied<T>(content);
+
+                Serializer.Populate(response, content);
+                SetMissingIdFromRequestUri(response, httpResponse.RequestMessage);
+                SetMissingRevFromRequestHeaders(response, httpResponse.Headers);
             }
         }
 
-        protected virtual bool ContentShouldContainIdAndRev(HttpRequestMessage request)
+        protected virtual void SetMissingIdFromRequestUri<T>(EntityResponse<T> response, HttpRequestMessage request) where T : class
         {
-            return
-                request.Method == HttpMethod.Post ||
-                request.Method == HttpMethod.Put ||
-                request.Method == HttpMethod.Delete;
+            if (string.IsNullOrWhiteSpace(response.Id) && request.Method != HttpMethod.Post)
+                response.Id = request.GetUriSegmentByRightOffset();
         }
 
-        protected virtual void SetDocumentHeaderFromResponseStream<T>(EntityResponse<T> response, Stream content) where T : class
-        {
-            Serializer.Populate(response, content);
-        }
-
-        protected virtual void SetMissingIdFromRequestUri<T>(EntityResponse<T> response, HttpResponseMessage httpResponse) where T : class
-        {
-            if (string.IsNullOrWhiteSpace(response.Id) && httpResponse.RequestMessage.Method != HttpMethod.Post)
-                response.Id = httpResponse.RequestMessage.GetUriSegmentByRightOffset();
-        }
-
-        protected virtual void SetMissingRevFromRequestHeaders<T>(EntityResponse<T> response, HttpResponseMessage httpResponse) where T : class
+        protected virtual void SetMissingRevFromRequestHeaders<T>(EntityResponse<T> response, HttpResponseHeaders responseHeaders) where T : class
         {
             if (string.IsNullOrWhiteSpace(response.Rev))
-                response.Rev = httpResponse.Headers.GetETag();
+                response.Rev = responseHeaders.GetETag();
         }
     }
 }

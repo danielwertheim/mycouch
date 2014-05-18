@@ -39,12 +39,12 @@ namespace MyCouch.Contexts
             DeleteHttpRequestFactory = new DeleteEntityHttpRequestFactory(Reflector);
         }
 
-        public virtual Task<EntityResponse<T>> GetAsync<T>(string id, string rev = null) where T : class
+        public virtual Task<GetEntityResponse<T>> GetAsync<T>(string id, string rev = null) where T : class
         {
             return GetAsync<T>(new GetEntityRequest(id, rev));
         }
 
-        public virtual async Task<EntityResponse<T>> GetAsync<T>(GetEntityRequest request) where T : class
+        public virtual async Task<GetEntityResponse<T>> GetAsync<T>(GetEntityRequest request) where T : class
         {
             var httpRequest = CreateHttpRequest(request);
 
@@ -119,9 +119,9 @@ namespace MyCouch.Contexts
             return DeleteHttpRequestFactory.Create(request);
         }
 
-        protected virtual EntityResponse<T> ProcessEntityResponse<T>(GetEntityRequest request, HttpResponseMessage response) where T : class
+        protected virtual GetEntityResponse<T> ProcessEntityResponse<T>(GetEntityRequest request, HttpResponseMessage response) where T : class
         {
-            return EntityResponseFactory.Create<T>(response);
+            return EntityResponseFactory.Create<GetEntityResponse<T>, T>(response);
         }
 
         protected virtual EntityResponse<T> ProcessEntityResponse<T>(PostEntityRequest<T> request, HttpResponseMessage response) where T : class

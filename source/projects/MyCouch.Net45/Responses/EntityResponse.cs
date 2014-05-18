@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace MyCouch.Responses
 {
@@ -7,15 +8,8 @@ namespace MyCouch.Responses
 #endif
     public class EntityResponse<T> : ContentResponse<T> where T : class
     {
-        public string Id { get; set; }
-        public string Rev { get; set; }
-
-        [Obsolete("Use Content instead")]
-        public T Entity
-        {
-            get { return Content; } 
-            set { Content = value; }
-        }
+        public virtual string Id { get; set; }
+        public virtual string Rev { get; set; }
 
         public override bool IsEmpty
         {
@@ -32,5 +26,20 @@ namespace MyCouch.Responses
                 Id ?? NullValueForDebugOutput,
                 Rev ?? NullValueForDebugOutput);
         }
+    }
+
+#if !PCL
+    [Serializable]
+#endif
+    public class GetEntityResponse<T> : EntityResponse<T> where T : class
+    {
+        [JsonProperty(JsonScheme._Id)]
+        public virtual string Id { get; set; }
+
+        [JsonProperty(JsonScheme._Rev)]
+        public virtual string Rev { get; set; }
+
+        [JsonProperty(JsonScheme.Conflicts)]
+        public virtual string[] Conflicts { get; set; }
     }
 }

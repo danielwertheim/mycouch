@@ -21,7 +21,7 @@ namespace MyCouch.IntegrationTests.CoreTests
 
             var response = SUT.GetAsync(request).Result;
 
-            response.Should().BeSuccessfulGet(postResponse.Id);
+            response.Should().BeSuccessfulGet(postResponse.Id, postResponse.Rev);
         }
 
         [MyFact(TestScenarios.DocumentsContext)]
@@ -221,8 +221,8 @@ namespace MyCouch.IntegrationTests.CoreTests
             var get1 = SUT.GetAsync(post1.Result.Id);
             var get2 = SUT.GetAsync(post2.Result.Id);
 
-            get1.Result.Should().BeSuccessfulGet(post1.Result.Id);
-            get2.Result.Should().BeSuccessfulGet(post2.Result.Id);
+            get1.Result.Should().BeSuccessfulGet(post1.Result.Id, post1.Result.Rev);
+            get2.Result.Should().BeSuccessfulGet(post2.Result.Id, post2.Result.Rev);
 
             var kv1 = DbClient.Serializer.Deserialize<IDictionary<string, dynamic>>(get1.Result.Content);
             kv1["year"] = 2000;
