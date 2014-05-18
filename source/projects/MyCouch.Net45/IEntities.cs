@@ -38,7 +38,7 @@ namespace MyCouch
         /// Typed entity-response (<see cref="EntityResponse{T}"/> of <typeparamref name="T"/>)
         /// representation of the document
         /// </returns>
-        Task<EntityResponse<T>> GetAsync<T>(string id, string rev = null) where T : class;
+        Task<GetEntityResponse<T>> GetAsync<T>(string id, string rev = null) where T : class;
 
         /// <summary>
         /// Gets typed entity-response (<see cref="EntityResponse{T}"/> of <typeparamref name="T"/>)
@@ -47,7 +47,7 @@ namespace MyCouch
         /// <typeparam name="T">The type you want the document deserialized as.</typeparam>
         /// <param name="request"></param>
         /// <returns></returns>
-        Task<EntityResponse<T>> GetAsync<T>(GetEntityRequest request) where T : class;
+        Task<GetEntityResponse<T>> GetAsync<T>(GetEntityRequest request) where T : class;
 
         /// <summary>
         /// Inserts sent entity. The resulting JSON that is inserted will have some additional

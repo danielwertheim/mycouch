@@ -129,8 +129,8 @@ namespace MyCouch.IntegrationTests.CoreTests
             var get1 = SUT.GetAsync<Artist>(post1.Result.Id);
             var get2 = SUT.GetAsync<Artist>(post2.Result.Id);
 
-            get1.Result.Should().BeSuccessfulGet(post1.Result.Id);
-            get2.Result.Should().BeSuccessfulGet(post2.Result.Id);
+            get1.Result.Should().BeSuccessfulGet(post1.Result.Id, post1.Result.Rev);
+            get2.Result.Should().BeSuccessfulGet(post2.Result.Id, post2.Result.Rev);
 
             get1.Result.Content.Albums = new List<Album>(get1.Result.Content.Albums) { new Album { Name = "Test" } }.ToArray();
             get2.Result.Content.Albums = new List<Album>(get2.Result.Content.Albums) { new Album { Name = "Test" } }.ToArray();

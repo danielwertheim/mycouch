@@ -229,6 +229,16 @@ namespace MyCouch.UnitTests.EntitySchemes
             SUT.GetValueFrom(model).Should().Be(expectedRev);
         }
 
+        [Fact]
+        public void When_private_setter_It_can_set_values()
+        {
+            var model = new ModelWithPrivateSetter();
+
+            SUT.SetValueTo(model, "test");
+
+            model.Rev.Should().Be("test");
+        }
+
         private class ModelForMemberRanking
         {
             public string Rev { get; set; }
@@ -336,6 +346,11 @@ namespace MyCouch.UnitTests.EntitySchemes
 
         private class ModelInheritanceRevChild : ModelInheritanceRevBase
         {
+        }
+
+        private class ModelWithPrivateSetter
+        {
+            public string Rev { get; private set; }
         }
     }
 }

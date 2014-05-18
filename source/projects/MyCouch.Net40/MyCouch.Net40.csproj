@@ -189,6 +189,9 @@
     <Compile Include="..\mycouch.net45\extensions\ObjectExtensions.cs">
       <Link>Extensions\ObjectExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Extensions\StreamExtensions.cs">
+      <Link>Extensions\StreamExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\mycouch.net45\extensions\StringExtensions.cs">
       <Link>Extensions\StringExtensions.cs</Link>
     </Compile>
@@ -507,7 +510,7 @@
     <Compile Include="..\mycouch.net45\responses\DocumentHeaderResponse.cs">
       <Link>Responses\DocumentHeaderResponse.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.net45\responses\DocumentResponse.cs">
+    <Compile Include="..\MyCouch.Net45\Responses\DocumentResponse.cs">
       <Link>Responses\DocumentResponse.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.net45\responses\EntityResponse.cs">
@@ -531,7 +534,7 @@
     <Compile Include="..\mycouch.net45\responses\factories\DocumentHeaderResponseFactory.cs">
       <Link>Responses\Factories\DocumentHeaderResponseFactory.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.net45\responses\factories\DocumentResponseFactory.cs">
+    <Compile Include="..\MyCouch.Net45\Responses\Factories\DocumentResponseFactory.cs">
       <Link>Responses\Factories\DocumentResponseFactory.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.net45\responses\factories\EntityResponseFactory.cs">

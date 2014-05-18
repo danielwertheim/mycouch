@@ -20,20 +20,26 @@ namespace MyCouch.Responses.Factories
 
         public virtual ChangesResponse Create(HttpResponseMessage httpResponse)
         {
-            return Materialize(new ChangesResponse(), httpResponse, OnMaterializationOfSuccessfulResponseProperties, OnMaterializationOfFailedResponseProperties);
+            return Materialize<ChangesResponse>(
+                httpResponse,
+                MaterializeSuccessfulResponse,
+                MaterializeFailedResponse);
         }
 
         public virtual ChangesResponse<T> Create<T>(HttpResponseMessage httpResponse)
         {
-            return Materialize(new ChangesResponse<T>(), httpResponse, OnMaterializationOfSuccessfulResponseProperties, OnMaterializationOfFailedResponseProperties);
+            return Materialize<ChangesResponse<T>>(
+                httpResponse,
+                MaterializeSuccessfulResponse,
+                MaterializeFailedResponse);
         }
 
-        protected virtual void OnMaterializationOfSuccessfulResponseProperties<T>(ChangesResponse<T> response, HttpResponseMessage httpResponse)
+        protected virtual void MaterializeSuccessfulResponse<T>(ChangesResponse<T> response, HttpResponseMessage httpResponse)
         {
             SuccessfulResponseMaterializer.Materialize(response, httpResponse);
         }
 
-        protected virtual void OnMaterializationOfFailedResponseProperties<T>(ChangesResponse<T> response, HttpResponseMessage httpResponse)
+        protected virtual void MaterializeFailedResponse<T>(ChangesResponse<T> response, HttpResponseMessage httpResponse)
         {
             FailedResponseMaterializer.Materialize(response, httpResponse);
         }

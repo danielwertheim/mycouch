@@ -64,7 +64,7 @@ namespace MyCouch.Serialization
                 }
             }
             return content.ToString();
-        }        
+        }
 
         public virtual T Deserialize<T>(string data) where T : class
         {
@@ -82,7 +82,7 @@ namespace MyCouch.Serialization
 
         public virtual T Deserialize<T>(Stream data) where T : class
         {
-            if (data == null || data.Length < 1)
+            if (StreamIsEmpty(data))
                 return null;
 
             using (var sr = new StreamReader(data, MyCouchRuntime.DefaultEncoding))
@@ -92,11 +92,33 @@ namespace MyCouch.Serialization
                     return InternalSerializer.Deserialize<T>(jsonReader);
                 }
             }
-        }        
+        }
+
+        public virtual T DeserializeCopied<T>(Stream data) where T : class
+        {
+            if (StreamIsEmpty(data))
+                return null;
+
+            using (var copy = new MemoryStream())
+            {
+                data.CopyTo(copy);
+
+                copy.Position = 0;
+                data.Position = 0;
+
+                using (var sr = new StreamReader(copy, MyCouchRuntime.DefaultEncoding))
+                {
+                    using (var jsonReader = Configuration.ApplyConfigToReader(CreateReaderFor(sr)))
+                    {
+                        return InternalSerializer.Deserialize<T>(jsonReader);
+                    }
+                }
+            }
+        }
 
         public virtual void Populate<T>(T item, Stream data) where T : class
         {
-            if (data == null || (data.CanSeek && data.Length < 1))
+            if(StreamIsEmpty(data))
                 return;
 
             using (var sr = new StreamReader(data, MyCouchRuntime.DefaultEncoding))
@@ -106,6 +128,27 @@ namespace MyCouch.Serialization
                     InternalSerializer.Populate(jsonReader, item);
                 }
             }
+        }
+
+        public virtual void Populate<T>(T item, string data) where T : class
+        {
+            if (string.IsNullOrWhiteSpace(data))
+                return;
+
+            using (var sr = new StringReader(data))
+            {
+                using (var jsonReader = Configuration.ApplyConfigToReader(CreateReaderFor(sr)))
+                {
+                    InternalSerializer.Populate(jsonReader, item);
+                }
+            }
+        }
+
+        private bool StreamIsEmpty(Stream stream)
+        {
+            var stupidExpressionDueToThatLengthThrowsInSomeCases = stream == null || (stream.CanSeek && stream.Length == 0);
+
+            return stupidExpressionDueToThatLengthThrowsInSomeCases;
         }
 
         public virtual string ToJson(object value)

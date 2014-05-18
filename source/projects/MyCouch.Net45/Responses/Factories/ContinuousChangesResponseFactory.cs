@@ -16,14 +16,9 @@ namespace MyCouch.Responses.Factories
             FailedResponseMaterializer = new FailedResponseMaterializer(serializer);
         }
 
-        protected override ContinuousChangesResponse CreateResponseInstance()
-        {
-            return new ContinuousChangesResponse();
-        }
+        protected override void MaterializeSuccessfulResponse(ContinuousChangesResponse response, HttpResponseMessage httpResponse) { }
 
-        protected override void OnMaterializationOfSuccessfulResponseProperties(ContinuousChangesResponse response, HttpResponseMessage httpResponse) { }
-
-        protected override void OnMaterializationOfFailedResponseProperties(ContinuousChangesResponse response, HttpResponseMessage httpResponse)
+        protected override void MaterializeFailedResponse(ContinuousChangesResponse response, HttpResponseMessage httpResponse)
         {
             FailedResponseMaterializer.Materialize(response, httpResponse);
         }

@@ -358,7 +358,7 @@ namespace MyCouch.Testing
             Response = response;
         }
 
-        public void BeSuccessfulGet(string id)
+        public void BeSuccessfulGet(string id, string rev)
         {
             Response.RequestMethod.Should().Be(HttpMethod.Get);
             Response.IsSuccess.Should().BeTrue("StatusCode:" + Response.StatusCode);
@@ -370,6 +370,7 @@ namespace MyCouch.Testing
             Response.Id.Should().NotBeNullOrEmpty();
             Response.Id.Should().Be(id);
             Response.Rev.Should().NotBeNullOrEmpty();
+            Response.Rev.Should().Be(rev);
         }
 
         public void BeSuccessfulPost(string initialId = null, Func<T, string> idAccessor = null, Func<T, string> revAccessor = null)
@@ -486,7 +487,7 @@ namespace MyCouch.Testing
             Response = response;
         }
 
-        public void BeSuccessfulGet(string id)
+        public void BeSuccessfulGet(string id, string rev)
         {
             Response.RequestMethod.Should().Be(HttpMethod.Get);
             Response.IsSuccess.Should().BeTrue("StatusCode:" + Response.StatusCode);
@@ -497,6 +498,7 @@ namespace MyCouch.Testing
             Response.Content.Should().NotBeNullOrEmpty();
             Response.Id.Should().NotBeNullOrEmpty().And.Be(id);
             Response.Rev.Should().NotBeNullOrEmpty();
+            Response.Rev.Should().Be(rev);
         }
     }
 

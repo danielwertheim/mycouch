@@ -16,12 +16,7 @@ namespace MyCouch.Responses.Materializers
             Serializer = serializer;
         }
 
-        public virtual void Materialize(BulkResponse response, HttpResponseMessage httpResponse)
-        {
-            SetRows(response, httpResponse);
-        }
-
-        protected virtual async void SetRows(BulkResponse response, HttpResponseMessage httpResponse)
+        public virtual async void Materialize(BulkResponse response, HttpResponseMessage httpResponse)
         {
             using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
                 response.Rows = Serializer.Deserialize<BulkResponse.Row[]>(content);
