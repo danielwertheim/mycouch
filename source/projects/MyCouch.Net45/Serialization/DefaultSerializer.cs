@@ -47,7 +47,7 @@ namespace MyCouch.Serialization
 
         protected virtual JsonTextWriter CreateWriter(TextWriter writer)
         {
-            return new JsonTextWriter(writer);
+            return new JsonTextWriter(writer){CloseOutput = false};
         }
 
         protected virtual JsonTextReader CreateReaderFor<T>(TextReader reader)
@@ -64,7 +64,7 @@ namespace MyCouch.Serialization
 
         protected virtual JsonTextReader CreateReader(TextReader reader)
         {
-            return new JsonTextReader(reader);
+            return new JsonTextReader(reader){CloseInput = false};
         }
 
         public virtual string Serialize<T>(T item) where T : class

@@ -32,6 +32,7 @@ namespace MyCouch.Serialization
             Conventions = conventions;
             ConventionWriter = new SerializationConventionWriter(this);
             EntityReflector = entityReflector;
+            CloseOutput = false;
         }
 
         public override void WriteStartObject()
