@@ -81,7 +81,7 @@ namespace MyCouch.UnitTests.Serialization
 
             var json = SUT.Serialize(model);
 
-            json.Should().Contain("\"$doctype\":\"modelentity\"");
+            json.Should().Contain("\"$doctype\":\"modelEntity\"");
         }
 
         [Fact]
@@ -101,7 +101,7 @@ namespace MyCouch.UnitTests.Serialization
 
             var json = SUT.Serialize(model);
 
-            json.Should().Contain("\"$doctype\":\"childmodelentity\"");
+            json.Should().Contain("\"$doctype\":\"childModelEntity\"");
         }
 
         [Fact]
