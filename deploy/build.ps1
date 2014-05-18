@@ -11,7 +11,7 @@ Properties {
     $build_config = "Release"
     $build_name = "${project_name}-v${build_version}-${build_config}"
     $build_dir_path = "${builds_dir_path}\${build_name}"
-    $testrunner = "xunit.console.clr4.exe"
+    $testrunner = "xunit.console.exe"
     $nuget = "nuget.exe"
 }
 
@@ -39,8 +39,7 @@ task Copy {
 task UnitTest {
     UnitTest-ProjecT("Net40")
     UnitTest-ProjecT("Net45")
-    UnitTest-ProjecT("Pcl.Ws80")
-    UnitTest-ProjecT("Pcl.Ws81")
+    UnitTest-ProjecT("Pcl")
 }
 
 task NuGet-Pack {
