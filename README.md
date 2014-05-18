@@ -55,10 +55,6 @@ using(var client = new MyCouchClient("http://localhost:5984/mydb"))
 ```
 
 ## Get up and running with the source ##
-- For .Net4.0 and .Net4.5, Visual Studio 2012 is needed.
-- For Windows store 8.0, currently not included. But let me know and I will assist or fix it.
-- For Windows store 8.1, Visual Studio 2013 is needed.
-
 Please note. **No NuGet packages are checked in**. If you are using the latest version of NuGet (v2.7.1+) **you should be able to just build and the packages will be restored**. If this does not work, you could install the missing NuGet packages using a simple PowerShell script [as covered here](http://danielwertheim.se/2013/08/12/nuget-restore-powershell-vs-rake)
 
 ## Test environments ##
