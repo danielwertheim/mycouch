@@ -1,4 +1,5 @@
-﻿using MyCouch;
+﻿using System.Runtime.CompilerServices;
+using MyCouch;
 using MyCouch.Requests;
 
 namespace MrLab
@@ -7,8 +8,8 @@ namespace MrLab
     {
         static void Main(string[] args)
         {
-            using (var client = new MyCouchClient("http://sa:test@localhost:5984/foo"))
-            {
+            //using (var client = new MyCouchClient("http://sa:test@localhost:5984/foo"))
+            //{
                 //client.Database.PutAsync().Wait();
 
                 //var postEntity = client.Entities.PostAsync(new Doc
@@ -20,7 +21,7 @@ namespace MrLab
                 //var getJson = client.Documents.GetAsync(postEntity.Id).Result;
 
                 //var all = client.Views.QueryAsync<Doc>(new QueryViewRequest("test", "all")).Result;
-            }
+            //}
         }
 
         public class Doc
