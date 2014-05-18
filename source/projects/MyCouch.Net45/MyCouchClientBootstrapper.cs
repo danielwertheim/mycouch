@@ -10,6 +10,12 @@ namespace MyCouch
     public class MyCouchClientBootstrapper
     {
         /// <summary>
+        /// Used for configuring serializers returned via <see cref="SerializerFn"/>
+        /// and <see cref="DocumentSerializerFn"/>.
+        /// </summary>
+        public Func<SerializationConfiguration> SerializationConfigurationFn { get; set; }
+
+        /// <summary>
         /// Used e.g. for boostraping components that needs to be able to read and set values
         /// effectively to entities. Used e.g. in <see cref="IEntities.Reflector"/>.
         /// </summary>
@@ -67,6 +73,11 @@ namespace MyCouch
 
         public MyCouchClientBootstrapper()
         {
+            ConfigureEntityReflectorFn();
+            ConfigureSerializationConfiguration();
+            ConfigureSerializerFn();
+            ConfigureDocumentSerializerFn();
+
             ConfigureChangesFn();
             ConfigureAttachmentsFn();
             ConfigureDatabaseFn();
@@ -75,10 +86,6 @@ namespace MyCouch
             ConfigureDocumentsFn();
             ConfigureEntitiesFn();
             ConfigureViewsFn();
-
-            ConfigureSerializerFn();
-            ConfigureDocumentSerializerFn();
-            ConfigureEntityReflectorFn();
         }
 
         protected virtual void ConfigureChangesFn()
@@ -142,11 +149,9 @@ namespace MyCouch
         {
             var serializer = new Lazy<ISerializer>(() =>
             {
-                var contractResolver = new SerializationContractResolver();
                 var documentMetaProvider = new EmptyDocumentSerializationMetaProvider();
-                var configuration = new SerializationConfiguration(contractResolver);
 
-                return new DefaultSerializer(configuration, documentMetaProvider);
+                return new DefaultSerializer(SerializationConfigurationFn(), documentMetaProvider);
             });
             SerializerFn = () => serializer.Value;
         }
@@ -155,13 +160,21 @@ namespace MyCouch
         {
             var serializer = new Lazy<ISerializer>(() =>
             {
-                var contractResolver = new SerializationContractResolver();
                 var documentMetaProvider = new DocumentSerializationMetaProvider();
-                var configuration = new SerializationConfiguration(contractResolver);
 
-                return new DefaultSerializer(configuration, documentMetaProvider, EntityReflectorFn());
+                return new DefaultSerializer(SerializationConfigurationFn(), documentMetaProvider, EntityReflectorFn());
             });
             DocumentSerializerFn = () => serializer.Value;
+        }
+
+        protected virtual void ConfigureSerializationConfiguration()
+        {
+            var config = new Lazy<SerializationConfiguration>(() =>
+            {
+                var contractResolver = new SerializationContractResolver();
+                return new SerializationConfiguration(contractResolver);
+            });
+            SerializationConfigurationFn = () => config.Value;
         }
     }
 }

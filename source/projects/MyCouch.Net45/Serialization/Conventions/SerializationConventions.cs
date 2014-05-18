@@ -1,4 +1,6 @@
-﻿namespace MyCouch.Serialization.Conventions
+﻿using MyCouch.Extensions;
+
+namespace MyCouch.Serialization.Conventions
 {
     public class SerializationConventions
     {
@@ -15,7 +17,7 @@
         {
             DocType = new StringSerializationConvention(
                 "$doctype",
-                m => !m.IsAnonymous ? m.DocType.ToLowerInvariant() : null);
+                m => !m.IsAnonymous ? m.DocType.ToCamelCase() : null);
 
             DocNamespace = new StringSerializationConvention(
                 "$docns",
