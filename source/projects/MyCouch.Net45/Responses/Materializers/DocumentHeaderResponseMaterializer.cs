@@ -19,16 +19,14 @@ namespace MyCouch.Responses.Materializers
 
         public virtual async void Materialize(DocumentHeaderResponse response, HttpResponseMessage httpResponse)
         {
-            if (httpResponse.RequestMessage.Method == HttpMethod.Head)
+            if (httpResponse.RequestMessage.Method != HttpMethod.Head)
             {
-                SetMissingIdFromRequestUri(response, httpResponse);
-                SetMissingRevFromRequestHeaders(response, httpResponse);
-
-                return;
+                using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
+                    SetDocumentHeaderFromResponseStream(response, content);
             }
 
-            using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
-                SetDocumentHeaderFromResponseStream(response, content);
+            SetMissingIdFromRequestUri(response, httpResponse);
+            SetMissingRevFromRequestHeaders(response, httpResponse);
         }
 
         protected virtual void SetMissingIdFromRequestUri(DocumentHeaderResponse response, HttpResponseMessage httpResponse)

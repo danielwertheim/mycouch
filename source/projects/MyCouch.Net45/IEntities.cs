@@ -16,7 +16,7 @@ namespace MyCouch
         /// to serialize or deserialize using entity conventions.
         /// </summary>
         /// <remarks>If you want the native, non convention based serializer, check <see cref="IMyCouchClient.Serializer"/></remarks>
-        IEntitySerializer Serializer { get; }
+        ISerializer Serializer { get; }
 
         /// <summary>
         /// Used to get and set specific members of entities when you are using the
@@ -38,7 +38,7 @@ namespace MyCouch
         /// Typed entity-response (<see cref="EntityResponse{T}"/> of <typeparamref name="T"/>)
         /// representation of the document
         /// </returns>
-        Task<EntityResponse<T>> GetAsync<T>(string id, string rev = null) where T : class;
+        Task<GetEntityResponse<T>> GetAsync<T>(string id, string rev = null) where T : class;
 
         /// <summary>
         /// Gets typed entity-response (<see cref="EntityResponse{T}"/> of <typeparamref name="T"/>)
@@ -47,7 +47,7 @@ namespace MyCouch
         /// <typeparam name="T">The type you want the document deserialized as.</typeparam>
         /// <param name="request"></param>
         /// <returns></returns>
-        Task<EntityResponse<T>> GetAsync<T>(GetEntityRequest request) where T : class;
+        Task<GetEntityResponse<T>> GetAsync<T>(GetEntityRequest request) where T : class;
 
         /// <summary>
         /// Inserts sent entity. The resulting JSON that is inserted will have some additional

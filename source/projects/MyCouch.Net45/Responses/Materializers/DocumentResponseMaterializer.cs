@@ -1,6 +1,6 @@
-﻿using System.IO;
+﻿using System;
 using System.Net.Http;
-using System.Text;
+using System.Net.Http.Headers;
 using EnsureThat;
 using MyCouch.Extensions;
 using MyCouch.Serialization;
@@ -18,62 +18,43 @@ namespace MyCouch.Responses.Materializers
             Serializer = serializer;
         }
 
-        public virtual void Materialize(DocumentResponse response, HttpResponseMessage httpResponse)
+        public virtual async void Materialize(DocumentResponse response, HttpResponseMessage httpResponse)
         {
-            SetContent(response, httpResponse);
-        }
+            if(response.RequestMethod != HttpMethod.Get)
+                throw new ArgumentException(GetType().Name + " only supports materializing GET responses for raw documents.");
 
-        protected virtual async void SetContent(DocumentResponse response, HttpResponseMessage httpResponse)
-        {
             using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
             {
-                if (ContentShouldContainIdAndRev(httpResponse.RequestMessage))
-                    SetDocumentHeaderFromResponseStream(response, content);
-                else
-                {
-                    SetMissingIdFromRequestUri(response, httpResponse);
-                    SetMissingRevFromRequestHeaders(response, httpResponse);
-                }
+                response.Content = content.ReadAsString();
 
                 content.Position = 0;
+                var t = Serializer.Deserialize<Temp>(content);
+                response.Id = t._id;
+                response.Rev = t._rev;
+                response.Conflicts = t._conflicts;
 
-                var sb = new StringBuilder();
-
-                using (var reader = new StreamReader(content, MyCouchRuntime.DefaultEncoding))
-                {
-                    while (!reader.EndOfStream)
-                        sb.Append(reader.ReadLine());
-                }
-
-                response.Content = sb.ToString();
-
-                sb.Clear();
+                SetMissingIdFromRequestUri(response, httpResponse.RequestMessage);
+                SetMissingRevFromRequestHeaders(response, httpResponse.Headers);
             }
         }
 
-        protected virtual bool ContentShouldContainIdAndRev(HttpRequestMessage request)
+        protected virtual void SetMissingIdFromRequestUri(DocumentResponse response, HttpRequestMessage request)
         {
-            return
-                request.Method == HttpMethod.Post ||
-                request.Method == HttpMethod.Put ||
-                request.Method == HttpMethod.Delete;
+            if (string.IsNullOrWhiteSpace(response.Id) && request.Method != HttpMethod.Post)
+                response.Id = request.GetUriSegmentByRightOffset();
         }
 
-        protected virtual void SetDocumentHeaderFromResponseStream(DocumentResponse response, Stream content)
-        {
-            Serializer.Populate(response, content);
-        }
-
-        protected virtual void SetMissingIdFromRequestUri(DocumentResponse response, HttpResponseMessage httpResponse)
-        {
-            if (string.IsNullOrWhiteSpace(response.Id) && httpResponse.RequestMessage.Method != HttpMethod.Post)
-                response.Id = httpResponse.RequestMessage.GetUriSegmentByRightOffset();
-        }
-
-        protected virtual void SetMissingRevFromRequestHeaders(DocumentResponse response, HttpResponseMessage httpResponse)
+        protected virtual void SetMissingRevFromRequestHeaders(DocumentResponse response, HttpResponseHeaders responseHeaders)
         {
             if (string.IsNullOrWhiteSpace(response.Rev))
-                response.Rev = httpResponse.Headers.GetETag();
+                response.Rev = responseHeaders.GetETag();
+        }
+
+        private class Temp
+        {
+            public string _id { get; set; }
+            public string _rev { get; set; }
+            public string[] _conflicts { get; set; }
         }
     }
 }

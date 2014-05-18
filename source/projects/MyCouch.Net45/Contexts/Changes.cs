@@ -8,8 +8,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Extensions;
+using MyCouch.HttpRequestFactories;
 using MyCouch.Requests;
-using MyCouch.Requests.Factories;
 using MyCouch.Responses;
 using MyCouch.Responses.Factories;
 using MyCouch.Serialization;
@@ -30,8 +30,8 @@ namespace MyCouch.Contexts
         {
             Ensure.That(serializer, "serializer").IsNotNull();
 
-            HttpRequestFactory = new GetChangesHttpRequestFactory(Connection);
-            ContinuousHttpRequestFactory = new GetContinuousChangesHttpRequestFactory(Connection);
+            HttpRequestFactory = new GetChangesHttpRequestFactory();
+            ContinuousHttpRequestFactory = new GetContinuousChangesHttpRequestFactory();
             ChangesResponseFactory = new ChangesResponseFactory(serializer);
             ContinuousChangesResponseFactory = new ContinuousChangesResponseFactory(serializer);
             ObservableSubscribeOnScheduler = () => TaskPoolScheduler.Default;
@@ -39,30 +39,57 @@ namespace MyCouch.Contexts
 
         public virtual async Task<ChangesResponse> GetAsync(GetChangesRequest request)
         {
-            using (var httpRequest = HttpRequestFactory.Create(request))
+            var httpRequest = HttpRequestFactory.Create(request);
+
+            using (var httpResponse = await SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead).ForAwait())
             {
-                using (var httpResponse = await SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead).ForAwait())
-                {
-                    return ChangesResponseFactory.Create(httpResponse);
-                }
+                return ChangesResponseFactory.Create(httpResponse);
             }
         }
 
         public virtual async Task<ChangesResponse<TIncludedDoc>> GetAsync<TIncludedDoc>(GetChangesRequest request)
         {
-            using (var httpRequest = HttpRequestFactory.Create(request))
+            var httpRequest = HttpRequestFactory.Create(request);
+
+            using (var httpResponse = await SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead).ForAwait())
             {
-                using (var httpResponse = await SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead).ForAwait())
-                {
-                    return ChangesResponseFactory.Create<TIncludedDoc>(httpResponse);
-                }
+                return ChangesResponseFactory.Create<TIncludedDoc>(httpResponse);
             }
         }
 
         public virtual async Task<ContinuousChangesResponse> GetAsync(GetChangesRequest request, Action<string> onRead, CancellationToken cancellationToken)
         {
-            using (var httpRequest = ContinuousHttpRequestFactory.Create(request))
+            var httpRequest = ContinuousHttpRequestFactory.Create(request);
+
+            using (var httpResponse = await SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ForAwait())
             {
+                var response = ContinuousChangesResponseFactory.Create(httpResponse);
+                if (response.IsSuccess)
+                {
+                    using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
+                    {
+                        using (var reader = new StreamReader(content, MyCouchRuntime.DefaultEncoding))
+                        {
+                            while (!cancellationToken.IsCancellationRequested && !reader.EndOfStream)
+                            {
+                                cancellationToken.ThrowIfCancellationRequested();
+                                onRead(reader.ReadLine());
+                            }
+                        }
+                    }
+                }
+                return response;
+            }
+        }
+
+        public virtual IObservable<string> ObserveContinuous(GetChangesRequest request, CancellationToken cancellationToken)
+        {
+            EnsureContinuousFeedIsRequested(request);
+
+            return Observable.Create<string>(async o =>
+            {
+                var httpRequest = ContinuousHttpRequestFactory.Create(request);
+
                 using (var httpResponse = await SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ForAwait())
                 {
                     var response = ContinuousChangesResponseFactory.Create(httpResponse);
@@ -75,45 +102,14 @@ namespace MyCouch.Contexts
                                 while (!cancellationToken.IsCancellationRequested && !reader.EndOfStream)
                                 {
                                     cancellationToken.ThrowIfCancellationRequested();
-                                    onRead(reader.ReadLine());
+                                    o.OnNext(reader.ReadLine());
                                 }
                             }
                         }
                     }
-                    return response;
-                }
-            }
-        }
+                    o.OnCompleted();
 
-        public virtual IObservable<string> ObserveContinuous(GetChangesRequest request, CancellationToken cancellationToken)
-        {
-            EnsureContinuousFeedIsRequested(request);
-
-            return Observable.Create<string>(async o =>
-            {
-                using (var httpRequest = ContinuousHttpRequestFactory.Create(request))
-                {
-                    using (var httpResponse = await SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ForAwait())
-                    {
-                        var response = ContinuousChangesResponseFactory.Create(httpResponse);
-                        if (response.IsSuccess)
-                        {
-                            using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
-                            {
-                                using (var reader = new StreamReader(content, MyCouchRuntime.DefaultEncoding))
-                                {
-                                    while (!cancellationToken.IsCancellationRequested && !reader.EndOfStream)
-                                    {
-                                        cancellationToken.ThrowIfCancellationRequested();
-                                        o.OnNext(reader.ReadLine());
-                                    }
-                                }
-                            }
-                        }
-                        o.OnCompleted();
-
-                        return Disposable.Empty;
-                    }
+                    return Disposable.Empty;
                 }
             }).SubscribeOn(ObservableSubscribeOnScheduler());
         }

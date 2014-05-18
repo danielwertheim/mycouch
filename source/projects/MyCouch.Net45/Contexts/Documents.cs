@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Extensions;
+using MyCouch.HttpRequestFactories;
 using MyCouch.Net;
 using MyCouch.Requests;
-using MyCouch.Requests.Factories;
 using MyCouch.Responses;
 using MyCouch.Responses.Factories;
 using MyCouch.Serialization;
@@ -25,22 +25,22 @@ namespace MyCouch.Contexts
         protected DocumentHeaderResponseFactory DocumentHeaderReponseFactory { get; set; }
         protected BulkResponseFactory BulkReponseFactory { get; set; }
 
-        public IDocumentSerializer Serializer { get; private set; }
+        public ISerializer Serializer { get; private set; }
 
-        public Documents(IDbClientConnection connection, IDocumentSerializer serializer)
+        public Documents(IDbClientConnection connection, ISerializer serializer)
             : base(connection)
         {
             Ensure.That(serializer, "serializer").IsNotNull();
 
             Serializer = serializer;
-            BulkHttpRequestFactory = new BulkHttpRequestFactory(Connection);
-            CopyDocumentHttpRequestFactory = new CopyDocumentHttpRequestFactory(Connection);
-            ReplaceDocumentHttpRequestFactory = new ReplaceDocumentHttpRequestFactory(Connection);
-            HeadDocumentHttpRequestFactory = new HeadDocumentHttpRequestFactory(Connection);
-            GetDocumentHttpRequestFactory = new GetDocumentHttpRequestFactory(Connection);
-            PostDocumentHttpRequestFactory = new PostDocumentHttpRequestFactory(Connection);
-            PutDocumentHttpRequestFactory = new PutDocumentHttpRequestFactory(Connection);
-            DeleteDocumentHttpRequestFactory = new DeleteDocumentHttpRequestFactory(Connection);
+            BulkHttpRequestFactory = new BulkHttpRequestFactory();
+            CopyDocumentHttpRequestFactory = new CopyDocumentHttpRequestFactory();
+            ReplaceDocumentHttpRequestFactory = new ReplaceDocumentHttpRequestFactory();
+            HeadDocumentHttpRequestFactory = new HeadDocumentHttpRequestFactory();
+            GetDocumentHttpRequestFactory = new GetDocumentHttpRequestFactory();
+            PostDocumentHttpRequestFactory = new PostDocumentHttpRequestFactory();
+            PutDocumentHttpRequestFactory = new PutDocumentHttpRequestFactory();
+            DeleteDocumentHttpRequestFactory = new DeleteDocumentHttpRequestFactory();
 
             DocumentReponseFactory = new DocumentResponseFactory(Serializer);
             DocumentHeaderReponseFactory = new DocumentHeaderResponseFactory(Serializer);
@@ -49,12 +49,11 @@ namespace MyCouch.Contexts
 
         public virtual async Task<BulkResponse> BulkAsync(BulkRequest request)
         {
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessBulkResponse(res);
-                }
+                return ProcessBulkResponse(res);
             }
         }
 
@@ -70,12 +69,11 @@ namespace MyCouch.Contexts
 
         public virtual async Task<DocumentHeaderResponse> CopyAsync(CopyDocumentRequest request)
         {
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessDocumentHeaderResponse(res);
-                }
+                return ProcessDocumentHeaderResponse(res);
             }
         }
 
@@ -91,12 +89,11 @@ namespace MyCouch.Contexts
 
         public virtual async Task<DocumentHeaderResponse> ReplaceAsync(ReplaceDocumentRequest request)
         {
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessDocumentHeaderResponse(res);
-                }
+                return ProcessDocumentHeaderResponse(res);
             }
         }
 
@@ -107,12 +104,11 @@ namespace MyCouch.Contexts
 
         public virtual async Task<DocumentHeaderResponse> HeadAsync(HeadDocumentRequest request)
         {
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessDocumentHeaderResponse(res);
-                }
+                return ProcessDocumentHeaderResponse(res);
             }
         }
 
@@ -123,12 +119,11 @@ namespace MyCouch.Contexts
 
         public virtual async Task<DocumentResponse> GetAsync(GetDocumentRequest request)
         {
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessDocumentResponse(res);
-                }
+                return ProcessDocumentResponse(res);
             }
         }
 
@@ -139,12 +134,11 @@ namespace MyCouch.Contexts
 
         public virtual async Task<DocumentHeaderResponse> PostAsync(PostDocumentRequest request)
         {
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessDocumentHeaderResponse(res);
-                }
+                return ProcessDocumentHeaderResponse(res);
             }
         }
 
@@ -160,12 +154,11 @@ namespace MyCouch.Contexts
 
         public virtual async Task<DocumentHeaderResponse> PutAsync(PutDocumentRequest request)
         {
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessDocumentHeaderResponse(res);
-                }
+                return ProcessDocumentHeaderResponse(res);
             }
         }
 
@@ -176,12 +169,11 @@ namespace MyCouch.Contexts
 
         public virtual async Task<DocumentHeaderResponse> DeleteAsync(DeleteDocumentRequest request)
         {
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessDocumentHeaderResponse(res);
-                }
+                return ProcessDocumentHeaderResponse(res);
             }
         }
 

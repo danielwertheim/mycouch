@@ -3,9 +3,6 @@ using EnsureThat;
 
 namespace MyCouch.Net
 {
-#if !PCL
-    [Serializable]
-#endif
     public class UrlParam
     {
         public string Key { get; private set; }
@@ -17,7 +14,9 @@ namespace MyCouch.Net
             Ensure.That(key, "key").IsNotNullOrWhiteSpace();
 
             Key = key;
-            Value = value;
+
+            if (value != null)
+                Value = Uri.EscapeDataString(value);
         }
     }
 }

@@ -26,5 +26,10 @@ namespace MyCouch
         /// Database oriented API operations.
         /// </summary>
         IDatabases Databases { get; }
+
+        /// <summary>
+        /// Replicator oriented API operations.
+        /// </summary>
+        IReplicator Replicator { get; }
     }
 }

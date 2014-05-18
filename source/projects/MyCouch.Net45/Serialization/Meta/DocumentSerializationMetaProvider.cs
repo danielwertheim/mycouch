@@ -56,7 +56,7 @@ namespace MyCouch.Serialization.Meta
             var metaAttr = ExtractMetaDataAttribute(docType);
             var type = metaAttr == null ? docType.Name : metaAttr.DocType ?? docType.Name;
 
-            var meta = new DocumentSerializationMeta(type, isAnonymous);
+            var meta = new DocumentSerializationMeta(docType, type, isAnonymous);
             if (metaAttr != null)
             {
                 meta.DocNamespace = metaAttr.DocNamespace;

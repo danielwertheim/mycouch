@@ -18,17 +18,12 @@ namespace MyCouch.Responses.Factories
             FailedResponseMaterializer = new FailedResponseMaterializer(serializer);
         }
 
-        protected override BulkResponse CreateResponseInstance()
-        {
-            return new BulkResponse();
-        }
-
-        protected override void OnMaterializationOfSuccessfulResponseProperties(BulkResponse response, HttpResponseMessage httpResponse)
+        protected override void MaterializeSuccessfulResponse(BulkResponse response, HttpResponseMessage httpResponse)
         {
             SuccessfulResponseMaterializer.Materialize(response, httpResponse);
         }
 
-        protected override void OnMaterializationOfFailedResponseProperties(BulkResponse response, HttpResponseMessage httpResponse)
+        protected override void MaterializeFailedResponse(BulkResponse response, HttpResponseMessage httpResponse)
         {
             FailedResponseMaterializer.Materialize(response, httpResponse);
         }

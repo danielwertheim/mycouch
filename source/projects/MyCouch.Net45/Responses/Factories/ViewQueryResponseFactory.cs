@@ -10,48 +10,44 @@ namespace MyCouch.Responses.Factories
         protected readonly ViewQueryResponseMaterializer SuccessfulResponseMaterializer;
         protected readonly FailedResponseMaterializer FailedResponseMaterializer;
 
-        public ViewQueryResponseFactory(ISerializer serializer, IEntitySerializer entitySerializer)
+        public ViewQueryResponseFactory(ISerializer serializer)
         {
             Ensure.That(serializer, "serializer").IsNotNull();
-            Ensure.That(entitySerializer, "entitySerializer").IsNotNull();
 
-            SuccessfulResponseMaterializer = new ViewQueryResponseMaterializer(entitySerializer);
+            SuccessfulResponseMaterializer = new ViewQueryResponseMaterializer(serializer);
             FailedResponseMaterializer = new FailedResponseMaterializer(serializer);
         }
 
         public virtual ViewQueryResponse Create(HttpResponseMessage httpResponse)
         {
-            return Materialize(
-                new ViewQueryResponse(),
+            return Materialize<ViewQueryResponse>(
                 httpResponse,
-                OnMaterializationOfSuccessfulResponseProperties,
-                OnMaterializationOfFailedResponseProperties);
+                MaterializeSuccessfulResponse,
+                MaterializeFailedResponse);
         }
 
-        public virtual ViewQueryResponse<T> Create<T>(HttpResponseMessage httpResponse)
+        public virtual ViewQueryResponse<TValue> Create<TValue>(HttpResponseMessage httpResponse)
         {
-            return Materialize(
-                new ViewQueryResponse<T>(),
+            return Materialize<ViewQueryResponse<TValue>>(
                 httpResponse,
-                OnMaterializationOfSuccessfulResponseProperties,
-                OnMaterializationOfFailedResponseProperties);
+                MaterializeSuccessfulResponse,
+                MaterializeFailedResponse);
         }
 
         public virtual ViewQueryResponse<TValue, TIncludedDoc> Create<TValue, TIncludedDoc>(HttpResponseMessage httpResponse)
         {
-            return Materialize(
-                new ViewQueryResponse<TValue, TIncludedDoc>(),
+            return Materialize<ViewQueryResponse<TValue, TIncludedDoc>>(
                 httpResponse,
-                OnMaterializationOfSuccessfulResponseProperties,
-                OnMaterializationOfFailedResponseProperties);
+                MaterializeSuccessfulResponse,
+                MaterializeFailedResponse);
         }
 
-        protected virtual void OnMaterializationOfSuccessfulResponseProperties<TValue, TIncludedDoc>(ViewQueryResponse<TValue, TIncludedDoc> response, HttpResponseMessage httpResponse)
+        protected virtual void MaterializeSuccessfulResponse<TValue, TIncludedDoc>(ViewQueryResponse<TValue, TIncludedDoc> response, HttpResponseMessage httpResponse)
         {
             SuccessfulResponseMaterializer.Materialize(response, httpResponse);
         }
 
-        protected virtual void OnMaterializationOfFailedResponseProperties<TValue, TIncludedDoc>(ViewQueryResponse<TValue, TIncludedDoc> response, HttpResponseMessage httpResponse)
+        protected virtual void MaterializeFailedResponse<TValue, TIncludedDoc>(ViewQueryResponse<TValue, TIncludedDoc> response, HttpResponseMessage httpResponse)
         {
             FailedResponseMaterializer.Materialize(response, httpResponse);
         }

@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Extensions;
+using MyCouch.HttpRequestFactories;
 using MyCouch.Net;
 using MyCouch.Requests;
-using MyCouch.Requests.Factories;
 using MyCouch.Responses;
 using MyCouch.Responses.Factories;
 using MyCouch.Serialization;
@@ -16,46 +16,42 @@ namespace MyCouch.Contexts
         protected QueryViewHttpRequestFactory QueryViewHttpRequestFactory { get; set; }
         protected ViewQueryResponseFactory ViewQueryResponseFactory { get; set; }
 
-        public Views(IDbClientConnection connection, ISerializer serializer, IEntitySerializer entitySerializer)
+        public Views(IDbClientConnection connection, ISerializer serializer)
             : base(connection)
         {
             Ensure.That(serializer, "serializer").IsNotNull();
-            Ensure.That(entitySerializer, "entitySerializer").IsNotNull();
 
-            QueryViewHttpRequestFactory = new QueryViewHttpRequestFactory(Connection, serializer);
-            ViewQueryResponseFactory = new ViewQueryResponseFactory(serializer, entitySerializer);
+            QueryViewHttpRequestFactory = new QueryViewHttpRequestFactory(serializer);
+            ViewQueryResponseFactory = new ViewQueryResponseFactory(serializer);
         }
 
         public virtual async Task<ViewQueryResponse> QueryAsync(QueryViewRequest request)
         {
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessHttpResponse(res);
-                }
+                return ProcessHttpResponse(res);
             }
         }
 
-        public virtual async Task<ViewQueryResponse<T>> QueryAsync<T>(QueryViewRequest request)
+        public virtual async Task<ViewQueryResponse<TValue>> QueryAsync<TValue>(QueryViewRequest request)
         {
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessHttpResponse<T>(res);
-                }
+                return ProcessHttpResponse<TValue>(res);
             }
         }
 
         public virtual async Task<ViewQueryResponse<TValue, TIncludedDoc>> QueryAsync<TValue, TIncludedDoc>(QueryViewRequest request)
         {
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessHttpResponse<TValue, TIncludedDoc>(res);
-                }
+                return ProcessHttpResponse<TValue, TIncludedDoc>(res);
             }
         }
 

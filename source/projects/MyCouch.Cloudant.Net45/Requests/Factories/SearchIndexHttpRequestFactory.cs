@@ -4,22 +4,18 @@ using System.Linq;
 using System.Net.Http;
 using EnsureThat;
 using MyCouch.Net;
-using MyCouch.Requests.Factories;
 using MyCouch.Serialization;
 
 namespace MyCouch.Cloudant.Requests.Factories
 {
-    public class SearchIndexHttpRequestFactory : HttpRequestFactoryBase
+    public class SearchIndexHttpRequestFactory
     {
-        protected ConstantRequestUrlGenerator RequestUrlGenerator { get; private set; }
         protected ISerializer Serializer { get; private set; }
 
-        public SearchIndexHttpRequestFactory(IDbClientConnection connection, ISerializer serializer)
+        public SearchIndexHttpRequestFactory(ISerializer serializer)
         {
-            Ensure.That(connection, "connection").IsNotNull();
             Ensure.That(serializer, "serializer").IsNotNull();
 
-            RequestUrlGenerator = new ConstantRequestUrlGenerator(connection.Address, connection.DbName);
             Serializer = serializer;
         }
 
@@ -27,13 +23,13 @@ namespace MyCouch.Cloudant.Requests.Factories
         {
             Ensure.That(request, "request").IsNotNull();
 
-            return CreateFor<SearchIndexRequest>(HttpMethod.Get, GenerateRequestUrl(request));
+            return new HttpRequest(HttpMethod.Get, GenerateRelativeUrl(request))
+                .SetRequestTypeHeader(request.GetType());
         }
 
-        protected virtual string GenerateRequestUrl(SearchIndexRequest request)
+        protected virtual string GenerateRelativeUrl(SearchIndexRequest request)
         {
-            return string.Format("{0}/_design/{1}/_search/{2}{3}",
-                RequestUrlGenerator.Generate(),
+            return string.Format("/_design/{0}/_search/{1}{2}",
                 request.IndexIdentity.DesignDocument,
                 request.IndexIdentity.Name,
                 GenerateRequestUrlQueryString(request));

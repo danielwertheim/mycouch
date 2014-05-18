@@ -29,7 +29,7 @@ namespace MyCouch.Responses
 #if !PCL
         [Serializable]
 #endif
-        public class Row : IResponseRow
+        public class Row
         {
             public virtual string Id { get; set; }
             public virtual string Seq { get; set; }

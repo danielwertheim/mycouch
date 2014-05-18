@@ -2,12 +2,21 @@
 {
     public static class JsonScheme
     {
+        public const string _Id = "_id";
+        public const string _Rev = "_rev";
+
+        public const string Id = "id";
+        public const string Rev = "rev";
         public const string Error = "error";
         public const string Reason = "reason";
         public const string UpdateSeq = "update_seq";
+        public const string Offset = "offset";
+        public const string Rows = "rows";
+        public const string Key = "key";
         public const string IncludedDoc = "doc";
         public const string LastSeq = "last_seq";
         public const string TotalRows = "total_rows";
+        public const string Conflicts = "_conflicts";
 
         public const string LocalId = "_local_id";
         public const string NoChanges = "no_changes";

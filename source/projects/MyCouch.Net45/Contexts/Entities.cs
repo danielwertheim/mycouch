@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.EntitySchemes;
 using MyCouch.Extensions;
+using MyCouch.HttpRequestFactories;
 using MyCouch.Net;
 using MyCouch.Requests;
-using MyCouch.Requests.Factories;
 using MyCouch.Responses;
 using MyCouch.Responses.Factories;
 using MyCouch.Serialization;
@@ -14,7 +14,7 @@ namespace MyCouch.Contexts
 {
     public class Entities : ApiContextBase<IDbClientConnection>, IEntities
     {
-        public IEntitySerializer Serializer { get; private set; }
+        public ISerializer Serializer { get; private set; }
         public IEntityReflector Reflector { get; private set;}
 
         protected GetEntityHttpRequestFactory GetHttpRequestFactory { get; set; }
@@ -24,35 +24,33 @@ namespace MyCouch.Contexts
  
         protected EntityResponseFactory EntityResponseFactory { get; set; }
 
-        public Entities(IDbClientConnection connection, ISerializer serializer, IEntitySerializer entitySerializer, IEntityReflector entityReflector)
+        public Entities(IDbClientConnection connection, ISerializer serializer, IEntityReflector entityReflector)
             : base(connection)
         {
             Ensure.That(serializer, "serializer").IsNotNull();
-            Ensure.That(entitySerializer, "entitySerializer").IsNotNull();
             Ensure.That(entityReflector, "entityReflector").IsNotNull();
 
-            Serializer = entitySerializer;
-            EntityResponseFactory = new EntityResponseFactory(serializer, entitySerializer);
+            Serializer = serializer;
             Reflector = entityReflector;
-            GetHttpRequestFactory = new GetEntityHttpRequestFactory(Connection, Serializer, Reflector);
-            PostHttpRequestFactory = new PostEntityHttpRequestFactory(Connection, Serializer, Reflector);
-            PutHttpRequestFactory = new PutEntityHttpRequestFactory(Connection, Serializer, Reflector);
-            DeleteHttpRequestFactory = new DeleteEntityHttpRequestFactory(Connection, Serializer, Reflector);
+            EntityResponseFactory = new EntityResponseFactory(serializer, Reflector);
+            GetHttpRequestFactory = new GetEntityHttpRequestFactory();
+            PostHttpRequestFactory = new PostEntityHttpRequestFactory(Serializer);
+            PutHttpRequestFactory = new PutEntityHttpRequestFactory(Reflector, Serializer);
+            DeleteHttpRequestFactory = new DeleteEntityHttpRequestFactory(Reflector);
         }
 
-        public virtual Task<EntityResponse<T>> GetAsync<T>(string id, string rev = null) where T : class
+        public virtual Task<GetEntityResponse<T>> GetAsync<T>(string id, string rev = null) where T : class
         {
             return GetAsync<T>(new GetEntityRequest(id, rev));
         }
 
-        public virtual async Task<EntityResponse<T>> GetAsync<T>(GetEntityRequest request) where T : class
+        public virtual async Task<GetEntityResponse<T>> GetAsync<T>(GetEntityRequest request) where T : class
         {
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessEntityResponse<T>(request, res);
-                }
+                return ProcessEntityResponse<T>(request, res);
             }
         }
 
@@ -63,12 +61,11 @@ namespace MyCouch.Contexts
 
         public virtual async Task<EntityResponse<T>> PostAsync<T>(PostEntityRequest<T> request) where T : class
         {
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessEntityResponse(request, res);
-                }
+                return ProcessEntityResponse(request, res);
             }
         }
 
@@ -79,12 +76,11 @@ namespace MyCouch.Contexts
 
         public virtual async Task<EntityResponse<T>> PutAsync<T>(PutEntityRequest<T> request) where T : class
         {
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessEntityResponse(request, res);
-                }
+                return ProcessEntityResponse(request, res);
             }
         }
 
@@ -95,12 +91,11 @@ namespace MyCouch.Contexts
 
         public virtual async Task<EntityResponse<T>> DeleteAsync<T>(DeleteEntityRequest<T> request) where T : class
         {
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessEntityResponse(request, res);
-                }
+                return ProcessEntityResponse(request, res);
             }
         }
 
@@ -124,9 +119,9 @@ namespace MyCouch.Contexts
             return DeleteHttpRequestFactory.Create(request);
         }
 
-        protected virtual EntityResponse<T> ProcessEntityResponse<T>(GetEntityRequest request, HttpResponseMessage response) where T : class
+        protected virtual GetEntityResponse<T> ProcessEntityResponse<T>(GetEntityRequest request, HttpResponseMessage response) where T : class
         {
-            return EntityResponseFactory.Create<T>(response);
+            return EntityResponseFactory.Create<GetEntityResponse<T>, T>(response);
         }
 
         protected virtual EntityResponse<T> ProcessEntityResponse<T>(PostEntityRequest<T> request, HttpResponseMessage response) where T : class

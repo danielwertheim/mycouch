@@ -11,5 +11,5 @@
     "SecondaryDbName": "mycouchtests_sec",
     "TempDbName": "mycouchtests_tmp",
     "User":"sa",
-    "Password":"p@ssword"
+    "Password":"test"
 }

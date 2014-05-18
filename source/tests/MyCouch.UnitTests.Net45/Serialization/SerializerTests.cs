@@ -23,13 +23,6 @@ namespace MyCouch.UnitTests.Serialization
 
         protected class ChildModelEntityWithMeta : ModelEntityWithMeta { }
 
-        protected class ModelWithIdInWrongOrder
-        {
-            public string Id { get; set; }
-            public string ModelWithIdInWrongOrderId { get; set; }
-            public string Value { get; set; }
-        }
-
         protected class ModelOne
         {
             public string Id { get; set; }

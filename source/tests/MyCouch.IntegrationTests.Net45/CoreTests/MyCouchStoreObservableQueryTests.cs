@@ -12,10 +12,15 @@ namespace MyCouch.IntegrationTests.CoreTests
     public class MyCouchStoreObservableQueryTests :
         IntegrationTestsOf<MyCouchStore>,
         IPreserveStatePerFixture,
+#if !PCL
         IUseFixture<ViewsFixture>
+#else
+        IClassFixture<ViewsFixture>
+#endif
     {
         protected Artist[] ArtistsById { get; set; }
 
+#if !PCL
         public MyCouchStoreObservableQueryTests()
         {
             SUT = new MyCouchStore(DbClient);
@@ -25,6 +30,13 @@ namespace MyCouch.IntegrationTests.CoreTests
         {
             ArtistsById = data.Init(Environment);
         }
+#else
+        public MyCouchStoreObservableQueryTests(ViewsFixture fixture)
+        {
+            SUT = new MyCouchStore(DbClient);
+            ArtistsById = fixture.Init(Environment);
+        }
+#endif
 
         [MyFact(TestScenarios.MyCouchStore)]
         public void When_no_key_with_sum_reduce_for_string_response_It_will_be_able_to_sum()

@@ -1,6 +1,7 @@
-﻿using System.IO;
-using System.Net.Http;
+﻿using System.Net.Http;
+using System.Net.Http.Headers;
 using EnsureThat;
+using MyCouch.EntitySchemes;
 using MyCouch.Extensions;
 using MyCouch.Serialization;
 
@@ -9,65 +10,58 @@ namespace MyCouch.Responses.Materializers
     public class EntityResponseMaterializer
     {
         protected readonly ISerializer Serializer;
-        protected readonly IEntitySerializer EntitySerializer;
+        protected readonly IEntityReflector EntityReflector;
 
-        public EntityResponseMaterializer(ISerializer serializer, IEntitySerializer entitySerializer)
+        public EntityResponseMaterializer(ISerializer serializer, IEntityReflector entityReflector)
         {
             Ensure.That(serializer, "serializer").IsNotNull();
-            Ensure.That(entitySerializer, "entitySerializer").IsNotNull();
+            Ensure.That(entityReflector, "entityReflector").IsNotNull();
 
             Serializer = serializer;
-            EntitySerializer = entitySerializer;
+            EntityReflector = entityReflector;
         }
 
-        public virtual void Materialize<T>(EntityResponse<T> response, HttpResponseMessage httpResponse) where T : class
-        {
-            SetContent(response, httpResponse);
-        }
-
-        protected virtual async void SetContent<T>(EntityResponse<T> response, HttpResponseMessage httpResponse) where T : class
+        public virtual async void Materialize<T>(EntityResponse<T> response, HttpResponseMessage httpResponse) where T : class
         {
             using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
             {
-                if (ContentShouldContainIdAndRev(httpResponse.RequestMessage))
-                    SetDocumentHeaderFromResponseStream(response, content);
-                else
+                var get = response as GetEntityResponse<T>;
+                if (get != null)
                 {
-                    SetMissingIdFromRequestUri(response, httpResponse);
-                    SetMissingRevFromRequestHeaders(response, httpResponse);
-                }
+                    response.Content = Serializer.DeserializeCopied<T>(content);
+                    response.Id = EntityReflector.IdMember.GetValueFrom(response.Content);
+                    response.Rev = EntityReflector.RevMember.GetValueFrom(response.Content);
 
-                if (response.RequestMethod == HttpMethod.Get)
-                {
-                    content.Position = 0;
-                    response.Content = EntitySerializer.Deserialize<T>(content);
+                    var tmp = Serializer.Deserialize<Temp>(content);
+                    get.Conflicts = tmp._conflicts;
+                    get.Id = get.Id ?? tmp.Id;
+                    get.Rev = get.Rev ?? tmp.Rev;
                 }
+                else
+                    Serializer.Populate(response, content);
+
+                SetMissingIdFromRequestUri(response, httpResponse.RequestMessage);
+                SetMissingRevFromRequestHeaders(response, httpResponse.Headers);
             }
         }
 
-        protected virtual bool ContentShouldContainIdAndRev(HttpRequestMessage request)
+        protected virtual void SetMissingIdFromRequestUri<T>(EntityResponse<T> response, HttpRequestMessage request) where T : class
         {
-            return
-                request.Method == HttpMethod.Post ||
-                request.Method == HttpMethod.Put ||
-                request.Method == HttpMethod.Delete;
+            if (string.IsNullOrWhiteSpace(response.Id) && request.Method != HttpMethod.Post)
+                response.Id = request.GetUriSegmentByRightOffset();
         }
 
-        protected virtual void SetDocumentHeaderFromResponseStream<T>(EntityResponse<T> response, Stream content) where T : class
-        {
-            Serializer.Populate(response, content);
-        }
-
-        protected virtual void SetMissingIdFromRequestUri<T>(EntityResponse<T> response, HttpResponseMessage httpResponse) where T : class
-        {
-            if (string.IsNullOrWhiteSpace(response.Id) && httpResponse.RequestMessage.Method != HttpMethod.Post)
-                response.Id = httpResponse.RequestMessage.GetUriSegmentByRightOffset();
-        }
-
-        protected virtual void SetMissingRevFromRequestHeaders<T>(EntityResponse<T> response, HttpResponseMessage httpResponse) where T : class
+        protected virtual void SetMissingRevFromRequestHeaders<T>(EntityResponse<T> response, HttpResponseHeaders responseHeaders) where T : class
         {
             if (string.IsNullOrWhiteSpace(response.Rev))
-                response.Rev = httpResponse.Headers.GetETag();
+                response.Rev = responseHeaders.GetETag();
+        }
+
+        private class Temp
+        {
+            public string Id { get; set; }
+            public string Rev { get; set; }
+            public string[] _conflicts { get; set; }
         }
     }
 }

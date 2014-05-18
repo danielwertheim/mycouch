@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace MyCouch.Responses
 {
@@ -7,7 +8,10 @@ namespace MyCouch.Responses
 #endif
     public class DocumentHeaderResponse : Response
     {
+        [JsonProperty(JsonScheme.Id)]
         public string Id { get; set; }
+
+        [JsonProperty(JsonScheme.Rev)]
         public string Rev { get; set; }
 
         public override string ToStringDebugVersion()

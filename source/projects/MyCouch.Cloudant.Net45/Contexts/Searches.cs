@@ -17,26 +17,24 @@ namespace MyCouch.Cloudant.Contexts
         protected SearchIndexHttpRequestFactory SearchIndexHttpRequestFactory { get; set; }
         protected SearchIndexResponseFactory SearchIndexResponseFactory { get; set; }
 
-        public Searches(IDbClientConnection connection, ISerializer serializer, IEntitySerializer entitySerializer)
+        public Searches(IDbClientConnection connection, ISerializer serializer)
             : base(connection)
         {
             Ensure.That(serializer, "serializer").IsNotNull();
-            Ensure.That(entitySerializer, "entitySerializer").IsNotNull();
 
-            SearchIndexHttpRequestFactory = new SearchIndexHttpRequestFactory(Connection, serializer);
-            SearchIndexResponseFactory = new SearchIndexResponseFactory(serializer, entitySerializer);
+            SearchIndexHttpRequestFactory = new SearchIndexHttpRequestFactory(serializer);
+            SearchIndexResponseFactory = new SearchIndexResponseFactory(serializer);
         }
 
         public virtual async Task<SearchIndexResponse> SearchAsync(SearchIndexRequest request)
         {
             Ensure.That(request, "request").IsNotNull();
 
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessHttpResponse(res);
-                }
+                return ProcessHttpResponse(res);
             }
         }
 
@@ -44,12 +42,11 @@ namespace MyCouch.Cloudant.Contexts
         {
             Ensure.That(request, "request").IsNotNull();
 
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessHttpResponse<TIncludedDoc>(res);
-                }
+                return ProcessHttpResponse<TIncludedDoc>(res);
             }
         }
 

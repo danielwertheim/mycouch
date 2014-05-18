@@ -2,15 +2,15 @@
 <package>
   <metadata>
     <id>MyCouch.Cloudant</id>
-    <title>MyCouch - Cloudant client</title>
+    <title>MyCouch.Cloudant client</title>
     <version>$version$</version>
     <authors>danielwertheim</authors>
     <copyright>Copyright 2014 Daniel Wertheim</copyright>
-    <summary>Simple async CouchDb and Cloudant client.</summary>
+    <summary>Simple async CouchDB and Cloudant client.</summary>
     <description>
-      MyCouch is the simple asynchronous CouchDb and Cloudant client for .Net - building on top of the asynchronous HTTP client and uses JSON.Net to provide flexible serialization behaviour.
+      MyCouch is the simple asynchronous CouchDB and Cloudant client for .Net - building on top of the asynchronous HTTP client and uses JSON.Net to provide flexible serialization behaviour.
 
-      This package contains support for Cloudant specific features. If you want pure CouchDb support go with the "MyCouch" package instead.
+      This package contains support for Cloudant specific features. If you want pure CouchDB support go with the "MyCouch" package instead.
 
       It tries to keep the domain language of CouchDb and lets you work with requests and responses but also provides you with an alternative simplifying async API.
       MyCouch lets you work with raw JSON and/or entities/POCOS without requiring any implementation of interfaces or base-classes etc. MyCouch provides you with some model conventions like
@@ -25,30 +25,28 @@
     <releaseNotes>Can be found on project site: https://github.com/danielwertheim/mycouch/wiki/release-notes</releaseNotes>
     <tags>couchdb cloudant lucene nosql</tags>
     <frameworkAssemblies>
-      <frameworkAssembly assemblyName="System.Configuration" targetFramework="net40" />
-      <frameworkAssembly assemblyName="System.Configuration" targetFramework="net45" />
       <frameworkAssembly assemblyName="System.Net.Http" targetFramework="net45" />
     </frameworkAssemblies>
     <dependencies>
        <group targetFramework="net40">
          <dependency id="MyCouch" version="[$version$]" />
          <dependency id="Ensure.That" version="1.0.0" />
-         <dependency id="Newtonsoft.Json" version="6.0.2" />
+         <dependency id="Newtonsoft.Json" version="6.0.3" />
          <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
-         <dependency id="Microsoft.Net.Http" version="2.2.20" />
-         <dependency id="Rx-Main" version="2.2.2" />
+         <dependency id="Microsoft.Net.Http" version="2.2.22" />
+         <dependency id="Rx-Main" version="2.2.4" />
        </group>
        <group targetFramework="net45">
          <dependency id="MyCouch" version="[$version$]" />
          <dependency id="Ensure.That" version="1.0.0" />
-         <dependency id="Newtonsoft.Json" version="6.0.2" />
-         <dependency id="Rx-Main" version="2.2.2" />
+         <dependency id="Newtonsoft.Json" version="6.0.3" />
+         <dependency id="Rx-Main" version="2.2.4" />
        </group>
        <group targetFramework="portable-netcore45+netcore451">
          <dependency id="MyCouch" version="[$version$]" />
          <dependency id="Ensure.That" version="1.0.0" />
-         <dependency id="Newtonsoft.Json" version="6.0.2" />
-         <dependency id="Rx-Main" version="2.2.2" />
+         <dependency id="Newtonsoft.Json" version="6.0.3" />
+         <dependency id="Rx-Main" version="2.2.4" />
        </group>
     </dependencies>
   </metadata>

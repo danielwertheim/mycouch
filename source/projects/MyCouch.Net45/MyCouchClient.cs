@@ -11,6 +11,7 @@ namespace MyCouch
 
         public IDbClientConnection Connection { get; private set; }
         public ISerializer Serializer { get; private set; }
+        public ISerializer DocumentSerializer { get; private set; }
         public IChanges Changes { get; private set; }
         public IAttachments Attachments { get; private set; }
         public IDatabase Database { get; private set; }
@@ -31,9 +32,10 @@ namespace MyCouch
             bootstrapper = bootstrapper ?? new MyCouchClientBootstrapper();
 
             Serializer = bootstrapper.SerializerFn();
+            DocumentSerializer = bootstrapper.DocumentSerializerFn();
             Changes = bootstrapper.ChangesFn(Connection);
             Attachments = bootstrapper.AttachmentsFn(Connection);
-            Database = bootstrapper.DatabasesFn(Connection);
+            Database = bootstrapper.DatabaseFn(Connection);
             Documents = bootstrapper.DocumentsFn(Connection);
             Entities = bootstrapper.EntitiesFn(Connection);
             Views = bootstrapper.ViewsFn(Connection);

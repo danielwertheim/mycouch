@@ -10,39 +10,10 @@ namespace MyCouch
     public class MyCouchClientBootstrapper
     {
         /// <summary>
-        /// Used e.g. for bootstraping components relying on plain serialization, <see cref="ISerializer"/>
-        /// used in <see cref="IMyCouchClient.Serializer"/>.
+        /// Used for configuring serializers returned via <see cref="SerializerFn"/>
+        /// and <see cref="DocumentSerializerFn"/>.
         /// </summary>
-        /// <remarks>
-        /// For document serialization configuration, <see cref="DocumentSerializationConfigurationFn"/>
-        /// For entity serialization configuration, <see cref="EntitySerializationConfigurationFn"/>.
-        /// </remarks>
         public Func<SerializationConfiguration> SerializationConfigurationFn { get; set; }
-
-        /// <summary>
-        /// Used e.g. for bootstraping components relying on document serialization, <see cref="IDocumentSerializer"/>
-        /// used in <see cref="IDocuments.Serializer"/> used in <see cref="IMyCouchClient.Documents"/>.
-        /// </summary>
-        /// <remarks>
-        /// For plain serialization configuration, <see cref="SerializationConfigurationFn"/>.
-        /// For entity serialization configuration, <see cref="EntitySerializationConfigurationFn"/>.
-        /// </remarks>
-        public Func<SerializationConfiguration> DocumentSerializationConfigurationFn { get; set; }
-
-        /// <summary>
-        /// Used e.g. for bootstraping components relying on entity serialization, <see cref="IEntitySerializer"/>
-        /// used in <see cref="IEntities.Serializer"/> used in <see cref="IMyCouchClient.Entities"/>.
-        /// </summary>
-        /// <remarks>
-        /// For plain serialization configuration, <see cref="SerializationConfigurationFn"/>.
-        /// For document serialization configuration, <see cref="DocumentSerializationConfigurationFn"/>
-        /// </remarks>
-        public Func<SerializationConfiguration> EntitySerializationConfigurationFn { get; set; }
-
-        /// <summary>
-        /// Used for constructing meta-data about documents used for serialization.
-        /// </summary>
-        public Func<IDocumentSerializationMetaProvider> DocumentSerializationMetaProviderFn { get; set; }
 
         /// <summary>
         /// Used e.g. for boostraping components that needs to be able to read and set values
@@ -56,14 +27,9 @@ namespace MyCouch
         public Func<ISerializer> SerializerFn { get; set; }
 
         /// <summary>
-        /// Used e.g. for bootstraping <see cref="IDocuments.Serializer"/>.
+        /// Used e.g. for bootstraping <see cref="IMyCouchClient.DocumentSerializer"/>.
         /// </summary>
-        public Func<IDocumentSerializer> DocumentSerializerFn { get; set; }
-
-        /// <summary>
-        /// Used e.g. for bootstraping <see cref="IEntities.Serializer"/>.
-        /// </summary>
-        public Func<IEntitySerializer> EntitySerializerFn { get; set; }
+        public Func<ISerializer> DocumentSerializerFn { get; set; }
 
         /// <summary>
         /// Used e.g. for bootstraping <see cref="IMyCouchClient.Changes"/>.
@@ -78,7 +44,17 @@ namespace MyCouch
         /// <summary>
         /// Used e.g. for bootstraping <see cref="IMyCouchClient.Database"/>.
         /// </summary>
-        public Func<IDbClientConnection, IDatabase> DatabasesFn { get; set; }
+        public Func<IDbClientConnection, IDatabase> DatabaseFn { get; set; }
+
+        /// <summary>
+        /// Used e.g. for bootstraping <see cref="IMyCouchServerClient.Databases"/>.
+        /// </summary>
+        public Func<IServerClientConnection, IDatabases> DatabasesFn { get; set; }
+
+        /// <summary>
+        /// Used e.g. for bootstraping <see cref="IMyCouchServerClient.Replicator"/>.
+        /// </summary>
+        public Func<IServerClientConnection, IReplicator> ReplicatorFn { get; set; }
 
         /// <summary>
         /// Used e.g. for bootstraping <see cref="IMyCouchClient.Documents"/>.
@@ -97,22 +73,19 @@ namespace MyCouch
 
         public MyCouchClientBootstrapper()
         {
+            ConfigureEntityReflectorFn();
+            ConfigureSerializationConfiguration();
+            ConfigureSerializerFn();
+            ConfigureDocumentSerializerFn();
+
             ConfigureChangesFn();
             ConfigureAttachmentsFn();
             ConfigureDatabaseFn();
+            ConfigureDatabasesFn();
+            ConfigureReplicatorFn();
             ConfigureDocumentsFn();
             ConfigureEntitiesFn();
             ConfigureViewsFn();
-
-            ConfigureSerializationConfigurationFn();
-            ConfigureDocumentSerializationConfigurationFn();
-            ConfigureEntitySerializationConfigurationFn();
-            ConfigureDocumentSerializationMetaProvider();
-
-            ConfigureSerializerFn();
-            ConfigureDocumentSerializerFn();
-            ConfigureEntitySerializerFn();
-            ConfigureEntityReflectorFn();
         }
 
         protected virtual void ConfigureChangesFn()
@@ -127,22 +100,31 @@ namespace MyCouch
 
         protected virtual void ConfigureDatabaseFn()
         {
-            DatabasesFn = cn => new Database(cn, SerializerFn());
+            DatabaseFn = cn => new Database(cn, SerializerFn());
+        }
+
+        protected virtual void ConfigureDatabasesFn()
+        {
+            DatabasesFn = cn => new Databases(cn, SerializerFn());
+        }
+
+        protected virtual void ConfigureReplicatorFn()
+        {
+            ReplicatorFn = cn => new Replicator(cn, SerializerFn());
         }
 
         protected virtual void ConfigureDocumentsFn()
         {
             DocumentsFn = cn => new Documents(
                 cn,
-                DocumentSerializerFn());
+                SerializerFn());
         }
 
         protected virtual void ConfigureEntitiesFn()
         {
             EntitiesFn = cn => new Entities(
                 cn,
-                SerializerFn(),
-                EntitySerializerFn(),
+                DocumentSerializerFn(),
                 EntityReflectorFn());
         }
 
@@ -150,8 +132,7 @@ namespace MyCouch
         {
             ViewsFn = cn => new Views(
                 cn,
-                SerializerFn(),
-                EntitySerializerFn());
+                DocumentSerializerFn());
         }
 
         protected virtual void ConfigureEntityReflectorFn()
@@ -164,63 +145,36 @@ namespace MyCouch
             EntityReflectorFn = () => entityReflector.Value;
         }
 
-        protected virtual void ConfigureSerializationConfigurationFn()
-        {
-            SerializationConfigurationFn = () =>
-            {
-                var contractResolver = new SerializationContractResolver();
-
-                return new SerializationConfiguration(contractResolver);
-            };
-        }
-
-        protected virtual void ConfigureDocumentSerializationConfigurationFn()
-        {
-            var serializationConfiguration = new Lazy<SerializationConfiguration>(() =>
-            {
-                var contractResolver = new SerializationContractResolver();
-
-                return new SerializationConfiguration(contractResolver);
-            });
-
-            DocumentSerializationConfigurationFn = () => serializationConfiguration.Value;
-        }
-
-        protected virtual void ConfigureEntitySerializationConfigurationFn()
-        {
-            var serializationConfiguration = new Lazy<SerializationConfiguration>(() =>
-            {
-                var contractResolver = new EntityContractResolver(EntityReflectorFn());
-
-                return new SerializationConfiguration(contractResolver);
-            });
-
-            EntitySerializationConfigurationFn = () => serializationConfiguration.Value;
-        }
-
-        protected virtual void ConfigureDocumentSerializationMetaProvider()
-        {
-            var provider = new Lazy<IDocumentSerializationMetaProvider>(() => new DocumentSerializationMetaProvider());
-
-            DocumentSerializationMetaProviderFn = () => provider.Value;
-        }
-
         protected virtual void ConfigureSerializerFn()
         {
-            var serializer = new Lazy<ISerializer>(() => new DefaultSerializer(SerializationConfigurationFn()));
+            var serializer = new Lazy<ISerializer>(() =>
+            {
+                var documentMetaProvider = new EmptyDocumentSerializationMetaProvider();
+
+                return new DefaultSerializer(SerializationConfigurationFn(), documentMetaProvider);
+            });
             SerializerFn = () => serializer.Value;
         }
 
         protected virtual void ConfigureDocumentSerializerFn()
         {
-            var serializer = new Lazy<IDocumentSerializer>(() => new DocumentSerializer(DocumentSerializationConfigurationFn(), DocumentSerializationMetaProviderFn()));
+            var serializer = new Lazy<ISerializer>(() =>
+            {
+                var documentMetaProvider = new DocumentSerializationMetaProvider();
+
+                return new DefaultSerializer(SerializationConfigurationFn(), documentMetaProvider, EntityReflectorFn());
+            });
             DocumentSerializerFn = () => serializer.Value;
         }
 
-        protected virtual void ConfigureEntitySerializerFn()
+        protected virtual void ConfigureSerializationConfiguration()
         {
-            var serializer = new Lazy<IEntitySerializer>(() => new EntitySerializer(EntitySerializationConfigurationFn(), DocumentSerializationMetaProviderFn()));
-            EntitySerializerFn = () => serializer.Value;
+            var config = new Lazy<SerializationConfiguration>(() =>
+            {
+                var contractResolver = new SerializationContractResolver();
+                return new SerializationConfiguration(contractResolver);
+            });
+            SerializationConfigurationFn = () => config.Value;
         }
     }
 }

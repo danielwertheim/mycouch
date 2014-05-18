@@ -97,20 +97,5 @@ namespace MyCouch
         /// <param name="request"></param>
         /// <returns></returns>
         Task<DatabaseHeaderResponse> ViewCleanupAsync(ViewCleanupRequest request);
-
-        /// <summary>
-        /// Initiates a new Replication task.
-        /// </summary>
-        /// <param name="source"></param>
-        /// <param name="target"></param>
-        /// <returns></returns>
-        Task<ReplicationResponse> ReplicateAsync(string source, string target);
-
-        /// <summary>
-        /// Initiates a new Replication task.
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        Task<ReplicationResponse> ReplicateAsync(ReplicateDatabaseRequest request);
     }
 }

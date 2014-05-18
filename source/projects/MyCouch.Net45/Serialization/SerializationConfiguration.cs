@@ -1,3 +1,4 @@
+using EnsureThat;
 using MyCouch.Serialization.Conventions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -10,13 +11,15 @@ namespace MyCouch.Serialization
         public JsonSerializerSettings Settings { get; protected set; }
         public SerializationConventions Conventions { get; protected set; }
 
-        public SerializationConfiguration(IContractResolver contractResolver = null)
+        public SerializationConfiguration(IContractResolver contractResolver)
         {
+            Ensure.That(contractResolver, "contractResolver").IsNotNull();
+
             Settings = new JsonSerializerSettings
             {
                 TypeNameHandling = TypeNameHandling.None,
                 ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor,
-                ContractResolver = contractResolver ?? new SerializationContractResolver(),
+                ContractResolver = contractResolver,
                 DateFormatHandling = DateFormatHandling.IsoDateFormat,
                 DateTimeZoneHandling = DateTimeZoneHandling.RoundtripKind,
                 Formatting = Formatting.None,

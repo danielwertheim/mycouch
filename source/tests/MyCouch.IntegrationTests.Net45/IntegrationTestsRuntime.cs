@@ -85,22 +85,25 @@ namespace MyCouch.IntegrationTests
             {
             }
 
-            protected override HttpRequest OnBeforeSend(HttpRequest httpRequest)
+            protected override HttpRequestMessage CreateHttpRequestMessage(HttpRequest httpRequest)
             {
-                if (httpRequest.Method == HttpMethod.Post || httpRequest.Method == HttpMethod.Put || httpRequest.Method == HttpMethod.Delete)
+                var message = base.CreateHttpRequestMessage(httpRequest);
+
+                if (message.Method == HttpMethod.Post || message.Method == HttpMethod.Put || message.Method == HttpMethod.Delete)
                 {
-                    httpRequest.RequestUri = string.IsNullOrEmpty(httpRequest.RequestUri.Query)
-                        ? new Uri(httpRequest.RequestUri + "?w=3")
-                        : new Uri(httpRequest.RequestUri + "&w=3");
+                    message.RequestUri = string.IsNullOrEmpty(message.RequestUri.Query)
+                        ? new Uri(message.RequestUri + "?w=3")
+                        : new Uri(message.RequestUri + "&w=3");
                 }
 
-                if (httpRequest.Method == HttpMethod.Get || httpRequest.Method == HttpMethod.Head)
+                if (message.Method == HttpMethod.Get || message.Method == HttpMethod.Head)
                 {
-                    httpRequest.RequestUri = string.IsNullOrEmpty(httpRequest.RequestUri.Query)
-                        ? new Uri(httpRequest.RequestUri + "?r=3")
-                        : new Uri(httpRequest.RequestUri + "&r=3");
+                    message.RequestUri = string.IsNullOrEmpty(message.RequestUri.Query)
+                        ? new Uri(message.RequestUri + "?r=3")
+                        : new Uri(message.RequestUri + "&r=3");
                 }
-                return base.OnBeforeSend(httpRequest);
+
+                return message;
             }
         }
 
@@ -111,22 +114,25 @@ namespace MyCouch.IntegrationTests
             {
             }
 
-            protected override HttpRequest OnBeforeSend(HttpRequest httpRequest)
+            protected override HttpRequestMessage CreateHttpRequestMessage(HttpRequest httpRequest)
             {
-                if (httpRequest.Method == HttpMethod.Post || httpRequest.Method == HttpMethod.Put || httpRequest.Method == HttpMethod.Delete)
+                var message = base.CreateHttpRequestMessage(httpRequest);
+
+                if (message.Method == HttpMethod.Post || message.Method == HttpMethod.Put || message.Method == HttpMethod.Delete)
                 {
-                    httpRequest.RequestUri = string.IsNullOrEmpty(httpRequest.RequestUri.Query)
-                        ? new Uri(httpRequest.RequestUri + "?w=3")
-                        : new Uri(httpRequest.RequestUri + "&w=3");
+                    message.RequestUri = string.IsNullOrEmpty(message.RequestUri.Query)
+                        ? new Uri(message.RequestUri + "?w=3")
+                        : new Uri(message.RequestUri + "&w=3");
                 }
 
-                if (httpRequest.Method == HttpMethod.Get || httpRequest.Method == HttpMethod.Head)
+                if (message.Method == HttpMethod.Get || message.Method == HttpMethod.Head)
                 {
-                    httpRequest.RequestUri = string.IsNullOrEmpty(httpRequest.RequestUri.Query)
-                        ? new Uri(httpRequest.RequestUri + "?r=1")
-                        : new Uri(httpRequest.RequestUri + "&r=1");
+                    message.RequestUri = string.IsNullOrEmpty(message.RequestUri.Query)
+                        ? new Uri(message.RequestUri + "?r=1")
+                        : new Uri(message.RequestUri + "&r=1");
                 }
-                return base.OnBeforeSend(httpRequest);
+
+                return message;
             }
         }
 
@@ -152,6 +158,8 @@ namespace MyCouch.IntegrationTests
                 CreateDb(Environment.TempDbName);
             }
 
+            if(Environment.HasSupportFor(TestScenarios.Replication))
+                ClearAllDocuments("_replicator");
         }
 
         private static void CreateDb(string dbName)
@@ -203,9 +211,15 @@ namespace MyCouch.IntegrationTests
             var bulkRequest = new BulkRequest();
 
             foreach (var row in response.Rows)
-                bulkRequest.Delete(row.Id, row.Value.rev.ToString());
+            {
+                if (row.Id.ToLower() == "_design/_replicator")
+                    continue;
 
-            client.Documents.BulkAsync(bulkRequest).Wait();
+                bulkRequest.Delete(row.Id, row.Value.rev.ToString());
+            }
+
+            if(!bulkRequest.IsEmpty)
+                client.Documents.BulkAsync(bulkRequest).Wait();
         }
     }
 

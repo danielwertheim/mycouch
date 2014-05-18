@@ -2,9 +2,9 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Extensions;
+using MyCouch.HttpRequestFactories;
 using MyCouch.Net;
 using MyCouch.Requests;
-using MyCouch.Requests.Factories;
 using MyCouch.Responses;
 using MyCouch.Responses.Factories;
 using MyCouch.Serialization;
@@ -15,15 +15,13 @@ namespace MyCouch.Contexts
     {
         protected DatabaseHeaderResponseFactory DatabaseHeaderResponseFactory { get; set; }
         protected GetDatabaseResponseFactory GetDatabaseResponseFactory { get; set; }
-        protected ReplicationResponseFactory ReplicationResponseFactory { get; set; }
 
-        protected GetDatabaseHttpRequestFactory GetHttpRequestFactory { get; set; }
-        protected HeadDatabaseHttpRequestFactory HeadHttpRequestFactory { get; set; }
-        protected PutDatabaseHttpRequestFactory PutHttpRequestFactory { get; set; }
-        protected DeleteDatabaseHttpRequestFactory DeleteHttpRequestFactory { get; set; }
-        protected CompactDatabaseHttpRequestFactory CompactHttpRequestFactory { get; set; }
-        protected ViewCleanupHttpRequestFactory ViewCleanupHttpRequestFactory { get; set; }
-        protected ReplicateDatabaseHttpRequestFactory ReplicateDatabaseHttpRequestFactory { get; set; }
+        protected GetDatabaseServerHttpRequestFactory GetHttpRequestFactory { get; set; }
+        protected HeadDatabaseServerHttpRequestFactory HeadHttpRequestFactory { get; set; }
+        protected PutDatabaseServerHttpRequestFactory PutHttpRequestFactory { get; set; }
+        protected DeleteDatabaseServerHttpRequestFactory DeleteHttpRequestFactory { get; set; }
+        protected CompactDatabaseServerHttpRequestFactory CompactHttpRequestFactory { get; set; }
+        protected ViewCleanupServerHttpRequestFactory ViewCleanupHttpRequestFactory { get; set; }
 
         public Databases(IServerClientConnection connection, ISerializer serializer)
             : base(connection)
@@ -32,15 +30,13 @@ namespace MyCouch.Contexts
 
             DatabaseHeaderResponseFactory = new DatabaseHeaderResponseFactory(serializer);
             GetDatabaseResponseFactory = new GetDatabaseResponseFactory(serializer);
-            ReplicationResponseFactory = new ReplicationResponseFactory(serializer);
 
-            GetHttpRequestFactory = new GetDatabaseHttpRequestFactory(Connection);
-            HeadHttpRequestFactory = new HeadDatabaseHttpRequestFactory(Connection);
-            PutHttpRequestFactory = new PutDatabaseHttpRequestFactory(Connection);
-            DeleteHttpRequestFactory = new DeleteDatabaseHttpRequestFactory(Connection);
-            CompactHttpRequestFactory = new CompactDatabaseHttpRequestFactory(Connection);
-            ViewCleanupHttpRequestFactory = new ViewCleanupHttpRequestFactory(Connection);
-            ReplicateDatabaseHttpRequestFactory = new ReplicateDatabaseHttpRequestFactory(Connection, serializer);
+            GetHttpRequestFactory = new GetDatabaseServerHttpRequestFactory();
+            HeadHttpRequestFactory = new HeadDatabaseServerHttpRequestFactory();
+            PutHttpRequestFactory = new PutDatabaseServerHttpRequestFactory();
+            DeleteHttpRequestFactory = new DeleteDatabaseServerHttpRequestFactory();
+            CompactHttpRequestFactory = new CompactDatabaseServerHttpRequestFactory();
+            ViewCleanupHttpRequestFactory = new ViewCleanupServerHttpRequestFactory();
         }
 
         public virtual Task<GetDatabaseResponse> GetAsync(string dbName)
@@ -50,12 +46,11 @@ namespace MyCouch.Contexts
 
         public virtual async Task<GetDatabaseResponse> GetAsync(GetDatabaseRequest request)
         {
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessGetDatabaseResponse(res);
-                }
+                return ProcessGetDatabaseResponse(res);
             }
         }
 
@@ -66,12 +61,11 @@ namespace MyCouch.Contexts
 
         public virtual async Task<DatabaseHeaderResponse> HeadAsync(HeadDatabaseRequest request)
         {
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessDatabaseHeaderResponse(res);
-                }
+                return ProcessDatabaseHeaderResponse(res);
             }
         }
 
@@ -82,12 +76,11 @@ namespace MyCouch.Contexts
 
         public virtual async Task<DatabaseHeaderResponse> PutAsync(PutDatabaseRequest request)
         {
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessDatabaseHeaderResponse(res);
-                }
+                return ProcessDatabaseHeaderResponse(res);
             }
         }
 
@@ -98,12 +91,11 @@ namespace MyCouch.Contexts
 
         public virtual async Task<DatabaseHeaderResponse> DeleteAsync(DeleteDatabaseRequest request)
         {
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessDatabaseHeaderResponse(res);
-                }
+                return ProcessDatabaseHeaderResponse(res);
             }
         }
 
@@ -114,12 +106,11 @@ namespace MyCouch.Contexts
 
         public virtual async Task<DatabaseHeaderResponse> CompactAsync(CompactDatabaseRequest request)
         {
-            using (var httpRequest = CreateHttpRequest(request))
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessDatabaseHeaderResponse(res);
-                }
+                return ProcessDatabaseHeaderResponse(res);
             }
         }
 
@@ -130,28 +121,11 @@ namespace MyCouch.Contexts
 
         public virtual async Task<DatabaseHeaderResponse> ViewCleanupAsync(ViewCleanupRequest request)
         {
-            using (var httpRequest = CreateHttpRequest(request))
-            {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessDatabaseHeaderResponse(res);
-                }
-            }
-        }
+            var httpRequest = CreateHttpRequest(request);
 
-        public virtual Task<ReplicationResponse> ReplicateAsync(string source, string target)
-        {
-            return ReplicateAsync(new ReplicateDatabaseRequest(source, target));
-        }
-
-        public virtual async Task<ReplicationResponse> ReplicateAsync(ReplicateDatabaseRequest request)
-        {
-            using (var httpRequest = CreateHttpRequest(request))
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                using (var res = await SendAsync(httpRequest).ForAwait())
-                {
-                    return ProcessReplicationResponse(res);
-                }
+                return ProcessDatabaseHeaderResponse(res);
             }
         }
 
@@ -185,11 +159,6 @@ namespace MyCouch.Contexts
             return ViewCleanupHttpRequestFactory.Create(request);
         }
 
-        protected virtual HttpRequest CreateHttpRequest(ReplicateDatabaseRequest request)
-        {
-            return ReplicateDatabaseHttpRequestFactory.Create(request);
-        }
-
         protected virtual DatabaseHeaderResponse ProcessDatabaseHeaderResponse(HttpResponseMessage response)
         {
             return DatabaseHeaderResponseFactory.Create(response);
@@ -198,11 +167,6 @@ namespace MyCouch.Contexts
         protected virtual GetDatabaseResponse ProcessGetDatabaseResponse(HttpResponseMessage response)
         {
             return GetDatabaseResponseFactory.Create(response);
-        }
-
-        protected virtual ReplicationResponse ProcessReplicationResponse(HttpResponseMessage response)
-        {
-            return ReplicationResponseFactory.Create(response);
         }
     }
 }
