@@ -72,8 +72,9 @@ namespace MyCouch.Contexts
                         {
                             while (!cancellationToken.IsCancellationRequested && !reader.EndOfStream)
                             {
-                                cancellationToken.ThrowIfCancellationRequested();
-                                onRead(reader.ReadLine());
+                                //cancellationToken.ThrowIfCancellationRequested();
+                                if(!cancellationToken.IsCancellationRequested)
+                                    onRead(reader.ReadLine());
                             }
                         }
                     }
@@ -101,8 +102,9 @@ namespace MyCouch.Contexts
                             {
                                 while (!cancellationToken.IsCancellationRequested && !reader.EndOfStream)
                                 {
-                                    cancellationToken.ThrowIfCancellationRequested();
-                                    o.OnNext(reader.ReadLine());
+                                    //cancellationToken.ThrowIfCancellationRequested();
+                                    if(!cancellationToken.IsCancellationRequested)
+                                        o.OnNext(reader.ReadLine());
                                 }
                             }
                         }
