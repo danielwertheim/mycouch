@@ -95,8 +95,20 @@
     <Compile Include="..\mycouch.cloudant.net45\contexts\Searches.cs">
       <Link>Contexts\Searches.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\Contexts\Security.cs">
+      <Link>Contexts\Security.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\HttpRequestFactories\GenerateApiKeyHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\GenerateApiKeyHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\HttpRequestFactories\SearchIndexHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\SearchIndexHttpRequestFactory.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\IMyCouchCloudantClient.cs">
       <Link>IMyCouchCloudantClient.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\IMyCouchCloudantServerClient.cs">
+      <Link>IMyCouchCloudantServerClient.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\ISearches.cs">
       <Link>ISearches.cs</Link>
@@ -104,20 +116,29 @@
     <Compile Include="..\MyCouch.Cloudant.Net45\ISearchParameters.cs">
       <Link>ISearchParameters.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\ISecurity.cs">
+      <Link>ISecurity.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\MyCouchCloudantClient.cs">
       <Link>MyCouchCloudantClient.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\MyCouchCloudantClientBootstrapper.cs">
       <Link>MyCouchCloudantClientBootstrapper.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\requests\factories\SearchIndexHttpRequestFactory.cs">
-      <Link>Requests\Factories\SearchIndexHttpRequestFactory.cs</Link>
+    <Compile Include="..\MyCouch.Cloudant.Net45\Requests\GenerateApiKeyRequest.cs">
+      <Link>Requests\GenerateApiKeyRequest.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.cloudant.net45\requests\SearchIndexRequest.cs">
       <Link>Requests\SearchIndexRequest.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\Responses\Factories\GenerateApiKeyResponseFactory.cs">
+      <Link>Responses\Factories\GenerateApiKeyResponseFactory.cs</Link>
+    </Compile>
     <Compile Include="..\mycouch.cloudant.net45\responses\factories\SearchIndexResponseFactory.cs">
       <Link>Responses\Factories\SearchIndexResponseFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\Responses\GenerateApiKeyResponse.cs">
+      <Link>Responses\GenerateApiKeyResponse.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.cloudant.net45\responses\materializers\SearchIndexResponseMaterializer.cs">
       <Link>Responses\Materializers\SearchIndexResponseMaterializer.cs</Link>
