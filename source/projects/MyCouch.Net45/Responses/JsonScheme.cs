@@ -13,6 +13,7 @@
         public const string Offset = "offset";
         public const string Rows = "rows";
         public const string Key = "key";
+        public const string Password = "password";
         public const string IncludedDoc = "doc";
         public const string LastSeq = "last_seq";
         public const string TotalRows = "total_rows";

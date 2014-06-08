@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
+using MyCouch.Cloudant.HttpRequestFactories;
 using MyCouch.Cloudant.Requests;
-using MyCouch.Cloudant.Requests.Factories;
 using MyCouch.Cloudant.Responses;
 using MyCouch.Cloudant.Responses.Factories;
 using MyCouch.Contexts;

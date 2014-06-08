@@ -99,6 +99,9 @@
     <Compile Include="..\mycouch.integrationtests.net45\cloudanttests\SearchTests.cs">
       <Link>CloudantTests\SearchTests.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.IntegrationTests.Net45\CloudantTests\SecurityTests.cs">
+      <Link>CloudantTests\SecurityTests.cs</Link>
+    </Compile>
     <Compile Include="..\mycouch.integrationtests.net45\coretests\AttachmentsTests.cs">
       <Link>CoreTests\AttachmentsTests.cs</Link>
     </Compile>

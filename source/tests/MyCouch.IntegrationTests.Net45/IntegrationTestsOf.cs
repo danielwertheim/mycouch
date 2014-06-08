@@ -11,7 +11,22 @@ namespace MyCouch.IntegrationTests
         protected readonly TestEnvironment Environment;
         protected IMyCouchServerClient ServerClient { get; private set; }
         protected IMyCouchClient DbClient { get; private set; }
-        protected IMyCouchCloudantClient CloudantDbClient { get { return DbClient as IMyCouchCloudantClient; } }
+
+        protected IMyCouchCloudantServerClient CloudantServerClient
+        {
+            get
+            {
+                return ServerClient as IMyCouchCloudantServerClient;
+            }
+        }
+
+        protected IMyCouchCloudantClient CloudantDbClient
+        {
+            get
+            {
+                return DbClient as IMyCouchCloudantClient;
+            }
+        }
 
         protected IntegrationTestsOf()
         {
@@ -30,7 +45,7 @@ namespace MyCouch.IntegrationTests
 
         protected virtual void Dispose(bool disposing)
         {
-            if(!disposing)
+            if (!disposing)
                 return;
 
             ServerClient.Dispose();
@@ -39,11 +54,11 @@ namespace MyCouch.IntegrationTests
             DbClient.Dispose();
             DbClient = null;
 
-            if(CloudantDbClient != null)
+            if (CloudantDbClient != null)
                 CloudantDbClient.Dispose();
 
             var disposableSut = SUT as IDisposable;
-            if(disposableSut == null)
+            if (disposableSut == null)
                 return;
 
             disposableSut.Dispose();

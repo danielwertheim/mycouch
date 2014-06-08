@@ -67,6 +67,7 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Cloudant\HttpRequestFactories\GenerateApiKeyHttpRequestFactoryTests.cs" />
     <Compile Include="Cloudant\HttpRequestFactories\SearchIndexHttpRequestFactoryTests.cs" />
     <Compile Include="Cloudant\SearchParametersConfiguratorTests.cs" />
     <Compile Include="Extensions\UriExtensionsTests.cs" />

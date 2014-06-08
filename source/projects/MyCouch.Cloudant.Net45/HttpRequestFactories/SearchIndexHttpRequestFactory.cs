@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using EnsureThat;
+using MyCouch.Cloudant.Requests;
 using MyCouch.Net;
 using MyCouch.Serialization;
 
-namespace MyCouch.Cloudant.Requests.Factories
+namespace MyCouch.Cloudant.HttpRequestFactories
 {
     public class SearchIndexHttpRequestFactory
     {
