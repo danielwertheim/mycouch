@@ -211,6 +211,8 @@
     <Compile Include="Responses\Factories\DocumentResponseFactory.cs" />
     <Compile Include="Responses\Factories\EntityResponseFactory.cs" />
     <Compile Include="Responses\Factories\GetDatabaseResponseFactory.cs" />
+    <Compile Include="Responses\GetEntityResponse.cs" />
+    <Compile Include="IDocumentHeader.cs" />
     <Compile Include="Responses\Materializers\AttachmentResponseMaterializer.cs" />
     <Compile Include="Responses\Materializers\BasicResponseMaterializer.cs" />
     <Compile Include="Responses\Materializers\BulkResponseMaterializer.cs" />

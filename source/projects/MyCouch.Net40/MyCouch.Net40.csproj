@@ -315,6 +315,9 @@
     <Compile Include="..\MyCouch.Net45\IDbClientConnection.cs">
       <Link>IDbClientConnection.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\IDocumentHeader.cs">
+      <Link>IDocumentHeader.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\IDocuments.cs">
       <Link>IDocuments.cs</Link>
     </Compile>
@@ -557,6 +560,9 @@
     </Compile>
     <Compile Include="..\mycouch.net45\responses\GetDatabaseResponse.cs">
       <Link>Responses\GetDatabaseResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\GetEntityResponse.cs">
+      <Link>Responses\GetEntityResponse.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.net45\responses\JsonScheme.cs">
       <Link>Responses\JsonScheme.cs</Link>
