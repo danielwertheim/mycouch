@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using MyCouch.Extensions;
 
 namespace MyCouch
@@ -39,6 +40,16 @@ namespace MyCouch
             Key = key;
             Value = value;
             IncludedDoc = includedDoc;
+        }
+
+        public object[] KeyAsArray()
+        {
+            return Key == null ? null : (object[])Key;
+        }
+
+        public T[] KeyAsArrayOf<T>()
+        {
+            return Key == null ? null : KeyAsArray().Select(e => (T)e).ToArray();
         }
 
         public string KeyAsString()
