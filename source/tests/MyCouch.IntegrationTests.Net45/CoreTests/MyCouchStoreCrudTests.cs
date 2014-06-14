@@ -49,5 +49,70 @@ namespace MyCouch.IntegrationTests.CoreTests
             var deleteByEntity = SUT.DeleteAsync(getEntityById.Result);
             deleteByEntity.Result.Should().BeTrue();
         }
+
+        [MyFact(TestScenarios.MyCouchStore)]
+        public virtual void SetAsync_When_new_document_It_inserts_the_document()
+        {
+            var setJson = SUT.SetAsync(ClientTestData.Artists.Artist1Id, ClientTestData.Artists.Artist1Json).Result;
+
+            setJson.Id.Should().Be(ClientTestData.Artists.Artist1Id);
+            setJson.Rev.Should().NotBeNullOrWhiteSpace();
+
+            var get = SUT.GetByIdAsync<Artist>(setJson.Id).Result;
+            get.ArtistId.Should().Be(ClientTestData.Artists.Artist1Id);
+            get.ArtistRev.Should().Be(setJson.Rev);
+        }
+
+        [MyFact(TestScenarios.MyCouchStore)]
+        public virtual void SetAsync_When_existing_document_It_overwrites_the_document()
+        {
+            var setJson1 = SUT.SetAsync(ClientTestData.Artists.Artist1Id, ClientTestData.Artists.Artist1Json).Result;
+
+            var setJson2 = SUT.SetAsync(setJson1.Id, "{\"message\":\"I rule\"}").Result;
+
+            setJson2.Id.Should().Be(ClientTestData.Artists.Artist1Id);
+            setJson2.Rev.Should().NotBeNullOrWhiteSpace();
+
+            var get = SUT.GetByIdAsync<Temp>(setJson2.Id).Result;
+            get.Id.Should().Be(ClientTestData.Artists.Artist1Id);
+            get.Rev.Should().Be(setJson2.Rev);
+            get.Message.Should().Be("I rule");
+        }
+
+        [MyFact(TestScenarios.MyCouchStore)]
+        public virtual void SetAsync_When_new_entity_It_inserts_the_entity()
+        {
+            var artist = SUT.SetAsync(ClientTestData.Artists.Artist1).Result;
+
+            artist.ArtistId.Should().Be(ClientTestData.Artists.Artist1Id);
+            artist.ArtistRev.Should().NotBeNullOrWhiteSpace();
+
+            var get = SUT.GetByIdAsync<Artist>(artist.ArtistId).Result;
+            get.ArtistId.Should().Be(ClientTestData.Artists.Artist1Id);
+            get.ArtistRev.Should().Be(artist.ArtistRev);
+        }
+
+        [MyFact(TestScenarios.MyCouchStore)]
+        public virtual void SetAsync_When_existing_entity_It_overwrites_the_entity()
+        {
+            var artist = SUT.SetAsync(ClientTestData.Artists.Artist1).Result;
+
+            var artist2 = SUT.SetAsync(new Artist { ArtistId = artist.ArtistId, Name = "I will overwrite without a REV." }).Result;
+
+            artist2.ArtistId.Should().Be(ClientTestData.Artists.Artist1Id);
+            artist2.ArtistRev.Should().NotBeNullOrWhiteSpace();
+
+            var get = SUT.GetByIdAsync<Artist>(artist2.ArtistId).Result;
+            get.ArtistId.Should().Be(ClientTestData.Artists.Artist1Id);
+            get.ArtistRev.Should().Be(artist2.ArtistRev);
+            get.Name.Should().Be("I will overwrite without a REV.");
+        }
+
+        private class Temp
+        {
+            public string Id { get; set; }
+            public string Rev { get; set; }
+            public string Message { get; set; }
+        }
     }
 }
