@@ -2,7 +2,7 @@
 {
     public interface IDocumentHeader
     {
-        string Id { get; set; }
-        string Rev { get; set; }
+        string Id { get; }
+        string Rev { get; }
     }
 }

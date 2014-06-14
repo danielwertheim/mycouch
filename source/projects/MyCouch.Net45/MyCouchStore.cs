@@ -103,6 +103,35 @@ namespace MyCouch
             return response.Content;
         }
 
+        public async virtual Task<DocumentHeader> SetAsync(string id, string doc)
+        {
+            ThrowIfDisposed();
+
+            var header = await GetHeaderAsync(id);
+
+            return (header == null)
+                ? await StoreAsync(id, doc)
+                : await StoreAsync(header.Id, header.Rev, doc);
+        }
+
+        public async virtual Task<T> SetAsync<T>(T entity) where T : class
+        {
+            ThrowIfDisposed();
+
+            var id = Client.Entities.Reflector.IdMember.GetValueFrom(entity);
+            Ensure.That(id, "EntityId").IsNotNullOrWhiteSpace();
+
+            var header = await GetHeaderAsync(id);
+            if (header != null)
+                Client.Entities.Reflector.RevMember.SetValueTo(entity, header.Rev);
+
+            var response = await Client.Entities.PutAsync(entity);
+
+            ThrowIfNotSuccessfulResponse(response);
+
+            return entity;
+        }
+
         public virtual async Task<DocumentHeader> CopyAsync(string srcId, string newId)
         {
             ThrowIfDisposed();
