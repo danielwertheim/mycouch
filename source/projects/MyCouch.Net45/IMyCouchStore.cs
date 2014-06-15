@@ -241,6 +241,22 @@ namespace MyCouch
         /// <returns></returns>
         IObservable<T> GetByIds<T>(params string[] ids) where T : class;
 
+        Task<QueryInfo> GetValueByKeysAsync(ViewIdentity view, object[] keys, Action<string> onResult);
+
+        Task<QueryInfo> GetValueByKeysAsync<T>(ViewIdentity view, object[] keys, Action<T> onResult) where T : class;
+
+        IObservable<string> GetValueByKeys(ViewIdentity view, params object[] keys);
+
+        IObservable<T> GetValueByKeys<T>(ViewIdentity view, params object[] keys) where T : class;
+
+        Task<QueryInfo> GetIncludedDocByKeysAsync(ViewIdentity view, object[] keys, Action<string> onResult);
+
+        Task<QueryInfo> GetIncludedDocByKeysAsync<TValue>(ViewIdentity view, object[] keys, Action<TValue> onResult) where TValue : class;
+
+        IObservable<string> GetIncludedDocByKeys(ViewIdentity view, params object[] keys);
+
+        IObservable<TIncludedDoc> GetIncludedDocByKeys<TIncludedDoc>(ViewIdentity view, params object[] keys) where TIncludedDoc : class;
+
         IObservable<Row> Query(Query query);
         IObservable<Row<TValue>> Query<TValue>(Query query);
         IObservable<Row<TValue, TIncludedDoc>> Query<TValue, TIncludedDoc>(Query query);

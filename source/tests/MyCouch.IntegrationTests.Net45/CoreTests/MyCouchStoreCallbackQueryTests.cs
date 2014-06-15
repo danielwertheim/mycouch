@@ -48,7 +48,8 @@ namespace MyCouch.IntegrationTests.CoreTests
             {
                 t.IsFaulted.Should().BeFalse();
 
-                docs.Select(d => DbClient.Entities.Serializer.Deserialize<Artist>(d)).ToArray()
+                docs.Select(d => DbClient.Entities.Serializer.Deserialize<Artist>(d))
+                    .ToArray()
                     .ShouldBe().ValueEqual(artists);
             }).Wait();
         }
@@ -61,6 +62,68 @@ namespace MyCouch.IntegrationTests.CoreTests
             var docs = new List<Artist>();
 
             SUT.GetByIdsAsync<Artist>(ids, docs.Add).ContinueWith(t =>
+            {
+                t.IsFaulted.Should().BeFalse();
+
+                docs.ToArray().ShouldBe().ValueEqual(artists);
+            }).Wait();
+        }
+
+        [MyFact(TestScenarios.MyCouchStore)]
+        public void GetValueByKeysAsync_for_json_When_keys_are_specified_Then_matching_docs_are_returned()
+        {
+            var artists = ArtistsById.Skip(2).Take(3).ToArray();
+            var keys = artists.Select(a => a.Name as object).ToArray();
+            var docs = new List<string>();
+
+            SUT.GetValueByKeysAsync(ClientTestData.Views.ArtistsAlbumsViewId, keys, docs.Add).ContinueWith(t =>
+            {
+                t.IsFaulted.Should().BeFalse();
+
+                docs.Select(d => DbClient.Entities.Serializer.Deserialize<Album[]>(d)).ToArray().ShouldBe().ValueEqual(artists.Select(a => a.Albums).ToArray());
+            }).Wait();
+        }
+
+        [MyFact(TestScenarios.MyCouchStore)]
+        public void GetValueByKeysAsync_for_entity_When_keys_are_specified_Then_matching_docs_are_returned()
+        {
+            var artists = ArtistsById.Skip(2).Take(3).ToArray();
+            var keys = artists.Select(a => a.Name as object).ToArray();
+            var docs = new List<Album[]>();
+
+            SUT.GetValueByKeysAsync<Album[]>(ClientTestData.Views.ArtistsAlbumsViewId, keys, docs.Add).ContinueWith(t =>
+            {
+                t.IsFaulted.Should().BeFalse();
+
+                docs.ToArray().ShouldBe().ValueEqual(artists.Select(a => a.Albums).ToArray());
+            }).Wait();
+        }
+
+        [MyFact(TestScenarios.MyCouchStore)]
+        public void GetIncludedDocByKeys_for_json_When_Ids_are_specified_Then_matching_docs_are_returned()
+        {
+            var artists = ArtistsById.Skip(2).Take(3).ToArray();
+            var keys = artists.Select(a => a.ArtistId as object).ToArray();
+            var docs = new List<string>();
+
+            SUT.GetIncludedDocByKeysAsync(new SystemViewIdentity("_all_docs"),  keys, docs.Add).ContinueWith(t =>
+            {
+                t.IsFaulted.Should().BeFalse();
+
+                docs.Select(d => DbClient.Entities.Serializer.Deserialize<Artist>(d))
+                    .ToArray()
+                    .ShouldBe().ValueEqual(artists);
+            }).Wait();
+        }
+
+        [MyFact(TestScenarios.MyCouchStore)]
+        public void GetIncludedDocByKeys_for_entity_When_Ids_are_specified_Then_matching_entities_are_returned()
+        {
+            var artists = ArtistsById.Skip(2).Take(3).ToArray();
+            var keys = artists.Select(a => a.ArtistId as object).ToArray();
+            var docs = new List<Artist>();
+
+            SUT.GetIncludedDocByKeysAsync<Artist>(new SystemViewIdentity("_all_docs"),  keys, docs.Add).ContinueWith(t =>
             {
                 t.IsFaulted.Should().BeFalse();
 

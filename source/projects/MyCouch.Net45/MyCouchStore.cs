@@ -339,6 +339,114 @@ namespace MyCouch
             }).SubscribeOn(ObservableSubscribeOnScheduler());
         }
 
+        public virtual Task<QueryInfo> GetValueByKeysAsync(ViewIdentity view, object[] keys, Action<string> onResult)
+        {
+            ThrowIfDisposed();
+
+            return GetValueByKeysAsync<string>(view, keys, onResult);
+        }
+
+        public async virtual Task<QueryInfo> GetValueByKeysAsync<TValue>(ViewIdentity view, object[] keys, Action<TValue> onResult) where TValue : class
+        {
+            ThrowIfDisposed();
+
+            Ensure.That(view, "view").IsNotNull();
+            Ensure.That(keys, "keys").HasItems();
+            Ensure.That(onResult, "onResult").IsNotNull();
+
+            var request = new QueryViewRequest(view).Configure(r => r.Keys(keys));
+            var response = await Client.Views.QueryAsync<TValue>(request).ForAwait();
+
+            ThrowIfNotSuccessfulResponse(response);
+
+            foreach (var row in response.Rows)
+                onResult(row.Value);
+
+            return CreateQueryInfoFrom(response);
+        }
+
+        public virtual IObservable<string> GetValueByKeys(ViewIdentity view, params object[] keys)
+        {
+            return GetValueByKeys<string>(view, keys);
+        }
+
+        public virtual IObservable<TValue> GetValueByKeys<TValue>(ViewIdentity view, params object[] keys) where TValue : class
+        {
+            ThrowIfDisposed();
+
+            Ensure.That(view, "view").IsNotNull();
+            Ensure.That(keys, "keys").HasItems();
+
+            return Observable.Create<TValue>(async o =>
+            {
+                var request = new QueryViewRequest(view).Configure(r => r.Keys(keys));
+                var response = await Client.Views.QueryAsync<TValue>(request).ForAwait();
+
+                ThrowIfNotSuccessfulResponse(response);
+
+                foreach (var row in response.Rows)
+                    o.OnNext(row.Value);
+
+                o.OnCompleted();
+
+                return Disposable.Empty;
+            }).SubscribeOn(ObservableSubscribeOnScheduler());
+        }
+
+        public virtual Task<QueryInfo> GetIncludedDocByKeysAsync(ViewIdentity view, object[] keys, Action<string> onResult)
+        {
+            ThrowIfDisposed();
+
+            return GetIncludedDocByKeysAsync<string>(view, keys, onResult);
+        }
+
+        public async virtual Task<QueryInfo> GetIncludedDocByKeysAsync<TIncludedDoc>(ViewIdentity view, object[] keys, Action<TIncludedDoc> onResult) where TIncludedDoc : class
+        {
+            ThrowIfDisposed();
+
+            Ensure.That(view, "view").IsNotNull();
+            Ensure.That(keys, "keys").HasItems();
+            Ensure.That(onResult, "onResult").IsNotNull();
+
+            var request = new QueryViewRequest(view).Configure(r => r.Keys(keys).IncludeDocs(true));
+            var response = await Client.Views.QueryAsync<string, TIncludedDoc>(request).ForAwait();
+
+            ThrowIfNotSuccessfulResponse(response);
+
+            foreach (var row in response.Rows)
+                onResult(row.IncludedDoc);
+
+            return CreateQueryInfoFrom(response);
+        }
+
+        public virtual IObservable<string> GetIncludedDocByKeys(ViewIdentity view, params object[] keys)
+        {
+            return GetIncludedDocByKeys<string>(view, keys);
+        }
+
+        public virtual IObservable<TIncludedDoc> GetIncludedDocByKeys<TIncludedDoc>(ViewIdentity view, params object[] keys) where TIncludedDoc : class
+        {
+            ThrowIfDisposed();
+
+            Ensure.That(view, "view").IsNotNull();
+            Ensure.That(keys, "keys").HasItems();
+
+            return Observable.Create<TIncludedDoc>(async o =>
+            {
+                var request = new QueryViewRequest(view).Configure(r => r.Keys(keys).IncludeDocs(true));
+                var response = await Client.Views.QueryAsync<string, TIncludedDoc>(request).ForAwait();
+
+                ThrowIfNotSuccessfulResponse(response);
+
+                foreach (var row in response.Rows)
+                    o.OnNext(row.IncludedDoc);
+
+                o.OnCompleted();
+
+                return Disposable.Empty;
+            }).SubscribeOn(ObservableSubscribeOnScheduler());
+        }
+
         public virtual IObservable<Row> Query(Query query)
         {
             ThrowIfDisposed();
