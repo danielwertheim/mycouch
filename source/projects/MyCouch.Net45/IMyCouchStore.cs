@@ -70,7 +70,7 @@ namespace MyCouch
         /// <summary>
         /// NOTE, NOTE, NOTE! An underlying lookup of latest known REVISION
         /// will be performed, then that revision will be used to to overwrite
-        /// an existing document with <see cref="doc"/>.
+        /// an existing document with <paramref name="doc"/>.
         /// </summary>
         /// <remarks>
         /// An initial HEAD will be performed to lookup the current revision.
@@ -84,7 +84,7 @@ namespace MyCouch
         /// <summary>
         /// NOTE, NOTE, NOTE! An underlying lookup of latest known REVISION
         /// will be performed, then that revision will be used to to overwrite
-        /// an existing document with <see cref="entity"/>.
+        /// an existing document with <paramref name="entity"/>.
         /// </summary>
         /// <remarks>
         /// An initial HEAD will be performed to lookup the current revision.
@@ -132,7 +132,21 @@ namespace MyCouch
         Task<DocumentHeader> ReplaceAsync(string srcId, string srcRev, string trgId, string trgRev);
 
         /// <summary>
-        /// Deletes a document by <see cref="id"/> and <see cref="rev"/>.
+        /// Deletes a document by <paramref name="id"/>. It will perform an additional HEAD-request
+        /// to lookup the value for latest known revision.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <remarks>
+        /// It will perform an additional HEAD-request
+        /// to lookup the value for latest known revision.
+        /// </remarks>
+        /// <returns></returns>
+        Task<bool> DeleteAsync(string id);
+
+        /// <summary>
+        /// Deletes a document by <paramref name="id"/> and <paramref name="rev"/>.
+        /// If you do not know the <paramref name="rev"/> or just want to delete
+        /// the latest know revision, use <see cref="DeleteAsync(string)"/>
         /// </summary>
         /// <param name="id"></param>
         /// <param name="rev"></param>
@@ -144,8 +158,16 @@ namespace MyCouch
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
         /// <param name="entity"></param>
+        /// <param name="lookupRev">
+        /// If true (default is false), an additional HEAD-request is performed
+        /// to lookup the last known rev.</param>
+        /// <remarks>
+        /// If you know the current revision, ensure it is assigned in the entity
+        /// and use false for <paramref name="lookupRev"/>,
+        /// that will save you from an additional HEAD-request.
+        /// </remarks>
         /// <returns></returns>
-        Task<bool> DeleteAsync<TEntity>(TEntity entity) where TEntity : class;
+        Task<bool> DeleteAsync<TEntity>(TEntity entity, bool lookupRev = false) where TEntity : class;
 
         /// <summary>
         /// Checks for existance of a document.
@@ -164,7 +186,7 @@ namespace MyCouch
         Task<DocumentHeader> GetHeaderAsync(string id, string rev = null);
 
         /// <summary>
-        /// Returns a document by <see cref="id"/> and optinally a <see cref="rev"/>.
+        /// Returns a document by <param ref="id"/> and optinally a <paramref name="rev"/>.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="rev"></param>
@@ -172,14 +194,68 @@ namespace MyCouch
         Task<string> GetByIdAsync(string id, string rev = null);
 
         /// <summary>
-        /// Returns a document as an entity, by <see cref="id"/> and
-        /// optionally <see cref="rev"/>.
+        /// Returns a document as an entity, by <paramref name="id"/> and
+        /// optionally <paramref name="rev"/>.
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
         /// <param name="id"></param>
         /// <param name="rev"></param>
         /// <returns></returns>
         Task<TEntity> GetByIdAsync<TEntity>(string id, string rev = null) where TEntity : class;
+
+        /// <summary>
+        /// Returns documents matching sent <paramref name="ids"/>, via <paramref name="onResult"/>.
+        /// If you want the documents as the return type instead of <see cref="QueryInfo"/>,
+        /// use the observable <see cref="GetByIds"/> instead.
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <param name="onResult"></param>
+        /// <returns></returns>
+        Task<QueryInfo> GetByIdsAsync(string[] ids, Action<string> onResult);
+
+        /// <summary>
+        /// Returns entities matching sent <paramref name="ids"/>, via <paramref name="onResult"/>.
+        /// If you want the documents as the return type instead of <see cref="QueryInfo"/>,
+        /// use the observable <see cref="GetByIds"/> instead.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="ids"></param>
+        /// <param name="onResult"></param>
+        /// <returns></returns>
+        Task<QueryInfo> GetByIdsAsync<T>(string[] ids, Action<T> onResult) where T : class;
+
+        /// <summary>
+        /// Returns documents matching sent <paramref name="ids"/>, via <see cref="IObservable{T}"/> of string.
+        /// If you want each document returned via callback instead, see <see cref="GetByIdsAsync"/>.
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <returns></returns>
+        IObservable<string> GetByIds(params string[] ids);
+
+        /// <summary>
+        /// Returns entities matching sent <paramref name="ids"/>, via <see cref="IObservable{T}"/> of <typeparamref name="T"/>.
+        /// If you want each document returned via callback instead, see <see cref="GetByIdsAsync{T}"/>.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="ids"></param>
+        /// <returns></returns>
+        IObservable<T> GetByIds<T>(params string[] ids) where T : class;
+
+        Task<QueryInfo> GetValueByKeysAsync(ViewIdentity view, object[] keys, Action<string> onResult);
+
+        Task<QueryInfo> GetValueByKeysAsync<T>(ViewIdentity view, object[] keys, Action<T> onResult) where T : class;
+
+        IObservable<string> GetValueByKeys(ViewIdentity view, params object[] keys);
+
+        IObservable<T> GetValueByKeys<T>(ViewIdentity view, params object[] keys) where T : class;
+
+        Task<QueryInfo> GetIncludedDocByKeysAsync(ViewIdentity view, object[] keys, Action<string> onResult);
+
+        Task<QueryInfo> GetIncludedDocByKeysAsync<TValue>(ViewIdentity view, object[] keys, Action<TValue> onResult) where TValue : class;
+
+        IObservable<string> GetIncludedDocByKeys(ViewIdentity view, params object[] keys);
+
+        IObservable<TIncludedDoc> GetIncludedDocByKeys<TIncludedDoc>(ViewIdentity view, params object[] keys) where TIncludedDoc : class;
 
         IObservable<Row> Query(Query query);
         IObservable<Row<TValue>> Query<TValue>(Query query);
