@@ -36,7 +36,7 @@ task Copy {
     CopyTo-Build("$project_name_cloudant.Pcl")
 }
 
-task UnitTest {
+task Tests-UnitTest {
     UnitTest-ProjecT("Net40")
     UnitTest-ProjecT("Net45")
     UnitTest-ProjecT("Pcl")
