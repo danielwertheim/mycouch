@@ -7,7 +7,7 @@ Properties {
     $project_name = "MyCouch"
     $project_name_cloudant = "MyCouch.Cloudant"
     $builds_dir_path = "builds"
-    $build_version = "2.0.0"
+    $build_version = "2.1.0"
     $build_config = "Release"
     $build_name = "${project_name}-v${build_version}-${build_config}"
     $build_dir_path = "${builds_dir_path}\${build_name}"
@@ -22,7 +22,7 @@ task Clean {
 }
 
 task Build {
-    Exec { msbuild "$solution_path" /t:Clean /v:quiet }
+    Exec { msbuild "$solution_path" /t:Clean /p:Configuration=$build_config /v:quiet }
     Exec { msbuild "$solution_path" /t:Build /p:Configuration=$build_config /v:quiet }
 }
 
