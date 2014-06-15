@@ -1,8 +1,8 @@
 ﻿using System;
 using FluentAssertions;
 using MyCouch.Cloudant;
+using MyCouch.Cloudant.HttpRequestFactories;
 using MyCouch.Cloudant.Requests;
-using MyCouch.Cloudant.Requests.Factories;
 using MyCouch.Net;
 using MyCouch.Testing;
 using Xunit;

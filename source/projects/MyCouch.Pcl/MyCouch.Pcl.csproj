@@ -264,6 +264,9 @@
     <Compile Include="..\MyCouch.Net45\IDbClientConnection.cs">
       <Link>IDbClientConnection.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\IDocumentHeader.cs">
+      <Link>IDocumentHeader.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\IDocuments.cs">
       <Link>IDocuments.cs</Link>
     </Compile>
@@ -491,6 +494,9 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\Responses\Factories\GetDatabaseResponseFactory.cs">
       <Link>Responses\Factories\GetDatabaseResponseFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\GetEntityResponse.cs">
+      <Link>Responses\GetEntityResponse.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\responses\materializers\AttachmentResponseMaterializer.cs">
       <Link>Responses\Materializers\AttachmentResponseMaterializer.cs</Link>

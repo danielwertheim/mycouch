@@ -39,6 +39,9 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.UnitTests.Net45\Cloudant\HttpRequestFactories\GenerateApiKeyHttpRequestFactoryTests.cs">
+      <Link>Cloudant\HttpRequestFactories\GenerateApiKeyHttpRequestFactoryTests.cs</Link>
+    </Compile>
     <Compile Include="..\mycouch.unittests.net45\cloudant\httprequestfactories\SearchIndexHttpRequestFactoryTests.cs">
       <Link>Cloudant\HttpRequestFactories\SearchIndexHttpRequestFactoryTests.cs</Link>
     </Compile>

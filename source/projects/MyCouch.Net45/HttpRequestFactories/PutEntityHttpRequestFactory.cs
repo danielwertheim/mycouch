@@ -39,7 +39,7 @@ namespace MyCouch.HttpRequestFactories
             var entityId = Reflector.IdMember.GetValueFrom(request.Entity);
 
             Ensure.That(entityId, "request")
-                .WithExtraMessageOf(() => "Could not extract entity Id from entity being deleted. Ensure member exists.")
+                .WithExtraMessageOf(() => "Could not extract entity Id from entity being PUT. Ensure member exists.")
                 .IsNotNullOrWhiteSpace();
 
             return entityId;

@@ -10,8 +10,7 @@ using Xunit;
 
 namespace MyCouch.IntegrationTests.CloudantTests
 {
-    public class SearchTests :
-        IntegrationTestsOf<ISearches>,
+    public class SearchTests : IntegrationTestsOf<ISearches>,
         IPreserveStatePerFixture,
 #if !PCL
         IUseFixture<SearchFixture>

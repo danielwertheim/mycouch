@@ -5,7 +5,7 @@ namespace MyCouch
 #if !PCL
     [Serializable]
 #endif
-    public class DocumentHeader
+    public class DocumentHeader : IDocumentHeader
     {
         public string Id { get; private set; }
         public string Rev { get; private set; }

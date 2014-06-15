@@ -1,12 +1,13 @@
 ﻿using System;
-using Newtonsoft.Json;
 
 namespace MyCouch.Responses
 {
 #if !PCL
     [Serializable]
 #endif
-    public class EntityResponse<T> : ContentResponse<T> where T : class
+    public class EntityResponse<T> : ContentResponse<T>,
+        IDocumentHeader
+        where T : class
     {
         public virtual string Id { get; set; }
         public virtual string Rev { get; set; }
@@ -26,20 +27,5 @@ namespace MyCouch.Responses
                 Id ?? NullValueForDebugOutput,
                 Rev ?? NullValueForDebugOutput);
         }
-    }
-
-#if !PCL
-    [Serializable]
-#endif
-    public class GetEntityResponse<T> : EntityResponse<T> where T : class
-    {
-        [JsonProperty(JsonScheme._Id)]
-        public override string Id { get; set; }
-
-        [JsonProperty(JsonScheme._Rev)]
-        public override string Rev { get; set; }
-
-        [JsonProperty(JsonScheme.Conflicts)]
-        public virtual string[] Conflicts { get; set; }
     }
 }

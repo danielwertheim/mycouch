@@ -6,7 +6,8 @@ namespace MyCouch.Responses
 #if !PCL
     [Serializable]
 #endif
-    public class DocumentResponse : TextResponse
+    public class DocumentResponse : TextResponse,
+        IDocumentHeader
     {
         [JsonProperty(JsonScheme._Id)]
         public virtual string Id { get; set; }

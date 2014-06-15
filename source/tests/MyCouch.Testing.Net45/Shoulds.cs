@@ -23,6 +23,11 @@ namespace MyCouch.Testing
             return new ContentResponseAssertions(response);
         }
 
+        public static GenerateApiKeyResponseAssertions Should(this GenerateApiKeyResponse response)
+        {
+            return new GenerateApiKeyResponseAssertions(response);
+        }
+
         public static SearchIndexResponseAssertions Should(this SearchIndexResponse response)
         {
             return new SearchIndexResponseAssertions(response);
@@ -218,6 +223,19 @@ namespace MyCouch.Testing
         public void BeOkJson(HttpMethod method, HttpStatusCode statusCode = HttpStatusCode.OK)
         {
             BeJson(method, statusCode, "{\"ok\":true}");
+        }
+    }
+
+    public class GenerateApiKeyResponseAssertions : ResponseAssertions<GenerateApiKeyResponse>
+    {
+        [DebuggerStepThrough]
+        public GenerateApiKeyResponseAssertions(GenerateApiKeyResponse response) : base(response) { }
+
+        public void BeSuccessful()
+        {
+            Response.Should().Be(HttpMethod.Post, HttpStatusCode.Created);
+            Response.Key.Should().NotBeNullOrWhiteSpace();
+            Response.Password.Should().NotBeNullOrWhiteSpace();
         }
     }
 

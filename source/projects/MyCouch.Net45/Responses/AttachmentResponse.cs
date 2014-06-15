@@ -5,7 +5,8 @@ namespace MyCouch.Responses
 #if !PCL
     [Serializable]
 #endif
-    public class AttachmentResponse : BytesResponse
+    public class AttachmentResponse : BytesResponse,
+        IDocumentHeader
     {
         public string Id { get; set; }
         public string Rev { get; set; }

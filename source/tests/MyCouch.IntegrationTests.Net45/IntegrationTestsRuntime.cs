@@ -232,6 +232,7 @@ namespace MyCouch.IntegrationTests
         public const string DocumentsContext = "documentscontext";
         public const string EntitiesContext = "entitiescontext";
         public const string ViewsContext = "viewscontext";
+        public const string SecurityContext = "securitycontext";
         public const string SearchesContext = "searchescontext";
 
         public const string Cloudant = "cloudant";
