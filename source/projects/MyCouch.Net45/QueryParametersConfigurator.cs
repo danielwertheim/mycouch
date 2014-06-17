@@ -1,3 +1,4 @@
+using System.Linq;
 using EnsureThat;
 
 namespace MyCouch
@@ -22,6 +23,7 @@ namespace MyCouch
 
             return this;
         }
+
         /// <summary>
         /// Include the full content of the documents in the return;
         /// </summary>
@@ -33,6 +35,7 @@ namespace MyCouch
 
             return this;
         }
+
         /// <summary>
         /// Return the documents in descending by key order.
         /// </summary>
@@ -44,6 +47,7 @@ namespace MyCouch
 
             return this;
         }
+
         /// <summary>
         /// Return only documents that match the specified key.
         /// </summary>
@@ -53,49 +57,45 @@ namespace MyCouch
         {
             Ensure.That(value, "value").IsNotNullOrWhiteSpace();
 
-            Parameters.Key = value;
-
-            return this;
+            return SetKey(value);
         }
+
         /// <summary>
         /// Return only documents that match the specified key.
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryParametersConfigurator Key(object value)
+        public virtual QueryParametersConfigurator Key<T>(T value)
         {
-            Ensure.That(value, "value").IsNotNull();
-
-            Parameters.Key = value;
-
-            return this;
+            return SetKey(value);
         }
+
         /// <summary>
         /// Return only documents that match the specified complex-key.
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryParametersConfigurator Key(object[] value)
+        public virtual QueryParametersConfigurator Key<T>(T[] value)
         {
             Ensure.That(value, "value").HasItems();
 
-            Parameters.Key = value;
-
-            return this;
+            return SetKey(value);
         }
+
         /// <summary>
         /// Returns only documents that matches any of the specified keys.
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryParametersConfigurator Keys(params object[] value)
+        public virtual QueryParametersConfigurator Keys<T>(params T[] value)
         {
             Ensure.That(value, "value").HasItems();
 
-            Parameters.Keys = value;
+            Parameters.Keys = value as object[];
 
             return this;
         }
+
         /// <summary>
         /// Return records starting with the specified key.
         /// </summary>
@@ -105,36 +105,31 @@ namespace MyCouch
         {
             Ensure.That(value, "value").IsNotNullOrWhiteSpace();
 
-            Parameters.StartKey = value;
-
-            return this;
+            return SetStartKey(value);
         }
+
         /// <summary>
         /// Return records starting with the specified key.
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryParametersConfigurator StartKey(object value)
+        public virtual QueryParametersConfigurator StartKey<T>(T value)
         {
-            Ensure.That(value, "value").IsNotNull();
-
-            Parameters.StartKey = value;
-
-            return this;
+            return SetStartKey(value);
         }
+
         /// <summary>
         /// Return records starting with the specified complex-key.
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryParametersConfigurator StartKey(object[] value)
+        public virtual QueryParametersConfigurator StartKey<T>(T[] value)
         {
             Ensure.That(value, "value").HasItems();
 
-            Parameters.StartKey = value;
-
-            return this;
+            return SetStartKey(value);
         }
+
         /// <summary>
         /// Return records starting with the specified document ID.
         /// </summary>
@@ -148,6 +143,7 @@ namespace MyCouch
 
             return this;
         }
+
         /// <summary>
         /// Stop returning records when the specified key is reached.
         /// </summary>
@@ -157,36 +153,31 @@ namespace MyCouch
         {
             Ensure.That(value, "value").IsNotNullOrWhiteSpace();
 
-            Parameters.EndKey = value;
-
-            return this;
+            return SetEndKey(value);
         }
+
         /// <summary>
         /// Stop returning records when the specified key is reached.
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryParametersConfigurator EndKey(object value)
+        public virtual QueryParametersConfigurator EndKey<T>(T value)
         {
-            Ensure.That(value, "value").IsNotNull();
-
-            Parameters.EndKey = value;
-
-            return this;
+            return SetEndKey(value);
         }
+
         /// <summary>
         /// Stop returning records when the specified complex-key is reached.
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryParametersConfigurator EndKey(object[] value)
+        public virtual QueryParametersConfigurator EndKey<T>(T[] value)
         {
             Ensure.That(value, "value").HasItems();
 
-            Parameters.EndKey = value;
-
-            return this;
+            return SetEndKey(value);
         }
+
         /// <summary>
         /// Stop returning records when the specified document ID is reached.
         /// </summary>
@@ -274,6 +265,33 @@ namespace MyCouch
         public virtual QueryParametersConfigurator GroupLevel(int value)
         {
             Parameters.GroupLevel = value;
+
+            return this;
+        }
+
+        protected virtual QueryParametersConfigurator SetKey(object value)
+        {
+            Ensure.That(value, "value").IsNotNull();
+
+            Parameters.Key = value;
+
+            return this;
+        }
+
+        protected virtual QueryParametersConfigurator SetStartKey(object value)
+        {
+            Ensure.That(value, "value").IsNotNull();
+
+            Parameters.StartKey = value;
+
+            return this;
+        }
+
+        protected virtual QueryParametersConfigurator SetEndKey(object value)
+        {
+            Ensure.That(value, "value").IsNotNull();
+
+            Parameters.EndKey = value;
 
             return this;
         }
