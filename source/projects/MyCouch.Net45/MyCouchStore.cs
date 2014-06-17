@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
@@ -260,6 +261,32 @@ namespace MyCouch
             return true;
         }
 
+        public virtual async Task<DeleteManyResult> DeleteManyAsync(params DocumentHeader[] documents)
+        {
+            ThrowIfDisposed();
+
+            Ensure.That(documents, "documents").HasItems();
+
+            var request = new BulkRequest()
+                .Delete(documents);
+
+            var response = await Client.Documents.BulkAsync(request);
+
+            ThrowIfNotSuccessfulResponse(response);
+
+            return new DeleteManyResult
+            {
+                Rows = response.Rows.Select(r => new DeleteManyResult.Row
+                {
+                    Id = r.Id,
+                    Rev = r.Rev,
+                    Error = r.Error,
+                    Reason = r.Reason,
+                    Deleted = r.Succeeded
+                }).ToArray()
+            };
+        }
+
         public virtual async Task<bool> ExistsAsync(string id, string rev = null)
         {
             ThrowIfDisposed();
@@ -290,6 +317,46 @@ namespace MyCouch
             ThrowIfNotSuccessfulResponse(response);
 
             return new DocumentHeader(response.Id, response.Rev);
+        }
+
+        public async virtual Task<QueryInfo> GetHeadersAsync(string[] ids, Action<DocumentHeader> onResult)
+        {
+            ThrowIfDisposed();
+
+            Ensure.That(ids, "ids").HasItems();
+            Ensure.That(onResult, "onResult").IsNotNull();
+
+            var request = new QueryViewRequest(SystemViewIdentity.AllDocs).Configure(r => r.Keys(ids));
+            var response = await Client.Views.QueryAsync<AllDocsValue>(request).ForAwait();
+
+            ThrowIfNotSuccessfulResponse(response);
+
+            foreach (var row in response.Rows)
+                onResult(new DocumentHeader(row.Id, row.Value.Rev));
+
+            return CreateQueryInfoFrom(response);
+        }
+
+        public virtual IObservable<DocumentHeader> GetHeaders(string[] ids)
+        {
+            ThrowIfDisposed();
+
+            Ensure.That(ids, "ids").HasItems();
+
+            return Observable.Create<DocumentHeader>(async o =>
+            {
+                var request = new QueryViewRequest(SystemViewIdentity.AllDocs).Configure(r => r.Keys(ids));
+                var response = await Client.Views.QueryAsync<AllDocsValue>(request).ForAwait();
+
+                ThrowIfNotSuccessfulResponse(response);
+
+                foreach (var row in response.Rows)
+                    o.OnNext(new DocumentHeader(row.Id, row.Value.Rev));
+
+                o.OnCompleted();
+
+                return Disposable.Empty;
+            }).SubscribeOn(ObservableSubscribeOnScheduler());
         }
 
         public virtual async Task<string> GetByIdAsync(string id, string rev = null)
@@ -338,7 +405,7 @@ namespace MyCouch
             Ensure.That(ids, "ids").HasItems();
             Ensure.That(onResult, "onResult").IsNotNull();
 
-            var request = new QueryViewRequest("_all_docs").Configure(r => r.Keys(ids).IncludeDocs(true));
+            var request = new QueryViewRequest(SystemViewIdentity.AllDocs).Configure(r => r.Keys(ids).IncludeDocs(true));
             var response = await Client.Views.QueryAsync<string, T>(request).ForAwait();
 
             ThrowIfNotSuccessfulResponse(response);
@@ -362,7 +429,7 @@ namespace MyCouch
 
             return Observable.Create<T>(async o =>
             {
-                var request = new QueryViewRequest("_all_docs").Configure(r => r.Keys(ids).IncludeDocs(true));
+                var request = new QueryViewRequest(SystemViewIdentity.AllDocs).Configure(r => r.Keys(ids).IncludeDocs(true));
                 var response = await Client.Views.QueryAsync<string, T>(request).ForAwait();
 
                 ThrowIfNotSuccessfulResponse(response);
@@ -607,21 +674,13 @@ namespace MyCouch
 
             throw new MyCouchResponseException(response);
         }
-    }
 
-    public class QueryInfo
-    {
-        public long TotalRows { get; private set; }
-        public string UpdateSeq { get; private set; }
-        public long RowCount { get; private set; }
-        public long OffSet { get; private set; }
-
-        public QueryInfo(long totalRows, long rowCount, long offSet, string updateSeq)
+#if !PCL
+        [Serializable]
+#endif
+        private class AllDocsValue
         {
-            TotalRows = totalRows;
-            RowCount = rowCount;
-            OffSet = offSet;
-            UpdateSeq = updateSeq;
+            public string Rev { get; set; }
         }
     }
 }

@@ -38,6 +38,23 @@ namespace MyCouch.IntegrationTests.CoreTests
         }
 #endif
         [MyFact(TestScenarios.MyCouchStore)]
+        public void GetHeadersAync_When_getting_three_headers_It_returns_the_three_requested_headers()
+        {
+            var artists = ArtistsById.Skip(2).Take(3).ToArray();
+            var ids = artists.Select(a => a.ArtistId).ToArray();
+            var headers = new List<DocumentHeader>();
+
+            SUT.GetHeadersAsync(ids, headers.Add).ContinueWith(t =>
+            {
+                t.IsFaulted.Should().BeFalse();
+
+                headers.ToArray()
+                    .ShouldBe()
+                    .ValueEqual(artists.Select(a => new DocumentHeader(a.ArtistId, a.ArtistRev)).ToArray());
+            }).Wait();
+        }
+
+        [MyFact(TestScenarios.MyCouchStore)]
         public void GetByIdsAync_for_json_When_Ids_are_specified_Then_matching_docs_are_returned()
         {
             var artists = ArtistsById.Skip(2).Take(3).ToArray();
@@ -106,7 +123,7 @@ namespace MyCouch.IntegrationTests.CoreTests
             var keys = artists.Select(a => a.ArtistId as object).ToArray();
             var docs = new List<string>();
 
-            SUT.GetIncludedDocByKeysAsync(new SystemViewIdentity("_all_docs"),  keys, docs.Add).ContinueWith(t =>
+            SUT.GetIncludedDocByKeysAsync(SystemViewIdentity.AllDocs,  keys, docs.Add).ContinueWith(t =>
             {
                 t.IsFaulted.Should().BeFalse();
 
@@ -123,7 +140,7 @@ namespace MyCouch.IntegrationTests.CoreTests
             var keys = artists.Select(a => a.ArtistId as object).ToArray();
             var docs = new List<Artist>();
 
-            SUT.GetIncludedDocByKeysAsync<Artist>(new SystemViewIdentity("_all_docs"),  keys, docs.Add).ContinueWith(t =>
+            SUT.GetIncludedDocByKeysAsync<Artist>(SystemViewIdentity.AllDocs,  keys, docs.Add).ContinueWith(t =>
             {
                 t.IsFaulted.Should().BeFalse();
 

@@ -1,3 +1,4 @@
+using System.Linq;
 using FluentAssertions;
 using MyCouch.Testing.Model;
 using MyCouch.Testing.TestData;
@@ -170,6 +171,52 @@ namespace MyCouch.IntegrationTests.CoreTests
 
             exists.Should().BeFalse();
             deleted.Should().BeTrue();
+        }
+
+        [MyFact(TestScenarios.MyCouchStore)]
+        public virtual void DeleteManyAsync_When_correct_ids_and_revs_It_deletes_the_documents()
+        {
+            var stored1 = SUT.StoreAsync(ClientTestData.Artists.Artist1).Result;
+            var stored2 = SUT.StoreAsync(ClientTestData.Artists.Artist2).Result;
+            var stored3 = SUT.StoreAsync(ClientTestData.Artists.Artist3).Result;
+
+            var result = SUT.DeleteManyAsync(
+                new DocumentHeader(stored2.ArtistId, stored2.ArtistRev),
+                new DocumentHeader(stored3.ArtistId, stored3.ArtistRev)).Result;
+
+            SUT.ExistsAsync(stored1.ArtistId).Result.Should().BeTrue();
+            SUT.ExistsAsync(stored2.ArtistId).Result.Should().BeFalse();
+            SUT.ExistsAsync(stored3.ArtistId).Result.Should().BeFalse();
+
+            result.IsEmpty.Should().BeFalse();
+            result.Rows.Length.Should().Be(2);
+            result.Rows.All(r => r.Deleted).Should().BeTrue();
+            result.Rows.Should().Contain(r => r.Id == stored2.ArtistId);
+            result.Rows.Should().Contain(r => r.Id == stored3.ArtistId);
+        }
+
+        [MyFact(TestScenarios.MyCouchStore)]
+        public virtual void DeleteManyAsync_When_correct_ids_but_wrong_revs_It_does_not_delete_the_documents()
+        {
+            var stored1 = SUT.StoreAsync(ClientTestData.Artists.Artist1).Result;
+            var stored2 = SUT.StoreAsync(ClientTestData.Artists.Artist2).Result;
+            var stored3 = SUT.StoreAsync(ClientTestData.Artists.Artist3).Result;
+
+            var result = SUT.DeleteManyAsync(
+                new DocumentHeader(stored2.ArtistId, stored3.ArtistRev),
+                new DocumentHeader(stored3.ArtistId, stored2.ArtistRev)).Result;
+
+            SUT.ExistsAsync(stored1.ArtistId).Result.Should().BeTrue();
+            SUT.ExistsAsync(stored2.ArtistId).Result.Should().BeTrue();
+            SUT.ExistsAsync(stored3.ArtistId).Result.Should().BeTrue();
+
+            result.IsEmpty.Should().BeFalse();
+            result.Rows.Length.Should().Be(2);
+            result.Rows.All(r => r.Deleted).Should().BeFalse();
+            result.Rows.All(r => r.Error.Length > 0).Should().BeTrue();
+            result.Rows.All(r => r.Reason.Length > 0).Should().BeTrue();
+            result.Rows.Should().Contain(r => r.Id == stored2.ArtistId);
+            result.Rows.Should().Contain(r => r.Id == stored3.ArtistId);
         }
 
         [MyFact(TestScenarios.MyCouchStore)]
