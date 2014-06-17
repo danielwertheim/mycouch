@@ -260,6 +260,32 @@ namespace MyCouch
             return true;
         }
 
+        public virtual async Task<DeleteManyResult> DeleteManyAsync(params DocumentHeader[] documents)
+        {
+            ThrowIfDisposed();
+
+            Ensure.That(documents, "documents").HasItems();
+
+            var request = new BulkRequest()
+                .Delete(documents);
+
+            var response = await Client.Documents.BulkAsync(request);
+
+            ThrowIfNotSuccessfulResponse(response);
+
+            return new DeleteManyResult
+            {
+                Rows = response.Rows.Select(r => new DeleteManyResult.Row
+                {
+                    Id = r.Id,
+                    Rev = r.Rev,
+                    Error = r.Error,
+                    Reason = r.Reason,
+                    Deleted = r.Succeeded
+                }).ToArray()
+            };
+        }
+
         public virtual async Task<bool> ExistsAsync(string id, string rev = null)
         {
             ThrowIfDisposed();

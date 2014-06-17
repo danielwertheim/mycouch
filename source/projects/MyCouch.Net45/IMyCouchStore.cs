@@ -55,12 +55,13 @@ namespace MyCouch
         Task<DocumentHeader> StoreAsync(string id, string rev, string doc);
 
         /// <summary>
-        /// POSTs or PUTs a NEW entity to the database.
+        /// POSTs or PUTs an entity to the database.
         /// If ID is assigned in the Entity, it will perform
         /// a PUT.
         /// If NO ID is assigned in the Entity, it will perform
         /// a POST, and assign the DB GENERATED ID back to the entity.
-        /// Should be used to insert new entities.
+        /// If you have assigned BOTH ID and REV, a PUT that updates
+        /// the current document will be performed.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="entity"></param>
@@ -168,6 +169,13 @@ namespace MyCouch
         /// </remarks>
         /// <returns></returns>
         Task<bool> DeleteAsync<TEntity>(TEntity entity, bool lookupRev = false) where TEntity : class;
+
+        /// <summary>
+        /// Issues a bulk delete of passed <see cref="DocumentHeader"/> in <paramref name="documents"/>.
+        /// </summary>
+        /// <param name="documents"></param>
+        /// <returns></returns>
+        Task<DeleteManyResult> DeleteManyAsync(params DocumentHeader[] documents);
 
         /// <summary>
         /// Checks for existance of a document.

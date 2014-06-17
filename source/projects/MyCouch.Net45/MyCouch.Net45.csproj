@@ -71,6 +71,7 @@
     <Compile Include="Contexts\Entities.cs" />
     <Compile Include="Contexts\Replicator.cs" />
     <Compile Include="Contexts\Views.cs" />
+    <Compile Include="DeleteManyResult.cs" />
     <Compile Include="DocumentAttribute.cs" />
     <Compile Include="DocumentHeader.cs" />
     <Compile Include="EntitySchemes\EntityIdMember.cs" />

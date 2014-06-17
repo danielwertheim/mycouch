@@ -75,6 +75,9 @@
     <Compile Include="..\MyCouch.Net45\Contexts\Views.cs">
       <Link>Contexts\Views.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\DeleteManyResult.cs">
+      <Link>DeleteManyResult.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\DocumentAttribute.cs">
       <Link>DocumentAttribute.cs</Link>
     </Compile>
