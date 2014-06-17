@@ -104,7 +104,7 @@ namespace MyCouch.IntegrationTests.CoreTests
             var artists = ArtistsById.Skip(2).Take(3).ToArray();
             var keys = artists.Select(a => a.ArtistId as object).ToArray();
 
-            var docs = SUT.GetIncludedDocByKeys(new SystemViewIdentity("_all_docs"), keys).ToEnumerable();
+            var docs = SUT.GetIncludedDocByKeys(SystemViewIdentity.AllDocs, keys).ToEnumerable();
 
             docs.Select(d => DbClient.Entities.Serializer.Deserialize<Artist>(d)).ToArray().ShouldBe().ValueEqual(artists);
         }
@@ -115,7 +115,7 @@ namespace MyCouch.IntegrationTests.CoreTests
             var artists = ArtistsById.Skip(2).Take(3).ToArray();
             var keys = artists.Select(a => a.ArtistId as object).ToArray();
 
-            var docs = SUT.GetIncludedDocByKeys<Artist>(new SystemViewIdentity("_all_docs"), keys).ToEnumerable().ToArray();
+            var docs = SUT.GetIncludedDocByKeys<Artist>(SystemViewIdentity.AllDocs, keys).ToEnumerable().ToArray();
 
             docs.ShouldBe().ValueEqual(artists);
         }

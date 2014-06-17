@@ -71,6 +71,7 @@
     <Compile Include="Contexts\Entities.cs" />
     <Compile Include="Contexts\Replicator.cs" />
     <Compile Include="Contexts\Views.cs" />
+    <Compile Include="DeleteManyResult.cs" />
     <Compile Include="DocumentAttribute.cs" />
     <Compile Include="DocumentHeader.cs" />
     <Compile Include="EntitySchemes\EntityIdMember.cs" />
@@ -131,6 +132,7 @@
     <Compile Include="Net\UrlSegment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query.cs" />
+    <Compile Include="QueryInfo.cs" />
     <Compile Include="Querying\QueryExtensions.cs" />
     <Compile Include="Querying\QueryParameters.cs" />
     <Compile Include="QueryParametersConfigurator.cs" />

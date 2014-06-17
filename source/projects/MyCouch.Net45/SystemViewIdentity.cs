@@ -10,6 +10,11 @@ namespace MyCouch
 #endif
     public class SystemViewIdentity : ViewIdentity
     {
+        public static SystemViewIdentity AllDocs
+        {
+            get { return new SystemViewIdentity("_all_docs"); }
+        }
+
         public SystemViewIdentity(string name) : base(name) { }
     }
 }

@@ -126,6 +126,9 @@
     <Compile Include="..\mycouch.net45\contexts\Views.cs">
       <Link>Contexts\Views.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\DeleteManyResult.cs">
+      <Link>DeleteManyResult.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\DocumentAttribute.cs">
       <Link>DocumentAttribute.cs</Link>
     </Compile>
@@ -404,6 +407,9 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\Query.cs">
       <Link>Query.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\QueryInfo.cs">
+      <Link>QueryInfo.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.net45\querying\QueryExtensions.cs">
       <Link>Querying\QueryExtensions.cs</Link>
