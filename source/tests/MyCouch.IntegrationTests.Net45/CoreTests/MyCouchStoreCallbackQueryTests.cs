@@ -123,7 +123,7 @@ namespace MyCouch.IntegrationTests.CoreTests
             var keys = artists.Select(a => a.ArtistId as object).ToArray();
             var docs = new List<string>();
 
-            SUT.GetIncludedDocByKeysAsync(new SystemViewIdentity("_all_docs"),  keys, docs.Add).ContinueWith(t =>
+            SUT.GetIncludedDocByKeysAsync(SystemViewIdentity.AllDocs,  keys, docs.Add).ContinueWith(t =>
             {
                 t.IsFaulted.Should().BeFalse();
 
@@ -140,7 +140,7 @@ namespace MyCouch.IntegrationTests.CoreTests
             var keys = artists.Select(a => a.ArtistId as object).ToArray();
             var docs = new List<Artist>();
 
-            SUT.GetIncludedDocByKeysAsync<Artist>(new SystemViewIdentity("_all_docs"),  keys, docs.Add).ContinueWith(t =>
+            SUT.GetIncludedDocByKeysAsync<Artist>(SystemViewIdentity.AllDocs,  keys, docs.Add).ContinueWith(t =>
             {
                 t.IsFaulted.Should().BeFalse();
 

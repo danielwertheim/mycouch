@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
@@ -325,7 +326,7 @@ namespace MyCouch
             Ensure.That(ids, "ids").HasItems();
             Ensure.That(onResult, "onResult").IsNotNull();
 
-            var request = new QueryViewRequest("_all_docs").Configure(r => r.Keys(ids));
+            var request = new QueryViewRequest(SystemViewIdentity.AllDocs).Configure(r => r.Keys(ids));
             var response = await Client.Views.QueryAsync<AllDocsValue>(request).ForAwait();
 
             ThrowIfNotSuccessfulResponse(response);
@@ -344,7 +345,7 @@ namespace MyCouch
 
             return Observable.Create<DocumentHeader>(async o =>
             {
-                var request = new QueryViewRequest("_all_docs").Configure(r => r.Keys(ids));
+                var request = new QueryViewRequest(SystemViewIdentity.AllDocs).Configure(r => r.Keys(ids));
                 var response = await Client.Views.QueryAsync<AllDocsValue>(request).ForAwait();
 
                 ThrowIfNotSuccessfulResponse(response);
@@ -404,7 +405,7 @@ namespace MyCouch
             Ensure.That(ids, "ids").HasItems();
             Ensure.That(onResult, "onResult").IsNotNull();
 
-            var request = new QueryViewRequest("_all_docs").Configure(r => r.Keys(ids).IncludeDocs(true));
+            var request = new QueryViewRequest(SystemViewIdentity.AllDocs).Configure(r => r.Keys(ids).IncludeDocs(true));
             var response = await Client.Views.QueryAsync<string, T>(request).ForAwait();
 
             ThrowIfNotSuccessfulResponse(response);
@@ -428,7 +429,7 @@ namespace MyCouch
 
             return Observable.Create<T>(async o =>
             {
-                var request = new QueryViewRequest("_all_docs").Configure(r => r.Keys(ids).IncludeDocs(true));
+                var request = new QueryViewRequest(SystemViewIdentity.AllDocs).Configure(r => r.Keys(ids).IncludeDocs(true));
                 var response = await Client.Views.QueryAsync<string, T>(request).ForAwait();
 
                 ThrowIfNotSuccessfulResponse(response);
@@ -680,25 +681,6 @@ namespace MyCouch
         private class AllDocsValue
         {
             public string Rev { get; set; }
-        }
-    }
-
-#if !PCL
-        [Serializable]
-#endif
-    public class QueryInfo
-    {
-        public long TotalRows { get; private set; }
-        public string UpdateSeq { get; private set; }
-        public long RowCount { get; private set; }
-        public long OffSet { get; private set; }
-
-        public QueryInfo(long totalRows, long rowCount, long offSet, string updateSeq)
-        {
-            TotalRows = totalRows;
-            RowCount = rowCount;
-            OffSet = offSet;
-            UpdateSeq = updateSeq;
         }
     }
 }

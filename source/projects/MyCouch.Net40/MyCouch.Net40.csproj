@@ -408,6 +408,9 @@
     <Compile Include="..\MyCouch.Net45\Query.cs">
       <Link>Query.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\QueryInfo.cs">
+      <Link>QueryInfo.cs</Link>
+    </Compile>
     <Compile Include="..\mycouch.net45\querying\QueryExtensions.cs">
       <Link>Querying\QueryExtensions.cs</Link>
     </Compile>

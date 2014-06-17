@@ -132,6 +132,7 @@
     <Compile Include="Net\UrlSegment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query.cs" />
+    <Compile Include="QueryInfo.cs" />
     <Compile Include="Querying\QueryExtensions.cs" />
     <Compile Include="Querying\QueryParameters.cs" />
     <Compile Include="QueryParametersConfigurator.cs" />
