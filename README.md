@@ -25,7 +25,7 @@ or if you also want some [Cloudant](http://cloudant.com) specific features like 
 
 	pm:> install-package mycouch.cloudant
 
-## Quick sample ##
+## Quick sample - using Requests and Responses ##
 
 ```csharp
 using(var client = new MyCouchClient("http://localhost:5984/mydb"))
@@ -51,6 +51,27 @@ using(var client = new MyCouchClient("http://localhost:5984/mydb"))
 
     //Using anonymous entities
     await client.Entities.PostAsync(new { Name = "Daniel" });
+}
+```
+
+```csharp
+using(var client = new MyCouchServerClient("http://localhost:5984"))
+{
+    var r = await client.Replicator.ReplicateAsync(id, source, target);
+}
+```
+
+## Quick sample - using MyCouchStore ##
+```csharp
+using(var store = new MyCouchStore("http://localhost:5984"))
+{
+    var mySomething = await store.StoreAsync(new Something("foo", "bar", 42));
+
+    var retrieved = await store.GetByIdAsync(mySomething.Id);
+
+    var deleted = await store.Delete(mySomething.Id, mySomething.Rev);
+
+    //... ... and so on... ...
 }
 ```
 
