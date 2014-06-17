@@ -292,6 +292,46 @@ namespace MyCouch
             return new DocumentHeader(response.Id, response.Rev);
         }
 
+        public async virtual Task<QueryInfo> GetHeadersAsync(string[] ids, Action<DocumentHeader> onResult)
+        {
+            ThrowIfDisposed();
+
+            Ensure.That(ids, "ids").HasItems();
+            Ensure.That(onResult, "onResult").IsNotNull();
+
+            var request = new QueryViewRequest("_all_docs").Configure(r => r.Keys(ids));
+            var response = await Client.Views.QueryAsync<AllDocsValue>(request).ForAwait();
+
+            ThrowIfNotSuccessfulResponse(response);
+
+            foreach (var row in response.Rows)
+                onResult(new DocumentHeader(row.Id, row.Value.Rev));
+
+            return CreateQueryInfoFrom(response);
+        }
+
+        public virtual IObservable<DocumentHeader> GetHeaders(string[] ids)
+        {
+            ThrowIfDisposed();
+
+            Ensure.That(ids, "ids").HasItems();
+
+            return Observable.Create<DocumentHeader>(async o =>
+            {
+                var request = new QueryViewRequest("_all_docs").Configure(r => r.Keys(ids));
+                var response = await Client.Views.QueryAsync<AllDocsValue>(request).ForAwait();
+
+                ThrowIfNotSuccessfulResponse(response);
+
+                foreach (var row in response.Rows)
+                    o.OnNext(new DocumentHeader(row.Id, row.Value.Rev));
+
+                o.OnCompleted();
+
+                return Disposable.Empty;
+            }).SubscribeOn(ObservableSubscribeOnScheduler());
+        }
+
         public virtual async Task<string> GetByIdAsync(string id, string rev = null)
         {
             ThrowIfDisposed();
@@ -607,8 +647,19 @@ namespace MyCouch
 
             throw new MyCouchResponseException(response);
         }
+
+#if !PCL
+        [Serializable]
+#endif
+        private class AllDocsValue
+        {
+            public string Rev { get; set; }
+        }
     }
 
+#if !PCL
+        [Serializable]
+#endif
     public class QueryInfo
     {
         public long TotalRows { get; private set; }

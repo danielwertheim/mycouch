@@ -37,6 +37,18 @@ namespace MyCouch.IntegrationTests.CoreTests
             ArtistsById = fixture.Init(Environment);
         }
 #endif
+        [MyFact(TestScenarios.MyCouchStore)]
+        public void GetHeaders_When_getting_three_headers_It_returns_the_three_requested_headers()
+        {
+            var artists = ArtistsById.Skip(2).Take(3).ToArray();
+            var ids = artists.Select(a => a.ArtistId).ToArray();
+
+            var headers = SUT.GetHeaders(ids).ToEnumerable();
+
+            headers.ToArray()
+                .ShouldBe()
+                .ValueEqual(artists.Select(a => new DocumentHeader(a.ArtistId, a.ArtistRev)).ToArray());
+        }
 
         [MyFact(TestScenarios.MyCouchStore)]
         public void GetByIds_for_json_When_ids_are_specified_Then_matching_docs_are_returned()
