@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using EnsureThat;
 
 namespace MyCouch.Cloudant
 {
@@ -18,6 +19,8 @@ namespace MyCouch.Cloudant
         /// <returns></returns>
         public virtual SearchParametersConfigurator Expression(string value)
         {
+            Ensure.That(value, "value").IsNotNullOrWhiteSpace();
+
             Parameters.Expression = value;
 
             return this;
@@ -46,6 +49,8 @@ namespace MyCouch.Cloudant
         /// <returns></returns>
         public virtual SearchParametersConfigurator Bookmark(string value)
         {
+            Ensure.That(value, "value").IsNotNullOrWhiteSpace();
+
             Parameters.Bookmark = value;
 
             return this;
@@ -58,6 +63,8 @@ namespace MyCouch.Cloudant
         /// <returns></returns>
         public virtual SearchParametersConfigurator Sort(params string[] sortExpressions)
         {
+            Ensure.That(sortExpressions, "sortExpressions").HasItems();
+
             Parameters.Sort = sortExpressions.ToList();
 
             return this;
