@@ -59,6 +59,8 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
+            Ensure.That(doc, "doc").IsNotNullOrWhiteSpace();
+
             var response = await Client.Documents.PostAsync(doc).ForAwait();
 
             ThrowIfNotSuccessfulResponse(response);
@@ -69,6 +71,9 @@ namespace MyCouch
         public virtual async Task<DocumentHeader> StoreAsync(string id, string doc)
         {
             ThrowIfDisposed();
+
+            Ensure.That(id, "id").IsNotNullOrWhiteSpace();
+            Ensure.That(doc, "doc").IsNotNullOrWhiteSpace();
 
             var response = await Client.Documents.PutAsync(id, doc).ForAwait();
 
@@ -81,6 +86,10 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
+            Ensure.That(id, "id").IsNotNullOrWhiteSpace();
+            Ensure.That(rev, "rev").IsNotNullOrWhiteSpace();
+            Ensure.That(doc, "doc").IsNotNullOrWhiteSpace();
+
             var response = await Client.Documents.PutAsync(id, rev, doc).ForAwait();
 
             ThrowIfNotSuccessfulResponse(response);
@@ -90,9 +99,9 @@ namespace MyCouch
 
         public virtual async Task<T> StoreAsync<T>(T entity) where T : class
         {
-            Ensure.That(entity, "entity").IsNotNull();
-
             ThrowIfDisposed();
+
+            Ensure.That(entity, "entity").IsNotNull();
 
             var id = Client.Entities.Reflector.IdMember.GetValueFrom(entity);
             var response = string.IsNullOrEmpty(id)
@@ -108,25 +117,30 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
+            Ensure.That(id, "id").IsNotNullOrWhiteSpace();
+            Ensure.That(doc, "doc").IsNotNullOrWhiteSpace();
+
             var header = await GetHeaderAsync(id);
 
             return (header == null)
-                ? await StoreAsync(id, doc)
-                : await StoreAsync(header.Id, header.Rev, doc);
+                ? await StoreAsync(id, doc).ForAwait()
+                : await StoreAsync(header.Id, header.Rev, doc).ForAwait();
         }
 
         public async virtual Task<T> SetAsync<T>(T entity) where T : class
         {
             ThrowIfDisposed();
 
+            Ensure.That(entity, "entity").IsNotNull();
+
             var id = Client.Entities.Reflector.IdMember.GetValueFrom(entity);
             Ensure.That(id, "EntityId").IsNotNullOrWhiteSpace();
 
-            var header = await GetHeaderAsync(id);
+            var header = await GetHeaderAsync(id).ForAwait();
             if (header != null)
                 Client.Entities.Reflector.RevMember.SetValueTo(entity, header.Rev);
 
-            var response = await Client.Entities.PutAsync(entity);
+            var response = await Client.Entities.PutAsync(entity).ForAwait();
 
             ThrowIfNotSuccessfulResponse(response);
 
@@ -136,6 +150,9 @@ namespace MyCouch
         public virtual async Task<DocumentHeader> CopyAsync(string srcId, string newId)
         {
             ThrowIfDisposed();
+
+            Ensure.That(srcId, "srcId").IsNotNullOrWhiteSpace();
+            Ensure.That(newId, "newId").IsNotNullOrWhiteSpace();
 
             var response = await Client.Documents.CopyAsync(srcId, newId).ForAwait();
 
@@ -148,6 +165,10 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
+            Ensure.That(srcId, "srcId").IsNotNullOrWhiteSpace();
+            Ensure.That(srcRev, "srcRev").IsNotNullOrWhiteSpace();
+            Ensure.That(newId, "newId").IsNotNullOrWhiteSpace();
+
             var response = await Client.Documents.CopyAsync(srcId, srcRev, newId).ForAwait();
 
             ThrowIfNotSuccessfulResponse(response);
@@ -159,6 +180,10 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
+            Ensure.That(srcId, "srcId").IsNotNullOrWhiteSpace();
+            Ensure.That(trgId, "trgId").IsNotNullOrWhiteSpace();
+            Ensure.That(trgRev, "trgRev").IsNotNullOrWhiteSpace();
+
             var response = await Client.Documents.ReplaceAsync(srcId, trgId, trgRev).ForAwait();
 
             ThrowIfNotSuccessfulResponse(response);
@@ -169,6 +194,10 @@ namespace MyCouch
         public virtual async Task<DocumentHeader> ReplaceAsync(string srcId, string srcRev, string trgId, string trgRev)
         {
             ThrowIfDisposed();
+
+            Ensure.That(srcId, "srcId").IsNotNullOrWhiteSpace();
+            Ensure.That(trgId, "trgId").IsNotNullOrWhiteSpace();
+            Ensure.That(trgRev, "trgRev").IsNotNullOrWhiteSpace();
 
             var response = await Client.Documents.ReplaceAsync(srcId, srcRev, trgId, trgRev).ForAwait();
 
@@ -183,11 +212,11 @@ namespace MyCouch
 
             Ensure.That(id, "id").IsNotNullOrWhiteSpace();
 
-            var head = await GetHeaderAsync(id);
+            var head = await GetHeaderAsync(id).ForAwait();
             if (head == null)
                 return false;
 
-            return await DeleteAsync(id, head.Rev);
+            return await DeleteAsync(id, head.Rev).ForAwait();
         }
 
         public virtual async Task<bool> DeleteAsync(string id, string rev)
@@ -215,7 +244,7 @@ namespace MyCouch
             if (lookupRev)
             {
                 var id = Client.Entities.Reflector.IdMember.GetValueFrom(entity);
-                var head = await GetHeaderAsync(id);
+                var head = await GetHeaderAsync(id).ForAwait();
                 if (head == null)
                     return false;
 
@@ -235,6 +264,8 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
+            Ensure.That(id, "id").IsNotNullOrWhiteSpace();
+
             var response = await Client.Documents.HeadAsync(id, rev).ForAwait();
 
             if (response.StatusCode == HttpStatusCode.NotFound)
@@ -248,6 +279,8 @@ namespace MyCouch
         public virtual async Task<DocumentHeader> GetHeaderAsync(string id, string rev = null)
         {
             ThrowIfDisposed();
+
+            Ensure.That(id, "id").IsNotNullOrWhiteSpace();
 
             var response = await Client.Documents.HeadAsync(id, rev).ForAwait();
 
@@ -263,6 +296,8 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
+            Ensure.That(id, "id").IsNotNullOrWhiteSpace();
+
             var response = await Client.Documents.GetAsync(id, rev).ForAwait();
 
             if (response.StatusCode == HttpStatusCode.NotFound)
@@ -277,7 +312,9 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
-            var response = await Client.Entities.GetAsync<TEntity>(id, rev);
+            Ensure.That(id, "id").IsNotNullOrWhiteSpace();
+
+            var response = await Client.Entities.GetAsync<TEntity>(id, rev).ForAwait();
 
             if (response.StatusCode == HttpStatusCode.NotFound)
                 return null;
