@@ -178,12 +178,33 @@ namespace MyCouch
         Task<bool> ExistsAsync(string id, string rev = null);
 
         /// <summary>
-        /// Returns the document header for a document.
+        /// Returns the document header for a document by doing a HEAD-request.
+        /// If you need multiple <see cref="DocumentHeader"/> in one batch,
+        /// see <see cref="GetHeadersAsync"/>
         /// </summary>
         /// <param name="id"></param>
         /// <param name="rev"></param>
         /// <returns></returns>
         Task<DocumentHeader> GetHeaderAsync(string id, string rev = null);
+
+        /// <summary>
+        /// Returns documents headers matching sent <paramref name="ids"/>, via <paramref name="onResult"/>.
+        /// It will query the all-docs view and return the id and ref via <see cref="DocumentHeader"/>.
+        /// If you want the documents as the return type instead of <see cref="QueryInfo"/>,
+        /// use the observable <see cref="GetHeaders"/> instead.
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <param name="onResult"></param>
+        /// <returns></returns>
+        Task<QueryInfo> GetHeadersAsync(string[] ids, Action<DocumentHeader> onResult);
+
+        /// <summary>
+        /// Returns documents headers matching sent <paramref name="ids"/>.
+        /// It will query the all-docs view and return the id and ref via <see cref="DocumentHeader"/>.
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <returns></returns>
+        IObservable<DocumentHeader> GetHeaders(string[] ids);
 
         /// <summary>
         /// Returns a document by <param ref="id"/> and optinally a <paramref name="rev"/>.
