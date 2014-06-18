@@ -410,7 +410,7 @@ namespace MyCouch
 
             ThrowIfNotSuccessfulResponse(response);
 
-            foreach (var row in response.Rows)
+            foreach (var row in response.Rows.Where(r => r.IncludedDoc != null))
                 onResult(row.IncludedDoc);
 
             return CreateQueryInfoFrom(response);
@@ -434,7 +434,7 @@ namespace MyCouch
 
                 ThrowIfNotSuccessfulResponse(response);
 
-                foreach (var row in response.Rows)
+                foreach (var row in response.Rows.Where(r => r.IncludedDoc != null))
                     o.OnNext(row.IncludedDoc);
 
                 o.OnCompleted();
@@ -463,7 +463,7 @@ namespace MyCouch
 
             ThrowIfNotSuccessfulResponse(response);
 
-            foreach (var row in response.Rows)
+            foreach (var row in response.Rows.Where(r => r.Value != null))
                 onResult(row.Value);
 
             return CreateQueryInfoFrom(response);
@@ -488,7 +488,7 @@ namespace MyCouch
 
                 ThrowIfNotSuccessfulResponse(response);
 
-                foreach (var row in response.Rows)
+                foreach (var row in response.Rows.Where(r => r.Value != null))
                     o.OnNext(row.Value);
 
                 o.OnCompleted();
@@ -517,7 +517,7 @@ namespace MyCouch
 
             ThrowIfNotSuccessfulResponse(response);
 
-            foreach (var row in response.Rows)
+            foreach (var row in response.Rows.Where(r => r.IncludedDoc != null))
                 onResult(row.IncludedDoc);
 
             return CreateQueryInfoFrom(response);
@@ -542,7 +542,7 @@ namespace MyCouch
 
                 ThrowIfNotSuccessfulResponse(response);
 
-                foreach (var row in response.Rows)
+                foreach (var row in response.Rows.Where(r => r.IncludedDoc != null))
                     o.OnNext(row.IncludedDoc);
 
                 o.OnCompleted();
