@@ -15,7 +15,7 @@ Properties {
     $nuget = "nuget.exe"
 }
 
-task default -depends Clean, Build, Copy, UnitTest, Nuget-Pack
+task default -depends Clean, Build, Copy, Tests-UnitTest, Nuget-Pack
 
 task Clean {
     Clean-Directory("$build_dir_path")
@@ -37,9 +37,9 @@ task Copy {
 }
 
 task Tests-UnitTest {
-    UnitTest-ProjecT("Net40")
-    UnitTest-ProjecT("Net45")
-    UnitTest-ProjecT("Pcl")
+    UnitTest-Project("Net40")
+    UnitTest-Project("Net45")
+    UnitTest-Project("Pcl")
 }
 
 task NuGet-Pack {
@@ -74,9 +74,10 @@ Function Create-Directory($dir){
 
 Function CopyTo-Build($t) {
     $trg = "$build_dir_path\$t"
+    $src = "$solution_dir_path\projects\$t\bin\$build_config\$t.*"
     EnsureClean-Directory($trg)
     
-    CopyTo-Directory "$solution_dir_path\projects\$t\bin\$build_config\$t.*" $trg
+    CopyTo-Directory $src $trg
 }
 
 Function CopyTo-Directory($src, $trg) {
