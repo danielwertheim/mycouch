@@ -354,6 +354,9 @@
     <Compile Include="..\MyCouch.Net45\Net\UrlSegment.cs">
       <Link>Net\UrlSegment.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\PublicExtensions.cs">
+      <Link>PublicExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\Query.cs">
       <Link>Query.cs</Link>
     </Compile>

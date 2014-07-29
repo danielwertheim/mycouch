@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using FluentAssertions;
@@ -76,7 +77,7 @@ namespace MyCouch.IntegrationTests.CoreTests
         public void GetValueByKeys_for_json_When_keys_are_specified_Then_matching_docs_are_returned()
         {
             var artists = ArtistsById.Skip(2).Take(3).ToArray();
-            var keys = artists.Select(a => a.Name as object).ToArray();
+            var keys = artists.Select(a => a.Name).ToCouchKeys();
 
             var values = SUT.GetValueByKeys(ClientTestData.Views.ArtistsAlbumsViewId, keys)
                 .ToEnumerable()
@@ -89,7 +90,7 @@ namespace MyCouch.IntegrationTests.CoreTests
         public void GetValueByKeys_for_entity_When_keys_are_specified_Then_matching_docs_are_returned()
         {
             var artists = ArtistsById.Skip(2).Take(3).ToArray();
-            var keys = artists.Select(a => a.Name as object).ToArray();
+            var keys = artists.Select(a => a.Name).ToCouchKeys();
 
             var values = SUT.GetValueByKeys<Album[]>(ClientTestData.Views.ArtistsAlbumsViewId, keys)
                 .ToEnumerable()
@@ -102,7 +103,7 @@ namespace MyCouch.IntegrationTests.CoreTests
         public void GetIncludedDocByKeys_for_json_When_Ids_are_specified_Then_matching_docs_are_returned()
         {
             var artists = ArtistsById.Skip(2).Take(3).ToArray();
-            var keys = artists.Select(a => a.ArtistId as object).ToArray();
+            var keys = artists.Select(a => a.ArtistId).ToCouchKeys();
 
             var docs = SUT.GetIncludedDocByKeys(SystemViewIdentity.AllDocs, keys).ToEnumerable();
 
@@ -113,7 +114,7 @@ namespace MyCouch.IntegrationTests.CoreTests
         public void GetIncludedDocByKeys_for_entity_When_Ids_are_specified_Then_matching_entities_are_returned()
         {
             var artists = ArtistsById.Skip(2).Take(3).ToArray();
-            var keys = artists.Select(a => a.ArtistId as object).ToArray();
+            var keys = artists.Select(a => a.ArtistId).ToCouchKeys();
 
             var docs = SUT.GetIncludedDocByKeys<Artist>(SystemViewIdentity.AllDocs, keys).ToEnumerable().ToArray();
 
