@@ -108,13 +108,13 @@ namespace MyCouch.HttpRequestFactories
                 kvs.Add(KeyNames.StartKey, Serializer.ToJson(request.StartKey));
 
             if (!string.IsNullOrWhiteSpace(request.StartKeyDocId))
-                kvs.Add(KeyNames.StartKeyDocId, Serializer.ToJson(request.StartKeyDocId));
+                kvs.Add(KeyNames.StartKeyDocId, request.StartKeyDocId);
 
             if (request.EndKey != null)
                 kvs.Add(KeyNames.EndKey, Serializer.ToJson(request.EndKey));
 
             if (!string.IsNullOrWhiteSpace(request.EndKeyDocId))
-                kvs.Add(KeyNames.EndKeyDocId, Serializer.ToJson(request.EndKeyDocId));
+                kvs.Add(KeyNames.EndKeyDocId, request.EndKeyDocId);
 
             if (request.Limit.HasValue)
                 kvs.Add(KeyNames.Limit, Serializer.ToJson(request.Limit.Value));
