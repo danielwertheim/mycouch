@@ -275,7 +275,7 @@ namespace MyCouch.IntegrationTests
             ServerUrl = "http://localhost:5984";
             PrimaryDbName = "mycouchtests_pri";
             SecondaryDbName = "mycouchtests_sec";
-            TempDbName = PrimaryDbName + "_tmp";
+            TempDbName = "mycouchtests_tmp";
             User = "sa";
             Password = "p@ssword";
         }
