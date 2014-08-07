@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using MyCouch.Responses;
 using MyCouch.Serialization.Converters;
 using Newtonsoft.Json;
@@ -42,12 +43,18 @@ namespace MyCouch.Cloudant.Responses
         public class Row
         {
             public string Id { get; set; }
-            public double[] Order { get; set; }
+            public object[] Order { get; set; }
             public Dictionary<string, object> Fields { get; set; }
 
             [JsonProperty(JsonScheme.IncludedDoc)]
             [JsonConverter(typeof(MultiTypeDeserializationJsonConverter))]
             public TIncludedDoc IncludedDoc { get; set; }
+
+            public virtual double[] GetOrderAsDoubles()
+            {
+                return Order == null || Order.Length == 0
+                    ? new double[0] : Order.Cast<double>().ToArray();
+            }
         }
     }
 }
