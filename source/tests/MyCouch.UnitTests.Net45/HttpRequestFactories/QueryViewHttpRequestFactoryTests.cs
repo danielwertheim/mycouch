@@ -373,7 +373,7 @@ namespace MyCouch.UnitTests.HttpRequestFactories
 
             WithHttpRequestFor(
                 request,
-                req => req.RelativeUrl.ToTestUriFromRelative().Query.Should().Be("?startkey_docid=%22My%20start%20key%20doc%20id%201%22"));
+                req => req.RelativeUrl.ToTestUriFromRelative().Query.Should().Be("?startkey_docid=My%20start%20key%20doc%20id%201"));
         }
 
         [Fact]
@@ -461,7 +461,7 @@ namespace MyCouch.UnitTests.HttpRequestFactories
 
             WithHttpRequestFor(
                 request,
-                req => req.RelativeUrl.ToTestUriFromRelative().Query.Should().Be("?endkey_docid=%22My%20end%20key%20doc%20id%201%22"));
+                req => req.RelativeUrl.ToTestUriFromRelative().Query.Should().Be("?endkey_docid=My%20end%20key%20doc%20id%201"));
         }
 
         [Fact]
@@ -530,7 +530,7 @@ namespace MyCouch.UnitTests.HttpRequestFactories
 
             WithHttpRequestFor(
                 request,
-                req => req.RelativeUrl.ToTestUriFromRelative().Query.Should().Be("?include_docs=true&descending=true&reduce=true&inclusive_end=true&update_seq=true&group=true&group_level=3&stale=update_after&key=%22Key1%22&startkey=%22My%20start%20key%22&startkey_docid=%22My%20start%20key%20doc%20id%22&endkey=%22My%20end%20key%22&endkey_docid=%22My%20end%20key%20doc%20id%22&limit=10&skip=5"));
+                req => req.RelativeUrl.ToTestUriFromRelative().Query.Should().Be("?include_docs=true&descending=true&reduce=true&inclusive_end=true&update_seq=true&group=true&group_level=3&stale=update_after&key=%22Key1%22&startkey=%22My%20start%20key%22&startkey_docid=My%20start%20key%20doc%20id&endkey=%22My%20end%20key%22&endkey_docid=My%20end%20key%20doc%20id&limit=10&skip=5"));
         }
 
         protected virtual QueryViewRequest CreateRequest()
