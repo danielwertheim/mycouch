@@ -45,6 +45,9 @@
     <Compile Include="..\mycouch.unittests.net45\cloudant\httprequestfactories\SearchIndexHttpRequestFactoryTests.cs">
       <Link>Cloudant\HttpRequestFactories\SearchIndexHttpRequestFactoryTests.cs</Link>
     </Compile>
+    <Compile Include="..\mycouch.unittests.net45\cloudant\responses\SearchIndexResponseTests.cs">
+      <Link>Cloudant\Responses\SearchIndexResponseTests.cs</Link>
+    </Compile>
     <Compile Include="..\mycouch.unittests.net45\cloudant\SearchParametersConfiguratorTests.cs">
       <Link>Cloudant\SearchParametersConfiguratorTests.cs</Link>
     </Compile>
