@@ -223,7 +223,7 @@ namespace MyCouch.IntegrationTests
 
     public class TestEnvironment
     {
-        public const string DefaultEnvironmentKey = "default";
+        public const string DefaultEnvironmentKey = "Default";
 
         public string Key { get; set; }
         public string[] Supports { get; set; }
@@ -297,7 +297,7 @@ namespace MyCouch.IntegrationTests
                     throw new Exception(exMessage, ex);
                 }
 
-                if (r.IsSuccessStatusCode)
+                if (!r.IsSuccessStatusCode)
                     throw new Exception(exMessage);
 
                 var environments = JsonConvert.DeserializeObject<TestEnvironment[]>(r.Content.ReadAsStringAsync().Result);
