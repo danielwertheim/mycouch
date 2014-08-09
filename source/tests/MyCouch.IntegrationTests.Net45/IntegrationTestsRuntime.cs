@@ -241,7 +241,7 @@ namespace MyCouch.IntegrationTests
 
         public bool IsAgainstCloudant()
         {
-            return ServerUrl.Contains("cloudant.com");
+            return ServerUrl.ToLower().Contains("cloudant.com");
         }
 
         public bool SupportsEverything
@@ -258,7 +258,7 @@ namespace MyCouch.IntegrationTests
             SecondaryDbName = "mycouchtests_sec";
             TempDbName = "mycouchtests_tmp";
             User = "sa";
-            Password = "p@ssword";
+            Password = "test";
         }
 
         public virtual bool HasSupportFor(params string[] requirements)
