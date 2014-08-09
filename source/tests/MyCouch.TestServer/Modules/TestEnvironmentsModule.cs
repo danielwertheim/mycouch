@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
+using EnsureThat;
 using Nancy;
 using Nancy.Responses;
 
@@ -7,44 +7,29 @@ namespace MyCouch.TestServer.Modules
 {
     public class TestEnvironmentsModule : NancyModule
     {
-        private static readonly string EnvDataDirPath;
+        private static readonly string TestEnvironmentsFullPath;
 
         static TestEnvironmentsModule()
         {
-            EnvDataDirPath = GetEnvDataDirPath(AppSettings.EnvDataDirRelativePath);
-            GenericFileResponse.SafePaths.Add(EnvDataDirPath);
+            TestEnvironmentsFullPath = GetFullPath(AppSettings.TestEnvironmentsRelativePath);
+            GenericFileResponse.SafePaths.Add(TestEnvironmentsFullPath);
         }
 
-        private static string GetEnvDataDirPath(string envDataDirPathExpression)
+        private static string GetFullPath(string relativePath)
         {
-            var path = Path.GetFullPath(envDataDirPathExpression);
-            if (!Directory.Exists(path))
-                throw new DirectoryNotFoundException(string.Format(
-                    "The directory path expression '{0}' translated to '{1} could not be used to find an existing directory.",
-                    envDataDirPathExpression, path));
+            Ensure.That(relativePath, "relativePath").IsNotNullOrWhiteSpace();
 
-            return path;
+            var fullPath = Path.GetFullPath(relativePath);
+            if (!File.Exists(fullPath))
+                throw new FileNotFoundException("Could not find file", relativePath);
+
+            return fullPath;
         }
 
         public TestEnvironmentsModule()
             : base("testenvironments")
         {
-            Get["/{config}"] = p =>
-            {
-                var kv = (IDictionary<string, object>)p;
-                var configName = kv.ContainsKey("config")
-                    ? kv["config"].ToString()
-                    : null;
-
-                return configName == null
-                    ? null
-                    : new GenericFileResponse(GenerateJsonConfigFilePath(configName));
-            };
-        }
-
-        private string GenerateJsonConfigFilePath(string configName)
-        {
-            return Path.Combine(EnvDataDirPath, configName + ".json");
+            Get["/"] = p => new GenericFileResponse(TestEnvironmentsFullPath);
         }
     }
 }
