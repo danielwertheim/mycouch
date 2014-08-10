@@ -49,8 +49,7 @@ namespace MyCouch.IntegrationTests.CoreTests
                 t.IsFaulted.Should().BeFalse();
 
                 headers.ToArray()
-                    .ShouldBe()
-                    .ValueEqual(artists.Select(a => new DocumentHeader(a.ArtistId, a.ArtistRev)).ToArray());
+                    .ShouldBeEquivalentTo(artists.Select(a => new DocumentHeader(a.ArtistId, a.ArtistRev)).ToArray());
             }).Wait();
         }
 
@@ -67,7 +66,7 @@ namespace MyCouch.IntegrationTests.CoreTests
 
                 docs.Select(d => DbClient.Entities.Serializer.Deserialize<Artist>(d))
                     .ToArray()
-                    .ShouldBe().ValueEqual(artists);
+                    .ShouldBeEquivalentTo(artists);
             }).Wait();
         }
 
@@ -82,7 +81,7 @@ namespace MyCouch.IntegrationTests.CoreTests
             {
                 t.IsFaulted.Should().BeFalse();
 
-                docs.ToArray().ShouldBe().ValueEqual(artists);
+                docs.ToArray().ShouldBeEquivalentTo(artists);
             }).Wait();
         }
 
@@ -97,7 +96,7 @@ namespace MyCouch.IntegrationTests.CoreTests
             {
                 t.IsFaulted.Should().BeFalse();
 
-                docs.Select(d => DbClient.Entities.Serializer.Deserialize<Album[]>(d)).ToArray().ShouldBe().ValueEqual(artists.Select(a => a.Albums).ToArray());
+                docs.Select(d => DbClient.Entities.Serializer.Deserialize<Album[]>(d)).ToArray().ShouldBeEquivalentTo(artists.Select(a => a.Albums).ToArray());
             }).Wait();
         }
 
@@ -112,7 +111,7 @@ namespace MyCouch.IntegrationTests.CoreTests
             {
                 t.IsFaulted.Should().BeFalse();
 
-                docs.ToArray().ShouldBe().ValueEqual(artists.Select(a => a.Albums).ToArray());
+                docs.ToArray().ShouldBeEquivalentTo(artists.Select(a => a.Albums).ToArray());
             }).Wait();
         }
 
@@ -129,7 +128,7 @@ namespace MyCouch.IntegrationTests.CoreTests
 
                 docs.Select(d => DbClient.Entities.Serializer.Deserialize<Artist>(d))
                     .ToArray()
-                    .ShouldBe().ValueEqual(artists);
+                    .ShouldBeEquivalentTo(artists);
             }).Wait();
         }
 
@@ -144,7 +143,7 @@ namespace MyCouch.IntegrationTests.CoreTests
             {
                 t.IsFaulted.Should().BeFalse();
 
-                docs.ToArray().ShouldBe().ValueEqual(artists);
+                docs.ToArray().ShouldBeEquivalentTo(artists);
             }).Wait();
         }
 
@@ -218,7 +217,7 @@ namespace MyCouch.IntegrationTests.CoreTests
                 r =>
                 {
                     len++;
-                    ArtistsById[i].ShouldBe().ValueEqual(DbClient.Entities.Serializer.Deserialize<Artist>(r.IncludedDoc));
+                    ArtistsById[i].ShouldBeEquivalentTo(DbClient.Entities.Serializer.Deserialize<Artist>(r.IncludedDoc));
                     i++;
                 })
                 .ContinueWith(t =>
@@ -238,7 +237,7 @@ namespace MyCouch.IntegrationTests.CoreTests
                 r =>
                 {
                     len++;
-                    ArtistsById[i].ShouldBe().ValueEqual(r.IncludedDoc);
+                    ArtistsById[i].ShouldBeEquivalentTo(r.IncludedDoc);
                     i++;
                 })
                 .ContinueWith(t =>
@@ -282,7 +281,7 @@ namespace MyCouch.IntegrationTests.CoreTests
 
                 var values = GetRowValues(rows);
 
-                values.ShouldBe().ValueEqual(albums);
+                values.ShouldBeEquivalentTo(albums);
             }).Wait();
         }
 
@@ -300,7 +299,7 @@ namespace MyCouch.IntegrationTests.CoreTests
 
                 var values = GetRowValues(rows);
 
-                values.ShouldBe().ValueEqual(albums);
+                values.ShouldBeEquivalentTo(albums);
             }).Wait();
         }
 
@@ -318,7 +317,7 @@ namespace MyCouch.IntegrationTests.CoreTests
 
                 var values = GetRowValues(rows);
 
-                values.ShouldBe().ValueEqual(albums);
+                values.ShouldBeEquivalentTo(albums);
             }).Wait();
         }
 
@@ -336,7 +335,7 @@ namespace MyCouch.IntegrationTests.CoreTests
 
                 var values = GetRowValues(rows);
 
-                values.ShouldBe().ValueEqual(albums);
+                values.ShouldBeEquivalentTo(albums);
             }).Wait();
         }
 
@@ -354,7 +353,7 @@ namespace MyCouch.IntegrationTests.CoreTests
 
                 var values = GetRowValues(rows);
 
-                values.ShouldBe().ValueEqual(albums);
+                values.ShouldBeEquivalentTo(albums);
             }).Wait();
         }
 
@@ -372,7 +371,7 @@ namespace MyCouch.IntegrationTests.CoreTests
 
                 var values = GetRowValues(rows);
 
-                values.ShouldBe().ValueEqual(albums);
+                values.ShouldBeEquivalentTo(albums);
             }).Wait();
         }
 
@@ -389,7 +388,7 @@ namespace MyCouch.IntegrationTests.CoreTests
 
                 var values = GetRowValues(rows);
 
-                values.ShouldBe().ValueEqual(new[] { DbClient.Serializer.Serialize(artist.Albums) });
+                values.ShouldBeEquivalentTo(new[] { DbClient.Serializer.Serialize(artist.Albums) });
             }).Wait();
         }
 
@@ -406,7 +405,7 @@ namespace MyCouch.IntegrationTests.CoreTests
 
                 var values = GetRowValues(rows);
 
-                values.ShouldBe().ValueEqual(new[] { artist.Albums.Select(i => DbClient.Serializer.Serialize(i)).ToArray() });
+                values.ShouldBeEquivalentTo(new[] { artist.Albums.Select(i => DbClient.Serializer.Serialize(i)).ToArray() });
             }).Wait();
         }
 
@@ -423,7 +422,7 @@ namespace MyCouch.IntegrationTests.CoreTests
 
                 var values = GetRowValues(rows);
 
-                values.ShouldBe().ValueEqual(new[] { artist.Albums });
+                values.ShouldBeEquivalentTo(new[] { artist.Albums });
             }).Wait();
         }
 
@@ -441,7 +440,7 @@ namespace MyCouch.IntegrationTests.CoreTests
 
                 var values = GetRowValues(rows);
 
-                values.ShouldBe().ValueEqual(artists.Select(a => DbClient.Serializer.Serialize(a.Albums)).ToArray());
+                values.ShouldBeEquivalentTo(artists.Select(a => DbClient.Serializer.Serialize(a.Albums)).ToArray());
             }).Wait();
         }
 
@@ -459,7 +458,7 @@ namespace MyCouch.IntegrationTests.CoreTests
 
                 var values = GetRowValues(rows);
 
-                values.ShouldBe().ValueEqual(artists.Select(a => a.Albums.Select(i => DbClient.Serializer.Serialize(i)).ToArray()).ToArray());
+                values.ShouldBeEquivalentTo(artists.Select(a => a.Albums.Select(i => DbClient.Serializer.Serialize(i)).ToArray()).ToArray());
             }).Wait();
         }
 
@@ -477,7 +476,7 @@ namespace MyCouch.IntegrationTests.CoreTests
 
                 var values = GetRowValues(rows);
 
-                values.ShouldBe().ValueEqual(artists.Select(a => a.Albums).ToArray());
+                values.ShouldBeEquivalentTo(artists.Select(a => a.Albums).ToArray());
             }).Wait();
         }
 
@@ -496,7 +495,7 @@ namespace MyCouch.IntegrationTests.CoreTests
 
                 var values = GetRowValues(rows);
 
-                values.ShouldBe().ValueEqual(artists.Select(a => DbClient.Serializer.Serialize(a.Albums)).ToArray());
+                values.ShouldBeEquivalentTo(artists.Select(a => DbClient.Serializer.Serialize(a.Albums)).ToArray());
             }).Wait();
         }
 
@@ -515,7 +514,7 @@ namespace MyCouch.IntegrationTests.CoreTests
 
                 var values = GetRowValues(rows);
 
-                values.ShouldBe().ValueEqual(artists.Select(a => a.Albums.Select(i => DbClient.Serializer.Serialize(i)).ToArray()).ToArray());
+                values.ShouldBeEquivalentTo(artists.Select(a => a.Albums.Select(i => DbClient.Serializer.Serialize(i)).ToArray()).ToArray());
             }).Wait();
         }
 
@@ -534,7 +533,7 @@ namespace MyCouch.IntegrationTests.CoreTests
 
                 var values = GetRowValues(rows);
 
-                values.ShouldBe().ValueEqual(artists.Select(a => a.Albums).ToArray());
+                values.ShouldBeEquivalentTo(artists.Select(a => a.Albums).ToArray());
             }).Wait();
         }
 
@@ -554,7 +553,7 @@ namespace MyCouch.IntegrationTests.CoreTests
 
                 var values = GetRowValues(rows);
 
-                values.ShouldBe().ValueEqual(artists.Take(artists.Length - 1).Select(a => DbClient.Serializer.Serialize(a.Albums)).ToArray());
+                values.ShouldBeEquivalentTo(artists.Take(artists.Length - 1).Select(a => DbClient.Serializer.Serialize(a.Albums)).ToArray());
             }).Wait();
         }
 
@@ -574,7 +573,7 @@ namespace MyCouch.IntegrationTests.CoreTests
 
                 var values = GetRowValues(rows);
 
-                values.ShouldBe().ValueEqual(artists.Take(artists.Length - 1).Select(a => a.Albums.Select(i => DbClient.Serializer.Serialize(i)).ToArray()).ToArray());
+                values.ShouldBeEquivalentTo(artists.Take(artists.Length - 1).Select(a => a.Albums.Select(i => DbClient.Serializer.Serialize(i)).ToArray()).ToArray());
             }).Wait();
         }
 
@@ -594,7 +593,7 @@ namespace MyCouch.IntegrationTests.CoreTests
 
                 var values = GetRowValues(rows);
 
-                values.ShouldBe().ValueEqual(artists.Take(artists.Length - 1).Select(a => a.Albums).ToArray());
+                values.ShouldBeEquivalentTo(artists.Take(artists.Length - 1).Select(a => a.Albums).ToArray());
             }).Wait();
         }
 
@@ -613,7 +612,7 @@ namespace MyCouch.IntegrationTests.CoreTests
 
                 var values = GetRowValues(rows);
 
-                values.ShouldBe().ValueEqual(artists);
+                values.ShouldBeEquivalentTo(artists);
             }).Wait();
         }
 
@@ -632,7 +631,7 @@ namespace MyCouch.IntegrationTests.CoreTests
 
                 var values = GetRowValues(rows);
 
-                values.ShouldBe().ValueEqual(artists);
+                values.ShouldBeEquivalentTo(artists);
             }).Wait();
         }
 
@@ -648,7 +647,7 @@ namespace MyCouch.IntegrationTests.CoreTests
 
                 var values = GetRowValues(rows);
 
-                values.ShouldBe().ValueEqual(ArtistsById);
+                values.ShouldBeEquivalentTo(ArtistsById);
             }).Wait();
         }
 
