@@ -127,7 +127,7 @@ namespace MyCouch.IntegrationTests.CloudantTests
             var orgDoc = Animals.Single(a => a.AnimalId == response.Rows[0].Id);
             var returnedDoc = response.Rows[0].IncludedDoc;
 
-            CustomAsserts.AreValueEqual(orgDoc, returnedDoc);
+            returnedDoc.ShouldBeEquivalentTo(orgDoc);
         }
 
         [MyFact(TestScenarios.Cloudant, TestScenarios.SearchesContext)]

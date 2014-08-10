@@ -65,7 +65,6 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="CustomAsserts.cs" />
     <Compile Include="JsonTestdata.Designer.cs">
       <DependentUpon>JsonTestdata.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -81,7 +80,6 @@
     <Compile Include="TestData\ClientTestData.cs" />
     <Compile Include="TestData\CloudantTestData.cs" />
     <Compile Include="TestsOf.cs" />
-    <Compile Include="TypeExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

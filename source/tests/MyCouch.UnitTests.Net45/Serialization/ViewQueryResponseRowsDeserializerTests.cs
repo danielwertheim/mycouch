@@ -190,22 +190,22 @@ namespace MyCouch.UnitTests.Serialization
             rows[0].Id.Should().Be("1");
             rows[0].Key.Should().Be("Fake artist 1");
             rows[0].Value.Length.Should().Be(1);
-            CustomAsserts.AreValueEqual(ClientTestData.Artists.Artist1.Albums, rows[0].Value);
+            rows[0].Value.ShouldBeEquivalentTo(ClientTestData.Artists.Artist1.Albums);
 
             rows[1].Id.Should().Be("2");
             rows[1].Key.Should().Be("Fake artist 2");
             rows[1].Value.Length.Should().Be(2);
-            CustomAsserts.AreValueEqual(ClientTestData.Artists.Artist2.Albums, rows[1].Value);
+            rows[1].Value.ShouldBeEquivalentTo(ClientTestData.Artists.Artist2.Albums);
 
             rows[2].Id.Should().Be("3");
             rows[2].Key.Should().Be("Fake artist 3");
             rows[2].Value.Length.Should().Be(3);
-            CustomAsserts.AreValueEqual(ClientTestData.Artists.Artist3.Albums, rows[2].Value);
+            rows[2].Value.ShouldBeEquivalentTo(ClientTestData.Artists.Artist3.Albums);
 
             rows[3].Id.Should().Be("4");
             rows[3].Key.Should().Be("Fake artist 4");
             rows[3].Value.Length.Should().Be(4);
-            CustomAsserts.AreValueEqual(ClientTestData.Artists.Artist4.Albums, rows[3].Value);
+            rows[3].Value.ShouldBeEquivalentTo(ClientTestData.Artists.Artist4.Albums);
         }
 
         private ViewQueryResponse<T>.Row[] Deserialize<T>(string jsonRows) where T : class

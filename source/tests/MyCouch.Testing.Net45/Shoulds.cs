@@ -105,7 +105,7 @@ namespace MyCouch.Testing
 
         public ObjectAssertions<T> ValueEqual(T expected)
         {
-            CustomAsserts.AreValueEqual(expected, _item);
+            _item.ShouldBeEquivalentTo(expected);
 
             return this;
         }
@@ -324,7 +324,7 @@ namespace MyCouch.Testing
         {
             BeSuccessful(method, expected.Length);
             for (var i = 0; i < Response.RowCount; i++)
-                CustomAsserts.AreValueEqual(expected[i], Response.Rows[i].Value);
+                Response.Rows[i].Value.ShouldBeEquivalentTo(expected[i]);
         }
 
         private void BeSuccessful<TKey>(HttpMethod method, T[] expected, Func<ViewQueryResponse<T, TIncludedDoc>.Row, TKey> orderBy = null)
@@ -336,7 +336,7 @@ namespace MyCouch.Testing
                 : Response.Rows;
 
             for (var i = 0; i < Response.RowCount; i++)
-                CustomAsserts.AreValueEqual(expected[i], actual[i].Value);
+                actual[i].Value.ShouldBeEquivalentTo(expected[i]);
         }
 
         public void BeSuccessfulPost(int numOfRows)

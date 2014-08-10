@@ -97,9 +97,6 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Testing.Net45\CustomAsserts.cs">
-      <Link>CustomAsserts.cs</Link>
-    </Compile>
     <Compile Include="..\mycouch.testing.net45\model\Album.cs">
       <Link>Model\Album.cs</Link>
     </Compile>
@@ -126,9 +123,6 @@
     </Compile>
     <Compile Include="..\MyCouch.Testing.Net45\TestsOf.cs">
       <Link>TestsOf.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Testing.Net45\TypeExtensions.cs">
-      <Link>TypeExtensions.cs</Link>
     </Compile>
     <Compile Include="JsonTestdata.Designer.cs">
       <DependentUpon>JsonTestdata.resx</DependentUpon>
