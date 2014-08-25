@@ -2,16 +2,13 @@
     "Key": "Default",
     "Supports": [
         "attachmentscontext",
-		"changescontext",
         "databasecontext",
-		"databasescontext",
         "documentscontext",
 		"entitiescontext",
         "viewscontext",
         "mycouchstore",
         "createdbs",
 		"deletedbs",
-		"compactdbs",
 		"replication"],
     "ServerUrl": "http://localhost:5984",
     "PrimaryDbName": "mycouchtests_pri",
@@ -21,7 +18,7 @@
     "Password":"test"
 },
 {
-    "Key": "WIN81DEV",
+    "Key": "COMPUTERNAME OR DEFAULT",
     "Supports": [
         "attachmentscontext",
 		"changescontext",
@@ -34,8 +31,9 @@
         "createdbs",
 		"deletedbs",
 		"compactdbs",
+		"viewcleanup",
 		"replication"],
-    "ServerUrl": "http://win2012r201:5984",
+    "ServerUrl": "http://localhost:5984",
     "PrimaryDbName": "mycouchtests_pri",
     "SecondaryDbName": "mycouchtests_sec",
     "TempDbName": "mycouchtests_tmp",
