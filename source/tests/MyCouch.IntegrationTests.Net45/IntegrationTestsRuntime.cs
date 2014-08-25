@@ -218,6 +218,7 @@ namespace MyCouch.IntegrationTests
         public const string CreateDbs = "createdbs";
         public const string DeleteDbs = "deletedbs";
         public const string CompactDbs = "compactdbs";
+        public const string ViewCleanUp = "compactdbs";
         public const string Replication = "replication";
     }
 
