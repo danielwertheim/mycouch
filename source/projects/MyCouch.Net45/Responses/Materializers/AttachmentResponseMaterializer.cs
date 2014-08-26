@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System.Linq;
+using System.Net.Http;
 using MyCouch.Extensions;
 
 namespace MyCouch.Responses.Materializers
@@ -16,13 +17,13 @@ namespace MyCouch.Responses.Materializers
         protected virtual void SetMissingIdFromRequestUri(AttachmentResponse response, HttpResponseMessage httpResponse)
         {
             if (string.IsNullOrWhiteSpace(response.Id))
-                response.Id = httpResponse.RequestMessage.GetUriSegmentByRightOffset(1);
+                response.Id = httpResponse.RequestMessage.ExtractIdFromUri(true);
         }
 
         protected virtual void SetMissingNameFromRequestUri(AttachmentResponse response, HttpResponseMessage httpResponse)
         {
             if (string.IsNullOrWhiteSpace(response.Name))
-                response.Name = httpResponse.RequestMessage.GetUriSegmentByRightOffset();
+                response.Name = httpResponse.RequestMessage.RequestUri.Segments.LastOrDefault();
         }
 
         protected virtual void SetMissingRevFromRequestHeaders(AttachmentResponse response, HttpResponseMessage httpResponse)

@@ -6,12 +6,15 @@ namespace MyCouch.Extensions
 {
     public static class HttpExtensions
     {
-        public static string GetUriSegmentByRightOffset(this HttpRequestMessage request, int offset = 0)
+        public static string ExtractIdFromUri(this HttpRequestMessage request, bool skipLast)
         {
-            var segments = request.RequestUri.Segments;
-            var val = Uri.UnescapeDataString(segments[segments.Length - (1 + offset)]);
+            var index = request.RequestUri.Segments.Length - (1 + (skipLast ? 1 : 0));
 
-            return val.TrimEnd('/');
+            var peek = request.RequestUri.Segments[index - 1];
+            if (string.Equals(peek, "_design/", StringComparison.OrdinalIgnoreCase))
+                return string.Concat(peek, request.RequestUri.Segments[index]);
+
+            return request.RequestUri.Segments[index].RemoveTrailing("/");
         }
 
         public static string GetETag(this HttpResponseHeaders headers)
