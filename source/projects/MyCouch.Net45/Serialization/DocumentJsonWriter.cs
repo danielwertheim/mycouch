@@ -37,11 +37,11 @@ namespace MyCouch.Serialization
 
         public override void WriteStartObject()
         {
+            Level += 1;
+
             base.WriteStartObject();
 
-            Level = Level += 1;
-
-            if (HasWrittenDocumentMeta || !Conventions.HasConventions)
+            if (Level > 1 || HasWrittenDocumentMeta || !Conventions.HasConventions)
                 return;
 
             HasWrittenDocumentMeta = true;
@@ -62,6 +62,13 @@ namespace MyCouch.Serialization
                 return;
 
             convention.Apply(meta, ConventionWriter);
+        }
+
+        public override void WriteEndObject()
+        {
+            Level -= 1;
+
+            base.WriteEndObject();
         }
 
         public override void WriteNull()

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -12,38 +13,14 @@ namespace MyCouch.IntegrationTests
 {
     internal static class IntegrationTestsRuntime
     {
-        private const string TestEnvironmentsBaseUrl = "http://localhost:8991/testenvironments/";
-
         internal static readonly TestEnvironment Environment;
 
         static IntegrationTestsRuntime()
         {
-            using (var c = new HttpClient())
-            {
-                Environment = GetTestEnvironment(c, "normal");
-            }
+            Environment = TestEnvironments.GetMachineSpecificOrDefaultTestEnvironment();
 
             if(Environment.IsAgainstCloudant() && !Environment.HasSupportFor(TestScenarios.Cloudant))
                 throw new NotSupportedException("The test environment's ServerClient and/or DbClient is configured to run against Cloudant, but the environment has no support for Cloudant.");
-        }
-
-        private static TestEnvironment GetTestEnvironment(HttpClient client, string envName)
-        {
-            try
-            {
-                var r = client.GetAsync(TestEnvironmentsBaseUrl + envName).Result;
-                if (r.StatusCode == HttpStatusCode.NotFound)
-                    return null;
-
-                if (!r.IsSuccessStatusCode)
-                    throw new Exception("Could not load test environment settings for: " + TestEnvironmentsBaseUrl + envName);
-
-                return JsonConvert.DeserializeObject<TestEnvironment>(r.Content.ReadAsStringAsync().Result);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Could not load test environment settings for: " + TestEnvironmentsBaseUrl + envName, ex);
-            }
         }
 
         internal static IMyCouchServerClient CreateServerClient()
@@ -241,11 +218,15 @@ namespace MyCouch.IntegrationTests
         public const string CreateDbs = "createdbs";
         public const string DeleteDbs = "deletedbs";
         public const string CompactDbs = "compactdbs";
+        public const string ViewCleanUp = "compactdbs";
         public const string Replication = "replication";
     }
 
     public class TestEnvironment
     {
+        public const string DefaultEnvironmentKey = "Default";
+
+        public string Key { get; set; }
         public string[] Supports { get; set; }
         public string ServerUrl { get; set; }
         public string PrimaryDbName { get; set; }
@@ -261,7 +242,7 @@ namespace MyCouch.IntegrationTests
 
         public bool IsAgainstCloudant()
         {
-            return ServerUrl.Contains("cloudant.com");
+            return ServerUrl.ToLower().Contains("cloudant.com");
         }
 
         public bool SupportsEverything
@@ -271,18 +252,61 @@ namespace MyCouch.IntegrationTests
 
         public TestEnvironment()
         {
+            Key = DefaultEnvironmentKey;
             Supports = new[] { "*" };
             ServerUrl = "http://localhost:5984";
             PrimaryDbName = "mycouchtests_pri";
             SecondaryDbName = "mycouchtests_sec";
-            TempDbName = PrimaryDbName + "_tmp";
+            TempDbName = "mycouchtests_tmp";
             User = "sa";
-            Password = "p@ssword";
+            Password = "test";
         }
 
         public virtual bool HasSupportFor(params string[] requirements)
         {
             return SupportsEverything || requirements.All(r => Supports.Contains(r, StringComparer.OrdinalIgnoreCase));
+        }
+    }
+
+    public static class TestEnvironments
+    {
+        private const string TestEnvironmentsBaseUrl = "http://localhost:8991/testenvironments/";
+
+        public static TestEnvironment GetMachineSpecificOrDefaultTestEnvironment()
+        {
+            var environments = GetTestEnvironments();
+            TestEnvironment machineSpecific;
+
+            return environments.TryGetValue(Environment.MachineName, out machineSpecific)
+                ? machineSpecific
+                : environments[TestEnvironment.DefaultEnvironmentKey];
+        }
+
+        private static IDictionary<string, TestEnvironment> GetTestEnvironments()
+        {
+            using (var client = new HttpClient())
+            {
+                HttpResponseMessage r;
+                const string exMessage = "Could not load test environments from: " + TestEnvironmentsBaseUrl;
+
+                try
+                {
+                    r = client.GetAsync(TestEnvironmentsBaseUrl).Result;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(exMessage, ex);
+                }
+
+                if (!r.IsSuccessStatusCode)
+                    throw new Exception(exMessage);
+
+                var environments = JsonConvert.DeserializeObject<TestEnvironment[]>(r.Content.ReadAsStringAsync().Result);
+                if (environments == null || !environments.Any())
+                    throw new Exception(exMessage);
+
+                return environments.ToDictionary(e => e.Key, e => e);
+            }
         }
     }
 }

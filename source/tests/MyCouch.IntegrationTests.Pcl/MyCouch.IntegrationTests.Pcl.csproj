@@ -1,22 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\packages\xunit.core.2.0.0-beta-build2650\build\portable-net45+win+wpa81+wp80\xunit.core.props" Condition="Exists('..\..\packages\xunit.core.2.0.0-beta-build2650\build\portable-net45+win+wpa81+wp80\xunit.core.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{24E21210-8B1C-40BB-9617-712F5A67FF6A}</ProjectGuid>
+    <ProjectGuid>{DF76366D-F94C-4E23-A582-21EF11EB5DB0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MyCouch.IntegrationTests</RootNamespace>
     <AssemblyName>MyCouch.IntegrationTests.Pcl</AssemblyName>
-    <DefaultLanguage>en-US</DefaultLanguage>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TargetFrameworkProfile>Profile7</TargetFrameworkProfile>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <NuGetPackageImportStamp>371db780</NuGetPackageImportStamp>
+    <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -36,25 +30,46 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .NET Framework is automatically included -->
-    <ProjectReference Include="..\..\projects\MyCouch.Cloudant.Pcl\MyCouch.Cloudant.Pcl.csproj">
-      <Project>{5a0d4e69-6a48-49d6-8b68-89c7b3ea6603}</Project>
-      <Name>MyCouch.Cloudant.Pcl</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\projects\MyCouch.Pcl\MyCouch.Pcl.csproj">
-      <Project>{da67c219-8fd3-4da8-892f-1d31dd473243}</Project>
-      <Name>MyCouch.Pcl</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MyCouch.Testing.Pcl\MyCouch.Testing.Pcl.csproj">
-      <Project>{ec6f9e25-3ab6-4fab-88ec-5df86895d600}</Project>
-      <Name>MyCouch.Testing.Pcl</Name>
-    </ProjectReference>
+    <Reference Include="FluentAssertions">
+      <HintPath>..\..\packages\FluentAssertions.3.1.229\lib\net45\FluentAssertions.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentAssertions.Core">
+      <HintPath>..\..\packages\FluentAssertions.3.1.229\lib\net45\FluentAssertions.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Reactive.Core">
+      <HintPath>..\..\packages\Rx-Core.2.2.5\lib\net45\System.Reactive.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces">
+      <HintPath>..\..\packages\Rx-Interfaces.2.2.5\lib\net45\System.Reactive.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Linq">
+      <HintPath>..\..\packages\Rx-Linq.2.2.5\lib\net45\System.Reactive.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.PlatformServices">
+      <HintPath>..\..\packages\Rx-PlatformServices.2.2.5\lib\net45\System.Reactive.PlatformServices.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="xunit">
+      <HintPath>..\..\packages\xunit.1.9.2\lib\net20\xunit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="..\mycouch.integrationtests.net45\cloudanttests\SearchTests.cs">
       <Link>CloudantTests\SearchTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests.Net45\CloudantTests\SecurityTests.cs">
+    <Compile Include="..\mycouch.integrationtests.net45\cloudanttests\SecurityTests.cs">
       <Link>CloudantTests\SecurityTests.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.integrationtests.net45\coretests\AttachmentsTests.cs">
@@ -84,7 +99,7 @@
     <Compile Include="..\mycouch.integrationtests.net45\coretests\MyCouchStoreObservableQueryTests.cs">
       <Link>CoreTests\MyCouchStoreObservableQueryTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests.Net45\CoreTests\ReplicatorTests.cs">
+    <Compile Include="..\mycouch.integrationtests.net45\coretests\ReplicatorTests.cs">
       <Link>CoreTests\ReplicatorTests.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.integrationtests.net45\coretests\ViewsTests.cs">
@@ -111,47 +126,23 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="FluentAssertions">
-      <HintPath>..\..\packages\FluentAssertions.3.0.107\lib\portable-net40+sl5+win8+wp8\FluentAssertions.dll</HintPath>
-    </Reference>
-    <Reference Include="FluentAssertions.Core">
-      <HintPath>..\..\packages\FluentAssertions.3.0.107\lib\portable-net40+sl5+win8+wp8\FluentAssertions.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\packages\Newtonsoft.Json.6.0.3\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.Core">
-      <HintPath>..\..\packages\Rx-Core.2.2.4\lib\portable-windows8+net45+wp8\System.Reactive.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.Interfaces">
-      <HintPath>..\..\packages\Rx-Interfaces.2.2.4\lib\portable-windows8+net45+wp8\System.Reactive.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.Linq">
-      <HintPath>..\..\packages\Rx-Linq.2.2.4\lib\portable-windows8+net45+wp8\System.Reactive.Linq.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.PlatformServices">
-      <HintPath>..\..\packages\Rx-PlatformServices.2.2.4\lib\portable-windows8+net45+wp8\System.Reactive.PlatformServices.dll</HintPath>
-    </Reference>
-    <Reference Include="xunit.abstractions">
-      <HintPath>..\..\packages\xunit.abstractions.2.0.0-beta-build2650\lib\portable-net45+win+wpa81+wp80\xunit.abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="xunit.assert">
-      <HintPath>..\..\packages\xunit.assert.2.0.0-beta-build2650\lib\portable-net45+win+wpa81+wp80\xunit.assert.dll</HintPath>
-    </Reference>
-    <Reference Include="xunit.core">
-      <HintPath>..\..\packages\xunit.core.2.0.0-beta-build2650\lib\portable-net45+win+wpa81+wp80\xunit.core.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\xunit.core.2.0.0-beta-build2650\build\portable-net45+win+wpa81+wp80\xunit.core.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\xunit.core.2.0.0-beta-build2650\build\portable-net45+win+wpa81+wp80\xunit.core.props'))" />
-  </Target>
+  <ItemGroup>
+    <ProjectReference Include="..\..\projects\MyCouch.Cloudant.Pcl\MyCouch.Cloudant.Pcl.csproj">
+      <Project>{5a0d4e69-6a48-49d6-8b68-89c7b3ea6603}</Project>
+      <Name>MyCouch.Cloudant.Pcl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\projects\MyCouch.Pcl\MyCouch.Pcl.csproj">
+      <Project>{da67c219-8fd3-4da8-892f-1d31dd473243}</Project>
+      <Name>MyCouch.Pcl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MyCouch.Testing.Pcl\MyCouch.Testing.Pcl.csproj">
+      <Project>{189bf3ac-8cca-4e33-a14a-4d2e782728ca}</Project>
+      <Name>MyCouch.Testing.Pcl</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

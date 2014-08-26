@@ -12,15 +12,10 @@ namespace MyCouch.IntegrationTests.CoreTests
     public class ViewsTests :
         IntegrationTestsOf<IViews>,
         IPreserveStatePerFixture,
-#if !PCL
         IUseFixture<ViewsFixture>
-#else
-        IClassFixture<ViewsFixture>
-#endif
     {
         protected Artist[] ArtistsById { get; set; }
 
-#if !PCL
         public ViewsTests()
         {
             SUT = DbClient.Views;
@@ -30,13 +25,7 @@ namespace MyCouch.IntegrationTests.CoreTests
         {
             ArtistsById = data.Init(Environment);
         }
-#else
-        public ViewsTests(ViewsFixture fixture)
-        {
-            SUT = DbClient.Views;
-            ArtistsById = fixture.Init(Environment);
-        }
-#endif
+
         [MyFact(TestScenarios.ViewsContext)]
         public void When_no_key_with_sum_reduce_for_string_response_It_will_be_able_to_sum()
         {
@@ -84,7 +73,7 @@ namespace MyCouch.IntegrationTests.CoreTests
             for (var i = 0; i < response.RowCount; i++)
             {
                 response.Rows[i].Value.Should().BeNull();
-                CustomAsserts.AreValueEqual(ArtistsById[i], DbClient.Entities.Serializer.Deserialize<Artist>(response.Rows[i].IncludedDoc));
+                DbClient.Entities.Serializer.Deserialize<Artist>(response.Rows[i].IncludedDoc).ShouldBeEquivalentTo(ArtistsById[i]);
             }
         }
 
@@ -99,7 +88,7 @@ namespace MyCouch.IntegrationTests.CoreTests
             for (var i = 0; i < response.RowCount; i++)
             {
                 response.Rows[i].Value.Should().BeNull();
-                CustomAsserts.AreValueEqual(ArtistsById[i], response.Rows[i].IncludedDoc);
+                response.Rows[i].IncludedDoc.ShouldBeEquivalentTo(ArtistsById[i]);
             }
         }
 

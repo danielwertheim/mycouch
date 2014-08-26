@@ -26,7 +26,7 @@ namespace MyCouch.Responses.Materializers
         protected virtual void SetMissingIdFromRequestUri<T>(EntityResponse<T> response, HttpResponseMessage httpResponse) where T : class
         {
             if (string.IsNullOrWhiteSpace(response.Id))
-                response.Id = httpResponse.RequestMessage.GetUriSegmentByRightOffset();
+                response.Id = httpResponse.RequestMessage.ExtractIdFromUri(false);
         }
     }
 }

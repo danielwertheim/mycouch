@@ -54,9 +54,6 @@ namespace MyCouch.IntegrationTests
             DbClient.Dispose();
             DbClient = null;
 
-            if (CloudantDbClient != null)
-                CloudantDbClient.Dispose();
-
             var disposableSut = SUT as IDisposable;
             if (disposableSut == null)
                 return;

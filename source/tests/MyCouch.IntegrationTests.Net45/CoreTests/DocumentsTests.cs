@@ -53,6 +53,16 @@ namespace MyCouch.IntegrationTests.CoreTests
         }
 
         [MyFact(TestScenarios.DocumentsContext)]
+        public void When_HEAD_of_existing_design_document_id_The_response_is_ok()
+        {
+            var postResponse = SUT.PostAsync(ClientTestData.Views.ArtistsViews).Result;
+
+            var response = SUT.HeadAsync(postResponse.Id).Result;
+
+            response.Should().BeHead200(postResponse.Id, postResponse.Rev);
+        }
+
+        [MyFact(TestScenarios.DocumentsContext)]
         public void When_HEAD_using_matching_id_and_rev_The_response_is_ok()
         {
             var postResponse = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;

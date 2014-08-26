@@ -41,7 +41,7 @@ namespace MyCouch.Responses.Materializers
         protected virtual void SetMissingIdFromRequestUri(DocumentResponse response, HttpRequestMessage request)
         {
             if (string.IsNullOrWhiteSpace(response.Id) && request.Method != HttpMethod.Post)
-                response.Id = request.GetUriSegmentByRightOffset();
+                response.Id = request.ExtractIdFromUri(false);
         }
 
         protected virtual void SetMissingRevFromRequestHeaders(DocumentResponse response, HttpResponseHeaders responseHeaders)

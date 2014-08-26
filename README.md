@@ -79,9 +79,7 @@ using(var store = new MyCouchStore("http://localhost:5984"))
 Please note. **No NuGet packages are checked in**. If you are using the latest version of NuGet (v2.7.1+) **you should be able to just build and the packages will be restored**. If this does not work, you could install the missing NuGet packages using a simple PowerShell script [as covered here](http://danielwertheim.se/2013/08/12/nuget-restore-powershell-vs-rake)
 
 ## Test environments ##
-The project `MyCouch.TestServer` is a small self-hosted Nancy server that is used to serve e.g. test environment configurations to the integration tests. Just ensure there's a folder called `env\data` and that its `normal.json` configuration file is configured correctly. Read more about this in `env\README.md`.
-
-The `MyCouch.TestServer` project **is not being built** in `DEBUG` nor for `RELEASE`. Hence the first time you need to explicitly e.g rebuild it via right clicking on it in the Solution Explorer.
+The project `MyCouch.TestServer` is a small self-hosted Nancy server that is used to serve e.g. test environment configurations to the integration tests configured in `\testenvironments.json`.
 
 ## How-to Contribute ##
 This is described in the wiki, under: ["How-to Contribute"](https://github.com/danielwertheim/mycouch/wiki/how-to-contribute).
