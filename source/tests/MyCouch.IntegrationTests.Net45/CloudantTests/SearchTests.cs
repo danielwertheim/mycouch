@@ -12,15 +12,10 @@ namespace MyCouch.IntegrationTests.CloudantTests
 {
     public class SearchTests : IntegrationTestsOf<ISearches>,
         IPreserveStatePerFixture,
-#if !PCL
         IUseFixture<SearchFixture>
-#else
-        IClassFixture<SearchFixture>
-#endif
     {
         protected Animal[] Animals { get; set; }
 
-#if !PCL
         public SearchTests()
         {
             SUT = CloudantDbClient.Searches;
@@ -30,13 +25,7 @@ namespace MyCouch.IntegrationTests.CloudantTests
         {
             Animals = data.Init(Environment);
         }
-#else
-        public SearchTests(SearchFixture fixture)
-        {
-            SUT = CloudantDbClient.Searches;
-            Animals = fixture.Init(Environment);
-        }
-#endif
+
         [MyFact(TestScenarios.Cloudant, TestScenarios.SearchesContext)]
         public void Can_search_on_default_index_using_simple_expression()
         {

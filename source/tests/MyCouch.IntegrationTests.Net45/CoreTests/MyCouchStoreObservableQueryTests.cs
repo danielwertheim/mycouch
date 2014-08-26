@@ -13,15 +13,10 @@ namespace MyCouch.IntegrationTests.CoreTests
     public class MyCouchStoreObservableQueryTests :
         IntegrationTestsOf<MyCouchStore>,
         IPreserveStatePerFixture,
-#if !PCL
         IUseFixture<ViewsFixture>
-#else
-        IClassFixture<ViewsFixture>
-#endif
     {
         protected Artist[] ArtistsById { get; set; }
 
-#if !PCL
         public MyCouchStoreObservableQueryTests()
         {
             SUT = new MyCouchStore(DbClient);
@@ -31,13 +26,7 @@ namespace MyCouch.IntegrationTests.CoreTests
         {
             ArtistsById = data.Init(Environment);
         }
-#else
-        public MyCouchStoreObservableQueryTests(ViewsFixture fixture)
-        {
-            SUT = new MyCouchStore(DbClient);
-            ArtistsById = fixture.Init(Environment);
-        }
-#endif
+
         [MyFact(TestScenarios.MyCouchStore)]
         public void GetHeaders_When_getting_three_headers_It_returns_the_three_requested_headers()
         {

@@ -12,15 +12,10 @@ namespace MyCouch.IntegrationTests.CoreTests
     public class MyCouchStoreCallbackQueryTests :
         IntegrationTestsOf<MyCouchStore>,
         IPreserveStatePerFixture,
-#if !PCL
         IUseFixture<ViewsFixture>
-#else
-        IClassFixture<ViewsFixture>
-#endif
     {
         protected Artist[] ArtistsById { get; set; }
 
-#if !PCL
         public MyCouchStoreCallbackQueryTests()
         {
             SUT = new MyCouchStore(DbClient);
@@ -30,13 +25,6 @@ namespace MyCouch.IntegrationTests.CoreTests
         {
             ArtistsById = data.Init(Environment);
         }
-#else
-        public MyCouchStoreCallbackQueryTests(ViewsFixture fixture)
-        {
-            SUT = new MyCouchStore(DbClient);
-            ArtistsById = fixture.Init(Environment);
-        }
-#endif
         [MyFact(TestScenarios.MyCouchStore)]
         public void GetHeadersAync_When_getting_three_headers_It_returns_the_three_requested_headers()
         {
@@ -122,7 +110,7 @@ namespace MyCouch.IntegrationTests.CoreTests
             var keys = artists.Select(a => a.ArtistId as object).ToArray();
             var docs = new List<string>();
 
-            SUT.GetIncludedDocByKeysAsync(SystemViewIdentity.AllDocs,  keys, docs.Add).ContinueWith(t =>
+            SUT.GetIncludedDocByKeysAsync(SystemViewIdentity.AllDocs, keys, docs.Add).ContinueWith(t =>
             {
                 t.IsFaulted.Should().BeFalse();
 
@@ -139,7 +127,7 @@ namespace MyCouch.IntegrationTests.CoreTests
             var keys = artists.Select(a => a.ArtistId as object).ToArray();
             var docs = new List<Artist>();
 
-            SUT.GetIncludedDocByKeysAsync<Artist>(SystemViewIdentity.AllDocs,  keys, docs.Add).ContinueWith(t =>
+            SUT.GetIncludedDocByKeysAsync<Artist>(SystemViewIdentity.AllDocs, keys, docs.Add).ContinueWith(t =>
             {
                 t.IsFaulted.Should().BeFalse();
 
@@ -274,7 +262,7 @@ namespace MyCouch.IntegrationTests.CoreTests
             var albums = ArtistsById.Skip(skip).Select(a => DbClient.Serializer.Serialize(a.Albums)).ToArray();
             var query = new Query(ClientTestData.Views.ArtistsAlbumsViewId).Configure(q => q.Skip(skip));
             var rows = new List<Row>();
-            
+
             SUT.QueryAsync(query, rows.Add).ContinueWith(t =>
             {
                 t.IsFaulted.Should().BeFalse();
