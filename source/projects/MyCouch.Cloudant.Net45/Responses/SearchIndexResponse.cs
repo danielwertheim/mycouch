@@ -26,7 +26,10 @@ namespace MyCouch.Cloudant.Responses
             get { return Rows == null || Rows.Length == 0; }
         }
         public string Bookmark { get; set; }
-
+        [JsonConverter(typeof(MultiTypeDeserializationJsonConverter))]
+        public string Counts { get; set; }
+        [JsonConverter(typeof(MultiTypeDeserializationJsonConverter))]
+        public string Ranges { get; set; }
         public override string ToStringDebugVersion()
         {
             return string.Format("{0}{1}{0}IsEmpty: {2}{0}TotalRows: {3}{0}RowCount: {4}{0}Bookmark: {5}",

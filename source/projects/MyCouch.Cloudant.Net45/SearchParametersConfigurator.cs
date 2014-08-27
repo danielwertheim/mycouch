@@ -93,5 +93,35 @@ namespace MyCouch.Cloudant
 
             return this;
         }
+
+        /// <summary>
+        /// Expression to define ranges for faceted numeric search fields
+        /// </summary>
+        /// <param name="ranges"></param>
+        /// <returns></returns>
+        public virtual SearchParametersConfigurator Ranges(object ranges)
+        {
+            Ensure.That(ranges, "ranges").IsNotNull();
+
+            Parameters.Ranges = ranges;
+
+            return this;
+        }
+
+
+
+        /// <summary>
+        /// List of field names for which counts should be produced.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public virtual SearchParametersConfigurator Counts(params string[] countFields)
+        {
+            Ensure.That(countFields, "countFields").HasItems();
+
+            Parameters.Counts = countFields.ToList();
+
+            return this;
+        }
     }
 }

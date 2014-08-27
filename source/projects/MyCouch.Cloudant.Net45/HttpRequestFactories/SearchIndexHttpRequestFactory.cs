@@ -70,6 +70,12 @@ namespace MyCouch.Cloudant.HttpRequestFactories
 
             if (request.IncludeDocs.HasValue)
                 kvs.Add(KeyNames.IncludeDocs, Serializer.ToJson(request.IncludeDocs.Value));
+			
+            if (request.Ranges != null)
+				kvs.Add(KeyNames.Ranges, Serializer.Serialize(request.Ranges));
+
+            if (request.HasCounts())
+                kvs.Add(KeyNames.Counts, Serializer.ToJsonArray(request.Counts.ToArray()));
 
             return kvs;
         }
@@ -82,6 +88,8 @@ namespace MyCouch.Cloudant.HttpRequestFactories
             public const string Stale = "stale";
             public const string Limit = "limit";
             public const string IncludeDocs = "include_docs";
+            public const string Ranges = "ranges";
+            public const string Counts = "counts";
         }
     }
 }
