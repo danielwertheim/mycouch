@@ -46,6 +46,16 @@ namespace MyCouch.Cloudant
         /// <summary>
         /// Limit the number of the returned documents to the specified number.
         /// </summary>
-        int? Limit { get; set; } 
+        int? Limit { get; set; }
+
+        /// <summary>
+        /// Defines ranges for faceted numeric search fields.
+        /// </summary>
+        object Ranges { get; set; }
+
+        /// <summary>
+        /// List of field names for which counts should be produced.
+        /// </summary>
+        IList<string> Counts { get; set; }
     }
 }

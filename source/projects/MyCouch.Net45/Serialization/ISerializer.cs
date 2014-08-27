@@ -6,6 +6,7 @@ namespace MyCouch.Serialization
 {
     public interface ISerializer
     {
+		string Serialize(object item);
         string Serialize<T>(T item) where T : class;
         T Deserialize<T>(string data);
         T Deserialize<T>(Stream data);

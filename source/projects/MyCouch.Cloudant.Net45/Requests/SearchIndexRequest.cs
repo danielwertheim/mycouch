@@ -78,6 +78,24 @@ namespace MyCouch.Cloudant.Requests
             set { State.Limit = value; }
         }
 
+        /// <summary>
+        /// Defines ranges for faceted numeric search fields.
+        /// </summary>
+        public object Ranges
+        {
+            get { return State.Ranges; }
+            set { State.Ranges = value; }
+        }
+
+        /// <summary>
+        /// List of field names for which counts should be produced.
+        /// </summary>
+        public IList<string> Counts
+        {
+            get { return State.Counts; }
+            set { State.Counts = value; }
+        }
+
         public SearchIndexRequest(string designDocument, string searchIndexName)
             : this(new SearchIndexIdentity(designDocument, searchIndexName)) { }
 
@@ -98,6 +116,11 @@ namespace MyCouch.Cloudant.Requests
         public virtual bool HasSortings()
         {
             return Sort != null && Sort.Any();
+        }
+
+        public virtual bool HasCounts()
+        {
+            return Counts != null && Counts.Any();
         }
     }
 }

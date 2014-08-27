@@ -16,6 +16,8 @@ namespace MyCouch.Cloudant.Searching
         public IList<string> Sort { get; set; }
         public bool? IncludeDocs { get; set; }
         public int? Limit { get; set; }
+        public object Ranges { get; set; }
+        public IList<string> Counts { get; set; }
 
         public SearchParameters(SearchIndexIdentity searchIndexIdentity)
         {
@@ -23,6 +25,7 @@ namespace MyCouch.Cloudant.Searching
 
             IndexIdentity = searchIndexIdentity;
             Sort = new List<string>();
+            Counts = new List<string>();
         }
     }
 }

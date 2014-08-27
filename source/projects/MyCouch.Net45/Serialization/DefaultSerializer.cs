@@ -255,5 +255,13 @@ namespace MyCouch.Serialization
         {
             return string.Format("[{0}]", string.Join(",", value.Select(v => ToJson(v))));
         }
+
+		public virtual string Serialize(object item)
+		{
+			if (item == null)
+				throw new ArgumentNullException("item");
+
+			return Newtonsoft.Json.Linq.JObject.FromObject(item).ToString();
+		}
     }
 }
