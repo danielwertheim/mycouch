@@ -19,6 +19,12 @@ namespace MyCouch.Cloudant.Responses
 	{
 		[JsonProperty(JsonScheme.TotalRows)]
 		public long TotalRows { get; set; }
+		public long GroupCount { get { return IsGroupsEmpty ? 0 : Groups.Length; } }
+		public Group[] Groups { get; set; }
+		public bool IsGroupsEmpty
+		{
+			get { return Groups == null || Groups.Length == 0; }
+		}
 		public long RowCount { get { return IsEmpty ? 0 : Rows.Length; } }
 		public Row[] Rows { get; set; }
 		public bool IsEmpty
@@ -58,6 +64,22 @@ namespace MyCouch.Cloudant.Responses
 				return Order == null || Order.Length == 0
 					? new double[0] : Order.Cast<double>().ToArray();
 			}
+		}
+
+#if !PCL
+		[Serializable]
+#endif
+		public class Group
+		{
+			public object By { get; set; }
+			[JsonProperty(JsonScheme.TotalRows)]
+			public long TotalRows { get; set; }
+			public Row[] Rows { get; set; }
+			public bool IsEmpty
+			{
+				get { return Rows == null || Rows.Length == 0; }
+			}
+			public long RowCount { get { return IsEmpty ? 0 : Rows.Length; } }
 		}
 	}
 }

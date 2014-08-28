@@ -57,5 +57,9 @@ namespace MyCouch.Cloudant
 		/// List of field names for which counts should be produced.
 		/// </summary>
 		IList<string> Counts { get; set; }
+		/// <summary>
+		/// Field by which to group search matches.
+		/// </summary>
+		string GroupField { get; set; }
 	}
 }

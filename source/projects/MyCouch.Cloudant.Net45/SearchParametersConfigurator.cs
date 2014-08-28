@@ -123,5 +123,19 @@ namespace MyCouch.Cloudant
 
 			return this;
 		}
+
+		/// <summary>
+		/// Field by which to group search matches.
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public virtual SearchParametersConfigurator GroupField(string value)
+		{
+			Ensure.That(value, "value").IsNotNullOrWhiteSpace();
+
+			Parameters.GroupField = value;
+
+			return this;
+		}
 	}
 }
