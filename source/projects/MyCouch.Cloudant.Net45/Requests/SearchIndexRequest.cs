@@ -96,6 +96,15 @@ namespace MyCouch.Cloudant.Requests
 			set { State.Counts = value; }
 		}
 
+		/// <summary>
+		/// Field by which to group search matches.
+		/// </summary>
+		public string GroupField
+		{
+			get { return State.GroupField; }
+			set { State.GroupField = value; }
+		}
+
 		public SearchIndexRequest(string designDocument, string searchIndexName)
 			: this(new SearchIndexIdentity(designDocument, searchIndexName)) { }
 

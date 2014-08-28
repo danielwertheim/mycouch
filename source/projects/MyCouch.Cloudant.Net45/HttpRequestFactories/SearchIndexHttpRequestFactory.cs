@@ -77,6 +77,9 @@ namespace MyCouch.Cloudant.HttpRequestFactories
 			if (request.HasCounts())
 				kvs.Add(KeyNames.Counts, Serializer.ToJsonArray(request.Counts.ToArray()));
 
+			if (!string.IsNullOrWhiteSpace(request.GroupField))
+				kvs.Add(KeyNames.GroupField, request.GroupField);
+
 			return kvs;
 		}
 
@@ -90,6 +93,7 @@ namespace MyCouch.Cloudant.HttpRequestFactories
 			public const string IncludeDocs = "include_docs";
 			public const string Ranges = "ranges";
 			public const string Counts = "counts";
+			public const string GroupField = "group_field";
 		}
 	}
 }

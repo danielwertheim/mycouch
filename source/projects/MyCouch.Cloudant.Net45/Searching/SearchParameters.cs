@@ -18,6 +18,7 @@ namespace MyCouch.Cloudant.Searching
 		public int? Limit { get; set; }
 		public object Ranges { get; set; }
 		public IList<string> Counts { get; set; }
+		public string GroupField { get; set; }
 
 		public SearchParameters(SearchIndexIdentity searchIndexIdentity)
 		{
