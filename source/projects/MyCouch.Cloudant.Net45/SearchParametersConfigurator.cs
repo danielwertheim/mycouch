@@ -137,5 +137,32 @@ namespace MyCouch.Cloudant
 
             return this;
         }
+
+        /// <summary>
+        /// Maximum group count. This field can only be used if group_field is specified.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public virtual SearchParametersConfigurator GroupLimit(int value)
+        {
+            Parameters.GroupLimit = value;
+
+            return this;
+        }
+
+        /// <summary>
+        /// This field defines the order of the groups in a search using group_field.
+        /// The default sort order is relevance.
+        /// </summary>
+        /// <param name="sortExpressions"></param>
+        /// <returns></returns>
+        public virtual SearchParametersConfigurator GroupSort(params string[] sortExpressions)
+        {
+            Ensure.That(sortExpressions, "sortExpressions").HasItems();
+
+            Parameters.GroupSort = sortExpressions.ToList();
+
+            return this;
+        }
     }
 }

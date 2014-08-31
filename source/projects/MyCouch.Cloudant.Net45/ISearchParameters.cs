@@ -62,5 +62,16 @@ namespace MyCouch.Cloudant
         /// Field by which to group search matches.
         /// </summary>
         string GroupField { get; set; }
+
+        /// <summary>
+        /// Maximum group count. This field can only be used if group_field is specified.
+        /// </summary>
+        int? GroupLimit { get; set; }
+
+        /// <summary>
+        /// This field defines the order of the groups in a search using group_field.
+        /// The default sort order is relevance.
+        /// </summary>
+        IList<string> GroupSort { get; set; }
     }
 }

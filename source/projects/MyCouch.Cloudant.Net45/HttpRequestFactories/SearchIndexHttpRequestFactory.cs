@@ -83,6 +83,12 @@ namespace MyCouch.Cloudant.HttpRequestFactories
             if (!string.IsNullOrWhiteSpace(request.GroupField))
                 kvs.Add(KeyNames.GroupField, request.GroupField);
 
+            if (request.GroupLimit.HasValue)
+                kvs.Add(KeyNames.GroupLimit, DocumentSerializer.ToJson(request.GroupLimit.Value));
+
+            if (request.HasGroupSortings())
+                kvs.Add(KeyNames.GroupSort, DocumentSerializer.ToJsonArray(request.GroupSort.ToArray()));
+
             return kvs;
         }
 
@@ -97,6 +103,8 @@ namespace MyCouch.Cloudant.HttpRequestFactories
             public const string Ranges = "ranges";
             public const string Counts = "counts";
             public const string GroupField = "group_field";
+            public const string GroupLimit = "group_limit";
+            public const string GroupSort = "group_sort";
         }
     }
 }

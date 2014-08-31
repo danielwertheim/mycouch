@@ -105,6 +105,25 @@ namespace MyCouch.Cloudant.Requests
             set { State.GroupField = value; }
         }
 
+        /// <summary>
+        /// Maximum group count. This field can only be used if group_field is specified.
+        /// </summary>
+        public int? GroupLimit
+        {
+            get { return State.GroupLimit; }
+            set { State.GroupLimit = value; }
+        }
+
+        /// <summary>
+        /// Sort expressions that defines the order of the groups in a search using group_field.
+        /// The default sort order is relevance.
+        /// </summary>
+        public IList<string> GroupSort
+        {
+            get { return State.GroupSort; }
+            set { State.GroupSort = value; }
+        }
+
         public SearchIndexRequest(string designDocument, string searchIndexName)
             : this(new SearchIndexIdentity(designDocument, searchIndexName)) { }
 
@@ -130,6 +149,11 @@ namespace MyCouch.Cloudant.Requests
         public virtual bool HasCounts()
         {
             return Counts != null && Counts.Any();
+        }
+
+        public virtual bool HasGroupSortings()
+        {
+            return GroupSort != null && GroupSort.Any();
         }
     }
 }
