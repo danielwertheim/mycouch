@@ -8,5 +8,10 @@ namespace MyCouch.Testing
         {
             return new Uri(new Uri("http://localhost:5984"), value);
         }
+
+        public static string ToUnescapedQuery(this string value)
+        {
+            return Uri.UnescapeDataString(value.ToTestUriFromRelative().Query);
+        }
     }
 }

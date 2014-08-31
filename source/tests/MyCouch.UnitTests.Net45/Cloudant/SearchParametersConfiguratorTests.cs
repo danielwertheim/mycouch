@@ -111,11 +111,21 @@ namespace MyCouch.UnitTests.Cloudant
         [Fact]
         public void When_config_of_GroupSort_It_configures_underlying_options_GroupSort()
         {
-            var configuredValue = new[] { "diet<string>", "latin_name<string>", "min_length<number>" };
+            var configuredValue = new[] { "a", "b", "c" };
 
             SUT.GroupSort(configuredValue);
 
             _parameters.GroupSort.Should().ContainInOrder(configuredValue);
+        }
+
+        [Fact]
+        public void When_config_of_Counts_It_configures_underlying_options_Counts()
+        {
+            var configuredValue = new[] { "a", "b", "c" };
+
+            SUT.Counts(configuredValue);
+
+            _parameters.Counts.Should().ContainInOrder(configuredValue);
         }
     }
 }
