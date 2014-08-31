@@ -21,8 +21,8 @@ namespace MyCouch.Cloudant.Responses
         public Group[] Groups { get; set; }
         [JsonProperty(JsonScheme.TotalRows)]
         public long TotalRows { get; set; }
-        public long RowCount { get { return IsEmpty ? 0 : Rows.Length; } }
-        public long GroupCount { get { return IsGroupsEmpty ? 0 : Groups.Length; } }
+        public long RowCount { get { return IsEmpty ? 0 : Rows.LongCount(); } }
+        public long GroupCount { get { return IsGroupsEmpty ? 0 : Groups.LongCount(); } }
         public bool IsEmpty
         {
             get { return Rows == null || Rows.Length == 0; }
