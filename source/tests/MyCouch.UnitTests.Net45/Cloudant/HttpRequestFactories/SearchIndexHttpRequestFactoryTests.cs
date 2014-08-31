@@ -155,6 +155,17 @@ namespace MyCouch.UnitTests.Cloudant.HttpRequestFactories
                 req => req.RelativeUrl.ToUnescapedQuery().Should().Be("?q=class:mammal&sort=[\"diet<string>\",\"-min_length<number>\"]&limit=10&include_docs=true"));
         }
 
+        [Fact]
+        public void When_Counts_is_assigned_It_should_get_included_in_the_querystring()
+        {
+            var request = CreateRequest();
+            request.Counts = new[] { "a", "b" };
+
+            WithHttpRequestFor(
+                request,
+                req => req.RelativeUrl.ToUnescapedQuery().Should().Be("?counts=[\"a\",\"b\"]"));
+        }
+
         protected virtual SearchIndexRequest CreateRequest()
         {
             return new SearchIndexRequest("foodesigndoc", "indexname");
