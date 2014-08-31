@@ -17,7 +17,7 @@ namespace MyCouch.IntegrationTests.CoreTests
         {
             var artist = ClientTestData.Artists.CreateArtist();
 
-            var response = SUT.PostAsync(new { Name = artist.Name }).Result;
+            var response = SUT.PostAsync(new {artist.Name }).Result;
 
             response.Should().BeSuccessfulPost();
         }
@@ -28,7 +28,7 @@ namespace MyCouch.IntegrationTests.CoreTests
             var artist = ClientTestData.Artists.CreateArtist();
             var initialId = artist.ArtistId;
 
-            var response = SUT.PostAsync(new { Id = artist.ArtistId, Name = artist.Name }).Result;
+            var response = SUT.PostAsync(new { Id = artist.ArtistId, artist.Name }).Result;
 
             response.Should().BeSuccessfulPost(initialId, e => e.Id);
         }
@@ -39,13 +39,13 @@ namespace MyCouch.IntegrationTests.CoreTests
             var artist = ClientTestData.Artists.CreateArtist();
             var initialId = artist.ArtistId;
 
-            var response = SUT.PutAsync(new { Id = artist.ArtistId, Name = artist.Name }).Result;
+            var response = SUT.PutAsync(new { Id = artist.ArtistId, artist.Name }).Result;
 
             response.Should().BeSuccessfulPutOfNew(initialId, e => e.Id);
         }
 
         [MyFact(TestScenarios.EntitiesContext)]
-        public void When_post_of_a_new_entity_with_id_Then_the_document_is_created()
+        public void When_POST_of_a_new_entity_with_id_Then_the_document_is_created()
         {
             var artist = ClientTestData.Artists.CreateArtist();
             var initialId = artist.ArtistId;
@@ -53,6 +53,27 @@ namespace MyCouch.IntegrationTests.CoreTests
             var response = SUT.PostAsync(artist).Result;
 
             response.Should().BeSuccessfulPost(initialId, e => e.ArtistId, e => e.ArtistRev);
+        }
+
+        [MyFact(TestScenarios.EntitiesContext)]
+        public void When_POST_of_a_new_entity_with_unpopulated_entityId_Then_the_document_is_created()
+        {
+            var artist = ClientTestData.Artists.CreateArtist();
+            artist.ArtistId = null;
+
+            var response = SUT.PostAsync(artist).Result;
+
+            response.Should().BeSuccessfulPost(idAccessor: e => e.ArtistId, revAccessor: e => e.ArtistRev);
+        }
+
+        [MyFact(TestScenarios.EntitiesContext)]
+        public void When_POST_of_a_new_entity_with_unpopulated_id_Then_the_document_is_created()
+        {
+            var doc = new DocumentWithId();
+
+            var response = SUT.PostAsync(doc).Result;
+
+            response.Should().BeSuccessfulPost(idAccessor: e => e.Id, revAccessor: e => e.Rev);
         }
 
         [MyFact(TestScenarios.EntitiesContext)]
@@ -179,6 +200,12 @@ namespace MyCouch.IntegrationTests.CoreTests
 
             var putResponse2 = SUT.PutAsync(entity).Result;
             putResponse2.Should().BeSuccessfulPut(id, i => i._id, i => i._rev);
+        }
+
+        private class DocumentWithId
+        {
+            public string Id { get; set; }
+            public string Rev { get; set; }
         }
 
         private abstract class Document
