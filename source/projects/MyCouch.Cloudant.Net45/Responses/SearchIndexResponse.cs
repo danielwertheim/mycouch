@@ -75,7 +75,7 @@ namespace MyCouch.Cloudant.Responses
 #endif
         public class Group
         {
-            public object By { get; set; }
+            public string By { get; set; }
             [JsonProperty(JsonScheme.TotalRows)]
             public long TotalRows { get; set; }
             public Row[] Rows { get; set; }
