@@ -11,17 +11,16 @@ namespace MyCouch.Cloudant.HttpRequestFactories
 {
     public class SearchIndexHttpRequestFactory
     {
+        protected ISerializer DocumentSerializer { get; private set; }
         protected ISerializer Serializer { get; private set; }
-        protected ISerializer NormalSerializer { get; private set; }
 
-        public SearchIndexHttpRequestFactory(ISerializer serializer, ISerializer normalSerializer)
+        public SearchIndexHttpRequestFactory(ISerializer documentSerializer, ISerializer serializer)
         {
-            Ensure.That(serializer, "serializer").IsNotNull();
-            Ensure.That(normalSerializer, "normalSerializer").IsNotNull();
+            Ensure.That(documentSerializer, "DocumentSerializer").IsNotNull();
+            Ensure.That(serializer, "Serializer").IsNotNull();
 
-
+            DocumentSerializer = documentSerializer;
             Serializer = serializer;
-            NormalSerializer = normalSerializer;
         }
 
         public virtual HttpRequest Create(SearchIndexRequest request)
@@ -61,7 +60,7 @@ namespace MyCouch.Cloudant.HttpRequestFactories
                 kvs.Add(KeyNames.Expression, request.Expression);
 
             if (request.HasSortings())
-                kvs.Add(KeyNames.Sort, Serializer.ToJsonArray(request.Sort.ToArray()));
+                kvs.Add(KeyNames.Sort, DocumentSerializer.ToJsonArray(request.Sort.ToArray()));
 
             if (!string.IsNullOrWhiteSpace(request.Bookmark))
                 kvs.Add(KeyNames.Bookmark, request.Bookmark);
@@ -70,16 +69,16 @@ namespace MyCouch.Cloudant.HttpRequestFactories
                 kvs.Add(KeyNames.Stale, request.Stale.Value.AsString());
 
             if (request.Limit.HasValue)
-                kvs.Add(KeyNames.Limit, Serializer.ToJson(request.Limit.Value));
+                kvs.Add(KeyNames.Limit, DocumentSerializer.ToJson(request.Limit.Value));
 
             if (request.IncludeDocs.HasValue)
-                kvs.Add(KeyNames.IncludeDocs, Serializer.ToJson(request.IncludeDocs.Value));
+                kvs.Add(KeyNames.IncludeDocs, DocumentSerializer.ToJson(request.IncludeDocs.Value));
             
             if (request.Ranges != null)
-                kvs.Add(KeyNames.Ranges, NormalSerializer.Serialize(request.Ranges));
+                kvs.Add(KeyNames.Ranges, Serializer.Serialize(request.Ranges));
 
             if (request.HasCounts())
-                kvs.Add(KeyNames.Counts, Serializer.ToJsonArray(request.Counts.ToArray()));
+                kvs.Add(KeyNames.Counts, DocumentSerializer.ToJsonArray(request.Counts.ToArray()));
 
             if (!string.IsNullOrWhiteSpace(request.GroupField))
                 kvs.Add(KeyNames.GroupField, request.GroupField);
