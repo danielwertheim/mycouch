@@ -12,12 +12,16 @@ namespace MyCouch.Cloudant.HttpRequestFactories
     public class SearchIndexHttpRequestFactory
     {
         protected ISerializer Serializer { get; private set; }
+        protected ISerializer NormalSerializer { get; private set; }
 
-        public SearchIndexHttpRequestFactory(ISerializer serializer)
+        public SearchIndexHttpRequestFactory(ISerializer serializer, ISerializer normalSerializer)
         {
             Ensure.That(serializer, "serializer").IsNotNull();
+            Ensure.That(normalSerializer, "normalSerializer").IsNotNull();
+
 
             Serializer = serializer;
+            NormalSerializer = normalSerializer;
         }
 
         public virtual HttpRequest Create(SearchIndexRequest request)
@@ -70,6 +74,15 @@ namespace MyCouch.Cloudant.HttpRequestFactories
 
             if (request.IncludeDocs.HasValue)
                 kvs.Add(KeyNames.IncludeDocs, Serializer.ToJson(request.IncludeDocs.Value));
+            
+            if (request.Ranges != null)
+                kvs.Add(KeyNames.Ranges, NormalSerializer.Serialize(request.Ranges));
+
+            if (request.HasCounts())
+                kvs.Add(KeyNames.Counts, Serializer.ToJsonArray(request.Counts.ToArray()));
+
+            if (!string.IsNullOrWhiteSpace(request.GroupField))
+                kvs.Add(KeyNames.GroupField, request.GroupField);
 
             return kvs;
         }
@@ -82,6 +95,9 @@ namespace MyCouch.Cloudant.HttpRequestFactories
             public const string Stale = "stale";
             public const string Limit = "limit";
             public const string IncludeDocs = "include_docs";
+            public const string Ranges = "ranges";
+            public const string Counts = "counts";
+            public const string GroupField = "group_field";
         }
     }
 }

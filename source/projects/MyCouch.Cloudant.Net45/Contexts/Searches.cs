@@ -17,12 +17,13 @@ namespace MyCouch.Cloudant.Contexts
         protected SearchIndexHttpRequestFactory SearchIndexHttpRequestFactory { get; set; }
         protected SearchIndexResponseFactory SearchIndexResponseFactory { get; set; }
 
-        public Searches(IDbClientConnection connection, ISerializer serializer)
+        public Searches(IDbClientConnection connection, ISerializer serializer, ISerializer normalSerializer)
             : base(connection)
         {
             Ensure.That(serializer, "serializer").IsNotNull();
+            Ensure.That(normalSerializer, "normalSerializer").IsNotNull();
 
-            SearchIndexHttpRequestFactory = new SearchIndexHttpRequestFactory(serializer);
+            SearchIndexHttpRequestFactory = new SearchIndexHttpRequestFactory(serializer, normalSerializer);
             SearchIndexResponseFactory = new SearchIndexResponseFactory(serializer);
         }
 
