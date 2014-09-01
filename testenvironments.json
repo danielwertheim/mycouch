@@ -16,27 +16,4 @@
     "TempDbName": "mycouchtests_tmp",
     "User":"sa",
     "Password":"test"
-},
-{
-    "Key": "COMPUTERNAME OR DEFAULT",
-    "Supports": [
-        "attachmentscontext",
-        "changescontext",
-        "databasecontext",
-        "databasescontext",
-        "documentscontext",
-        "entitiescontext",
-        "viewscontext",
-        "mycouchstore",
-        "createdbs",
-        "deletedbs",
-        "compactdbs",
-        "viewcleanup",
-        "replication"],
-    "ServerUrl": "http://localhost:5984",
-    "PrimaryDbName": "mycouchtests_pri",
-    "SecondaryDbName": "mycouchtests_sec",
-    "TempDbName": "mycouchtests_tmp",
-    "User":"sa",
-    "Password":"test"
 }]
