@@ -32,8 +32,8 @@ namespace MyCouch.IntegrationTests
                 uriBuilder.SetBasicCredentials(config.User, config.Password);
 
             return config.IsAgainstCloudant()
-                ? new MyCouchServerClient(new CustomCloudantServerClientConnection(uriBuilder.Build()))
-                : new MyCouchServerClient(uriBuilder.Build());
+                ? (IMyCouchServerClient)new MyCouchCloudantServerClient(new CustomCloudantServerClientConnection(uriBuilder.Build()))
+                : (IMyCouchServerClient)new MyCouchServerClient(uriBuilder.Build());
         }
 
         internal static IMyCouchClient CreateDbClient()
