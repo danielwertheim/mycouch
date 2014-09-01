@@ -127,5 +127,19 @@ namespace MyCouch.UnitTests.Cloudant
 
             _parameters.Counts.Should().ContainInOrder(configuredValue);
         }
+
+        [Fact]
+        public void When_config_of_Ranges_It_configures_underlying_options_Ranges()
+        {
+            var configuredValue = new
+            {
+                min_length = new { minlight = "[0 TO 100]", minheavy = "{101 TO Infinity}" },
+                max_length = new { maxlight = "[0 TO 100]", maxheavy = "{101 TO Infinity}" }
+            };
+
+            SUT.Ranges(configuredValue);
+
+            _parameters.Ranges.Should().BeSameAs(configuredValue);
+        }
     }
 }
