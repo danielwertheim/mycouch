@@ -78,6 +78,52 @@ namespace MyCouch.Cloudant.Requests
             set { State.Limit = value; }
         }
 
+        /// <summary>
+        /// Defines ranges for faceted numeric search fields.
+        /// </summary>
+        public object Ranges
+        {
+            get { return State.Ranges; }
+            set { State.Ranges = value; }
+        }
+
+        /// <summary>
+        /// List of field names for which counts should be produced.
+        /// </summary>
+        public IList<string> Counts
+        {
+            get { return State.Counts; }
+            set { State.Counts = value; }
+        }
+
+        /// <summary>
+        /// Field by which to group search matches.
+        /// </summary>
+        public string GroupField
+        {
+            get { return State.GroupField; }
+            set { State.GroupField = value; }
+        }
+
+        /// <summary>
+        /// Maximum group count. This field can only be used if group_field is specified.
+        /// </summary>
+        public int? GroupLimit
+        {
+            get { return State.GroupLimit; }
+            set { State.GroupLimit = value; }
+        }
+
+        /// <summary>
+        /// Sort expressions that defines the order of the groups in a search using group_field.
+        /// The default sort order is relevance.
+        /// </summary>
+        public IList<string> GroupSort
+        {
+            get { return State.GroupSort; }
+            set { State.GroupSort = value; }
+        }
+
         public SearchIndexRequest(string designDocument, string searchIndexName)
             : this(new SearchIndexIdentity(designDocument, searchIndexName)) { }
 
@@ -98,6 +144,16 @@ namespace MyCouch.Cloudant.Requests
         public virtual bool HasSortings()
         {
             return Sort != null && Sort.Any();
+        }
+
+        public virtual bool HasCounts()
+        {
+            return Counts != null && Counts.Any();
+        }
+
+        public virtual bool HasGroupSortings()
+        {
+            return GroupSort != null && GroupSort.Any();
         }
     }
 }

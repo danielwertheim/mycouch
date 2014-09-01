@@ -7,11 +7,11 @@ Properties {
     $project_name = "MyCouch"
     $project_name_cloudant = "MyCouch.Cloudant"
     $builds_dir_path = "builds"
-    $build_version = "2.2.2"
+    $build_version = "2.3.0"
     $build_config = "Release"
     $build_name = "${project_name}-v${build_version}-${build_config}"
     $build_dir_path = "${builds_dir_path}\${build_name}"
-    $testrunner = "xunit.console.exe"
+    $testrunner = "../tools/xunit-v1.9.2/xunit.console.clr4.exe"
     $nuget = "nuget.exe"
 }
 

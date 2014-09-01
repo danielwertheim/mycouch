@@ -46,6 +46,32 @@ namespace MyCouch.Cloudant
         /// <summary>
         /// Limit the number of the returned documents to the specified number.
         /// </summary>
-        int? Limit { get; set; } 
+        int? Limit { get; set; }
+
+        /// <summary>
+        /// Defines ranges for faceted numeric search fields.
+        /// </summary>
+        object Ranges { get; set; }
+
+        /// <summary>
+        /// List of field names for which counts should be produced.
+        /// </summary>
+        IList<string> Counts { get; set; }
+
+        /// <summary>
+        /// Field by which to group search matches.
+        /// </summary>
+        string GroupField { get; set; }
+
+        /// <summary>
+        /// Maximum group count. This field can only be used if group_field is specified.
+        /// </summary>
+        int? GroupLimit { get; set; }
+
+        /// <summary>
+        /// This field defines the order of the groups in a search using group_field.
+        /// The default sort order is relevance.
+        /// </summary>
+        IList<string> GroupSort { get; set; }
     }
 }

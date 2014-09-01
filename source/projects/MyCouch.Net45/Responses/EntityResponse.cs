@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace MyCouch.Responses
 {
@@ -9,7 +10,10 @@ namespace MyCouch.Responses
         IDocumentHeader
         where T : class
     {
+        [JsonProperty(JsonScheme.Id)]
         public virtual string Id { get; set; }
+
+        [JsonProperty(JsonScheme.Rev)]
         public virtual string Rev { get; set; }
 
         public override bool IsEmpty

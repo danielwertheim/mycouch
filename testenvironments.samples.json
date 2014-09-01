@@ -1,0 +1,66 @@
+These are just samples of testenvironments. The contexts controls what kind of tests to run.
+
+The one with a key="YourComputername" or key = "Default" will be picked.
+
+[{
+    "Key": "Sample-LOCAL",
+    "Supports": [
+        "attachmentscontext",
+        "databasecontext",
+        "documentscontext",
+        "entitiescontext",
+        "viewscontext",
+        "mycouchstore",
+        "createdbs",
+        "deletedbs",
+        "replication"],
+    "ServerUrl": "http://localhost:5984",
+    "PrimaryDbName": "mycouchtests_pri",
+    "SecondaryDbName": "mycouchtests_sec",
+    "TempDbName": "mycouchtests_tmp",
+    "User":"sa",
+    "Password":"test"
+},
+{
+    "Key": "Sample-EVERYTHING-LOCAL",
+    "Supports": [
+        "attachmentscontext",
+        "changescontext",
+        "databasecontext",
+        "databasescontext",
+        "documentscontext",
+        "entitiescontext",
+        "viewscontext",
+        "mycouchstore",
+        "createdbs",
+        "deletedbs",
+        "compactdbs",
+        "viewcleanup",
+        "replication"],
+    "ServerUrl": "http://localhost:5984",
+    "PrimaryDbName": "mycouchtests_pri",
+    "SecondaryDbName": "mycouchtests_sec",
+    "TempDbName": "mycouchtests_tmp",
+    "User":"sa",
+    "Password":"test"
+},
+{
+    "Key": "Sample-CLOUDANT",
+    "Supports": [
+        "cloudant",
+        "searchescontext",
+        "securitycontext",
+        "attachmentscontext",
+        "databasecontext",
+        "databasescontext",
+        "documentscontext",
+        "entitiescontext",
+        "viewscontext",
+        "mycouchstore"],
+    "ServerUrl": "https://youraccount.cloudant.com",
+    "PrimaryDbName": "mycouchtests_pri",
+    "SecondaryDbName": "mycouchtests_sec",
+    "TempDbName": "mycouchtests_tmp",
+    "User":"an API key",
+    "Password":"some password"
+}]

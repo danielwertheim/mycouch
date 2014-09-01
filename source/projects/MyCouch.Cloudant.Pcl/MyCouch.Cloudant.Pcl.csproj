@@ -71,6 +71,9 @@
     <Compile Include="..\MyCouch.Cloudant.Net45\MyCouchCloudantClientBootstrapper.cs">
       <Link>MyCouchCloudantClientBootstrapper.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\MyCouchCloudantServerClient.cs">
+      <Link>MyCouchCloudantServerClient.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\Requests\GenerateApiKeyRequest.cs">
       <Link>Requests\GenerateApiKeyRequest.cs</Link>
     </Compile>
