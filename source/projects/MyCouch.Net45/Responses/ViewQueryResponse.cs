@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using MyCouch.Extensions;
 using MyCouch.Serialization.Converters;
 using Newtonsoft.Json;
@@ -22,7 +23,7 @@ namespace MyCouch.Responses
     {
         [JsonProperty(JsonScheme.TotalRows)]
         public long TotalRows { get; set; }
-        public long RowCount { get { return IsEmpty ? 0 : Rows.Length; } }
+        public long RowCount { get { return IsEmpty ? 0 : Rows.LongCount(); } }
         [JsonProperty(JsonScheme.UpdateSeq)]
         public string UpdateSeq { get; set; }
         [JsonProperty(JsonScheme.Offset)]

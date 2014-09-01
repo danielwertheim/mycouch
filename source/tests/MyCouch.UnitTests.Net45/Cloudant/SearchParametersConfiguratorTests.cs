@@ -87,5 +87,59 @@ namespace MyCouch.UnitTests.Cloudant
 
             _parameters.Limit.Should().Be(configuredValue);
         }
+
+        [Fact]
+        public void When_config_of_GroupField_It_configures_underlying_options_GroupField()
+        {
+            const string configuredValue = "name";
+
+            SUT.GroupField(configuredValue);
+
+            _parameters.GroupField.Should().Be(configuredValue);
+        }
+
+        [Fact]
+        public void When_config_of_GroupLimit_It_configures_underlying_options_GroupLimit()
+        {
+            const int configuredValue = 10;
+
+            SUT.GroupLimit(configuredValue);
+
+            _parameters.GroupLimit.Should().Be(configuredValue);
+        }
+
+        [Fact]
+        public void When_config_of_GroupSort_It_configures_underlying_options_GroupSort()
+        {
+            var configuredValue = new[] { "a", "b", "c" };
+
+            SUT.GroupSort(configuredValue);
+
+            _parameters.GroupSort.Should().ContainInOrder(configuredValue);
+        }
+
+        [Fact]
+        public void When_config_of_Counts_It_configures_underlying_options_Counts()
+        {
+            var configuredValue = new[] { "a", "b", "c" };
+
+            SUT.Counts(configuredValue);
+
+            _parameters.Counts.Should().ContainInOrder(configuredValue);
+        }
+
+        [Fact]
+        public void When_config_of_Ranges_It_configures_underlying_options_Ranges()
+        {
+            var configuredValue = new
+            {
+                min_length = new { minlight = "[0 TO 100]", minheavy = "{101 TO Infinity}" },
+                max_length = new { maxlight = "[0 TO 100]", maxheavy = "{101 TO Infinity}" }
+            };
+
+            SUT.Ranges(configuredValue);
+
+            _parameters.Ranges.Should().BeSameAs(configuredValue);
+        }
     }
 }

@@ -30,7 +30,7 @@ namespace MyCouch.Serialization
 
         protected virtual JsonTextWriter CreateWriterFor<T>(TextWriter writer)
         {
-            return CreateWriterFor(typeof (T), writer);
+            return CreateWriterFor(typeof(T), writer);
         }
 
         protected virtual JsonTextWriter CreateWriterFor(Type docType, TextWriter writer)
@@ -47,12 +47,12 @@ namespace MyCouch.Serialization
 
         protected virtual JsonTextWriter CreateWriter(TextWriter writer)
         {
-            return new JsonTextWriter(writer){CloseOutput = false};
+            return new JsonTextWriter(writer) { CloseOutput = false };
         }
 
         protected virtual JsonTextReader CreateReaderFor<T>(TextReader reader)
         {
-            return CreateReader(typeof (T), reader);
+            return CreateReader(typeof(T), reader);
         }
 
         protected virtual JsonTextReader CreateReader(Type type, TextReader reader)
@@ -64,7 +64,7 @@ namespace MyCouch.Serialization
 
         protected virtual JsonTextReader CreateReader(TextReader reader)
         {
-            return new JsonTextReader(reader){CloseInput = false};
+            return new JsonTextReader(reader) { CloseInput = false };
         }
 
         public virtual string Serialize<T>(T item) where T : class
@@ -145,7 +145,7 @@ namespace MyCouch.Serialization
 
         public virtual void Populate<T>(T item, Stream data) where T : class
         {
-            if(StreamIsEmpty(data))
+            if (StreamIsEmpty(data))
                 return;
 
             using (var sr = new StreamReader(data, MyCouchRuntime.DefaultEncoding))
