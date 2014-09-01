@@ -7,7 +7,6 @@ using MyCouch.Testing;
 using MyCouch.Testing.Model;
 using MyCouch.Testing.TestData;
 using Xunit;
-using Newtonsoft.Json.Linq;
 
 namespace MyCouch.IntegrationTests.CloudantTests
 {
@@ -166,7 +165,7 @@ namespace MyCouch.IntegrationTests.CloudantTests
 
             response.Should().BeSuccessfulGet(numOfRows: 4);
             response.Counts.Should().NotBeNullOrWhiteSpace();
-            dynamic counts = JObject.Parse(response.Counts);
+            var counts = CloudantDbClient.Serializer.Deserialize<dynamic>(response.Counts);
             ((double)counts.@class.mammal).Should().Be(4.0);
             ((double)counts.diet.carnivore).Should().Be(1.0);
             ((double)counts.diet.herbivore).Should().Be(2.0);
@@ -190,7 +189,7 @@ namespace MyCouch.IntegrationTests.CloudantTests
 
             response.Should().BeSuccessfulGet(numOfRows: 4);
             response.Ranges.Should().NotBeNullOrWhiteSpace();
-            dynamic ranges = JObject.Parse(response.Ranges);
+            var ranges = CloudantDbClient.Serializer.Deserialize<dynamic>(response.Ranges);
             ((double)ranges.minLength.minLow).Should().Be(4.0);
             ((double)ranges.minLength.minHigh).Should().Be(0.0);
             ((double)ranges.maxLength.maxLow).Should().Be(4.0);
