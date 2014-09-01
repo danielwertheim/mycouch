@@ -10,7 +10,7 @@ namespace MyCouch.IntegrationTests.CloudantTests
             SUT = CloudantServerClient.Security;
         }
 
-        [MyFact(TestScenarios.Cloudant, TestScenarios.SearchesContext)]
+        [MyFact(TestScenarios.Cloudant, TestScenarios.SecurityContext)]
         public void Can_generate_api_key()
         {
             var response = SUT.GenerateApiKey().Result;

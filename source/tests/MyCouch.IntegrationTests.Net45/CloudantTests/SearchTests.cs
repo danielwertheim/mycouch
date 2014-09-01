@@ -37,8 +37,9 @@ namespace MyCouch.IntegrationTests.CloudantTests
             response.Should().BeSuccessfulGet(numOfRows: 1);
             response.Bookmark.Should().NotBeNullOrEmpty();
             response.Rows[0].Id.Should().Be("kookaburra");
-            response.Rows[0].Order.Should().BeEquivalentTo(new[] { 1.4054651260375977, 0 });
-            response.Rows[0].Fields.Count.Should().Be(4);
+            response.Rows[0].Order[0].Should().Be(1.4054651260375977);
+            response.Rows[0].Order[1].Should().Be((long)0);
+            response.Rows[0].Fields.Count.Should().Be(5);
             response.Rows[0].Fields["diet"].Should().Be("carnivore");
             response.Rows[0].Fields["minLength"].Should().Be(0.28);
             response.Rows[0].Fields["class"].Should().Be("bird");
@@ -57,8 +58,9 @@ namespace MyCouch.IntegrationTests.CloudantTests
             response.Should().BeSuccessfulGet(numOfRows: 1);
             response.Bookmark.Should().NotBeNullOrEmpty();
             response.Rows[0].Id.Should().Be("panda");
-            response.Rows[0].Order.Should().BeEquivalentTo(new[] { 1.4142135381698608, 1 });
-            response.Rows[0].Fields.Count.Should().Be(3);
+            response.Rows[0].Order[0].Should().Be(1.4142135381698608);
+            response.Rows[0].Order[1].Should().Be((long)1);
+            response.Rows[0].Fields.Count.Should().Be(4);
             response.Rows[0].Fields["diet"].Should().Be("carnivore");
             response.Rows[0].Fields["minLength"].Should().Be(1.2);
             response.Rows[0].Fields["class"].Should().Be("mammal");
@@ -77,12 +79,14 @@ namespace MyCouch.IntegrationTests.CloudantTests
             response.Should().BeSuccessfulGet(numOfRows: 2);
             response.Bookmark.Should().NotBeNullOrEmpty();
             response.Rows[0].Id.Should().Be("panda");
-            response.Rows[0].Order.Should().BeEquivalentTo(new[] { 1.2, 1 });
+            response.Rows[0].Order[0].Should().Be(1.2);
+            response.Rows[0].Order[1].Should().Be((long)1);
             response.Rows[0].Fields["diet"].Should().Be("carnivore");
             response.Rows[0].Fields["minLength"].Should().Be(1.2);
 
             response.Rows[1].Id.Should().Be("kookaburra");
-            response.Rows[1].Order.Should().BeEquivalentTo(new[] { 0.28, 0 });
+            response.Rows[1].Order[0].Should().Be(0.28);
+            response.Rows[1].Order[1].Should().Be((long)0);
             response.Rows[1].Fields["diet"].Should().Be("carnivore");
             response.Rows[1].Fields["minLength"].Should().Be(0.28);
         }
@@ -152,6 +156,48 @@ namespace MyCouch.IntegrationTests.CloudantTests
             response2.Should().BeSuccessfulGet(numOfRows: 1);
             response2.TotalRows.Should().Be(8);
             response2.Rows[0].Id.Should().Be("aardvark");
+        }
+
+        [MyFact(TestScenarios.Cloudant, TestScenarios.SearchesContext)]
+        public void Can_report_counts_by_multiple_fields()
+        {
+            var searchRequest = new SearchIndexRequest(CloudantTestData.Views.Views101AnimalsSearchIndexId).Configure(q => q
+                .Expression("minLength:[1 TO 3]")
+                .Counts("diet", "class"));
+
+            var response = SUT.SearchAsync(searchRequest).Result;
+
+            response.Should().BeSuccessfulGet(numOfRows: 4);
+            response.Counts.Should().NotBeNullOrWhiteSpace();
+            var counts = CloudantDbClient.Serializer.Deserialize<dynamic>(response.Counts);
+            ((double)counts.@class.mammal).Should().Be(4.0);
+            ((double)counts.diet.carnivore).Should().Be(1.0);
+            ((double)counts.diet.herbivore).Should().Be(2.0);
+            ((double)counts.diet.omnivore).Should().Be(1.0);
+        }
+
+        [MyFact(TestScenarios.Cloudant, TestScenarios.SearchesContext)]
+        public void Can_report_ranges_by_multiple_fields()
+        {
+            var searchRequest = new SearchIndexRequest(CloudantTestData.Views.Views101AnimalsSearchIndexId).Configure(q => q
+                .Expression("minLength:[1 TO 3]")
+                .Ranges(
+                    new
+                    {
+                        minLength = new { minLow = "[0 TO 100]", minHigh = "{101 TO Infinity}" },
+                        maxLength = new { maxLow = "[0 TO 100]", maxHigh = "{101 TO Infinity}" }
+                    }
+                ));
+
+            var response = SUT.SearchAsync(searchRequest).Result;
+
+            response.Should().BeSuccessfulGet(numOfRows: 4);
+            response.Ranges.Should().NotBeNullOrWhiteSpace();
+            var ranges = CloudantDbClient.Serializer.Deserialize<dynamic>(response.Ranges);
+            ((double)ranges.minLength.minLow).Should().Be(4.0);
+            ((double)ranges.minLength.minHigh).Should().Be(0.0);
+            ((double)ranges.maxLength.maxLow).Should().Be(4.0);
+            ((double)ranges.maxLength.maxHigh).Should().Be(0.0);
         }
     }
 }

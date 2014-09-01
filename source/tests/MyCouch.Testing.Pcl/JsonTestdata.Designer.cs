@@ -10,7 +10,6 @@
 
 namespace MyCouch.Testing {
     using System;
-    using System.Reflection;
     
     
     /// <summary>
@@ -40,7 +39,7 @@ namespace MyCouch.Testing {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MyCouch.Testing.JsonTestdata", typeof(JsonTestdata).GetTypeInfo().Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MyCouch.Testing.JsonTestdata", typeof(JsonTestdata).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
