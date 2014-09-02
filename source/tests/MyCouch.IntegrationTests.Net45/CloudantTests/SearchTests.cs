@@ -199,5 +199,23 @@ namespace MyCouch.IntegrationTests.CloudantTests
             ((double)ranges.maxLength.maxLow).Should().Be(4.0);
             ((double)ranges.maxLength.maxHigh).Should().Be(0.0);
         }
+
+        [MyFact(TestScenarios.Cloudant, TestScenarios.SearchesContext)]
+        public void Can_drilldown_searches_by_field_value()
+        {
+            var searchRequest = new SearchIndexRequest(CloudantTestData.Views.Views101AnimalsSearchIndexId).Configure(q => q
+                .Expression("class:(bird OR mammal)")
+                .Counts("diet")
+                .DrillDown("class", "bird"));
+
+            var response = SUT.SearchAsync(searchRequest).Result;
+
+            response.Should().BeSuccessfulGet(numOfRows: 2);
+            response.Rows.Should().NotContain(r => (string)r.Fields["class"] != "bird");
+            response.Counts.Should().NotBeNullOrWhiteSpace();
+            var counts = CloudantDbClient.Serializer.Deserialize<dynamic>(response.Counts);
+            ((double)counts.diet.carnivore).Should().Be(1.0);
+            ((double)counts.diet.omnivore).Should().Be(1.0);
+        }
     }
 }

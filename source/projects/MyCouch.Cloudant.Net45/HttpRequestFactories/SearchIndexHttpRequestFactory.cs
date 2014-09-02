@@ -89,6 +89,9 @@ namespace MyCouch.Cloudant.HttpRequestFactories
             if (request.HasGroupSortings())
                 kvs.Add(KeyNames.GroupSort, DocumentSerializer.ToJsonArray(request.GroupSort.ToArray()));
 
+            if (request.DrillDown.HasValue)
+                kvs.Add(KeyNames.DrillDown, DocumentSerializer.ToJsonArray(new []{ request.DrillDown.Value.Key, request.DrillDown.Value.Value }));
+
             return kvs;
         }
 
@@ -105,6 +108,7 @@ namespace MyCouch.Cloudant.HttpRequestFactories
             public const string GroupField = "group_field";
             public const string GroupLimit = "group_limit";
             public const string GroupSort = "group_sort";
+            public const string DrillDown = "drilldown";
         }
     }
 }
