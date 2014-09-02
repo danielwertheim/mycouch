@@ -242,11 +242,11 @@ namespace MyCouch.Testing.TestData
                         "\"animals\": {" +
                             "\"index\": \"function(doc){\\n" +
                             "  index('default', doc._id);\\n" +
-                            "  if(doc.minLength){\\n    index('minLength', doc.minLength, {\\\"store\\\": \\\"yes\\\", \\\"facet\\\": true });\\n  }\\n" +
-                            "  if(doc.maxLength){\\n    index('maxLength', doc.maxLength, {\\\"store\\\": \\\"yes\\\", \\\"facet\\\": true });\\n  }\\n" +
-                            "  if(doc.diet){\\n    index('diet', doc.diet, {\\\"store\\\": \\\"yes\\\", \\\"facet\\\": true });\\n  }\\n" +
+                            "  if (doc.minLength){\\n    index('minLength', doc.minLength, {\\\"facet\\\": true, \\\"store\\\": \\\"yes\\\"});\\n  }\\n" +
+                            "  if (doc.maxLength){\\n    index('maxLength', doc.maxLength, {\\\"facet\\\": true, \\\"store\\\": \\\"yes\\\"});\\n  }\\n" +
+                            "  if (doc.diet){\\n    index('diet', doc.diet, {\\\"facet\\\": true, \\\"store\\\": \\\"yes\\\"});\\n  }\\n" +
                             "  if (doc.latinName){\\n    index('latinName', doc.latinName, {\\\"store\\\": \\\"yes\\\"});\\n  }\\n" +
-                            "  if (doc['class']){\\n    index('class', doc['class'], {\\\"store\\\": \\\"yes\\\", \\\"facet\\\": true });\\n  }\\n}\"" +
+                            "  if (doc['class']){\\n    index('class', doc['class'], {\\\"facet\\\": true, \\\"store\\\": \\\"yes\\\"});\\n  }\\n}\"" +
                         "}" +
                     "}" +
                 "}";

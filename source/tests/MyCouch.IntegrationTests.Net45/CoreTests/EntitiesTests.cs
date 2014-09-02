@@ -77,6 +77,16 @@ namespace MyCouch.IntegrationTests.CoreTests
         }
 
         [MyFact(TestScenarios.EntitiesContext)]
+        public void When_POST_of_a_new_inherited_entity_with_unpopulated_id_Then_the_document_is_created()
+        {
+            var doc = new Issue50Session();
+
+            var response = SUT.PostAsync(doc).Result;
+
+            response.Should().BeSuccessfulPost(idAccessor: e => e.Id, revAccessor: e => e.Rev);
+        }
+
+        [MyFact(TestScenarios.EntitiesContext)]
         public void When_put_of_a_new_entity_Then_the_document_is_created()
         {
             var artist = ClientTestData.Artists.CreateArtist();
@@ -217,6 +227,18 @@ namespace MyCouch.IntegrationTests.CoreTests
         private class Inherited : Document
         {
             public string Value { get; set; }
+        }
+
+        public abstract class Issue50
+        {
+            public string Id { get; set; }
+            public string Rev { get; set; }
+        }
+
+        public class Issue50Session : Issue50
+        {
+            public string MasterID { get; set; }
+            public string ClientAppID { get; set; }
         }
     }
 }

@@ -37,8 +37,9 @@ namespace MyCouch.IntegrationTests.CloudantTests
             response.Should().BeSuccessfulGet(numOfRows: 1);
             response.Bookmark.Should().NotBeNullOrEmpty();
             response.Rows[0].Id.Should().Be("kookaburra");
-            response.Rows[0].Order.Should().BeEquivalentTo(new[] { 1.4054651260375977, 0 });
-            response.Rows[0].Fields.Count.Should().Be(4);
+            response.Rows[0].Order[0].Should().Be(1.4054651260375977);
+            response.Rows[0].Order[1].Should().Be((long)0);
+            response.Rows[0].Fields.Count.Should().Be(5);
             response.Rows[0].Fields["diet"].Should().Be("carnivore");
             response.Rows[0].Fields["minLength"].Should().Be(0.28);
             response.Rows[0].Fields["class"].Should().Be("bird");
@@ -57,8 +58,9 @@ namespace MyCouch.IntegrationTests.CloudantTests
             response.Should().BeSuccessfulGet(numOfRows: 1);
             response.Bookmark.Should().NotBeNullOrEmpty();
             response.Rows[0].Id.Should().Be("panda");
-            response.Rows[0].Order.Should().BeEquivalentTo(new[] { 1.4142135381698608, 1 });
-            response.Rows[0].Fields.Count.Should().Be(3);
+            response.Rows[0].Order[0].Should().Be(1.4142135381698608);
+            response.Rows[0].Order[1].Should().Be((long)1);
+            response.Rows[0].Fields.Count.Should().Be(4);
             response.Rows[0].Fields["diet"].Should().Be("carnivore");
             response.Rows[0].Fields["minLength"].Should().Be(1.2);
             response.Rows[0].Fields["class"].Should().Be("mammal");
@@ -77,12 +79,14 @@ namespace MyCouch.IntegrationTests.CloudantTests
             response.Should().BeSuccessfulGet(numOfRows: 2);
             response.Bookmark.Should().NotBeNullOrEmpty();
             response.Rows[0].Id.Should().Be("panda");
-            response.Rows[0].Order.Should().BeEquivalentTo(new[] { 1.2, 1 });
+            response.Rows[0].Order[0].Should().Be(1.2);
+            response.Rows[0].Order[1].Should().Be((long)1);
             response.Rows[0].Fields["diet"].Should().Be("carnivore");
             response.Rows[0].Fields["minLength"].Should().Be(1.2);
 
             response.Rows[1].Id.Should().Be("kookaburra");
-            response.Rows[1].Order.Should().BeEquivalentTo(new[] { 0.28, 0 });
+            response.Rows[1].Order[0].Should().Be(0.28);
+            response.Rows[1].Order[1].Should().Be((long)0);
             response.Rows[1].Fields["diet"].Should().Be("carnivore");
             response.Rows[1].Fields["minLength"].Should().Be(0.28);
         }
