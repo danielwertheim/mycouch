@@ -141,5 +141,18 @@ namespace MyCouch.UnitTests.Cloudant
 
             _parameters.Ranges.Should().BeSameAs(configuredValue);
         }
+
+        [Fact]
+        public void When_config_of_DrillDown_It_configures_underlying_DrillDown()
+        {
+            var configuredfieldName = "configuredfieldName";
+            var configuredfieldValue = "configuredfielValue";
+
+            SUT.DrillDown(configuredfieldName, configuredfieldValue);
+
+            _parameters.DrillDown.Should().NotBeNull();
+            _parameters.DrillDown.Value.Key.Should().Be(configuredfieldName);
+            _parameters.DrillDown.Value.Value.Should().Be(configuredfieldValue);
+        }
     }
 }

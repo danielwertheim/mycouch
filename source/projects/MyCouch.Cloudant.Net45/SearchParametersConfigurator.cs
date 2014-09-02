@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using EnsureThat;
+using System.Collections.Generic;
 
 namespace MyCouch.Cloudant
 {
@@ -161,6 +162,20 @@ namespace MyCouch.Cloudant
             Ensure.That(sortExpressions, "sortExpressions").HasItems();
 
             Parameters.GroupSort = sortExpressions.ToList();
+
+            return this;
+        }
+
+        /// <summary>
+        /// Defines a pair of field name and value so that search only matches
+        /// documents that that have the given value in the field name.
+        /// </summary>
+        public virtual SearchParametersConfigurator DrillDown(string name, string value)
+        {
+            Ensure.That(name, "name").IsNotNullOrWhiteSpace();
+            Ensure.That(value, "value").IsNotNullOrWhiteSpace();
+
+            Parameters.DrillDown = new KeyValuePair<string, string>(name, value);
 
             return this;
         }

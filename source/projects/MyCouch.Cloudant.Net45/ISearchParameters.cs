@@ -73,5 +73,11 @@ namespace MyCouch.Cloudant
         /// The default sort order is relevance.
         /// </summary>
         IList<string> GroupSort { get; set; }
+
+        /// <summary>
+        /// Defines a pair of field name and value so that search only matches
+        /// documents that that have the given value in the field name.
+        /// </summary>
+        KeyValuePair<string, string>? DrillDown { get; set; }
     }
 }
