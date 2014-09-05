@@ -206,7 +206,7 @@ namespace MyCouch.IntegrationTests.CloudantTests
             var searchRequest = new SearchIndexRequest(CloudantTestData.Views.Views101AnimalsSearchIndexId).Configure(q => q
                 .Expression("class:(bird OR mammal)")
                 .Counts("diet")
-                .DrillDown("class", "bird"));
+                .Drilldown("class", "bird"));
 
             var response = SUT.SearchAsync(searchRequest).Result;
 

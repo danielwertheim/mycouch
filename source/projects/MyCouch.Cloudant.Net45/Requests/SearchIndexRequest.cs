@@ -128,10 +128,10 @@ namespace MyCouch.Cloudant.Requests
         /// Defines a pair of field name and value so that search only matches
         /// documents that that have the given value in the field name.
         /// </summary>
-        public KeyValuePair<string, string>? DrillDown
+        public KeyValuePair<string, string>? Drilldown
         {
-            get { return State.DrillDown; }
-            set { State.DrillDown = value; }
+            get { return State.Drilldown; }
+            set { State.Drilldown = value; }
         }
 
         public SearchIndexRequest(string designDocument, string searchIndexName)
