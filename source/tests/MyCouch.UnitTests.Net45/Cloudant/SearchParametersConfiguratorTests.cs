@@ -148,11 +148,11 @@ namespace MyCouch.UnitTests.Cloudant
             var configuredfieldName = "configuredfieldName";
             var configuredfieldValue = "configuredfielValue";
 
-            SUT.DrillDown(configuredfieldName, configuredfieldValue);
+            SUT.Drilldown(configuredfieldName, configuredfieldValue);
 
-            _parameters.DrillDown.Should().NotBeNull();
-            _parameters.DrillDown.Value.Key.Should().Be(configuredfieldName);
-            _parameters.DrillDown.Value.Value.Should().Be(configuredfieldValue);
+            _parameters.Drilldown.Should().NotBeNull();
+            _parameters.Drilldown.Value.Key.Should().Be(configuredfieldName);
+            _parameters.Drilldown.Value.Value.Should().Be(configuredfieldValue);
         }
     }
 }
