@@ -21,7 +21,7 @@ namespace MyCouch.Cloudant.Searching
         public string GroupField { get; set; }
         public int? GroupLimit { get; set; }
         public IList<string> GroupSort { get; set; }
-        public KeyValuePair<string, string>? Drilldown { get; set; }
+        public KeyValuePair<string, string>? DrillDown { get; set; }
 
         public SearchParameters(SearchIndexIdentity searchIndexIdentity)
         {

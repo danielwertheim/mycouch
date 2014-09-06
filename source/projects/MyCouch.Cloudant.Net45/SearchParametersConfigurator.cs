@@ -170,12 +170,12 @@ namespace MyCouch.Cloudant
         /// Defines a pair of field name and value so that search only matches
         /// documents that that have the given value in the field name.
         /// </summary>
-        public virtual SearchParametersConfigurator Drilldown(string name, string value)
+        public virtual SearchParametersConfigurator DrillDown(string name, string value)
         {
             Ensure.That(name, "name").IsNotNullOrWhiteSpace();
             Ensure.That(value, "value").IsNotNullOrWhiteSpace();
 
-            Parameters.Drilldown = new KeyValuePair<string, string>(name, value);
+            Parameters.DrillDown = new KeyValuePair<string, string>(name, value);
 
             return this;
         }
