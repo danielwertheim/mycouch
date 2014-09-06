@@ -124,6 +124,16 @@ namespace MyCouch.Cloudant.Requests
             set { State.GroupSort = value; }
         }
 
+        /// <summary>
+        /// Defines a pair of field name and value so that search only matches
+        /// documents that that have the given value in the field name.
+        /// </summary>
+        public KeyValuePair<string, string>? DrillDown
+        {
+            get { return State.DrillDown; }
+            set { State.DrillDown = value; }
+        }
+
         public SearchIndexRequest(string designDocument, string searchIndexName)
             : this(new SearchIndexIdentity(designDocument, searchIndexName)) { }
 
