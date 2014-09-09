@@ -14,7 +14,8 @@ namespace MyCouch.Cloudant.Contexts
 {
     public class Queries : ApiContextBase<IDbClientConnection>, IQueries
     {
-        protected IndexHttpRequestFactory IndexHttpRequestFactory { get; set; }
+        protected PostIndexHttpRequestFactory PostIndexHttpRequestFactory { get; set; }
+        protected DeleteIndexHttpRequestFactory DeleteIndexHttpRequestFactory { get; set; }
         protected IndexResponseFactory IndexResponseFactory { get; set; }
         public Queries(IDbClientConnection connection, ISerializer documentSerializer, ISerializer serializer)
             : base(connection)
@@ -22,7 +23,8 @@ namespace MyCouch.Cloudant.Contexts
             Ensure.That(documentSerializer, "documentSerializer").IsNotNull();
             Ensure.That(serializer, "serializer").IsNotNull();
 
-            IndexHttpRequestFactory = new IndexHttpRequestFactory(serializer);
+            PostIndexHttpRequestFactory = new PostIndexHttpRequestFactory(serializer);
+            DeleteIndexHttpRequestFactory = new DeleteIndexHttpRequestFactory();
             IndexResponseFactory = new IndexResponseFactory(documentSerializer);
         }
 
@@ -38,9 +40,26 @@ namespace MyCouch.Cloudant.Contexts
             }
         }
 
+        public virtual async Task<IndexResponse> DeleteAsync(DeleteIndexRequest request)
+        {
+            Ensure.That(request, "request").IsNotNull();
+
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
+            {
+                return ProcessHttpResponse(res);
+            }
+        }
+
+        protected virtual HttpRequest CreateHttpRequest(DeleteIndexRequest request)
+        {
+            return DeleteIndexHttpRequestFactory.Create(request);
+        }
+
         protected virtual HttpRequest CreateHttpRequest(PostIndexRequest request)
         {
-            return IndexHttpRequestFactory.Create(request);
+            return PostIndexHttpRequestFactory.Create(request);
         }
 
         protected virtual IndexResponse ProcessHttpResponse(HttpResponseMessage response)

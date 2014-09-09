@@ -68,8 +68,9 @@
     <Compile Include="Contexts\Queries.cs" />
     <Compile Include="Contexts\Searches.cs" />
     <Compile Include="Contexts\Security.cs" />
+    <Compile Include="HttpRequestFactories\DeleteIndexHttpRequestFactory.cs" />
     <Compile Include="HttpRequestFactories\GenerateApiKeyHttpRequestFactory.cs" />
-    <Compile Include="HttpRequestFactories\IndexHttpRequestFactory.cs" />
+    <Compile Include="HttpRequestFactories\PostIndexHttpRequestFactory.cs" />
     <Compile Include="IIndexParameters.cs" />
     <Compile Include="IMyCouchCloudantClient.cs" />
     <Compile Include="IMyCouchCloudantServerClient.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="HttpRequestFactories\SearchIndexHttpRequestFactory.cs" />
     <Compile Include="Querying\IndexParameters.cs" />
+    <Compile Include="Requests\DeleteIndexRequest.cs" />
     <Compile Include="Requests\GenerateApiKeyRequest.cs" />
     <Compile Include="Requests\PostIndexRequest.cs" />
     <Compile Include="Requests\SearchIndexRequest.cs" />

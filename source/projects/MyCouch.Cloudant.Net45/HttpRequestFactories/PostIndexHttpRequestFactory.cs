@@ -9,12 +9,12 @@ using System.Linq;
 
 namespace MyCouch.Cloudant.HttpRequestFactories
 {
-    public class IndexHttpRequestFactory
+    public class PostIndexHttpRequestFactory
     {
         private const string JsonPropertyAppendFormat = ",\"{0}\": \"{1}\"";
         protected ISerializer Serializer { get; private set; }
 
-        public IndexHttpRequestFactory(ISerializer serializer)
+        public PostIndexHttpRequestFactory(ISerializer serializer)
         {
             Ensure.That(serializer, "Serializer").IsNotNull();
 

@@ -15,5 +15,6 @@ namespace MyCouch.Cloudant
         /// <param name="request"></param>
         /// <returns></returns>
         Task<IndexResponse> PostAsync(PostIndexRequest request);
+        Task<IndexResponse> DeleteAsync(DeleteIndexRequest request);
     }
 }

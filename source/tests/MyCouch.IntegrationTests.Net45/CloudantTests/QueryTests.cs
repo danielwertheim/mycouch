@@ -3,6 +3,7 @@ using MyCouch.Cloudant.Requests;
 using MyCouch.IntegrationTests.TestFixtures;
 using Xunit;
 using FluentAssertions;
+using System.Net;
 
 namespace MyCouch.IntegrationTests.CloudantTests
 {
@@ -72,6 +73,32 @@ namespace MyCouch.IntegrationTests.CloudantTests
 
             response.IsSuccess.Should().Be(true);
             response.Result.Should().Be("created");
+        }
+
+        [MyFact(TestScenarios.Cloudant, TestScenarios.QueriesContext)]
+        public void Can_delete_a_pre_existing_index()
+        {
+            var dDocName = "MyDoc";
+            var indexName = "MyName";
+            var indexRequest = new PostIndexRequest();
+            indexRequest.Configure(q => q.DesignDocument(dDocName)
+                .Name(indexName)
+                .Fields(new IndexField("diet"))
+                );
+            SUT.PostAsync(indexRequest).Wait();
+
+            var response = SUT.DeleteAsync(new DeleteIndexRequest(dDocName, indexName)).Result;
+            response.IsSuccess.Should().Be(true);
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+        }
+
+        [MyFact(TestScenarios.Cloudant, TestScenarios.QueriesContext)]
+        public void Trying_to_delete_a_non_existing_index_should_report_error()
+        {
+            var response = SUT.DeleteAsync(new DeleteIndexRequest("junk", "junk")).Result;
+            response.IsSuccess.Should().Be(false);
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+            response.Reason.Should().Be("missing");
         }
     }
 }
