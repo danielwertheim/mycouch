@@ -77,7 +77,6 @@
     <Compile Include="IndexParametersConfigurator.cs" />
     <Compile Include="IndexType.cs" />
     <Compile Include="IQueries.cs" />
-    <Compile Include="IQueryParameters.cs" />
     <Compile Include="ISearches.cs" />
     <Compile Include="ISearchParameters.cs" />
     <Compile Include="ISecurity.cs" />
