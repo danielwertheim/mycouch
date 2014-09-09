@@ -47,7 +47,7 @@ namespace MyCouch.Cloudant
         {
             Ensure.That(value, "value").IsNotNullOrWhiteSpace();
 
-            Parameters.DesignDocument = value;
+            Parameters.Name = value;
 
             return this;
         }

@@ -12,7 +12,7 @@ namespace MyCouch.Cloudant.Requests
 #if !PCL
     [Serializable]
 #endif
-    public class IndexRequest : Request, IIndexParameters
+    public class PostIndexRequest : Request, IIndexParameters
     {
         protected IIndexParameters State { get; private set; }
         /// <summary>
@@ -48,12 +48,12 @@ namespace MyCouch.Cloudant.Requests
             set { State.Fields = value; }
         }
 
-        public IndexRequest()
+        public PostIndexRequest()
         {
             State = new IndexParameters();
         }
 
-        public virtual IndexRequest Configure(Action<IndexParametersConfigurator> configurator)
+        public virtual PostIndexRequest Configure(Action<IndexParametersConfigurator> configurator)
         {
             configurator(new IndexParametersConfigurator(State));
 

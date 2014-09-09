@@ -11,20 +11,17 @@ namespace MyCouch.Cloudant.HttpRequestFactories
 {
     public class IndexHttpRequestFactory
     {
-        private const string _jsonPropertyAppendFormat = ",\"{0}\": \"{1}\"";
-        protected ISerializer DocumentSerializer { get; private set; }
+        private const string JsonPropertyAppendFormat = ",\"{0}\": \"{1}\"";
         protected ISerializer Serializer { get; private set; }
 
-        public IndexHttpRequestFactory(ISerializer documentSerializer, ISerializer serializer)
+        public IndexHttpRequestFactory(ISerializer serializer)
         {
-            Ensure.That(documentSerializer, "DocumentSerializer").IsNotNull();
             Ensure.That(serializer, "Serializer").IsNotNull();
 
-            DocumentSerializer = documentSerializer;
             Serializer = serializer;
         }
 
-        public virtual HttpRequest Create(IndexRequest request)
+        public virtual HttpRequest Create(PostIndexRequest request)
         {
             Ensure.That(request, "request").IsNotNull();
 
@@ -33,7 +30,7 @@ namespace MyCouch.Cloudant.HttpRequestFactories
                 .SetJsonContent(GenerateRequestBody(request));
         }
 
-        protected virtual string GenerateRequestBody(IndexRequest request)
+        protected virtual string GenerateRequestBody(PostIndexRequest request)
         {
             Ensure.That(request.Fields, "request.Fields").HasItems();
 
@@ -43,24 +40,24 @@ namespace MyCouch.Cloudant.HttpRequestFactories
 
             sb.AppendFormat("{0}", GenerateIndexContent(request.Fields));
             if (!string.IsNullOrWhiteSpace(request.DesignDocument))
-                sb.AppendFormat(_jsonPropertyAppendFormat, KeyNames.DesignDocument, request.DesignDocument);
+                sb.AppendFormat(JsonPropertyAppendFormat, KeyNames.DesignDocument, request.DesignDocument);
             if (request.Type.HasValue)
-                sb.AppendFormat(_jsonPropertyAppendFormat, KeyNames.Type, request.Type.Value.ToString());
+                sb.AppendFormat(JsonPropertyAppendFormat, KeyNames.Type, request.Type.Value.ToString());
             if (!string.IsNullOrWhiteSpace(request.Name))
-                sb.AppendFormat(_jsonPropertyAppendFormat, KeyNames.Name, request.Name);
+                sb.AppendFormat(JsonPropertyAppendFormat, KeyNames.Name, request.Name);
 
             sb.Append("}");
 
             return sb.ToString();
         }
 
-        private string GenerateIndexContent(IList<IndexField> fields)
+        protected virtual string GenerateIndexContent(IList<IndexField> fields)
         {
             return string.Format("\"{0}\": {1}", KeyNames.Index,
                 Serializer.Serialize(new { fields = fields.ToArray() }));
         }
 
-        private string GenerateRelativeUrl(IndexRequest request)
+        protected virtual string GenerateRelativeUrl(PostIndexRequest request)
         {
             return "/_index";
         }

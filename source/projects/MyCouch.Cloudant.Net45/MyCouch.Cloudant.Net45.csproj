@@ -87,7 +87,7 @@
     <Compile Include="HttpRequestFactories\SearchIndexHttpRequestFactory.cs" />
     <Compile Include="Querying\IndexParameters.cs" />
     <Compile Include="Requests\GenerateApiKeyRequest.cs" />
-    <Compile Include="Requests\IndexRequest.cs" />
+    <Compile Include="Requests\PostIndexRequest.cs" />
     <Compile Include="Requests\SearchIndexRequest.cs" />
     <Compile Include="Responses\Factories\GenerateApiKeyResponseFactory.cs" />
     <Compile Include="Responses\Factories\IndexResponseFactory.cs" />

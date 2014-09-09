@@ -22,7 +22,7 @@ namespace MyCouch.IntegrationTests.CloudantTests
         [MyFact(TestScenarios.Cloudant, TestScenarios.QueriesContext)]
         public void Can_create_an_index_with_explicit_designdoc_and_name()
         {
-            var indexRequest = new IndexRequest();
+            var indexRequest = new PostIndexRequest();
             indexRequest.Configure(q => q.DesignDocument("MyDoc")
                 .Name("MyName")
                 .Fields(new IndexField("diet"))
@@ -37,7 +37,7 @@ namespace MyCouch.IntegrationTests.CloudantTests
         [MyFact(TestScenarios.Cloudant, TestScenarios.QueriesContext)]
         public void Creating_an_index_with_same_name_as_existing_should_be_reported()
         {
-            var indexRequest = new IndexRequest();
+            var indexRequest = new PostIndexRequest();
             indexRequest.Configure(q => q.DesignDocument("MyDoc")
                 .Name("MyName")
                 .Fields(new IndexField("diet"))
@@ -53,7 +53,7 @@ namespace MyCouch.IntegrationTests.CloudantTests
         [MyFact(TestScenarios.Cloudant, TestScenarios.QueriesContext)]
         public void Can_create_an_index_without_specifying_a_designdoc_and_name()
         {
-            var indexRequest = new IndexRequest();
+            var indexRequest = new PostIndexRequest();
             indexRequest.Configure(q => q.Fields(new IndexField("diet")));
 
             var response = SUT.PostAsync(indexRequest).Result;
@@ -65,7 +65,7 @@ namespace MyCouch.IntegrationTests.CloudantTests
         [MyFact(TestScenarios.Cloudant, TestScenarios.QueriesContext)]
         public void Can_specify_a_sort_order_for_an_index_field()
         {
-            var indexRequest = new IndexRequest();
+            var indexRequest = new PostIndexRequest();
             indexRequest.Configure(q => q.Fields(new IndexField("diet", SortDirection.Desc)));
 
             var response = SUT.PostAsync(indexRequest).Result;

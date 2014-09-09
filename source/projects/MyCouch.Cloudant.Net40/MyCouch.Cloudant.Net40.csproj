@@ -162,8 +162,8 @@
     <Compile Include="..\MyCouch.Cloudant.Net45\Requests\GenerateApiKeyRequest.cs">
       <Link>Requests\GenerateApiKeyRequest.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\Requests\IndexRequest.cs">
-      <Link>Requests\IndexRequest.cs</Link>
+    <Compile Include="..\MyCouch.Cloudant.Net45\Requests\PostIndexRequest.cs">
+      <Link>Requests\PostIndexRequest.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.cloudant.net45\requests\SearchIndexRequest.cs">
       <Link>Requests\SearchIndexRequest.cs</Link>

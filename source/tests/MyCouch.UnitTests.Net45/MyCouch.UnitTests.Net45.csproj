@@ -75,6 +75,7 @@
     </Compile>
     <Compile Include="Cloudant\HttpRequestFactories\GenerateApiKeyHttpRequestFactoryTests.cs" />
     <Compile Include="Cloudant\HttpRequestFactories\SearchIndexHttpRequestFactoryTests.cs" />
+    <Compile Include="Cloudant\IndexParametersConfiguratorTests.cs" />
     <Compile Include="Cloudant\Responses\SearchIndexResponseTests.cs" />
     <Compile Include="Cloudant\SearchParametersConfiguratorTests.cs" />
     <Compile Include="Extensions\UriExtensionsTests.cs" />

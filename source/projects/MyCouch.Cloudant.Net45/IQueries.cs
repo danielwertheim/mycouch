@@ -14,6 +14,6 @@ namespace MyCouch.Cloudant
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        Task<IndexResponse> PostAsync(IndexRequest request);
+        Task<IndexResponse> PostAsync(PostIndexRequest request);
     }
 }
