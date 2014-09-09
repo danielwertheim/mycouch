@@ -65,11 +65,19 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Contexts\Queries.cs" />
     <Compile Include="Contexts\Searches.cs" />
     <Compile Include="Contexts\Security.cs" />
     <Compile Include="HttpRequestFactories\GenerateApiKeyHttpRequestFactory.cs" />
+    <Compile Include="HttpRequestFactories\IndexHttpRequestFactory.cs" />
+    <Compile Include="IIndexParameters.cs" />
     <Compile Include="IMyCouchCloudantClient.cs" />
     <Compile Include="IMyCouchCloudantServerClient.cs" />
+    <Compile Include="IndexField.cs" />
+    <Compile Include="IndexParametersConfigurator.cs" />
+    <Compile Include="IndexType.cs" />
+    <Compile Include="IQueries.cs" />
+    <Compile Include="IQueryParameters.cs" />
     <Compile Include="ISearches.cs" />
     <Compile Include="ISearchParameters.cs" />
     <Compile Include="ISecurity.cs" />
@@ -78,16 +86,22 @@
     <Compile Include="MyCouchCloudantServerClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="HttpRequestFactories\SearchIndexHttpRequestFactory.cs" />
+    <Compile Include="Querying\IndexParameters.cs" />
     <Compile Include="Requests\GenerateApiKeyRequest.cs" />
+    <Compile Include="Requests\IndexRequest.cs" />
     <Compile Include="Requests\SearchIndexRequest.cs" />
     <Compile Include="Responses\Factories\GenerateApiKeyResponseFactory.cs" />
+    <Compile Include="Responses\Factories\IndexResponseFactory.cs" />
     <Compile Include="Responses\GenerateApiKeyResponse.cs" />
+    <Compile Include="Responses\IndexResponse.cs" />
     <Compile Include="Responses\Materializers\SearchIndexResponseMaterializer.cs" />
     <Compile Include="Responses\Factories\SearchIndexResponseFactory.cs" />
     <Compile Include="Responses\SearchIndexResponse.cs" />
     <Compile Include="SearchIndexIdentity.cs" />
     <Compile Include="Searching\SearchParameters.cs" />
     <Compile Include="SearchParametersConfigurator.cs" />
+    <Compile Include="Serialization\Converters\IndexFieldConverter.cs" />
+    <Compile Include="SortDirection.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -99,6 +113,7 @@
       <Name>MyCouch.Net45</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
