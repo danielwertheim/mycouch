@@ -38,6 +38,9 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\Contexts\Queries.cs">
+      <Link>Contexts\Queries.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\Contexts\Searches.cs">
       <Link>Contexts\Searches.cs</Link>
     </Compile>
@@ -47,14 +50,35 @@
     <Compile Include="..\MyCouch.Cloudant.Net45\HttpRequestFactories\GenerateApiKeyHttpRequestFactory.cs">
       <Link>HttpRequestFactories\GenerateApiKeyHttpRequestFactory.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\HttpRequestFactories\IndexHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\IndexHttpRequestFactory.cs</Link>
+    </Compile>
     <Compile Include="..\mycouch.cloudant.net45\httprequestfactories\SearchIndexHttpRequestFactory.cs">
       <Link>HttpRequestFactories\SearchIndexHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\IIndexParameters.cs">
+      <Link>IIndexParameters.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\IMyCouchCloudantClient.cs">
       <Link>IMyCouchCloudantClient.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\IMyCouchCloudantServerClient.cs">
       <Link>IMyCouchCloudantServerClient.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\IndexField.cs">
+      <Link>IndexField.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\IndexParametersConfigurator.cs">
+      <Link>IndexParametersConfigurator.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\IndexType.cs">
+      <Link>IndexType.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\IQueries.cs">
+      <Link>IQueries.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\IQueryParameters.cs">
+      <Link>IQueryParameters.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\ISearches.cs">
       <Link>ISearches.cs</Link>
@@ -74,8 +98,14 @@
     <Compile Include="..\MyCouch.Cloudant.Net45\MyCouchCloudantServerClient.cs">
       <Link>MyCouchCloudantServerClient.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\Querying\IndexParameters.cs">
+      <Link>Querying\IndexParameters.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\Requests\GenerateApiKeyRequest.cs">
       <Link>Requests\GenerateApiKeyRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\Requests\IndexRequest.cs">
+      <Link>Requests\IndexRequest.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\Requests\SearchIndexRequest.cs">
       <Link>Requests\SearchIndexRequest.cs</Link>
@@ -83,11 +113,17 @@
     <Compile Include="..\MyCouch.Cloudant.Net45\Responses\Factories\GenerateApiKeyResponseFactory.cs">
       <Link>Responses\Factories\GenerateApiKeyResponseFactory.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\Responses\Factories\IndexResponseFactory.cs">
+      <Link>Responses\Factories\IndexResponseFactory.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\Responses\Factories\SearchIndexResponseFactory.cs">
       <Link>Responses\Factories\SearchIndexResponseFactory.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\Responses\GenerateApiKeyResponse.cs">
       <Link>Responses\GenerateApiKeyResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\Responses\IndexResponse.cs">
+      <Link>Responses\IndexResponse.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\Responses\Materializers\SearchIndexResponseMaterializer.cs">
       <Link>Responses\Materializers\SearchIndexResponseMaterializer.cs</Link>
@@ -103,6 +139,12 @@
     </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\SearchParametersConfigurator.cs">
       <Link>SearchParametersConfigurator.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\Serialization\Converters\IndexFieldConverter.cs">
+      <Link>Serialization\Converters\IndexFieldConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\SortDirection.cs">
+      <Link>SortDirection.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

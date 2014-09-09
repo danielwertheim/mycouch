@@ -211,6 +211,7 @@ namespace MyCouch.IntegrationTests
         public const string ViewsContext = "viewscontext";
         public const string SecurityContext = "securitycontext";
         public const string SearchesContext = "searchescontext";
+        public const string QueriesContext = "queriescontext";
 
         public const string Cloudant = "cloudant";
         public const string MyCouchStore = "mycouchstore";
