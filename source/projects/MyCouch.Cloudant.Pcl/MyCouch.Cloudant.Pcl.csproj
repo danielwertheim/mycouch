@@ -47,11 +47,14 @@
     <Compile Include="..\MyCouch.Cloudant.Net45\Contexts\Security.cs">
       <Link>Contexts\Security.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\HttpRequestFactories\DeleteIndexHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\DeleteIndexHttpRequestFactory.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\HttpRequestFactories\GenerateApiKeyHttpRequestFactory.cs">
       <Link>HttpRequestFactories\GenerateApiKeyHttpRequestFactory.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\HttpRequestFactories\IndexHttpRequestFactory.cs">
-      <Link>HttpRequestFactories\IndexHttpRequestFactory.cs</Link>
+    <Compile Include="..\MyCouch.Cloudant.Net45\HttpRequestFactories\PostIndexHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\PostIndexHttpRequestFactory.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.cloudant.net45\httprequestfactories\SearchIndexHttpRequestFactory.cs">
       <Link>HttpRequestFactories\SearchIndexHttpRequestFactory.cs</Link>
@@ -97,6 +100,9 @@
     </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\Querying\IndexParameters.cs">
       <Link>Querying\IndexParameters.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\Requests\DeleteIndexRequest.cs">
+      <Link>Requests\DeleteIndexRequest.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\Requests\GenerateApiKeyRequest.cs">
       <Link>Requests\GenerateApiKeyRequest.cs</Link>

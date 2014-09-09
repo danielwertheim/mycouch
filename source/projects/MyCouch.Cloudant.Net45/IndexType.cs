@@ -1,4 +1,5 @@
 ﻿
+using System.Collections.Generic;
 namespace MyCouch.Cloudant
 {
     /// <summary>
@@ -11,5 +12,22 @@ namespace MyCouch.Cloudant
         /// Json
         /// </summary>
         Json,
+    }
+
+    public static class IndexTypeEnumExtensions
+    {
+        private static readonly Dictionary<IndexType, string> Mappings;
+
+        static IndexTypeEnumExtensions()
+        {
+            Mappings = new Dictionary<IndexType, string> {
+                { IndexType.Json, "json" }
+            };
+        }
+
+        public static string AsString(this IndexType IndexType)
+        {
+            return Mappings[IndexType];
+        }
     }
 }
