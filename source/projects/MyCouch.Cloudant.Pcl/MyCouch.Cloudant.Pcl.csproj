@@ -77,9 +77,6 @@
     <Compile Include="..\MyCouch.Cloudant.Net45\IQueries.cs">
       <Link>IQueries.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\IQueryParameters.cs">
-      <Link>IQueryParameters.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\ISearches.cs">
       <Link>ISearches.cs</Link>
     </Compile>
