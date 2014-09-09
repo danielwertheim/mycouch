@@ -22,11 +22,11 @@ namespace MyCouch.Cloudant.Contexts
             Ensure.That(documentSerializer, "documentSerializer").IsNotNull();
             Ensure.That(serializer, "serializer").IsNotNull();
 
-            IndexHttpRequestFactory = new IndexHttpRequestFactory(documentSerializer, serializer);
+            IndexHttpRequestFactory = new IndexHttpRequestFactory(serializer);
             IndexResponseFactory = new IndexResponseFactory(documentSerializer);
         }
 
-        public virtual async Task<IndexResponse> PostAsync(IndexRequest request)
+        public virtual async Task<IndexResponse> PostAsync(PostIndexRequest request)
         {
             Ensure.That(request, "request").IsNotNull();
 
@@ -38,7 +38,7 @@ namespace MyCouch.Cloudant.Contexts
             }
         }
 
-        protected virtual HttpRequest CreateHttpRequest(IndexRequest request)
+        protected virtual HttpRequest CreateHttpRequest(PostIndexRequest request)
         {
             return IndexHttpRequestFactory.Create(request);
         }

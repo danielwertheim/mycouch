@@ -72,6 +72,9 @@
     <Compile Include="..\mycouch.unittests.net45\cloudant\httprequestfactories\SearchIndexHttpRequestFactoryTests.cs">
       <Link>Cloudant\HttpRequestFactories\SearchIndexHttpRequestFactoryTests.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.UnitTests.Net45\Cloudant\IndexParametersConfiguratorTests.cs">
+      <Link>Cloudant\IndexParametersConfiguratorTests.cs</Link>
+    </Compile>
     <Compile Include="..\mycouch.unittests.net45\cloudant\responses\SearchIndexResponseTests.cs">
       <Link>Cloudant\Responses\SearchIndexResponseTests.cs</Link>
     </Compile>
@@ -171,6 +174,9 @@
       <Project>{189bf3ac-8cca-4e33-a14a-4d2e782728ca}</Project>
       <Name>MyCouch.Testing.Pcl</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
