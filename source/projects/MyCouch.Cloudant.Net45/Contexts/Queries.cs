@@ -15,17 +15,21 @@ namespace MyCouch.Cloudant.Contexts
     public class Queries : ApiContextBase<IDbClientConnection>, IQueries
     {
         protected PostIndexHttpRequestFactory PostIndexHttpRequestFactory { get; set; }
+        protected GetAllIndexesHttpRequestFactory GetAllIndexesHttpRequestFactory { get; set; }
         protected DeleteIndexHttpRequestFactory DeleteIndexHttpRequestFactory { get; set; }
         protected IndexResponseFactory IndexResponseFactory { get; set; }
-        public Queries(IDbClientConnection connection, ISerializer documentSerializer, ISerializer serializer)
+        protected IndexListResponseFactory IndexListResponseFactory { get; set; }
+        public Queries(IDbClientConnection connection, ISerializer serializer)
             : base(connection)
         {
-            Ensure.That(documentSerializer, "documentSerializer").IsNotNull();
             Ensure.That(serializer, "serializer").IsNotNull();
 
             PostIndexHttpRequestFactory = new PostIndexHttpRequestFactory(serializer);
+            GetAllIndexesHttpRequestFactory = new GetAllIndexesHttpRequestFactory();
             DeleteIndexHttpRequestFactory = new DeleteIndexHttpRequestFactory();
-            IndexResponseFactory = new IndexResponseFactory(documentSerializer);
+
+            IndexResponseFactory = new IndexResponseFactory(serializer);
+            IndexListResponseFactory = new IndexListResponseFactory(serializer);
         }
 
         public virtual async Task<IndexResponse> PostAsync(PostIndexRequest request)
@@ -36,7 +40,17 @@ namespace MyCouch.Cloudant.Contexts
 
             using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                return ProcessHttpResponse(res);
+                return ProcessIndexResponse(res);
+            }
+        }
+
+        public virtual async Task<IndexListResponse> GetAllAsync()
+        {
+            var httpRequest = CreateHttpRequest();
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
+            {
+                return ProcessIndexListResponse(res);
             }
         }
 
@@ -48,7 +62,7 @@ namespace MyCouch.Cloudant.Contexts
 
             using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                return ProcessHttpResponse(res);
+                return ProcessIndexResponse(res);
             }
         }
 
@@ -57,14 +71,24 @@ namespace MyCouch.Cloudant.Contexts
             return DeleteIndexHttpRequestFactory.Create(request);
         }
 
+        protected virtual HttpRequest CreateHttpRequest()
+        {
+            return GetAllIndexesHttpRequestFactory.Create();
+        }
+
         protected virtual HttpRequest CreateHttpRequest(PostIndexRequest request)
         {
             return PostIndexHttpRequestFactory.Create(request);
         }
 
-        protected virtual IndexResponse ProcessHttpResponse(HttpResponseMessage response)
+        protected virtual IndexResponse ProcessIndexResponse(HttpResponseMessage response)
         {
             return IndexResponseFactory.Create(response);
+        }
+
+        protected virtual IndexListResponse ProcessIndexListResponse(HttpResponseMessage response)
+        {
+            return IndexListResponseFactory.Create(response);
         }
     }
 }
