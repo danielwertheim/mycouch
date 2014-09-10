@@ -4,6 +4,7 @@ using MyCouch.IntegrationTests.TestFixtures;
 using Xunit;
 using FluentAssertions;
 using System.Net;
+using System.Linq;
 
 namespace MyCouch.IntegrationTests.CloudantTests
 {
@@ -99,6 +100,23 @@ namespace MyCouch.IntegrationTests.CloudantTests
             response.IsSuccess.Should().Be(false);
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
             response.Reason.Should().Be("missing");
+        }
+
+        [MyFact(TestScenarios.Cloudant, TestScenarios.QueriesContext)]
+        public void Getall_should_return_all_indexes()
+        {
+            var response = SUT.GetAllAsync().Result;
+
+            response.IsSuccess.Should().Be(true);
+            response.IsEmpty.Should().Be(false);
+            response.IndexCount.Should().Be(1);
+            var primaryIndex = response.Indexes.First();
+
+            primaryIndex.Name.Should().Be("_all_docs");
+            primaryIndex.Def.Fields.Count().Should().Be(1);
+            var field = primaryIndex.Def.Fields.First();
+            field.Name.Should().Be("_id");
+            field.SortDirection.Should().Be(SortDirection.Asc);
         }
     }
 }

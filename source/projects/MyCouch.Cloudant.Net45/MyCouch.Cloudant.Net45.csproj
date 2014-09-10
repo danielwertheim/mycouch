@@ -70,6 +70,7 @@
     <Compile Include="Contexts\Security.cs" />
     <Compile Include="HttpRequestFactories\DeleteIndexHttpRequestFactory.cs" />
     <Compile Include="HttpRequestFactories\GenerateApiKeyHttpRequestFactory.cs" />
+    <Compile Include="HttpRequestFactories\GetAllIndexesHttpRequestFactory.cs" />
     <Compile Include="HttpRequestFactories\PostIndexHttpRequestFactory.cs" />
     <Compile Include="IIndexParameters.cs" />
     <Compile Include="IMyCouchCloudantClient.cs" />
@@ -92,9 +93,12 @@
     <Compile Include="Requests\PostIndexRequest.cs" />
     <Compile Include="Requests\SearchIndexRequest.cs" />
     <Compile Include="Responses\Factories\GenerateApiKeyResponseFactory.cs" />
+    <Compile Include="Responses\Factories\IndexListResponseFactory.cs" />
     <Compile Include="Responses\Factories\IndexResponseFactory.cs" />
     <Compile Include="Responses\GenerateApiKeyResponse.cs" />
+    <Compile Include="Responses\IndexListResponse.cs" />
     <Compile Include="Responses\IndexResponse.cs" />
+    <Compile Include="Responses\CloudantJsonScheme.cs" />
     <Compile Include="Responses\Materializers\SearchIndexResponseMaterializer.cs" />
     <Compile Include="Responses\Factories\SearchIndexResponseFactory.cs" />
     <Compile Include="Responses\SearchIndexResponse.cs" />

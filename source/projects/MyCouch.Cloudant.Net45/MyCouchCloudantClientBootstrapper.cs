@@ -36,7 +36,6 @@ namespace MyCouch.Cloudant
         {
             QueriesFn = cn => new Queries(
                 cn,
-                DocumentSerializerFn(),
                 SerializerFn());
         }
     }

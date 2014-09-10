@@ -53,6 +53,9 @@
     <Compile Include="..\MyCouch.Cloudant.Net45\HttpRequestFactories\GenerateApiKeyHttpRequestFactory.cs">
       <Link>HttpRequestFactories\GenerateApiKeyHttpRequestFactory.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\HttpRequestFactories\GetAllIndexesHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\GetAllIndexesHttpRequestFactory.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\HttpRequestFactories\PostIndexHttpRequestFactory.cs">
       <Link>HttpRequestFactories\PostIndexHttpRequestFactory.cs</Link>
     </Compile>
@@ -113,8 +116,14 @@
     <Compile Include="..\MyCouch.Cloudant.Net45\Requests\SearchIndexRequest.cs">
       <Link>Requests\SearchIndexRequest.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\Responses\CloudantJsonScheme.cs">
+      <Link>Responses\CloudantJsonScheme.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\Responses\Factories\GenerateApiKeyResponseFactory.cs">
       <Link>Responses\Factories\GenerateApiKeyResponseFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\Responses\Factories\IndexListResponseFactory.cs">
+      <Link>Responses\Factories\IndexListResponseFactory.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\Responses\Factories\IndexResponseFactory.cs">
       <Link>Responses\Factories\IndexResponseFactory.cs</Link>
@@ -124,6 +133,9 @@
     </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\Responses\GenerateApiKeyResponse.cs">
       <Link>Responses\GenerateApiKeyResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\Responses\IndexListResponse.cs">
+      <Link>Responses\IndexListResponse.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\Responses\IndexResponse.cs">
       <Link>Responses\IndexResponse.cs</Link>
