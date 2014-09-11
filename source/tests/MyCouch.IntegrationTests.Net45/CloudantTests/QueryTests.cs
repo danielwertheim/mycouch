@@ -5,6 +5,7 @@ using Xunit;
 using FluentAssertions;
 using System.Net;
 using System.Linq;
+using MyCouch.Testing.Model;
 
 namespace MyCouch.IntegrationTests.CloudantTests
 {
@@ -27,7 +28,7 @@ namespace MyCouch.IntegrationTests.CloudantTests
             var indexRequest = new PostIndexRequest();
             indexRequest.Configure(q => q.DesignDocument("MyDoc")
                 .Name("MyName")
-                .Fields(new IndexField("diet"))
+                .Fields(new SortableField("diet"))
                 );
 
             var response = SUT.PostAsync(indexRequest).Result;
@@ -42,7 +43,7 @@ namespace MyCouch.IntegrationTests.CloudantTests
             var indexRequest = new PostIndexRequest();
             indexRequest.Configure(q => q.DesignDocument("MyDoc")
                 .Name("MyName")
-                .Fields(new IndexField("diet"))
+                .Fields(new SortableField("diet"))
                 );
             SUT.PostAsync(indexRequest).Wait();
 
@@ -56,7 +57,7 @@ namespace MyCouch.IntegrationTests.CloudantTests
         public void Can_create_an_index_without_specifying_a_designdoc_and_name()
         {
             var indexRequest = new PostIndexRequest();
-            indexRequest.Configure(q => q.Fields(new IndexField("diet")));
+            indexRequest.Configure(q => q.Fields(new SortableField("diet")));
 
             var response = SUT.PostAsync(indexRequest).Result;
 
@@ -68,7 +69,7 @@ namespace MyCouch.IntegrationTests.CloudantTests
         public void Can_specify_a_sort_order_for_an_index_field()
         {
             var indexRequest = new PostIndexRequest();
-            indexRequest.Configure(q => q.Fields(new IndexField("diet", SortDirection.Desc)));
+            indexRequest.Configure(q => q.Fields(new SortableField("diet", SortDirection.Desc)));
 
             var response = SUT.PostAsync(indexRequest).Result;
 
@@ -84,7 +85,7 @@ namespace MyCouch.IntegrationTests.CloudantTests
             var indexRequest = new PostIndexRequest();
             indexRequest.Configure(q => q.DesignDocument(dDocName)
                 .Name(indexName)
-                .Fields(new IndexField("diet"))
+                .Fields(new SortableField("diet"))
                 );
             SUT.PostAsync(indexRequest).Wait();
 
@@ -117,6 +118,21 @@ namespace MyCouch.IntegrationTests.CloudantTests
             var field = primaryIndex.Def.Fields.First();
             field.Name.Should().Be("_id");
             field.SortDirection.Should().Be(SortDirection.Asc);
+        }
+
+        [MyFact(TestScenarios.Cloudant, TestScenarios.QueriesContext)]
+        public void Query_with_simple_selectors_should_return_matching_docs()
+        {
+            const string searchTitle = "Html5 blog";
+            var request = new FindRequest();
+            request.Configure(q => q.Selector(new { title = searchTitle }));
+
+            var response = SUT.FindAsync<Blog>(request).Result;
+
+            response.IsSuccess.Should().Be(true);
+            response.DocCount.Should().Be(1);
+            var doc = response.Docs.First();
+            doc.Title.Should().Be(searchTitle);
         }
     }
 }

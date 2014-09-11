@@ -42,7 +42,7 @@ namespace MyCouch.Cloudant.Requests
         /// <summary>
         /// Index fields
         /// </summary>
-        public IList<IndexField> Fields
+        public IList<SortableField> Fields
         {
             get { return State.Fields; }
             set { State.Fields = value; }

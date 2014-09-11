@@ -11,7 +11,6 @@ namespace MyCouch.Cloudant.HttpRequestFactories
 {
     public class PostIndexHttpRequestFactory
     {
-        private const string JsonPropertyAppendFormat = ",\"{0}\": \"{1}\"";
         protected ISerializer Serializer { get; private set; }
 
         public PostIndexHttpRequestFactory(ISerializer serializer)
@@ -40,18 +39,18 @@ namespace MyCouch.Cloudant.HttpRequestFactories
 
             sb.AppendFormat("{0}", GenerateIndexContent(request.Fields));
             if (!string.IsNullOrWhiteSpace(request.DesignDocument))
-                sb.AppendFormat(JsonPropertyAppendFormat, KeyNames.DesignDocument, request.DesignDocument);
+                sb.AppendFormat(FormatStrings.JsonPropertyAppendFormat, KeyNames.DesignDocument, request.DesignDocument);
             if (request.Type.HasValue)
-                sb.AppendFormat(JsonPropertyAppendFormat, KeyNames.Type, request.Type.Value.ToString());
+                sb.AppendFormat(FormatStrings.JsonPropertyAppendFormat, KeyNames.Type, request.Type.Value.ToString());
             if (!string.IsNullOrWhiteSpace(request.Name))
-                sb.AppendFormat(JsonPropertyAppendFormat, KeyNames.Name, request.Name);
+                sb.AppendFormat(FormatStrings.JsonPropertyAppendFormat, KeyNames.Name, request.Name);
 
             sb.Append("}");
 
             return sb.ToString();
         }
 
-        protected virtual string GenerateIndexContent(IList<IndexField> fields)
+        protected virtual string GenerateIndexContent(IList<SortableField> fields)
         {
             return string.Format("\"{0}\": {1}", KeyNames.Index,
                 Serializer.Serialize(new { fields = fields.ToArray() }));

@@ -56,7 +56,7 @@ namespace MyCouch.Cloudant
         /// </summary>
         /// <param name="fields">Fields</param>
         /// <returns></returns>
-        public virtual IndexParametersConfigurator Fields(params IndexField[] fields)
+        public virtual IndexParametersConfigurator Fields(params SortableField[] fields)
         {
             Ensure.That(fields, "fields").HasItems();
 

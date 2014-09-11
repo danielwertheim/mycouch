@@ -40,7 +40,7 @@ namespace MyCouch.UnitTests.Cloudant
         [Fact]
         public void When_config_of_fields_it_configures_underlying_options_fields()
         {
-            SUT.Fields(new IndexField("field1"), new IndexField("field2", SortDirection.Desc));
+            SUT.Fields(new SortableField("field1"), new SortableField("field2", SortDirection.Desc));
 
             _parameters.Fields.Count.Should().Be(2);
             _parameters.Fields.First().Name.Should().Be("field1");

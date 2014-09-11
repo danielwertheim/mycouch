@@ -7,10 +7,10 @@ namespace MyCouch.Cloudant.Querying
         public string DesignDocument { get; set; }
         public IndexType? Type { get; set; }
         public string Name { get; set; }
-        public IList<IndexField> Fields { get; set; }
+        public IList<SortableField> Fields { get; set; }
         public IndexParameters()
         {
-            Fields = new List<IndexField>();
+            Fields = new List<SortableField>();
         }
     }
 }

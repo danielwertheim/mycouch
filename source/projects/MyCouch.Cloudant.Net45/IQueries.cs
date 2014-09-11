@@ -26,5 +26,22 @@ namespace MyCouch.Cloudant
         /// <param name="request"></param>
         /// <returns></returns>
         Task<IndexResponse> DeleteAsync(DeleteIndexRequest request);
+        /// <summary>
+        /// Lets you find documents by querying indexes using Cloudants
+        /// Query API by using a reusable <see cref="FindRequest"/>.
+        /// Any returned IncludedDoc will be treated as JSON.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        Task<FindResponse> FindAsync(FindRequest request);
+        /// <summary>
+        /// Lets you find documents by querying indexes using Cloudants
+        /// Query API by using a reusable <see cref="FindRequest"/>.
+        /// Any returned IncludedDoc will be treated as <typeparamref name="TIncludedDoc"/>.
+        /// </summary>
+        /// <typeparam name="TIncludedDoc"></typeparam>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        Task<FindResponse<TIncludedDoc>> FindAsync<TIncludedDoc>(FindRequest request);
     }
 }
