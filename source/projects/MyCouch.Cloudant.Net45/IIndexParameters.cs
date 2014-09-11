@@ -26,6 +26,6 @@ namespace MyCouch.Cloudant
         /// <summary>
         /// Index fields 
         /// </summary>
-        IList<IndexField> Fields { get; set; }
+        IList<SortableField> Fields { get; set; }
     }
 }

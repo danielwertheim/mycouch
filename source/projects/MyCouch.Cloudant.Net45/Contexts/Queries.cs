@@ -17,8 +17,10 @@ namespace MyCouch.Cloudant.Contexts
         protected PostIndexHttpRequestFactory PostIndexHttpRequestFactory { get; set; }
         protected GetAllIndexesHttpRequestFactory GetAllIndexesHttpRequestFactory { get; set; }
         protected DeleteIndexHttpRequestFactory DeleteIndexHttpRequestFactory { get; set; }
+        protected FindHttpRequestFactory FindHttpRequestFactory { get; set; }
         protected IndexResponseFactory IndexResponseFactory { get; set; }
         protected IndexListResponseFactory IndexListResponseFactory { get; set; }
+        protected FindResponseFactory FindResponseFactory { get; set; }
         public Queries(IDbClientConnection connection, ISerializer serializer)
             : base(connection)
         {
@@ -27,9 +29,11 @@ namespace MyCouch.Cloudant.Contexts
             PostIndexHttpRequestFactory = new PostIndexHttpRequestFactory(serializer);
             GetAllIndexesHttpRequestFactory = new GetAllIndexesHttpRequestFactory();
             DeleteIndexHttpRequestFactory = new DeleteIndexHttpRequestFactory();
+            FindHttpRequestFactory = new FindHttpRequestFactory(serializer);
 
             IndexResponseFactory = new IndexResponseFactory(serializer);
             IndexListResponseFactory = new IndexListResponseFactory(serializer);
+            FindResponseFactory = new FindResponseFactory(serializer);
         }
 
         public virtual async Task<IndexResponse> PostAsync(PostIndexRequest request)
@@ -66,6 +70,30 @@ namespace MyCouch.Cloudant.Contexts
             }
         }
 
+        public virtual async Task<FindResponse> FindAsync(FindRequest request)
+        {
+            Ensure.That(request, "request").IsNotNull();
+
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
+            {
+                return ProcessFindResponse(res);
+            }
+        }
+
+        public virtual async Task<FindResponse<TIncludedDoc>> FindAsync<TIncludedDoc>(FindRequest request)
+        {
+            Ensure.That(request, "request").IsNotNull();
+
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
+            {
+                return ProcessFindResponse<TIncludedDoc>(res);
+            }
+        }
+
         protected virtual HttpRequest CreateHttpRequest(DeleteIndexRequest request)
         {
             return DeleteIndexHttpRequestFactory.Create(request);
@@ -89,6 +117,21 @@ namespace MyCouch.Cloudant.Contexts
         protected virtual IndexListResponse ProcessIndexListResponse(HttpResponseMessage response)
         {
             return IndexListResponseFactory.Create(response);
+        }
+
+        protected virtual HttpRequest CreateHttpRequest(FindRequest request)
+        {
+            return FindHttpRequestFactory.Create(request);
+        }
+
+        protected virtual FindResponse ProcessFindResponse(HttpResponseMessage response)
+        {
+            return FindResponseFactory.Create(response);
+        }
+
+        protected virtual FindResponse<TIncludedDoc> ProcessFindResponse<TIncludedDoc>(HttpResponseMessage response)
+        {
+            return FindResponseFactory.Create<TIncludedDoc>(response);
         }
     }
 }

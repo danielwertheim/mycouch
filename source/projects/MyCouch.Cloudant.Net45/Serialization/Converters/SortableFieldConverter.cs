@@ -4,19 +4,19 @@ using System.Collections.Generic;
 
 namespace MyCouch.Cloudant.Serialization.Converters
 {
-    public class IndexFieldConverter : JsonConverter
+    public class SortableFieldConverter : JsonConverter
     {
         public override bool CanConvert(Type objectType)
         {
-            return objectType == typeof(IndexField);
+            return objectType == typeof(SortableField);
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            return ReadAsIndexField(reader);
+            return ReadAsSortableField(reader);
         }
 
-        protected virtual object ReadAsIndexField(JsonReader reader)
+        protected virtual object ReadAsSortableField(JsonReader reader)
         {
             if (reader.TokenType != JsonToken.StartObject)
                 return null;
@@ -26,12 +26,12 @@ namespace MyCouch.Cloudant.Serialization.Converters
                 values.Add(reader.Value as string);
 
             return (values.Count == 2 && !string.IsNullOrWhiteSpace(values[0]) && !string.IsNullOrWhiteSpace(values[1])) ?
-                new IndexField(values[0], values[1].AsSortDirection()) : null;
+                new SortableField(values[0], values[1].AsSortDirection()) : null;
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            var v = (IndexField)value;
+            var v = (SortableField)value;
             writer.WriteStartObject();
             writer.WritePropertyName(v.Name);
             writer.WriteValue(v.SortDirection.AsString());

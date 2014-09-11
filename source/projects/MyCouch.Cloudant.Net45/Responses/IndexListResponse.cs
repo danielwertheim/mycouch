@@ -44,7 +44,7 @@ namespace MyCouch.Cloudant.Responses
 #endif
             public class Definition
             {
-                public IndexField[] Fields { get; set; }
+                public SortableField[] Fields { get; set; }
             }
         }
     }
