@@ -4,7 +4,7 @@ namespace MyCouch.Cloudant.Querying
 {
     public class FindParameters : IFindParameters
     {
-        public object Selector { get; set; }
+        public string Selector { get; set; }
 
         public int? Limit { get; set; }
 

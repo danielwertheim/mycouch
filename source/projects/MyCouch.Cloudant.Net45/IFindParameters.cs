@@ -7,7 +7,7 @@ namespace MyCouch.Cloudant
         /// <summary>
         /// JSON object describing criteria used to select documents.
         /// </summary>
-        object Selector { get; set; }
+        string Selector { get; set; }
         /// <summary>
         /// Limit the number of the returned documents to the specified number.
         /// </summary>

@@ -16,7 +16,7 @@ namespace MyCouch.Cloudant.Requests
         /// <summary>
         /// JSON object describing criteria used to select documents.
         /// </summary>
-        public object Selector
+        public string Selector
         {
             get { return State.Selector; }
             set { State.Selector = value; }
@@ -27,7 +27,7 @@ namespace MyCouch.Cloudant.Requests
         public int? Limit 
         {
             get { return State.Limit; }
-            set { State.Selector = value; }
+            set { State.Limit = value; }
         }
         /// <summary>
         /// Skip the first n results, where n is the value specified.
