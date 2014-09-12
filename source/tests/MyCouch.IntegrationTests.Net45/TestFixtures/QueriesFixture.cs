@@ -15,12 +15,12 @@ namespace MyCouch.IntegrationTests.TestFixtures
     public class QueriesFixture : IDisposable
     {
         private Blog[] _blogs;
-        internal Blog[] Init(TestEnvironment environment)
+        internal void Init(TestEnvironment environment)
         {
             environment.IsAgainstCloudant().Should().Be(true);
 
             if (_blogs != null && _blogs.Any())
-                return _blogs;
+                return;
 
             IntegrationTestsRuntime.EnsureCleanEnvironment();
 
@@ -33,24 +33,35 @@ namespace MyCouch.IntegrationTests.TestFixtures
 
                 var bulkResponse = client.Documents.BulkAsync(bulk).Result;
 
-                //foreach (var row in bulkResponse.Rows)
-                //{
-                //    var blog = _blogs.Single(i => i.Id == row.Id);
-                //    client.Entities.Reflector.RevMember.SetValueTo(blog, row.Rev);
-                //}
-
-                CreateIndex(client);
+                CreateIndexes(client);
             }
-
-            return _blogs;
         }
 
-        private void CreateIndex(IMyCouchCloudantClient client)
+        private void CreateIndexes(IMyCouchCloudantClient client)
+        {
+            CreateIndex1(client);
+            CreateIndex2(client);
+        }
+
+        private static void CreateIndex1(IMyCouchCloudantClient client)
         {
             var indexRequest = new PostIndexRequest();
             indexRequest.Configure(q => q.DesignDocument("TestDoc")
-                .Name("TestIndex")
-                .Fields(new SortableField("title"), new SortableField("author.age"))
+                .Name("TestIndex1")
+                .Fields(new SortableField("title"), new SortableField("author.age"), new SortableField("yearsActive"))
+                );
+
+            var response = client.Queries.PostAsync(indexRequest).Result;
+
+            response.IsSuccess.Should().Be(true);
+        }
+
+        private static void CreateIndex2(IMyCouchCloudantClient client)
+        {
+            var indexRequest = new PostIndexRequest();
+            indexRequest.Configure(q => q.DesignDocument("TestDoc")
+                .Name("TestIndex2")
+                .Fields(new SortableField("author.age"), new SortableField("yearsActive"))
                 );
 
             var response = client.Queries.PostAsync(indexRequest).Result;

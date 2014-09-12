@@ -39,11 +39,11 @@ namespace MyCouch.Cloudant.HttpRequestFactories
 
             sb.AppendFormat("{0}", GenerateIndexContent(request.Fields));
             if (!string.IsNullOrWhiteSpace(request.DesignDocument))
-                sb.AppendFormat(FormatStrings.JsonPropertyAppendFormat, KeyNames.DesignDocument, request.DesignDocument);
+                sb.AppendFormat(FormatStrings.JsonPropertyAppendFormat, KeyNames.DesignDocument, Serializer.ToJson(request.DesignDocument));
             if (request.Type.HasValue)
-                sb.AppendFormat(FormatStrings.JsonPropertyAppendFormat, KeyNames.Type, request.Type.Value.ToString());
+                sb.AppendFormat(FormatStrings.JsonPropertyAppendFormat, KeyNames.Type, Serializer.ToJson(request.Type.Value.ToString()));
             if (!string.IsNullOrWhiteSpace(request.Name))
-                sb.AppendFormat(FormatStrings.JsonPropertyAppendFormat, KeyNames.Name, request.Name);
+                sb.AppendFormat(FormatStrings.JsonPropertyAppendFormat, KeyNames.Name, Serializer.ToJson(request.Name));
 
             sb.Append("}");
 

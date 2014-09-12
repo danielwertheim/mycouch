@@ -17,9 +17,9 @@ namespace MyCouch.Cloudant
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual FindParametersConfigurator Selector(object value)
+        public virtual FindParametersConfigurator Selector(string value)
         {
-            Ensure.That(value, "value").IsNotNull();
+            Ensure.That(value, "value").IsNotNullOrWhiteSpace();
 
             Parameters.Selector = value;
 

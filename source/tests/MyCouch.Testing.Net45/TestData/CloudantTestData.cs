@@ -285,7 +285,8 @@ namespace MyCouch.Testing.TestData
                     {
                         new BlogEntry { Sequence = 1, Subject = "Semantic tags", Content = "Content on semantic tags" },
                         new BlogEntry { Sequence = 2, Subject = "Media elements", Content = "Content on media elements" }
-                    }
+                    },
+                    YearsActive = 2
                 };
             }
 
@@ -298,7 +299,8 @@ namespace MyCouch.Testing.TestData
                     Entries = new[]
                     {
                         new BlogEntry { Sequence = 1, Subject = "Primary indexes", Content = "Content on primary indexes" }
-                    }
+                    },
+                    YearsActive = 4
                 };
             }
 
@@ -312,7 +314,8 @@ namespace MyCouch.Testing.TestData
                     {
                         new BlogEntry { Sequence = 1, Subject = "Json syntax", Content = "Content on Json syntax" },
                         new BlogEntry { Sequence = 2, Subject = "Json arrays", Content = "Content on Json arrays" }
-                    }
+                    },
+                    YearsActive = 5
                 };
             }
         }

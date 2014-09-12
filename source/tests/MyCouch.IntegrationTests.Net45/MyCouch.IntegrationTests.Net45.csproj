@@ -72,6 +72,7 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="CloudantTests\IndexTests.cs" />
     <Compile Include="CloudantTests\QueryTests.cs" />
     <Compile Include="CloudantTests\SearchTests.cs" />
     <Compile Include="CloudantTests\SecurityTests.cs" />

@@ -13,6 +13,8 @@ namespace MyCouch.Testing.Model
         public string Title { get; set; }
         public Author Author { get; set; }
         public BlogEntry[] Entries { get; set; }
+
+        public int YearsActive { get; set; }
     }
 
     public class Author
