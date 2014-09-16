@@ -1,6 +1,7 @@
 [{
     "Key": "Default",
     "Supports": [
+	"cloudant",
         "attachmentscontext",
         "databasecontext",
         "documentscontext",
@@ -9,11 +10,12 @@
         "mycouchstore",
         "createdbs",
         "deletedbs",
-        "replication"],
-    "ServerUrl": "http://localhost:5984",
+        "replication",
+	"queriescontext"],
+    "ServerUrl": "http://indranilatcal.cloudant.com",
     "PrimaryDbName": "mycouchtests_pri",
     "SecondaryDbName": "mycouchtests_sec",
     "TempDbName": "mycouchtests_tmp",
-    "User":"sa",
-    "Password":"test"
+    "User":"indranilatcal",
+    "Password":"in201174"
 }]

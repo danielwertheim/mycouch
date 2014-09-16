@@ -38,12 +38,15 @@ namespace MyCouch.Cloudant.HttpRequestFactories
 
         protected virtual string GenerateRequestBody(FindRequest request)
         {
-            Ensure.That(request.Selector, "request.Selector").IsNotNull();
+            if (request.Selector != null)
+                request.SelectorExpression = request.Selector.ToJson(Serializer);
+
+            Ensure.That(request.SelectorExpression, "request.SelectorExpression").IsNotNullOrWhiteSpace();
 
             var sb = new StringBuilder();
             sb.Append("{");
 
-            sb.AppendFormat(FormatStrings.JsonPropertyFormat, KeyNames.Selector, GetSelectorContent(request.Selector));
+            sb.AppendFormat(FormatStrings.JsonPropertyFormat, KeyNames.Selector, request.SelectorExpression);
             if(request.Limit.HasValue)
                 sb.AppendFormat(FormatStrings.JsonPropertyAppendFormat, KeyNames.Limit, Serializer.ToJson(request.Limit.Value));
             if (request.Skip.HasValue)
