@@ -1,4 +1,5 @@
 ﻿using MyCouch.Cloudant.Querying;
+using MyCouch.Cloudant.Querying.Selectors;
 using MyCouch.Requests;
 using System;
 using System.Collections.Generic;
@@ -16,10 +17,10 @@ namespace MyCouch.Cloudant.Requests
         /// <summary>
         /// JSON object describing criteria used to select documents.
         /// </summary>
-        public string Selector
+        public string SelectorExpression
         {
-            get { return State.Selector; }
-            set { State.Selector = value; }
+            get { return State.SelectorExpression; }
+            set { State.SelectorExpression = value; }
         }
         /// <summary>
         /// Limit the number of the returned documents to the specified number.
@@ -60,6 +61,12 @@ namespace MyCouch.Cloudant.Requests
         {
             get { return State.ReadQuorum; }
             set { State.ReadQuorum = value; }
+        }
+
+        public Selector Selector
+        {
+            get { return State.Selector; }
+            set { State.Selector = value; }
         }
 
         public FindRequest()

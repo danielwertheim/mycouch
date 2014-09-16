@@ -7,6 +7,7 @@ using System.Net;
 using System.Linq;
 using MyCouch.Testing.Model;
 using Newtonsoft.Json.Linq;
+using MyCouch.Cloudant.Querying.Selectors;
 
 namespace MyCouch.IntegrationTests.CloudantTests
 {
@@ -31,7 +32,7 @@ namespace MyCouch.IntegrationTests.CloudantTests
             var request = new FindRequest();
 
             var formatString = "{{\"title\": \"{0}\", \"author.age\": {1}}}";
-            request.Configure(q => q.Selector(string.Format(formatString, title, age)));
+            request.Configure(q => q.SelectorExpression(string.Format(formatString, title, age)));
             
             var response = SUT.FindAsync<Blog>(request).Result;
 
@@ -51,7 +52,7 @@ namespace MyCouch.IntegrationTests.CloudantTests
             JObject selector = new JObject();
             selector.Add("author.age", condition);
             var request = new FindRequest();
-            request.Configure(q => q.Selector(selector.ToString())
+            request.Configure(q => q.SelectorExpression(selector.ToString())
                 .Fields("title")
                 );
 
@@ -80,7 +81,7 @@ namespace MyCouch.IntegrationTests.CloudantTests
             selector.Add("$and", new JArray(ageCondition, yrsAtiveCondition));
 
             var request = new FindRequest();
-            request.Configure(q => q.Selector(selector.ToString())
+            request.Configure(q => q.SelectorExpression(selector.ToString())
                 .Fields("title")
                 );
 
@@ -101,7 +102,7 @@ namespace MyCouch.IntegrationTests.CloudantTests
             JObject selector = new JObject();
             selector.Add("author.age", condition);
             var request = new FindRequest();
-            request.Configure(q => q.Selector(selector.ToString())
+            request.Configure(q => q.SelectorExpression(selector.ToString())
                 .Fields("author.age")
                 .Sort(new SortableField("author.age", SortDirection.Desc))
                 );
@@ -123,7 +124,7 @@ namespace MyCouch.IntegrationTests.CloudantTests
             JObject selector = new JObject();
             selector.Add("author.age", condition);
             var request = new FindRequest();
-            request.Configure(q => q.Selector(selector.ToString())
+            request.Configure(q => q.SelectorExpression(selector.ToString())
                 .Fields("title")
                 .Skip(1)
                 .Limit(1)
@@ -134,6 +135,25 @@ namespace MyCouch.IntegrationTests.CloudantTests
             response.IsSuccess.Should().Be(true);
             response.DocCount.Should().Be(1);
             response.Docs.Select(b => b.Title).SequenceEqual(titles.Select(y => y)).Should().Be(true);
+        }
+
+        [MyFact(TestScenarios.Cloudant, TestScenarios.QueriesContext)]
+        public void Query_with_simple_conditional_operator_using_selector_object_should_return_matching_docs()
+        {
+            const int age = 21;
+            var selector = new Selector();
+            selector.Configure(q => q.AddComparison("author.age", ComparisonOperator.GreaterThan, age));
+            var request = new FindRequest();
+            request.Configure(q => q.Selector(selector)
+                .Fields("title")
+                );
+
+            var response = SUT.FindAsync(request).Result;
+
+            response.IsSuccess.Should().Be(true);
+            response.DocCount.Should().Be(2);
+            response.Docs.Select(t => t.Contains("Couch blog"));
+            response.Docs.Select(t => t.Contains("Json blog"));
         }
     }
 }

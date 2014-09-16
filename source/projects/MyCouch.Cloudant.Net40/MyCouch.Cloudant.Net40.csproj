@@ -144,6 +144,9 @@
     <Compile Include="..\MyCouch.Cloudant.Net45\IMyCouchCloudantServerClient.cs">
       <Link>IMyCouchCloudantServerClient.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\Querying\Selectors\Operator.cs">
+      <Link>Querying\Selectors\Operator.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\SortableField.cs">
       <Link>SortableField.cs</Link>
     </Compile>
