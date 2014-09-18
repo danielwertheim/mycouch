@@ -32,7 +32,9 @@ namespace MyCouch.Serialization.Converters
 
             while (reader.Read() && !(reader.TokenType == JsonToken.EndArray && reader.Depth == valueStartDepth))
             {
-                rowValues.Add(reader.Value);
+                rowValues.Add(reader.TokenType == JsonToken.StartArray 
+                    ? ReadAsObjectArray(reader)
+                    : reader.Value);
             }
 
             return rowValues.ToArray();

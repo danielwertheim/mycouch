@@ -10,7 +10,6 @@
 
 namespace MyCouch.Testing {
     using System;
-    using System.Reflection;
     
     
     /// <summary>
@@ -40,7 +39,7 @@ namespace MyCouch.Testing {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MyCouch.Testing.JsonTestdata", typeof(JsonTestdata).GetTypeInfo().Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MyCouch.Testing.JsonTestdata", typeof(JsonTestdata).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -129,6 +128,35 @@ namespace MyCouch.Testing {
         public static string ViewQueryComplexKeysRows {
             get {
                 return ResourceManager.GetString("ViewQueryComplexKeysRows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///    {
+        ///        &quot;id&quot;: &quot;e5c0dce2ef044d2815f4c83aa00000e4&quot;,
+        ///        &quot;key&quot;: [
+        ///            [
+        ///                &quot;a&quot;,
+        ///                &quot;b&quot;
+        ///            ],
+        ///            123234
+        ///        ],
+        ///        &quot;value&quot;: {
+        ///            &quot;_id&quot;: &quot;e5c0dce2ef044d2815f4c83aa00000e4&quot;,
+        ///            &quot;_rev&quot;: &quot;1-5c4be5d43287f2a8b6121d2720e44d57&quot;,
+        ///            &quot;strings&quot;: [
+        ///                &quot;a&quot;,
+        ///                &quot;b&quot;
+        ///            ],
+        ///            &quot;ts&quot;: 123234
+        ///        }
+        ///    }
+        ///].
+        /// </summary>
+        public static string ViewQueryComplexKeyWithArray {
+            get {
+                return ResourceManager.GetString("ViewQueryComplexKeyWithArray", resourceCulture);
             }
         }
         

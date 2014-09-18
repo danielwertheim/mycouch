@@ -1,4 +1,3 @@
-# v2013-09-02.1
 # vs
 AppPackages/
 [Aa]pp_[Dd]ata/
@@ -25,6 +24,7 @@ tools/
 *.swp
 *.sdf
 *.orig
+testenvironments.local.json
 
 # nuget
 [Pp]ackages/

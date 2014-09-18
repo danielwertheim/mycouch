@@ -133,6 +133,35 @@ namespace MyCouch.Testing {
         
         /// <summary>
         ///   Looks up a localized string similar to [
+        ///    {
+        ///        &quot;id&quot;: &quot;e5c0dce2ef044d2815f4c83aa00000e4&quot;,
+        ///        &quot;key&quot;: [
+        ///            [
+        ///                &quot;a&quot;,
+        ///                &quot;b&quot;
+        ///            ],
+        ///            123234
+        ///        ],
+        ///        &quot;value&quot;: {
+        ///            &quot;_id&quot;: &quot;e5c0dce2ef044d2815f4c83aa00000e4&quot;,
+        ///            &quot;_rev&quot;: &quot;1-5c4be5d43287f2a8b6121d2720e44d57&quot;,
+        ///            &quot;strings&quot;: [
+        ///                &quot;a&quot;,
+        ///                &quot;b&quot;
+        ///            ],
+        ///            &quot;ts&quot;: 123234
+        ///        }
+        ///    }
+        ///].
+        /// </summary>
+        public static string ViewQueryComplexKeyWithArray {
+            get {
+                return ResourceManager.GetString("ViewQueryComplexKeyWithArray", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
         ///    {&quot;id&quot;:&quot;integer:1&quot;,&quot;key&quot;:1,&quot;value&quot;:null},
         ///    {&quot;id&quot;:&quot;float:1&quot;,&quot;key&quot;:3.14,&quot;value&quot;:null},
         ///    {&quot;id&quot;:&quot;datetime:1&quot;,&quot;key&quot;:&quot;2013-09-22T22:36:00&quot;,&quot;value&quot;:null},

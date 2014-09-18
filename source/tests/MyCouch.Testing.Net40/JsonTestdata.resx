@@ -199,6 +199,29 @@
     {"id":"complex:2","key":["test2",2,3.15,"2013-09-22T22:37:00"],"value":null}
 ]</value>
   </data>
+  <data name="ViewQueryComplexKeyWithArray" xml:space="preserve">
+    <value>[
+    {
+        "id": "e5c0dce2ef044d2815f4c83aa00000e4",
+        "key": [
+            [
+                "a",
+                "b"
+            ],
+            123234
+        ],
+        "value": {
+            "_id": "e5c0dce2ef044d2815f4c83aa00000e4",
+            "_rev": "1-5c4be5d43287f2a8b6121d2720e44d57",
+            "strings": [
+                "a",
+                "b"
+            ],
+            "ts": 123234
+        }
+    }
+]</value>
+  </data>
   <data name="ViewQuerySingleValueKeysRows" xml:space="preserve">
     <value>[
     {"id":"integer:1","key":1,"value":null},
