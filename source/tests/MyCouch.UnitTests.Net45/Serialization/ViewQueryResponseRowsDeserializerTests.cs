@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using FluentAssertions;
 using MyCouch.EntitySchemes;
 using MyCouch.EntitySchemes.Reflections;
@@ -206,6 +207,17 @@ namespace MyCouch.UnitTests.Serialization
             rows[3].Key.Should().Be("Fake artist 4");
             rows[3].Value.Length.Should().Be(4);
             rows[3].Value.ShouldBeEquivalentTo(ClientTestData.Artists.Artist4.Albums);
+        }
+
+        [Fact]
+        public void It_can_populate_complex_keys_that_contains_arrays_in_view_query_response_of_string()
+        {
+            var rows = Deserialize<string>(JsonTestdata.ViewQueryComplexKeyWithArray);
+
+            rows.Length.Should().Be(1);
+            var key = (object[])rows[0].Key;
+            key[0].As<object[]>().Select(i => i as string).ShouldBeEquivalentTo(new [] {"a", "b"});
+            key[1].As<long>().Should().Be(123234);
         }
 
         private ViewQueryResponse<T>.Row[] Deserialize<T>(string jsonRows) where T : class
