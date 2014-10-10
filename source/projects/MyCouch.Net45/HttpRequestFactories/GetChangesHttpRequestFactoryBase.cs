@@ -34,7 +34,7 @@ namespace MyCouch.HttpRequestFactories
         protected virtual string GenerateQueryStringParams(GetChangesRequest request)
         {
             return string.Join("&", ConvertRequestToJsonCompatibleKeyValues(request)
-                .Select(kv => string.Format("{0}={1}", kv.Key, Uri.EscapeDataString(kv.Value))));
+                .Select(kv => string.Format("{0}={1}", kv.Key, UrlParam.Encode(kv.Value))));
         }
 
         /// <summary>

@@ -1,6 +1,7 @@
 ﻿using System;
 using EnsureThat;
 using MyCouch.Extensions;
+using MyCouch.Net;
 
 namespace MyCouch
 {
@@ -62,8 +63,8 @@ namespace MyCouch
         {
             return ShouldUseBasicCredentials
                 ? string.Format("{0}:{1}@",
-                    Uri.EscapeDataString(Username),
-                    Uri.EscapeDataString(Password)) 
+                    UrlParam.Encode(Username),
+                    UrlParam.Encode(Password))
                 : string.Empty;
         }
     }

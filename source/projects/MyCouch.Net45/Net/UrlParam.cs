@@ -18,5 +18,15 @@ namespace MyCouch.Net
             if (value != null)
                 Value = Uri.EscapeDataString(value);
         }
+
+        public override string ToString()
+        {
+            return string.Concat(Key, "=", Value);
+        }
+
+        public static string Encode(string value)
+        {
+            return Uri.EscapeDataString(value);
+        }
     }
 }

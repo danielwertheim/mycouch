@@ -219,6 +219,18 @@ namespace MyCouch.IntegrationTests.CoreTests
                 .Replace("\"_rev\":\"" + srcArtist1.Rev + "\"", "\"_rev\":\"" + replaceResponse.Rev + "\""));
         }
 
+        [MyFact(TestScenarios.EntitiesContext)]
+        public void When_PUT_of_id_with_slash_It_will_encode_and_decode_id()
+        {
+            const string id = "test/1";
+
+            var putResponse = SUT.PutAsync(id, "{\"value\":42}").Result;
+            putResponse.Should().BeSuccessfulPutOfNew(id);
+
+            var getResponse = SUT.GetAsync(id).Result;
+            getResponse.Id.Should().Be(id);
+        }
+
         [MyFact(TestScenarios.DocumentsContext)]
         public void Flow_tests()
         {
