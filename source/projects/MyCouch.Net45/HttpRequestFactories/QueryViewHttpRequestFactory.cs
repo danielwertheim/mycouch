@@ -65,7 +65,7 @@ namespace MyCouch.HttpRequestFactories
         protected virtual string GenerateQueryStringParams(QueryViewRequest request)
         {
             return string.Join("&", GenerateJsonCompatibleKeyValues(request)
-                .Select(kv => string.Format("{0}={1}", kv.Key, Uri.EscapeDataString(kv.Value))));
+                .Select(kv => string.Format("{0}={1}", kv.Key, UrlParam.Encode(kv.Value))));
         }
 
         /// <summary>

@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Net.Http;
+﻿using System.Net.Http;
 using MyCouch.Extensions;
 
 namespace MyCouch.Responses.Materializers
@@ -23,7 +22,7 @@ namespace MyCouch.Responses.Materializers
         protected virtual void SetMissingNameFromRequestUri(AttachmentResponse response, HttpResponseMessage httpResponse)
         {
             if (string.IsNullOrWhiteSpace(response.Name))
-                response.Name = httpResponse.RequestMessage.RequestUri.Segments.LastOrDefault();
+                response.Name = httpResponse.RequestMessage.ExtractAttachmentNameFromUri();
         }
 
         protected virtual void SetMissingRevFromRequestHeaders(AttachmentResponse response, HttpResponseMessage httpResponse)

@@ -31,7 +31,7 @@
        <group targetFramework="net40">
          <dependency id="MyCouch" version="[$version$]" />
          <dependency id="Ensure.That" version="2.0.0" />
-         <dependency id="Newtonsoft.Json" version="6.0.4" />
+         <dependency id="Newtonsoft.Json" version="6.0.5" />
          <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
          <dependency id="Microsoft.Net.Http" version="2.2.28" />
          <dependency id="Rx-Main" version="2.2.5" />
@@ -39,13 +39,13 @@
        <group targetFramework="net45">
          <dependency id="MyCouch" version="[$version$]" />
          <dependency id="Ensure.That" version="2.0.0" />
-         <dependency id="Newtonsoft.Json" version="6.0.4" />
+         <dependency id="Newtonsoft.Json" version="6.0.5" />
          <dependency id="Rx-Main" version="2.2.5" />
        </group>
        <group targetFramework="portable-net45+netcore45">
          <dependency id="MyCouch" version="[$version$]" />
          <dependency id="Ensure.That" version="2.0.0" />
-         <dependency id="Newtonsoft.Json" version="6.0.4" />
+         <dependency id="Newtonsoft.Json" version="6.0.5" />
          <dependency id="Rx-Main" version="2.2.5" />
        </group>
     </dependencies>

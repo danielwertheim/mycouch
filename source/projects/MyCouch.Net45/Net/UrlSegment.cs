@@ -1,4 +1,5 @@
-﻿using EnsureThat;
+﻿using System;
+using EnsureThat;
 
 namespace MyCouch.Net
 {
@@ -10,7 +11,7 @@ namespace MyCouch.Net
         {
             Ensure.That(value, "value").IsNotNullOrWhiteSpace();
 
-            Value = value;
+            Value = Uri.EscapeDataString(value);
         }
 
         public override string ToString()
