@@ -49,7 +49,7 @@ namespace MyCouch.Cloudant.HttpRequestFactories
         protected virtual string GenerateQueryStringParams(SearchIndexRequest request)
         {
             return string.Join("&", GenerateJsonCompatibleKeyValues(request)
-                .Select(kv => string.Format("{0}={1}", kv.Key, Uri.EscapeDataString(kv.Value))));
+                .Select(kv => string.Format("{0}={1}", kv.Key, UrlParam.Encode(kv.Value))));
         }
 
         protected virtual IDictionary<string, string> GenerateJsonCompatibleKeyValues(SearchIndexRequest request)

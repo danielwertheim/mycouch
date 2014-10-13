@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using FluentAssertions;
 using MyCouch.Testing;
 using MyCouch.Testing.Model;
 using MyCouch.Testing.TestData;
@@ -210,6 +211,19 @@ namespace MyCouch.IntegrationTests.CoreTests
 
             var putResponse2 = SUT.PutAsync(entity).Result;
             putResponse2.Should().BeSuccessfulPut(id, i => i._id, i => i._rev);
+        }
+
+        [MyFact(TestScenarios.EntitiesContext)]
+        public void When_PUT_of_id_with_slash_It_will_encode_and_decode_id()
+        {
+            var id = "test/1";
+            var entity = new DocumentWithId {Id = id};
+
+            var putResponse = SUT.PutAsync(entity).Result;
+            putResponse.Should().BeSuccessfulPutOfNew(id, i => i.Id, i => i.Rev);
+
+            var getResponse = SUT.GetAsync<DocumentWithId>(id).Result;
+            getResponse.Id.Should().Be(id);
         }
 
         private class DocumentWithId
