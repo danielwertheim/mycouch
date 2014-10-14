@@ -5,7 +5,7 @@ namespace MyCouch.Responses
 #if !PCL
     [Serializable]
 #endif
-    public class TextResponse : ContentResponse<string>
+    public abstract class TextResponse : ContentResponse<string>
     {
         public override bool IsEmpty
         {

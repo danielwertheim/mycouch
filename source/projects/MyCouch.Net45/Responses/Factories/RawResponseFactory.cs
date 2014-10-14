@@ -5,25 +5,25 @@ using MyCouch.Serialization;
 
 namespace MyCouch.Responses.Factories
 {
-    public class TextResponseFactory : ResponseFactoryBase<TextResponse>
+    public class RawResponseFactory : ResponseFactoryBase<RawResponse>
     {
-        protected readonly TextResponseMaterializer SuccessfulResponseMaterializer;
+        protected readonly RawResponseMaterializer SuccessfulResponseMaterializer;
         protected readonly FailedResponseMaterializer FailedResponseMaterializer;
 
-        public TextResponseFactory(ISerializer serializer)
+        public RawResponseFactory(ISerializer serializer)
         {
             Ensure.That(serializer, "serializer").IsNotNull();
 
-            SuccessfulResponseMaterializer = new TextResponseMaterializer();
+            SuccessfulResponseMaterializer = new RawResponseMaterializer();
             FailedResponseMaterializer = new FailedResponseMaterializer(serializer);
         }
 
-        protected override void MaterializeSuccessfulResponse(TextResponse response, HttpResponseMessage httpResponse)
+        protected override void MaterializeSuccessfulResponse(RawResponse response, HttpResponseMessage httpResponse)
         {
             SuccessfulResponseMaterializer.Materialize(response, httpResponse);
         }
 
-        protected override void MaterializeFailedResponse(TextResponse response, HttpResponseMessage httpResponse)
+        protected override void MaterializeFailedResponse(RawResponse response, HttpResponseMessage httpResponse)
         {
             FailedResponseMaterializer.Materialize(response, httpResponse);
         }

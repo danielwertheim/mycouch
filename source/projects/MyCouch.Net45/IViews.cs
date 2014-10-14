@@ -10,6 +10,13 @@ namespace MyCouch
     public interface IViews
     {
         /// <summary>
+        /// Lets you perform a query and get the result as RAW JSON.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        Task<RawResponse> QueryRawAsync(QueryViewRequest request);
+
+        /// <summary>
         /// Lets you perform a query by using a reusable <see cref="QueryViewRequest"/>.
         /// Any returned Value and, or IncludedDoc of the response,
         /// will be treated as JSON-strings.

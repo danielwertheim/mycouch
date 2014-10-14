@@ -371,5 +371,15 @@ namespace MyCouch.IntegrationTests.CoreTests
                 ArtistsById.OrderBy(a => a.ArtistId).ToArray(),
                 i => i.Id);
         }
+
+        [MyFact(TestScenarios.ViewsContext)]
+        public void When_query_as_for_raw_It_shall_return_raw_result()
+        {
+            var query = new QueryViewRequest(ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId);
+
+            var response = SUT.QueryRawAsync(query).Result;
+
+            response.Should().BeGetOfAnyJson();
+        }
     }
 }

@@ -232,14 +232,15 @@
     <Compile Include="Responses\Materializers\FailedEntityResponseMaterializer.cs" />
     <Compile Include="Responses\Materializers\FailedResponseMaterializer.cs" />
     <Compile Include="Responses\Materializers\SimpleDeserializingResponseMaterializer.cs" />
-    <Compile Include="Responses\Materializers\TextResponseMaterializer.cs" />
+    <Compile Include="Responses\Materializers\RawResponseMaterializer.cs" />
     <Compile Include="Responses\Materializers\ViewQueryResponseMaterializer.cs" />
     <Compile Include="Responses\Factories\ReplicationResponseFactory.cs" />
     <Compile Include="Responses\Factories\ResponseFactoryBase.cs" />
-    <Compile Include="Responses\Factories\TextResponseFactory.cs" />
+    <Compile Include="Responses\Factories\RawResponseFactory.cs" />
     <Compile Include="Responses\Factories\ViewQueryResponseFactory.cs" />
     <Compile Include="Responses\GetDatabaseResponse.cs" />
     <Compile Include="Responses\JsonScheme.cs" />
+    <Compile Include="Responses\RawResponse.cs" />
     <Compile Include="Responses\ReplicationResponse.cs" />
     <Compile Include="Responses\Response.cs" />
     <Compile Include="Responses\TextResponse.cs" />

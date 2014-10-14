@@ -505,6 +505,9 @@
     <Compile Include="..\MyCouch.Net45\Responses\Factories\GetDatabaseResponseFactory.cs">
       <Link>Responses\Factories\GetDatabaseResponseFactory.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\Factories\RawResponseFactory.cs">
+      <Link>Responses\Factories\RawResponseFactory.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\Responses\GetEntityResponse.cs">
       <Link>Responses\GetEntityResponse.cs</Link>
     </Compile>
@@ -538,11 +541,11 @@
     <Compile Include="..\MyCouch.Net45\responses\materializers\FailedResponseMaterializer.cs">
       <Link>Responses\Materializers\FailedResponseMaterializer.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\Materializers\RawResponseMaterializer.cs">
+      <Link>Responses\Materializers\RawResponseMaterializer.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\responses\materializers\SimpleDeserializingResponseMaterializer.cs">
       <Link>Responses\Materializers\SimpleDeserializingResponseMaterializer.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\responses\materializers\TextResponseMaterializer.cs">
-      <Link>Responses\Materializers\TextResponseMaterializer.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\responses\materializers\ViewQueryResponseMaterializer.cs">
       <Link>Responses\Materializers\ViewQueryResponseMaterializer.cs</Link>
@@ -553,9 +556,6 @@
     <Compile Include="..\MyCouch.Net45\Responses\Factories\ResponseFactoryBase.cs">
       <Link>Responses\Factories\ResponseFactoryBase.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\Responses\Factories\TextResponseFactory.cs">
-      <Link>Responses\Factories\TextResponseFactory.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Net45\Responses\Factories\ViewQueryResponseFactory.cs">
       <Link>Responses\Factories\ViewQueryResponseFactory.cs</Link>
     </Compile>
@@ -564,6 +564,9 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\Responses\JsonScheme.cs">
       <Link>Responses\JsonScheme.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\RawResponse.cs">
+      <Link>Responses\RawResponse.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Responses\ReplicationResponse.cs">
       <Link>Responses\ReplicationResponse.cs</Link>

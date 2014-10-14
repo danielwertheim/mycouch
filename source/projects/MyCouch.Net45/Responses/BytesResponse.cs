@@ -5,7 +5,7 @@ namespace MyCouch.Responses
 #if !PCL
     [Serializable]
 #endif
-    public class BytesResponse : ContentResponse<byte[]>
+    public abstract class BytesResponse : ContentResponse<byte[]>
     {
         public override bool IsEmpty
         {
