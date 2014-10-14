@@ -191,6 +191,11 @@ namespace MyCouch.Testing
             Response.Content.Should().Be(content);
         }
 
+        public void BeGetOfAnyJson()
+        {
+            BeAnyJson(HttpMethod.Get);
+        }
+
         public void BeAnyJson(HttpMethod method, HttpStatusCode statusCode = HttpStatusCode.OK)
         {
             Be(method, statusCode);

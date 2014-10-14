@@ -15,6 +15,7 @@ namespace MyCouch.Contexts
     {
         protected QueryViewHttpRequestFactory QueryViewHttpRequestFactory { get; set; }
         protected ViewQueryResponseFactory ViewQueryResponseFactory { get; set; }
+        protected RawResponseFactory RawResponseFactory { get; set; } 
 
         public Views(IDbClientConnection connection, ISerializer serializer)
             : base(connection)
@@ -23,6 +24,17 @@ namespace MyCouch.Contexts
 
             QueryViewHttpRequestFactory = new QueryViewHttpRequestFactory(serializer);
             ViewQueryResponseFactory = new ViewQueryResponseFactory(serializer);
+            RawResponseFactory = new RawResponseFactory(serializer);
+        }
+
+        public virtual async Task<RawResponse> QueryRawAsync(QueryViewRequest request)
+        {
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest))
+            {
+                return ProcessRawHttpResponse(res);
+            }
         }
 
         public virtual async Task<ViewQueryResponse> QueryAsync(QueryViewRequest request)
@@ -63,6 +75,11 @@ namespace MyCouch.Contexts
         protected virtual HttpRequest CreateHttpRequest(QueryViewRequest request)
         {
             return QueryViewHttpRequestFactory.Create(request);
+        }
+
+        protected virtual RawResponse ProcessRawHttpResponse(HttpResponseMessage response)
+        {
+            return RawResponseFactory.Create(response);
         }
 
         protected virtual ViewQueryResponse ProcessHttpResponse(HttpResponseMessage response)
