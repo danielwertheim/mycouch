@@ -32,7 +32,7 @@ namespace MyCouch.Contexts
         {
             var httpRequest = CreateHttpRequest(request);
 
-            using (var res = await SendAsync(httpRequest))
+            using (var res = await SendAsync(httpRequest).ForAwait())
             {
                 return ProcessRawHttpResponse(res);
             }
@@ -42,7 +42,7 @@ namespace MyCouch.Contexts
         {
             var httpRequest = CreateHttpRequest(request);
 
-            using (var res = await SendAsync(httpRequest, cancellationToken))
+            using (var res = await SendAsync(httpRequest, cancellationToken).ForAwait())
             {
                 return ProcessRawHttpResponse(res);
             }
