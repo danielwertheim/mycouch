@@ -563,14 +563,14 @@
     <Compile Include="..\mycouch.net45\responses\factories\GetDatabaseResponseFactory.cs">
       <Link>Responses\Factories\GetDatabaseResponseFactory.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\Factories\RawResponseFactory.cs">
+      <Link>Responses\Factories\RawResponseFactory.cs</Link>
+    </Compile>
     <Compile Include="..\mycouch.net45\responses\factories\ReplicationResponseFactory.cs">
       <Link>Responses\Factories\ReplicationResponseFactory.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.net45\responses\factories\ResponseFactoryBase.cs">
       <Link>Responses\Factories\ResponseFactoryBase.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.net45\responses\factories\TextResponseFactory.cs">
-      <Link>Responses\Factories\TextResponseFactory.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.net45\responses\factories\ViewQueryResponseFactory.cs">
       <Link>Responses\Factories\ViewQueryResponseFactory.cs</Link>
@@ -614,14 +614,17 @@
     <Compile Include="..\mycouch.net45\responses\materializers\FailedResponseMaterializer.cs">
       <Link>Responses\Materializers\FailedResponseMaterializer.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\Materializers\RawResponseMaterializer.cs">
+      <Link>Responses\Materializers\RawResponseMaterializer.cs</Link>
+    </Compile>
     <Compile Include="..\mycouch.net45\responses\materializers\SimpleDeserializingResponseMaterializer.cs">
       <Link>Responses\Materializers\SimpleDeserializingResponseMaterializer.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.net45\responses\materializers\TextResponseMaterializer.cs">
-      <Link>Responses\Materializers\TextResponseMaterializer.cs</Link>
-    </Compile>
     <Compile Include="..\mycouch.net45\responses\materializers\ViewQueryResponseMaterializer.cs">
       <Link>Responses\Materializers\ViewQueryResponseMaterializer.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\RawResponse.cs">
+      <Link>Responses\RawResponse.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.net45\responses\ReplicationResponse.cs">
       <Link>Responses\ReplicationResponse.cs</Link>

@@ -1,4 +1,6 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using MyCouch;
 using MyCouch.Requests;
 
@@ -8,33 +10,26 @@ namespace MrLab
     {
         static void Main(string[] args)
         {
+            Test().Wait();
+        }
+
+        private async static Task Test()
+        {
             using (var client = new MyCouchClient("http://sa:test@localhost:5984/foo"))
             {
-                var r = client.Views.QueryAsync(new QueryViewRequest("test", "test")).Result;
-                //client.Database.PutAsync().Wait();
+                var db = await client.Database.PutAsync();
 
-                //var postEntity = client.Entities.PostAsync(new Doc
-                //{
-                //    Item = new Nested { EntityId = "Test" }
-                //}).Result;
+                var put = await client.Entities.PutAsync(
+                    new Person { Id = "persons/1", Name = "Daniel" });
 
-                //var getEntity = client.Entities.GetAsync<Doc>(postEntity.Id).Result;
-                //var getJson = client.Documents.GetAsync(postEntity.Id).Result;
-
-                //var all = client.Views.QueryAsync<Doc>(new QueryViewRequest("test", "all")).Result;
+                var get = await client.Entities.GetAsync<Person>(put.Id);
             }
         }
+    }
 
-        public class Doc
-        {
-            public string DocumentId { get; set; }
-            public string DocumentRev { get; set; }
-            public Nested Item { get; set; }
-        }
-
-        public class Nested
-        {
-            public string EntityId { get; set; }
-        }
+    public class Person
+    {
+        public string Id { get; set; }
+        public string Name { get; set; }
     }
 }
