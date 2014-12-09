@@ -92,6 +92,9 @@
     <Compile Include="..\mycouch.integrationtests.net45\coretests\EntitiesTests.cs">
       <Link>CoreTests\EntitiesTests.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.IntegrationTests.Net45\CoreTests\ListsTests.cs">
+      <Link>CoreTests\ListsTests.cs</Link>
+    </Compile>
     <Compile Include="..\mycouch.integrationtests.net45\coretests\MyCouchStoreCallbackQueryTests.cs">
       <Link>CoreTests\MyCouchStoreCallbackQueryTests.cs</Link>
     </Compile>
