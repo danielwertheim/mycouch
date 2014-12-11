@@ -1,5 +1,4 @@
 ﻿using EnsureThat;
-using MyCouch.Cloudant.Querying.Selectors;
 using System.Linq;
 
 namespace MyCouch.Cloudant
@@ -91,15 +90,6 @@ namespace MyCouch.Cloudant
             Ensure.That(value, "value").IsGte(1);
 
             Parameters.Limit = value;
-
-            return this;
-        }
-
-        public virtual FindParametersConfigurator Selector(Selector value)
-        {
-            Ensure.That(value, "value").IsNotNull();
-
-            Parameters.Selector = value;
 
             return this;
         }
