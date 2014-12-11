@@ -369,6 +369,11 @@ namespace MyCouch.Testing
             BeSuccessful(HttpMethod.Get);
         }
 
+        public void BeSuccessfulPost()
+        {
+            BeSuccessful(HttpMethod.Post);
+        }
+
         private void BeSuccessful(HttpMethod method)
         {
             Response.RequestMethod.Should().Be(method);

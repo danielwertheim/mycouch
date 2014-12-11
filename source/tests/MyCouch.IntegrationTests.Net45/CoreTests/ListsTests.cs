@@ -42,7 +42,7 @@ namespace MyCouch.IntegrationTests.CoreTests
         }
 
         [MyFact(TestScenarios.ListsContext)]
-        public void Should_apply_view_query_parameters_to_underlying_view()
+        public void When_Key_is_specified_using_json_Then_the_matching_row_is_transformed()
         {
             const string keyToReturn = "Fake artist 1";
             var query = new QueryListRequest(ClientTestData.Views.TransformToDocListId,
@@ -55,6 +55,22 @@ namespace MyCouch.IntegrationTests.CoreTests
             var transformedArtists = DbClient.Entities.Serializer.Deserialize<dynamic[]>(response.Content);
             transformedArtists.Length.Should().Be(1);
             ((string)transformedArtists.Single().name).Should().Be(keyToReturn);
+        }
+
+        [MyFact(TestScenarios.ListsContext)]
+        public void When_Keys_are_specified_using_json_Then_matching_rows_are_transformed()
+        {
+            var artists = ArtistsById.Skip(2).Take(3).ToArray();
+            var keys = artists.Select(a => a.Name).ToArray();
+            var query = new QueryListRequest(ClientTestData.Views.TransformToDocListId,
+                ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId.Name).Configure(q => q.Keys(keys));
+
+            var response = SUT.QueryAsync(query).Result;
+
+            response.Should().BeSuccessfulPost();
+            response.ContentType.Should().Contain(HttpContentTypes.Json);
+            var transformedArtists = DbClient.Entities.Serializer.Deserialize<dynamic[]>(response.Content);
+            transformedArtists.Length.Should().Be(3);
         }
     }
 }

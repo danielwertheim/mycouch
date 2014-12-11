@@ -24,7 +24,9 @@ namespace MyCouch.HttpRequestFactories
         {
             Ensure.That(request, "request").IsNotNull();
 
-            var httpRequest = new HttpRequest(HttpMethod.Get, GenerateRelativeUrl(request));
+            var httpRequest = request.HasKeys
+                ? new HttpRequest(HttpMethod.Post, GenerateRelativeUrl(request)).SetJsonContent(GenerateRequestBody(request))
+                : new HttpRequest(HttpMethod.Get, GenerateRelativeUrl(request));
 
             httpRequest.SetRequestTypeHeader(request.GetType());
 
@@ -38,6 +40,13 @@ namespace MyCouch.HttpRequestFactories
                     request.ListIdentity.Name,
                     request.ViewName,
                     GenerateRequestUrlQueryString(request));
+        }
+
+        protected virtual string GenerateRequestBody(QueryListRequest request)
+        {
+            return request.HasKeys
+                ? Serializer.Serialize(new { keys = request.Keys })
+                : "{}";
         }
 
         protected virtual string GenerateRequestUrlQueryString(QueryListRequest request)
@@ -64,8 +73,50 @@ namespace MyCouch.HttpRequestFactories
 
             var kvs = new Dictionary<string, string>();
 
+            if (request.IncludeDocs.HasValue)
+                kvs.Add(KeyNames.IncludeDocs, Serializer.ToJson(request.IncludeDocs.Value));
+
+            if (request.Descending.HasValue)
+                kvs.Add(KeyNames.Descending, Serializer.ToJson(request.Descending.Value));
+
+            if (request.Reduce.HasValue)
+                kvs.Add(KeyNames.Reduce, Serializer.ToJson(request.Reduce.Value));
+
+            if (request.InclusiveEnd.HasValue)
+                kvs.Add(KeyNames.InclusiveEnd, Serializer.ToJson(request.InclusiveEnd.Value));
+
+            if (request.UpdateSeq.HasValue)
+                kvs.Add(KeyNames.UpdateSeq, Serializer.ToJson(request.UpdateSeq.Value));
+
+            if (request.Group.HasValue)
+                kvs.Add(KeyNames.Group, Serializer.ToJson(request.Group.Value));
+
+            if (request.GroupLevel.HasValue)
+                kvs.Add(KeyNames.GroupLevel, Serializer.ToJson(request.GroupLevel.Value));
+
+            if (request.Stale.HasValue)
+                kvs.Add(KeyNames.Stale, request.Stale.Value.AsString());
+
             if (request.Key != null)
                 kvs.Add(KeyNames.Key, Serializer.ToJson(request.Key));
+
+            if (request.StartKey != null)
+                kvs.Add(KeyNames.StartKey, Serializer.ToJson(request.StartKey));
+
+            if (!string.IsNullOrWhiteSpace(request.StartKeyDocId))
+                kvs.Add(KeyNames.StartKeyDocId, request.StartKeyDocId);
+
+            if (request.EndKey != null)
+                kvs.Add(KeyNames.EndKey, Serializer.ToJson(request.EndKey));
+
+            if (!string.IsNullOrWhiteSpace(request.EndKeyDocId))
+                kvs.Add(KeyNames.EndKeyDocId, request.EndKeyDocId);
+
+            if (request.Limit.HasValue)
+                kvs.Add(KeyNames.Limit, Serializer.ToJson(request.Limit.Value));
+
+            if (request.Skip.HasValue)
+                kvs.Add(KeyNames.Skip, Serializer.ToJson(request.Skip.Value));
 
             if(request.HasAdditionalQueryParameters)
             {
