@@ -1,5 +1,4 @@
 ﻿
-using MyCouch.Cloudant.Querying.Selectors;
 using System.Collections.Generic;
 namespace MyCouch.Cloudant.Querying
 {
@@ -16,7 +15,6 @@ namespace MyCouch.Cloudant.Querying
         public IList<string> Fields { get; set; }
 
         public int? ReadQuorum { get; set; }
-        public Selector Selector { get; set; }
 
         public FindParameters()
         {

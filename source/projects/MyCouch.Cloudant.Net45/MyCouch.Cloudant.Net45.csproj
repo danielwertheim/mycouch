@@ -79,7 +79,6 @@
     <Compile Include="IIndexParameters.cs" />
     <Compile Include="IMyCouchCloudantClient.cs" />
     <Compile Include="IMyCouchCloudantServerClient.cs" />
-    <Compile Include="Querying\Selectors\Operator.cs" />
     <Compile Include="SortableField.cs" />
     <Compile Include="IndexParametersConfigurator.cs" />
     <Compile Include="IndexType.cs" />

@@ -38,9 +38,6 @@ namespace MyCouch.Cloudant.HttpRequestFactories
 
         protected virtual string GenerateRequestBody(FindRequest request)
         {
-            if (request.Selector != null)
-                request.SelectorExpression = request.Selector.ToJson(Serializer);
-
             Ensure.That(request.SelectorExpression, "request.SelectorExpression").IsNotNullOrWhiteSpace();
 
             var sb = new StringBuilder();

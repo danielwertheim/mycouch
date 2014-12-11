@@ -1,5 +1,4 @@
 ﻿using MyCouch.Cloudant.Querying;
-using MyCouch.Cloudant.Querying.Selectors;
 using MyCouch.Requests;
 using System;
 using System.Collections.Generic;
@@ -61,12 +60,6 @@ namespace MyCouch.Cloudant.Requests
         {
             get { return State.ReadQuorum; }
             set { State.ReadQuorum = value; }
-        }
-
-        public Selector Selector
-        {
-            get { return State.Selector; }
-            set { State.Selector = value; }
         }
 
         public FindRequest()

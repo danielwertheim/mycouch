@@ -1,5 +1,4 @@
 ﻿
-using MyCouch.Cloudant.Querying.Selectors;
 using System.Collections.Generic;
 namespace MyCouch.Cloudant
 {
@@ -29,6 +28,5 @@ namespace MyCouch.Cloudant
         /// Read quorum needed for the result.
         /// </summary>
         int? ReadQuorum { get; set; }
-        Selector Selector { get; set; }
     }
 }
