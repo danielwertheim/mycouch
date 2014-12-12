@@ -6,5 +6,6 @@
         public const string Xml = "application/xml";
         public const string Json = "application/json";
         public const string Jpeg = "image/jpeg";
+        public const string Html = "text/html";
     }
 }

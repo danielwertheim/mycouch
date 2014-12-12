@@ -91,5 +91,6 @@ namespace MyCouch
         /// <param name="cancellationToken">A cancellation token that can be used to cancel the query</param>
         /// <returns></returns>
         Task<ViewQueryResponse<TValue, TIncludedDoc>> QueryAsync<TValue, TIncludedDoc>(QueryViewRequest query, CancellationToken cancellationToken);
+        Task<ListQueryResponse> QueryAsync(QueryListRequest listQuery);
     }
 }

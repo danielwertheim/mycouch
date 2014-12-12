@@ -87,6 +87,11 @@ namespace MyCouch.Testing
         {
             return new ReplicationResponseAssertions(response);
         }
+
+        public static ListQueryResponseAssertions Should(this ListQueryResponse response)
+        {
+            return new ListQueryResponseAssertions(response);
+        }
     }
 
     public abstract class ResponseAssertions<T> where T : Response
@@ -346,6 +351,37 @@ namespace MyCouch.Testing
                 Response.Rows.Should().NotBeNull();
                 Response.RowCount.Should().Be(numOfRows);
             }
+        }
+    }
+
+    public class ListQueryResponseAssertions
+    {
+        protected readonly ListQueryResponse Response;
+
+        [DebuggerStepThrough]
+        public ListQueryResponseAssertions(ListQueryResponse response)
+        {
+            Response = response;
+        }
+
+        public void BeSuccessfulGet()
+        {
+            BeSuccessful(HttpMethod.Get);
+        }
+
+        public void BeSuccessfulPost()
+        {
+            BeSuccessful(HttpMethod.Post);
+        }
+
+        private void BeSuccessful(HttpMethod method)
+        {
+            Response.RequestMethod.Should().Be(method);
+            Response.IsSuccess.Should().BeTrue();
+            Response.StatusCode.Should().Be(HttpStatusCode.OK);
+            Response.Error.Should().BeNull();
+            Response.Reason.Should().BeNull();
+            Response.IsEmpty.Should().BeFalse();
         }
     }
 
