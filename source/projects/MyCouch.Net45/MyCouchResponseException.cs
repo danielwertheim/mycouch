@@ -28,7 +28,11 @@ namespace MyCouch
                 uri,
                 error,
                 reason))
-        { }
+        {
+            this.HttpStatus = httpStatus;
+            this.Error = error;
+            this.Reason = reason;
+        }
 
 #if !PCL
         protected MyCouchResponseException(SerializationInfo info, StreamingContext context)
