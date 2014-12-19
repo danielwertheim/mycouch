@@ -2,12 +2,9 @@
 using MyCouch.Cloudant.Requests;
 using MyCouch.Net;
 using MyCouch.Serialization;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MyCouch.Cloudant.HttpRequestFactories
 {
@@ -33,7 +30,7 @@ namespace MyCouch.Cloudant.HttpRequestFactories
 
         protected virtual string GenerateRelativeUrl(FindRequest request)
         {
-            return "_find";
+            return "/_find";
         }
 
         protected virtual string GenerateRequestBody(FindRequest request)

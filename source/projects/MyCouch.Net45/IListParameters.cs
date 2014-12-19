@@ -1,5 +1,5 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+
 namespace MyCouch
 {
     /// <summary>
@@ -13,10 +13,12 @@ namespace MyCouch
         /// performed against.
         /// </summary>
         ListIdentity ListIdentity { get; }
+
         /// <summary>
         /// The view to be used for the list query
         /// </summary>
         string ViewName { get; set; }
+
         /// <summary>
         /// Allow the results from a stale view to be used.
         /// </summary>
@@ -102,9 +104,9 @@ namespace MyCouch
         /// </summary>
         int? GroupLevel { get; set; }
 
-        //Plan to add other view query options in simimar pattern as above.
-
+        //TODO: What is this for?
         IDictionary<string, object> AdditionalQueryParameters { get; set; }
+
         bool HasAdditionalQueryParameters { get; }
     }
 }

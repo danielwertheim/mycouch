@@ -113,6 +113,7 @@ namespace MyCouch.Contexts
             }
         }
 
+//TODO: Add cancellationtoken and to similar places.
         public virtual async Task<ListQueryResponse> QueryAsync(QueryListRequest request)
         {
             var httpRequest = CreateHttpRequest(request);

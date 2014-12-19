@@ -1,4 +1,3 @@
-using System.Linq;
 using EnsureThat;
 using System.Collections.Generic;
 
@@ -10,6 +9,8 @@ namespace MyCouch
 
         public ListParametersConfigurator(IListParameters parameters)
         {
+            Ensure.That(parameters, "parameters").IsNotNull();
+
             Parameters = parameters;
         }
 

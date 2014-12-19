@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -11,15 +10,12 @@ namespace MyCouch.Cloudant.HttpRequestFactories
 {
     public class SearchIndexHttpRequestFactory
     {
-        protected ISerializer DocumentSerializer { get; private set; }
         protected ISerializer Serializer { get; private set; }
 
-        public SearchIndexHttpRequestFactory(ISerializer documentSerializer, ISerializer serializer)
+        public SearchIndexHttpRequestFactory(ISerializer serializer)
         {
-            Ensure.That(documentSerializer, "DocumentSerializer").IsNotNull();
             Ensure.That(serializer, "Serializer").IsNotNull();
 
-            DocumentSerializer = documentSerializer;
             Serializer = serializer;
         }
 
@@ -34,8 +30,8 @@ namespace MyCouch.Cloudant.HttpRequestFactories
         protected virtual string GenerateRelativeUrl(SearchIndexRequest request)
         {
             return string.Format("/_design/{0}/_search/{1}{2}",
-                request.IndexIdentity.DesignDocument,
-                request.IndexIdentity.Name,
+                new UrlSegment(request.IndexIdentity.DesignDocument),
+                new UrlSegment(request.IndexIdentity.Name),
                 GenerateRequestUrlQueryString(request));
         }
 
@@ -60,7 +56,7 @@ namespace MyCouch.Cloudant.HttpRequestFactories
                 kvs.Add(KeyNames.Expression, request.Expression);
 
             if (request.HasSortings())
-                kvs.Add(KeyNames.Sort, DocumentSerializer.ToJsonArray(request.Sort.ToArray()));
+                kvs.Add(KeyNames.Sort, Serializer.ToJsonArray(request.Sort.ToArray()));
 
             if (!string.IsNullOrWhiteSpace(request.Bookmark))
                 kvs.Add(KeyNames.Bookmark, request.Bookmark);
@@ -69,28 +65,28 @@ namespace MyCouch.Cloudant.HttpRequestFactories
                 kvs.Add(KeyNames.Stale, request.Stale.Value.AsString());
 
             if (request.Limit.HasValue)
-                kvs.Add(KeyNames.Limit, DocumentSerializer.ToJson(request.Limit.Value));
+                kvs.Add(KeyNames.Limit, Serializer.ToJson(request.Limit.Value));
 
             if (request.IncludeDocs.HasValue)
-                kvs.Add(KeyNames.IncludeDocs, DocumentSerializer.ToJson(request.IncludeDocs.Value));
+                kvs.Add(KeyNames.IncludeDocs, Serializer.ToJson(request.IncludeDocs.Value));
             
             if (request.Ranges != null)
                 kvs.Add(KeyNames.Ranges, Serializer.Serialize(request.Ranges));
 
             if (request.HasCounts())
-                kvs.Add(KeyNames.Counts, DocumentSerializer.ToJsonArray(request.Counts.ToArray()));
+                kvs.Add(KeyNames.Counts, Serializer.ToJsonArray(request.Counts.ToArray()));
 
             if (!string.IsNullOrWhiteSpace(request.GroupField))
                 kvs.Add(KeyNames.GroupField, request.GroupField);
 
             if (request.GroupLimit.HasValue)
-                kvs.Add(KeyNames.GroupLimit, DocumentSerializer.ToJson(request.GroupLimit.Value));
+                kvs.Add(KeyNames.GroupLimit, Serializer.ToJson(request.GroupLimit.Value));
 
             if (request.HasGroupSortings())
-                kvs.Add(KeyNames.GroupSort, DocumentSerializer.ToJsonArray(request.GroupSort.ToArray()));
+                kvs.Add(KeyNames.GroupSort, Serializer.ToJsonArray(request.GroupSort.ToArray()));
 
             if (request.DrillDown.HasValue)
-                kvs.Add(KeyNames.DrillDown, DocumentSerializer.ToJsonArray(new []{ request.DrillDown.Value.Key, request.DrillDown.Value.Value }));
+                kvs.Add(KeyNames.DrillDown, Serializer.ToJsonArray(new[] { request.DrillDown.Value.Key, request.DrillDown.Value.Value }));
 
             return kvs;
         }

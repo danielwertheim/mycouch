@@ -1,7 +1,7 @@
-﻿using EnsureThat;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using EnsureThat;
 
 namespace MyCouch.Querying
 {
@@ -43,6 +43,10 @@ namespace MyCouch.Querying
         public bool? Group { get; set; }
         public int? GroupLevel { get; set; }
         public IDictionary<string, object> AdditionalQueryParameters { get; set; }
-        public bool HasAdditionalQueryParameters { get { return AdditionalQueryParameters != null && AdditionalQueryParameters.Any(); } }
+
+        public bool HasAdditionalQueryParameters
+        {
+            get { return AdditionalQueryParameters != null && AdditionalQueryParameters.Any(); }
+        }
     }
 }

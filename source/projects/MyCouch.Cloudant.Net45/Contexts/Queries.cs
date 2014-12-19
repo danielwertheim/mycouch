@@ -21,9 +21,11 @@ namespace MyCouch.Cloudant.Contexts
         protected IndexResponseFactory IndexResponseFactory { get; set; }
         protected IndexListResponseFactory IndexListResponseFactory { get; set; }
         protected FindResponseFactory FindResponseFactory { get; set; }
-        public Queries(IDbClientConnection connection, ISerializer serializer)
+
+        public Queries(IDbClientConnection connection, ISerializer documentSerializer, ISerializer serializer)
             : base(connection)
         {
+            Ensure.That(documentSerializer, "documentSerializer").IsNotNull();
             Ensure.That(serializer, "serializer").IsNotNull();
 
             PostIndexHttpRequestFactory = new PostIndexHttpRequestFactory(serializer);
@@ -33,7 +35,7 @@ namespace MyCouch.Cloudant.Contexts
 
             IndexResponseFactory = new IndexResponseFactory(serializer);
             IndexListResponseFactory = new IndexListResponseFactory(serializer);
-            FindResponseFactory = new FindResponseFactory(serializer);
+            FindResponseFactory = new FindResponseFactory(documentSerializer);
         }
 
         public virtual async Task<IndexResponse> PostAsync(PostIndexRequest request)

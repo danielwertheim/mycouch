@@ -1,5 +1,4 @@
 ﻿using MyCouch.Net;
-using System;
 using System.Net.Http;
 
 namespace MyCouch.Cloudant.HttpRequestFactories

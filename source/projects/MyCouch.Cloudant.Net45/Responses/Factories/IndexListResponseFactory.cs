@@ -10,6 +10,7 @@ namespace MyCouch.Cloudant.Responses.Factories
     {
         protected readonly SimpleDeserializingResponseMaterializer SuccessfulResponseMaterializer;
         protected readonly FailedResponseMaterializer FailedResponseMaterializer;
+
         public IndexListResponseFactory(ISerializer serializer)
         {
             Ensure.That(serializer, "serializer").IsNotNull();

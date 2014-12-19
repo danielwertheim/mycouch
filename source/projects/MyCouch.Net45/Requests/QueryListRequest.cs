@@ -16,7 +16,12 @@ namespace MyCouch.Requests
         /// Identitfies the List function that this request will be
         /// performed against.
         /// </summary>
-        public ListIdentity ListIdentity { get { return State.ListIdentity; } }
+        public ListIdentity ListIdentity
+        {
+            get { return State.ListIdentity; }
+        }
+
+        //TODO: Document
         public string ViewName
         {
             get { return State.ViewName; }
@@ -181,7 +186,10 @@ namespace MyCouch.Requests
             set { State.AdditionalQueryParameters = value; }
         }
 
-        public bool HasAdditionalQueryParameters { get { return State.HasAdditionalQueryParameters; } }
+        public bool HasAdditionalQueryParameters
+		{
+			get { return State.HasAdditionalQueryParameters; }
+		}
 
         public QueryListRequest(string designDocument, string functionName, string viewName)
             : this(new ListIdentity(designDocument, functionName), viewName) { }

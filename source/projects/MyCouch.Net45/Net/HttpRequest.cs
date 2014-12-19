@@ -28,6 +28,7 @@ namespace MyCouch.Net
 
             RelativeUrl = relativeUrl;
             Method = method;
+			//TODO: Review
             Headers = new Dictionary<string, string> { { "Accept", string.Format(_acceptHeadersAppendFormat,
                                                            HttpContentTypes.Json, HttpContentTypes.Html) } };
         }

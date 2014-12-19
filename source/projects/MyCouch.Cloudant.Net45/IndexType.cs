@@ -1,33 +1,19 @@
-﻿
-using System.Collections.Generic;
-namespace MyCouch.Cloudant
+﻿namespace MyCouch.Cloudant
 {
     /// <summary>
-    /// Depicts the type of index. The only supported value is Json, Full text & geispatial indexes to be supported
-    /// in future
+    /// Depicts the type of index. The only supported value is Json.
+    /// Full text & geospatial indexes is to be supported in the future.
     /// </summary>
     public enum IndexType
     {
-        /// <summary>
-        /// Json
-        /// </summary>
-        Json,
+        Json = 0
     }
 
-    public static class IndexTypeEnumExtensions
+    internal static class IndexTypeEnumExtensions
     {
-        private static readonly Dictionary<IndexType, string> Mappings;
-
-        static IndexTypeEnumExtensions()
+        public static string AsString(this IndexType indexType)
         {
-            Mappings = new Dictionary<IndexType, string> {
-                { IndexType.Json, "json" }
-            };
-        }
-
-        public static string AsString(this IndexType IndexType)
-        {
-            return Mappings[IndexType];
+            return indexType.ToString().ToLowerInvariant();
         }
     }
 }

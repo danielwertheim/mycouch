@@ -21,12 +21,13 @@ namespace MyCouch.Cloudant.Serialization.Converters
             if (reader.TokenType != JsonToken.StartObject)
                 return null;
 
-            List<string> values = new List<string>();
+            var values = new List<string>();
             while (reader.Read() && reader.TokenType != JsonToken.EndObject)
                 values.Add(reader.Value as string);
 
-            return (values.Count == 2 && !string.IsNullOrWhiteSpace(values[0]) && !string.IsNullOrWhiteSpace(values[1])) ?
-                new SortableField(values[0], values[1].AsSortDirection()) : null;
+            return (values.Count == 2 && !string.IsNullOrWhiteSpace(values[0]) && !string.IsNullOrWhiteSpace(values[1]))
+                ? new SortableField(values[0], values[1].AsSortDirection())
+                : null;
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)

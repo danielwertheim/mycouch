@@ -1,6 +1,7 @@
-﻿
+﻿using EnsureThat;
 using MyCouch.Requests;
 using System;
+
 namespace MyCouch.Cloudant.Requests
 {
 #if !PCL
@@ -14,6 +15,9 @@ namespace MyCouch.Cloudant.Requests
 
         public DeleteIndexRequest(string designDoc, string name, IndexType type = IndexType.Json)
         {
+            Ensure.That(designDoc, "designDoc").IsNotNullOrWhiteSpace();
+            Ensure.That(name, "name").IsNotNullOrWhiteSpace();
+
             DesignDoc = designDoc;
             Name = name;
             Type = type;

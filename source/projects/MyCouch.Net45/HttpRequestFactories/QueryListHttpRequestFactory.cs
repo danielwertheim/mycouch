@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -36,9 +35,9 @@ namespace MyCouch.HttpRequestFactories
         protected virtual string GenerateRelativeUrl(QueryListRequest request)
         {
             return string.Format("/_design/{0}/_list/{1}/{2}{3}",
-                    request.ListIdentity.DesignDocument,
-                    request.ListIdentity.Name,
-                    request.ViewName,
+                    new UrlSegment(request.ListIdentity.DesignDocument),
+                    new UrlSegment(request.ListIdentity.Name),
+                    new UrlSegment(request.ViewName),
                     GenerateRequestUrlQueryString(request));
         }
 

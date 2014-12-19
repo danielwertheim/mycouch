@@ -2,7 +2,6 @@
 using EnsureThat;
 using MyCouch.Extensions;
 using MyCouch.Serialization;
-using MyCouch.Net;
 
 namespace MyCouch.Responses.Materializers
 {
@@ -19,7 +18,7 @@ namespace MyCouch.Responses.Materializers
 
         public virtual async void Materialize(ListQueryResponse response, HttpResponseMessage httpResponse)
         {
-            response.Etag = httpResponse.Headers.GetETag();
+            response.ETag = httpResponse.Headers.GetETag();
             response.Content = await httpResponse.Content.ReadAsStringAsync().ForAwait();
         }
     }
