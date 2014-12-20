@@ -91,6 +91,7 @@ namespace MyCouch
             ConfigureDocumentsFn();
             ConfigureEntitiesFn();
             ConfigureViewsFn();
+            ConfigureListsFn();
         }
 
         protected virtual void ConfigureChangesFn()
