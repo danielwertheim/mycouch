@@ -7,6 +7,8 @@ namespace MyCouch.Cloudant
     {
         public ISearches Searches { get; private set; }
 
+        public IQueries Queries { get; private set; }
+
         public MyCouchCloudantClient(string url)
             : this(new Uri(url)) { }
 
@@ -19,6 +21,7 @@ namespace MyCouch.Cloudant
             bootstrapper = bootstrapper ?? new MyCouchCloudantClientBootstrapper();
 
             Searches = bootstrapper.SearchesFn(Connection);
+            Queries = bootstrapper.QueriesFn(Connection);
         }
     }
 }

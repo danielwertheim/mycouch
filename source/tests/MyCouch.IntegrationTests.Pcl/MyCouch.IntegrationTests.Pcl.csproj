@@ -92,6 +92,9 @@
     <Compile Include="..\mycouch.integrationtests.net45\coretests\EntitiesTests.cs">
       <Link>CoreTests\EntitiesTests.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.IntegrationTests.Net45\CoreTests\ListsTests.cs">
+      <Link>CoreTests\ListsTests.cs</Link>
+    </Compile>
     <Compile Include="..\mycouch.integrationtests.net45\coretests\MyCouchStoreCallbackQueryTests.cs">
       <Link>CoreTests\MyCouchStoreCallbackQueryTests.cs</Link>
     </Compile>
@@ -143,6 +146,9 @@
       <Project>{189bf3ac-8cca-4e33-a14a-4d2e782728ca}</Project>
       <Name>MyCouch.Testing.Pcl</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

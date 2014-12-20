@@ -27,7 +27,10 @@ namespace MyCouch.Net
 
             RelativeUrl = relativeUrl;
             Method = method;
-            Headers = new Dictionary<string, string> { { "Accept", HttpContentTypes.Json } };
+            Headers = new Dictionary<string, string>
+            {
+                { "Accept", string.Format("{0},{1}", HttpContentTypes.Json, HttpContentTypes.Html) }
+            };
         }
 
         public virtual HttpRequest SetIfMatchHeader(string rev)

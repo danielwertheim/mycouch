@@ -114,6 +114,9 @@
     <Compile Include="..\MyCouch.UnitTests.Net45\Cloudant\HttpRequestFactories\SearchIndexHttpRequestFactoryTests.cs">
       <Link>Cloudant\HttpRequestFactories\SearchIndexHttpRequestFactoryTests.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.UnitTests.Net45\Cloudant\IndexParametersConfiguratorTests.cs">
+      <Link>Cloudant\IndexParametersConfiguratorTests.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.UnitTests.Net45\Cloudant\Responses\SearchIndexResponseTests.cs">
       <Link>Cloudant\Responses\SearchIndexResponseTests.cs</Link>
     </Compile>
@@ -159,6 +162,9 @@
     <Compile Include="..\MyCouch.UnitTests.Net45\HttpRequestFactories\PutDatabaseHttpRequestFactoryTests.cs">
       <Link>HttpRequestFactories\PutDatabaseHttpRequestFactoryTests.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.UnitTests.Net45\HttpRequestFactories\QueryListHttpRequestFactoryTests.cs">
+      <Link>HttpRequestFactories\QueryListHttpRequestFactoryTests.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.UnitTests.Net45\HttpRequestFactories\QueryViewHttpRequestFactoryTests.cs">
       <Link>HttpRequestFactories\QueryViewHttpRequestFactoryTests.cs</Link>
     </Compile>
@@ -168,6 +174,9 @@
     <Compile Include="..\MyCouch.UnitTests.Net45\HttpRequestFactories\ViewCleanupHttpRequestFactoryTests.cs">
       <Link>HttpRequestFactories\ViewCleanupHttpRequestFactoryTests.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.UnitTests.Net45\ListConfigurationTests.cs">
+      <Link>ListConfigurationTests.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.UnitTests.Net45\Net\BasicAuthStringTests.cs">
       <Link>Net\BasicAuthStringTests.cs</Link>
     </Compile>
@@ -176,6 +185,9 @@
     </Compile>
     <Compile Include="..\MyCouch.UnitTests.Net45\QueryConfigurationTests.cs">
       <Link>QueryConfigurationTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.UnitTests.Net45\Requests\QueryListRequestTests.cs">
+      <Link>Requests\QueryListRequestTests.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.unittests.net45\requests\QueryViewRequestTests.cs">
       <Link>Requests\QueryViewRequestTests.cs</Link>
@@ -215,7 +227,9 @@
       <Name>MyCouch.Testing.Net40</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

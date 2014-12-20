@@ -70,6 +70,9 @@
     <Compile Include="..\MyCouch.Net45\Contexts\Entities.cs">
       <Link>Contexts\Entities.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Contexts\Lists.cs">
+      <Link>Contexts\Lists.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\Contexts\Replicator.cs">
       <Link>Contexts\Replicator.cs</Link>
     </Compile>
@@ -235,6 +238,9 @@
     <Compile Include="..\MyCouch.Net45\HttpRequestFactories\PutEntityHttpRequestFactory.cs">
       <Link>HttpRequestFactories\PutEntityHttpRequestFactory.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\HttpRequestFactories\QueryListHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\QueryListHttpRequestFactory.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\HttpRequestFactories\QueryViewHttpRequestFactory.cs">
       <Link>HttpRequestFactories\QueryViewHttpRequestFactory.cs</Link>
     </Compile>
@@ -277,6 +283,12 @@
     <Compile Include="..\MyCouch.Net45\IEntities.cs">
       <Link>IEntities.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\IListParameters.cs">
+      <Link>IListParameters.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\ILists.cs">
+      <Link>ILists.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\IMyCouchClient.cs">
       <Link>IMyCouchClient.cs</Link>
     </Compile>
@@ -297,6 +309,12 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\IViews.cs">
       <Link>IViews.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\ListIdentity.cs">
+      <Link>ListIdentity.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\ListParametersConfigurator.cs">
+      <Link>ListParametersConfigurator.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\MyCouchClient.cs">
       <Link>MyCouchClient.cs</Link>
@@ -363,6 +381,9 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\QueryInfo.cs">
       <Link>QueryInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Querying\ListParameters.cs">
+      <Link>Querying\ListParameters.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Querying\QueryExtensions.cs">
       <Link>Querying\QueryExtensions.cs</Link>
@@ -432,6 +453,9 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\PutEntityRequest.cs">
       <Link>Requests\PutEntityRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Requests\QueryListRequest.cs">
+      <Link>Requests\QueryListRequest.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\QueryViewRequest.cs">
       <Link>Requests\QueryViewRequest.cs</Link>
@@ -505,11 +529,17 @@
     <Compile Include="..\MyCouch.Net45\Responses\Factories\GetDatabaseResponseFactory.cs">
       <Link>Responses\Factories\GetDatabaseResponseFactory.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\Factories\ListQueryResponseFactory.cs">
+      <Link>Responses\Factories\ListQueryResponseFactory.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\Responses\Factories\RawResponseFactory.cs">
       <Link>Responses\Factories\RawResponseFactory.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Responses\GetEntityResponse.cs">
       <Link>Responses\GetEntityResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\ListQueryResponse.cs">
+      <Link>Responses\ListQueryResponse.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\responses\materializers\AttachmentResponseMaterializer.cs">
       <Link>Responses\Materializers\AttachmentResponseMaterializer.cs</Link>
@@ -540,6 +570,9 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\responses\materializers\FailedResponseMaterializer.cs">
       <Link>Responses\Materializers\FailedResponseMaterializer.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Responses\Materializers\ListQueryResponseMaterializer.cs">
+      <Link>Responses\Materializers\ListQueryResponseMaterializer.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Responses\Materializers\RawResponseMaterializer.cs">
       <Link>Responses\Materializers\RawResponseMaterializer.cs</Link>

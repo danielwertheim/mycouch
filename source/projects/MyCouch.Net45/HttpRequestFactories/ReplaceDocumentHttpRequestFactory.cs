@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net.Http;
+﻿using System.Net.Http;
 using EnsureThat;
 using MyCouch.Net;
 using MyCouch.Requests;

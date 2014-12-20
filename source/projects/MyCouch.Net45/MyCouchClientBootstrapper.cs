@@ -71,6 +71,11 @@ namespace MyCouch
         /// </summary>
         public Func<IDbClientConnection, IViews> ViewsFn { get; set; }
 
+        /// <summary>
+        /// Used e.g. for bootstraping <see cref="IMyCouchClient.Lists"/>.
+        /// </summary>
+        public Func<IDbClientConnection, ILists> ListsFn { get; set; }
+
         public MyCouchClientBootstrapper()
         {
             ConfigureEntityReflectorFn();
@@ -86,6 +91,7 @@ namespace MyCouch
             ConfigureDocumentsFn();
             ConfigureEntitiesFn();
             ConfigureViewsFn();
+            ConfigureListsFn();
         }
 
         protected virtual void ConfigureChangesFn()
@@ -131,6 +137,13 @@ namespace MyCouch
         protected virtual void ConfigureViewsFn()
         {
             ViewsFn = cn => new Views(
+                cn,
+                DocumentSerializerFn());
+        }
+
+        protected virtual void ConfigureListsFn()
+        {
+            ListsFn = cn => new Lists(
                 cn,
                 DocumentSerializerFn());
         }

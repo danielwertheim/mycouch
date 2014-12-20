@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -38,13 +37,13 @@ namespace MyCouch.HttpRequestFactories
             if (request.ViewIdentity is SystemViewIdentity)
             {
                 return string.Format("/{0}{1}",
-                    request.ViewIdentity.Name,
+                    new UrlSegment(request.ViewIdentity.Name),
                     GenerateRequestUrlQueryString(request));
             }
 
             return string.Format("/_design/{0}/_view/{1}{2}",
-                request.ViewIdentity.DesignDocument,
-                request.ViewIdentity.Name,
+                new UrlSegment(request.ViewIdentity.DesignDocument),
+                new UrlSegment(request.ViewIdentity.Name),
                 GenerateRequestUrlQueryString(request));
         }
 

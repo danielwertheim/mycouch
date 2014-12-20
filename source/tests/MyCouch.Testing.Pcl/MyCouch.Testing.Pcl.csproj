@@ -74,6 +74,9 @@
     <Compile Include="..\mycouch.testing.net45\model\Artist.cs">
       <Link>Model\Artist.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Testing.Net45\Model\Blog.cs">
+      <Link>Blog.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Testing.Net45\ObservableRowExtensions.cs">
       <Link>ObservableRowExtensions.cs</Link>
     </Compile>

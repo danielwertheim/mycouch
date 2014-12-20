@@ -16,7 +16,7 @@ namespace MyCouch.Contexts
     {
         protected QueryViewHttpRequestFactory QueryViewHttpRequestFactory { get; set; }
         protected ViewQueryResponseFactory ViewQueryResponseFactory { get; set; }
-        protected RawResponseFactory RawResponseFactory { get; set; } 
+        protected RawResponseFactory RawResponseFactory { get; set; }
 
         public Views(IDbClientConnection connection, ISerializer serializer)
             : base(connection)
@@ -107,6 +107,8 @@ namespace MyCouch.Contexts
                 return ProcessHttpResponse<TValue, TIncludedDoc>(res);
             }
         }
+
+
 
         protected virtual QueryViewRequest CreateQueryViewRequest(string designDocument, string viewname)
         {

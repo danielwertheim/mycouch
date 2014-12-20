@@ -18,6 +18,7 @@ namespace MyCouch
         public IDocuments Documents { get; private set; }
         public IEntities Entities { get; protected set; }
         public IViews Views { get; private set; }
+        public ILists Lists { get; private set; }
 
         public MyCouchClient(string dbUri, string dbName = null) : this(new Uri(dbUri), dbName) { }
 
@@ -28,9 +29,9 @@ namespace MyCouch
             Ensure.That(connection, "connection").IsNotNull();
 
             Connection = connection;
+            IsDisposed = false;
 
             bootstrapper = bootstrapper ?? new MyCouchClientBootstrapper();
-
             Serializer = bootstrapper.SerializerFn();
             DocumentSerializer = bootstrapper.DocumentSerializerFn();
             Changes = bootstrapper.ChangesFn(Connection);
@@ -39,7 +40,7 @@ namespace MyCouch
             Documents = bootstrapper.DocumentsFn(Connection);
             Entities = bootstrapper.EntitiesFn(Connection);
             Views = bootstrapper.ViewsFn(Connection);
-            IsDisposed = false;
+            Lists = bootstrapper.ListsFn(Connection);
         }
 
         public void Dispose()
