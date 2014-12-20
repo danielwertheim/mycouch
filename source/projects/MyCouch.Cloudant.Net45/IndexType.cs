@@ -2,7 +2,7 @@
 {
     /// <summary>
     /// Depicts the type of index. The only supported value is Json.
-    /// Full text & geospatial indexes is to be supported in the future.
+    /// Full text and geospatial indexes is to be supported in the future.
     /// </summary>
     public enum IndexType
     {
