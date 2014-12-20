@@ -9,8 +9,7 @@ using Xunit;
 
 namespace MyCouch.IntegrationTests.CoreTests
 {
-    public class ViewsTests :
-        IntegrationTestsOf<IViews>,
+    public class ViewsTests : IntegrationTestsOf<IViews>,
         IPreserveStatePerFixture,
         IUseFixture<ViewsFixture>
     {

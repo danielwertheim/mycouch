@@ -61,5 +61,10 @@ namespace MyCouch
         /// View oriented API operations, for accessing and managing views.
         /// </summary>
         IViews Views { get; }
+
+        /// <summary>
+        /// List oriented API operations, for accessing and managing lists.
+        /// </summary>
+        ILists Lists { get; }
     }
 }

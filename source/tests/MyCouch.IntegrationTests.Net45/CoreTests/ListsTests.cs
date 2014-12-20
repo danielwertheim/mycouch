@@ -10,8 +10,7 @@ using MyCouch.Net;
 
 namespace MyCouch.IntegrationTests.CoreTests
 {
-    public class ListsTests :
-        IntegrationTestsOf<IViews>,
+    public class ListsTests : IntegrationTestsOf<ILists>,
         IPreserveStatePerFixture,
         IUseFixture<ViewsFixture>
     {
@@ -19,7 +18,7 @@ namespace MyCouch.IntegrationTests.CoreTests
 
         public ListsTests()
         {
-            SUT = DbClient.Views;
+            SUT = DbClient.Lists;
         }
 
         public void SetFixture(ViewsFixture data)

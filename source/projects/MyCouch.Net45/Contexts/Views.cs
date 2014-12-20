@@ -9,7 +9,6 @@ using MyCouch.Requests;
 using MyCouch.Responses;
 using MyCouch.Responses.Factories;
 using MyCouch.Serialization;
-using System;
 
 namespace MyCouch.Contexts
 {
@@ -18,8 +17,6 @@ namespace MyCouch.Contexts
         protected QueryViewHttpRequestFactory QueryViewHttpRequestFactory { get; set; }
         protected ViewQueryResponseFactory ViewQueryResponseFactory { get; set; }
         protected RawResponseFactory RawResponseFactory { get; set; }
-        protected QueryListHttpRequestFactory QueryListHttpRequestFactory { get; set; }
-        protected ListQueryResponseFactory ListQueryResponseFactory { get; set; }
 
         public Views(IDbClientConnection connection, ISerializer serializer)
             : base(connection)
@@ -29,8 +26,6 @@ namespace MyCouch.Contexts
             QueryViewHttpRequestFactory = new QueryViewHttpRequestFactory(serializer);
             ViewQueryResponseFactory = new ViewQueryResponseFactory(serializer);
             RawResponseFactory = new RawResponseFactory(serializer);
-            QueryListHttpRequestFactory = new QueryListHttpRequestFactory(serializer);
-            ListQueryResponseFactory = new ListQueryResponseFactory(serializer);
         }
 
         public virtual async Task<RawResponse> QueryRawAsync(QueryViewRequest request)
@@ -113,16 +108,7 @@ namespace MyCouch.Contexts
             }
         }
 
-//TODO: Add cancellationtoken and to similar places.
-        public virtual async Task<ListQueryResponse> QueryAsync(QueryListRequest request)
-        {
-            var httpRequest = CreateHttpRequest(request);
 
-            using (var res = await SendAsync(httpRequest).ForAwait())
-            {
-                return ProcessListHttpResponse(res);
-            }
-        }
 
         protected virtual QueryViewRequest CreateQueryViewRequest(string designDocument, string viewname)
         {
@@ -134,11 +120,6 @@ namespace MyCouch.Contexts
             return QueryViewHttpRequestFactory.Create(request);
         }
 
-        protected virtual HttpRequest CreateHttpRequest(QueryListRequest request)
-        {
-            return QueryListHttpRequestFactory.Create(request);
-        }
-
         protected virtual RawResponse ProcessRawHttpResponse(HttpResponseMessage response)
         {
             return RawResponseFactory.Create(response);
@@ -147,11 +128,6 @@ namespace MyCouch.Contexts
         protected virtual ViewQueryResponse ProcessHttpResponse(HttpResponseMessage response)
         {
             return ViewQueryResponseFactory.Create(response);
-        }
-
-        protected virtual ListQueryResponse ProcessListHttpResponse(HttpResponseMessage response)
-        {
-            return ListQueryResponseFactory.Create(response);
         }
 
         protected virtual ViewQueryResponse<T> ProcessHttpResponse<T>(HttpResponseMessage response)
