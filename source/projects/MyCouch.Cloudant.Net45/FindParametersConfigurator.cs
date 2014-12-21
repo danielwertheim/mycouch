@@ -1,5 +1,5 @@
-﻿using EnsureThat;
-using System.Linq;
+﻿using System.Linq;
+using EnsureThat;
 
 namespace MyCouch.Cloudant
 {
@@ -16,12 +16,15 @@ namespace MyCouch.Cloudant
         /// JSON object describing criteria used to select documents.
         /// </summary>
         /// <param name="value"></param>
+        /// <param name="formattingArgs"></param>
         /// <returns></returns>
-        public virtual FindParametersConfigurator SelectorExpression(string value)
+        public virtual FindParametersConfigurator SelectorExpression(string value, params object[] formattingArgs)
         {
             Ensure.That(value, "value").IsNotNullOrWhiteSpace();
 
-            Parameters.SelectorExpression = value;
+            Parameters.SelectorExpression = formattingArgs != null && formattingArgs.Any()
+                ? string.Format(value, formattingArgs)
+                : value;
 
             return this;
         }

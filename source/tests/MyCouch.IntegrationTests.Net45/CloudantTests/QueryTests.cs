@@ -3,7 +3,6 @@ using MyCouch.Cloudant.Requests;
 using MyCouch.IntegrationTests.TestFixtures;
 using Xunit;
 using FluentAssertions;
-using System.Net;
 using System.Linq;
 using MyCouch.Testing.Model;
 using Newtonsoft.Json.Linq;
@@ -18,6 +17,7 @@ namespace MyCouch.IntegrationTests.CloudantTests
         {
             SUT = CloudantDbClient.Queries;
         }
+
         public void SetFixture(QueriesFixture data)
         {
             data.Init(Environment);
@@ -28,11 +28,8 @@ namespace MyCouch.IntegrationTests.CloudantTests
         {
             const string title = "Html5 blog";
             const int age = 21;
-            var request = new FindRequest();
+            var request = new FindRequest().Configure(q => q.SelectorExpression("{{\"title\": \"{0}\", \"author.age\": {1}}}", title, age));
 
-            var formatString = "{{\"title\": \"{0}\", \"author.age\": {1}}}";
-            request.Configure(q => q.SelectorExpression(string.Format(formatString, title, age)));
-            
             var response = SUT.FindAsync<Blog>(request).Result;
 
             response.IsSuccess.Should().Be(true);
@@ -46,21 +43,20 @@ namespace MyCouch.IntegrationTests.CloudantTests
         public void Query_with_simple_conditional_operator_should_return_matching_docs()
         {
             const int age = 21;
-            JObject condition = new JObject();
-            condition.Add("$gt", age);
-            JObject selector = new JObject();
-            selector.Add("author.age", condition);
-            var request = new FindRequest();
-            request.Configure(q => q.SelectorExpression(selector.ToString())
-                .Fields("title")
-                );
+            var selector = new JObject
+            {
+                {"author.age", new JObject {{"$gt", age}}}
+            };
+            var request = new FindRequest().Configure(q => q
+                .SelectorExpression(selector.ToString())
+                .Fields("title"));
 
             var response = SUT.FindAsync(request).Result;
 
             response.IsSuccess.Should().Be(true);
             response.DocCount.Should().Be(2);
-            response.Docs.Select(t => t.Contains("Couch blog"));
-            response.Docs.Select(t => t.Contains("Json blog"));
+            response.Docs.Should().Contain("Couch blog");
+            response.Docs.Should().Contain(t => t.Contains("Json blog"));
         }
 
         [MyFact(TestScenarios.Cloudant, TestScenarios.QueriesContext)]
