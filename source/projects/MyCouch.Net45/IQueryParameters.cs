@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace MyCouch
 {
     /// <summary>
@@ -96,5 +98,20 @@ namespace MyCouch
         /// Specify the group level to be used.
         /// </summary>
         int? GroupLevel { get; set; }
+
+        /// <summary>
+        /// Specify if you want to target a specific list in the view.
+        /// </summary>
+        string ListName { get; set; }
+
+        /// <summary>
+        /// Additional custom query string parameters.
+        /// </summary>
+        IDictionary<string, object> CustomQueryParameters { get; set; }
+
+        /// <summary>
+        /// Indicates if there are any <see cref="CustomQueryParameters"/> or not.
+        /// </summary>
+        bool HasCustomQueryParameters { get; }
     }
 }

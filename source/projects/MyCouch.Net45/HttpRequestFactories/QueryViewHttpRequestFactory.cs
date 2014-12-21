@@ -41,6 +41,13 @@ namespace MyCouch.HttpRequestFactories
                     GenerateRequestUrlQueryString(request));
             }
 
+            if(!string.IsNullOrWhiteSpace(request.ListName))
+                return string.Format("/_design/{0}/_list/{1}/{2}{3}",
+                    new UrlSegment(request.ViewIdentity.DesignDocument),
+                    new UrlSegment(request.ListName),
+                    new UrlSegment(request.ViewIdentity.Name),
+                    GenerateRequestUrlQueryString(request));
+
             return string.Format("/_design/{0}/_view/{1}{2}",
                 new UrlSegment(request.ViewIdentity.DesignDocument),
                 new UrlSegment(request.ViewIdentity.Name),
@@ -120,6 +127,10 @@ namespace MyCouch.HttpRequestFactories
 
             if (request.Skip.HasValue)
                 kvs.Add(KeyNames.Skip, Serializer.ToJson(request.Skip.Value));
+
+            if (request.HasCustomQueryParameters)
+                foreach (var param in request.CustomQueryParameters)
+                    kvs.Add(UrlParam.Encode(param.Key), Serializer.ToJson(param.Value));
 
             return kvs;
         }

@@ -378,7 +378,7 @@ namespace MyCouch.IntegrationTests.CoreTests
 
             var response = SUT.QueryRawAsync(query).Result;
 
-            response.Should().BeGetOfAnyJson();
+            response.Should().BeGetOfJson();
         }
     }
 }

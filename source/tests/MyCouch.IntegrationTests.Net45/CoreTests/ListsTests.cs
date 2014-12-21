@@ -6,11 +6,10 @@ using MyCouch.Testing;
 using MyCouch.Testing.Model;
 using MyCouch.Testing.TestData;
 using Xunit;
-using MyCouch.Net;
 
 namespace MyCouch.IntegrationTests.CoreTests
 {
-    public class ListsTests : IntegrationTestsOf<ILists>,
+    public class ListsTests : IntegrationTestsOf<IViews>,
         IPreserveStatePerFixture,
         IUseFixture<ViewsFixture>
     {
@@ -18,7 +17,7 @@ namespace MyCouch.IntegrationTests.CoreTests
 
         public ListsTests()
         {
-            SUT = DbClient.Lists;
+            SUT = DbClient.Views;
         }
 
         public void SetFixture(ViewsFixture data)
@@ -27,49 +26,84 @@ namespace MyCouch.IntegrationTests.CoreTests
         }
 
         [MyFact(TestScenarios.ListsContext)]
-        public void Should_transform_all_view_rows_when_query_parameters_not_supplied()
+        public void When_querying_raw_using_list_that_transforms_to_json_It_should_return_json()
         {
-            var query = new QueryListRequest(ClientTestData.Views.TransformToDocListId,
-                ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId.Name);
+            var query = new QueryViewRequest(ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId)
+                .Configure(c => c.WithList(ClientTestData.Views.ListNames.TransformToDocListId));
 
-            var response = SUT.QueryAsync(query).Result;
+            var response = SUT.QueryRawAsync(query).Result;
 
-            response.Should().BeSuccessfulGet();
-            response.ContentType.Should().Contain(HttpContentTypes.Json);
+            response.Should().BeGetOfJson();
             var transformedArtists = DbClient.Entities.Serializer.Deserialize<dynamic[]>(response.Content);
             transformedArtists.Length.Should().Be(10);
         }
 
         [MyFact(TestScenarios.ListsContext)]
-        public void When_Key_is_specified_using_json_Then_the_matching_row_is_transformed()
+        public void When_querying_raw_using_list_that_transforms_to_html_It_should_return_html()
+        {
+            var query = new QueryViewRequest(ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId)
+                .Configure(c => c.WithList(ClientTestData.Views.ListNames.TransformToHtmlListId));
+
+            var response = SUT.QueryRawAsync(query).Result;
+
+            response.Should().BeGetOfHtml();
+        }
+
+        [MyFact(TestScenarios.ListsContext)]
+        public void When_querying_raw_using_key_and_a_list_that_transforms_to_json_It_should_return_json()
         {
             const string keyToReturn = "Fake artist 1";
-            var query = new QueryListRequest(ClientTestData.Views.TransformToDocListId,
-                ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId.Name).Configure(q => q.Key(keyToReturn));
+            var query = new QueryViewRequest(ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId).Configure(c => c
+                .WithList(ClientTestData.Views.ListNames.TransformToDocListId)
+                .Key(keyToReturn));
 
-            var response = SUT.QueryAsync(query).Result;
+            var response = SUT.QueryRawAsync(query).Result;
 
-            response.Should().BeSuccessfulGet();
-            response.ContentType.Should().Contain(HttpContentTypes.Json);
+            response.Should().BeGetOfJson();
             var transformedArtists = DbClient.Entities.Serializer.Deserialize<dynamic[]>(response.Content);
             transformedArtists.Length.Should().Be(1);
             ((string)transformedArtists.Single().name).Should().Be(keyToReturn);
         }
 
         [MyFact(TestScenarios.ListsContext)]
-        public void When_Keys_are_specified_using_json_Then_matching_rows_are_transformed()
+        public void When_querying_raw_using_key_and_a_list_that_transforms_to_html_It_should_return_html()
+        {
+            const string keyToReturn = "Fake artist 1";
+            var query = new QueryViewRequest(ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId).Configure(c => c
+                .WithList(ClientTestData.Views.ListNames.TransformToHtmlListId)
+                .Key(keyToReturn));
+
+            var response = SUT.QueryRawAsync(query).Result;
+
+            response.Should().BeGetOfHtml();
+        }
+
+        [MyFact(TestScenarios.ListsContext)]
+        public void When_querying_raw_using_keys_and_a_list_that_transforms_to_json_It_should_return_json()
         {
             var artists = ArtistsById.Skip(2).Take(3).ToArray();
             var keys = artists.Select(a => a.Name).ToArray();
-            var query = new QueryListRequest(ClientTestData.Views.TransformToDocListId,
-                ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId.Name).Configure(q => q.Keys(keys));
+            var query = new QueryViewRequest(ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId)
+                .Configure(c => c.WithList(ClientTestData.Views.ListNames.TransformToDocListId).Keys(keys));
 
-            var response = SUT.QueryAsync(query).Result;
+            var response = SUT.QueryRawAsync(query).Result;
 
-            response.Should().BeSuccessfulPost();
-            response.ContentType.Should().Contain(HttpContentTypes.Json);
+            response.Should().BePostOfJson();
             var transformedArtists = DbClient.Entities.Serializer.Deserialize<dynamic[]>(response.Content);
             transformedArtists.Length.Should().Be(3);
+        }
+
+        [MyFact(TestScenarios.ListsContext)]
+        public void When_querying_raw_using_keys_and_a_list_that_transforms_to_html_It_should_return_html()
+        {
+            var artists = ArtistsById.Skip(2).Take(3).ToArray();
+            var keys = artists.Select(a => a.Name).ToArray();
+            var query = new QueryViewRequest(ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId)
+                .Configure(c => c.WithList(ClientTestData.Views.ListNames.TransformToHtmlListId).Keys(keys));
+
+            var response = SUT.QueryRawAsync(query).Result;
+
+            response.Should().BePostOfHtml();
         }
     }
 }

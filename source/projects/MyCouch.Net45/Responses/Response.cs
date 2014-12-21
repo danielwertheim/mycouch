@@ -12,6 +12,7 @@ namespace MyCouch.Responses
         protected const string NullValueForDebugOutput = "<NULL>";
 
         public HttpStatusCode StatusCode { get; set; }
+        public string ETag { get; set; }
         public Uri RequestUri { get; set; }
         public HttpMethod RequestMethod { get; set; }
         public string ContentType { get; set; }
@@ -34,7 +35,7 @@ namespace MyCouch.Responses
 
         public virtual string ToStringDebugVersion()
         {
-            return string.Format("RequestUri: {1}{0}RequestMethod: {2}{0}Status: {3}({4}){0}Error:{5}{0}Reason: {6}{0}ContentType:{7}{0}",
+            return string.Format("RequestUri: {1}{0}RequestMethod: {2}{0}Status: {3}({4}){0}Error:{5}{0}Reason: {6}{0}ContentType:{7}{0}ETag: {8}{0}",
                 Environment.NewLine,
                 RequestUri,
                 RequestMethod,
@@ -42,7 +43,8 @@ namespace MyCouch.Responses
                 (int)StatusCode,
                 Error ?? NullValueForDebugOutput,
                 Reason ?? NullValueForDebugOutput,
-                ContentType);
+                ContentType,
+                ETag ?? NullValueForDebugOutput);
         }
     }
 }

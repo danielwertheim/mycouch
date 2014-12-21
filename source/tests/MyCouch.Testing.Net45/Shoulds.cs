@@ -87,11 +87,6 @@ namespace MyCouch.Testing
         {
             return new ReplicationResponseAssertions(response);
         }
-
-        public static ListQueryResponseAssertions Should(this ListQueryResponse response)
-        {
-            return new ListQueryResponseAssertions(response);
-        }
     }
 
     public abstract class ResponseAssertions<T> where T : Response
@@ -189,6 +184,28 @@ namespace MyCouch.Testing
         [DebuggerStepThrough]
         public ContentResponseAssertions(TextResponse response) : base(response) { }
 
+        public void BeGetOfJson()
+        {
+            BeJson(HttpMethod.Get);
+        }
+
+        public void BePostOfJson()
+        {
+            BeJson(HttpMethod.Post);
+        }
+
+        public void BeOkJson(HttpMethod method, HttpStatusCode statusCode = HttpStatusCode.OK)
+        {
+            BeJson(method, statusCode, "{\"ok\":true}");
+        }
+
+        public void BeJson(HttpMethod method, HttpStatusCode statusCode = HttpStatusCode.OK)
+        {
+            Be(method, statusCode);
+            Response.ContentType.Should().Be(HttpContentTypes.Json);
+            Response.Content.Should().NotBeNullOrEmpty();
+        }
+
         public void BeJson(HttpMethod method, HttpStatusCode statusCode, string content)
         {
             Be(method, statusCode);
@@ -196,21 +213,21 @@ namespace MyCouch.Testing
             Response.Content.Should().Be(content);
         }
 
-        public void BeGetOfAnyJson()
+        public void BeGetOfHtml()
         {
-            BeAnyJson(HttpMethod.Get);
+            BeHtml(HttpMethod.Get);
         }
 
-        public void BeAnyJson(HttpMethod method, HttpStatusCode statusCode = HttpStatusCode.OK)
+        public void BePostOfHtml()
+        {
+            BeHtml(HttpMethod.Post);
+        }
+
+        public void BeHtml(HttpMethod method, HttpStatusCode statusCode = HttpStatusCode.OK)
         {
             Be(method, statusCode);
-            Response.ContentType.Should().Be(HttpContentTypes.Json);
+            Response.ContentType.Should().Contain(HttpContentTypes.Html);
             Response.Content.Should().NotBeNullOrEmpty();
-        }
-
-        public void BeOkJson(HttpMethod method, HttpStatusCode statusCode = HttpStatusCode.OK)
-        {
-            BeJson(method, statusCode, "{\"ok\":true}");
         }
     }
 
@@ -345,43 +362,13 @@ namespace MyCouch.Testing
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
             Response.IsEmpty.Should().BeFalse();
+            Response.ETag.Should().NotBeNullOrWhiteSpace();
 
             if (numOfRows > 0)
             {
                 Response.Rows.Should().NotBeNull();
                 Response.RowCount.Should().Be(numOfRows);
             }
-        }
-    }
-
-    public class ListQueryResponseAssertions
-    {
-        protected readonly ListQueryResponse Response;
-
-        [DebuggerStepThrough]
-        public ListQueryResponseAssertions(ListQueryResponse response)
-        {
-            Response = response;
-        }
-
-        public void BeSuccessfulGet()
-        {
-            BeSuccessful(HttpMethod.Get);
-        }
-
-        public void BeSuccessfulPost()
-        {
-            BeSuccessful(HttpMethod.Post);
-        }
-
-        private void BeSuccessful(HttpMethod method)
-        {
-            Response.RequestMethod.Should().Be(method);
-            Response.IsSuccess.Should().BeTrue();
-            Response.StatusCode.Should().Be(HttpStatusCode.OK);
-            Response.Error.Should().BeNull();
-            Response.Reason.Should().BeNull();
-            Response.IsEmpty.Should().BeFalse();
         }
     }
 

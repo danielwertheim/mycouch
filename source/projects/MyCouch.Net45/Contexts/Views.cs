@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using EnsureThat;
@@ -50,6 +51,8 @@ namespace MyCouch.Contexts
 
         public virtual async Task<ViewQueryResponse> QueryAsync(QueryViewRequest request)
         {
+            EnsureThatNoListFunctionIsUsed(request);
+
             var httpRequest = CreateHttpRequest(request);
 
             using (var res = await SendAsync(httpRequest).ForAwait())
@@ -60,6 +63,8 @@ namespace MyCouch.Contexts
 
         public virtual async Task<ViewQueryResponse> QueryAsync(QueryViewRequest request, CancellationToken cancellationToken)
         {
+            EnsureThatNoListFunctionIsUsed(request);
+
             var httpRequest = CreateHttpRequest(request);
 
             using (var res = await SendAsync(httpRequest, cancellationToken).ForAwait())
@@ -70,6 +75,8 @@ namespace MyCouch.Contexts
 
         public virtual async Task<ViewQueryResponse<TValue>> QueryAsync<TValue>(QueryViewRequest request)
         {
+            EnsureThatNoListFunctionIsUsed(request);
+
             var httpRequest = CreateHttpRequest(request);
 
             using (var res = await SendAsync(httpRequest).ForAwait())
@@ -80,6 +87,8 @@ namespace MyCouch.Contexts
 
         public virtual async Task<ViewQueryResponse<TValue>> QueryAsync<TValue>(QueryViewRequest request, CancellationToken cancellationToken)
         {
+            EnsureThatNoListFunctionIsUsed(request);
+
             var httpRequest = CreateHttpRequest(request);
 
             using (var res = await SendAsync(httpRequest, cancellationToken).ForAwait())
@@ -90,6 +99,8 @@ namespace MyCouch.Contexts
 
         public virtual async Task<ViewQueryResponse<TValue, TIncludedDoc>> QueryAsync<TValue, TIncludedDoc>(QueryViewRequest request)
         {
+            EnsureThatNoListFunctionIsUsed(request);
+
             var httpRequest = CreateHttpRequest(request);
 
             using (var res = await SendAsync(httpRequest).ForAwait())
@@ -100,6 +111,8 @@ namespace MyCouch.Contexts
 
         public virtual async Task<ViewQueryResponse<TValue, TIncludedDoc>> QueryAsync<TValue, TIncludedDoc>(QueryViewRequest request, CancellationToken cancellationToken)
         {
+            EnsureThatNoListFunctionIsUsed(request);
+
             var httpRequest = CreateHttpRequest(request);
 
             using (var res = await SendAsync(httpRequest, cancellationToken).ForAwait())
@@ -107,8 +120,6 @@ namespace MyCouch.Contexts
                 return ProcessHttpResponse<TValue, TIncludedDoc>(res);
             }
         }
-
-
 
         protected virtual QueryViewRequest CreateQueryViewRequest(string designDocument, string viewname)
         {
@@ -138,6 +149,14 @@ namespace MyCouch.Contexts
         protected virtual ViewQueryResponse<TValue, TIncludedDoc> ProcessHttpResponse<TValue, TIncludedDoc>(HttpResponseMessage response)
         {
             return ViewQueryResponseFactory.Create<TValue, TIncludedDoc>(response);
+        }
+
+        private static void EnsureThatNoListFunctionIsUsed(QueryViewRequest request)
+        {
+            Ensure.That(request, "request").IsNotNull();
+            if (!string.IsNullOrWhiteSpace(request.ListName))
+                throw new NotSupportedException(
+                    "This method does not support list functions to be used. Use QueryRawAsync instead.");
         }
     }
 }

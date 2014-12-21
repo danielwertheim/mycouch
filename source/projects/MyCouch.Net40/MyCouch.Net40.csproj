@@ -128,9 +128,6 @@
     <Compile Include="..\mycouch.net45\contexts\Entities.cs">
       <Link>Contexts\Entities.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\Contexts\Lists.cs">
-      <Link>Contexts\Lists.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Net45\Contexts\Replicator.cs">
       <Link>Contexts\Replicator.cs</Link>
     </Compile>
@@ -296,9 +293,6 @@
     <Compile Include="..\MyCouch.Net45\HttpRequestFactories\PutEntityHttpRequestFactory.cs">
       <Link>HttpRequestFactories\PutEntityHttpRequestFactory.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\HttpRequestFactories\QueryListHttpRequestFactory.cs">
-      <Link>HttpRequestFactories\QueryListHttpRequestFactory.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Net45\HttpRequestFactories\QueryViewHttpRequestFactory.cs">
       <Link>HttpRequestFactories\QueryViewHttpRequestFactory.cs</Link>
     </Compile>
@@ -341,12 +335,6 @@
     <Compile Include="..\MyCouch.Net45\IEntities.cs">
       <Link>IEntities.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\IListParameters.cs">
-      <Link>IListParameters.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\ILists.cs">
-      <Link>ILists.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Net45\IMyCouchClient.cs">
       <Link>IMyCouchClient.cs</Link>
     </Compile>
@@ -367,12 +355,6 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\IViews.cs">
       <Link>IViews.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\ListIdentity.cs">
-      <Link>ListIdentity.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\ListParametersConfigurator.cs">
-      <Link>ListParametersConfigurator.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\MyCouchClient.cs">
       <Link>MyCouchClient.cs</Link>
@@ -440,17 +422,14 @@
     <Compile Include="..\MyCouch.Net45\QueryInfo.cs">
       <Link>QueryInfo.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\Querying\ListParameters.cs">
-      <Link>Querying\ListParameters.cs</Link>
-    </Compile>
     <Compile Include="..\mycouch.net45\querying\QueryExtensions.cs">
       <Link>Querying\QueryExtensions.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.net45\querying\QueryParameters.cs">
       <Link>Querying\QueryParameters.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\QueryParametersConfigurator.cs">
-      <Link>QueryParametersConfigurator.cs</Link>
+    <Compile Include="..\MyCouch.Net45\QueryViewParametersConfigurator.cs">
+      <Link>QueryViewParametersConfigurator.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.net45\requests\BulkRequest.cs">
       <Link>Requests\BulkRequest.cs</Link>
@@ -511,9 +490,6 @@
     </Compile>
     <Compile Include="..\mycouch.net45\requests\PutEntityRequest.cs">
       <Link>Requests\PutEntityRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\Requests\QueryListRequest.cs">
-      <Link>Requests\QueryListRequest.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.net45\requests\QueryViewRequest.cs">
       <Link>Requests\QueryViewRequest.cs</Link>
@@ -587,9 +563,6 @@
     <Compile Include="..\mycouch.net45\responses\factories\GetDatabaseResponseFactory.cs">
       <Link>Responses\Factories\GetDatabaseResponseFactory.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\Responses\Factories\ListQueryResponseFactory.cs">
-      <Link>Responses\Factories\ListQueryResponseFactory.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Net45\Responses\Factories\RawResponseFactory.cs">
       <Link>Responses\Factories\RawResponseFactory.cs</Link>
     </Compile>
@@ -610,9 +583,6 @@
     </Compile>
     <Compile Include="..\mycouch.net45\responses\JsonScheme.cs">
       <Link>Responses\JsonScheme.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\Responses\ListQueryResponse.cs">
-      <Link>Responses\ListQueryResponse.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.net45\responses\materializers\AttachmentResponseMaterializer.cs">
       <Link>Responses\Materializers\AttachmentResponseMaterializer.cs</Link>
@@ -643,9 +613,6 @@
     </Compile>
     <Compile Include="..\mycouch.net45\responses\materializers\FailedResponseMaterializer.cs">
       <Link>Responses\Materializers\FailedResponseMaterializer.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\Responses\Materializers\ListQueryResponseMaterializer.cs">
-      <Link>Responses\Materializers\ListQueryResponseMaterializer.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Responses\Materializers\RawResponseMaterializer.cs">
       <Link>Responses\Materializers\RawResponseMaterializer.cs</Link>
