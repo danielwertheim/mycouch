@@ -1,13 +1,13 @@
-using System.Linq;
+using System.Collections.Generic;
 using EnsureThat;
 
 namespace MyCouch
 {
-    public class QueryParametersConfigurator
+    public class QueryViewParametersConfigurator
     {
         protected readonly IQueryParameters Parameters;
 
-        public QueryParametersConfigurator(IQueryParameters parameters)
+        public QueryViewParametersConfigurator(IQueryParameters parameters)
         {
             Parameters = parameters;
         }
@@ -17,7 +17,7 @@ namespace MyCouch
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryParametersConfigurator Stale(Stale value)
+        public virtual QueryViewParametersConfigurator Stale(Stale value)
         {
             Parameters.Stale = value;
 
@@ -29,7 +29,7 @@ namespace MyCouch
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryParametersConfigurator IncludeDocs(bool value)
+        public virtual QueryViewParametersConfigurator IncludeDocs(bool value)
         {
             Parameters.IncludeDocs = value;
 
@@ -41,7 +41,7 @@ namespace MyCouch
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryParametersConfigurator Descending(bool value)
+        public virtual QueryViewParametersConfigurator Descending(bool value)
         {
             Parameters.Descending = value;
 
@@ -53,7 +53,7 @@ namespace MyCouch
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryParametersConfigurator Key(string value)
+        public virtual QueryViewParametersConfigurator Key(string value)
         {
             Ensure.That(value, "value").IsNotNullOrWhiteSpace();
 
@@ -65,7 +65,7 @@ namespace MyCouch
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryParametersConfigurator Key<T>(T value)
+        public virtual QueryViewParametersConfigurator Key<T>(T value)
         {
             return SetKey(value);
         }
@@ -75,7 +75,7 @@ namespace MyCouch
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryParametersConfigurator Key<T>(T[] value)
+        public virtual QueryViewParametersConfigurator Key<T>(T[] value)
         {
             Ensure.That(value, "value").HasItems();
 
@@ -87,7 +87,7 @@ namespace MyCouch
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryParametersConfigurator Keys<T>(params T[] value)
+        public virtual QueryViewParametersConfigurator Keys<T>(params T[] value)
         {
             Ensure.That(value, "value").HasItems();
 
@@ -101,7 +101,7 @@ namespace MyCouch
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryParametersConfigurator StartKey(string value)
+        public virtual QueryViewParametersConfigurator StartKey(string value)
         {
             Ensure.That(value, "value").IsNotNullOrWhiteSpace();
 
@@ -113,7 +113,7 @@ namespace MyCouch
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryParametersConfigurator StartKey<T>(T value)
+        public virtual QueryViewParametersConfigurator StartKey<T>(T value)
         {
             return SetStartKey(value);
         }
@@ -123,7 +123,7 @@ namespace MyCouch
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryParametersConfigurator StartKey<T>(T[] value)
+        public virtual QueryViewParametersConfigurator StartKey<T>(T[] value)
         {
             Ensure.That(value, "value").HasItems();
 
@@ -135,7 +135,7 @@ namespace MyCouch
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryParametersConfigurator StartKeyDocId(string value)
+        public virtual QueryViewParametersConfigurator StartKeyDocId(string value)
         {
             Ensure.That(value, "value").IsNotNullOrWhiteSpace();
 
@@ -149,7 +149,7 @@ namespace MyCouch
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryParametersConfigurator EndKey(string value)
+        public virtual QueryViewParametersConfigurator EndKey(string value)
         {
             Ensure.That(value, "value").IsNotNullOrWhiteSpace();
 
@@ -161,7 +161,7 @@ namespace MyCouch
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryParametersConfigurator EndKey<T>(T value)
+        public virtual QueryViewParametersConfigurator EndKey<T>(T value)
         {
             return SetEndKey(value);
         }
@@ -171,7 +171,7 @@ namespace MyCouch
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryParametersConfigurator EndKey<T>(T[] value)
+        public virtual QueryViewParametersConfigurator EndKey<T>(T[] value)
         {
             Ensure.That(value, "value").HasItems();
 
@@ -183,7 +183,7 @@ namespace MyCouch
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryParametersConfigurator EndKeyDocId(string value)
+        public virtual QueryViewParametersConfigurator EndKeyDocId(string value)
         {
             Ensure.That(value, "value").IsNotNullOrWhiteSpace();
 
@@ -196,7 +196,7 @@ namespace MyCouch
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryParametersConfigurator InclusiveEnd(bool value)
+        public virtual QueryViewParametersConfigurator InclusiveEnd(bool value)
         {
             Parameters.InclusiveEnd = value;
 
@@ -207,7 +207,7 @@ namespace MyCouch
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryParametersConfigurator Skip(int value)
+        public virtual QueryViewParametersConfigurator Skip(int value)
         {
             Parameters.Skip = value;
 
@@ -218,7 +218,7 @@ namespace MyCouch
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryParametersConfigurator Limit(int value)
+        public virtual QueryViewParametersConfigurator Limit(int value)
         {
             Parameters.Limit = value;
 
@@ -229,7 +229,7 @@ namespace MyCouch
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryParametersConfigurator Reduce(bool value)
+        public virtual QueryViewParametersConfigurator Reduce(bool value)
         {
             Parameters.Reduce = value;
 
@@ -240,7 +240,7 @@ namespace MyCouch
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryParametersConfigurator UpdateSeq(bool value)
+        public virtual QueryViewParametersConfigurator UpdateSeq(bool value)
         {
             Parameters.UpdateSeq = value;
 
@@ -251,7 +251,7 @@ namespace MyCouch
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryParametersConfigurator Group(bool value)
+        public virtual QueryViewParametersConfigurator Group(bool value)
         {
             Parameters.Group = value;
 
@@ -262,14 +262,42 @@ namespace MyCouch
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual QueryParametersConfigurator GroupLevel(int value)
+        public virtual QueryViewParametersConfigurator GroupLevel(int value)
         {
             Parameters.GroupLevel = value;
 
             return this;
         }
 
-        protected virtual QueryParametersConfigurator SetKey(object value)
+        /// <summary>
+        /// Additional custom query string parameters.
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public virtual QueryViewParametersConfigurator CustomQueryParameters(IDictionary<string, object> parameters)
+        {
+            Ensure.That(parameters, "parameters").HasItems();
+
+            Parameters.CustomQueryParameters = parameters;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Specify if you want to target a specific list in the view.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public virtual QueryViewParametersConfigurator WithList(string name)
+        {
+            Ensure.That(name, "name").IsNotNullOrWhiteSpace();
+
+            Parameters.ListName = name;
+
+            return this;
+        }
+
+        protected virtual QueryViewParametersConfigurator SetKey(object value)
         {
             Ensure.That(value, "value").IsNotNull();
 
@@ -278,7 +306,7 @@ namespace MyCouch
             return this;
         }
 
-        protected virtual QueryParametersConfigurator SetStartKey(object value)
+        protected virtual QueryViewParametersConfigurator SetStartKey(object value)
         {
             Ensure.That(value, "value").IsNotNull();
 
@@ -287,7 +315,7 @@ namespace MyCouch
             return this;
         }
 
-        protected virtual QueryParametersConfigurator SetEndKey(object value)
+        protected virtual QueryViewParametersConfigurator SetEndKey(object value)
         {
             Ensure.That(value, "value").IsNotNull();
 

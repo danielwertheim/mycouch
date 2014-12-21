@@ -10,7 +10,7 @@ using MyCouch.Net;
 
 namespace MyCouch.IntegrationTests.CoreTests
 {
-    public class ListsTests : IntegrationTestsOf<ILists>,
+    public class ListsTests : IntegrationTestsOf<IViews>,
         IPreserveStatePerFixture,
         IUseFixture<ViewsFixture>
     {
@@ -18,7 +18,7 @@ namespace MyCouch.IntegrationTests.CoreTests
 
         public ListsTests()
         {
-            SUT = DbClient.Lists;
+            SUT = DbClient.Views;
         }
 
         public void SetFixture(ViewsFixture data)
@@ -29,12 +29,12 @@ namespace MyCouch.IntegrationTests.CoreTests
         [MyFact(TestScenarios.ListsContext)]
         public void Should_transform_all_view_rows_when_query_parameters_not_supplied()
         {
-            var query = new QueryListRequest(ClientTestData.Views.TransformToDocListId,
-                ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId.Name);
+            var query = new QueryViewRequest(ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId)
+                .Configure(c => c.WithList(ClientTestData.Views.ListNames.TransformToDocListId));
 
-            var response = SUT.QueryAsync(query).Result;
+            var response = SUT.QueryRawAsync(query).Result;
 
-            response.Should().BeSuccessfulGet();
+            response.Should().BeSuccessfulGet(10);
             response.ContentType.Should().Contain(HttpContentTypes.Json);
             var transformedArtists = DbClient.Entities.Serializer.Deserialize<dynamic[]>(response.Content);
             transformedArtists.Length.Should().Be(10);
@@ -44,10 +44,10 @@ namespace MyCouch.IntegrationTests.CoreTests
         public void When_Key_is_specified_using_json_Then_the_matching_row_is_transformed()
         {
             const string keyToReturn = "Fake artist 1";
-            var query = new QueryListRequest(ClientTestData.Views.TransformToDocListId,
-                ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId.Name).Configure(q => q.Key(keyToReturn));
+            var query = new QueryViewRequest(ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId)
+                .Configure(c => c.WithList(ClientTestData.Views.ListNames.TransformToDocListId).Key(keyToReturn));
 
-            var response = SUT.QueryAsync(query).Result;
+            var response = SUT.QueryRawAsync(query).Result;
 
             response.Should().BeSuccessfulGet();
             response.ContentType.Should().Contain(HttpContentTypes.Json);
@@ -61,10 +61,10 @@ namespace MyCouch.IntegrationTests.CoreTests
         {
             var artists = ArtistsById.Skip(2).Take(3).ToArray();
             var keys = artists.Select(a => a.Name).ToArray();
-            var query = new QueryListRequest(ClientTestData.Views.TransformToDocListId,
-                ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId.Name).Configure(q => q.Keys(keys));
+            var query = new QueryViewRequest(ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId)
+                .Configure(c => c.WithList(ClientTestData.Views.ListNames.TransformToDocListId).Keys(keys));
 
-            var response = SUT.QueryAsync(query).Result;
+            var response = SUT.QueryRawAsync(query).Result;
 
             response.Should().BeSuccessfulPost();
             response.ContentType.Should().Contain(HttpContentTypes.Json);

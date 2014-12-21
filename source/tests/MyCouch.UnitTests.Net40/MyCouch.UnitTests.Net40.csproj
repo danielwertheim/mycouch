@@ -162,9 +162,6 @@
     <Compile Include="..\MyCouch.UnitTests.Net45\HttpRequestFactories\PutDatabaseHttpRequestFactoryTests.cs">
       <Link>HttpRequestFactories\PutDatabaseHttpRequestFactoryTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.UnitTests.Net45\HttpRequestFactories\QueryListHttpRequestFactoryTests.cs">
-      <Link>HttpRequestFactories\QueryListHttpRequestFactoryTests.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.UnitTests.Net45\HttpRequestFactories\QueryViewHttpRequestFactoryTests.cs">
       <Link>HttpRequestFactories\QueryViewHttpRequestFactoryTests.cs</Link>
     </Compile>
@@ -174,9 +171,6 @@
     <Compile Include="..\MyCouch.UnitTests.Net45\HttpRequestFactories\ViewCleanupHttpRequestFactoryTests.cs">
       <Link>HttpRequestFactories\ViewCleanupHttpRequestFactoryTests.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.UnitTests.Net45\ListConfigurationTests.cs">
-      <Link>ListConfigurationTests.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.UnitTests.Net45\Net\BasicAuthStringTests.cs">
       <Link>Net\BasicAuthStringTests.cs</Link>
     </Compile>
@@ -185,9 +179,6 @@
     </Compile>
     <Compile Include="..\MyCouch.UnitTests.Net45\QueryConfigurationTests.cs">
       <Link>QueryConfigurationTests.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.UnitTests.Net45\Requests\QueryListRequestTests.cs">
-      <Link>Requests\QueryListRequestTests.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.unittests.net45\requests\QueryViewRequestTests.cs">
       <Link>Requests\QueryViewRequestTests.cs</Link>

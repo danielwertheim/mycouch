@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using EnsureThat;
 using MyCouch.Querying;
 
@@ -169,6 +170,28 @@ namespace MyCouch
             set { State.GroupLevel = value; }
         }
 
+        /// <summary>
+        /// Specify if you want to target a specific list in the view.
+        /// </summary>
+        public string ListName
+        {
+            get { return State.ListName; }
+            set { State.ListName = value; }
+        }
+
+        /// <summary>
+        /// Additional custom query string parameters.
+        /// </summary>
+        public IDictionary<string, object> CustomQueryParameters { get; set; }
+
+        /// <summary>
+        /// Indicates if there are any <see cref="CustomQueryParameters"/> or not.
+        /// </summary>
+        public bool HasCustomQueryParameters
+        {
+            get { return State.HasCustomQueryParameters; }
+        }
+
         public Query(string viewName)
             : this(new SystemViewIdentity(viewName)) { }
 
@@ -189,9 +212,9 @@ namespace MyCouch
             State = new QueryParameters(viewIdentity);
         }
 
-        public virtual Query Configure(Action<QueryParametersConfigurator> configurator)
+        public virtual Query Configure(Action<QueryViewParametersConfigurator> configurator)
         {
-            configurator(new QueryParametersConfigurator(State));
+            configurator(new QueryViewParametersConfigurator(State));
 
             return this;
         }
