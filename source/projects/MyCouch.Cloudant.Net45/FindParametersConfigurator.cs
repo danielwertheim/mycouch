@@ -82,6 +82,7 @@ namespace MyCouch.Cloudant
 
         /// <summary>
         /// Read quorum needed for the result.
+        /// Defaults to 1.
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
@@ -89,7 +90,7 @@ namespace MyCouch.Cloudant
         {
             Ensure.That(value, "value").IsGte(1);
 
-            Parameters.Limit = value;
+            Parameters.ReadQuorum = value;
 
             return this;
         }
