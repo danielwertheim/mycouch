@@ -184,6 +184,28 @@ namespace MyCouch.Testing
         [DebuggerStepThrough]
         public ContentResponseAssertions(TextResponse response) : base(response) { }
 
+        public void BeGetOfJson()
+        {
+            BeJson(HttpMethod.Get);
+        }
+
+        public void BePostOfJson()
+        {
+            BeJson(HttpMethod.Post);
+        }
+
+        public void BeOkJson(HttpMethod method, HttpStatusCode statusCode = HttpStatusCode.OK)
+        {
+            BeJson(method, statusCode, "{\"ok\":true}");
+        }
+
+        public void BeJson(HttpMethod method, HttpStatusCode statusCode = HttpStatusCode.OK)
+        {
+            Be(method, statusCode);
+            Response.ContentType.Should().Be(HttpContentTypes.Json);
+            Response.Content.Should().NotBeNullOrEmpty();
+        }
+
         public void BeJson(HttpMethod method, HttpStatusCode statusCode, string content)
         {
             Be(method, statusCode);
@@ -191,21 +213,21 @@ namespace MyCouch.Testing
             Response.Content.Should().Be(content);
         }
 
-        public void BeGetOfAnyJson()
+        public void BeGetOfHtml()
         {
-            BeAnyJson(HttpMethod.Get);
+            BeHtml(HttpMethod.Get);
         }
 
-        public void BeAnyJson(HttpMethod method, HttpStatusCode statusCode = HttpStatusCode.OK)
+        public void BePostOfHtml()
+        {
+            BeHtml(HttpMethod.Post);
+        }
+
+        public void BeHtml(HttpMethod method, HttpStatusCode statusCode = HttpStatusCode.OK)
         {
             Be(method, statusCode);
-            Response.ContentType.Should().Be(HttpContentTypes.Json);
+            Response.ContentType.Should().Contain(HttpContentTypes.Html);
             Response.Content.Should().NotBeNullOrEmpty();
-        }
-
-        public void BeOkJson(HttpMethod method, HttpStatusCode statusCode = HttpStatusCode.OK)
-        {
-            BeJson(method, statusCode, "{\"ok\":true}");
         }
     }
 
