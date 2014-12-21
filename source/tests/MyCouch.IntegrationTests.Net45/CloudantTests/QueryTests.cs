@@ -28,7 +28,8 @@ namespace MyCouch.IntegrationTests.CloudantTests
         {
             const string title = "Html5 blog";
             const int age = 21;
-            var request = new FindRequest().Configure(q => q.SelectorExpression("{{\"title\": \"{0}\", \"author.age\": {1}}}", title, age));
+            var request = new FindRequest().Configure(q => 
+                q.SelectorExpression("{{\"title\": \"{0}\", \"author.age\": {1}}}", title, age));
 
             var response = SUT.FindAsync<Blog>(request).Result;
 
@@ -62,74 +63,51 @@ namespace MyCouch.IntegrationTests.CloudantTests
         [MyFact(TestScenarios.Cloudant, TestScenarios.QueriesContext)]
         public void Query_with_combintation_operators_should_return_matching_docs()
         {
-            const int age = 21;
-            const int yearsActive = 5;
-            JObject gt = new JObject();
-            gt.Add("$gt", age);
-            JObject lt = new JObject();
-            lt.Add("$lt", yearsActive);
-            JObject ageCondition = new JObject();
-            ageCondition.Add("author.age", gt);
-            JObject yrsAtiveCondition = new JObject();
-            yrsAtiveCondition.Add("yearsActive", lt);
-            JObject selector = new JObject();
-            selector.Add("$and", new JArray(ageCondition, yrsAtiveCondition));
+            const string e = "{\"$and\":[{\"author.age\":{\"$gt\":21}},{\"yearsActive\":{\"$lt\":5}}]}{\"$and\":[{\"author.age\":{\"$gt\":21}},{\"yearsActive\":{\"$lt\":5}}]}";
 
-            var request = new FindRequest();
-            request.Configure(q => q.SelectorExpression(selector.ToString())
-                .Fields("title")
-                );
+            var request = new FindRequest().Configure(q => q
+                .SelectorExpression(e)
+                .Fields("title"));
 
             var response = SUT.FindAsync(request).Result;
 
             response.IsSuccess.Should().Be(true);
             response.DocCount.Should().Be(1);
-            response.Docs.Select(t => t.Contains("Couch blog"));
+            response.Docs.Should().Contain(d => d.Contains("Couch blog"));
         }
 
         [MyFact(TestScenarios.Cloudant, TestScenarios.QueriesContext)]
         public void Query_with_specified_sort_fields_should_return_sorted_results()
         {
             var sortedAges = new[] { 43, 32 };
-            const int age = 21;
-            JObject condition = new JObject();
-            condition.Add("$gt", age);
-            JObject selector = new JObject();
-            selector.Add("author.age", condition);
-            var request = new FindRequest();
-            request.Configure(q => q.SelectorExpression(selector.ToString())
+            
+            var request = new FindRequest().Configure(q => q
+                .SelectorExpression("{\"author.age\": {\"$gt\": 21}}")
                 .Fields("author.age")
-                .Sort(new SortableField("author.age", SortDirection.Desc))
-                );
+                .Sort(new SortableField("author.age", SortDirection.Desc)));
 
             var response = SUT.FindAsync<Blog>(request).Result;
 
-            response.IsSuccess.Should().Be(true);
+            response.IsSuccess.Should().BeTrue();
             response.DocCount.Should().Be(2);
-            response.Docs.Select(b => b.Author.Age).SequenceEqual(sortedAges.Select(y => y)).Should().Be(true);
+            response.Docs.Select(b => b.Author.Age).SequenceEqual(sortedAges.Select(y => y)).Should().BeTrue();
         }
 
         [MyFact(TestScenarios.Cloudant, TestScenarios.QueriesContext)]
         public void Query_can_skip_and_limit_results()
         {
             var titles = new[] { "Couch blog" };
-            const int age = 0;
-            JObject condition = new JObject();
-            condition.Add("$gt", age);
-            JObject selector = new JObject();
-            selector.Add("author.age", condition);
-            var request = new FindRequest();
-            request.Configure(q => q.SelectorExpression(selector.ToString())
+            var request = new FindRequest().Configure(q => q
+                .SelectorExpression("{\"author.age\": {\"$gt\": 0}}")
                 .Fields("title")
                 .Skip(1)
-                .Limit(1)
-                );
+                .Limit(1));
 
             var response = SUT.FindAsync<Blog>(request).Result;
 
-            response.IsSuccess.Should().Be(true);
+            response.IsSuccess.Should().BeTrue();
             response.DocCount.Should().Be(1);
-            response.Docs.Select(b => b.Title).SequenceEqual(titles.Select(y => y)).Should().Be(true);
+            response.Docs.Select(b => b.Title).SequenceEqual(titles.Select(y => y)).Should().BeTrue();
         }
     }
 }

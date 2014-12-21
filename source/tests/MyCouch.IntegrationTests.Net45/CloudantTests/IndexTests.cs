@@ -16,11 +16,10 @@ namespace MyCouch.IntegrationTests.CloudantTests
         [MyFact(TestScenarios.Cloudant, TestScenarios.QueriesContext)]
         public void Can_create_an_index_with_explicit_designdoc_and_name()
         {
-            var indexRequest = new PostIndexRequest();
-            indexRequest.Configure(q => q.DesignDocument("MyDoc")
+            var indexRequest = new PostIndexRequest().Configure(q => q
+                .DesignDocument("MyDoc")
                 .Name("MyName")
-                .Fields(new SortableField("diet"))
-                );
+                .Fields(new SortableField("diet")));
 
             var response = SUT.PostAsync(indexRequest).Result;
 
@@ -31,11 +30,11 @@ namespace MyCouch.IntegrationTests.CloudantTests
         [MyFact(TestScenarios.Cloudant, TestScenarios.QueriesContext)]
         public void Creating_an_index_with_same_name_as_existing_should_be_reported()
         {
-            var indexRequest = new PostIndexRequest();
-            indexRequest.Configure(q => q.DesignDocument("MyDoc")
+            var indexRequest = new PostIndexRequest().Configure(q => q
+                .DesignDocument("MyDoc")
                 .Name("MyName")
-                .Fields(new SortableField("diet"))
-                );
+                .Fields(new SortableField("diet")));
+
             SUT.PostAsync(indexRequest).Wait();
 
             var response = SUT.PostAsync(indexRequest).Result;
@@ -47,8 +46,8 @@ namespace MyCouch.IntegrationTests.CloudantTests
         [MyFact(TestScenarios.Cloudant, TestScenarios.QueriesContext)]
         public void Can_create_an_index_without_specifying_a_designdoc_and_name()
         {
-            var indexRequest = new PostIndexRequest();
-            indexRequest.Configure(q => q.Fields(new SortableField("diet")));
+            var indexRequest = new PostIndexRequest().Configure(q => q
+                .Fields(new SortableField("diet")));
 
             var response = SUT.PostAsync(indexRequest).Result;
 
@@ -59,8 +58,8 @@ namespace MyCouch.IntegrationTests.CloudantTests
         [MyFact(TestScenarios.Cloudant, TestScenarios.QueriesContext)]
         public void Can_specify_a_sort_order_for_an_index_field()
         {
-            var indexRequest = new PostIndexRequest();
-            indexRequest.Configure(q => q.Fields(new SortableField("diet")));
+            var indexRequest = new PostIndexRequest().Configure(q => q
+                .Fields(new SortableField("diet")));
 
             var response = SUT.PostAsync(indexRequest).Result;
 
@@ -71,13 +70,13 @@ namespace MyCouch.IntegrationTests.CloudantTests
         [MyFact(TestScenarios.Cloudant, TestScenarios.QueriesContext)]
         public void Can_delete_a_pre_existing_index()
         {
-            var dDocName = "MyDoc";
-            var indexName = "MyName";
-            var indexRequest = new PostIndexRequest();
-            indexRequest.Configure(q => q.DesignDocument(dDocName)
+            const string dDocName = "MyDoc";
+            const string indexName = "MyName";
+            var indexRequest = new PostIndexRequest().Configure(q => q
+                .DesignDocument(dDocName)
                 .Name(indexName)
-                .Fields(new SortableField("diet"))
-                );
+                .Fields(new SortableField("diet")));
+
             SUT.PostAsync(indexRequest).Wait();
 
             var response = SUT.DeleteAsync(new DeleteIndexRequest(dDocName, indexName)).Result;
@@ -89,6 +88,7 @@ namespace MyCouch.IntegrationTests.CloudantTests
         public void Trying_to_delete_a_non_existing_index_should_report_error()
         {
             var response = SUT.DeleteAsync(new DeleteIndexRequest("junk", "junk")).Result;
+
             response.IsSuccess.Should().Be(false);
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
             response.Reason.Should().Be("missing");
@@ -99,8 +99,8 @@ namespace MyCouch.IntegrationTests.CloudantTests
         {
             var response = SUT.GetAllAsync().Result;
 
-            response.IsSuccess.Should().Be(true);
-            response.IsEmpty.Should().Be(false);
+            response.IsSuccess.Should().BeTrue();
+            response.IsEmpty.Should().BeFalse();
             response.IndexCount.Should().Be(1);
             var primaryIndex = response.Indexes.First();
 
