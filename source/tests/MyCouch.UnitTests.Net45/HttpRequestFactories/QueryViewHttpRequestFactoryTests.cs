@@ -518,7 +518,7 @@ namespace MyCouch.UnitTests.HttpRequestFactories
         }
 
         [Fact]
-        public void When_custom_query_parameter_are_specified_It_should_get_included_in_the_querystring()
+        public void When_custom_query_parameters_are_specified_It_should_get_included_in_the_querystring()
         {
             var request = CreateRequest();
             request.CustomQueryParameters = new Dictionary<string, object>
