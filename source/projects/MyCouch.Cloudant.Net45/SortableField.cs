@@ -1,6 +1,7 @@
-﻿
+﻿using EnsureThat;
 using MyCouch.Cloudant.Serialization.Converters;
 using Newtonsoft.Json;
+
 namespace MyCouch.Cloudant
 {
     [JsonConverter(typeof(SortableFieldConverter))]
@@ -11,6 +12,8 @@ namespace MyCouch.Cloudant
 
         public SortableField(string name, SortDirection sortDirection = SortDirection.Asc)
         {
+            Ensure.That(name, "name").IsNotNullOrWhiteSpace();
+
             Name = name;
             SortDirection = sortDirection;
         }
