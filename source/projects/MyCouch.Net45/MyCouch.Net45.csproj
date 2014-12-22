@@ -75,6 +75,7 @@
     <Compile Include="Contexts\Documents.cs" />
     <Compile Include="Contexts\Entities.cs" />
     <Compile Include="Contexts\Replicator.cs" />
+    <Compile Include="Contexts\Shows.cs" />
     <Compile Include="Contexts\Views.cs" />
     <Compile Include="DeleteManyResult.cs" />
     <Compile Include="DocumentAttribute.cs" />
@@ -116,6 +117,8 @@
     <Compile Include="IQueryParameters.cs" />
     <Compile Include="IReplicator.cs" />
     <Compile Include="IServerClientConnection.cs" />
+    <Compile Include="IShowParameters.cs" />
+    <Compile Include="IShows.cs" />
     <Compile Include="IViews.cs" />
     <Compile Include="MyCouchClient.cs" />
     <Compile Include="MyCouchClientBootstrapper.cs" />
@@ -199,6 +202,7 @@
     <Compile Include="Requests\ReplaceDocumentRequest.cs" />
     <Compile Include="Requests\ReplicateDatabaseRequest.cs" />
     <Compile Include="Requests\Request.cs" />
+    <Compile Include="Requests\ShowRequest.cs" />
     <Compile Include="Requests\ViewCleanupRequest.cs" />
     <Compile Include="Responses\AttachmentResponse.cs" />
     <Compile Include="Responses\BulkResponse.cs" />
