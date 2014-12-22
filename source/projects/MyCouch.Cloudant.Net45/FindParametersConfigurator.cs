@@ -58,13 +58,27 @@ namespace MyCouch.Cloudant
         /// <summary>
         /// List of fields with sort directions to specify sorting of results.
         /// </summary>
-        /// <param name="sortExpressions"></param>
+        /// <param name="fields"></param>
         /// <returns></returns>
-        public virtual FindParametersConfigurator Sort(params SortableField[] sortExpressions)
+        public virtual FindParametersConfigurator Sort(params SortableField[] fields)
         {
-            Ensure.That(sortExpressions, "sortExpressions").HasItems();
+            Ensure.That(fields, "fields").HasItems();
 
-            Parameters.Sort = sortExpressions.ToList();
+            Parameters.Sort = fields.ToList();
+
+            return this;
+        }
+
+        /// <summary>
+        /// List of fields with sort directions to specify sorting of results.
+        /// </summary>
+        /// <param name="fields"></param>
+        /// <returns></returns>
+        public virtual FindParametersConfigurator Sort(params string[] fields)
+        {
+            Ensure.That(fields, "fields").HasItems();
+
+            Parameters.Sort = fields.Select(f => new SortableField(f)).ToList();
 
             return this;
         }

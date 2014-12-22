@@ -1,19 +1,17 @@
 ﻿using EnsureThat;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyCouch.Cloudant
 {
     public class IndexParametersConfigurator
     {
         protected readonly IIndexParameters Parameters;
+
         public IndexParametersConfigurator(IIndexParameters parameters)
         {
             Parameters = parameters;
         }
+
         /// <summary>
         /// The design document to which an index belongs
         /// </summary>
@@ -38,6 +36,7 @@ namespace MyCouch.Cloudant
 
             return this;
         }
+
         /// <summary>
         /// The name of the index
         /// </summary>
@@ -51,6 +50,7 @@ namespace MyCouch.Cloudant
 
             return this;
         }
+
         /// <summary>
         /// Index fields
         /// </summary>
@@ -61,6 +61,20 @@ namespace MyCouch.Cloudant
             Ensure.That(fields, "fields").HasItems();
 
             Parameters.Fields = fields.ToList();
+
+            return this;
+        }
+
+        /// <summary>
+        /// Index fields
+        /// </summary>
+        /// <param name="fields">Fields</param>
+        /// <returns></returns>
+        public virtual IndexParametersConfigurator Fields(params string[] fields)
+        {
+            Ensure.That(fields, "fields").HasItems();
+
+            Parameters.Fields = fields.Select(f => new SortableField(f)).ToList();
 
             return this;
         }
