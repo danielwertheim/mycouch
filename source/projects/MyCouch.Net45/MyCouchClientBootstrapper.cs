@@ -70,6 +70,10 @@ namespace MyCouch
         /// Used e.g. for bootstraping <see cref="IMyCouchClient.Views"/>.
         /// </summary>
         public Func<IDbClientConnection, IViews> ViewsFn { get; set; }
+        /// <summary>
+        /// Used e.g. for bootstrapping <see cref="IMyCouchClient.Shows"/>.
+        /// </summary>
+        public Func<IDbClientConnection, IShows> ShowsFn { get; set; }
 
         public MyCouchClientBootstrapper()
         {
@@ -86,6 +90,7 @@ namespace MyCouch
             ConfigureDocumentsFn();
             ConfigureEntitiesFn();
             ConfigureViewsFn();
+            ConfigureShowsFn();
         }
 
         protected virtual void ConfigureChangesFn()
@@ -133,6 +138,13 @@ namespace MyCouch
             ViewsFn = cn => new Views(
                 cn,
                 DocumentSerializerFn());
+        }
+
+        protected virtual void ConfigureShowsFn()
+        {
+            ShowsFn = cn => new Shows(
+                cn,
+                SerializerFn());
         }
 
         protected virtual void ConfigureEntityReflectorFn()

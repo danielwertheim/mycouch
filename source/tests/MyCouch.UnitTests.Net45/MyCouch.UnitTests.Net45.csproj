@@ -80,9 +80,12 @@
     <Compile Include="Cloudant\SearchParametersConfiguratorTests.cs" />
     <Compile Include="Extensions\UriExtensionsTests.cs" />
     <Compile Include="Fakes\DbClientConnectionFake.cs" />
+    <Compile Include="HttpRequestFactories\ShowViewHttpRequestFactoryTests.cs" />
     <Compile Include="Net\BasicAuthStringTests.cs" />
     <Compile Include="Net\DbClientConnectionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Requests\ShowRequestTests.cs" />
+    <Compile Include="ShowConfigurationTests.cs" />
     <Compile Include="QueryConfigurationTests.cs" />
     <Compile Include="HttpRequestFactories\BulkHttpRequestFactoryTests.cs" />
     <Compile Include="HttpRequestFactories\CompactDatabaseHttpRequestFactoryTests.cs" />

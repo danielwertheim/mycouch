@@ -60,6 +60,7 @@ The one with a key="YourComputername" or key = "Default" will be picked.
         "viewscontext",
         "listscontext",
         "queriescontext",
+	"showscontext",
         "mycouchstore"],
     "ServerUrl": "https://youraccount.cloudant.com",
     "PrimaryDbName": "mycouchtests_pri",

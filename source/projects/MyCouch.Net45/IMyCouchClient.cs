@@ -61,5 +61,9 @@ namespace MyCouch
         /// View oriented API operations, for accessing and managing views.
         /// </summary>
         IViews Views { get; }
+        /// <summary>
+        /// Show oriented API operations, for accessing and querying shows.
+        /// </summary>
+        IShows Shows { get; }
     }
 }

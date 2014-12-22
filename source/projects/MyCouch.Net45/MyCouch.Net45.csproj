@@ -103,6 +103,7 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\TaskExtensions.cs" />
     <Compile Include="Extensions\UriExtensions.cs" />
+    <Compile Include="HttpRequestFactories\ShowHttpRequestFactory.cs" />
     <Compile Include="IAttachments.cs" />
     <Compile Include="IChanges.cs" />
     <Compile Include="IConnection.cs" />
@@ -144,6 +145,7 @@
     <Compile Include="QueryInfo.cs" />
     <Compile Include="Querying\QueryExtensions.cs" />
     <Compile Include="Querying\QueryParameters.cs" />
+    <Compile Include="Querying\ShowParameters.cs" />
     <Compile Include="QueryViewParametersConfigurator.cs" />
     <Compile Include="Requests\BulkRequest.cs" />
     <Compile Include="Requests\CompactDatabaseRequest.cs" />
@@ -250,6 +252,8 @@
     <Compile Include="Responses\TextResponse.cs" />
     <Compile Include="Responses\ViewQueryResponse.cs" />
     <Compile Include="Row.cs" />
+    <Compile Include="Show.cs" />
+    <Compile Include="ShowIdentity.cs" />
     <Compile Include="Serialization\Conventions\ISerializationConvention.cs" />
     <Compile Include="Serialization\Conventions\ISerializationConventionWriter.cs" />
     <Compile Include="Serialization\Conventions\SerializationConventions.cs" />
@@ -268,6 +272,7 @@
     <Compile Include="Serialization\SerializationConfiguration.cs" />
     <Compile Include="Serialization\SerializationContractResolver.cs" />
     <Compile Include="Serialization\DocumentJsonWriter.cs" />
+    <Compile Include="ShowParametersConfigurator.cs" />
     <Compile Include="Stale.cs" />
     <Compile Include="SystemViewIdentity.cs" />
     <Compile Include="ViewIdentity.cs" />

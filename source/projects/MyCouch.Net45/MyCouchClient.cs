@@ -18,6 +18,7 @@ namespace MyCouch
         public IDocuments Documents { get; private set; }
         public IEntities Entities { get; protected set; }
         public IViews Views { get; private set; }
+        public IShows Shows { get; private set; }
 
         public MyCouchClient(string dbUri, string dbName = null) : this(new Uri(dbUri), dbName) { }
 
@@ -39,6 +40,7 @@ namespace MyCouch
             Documents = bootstrapper.DocumentsFn(Connection);
             Entities = bootstrapper.EntitiesFn(Connection);
             Views = bootstrapper.ViewsFn(Connection);
+            Shows = bootstrapper.ShowsFn(Connection);
         }
 
         public void Dispose()

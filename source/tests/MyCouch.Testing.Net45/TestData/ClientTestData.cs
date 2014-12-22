@@ -101,6 +101,24 @@ namespace MyCouch.Testing.TestData
             }
         }
 
+        public static class Shows
+        {
+            public const string ArtistsShows =
+                "{" +
+                    "\"_id\": \"_design/artistshows\"," +
+                    "\"shows\": {" +
+                        "\"hello\": \"function(doc, req){" +
+                                    "return '<h1>hello</h1>';" +
+                                "}\"," +
+                        "\"jsonShow\": \"function(doc, req){" +
+                                    "return { body: { name: doc.name } };" +
+                                "}\"" +
+                    "}" +
+                "}";
+            public static readonly ShowIdentity ArtistsHelloShowId = new ShowIdentity("artistshows", "hello");
+            public static readonly ShowIdentity ArtistsJsonShowId = new ShowIdentity("artistshows", "jsonShow");
+        }
+
         public static class Views
         {
             public static readonly ViewIdentity[] AllViewIds;
@@ -161,7 +179,7 @@ namespace MyCouch.Testing.TestData
             public static readonly ViewIdentity ArtistsNameNoValueViewId = new ViewIdentity("artists", "name_no_value");
             public static readonly ViewIdentity ArtistsTotalNumOfAlbumsViewId = new ViewIdentity("artists", "total_num_of_albums");
             public static readonly ViewIdentity ArtistsNameAsKeyAndDocAsValueId = new ViewIdentity("artists", "name_as_key_and_doc_as_value");
-
+            
             public static class ListNames
             {
                 public static readonly string TransformToHtmlListId = "transformToHtml";

@@ -8,5 +8,10 @@ namespace MyCouch.Querying
         {
             return new QueryViewRequest(query);
         }
+
+        internal static ShowRequest ToRequest(this Show show)
+        {
+            return new ShowRequest(show);
+        }
     }
 }
