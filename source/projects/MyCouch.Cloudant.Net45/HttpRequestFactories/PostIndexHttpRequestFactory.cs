@@ -38,6 +38,7 @@ namespace MyCouch.Cloudant.HttpRequestFactories
             sb.Append("{");
 
             sb.AppendFormat("{0}", GenerateIndexContent(request.Fields));
+
             if (!string.IsNullOrWhiteSpace(request.DesignDocument))
                 sb.AppendFormat(FormatStrings.JsonPropertyAppendFormat, KeyNames.DesignDocument, Serializer.ToJson(request.DesignDocument));
             if (request.Type.HasValue)

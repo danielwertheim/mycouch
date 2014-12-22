@@ -8,6 +8,7 @@ namespace MyCouch.Cloudant.Querying
         public IndexType? Type { get; set; }
         public string Name { get; set; }
         public IList<SortableField> Fields { get; set; }
+
         public IndexParameters()
         {
             Fields = new List<SortableField>();
