@@ -111,12 +111,20 @@ namespace MyCouch.Testing.TestData
                                     "return '<h1>hello</h1>';" +
                                 "}\"," +
                         "\"jsonShow\": \"function(doc, req){" +
-                                    "return { body: { name: doc.name } };" +
+                                    "provides('json',function(){" +
+                                        "send(JSON.stringify({ name: doc.name}));" +
+                                    "});" +
+                                "}\"," +
+                        "\"jsonCustomQueryParamShow\": \"function(doc, req){" +
+                                    "provides('json',function(){" +
+                                        "send(JSON.stringify({ name: doc.name, foo: req.query.foo}));" +
+                                    "});" +
                                 "}\"" +
                     "}" +
                 "}";
             public static readonly ShowIdentity ArtistsHelloShowId = new ShowIdentity("artistshows", "hello");
             public static readonly ShowIdentity ArtistsJsonShowId = new ShowIdentity("artistshows", "jsonShow");
+            public static readonly ShowIdentity ArtistsJsonShowWithCustomQueryParamId = new ShowIdentity("artistshows", "jsonCustomQueryParamShow");
         }
 
         public static class Views

@@ -28,7 +28,7 @@ namespace MyCouch.UnitTests
         }
 
         [Fact]
-        public void When_config_of_AdditionalQueryParameters_It_configures_options_AdditionalQueryParameters()
+        public void When_config_of_CustomQueryParameters_It_configures_options_CustomQueryParameters()
         {
             var configuredValue = new Dictionary<string, object>
             {

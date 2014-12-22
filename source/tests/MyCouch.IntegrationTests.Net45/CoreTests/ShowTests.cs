@@ -6,6 +6,7 @@ using MyCouch.Testing;
 using MyCouch.Testing.Model;
 using MyCouch.Testing.TestData;
 using Xunit;
+using System.Collections.Generic;
 
 namespace MyCouch.IntegrationTests.CoreTests
 {
@@ -47,74 +48,24 @@ namespace MyCouch.IntegrationTests.CoreTests
             var transformedArtist = DbClient.Entities.Serializer.Deserialize<dynamic>(response.Content);
             ((string)transformedArtist.name).Should().Be(artist.Name);
         }
-        /*
-        [MyFact(TestScenarios.ListsContext)]
-        public void When_querying_raw_using_list_that_transforms_to_html_It_should_return_html()
+
+        [MyFact(TestScenarios.ShowsContext)]
+        public void Can_send_custom_query_parameters_to_show()
         {
-            var query = new ShowRequest(ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId)
-                .Configure(c => c.WithList(ClientTestData.Views.ListNames.TransformToHtmlListId));
-
-            var response = SUT.QueryRawAsync(query).Result;
-
-            response.Should().BeGetOfHtml();
-        }
-
-        [MyFact(TestScenarios.ListsContext)]
-        public void When_querying_raw_using_key_and_a_list_that_transforms_to_json_It_should_return_json()
-        {
-            const string keyToReturn = "Fake artist 1";
-            var query = new ShowRequest(ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId).Configure(c => c
-                .WithList(ClientTestData.Views.ListNames.TransformToDocListId)
-                .Key(keyToReturn));
+            var artist = ArtistsById.First();
+            var customQueryParams = new Dictionary<string, object>();
+            customQueryParams.Add("foo", 42);
+            var query = new ShowRequest(ClientTestData.Shows.ArtistsJsonShowWithCustomQueryParamId)
+                .Configure(c => c.Id(artist.ArtistId)
+                .CustomQueryParameters(customQueryParams)
+                );
 
             var response = SUT.QueryRawAsync(query).Result;
 
             response.Should().BeGetOfJson();
-            var transformedArtists = DbClient.Entities.Serializer.Deserialize<dynamic[]>(response.Content);
-            transformedArtists.Length.Should().Be(1);
-            ((string)transformedArtists.Single().name).Should().Be(keyToReturn);
+            var transformedArtist = DbClient.Entities.Serializer.Deserialize<dynamic>(response.Content);
+            ((string)transformedArtist.name).Should().Be(artist.Name);
+            ((string)transformedArtist.foo).Should().Be("42");
         }
-
-        [MyFact(TestScenarios.ListsContext)]
-        public void When_querying_raw_using_key_and_a_list_that_transforms_to_html_It_should_return_html()
-        {
-            const string keyToReturn = "Fake artist 1";
-            var query = new ShowRequest(ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId).Configure(c => c
-                .WithList(ClientTestData.Views.ListNames.TransformToHtmlListId)
-                .Key(keyToReturn));
-
-            var response = SUT.QueryRawAsync(query).Result;
-
-            response.Should().BeGetOfHtml();
-        }
-
-        [MyFact(TestScenarios.ListsContext)]
-        public void When_querying_raw_using_keys_and_a_list_that_transforms_to_json_It_should_return_json()
-        {
-            var artists = ArtistsById.Skip(2).Take(3).ToArray();
-            var keys = artists.Select(a => a.Name).ToArray();
-            var query = new ShowRequest(ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId)
-                .Configure(c => c.WithList(ClientTestData.Views.ListNames.TransformToDocListId).Keys(keys));
-
-            var response = SUT.QueryRawAsync(query).Result;
-
-            response.Should().BePostOfJson();
-            var transformedArtists = DbClient.Entities.Serializer.Deserialize<dynamic[]>(response.Content);
-            transformedArtists.Length.Should().Be(3);
-        }
-
-        [MyFact(TestScenarios.ListsContext)]
-        public void When_querying_raw_using_keys_and_a_list_that_transforms_to_html_It_should_return_html()
-        {
-            var artists = ArtistsById.Skip(2).Take(3).ToArray();
-            var keys = artists.Select(a => a.Name).ToArray();
-            var query = new ShowRequest(ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId)
-                .Configure(c => c.WithList(ClientTestData.Views.ListNames.TransformToHtmlListId).Keys(keys));
-
-            var response = SUT.QueryRawAsync(query).Result;
-
-            response.Should().BePostOfHtml();
-        }
-        */
     }
 }
