@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using EnsureThat;
+using MyCouch.Extensions;
 using MyCouch.Net;
 using MyCouch.Requests;
 using MyCouch.Serialization;
@@ -130,7 +131,7 @@ namespace MyCouch.HttpRequestFactories
 
             if (request.HasCustomQueryParameters)
                 foreach (var param in request.CustomQueryParameters)
-                    kvs.Add(UrlParam.Encode(param.Key), Serializer.ToJson(param.Value));
+                    kvs.Add(param.Key, param.Value.ToStringExtended());
 
             return kvs;
         }

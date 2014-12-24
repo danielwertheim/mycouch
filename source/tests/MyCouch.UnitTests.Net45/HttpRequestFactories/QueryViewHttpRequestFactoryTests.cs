@@ -37,10 +37,11 @@ namespace MyCouch.UnitTests.HttpRequestFactories
         public void When_not_configured_It_yields_no_content_nor_querystring()
         {
             var request = CreateRequest();
-            
+
             WithHttpRequestFor(
                 request,
-                req => {
+                req =>
+                {
                     req.Content.Should().BeNull();
                     req.RelativeUrl.ToTestUriFromRelative().Query.Should().Be(string.Empty);
                 });
@@ -523,12 +524,15 @@ namespace MyCouch.UnitTests.HttpRequestFactories
             var request = CreateRequest();
             request.CustomQueryParameters = new Dictionary<string, object>
             {
-                { "foo", new object[] { "Key1", 42 } }
+                { "myint", 42 },
+                { "mystring", "test"},
+                { "mybool", true},
+                { "mydatetime", new DateTime(2014,1,1,13,14,15,16) }
             };
 
             WithHttpRequestFor(
                 request,
-                req => req.RelativeUrl.ToTestUriFromRelative().Query.Should().Be("?foo=%5B%22Key1%22%2C42%5D"));
+                req => req.RelativeUrl.ToTestUriFromRelative().Query.Should().Be("?myint=42&mystring=test&mybool=True&mydatetime=2014-01-01T13%3A14%3A15"));
         }
 
         [Fact]
@@ -537,13 +541,13 @@ namespace MyCouch.UnitTests.HttpRequestFactories
             var request = CreateRequest();
             request.CustomQueryParameters = new Dictionary<string, object>
             {
-                { "foo", new object[] { "Key1", 42 } }
+                { "myint", 42 }
             };
             request.GroupLevel = 3;
 
             WithHttpRequestFor(
                 request,
-                req => req.RelativeUrl.ToTestUriFromRelative().Query.Should().Be("?group_level=3&foo=%5B%22Key1%22%2C42%5D"));
+                req => req.RelativeUrl.ToTestUriFromRelative().Query.Should().Be("?group_level=3&myint=42"));
         }
 
         [Fact]
@@ -567,12 +571,12 @@ namespace MyCouch.UnitTests.HttpRequestFactories
             request.GroupLevel = 3;
             request.CustomQueryParameters = new Dictionary<string, object>
             {
-                {"foo", new object[] {"Key1", 42}}
+                { "myint", 42 }
             };
 
             WithHttpRequestFor(
                 request,
-                req => req.RelativeUrl.ToTestUriFromRelative().Query.Should().Be("?include_docs=true&descending=true&reduce=true&inclusive_end=true&update_seq=true&group=true&group_level=3&stale=update_after&key=%22Key1%22&startkey=%22My%20start%20key%22&startkey_docid=My%20start%20key%20doc%20id&endkey=%22My%20end%20key%22&endkey_docid=My%20end%20key%20doc%20id&limit=10&skip=5&foo=%5B%22Key1%22%2C42%5D"));
+                req => req.RelativeUrl.ToTestUriFromRelative().Query.Should().Be("?include_docs=true&descending=true&reduce=true&inclusive_end=true&update_seq=true&group=true&group_level=3&stale=update_after&key=%22Key1%22&startkey=%22My%20start%20key%22&startkey_docid=My%20start%20key%20doc%20id&endkey=%22My%20end%20key%22&endkey_docid=My%20end%20key%20doc%20id&limit=10&skip=5&myint=42"));
         }
 
         protected virtual QueryViewRequest CreateRequest()
