@@ -1,5 +1,4 @@
 using System;
-using System.Reactive.Concurrency;
 using System.Threading.Tasks;
 
 namespace MyCouch
@@ -18,10 +17,10 @@ namespace MyCouch
         IMyCouchClient Client { get; }
 
         /// <summary>
-        /// The Scheduler used when running observable queries.
-        /// By default <see cref="TaskPoolScheduler.Default"/>.
+        /// Resolves the <see cref="TaskFactory"/> used when running observable queries.
+        /// By default <see cref="Task.Factory"/>.
         /// </summary>
-        Func<IScheduler> ObservableSubscribeOnScheduler { set; }
+        Func<TaskFactory> ObservableWorkTaskFactoryResolver { set; }
 
         /// <summary>
         /// POSTs a raw NEW document to the database.

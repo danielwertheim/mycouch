@@ -108,6 +108,7 @@
     <Compile Include="MyCouchServerClient.cs" />
     <Compile Include="MyCouchStore.cs" />
     <Compile Include="MyCouchUriBuilder.cs" />
+    <Compile Include="MySingleObservable.cs" />
     <Compile Include="Net\BytesContent.cs" />
     <Compile Include="Net\BasicAuthString.cs" />
     <Compile Include="Net\Connection.cs" />

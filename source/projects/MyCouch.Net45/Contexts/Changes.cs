@@ -1,9 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Net.Http;
-using System.Reactive.Concurrency;
-using System.Reactive.Disposables;
-using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using EnsureThat;
@@ -23,7 +20,7 @@ namespace MyCouch.Contexts
         protected ChangesResponseFactory ChangesResponseFactory { get; set; }
         protected ContinuousChangesResponseFactory ContinuousChangesResponseFactory { get; set; }
 
-        public Func<IScheduler> ObservableSubscribeOnScheduler { protected get; set; }
+        public Func<TaskFactory> ObservableWorkTaskFactoryResolver { protected get; set; }
 
         public Changes(IDbClientConnection connection, ISerializer serializer)
             : base(connection)
@@ -34,7 +31,7 @@ namespace MyCouch.Contexts
             ContinuousHttpRequestFactory = new GetContinuousChangesHttpRequestFactory();
             ChangesResponseFactory = new ChangesResponseFactory(serializer);
             ContinuousChangesResponseFactory = new ContinuousChangesResponseFactory(serializer);
-            ObservableSubscribeOnScheduler = () => TaskPoolScheduler.Default;
+            ObservableWorkTaskFactoryResolver = () => Task.Factory;
         }
 
         public virtual async Task<ChangesResponse> GetAsync(GetChangesRequest request)
@@ -87,7 +84,7 @@ namespace MyCouch.Contexts
         {
             EnsureContinuousFeedIsRequested(request);
 
-            return Observable.Create<string>(async o =>
+            return MySingleObservable<string>.Create(async o =>
             {
                 var httpRequest = ContinuousHttpRequestFactory.Create(request);
 
@@ -103,17 +100,14 @@ namespace MyCouch.Contexts
                                 while (!cancellationToken.IsCancellationRequested && !reader.EndOfStream)
                                 {
                                     //cancellationToken.ThrowIfCancellationRequested();
-                                    if(!cancellationToken.IsCancellationRequested)
-                                        o.OnNext(reader.ReadLine());
+                                    if (!cancellationToken.IsCancellationRequested)
+                                        o(reader.ReadLine());
                                 }
                             }
                         }
                     }
-                    o.OnCompleted();
-
-                    return Disposable.Empty;
                 }
-            }).SubscribeOn(ObservableSubscribeOnScheduler());
+            }, cancellationToken, ObservableWorkTaskFactoryResolver());
         }
 
         protected virtual void EnsureContinuousFeedIsRequested(GetChangesRequest request)

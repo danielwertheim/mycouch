@@ -319,6 +319,9 @@
     <Compile Include="..\MyCouch.Net45\MyCouchUriBuilder.cs">
       <Link>MyCouchUriBuilder.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\MySingleObservable.cs">
+      <Link>MySingleObservable.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\Net\BasicAuthString.cs">
       <Link>Net\BasicAuthString.cs</Link>
     </Compile>

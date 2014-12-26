@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Net;
-using System.Reactive.Concurrency;
-using System.Reactive.Disposables;
-using System.Reactive.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Extensions;
@@ -19,7 +17,7 @@ namespace MyCouch
 
         public IMyCouchClient Client { get; protected set; }
 
-        public Func<IScheduler> ObservableSubscribeOnScheduler { protected get; set; }
+        public Func<TaskFactory> ObservableWorkTaskFactoryResolver { protected get; set; }
 
         public MyCouchStore(string dbUri, string dbName = null) : this(new MyCouchClient(dbUri, dbName)) { }
 
@@ -31,7 +29,7 @@ namespace MyCouch
 
             Client = client;
             IsDisposed = false;
-            ObservableSubscribeOnScheduler = () => TaskPoolScheduler.Default;
+            ObservableWorkTaskFactoryResolver = () => Task.Factory;
         }
 
         public void Dispose()
@@ -343,7 +341,7 @@ namespace MyCouch
 
             Ensure.That(ids, "ids").HasItems();
 
-            return Observable.Create<DocumentHeader>(async o =>
+            return MySingleObservable<DocumentHeader>.Create(async o =>
             {
                 var request = new QueryViewRequest(SystemViewIdentity.AllDocs).Configure(r => r.Keys(ids));
                 var response = await Client.Views.QueryAsync<AllDocsValue>(request).ForAwait();
@@ -351,12 +349,8 @@ namespace MyCouch
                 ThrowIfNotSuccessfulResponse(response);
 
                 foreach (var row in response.Rows)
-                    o.OnNext(new DocumentHeader(row.Id, row.Value.Rev));
-
-                o.OnCompleted();
-
-                return Disposable.Empty;
-            }).SubscribeOn(ObservableSubscribeOnScheduler());
+                    o(new DocumentHeader(row.Id, row.Value.Rev));
+            }, CancellationToken.None, ObservableWorkTaskFactoryResolver());
         }
 
         public virtual async Task<string> GetByIdAsync(string id, string rev = null)
@@ -427,7 +421,7 @@ namespace MyCouch
 
             Ensure.That(ids, "ids").HasItems();
 
-            return Observable.Create<T>(async o =>
+            return MySingleObservable<T>.Create(async o =>
             {
                 var request = new QueryViewRequest(SystemViewIdentity.AllDocs).Configure(r => r.Keys(ids).IncludeDocs(true));
                 var response = await Client.Views.QueryAsync<string, T>(request).ForAwait();
@@ -435,12 +429,8 @@ namespace MyCouch
                 ThrowIfNotSuccessfulResponse(response);
 
                 foreach (var row in response.Rows.Where(r => r.IncludedDoc != null))
-                    o.OnNext(row.IncludedDoc);
-
-                o.OnCompleted();
-
-                return Disposable.Empty;
-            }).SubscribeOn(ObservableSubscribeOnScheduler());
+                    o(row.IncludedDoc);
+            }, CancellationToken.None, ObservableWorkTaskFactoryResolver());
         }
 
         public virtual Task<QueryInfo> GetValueByKeysAsync(ViewIdentity view, object[] keys, Action<string> onResult)
@@ -481,7 +471,7 @@ namespace MyCouch
             Ensure.That(view, "view").IsNotNull();
             Ensure.That(keys, "keys").HasItems();
 
-            return Observable.Create<TValue>(async o =>
+            return MySingleObservable<TValue>.Create(async o =>
             {
                 var request = new QueryViewRequest(view).Configure(r => r.Keys(keys));
                 var response = await Client.Views.QueryAsync<TValue>(request).ForAwait();
@@ -489,12 +479,8 @@ namespace MyCouch
                 ThrowIfNotSuccessfulResponse(response);
 
                 foreach (var row in response.Rows.Where(r => r.Value != null))
-                    o.OnNext(row.Value);
-
-                o.OnCompleted();
-
-                return Disposable.Empty;
-            }).SubscribeOn(ObservableSubscribeOnScheduler());
+                    o(row.Value);
+            }, CancellationToken.None, ObservableWorkTaskFactoryResolver());
         }
 
         public virtual Task<QueryInfo> GetIncludedDocByKeysAsync(ViewIdentity view, object[] keys, Action<string> onResult)
@@ -535,7 +521,7 @@ namespace MyCouch
             Ensure.That(view, "view").IsNotNull();
             Ensure.That(keys, "keys").HasItems();
 
-            return Observable.Create<TIncludedDoc>(async o =>
+            return MySingleObservable<TIncludedDoc>.Create(async o =>
             {
                 var request = new QueryViewRequest(view).Configure(r => r.Keys(keys).IncludeDocs(true));
                 var response = await Client.Views.QueryAsync<string, TIncludedDoc>(request).ForAwait();
@@ -543,12 +529,8 @@ namespace MyCouch
                 ThrowIfNotSuccessfulResponse(response);
 
                 foreach (var row in response.Rows.Where(r => r.IncludedDoc != null))
-                    o.OnNext(row.IncludedDoc);
-
-                o.OnCompleted();
-
-                return Disposable.Empty;
-            }).SubscribeOn(ObservableSubscribeOnScheduler());
+                    o(row.IncludedDoc);
+            }, CancellationToken.None, ObservableWorkTaskFactoryResolver());
         }
 
         public virtual IObservable<Row> Query(Query query)
@@ -557,19 +539,15 @@ namespace MyCouch
 
             Ensure.That(query, "query").IsNotNull();
 
-            return Observable.Create<Row>(async o =>
+            return MySingleObservable<Row>.Create(async o =>
             {
                 var response = await Client.Views.QueryAsync(query.ToRequest()).ForAwait();
 
                 ThrowIfNotSuccessfulResponse(response);
 
                 foreach (var row in response.Rows)
-                    o.OnNext(new Row(row.Id, row.Key, row.Value, row.IncludedDoc));
-
-                o.OnCompleted();
-
-                return Disposable.Empty;
-            }).SubscribeOn(ObservableSubscribeOnScheduler());
+                    o(new Row(row.Id, row.Key, row.Value, row.IncludedDoc));
+            }, CancellationToken.None, ObservableWorkTaskFactoryResolver());
         }
 
         public virtual IObservable<Row<TValue>> Query<TValue>(Query query)
@@ -578,19 +556,15 @@ namespace MyCouch
 
             Ensure.That(query, "query").IsNotNull();
 
-            return Observable.Create<Row<TValue>>(async o =>
+            return MySingleObservable<Row<TValue>>.Create(async o =>
             {
                 var response = await Client.Views.QueryAsync<TValue>(query.ToRequest()).ForAwait();
 
                 ThrowIfNotSuccessfulResponse(response);
 
                 foreach (var row in response.Rows)
-                    o.OnNext(new Row<TValue>(row.Id, row.Key, row.Value, row.IncludedDoc));
-
-                o.OnCompleted();
-
-                return Disposable.Empty;
-            }).SubscribeOn(ObservableSubscribeOnScheduler());
+                    o(new Row<TValue>(row.Id, row.Key, row.Value, row.IncludedDoc));
+            }, CancellationToken.None, ObservableWorkTaskFactoryResolver());
         }
 
         public virtual IObservable<Row<TValue, TIncludedDoc>> Query<TValue, TIncludedDoc>(Query query)
@@ -599,19 +573,15 @@ namespace MyCouch
 
             Ensure.That(query, "query").IsNotNull();
 
-            return Observable.Create<Row<TValue, TIncludedDoc>>(async o =>
+            return MySingleObservable<Row<TValue, TIncludedDoc>>.Create(async o =>
             {
                 var response = await Client.Views.QueryAsync<TValue, TIncludedDoc>(query.ToRequest()).ForAwait();
 
                 ThrowIfNotSuccessfulResponse(response);
 
                 foreach (var row in response.Rows)
-                    o.OnNext(new Row<TValue, TIncludedDoc>(row.Id, row.Key, row.Value, row.IncludedDoc));
-
-                o.OnCompleted();
-
-                return Disposable.Empty;
-            }).SubscribeOn(ObservableSubscribeOnScheduler());
+                    o(new Row<TValue, TIncludedDoc>(row.Id, row.Key, row.Value, row.IncludedDoc));
+            }, CancellationToken.None, ObservableWorkTaskFactoryResolver());
         }
 
         public virtual async Task<QueryInfo> QueryAsync(Query query, Action<Row> onResult)
