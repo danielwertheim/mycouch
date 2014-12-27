@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Threading;
 using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Extensions;
@@ -17,8 +17,6 @@ namespace MyCouch
 
         public IMyCouchClient Client { get; protected set; }
 
-        public Func<TaskFactory> ObservableWorkTaskFactoryResolver { protected get; set; }
-
         public MyCouchStore(string dbUri, string dbName = null) : this(new MyCouchClient(dbUri, dbName)) { }
 
         public MyCouchStore(Uri dbUri, string dbName = null) : this(new MyCouchClient(dbUri, dbName)) { }
@@ -29,7 +27,6 @@ namespace MyCouch
 
             Client = client;
             IsDisposed = false;
-            ObservableWorkTaskFactoryResolver = () => Task.Factory;
         }
 
         public void Dispose()
@@ -335,22 +332,18 @@ namespace MyCouch
             return CreateQueryInfoFrom(response);
         }
 
-        public virtual IObservable<DocumentHeader> GetHeaders(string[] ids)
+        public async virtual Task<IEnumerable<DocumentHeader>> GetHeadersAsync(string[] ids)
         {
             ThrowIfDisposed();
 
             Ensure.That(ids, "ids").HasItems();
 
-            return MySingleObservable<DocumentHeader>.Create(async o =>
-            {
-                var request = new QueryViewRequest(SystemViewIdentity.AllDocs).Configure(r => r.Keys(ids));
-                var response = await Client.Views.QueryAsync<AllDocsValue>(request).ForAwait();
+            var request = new QueryViewRequest(SystemViewIdentity.AllDocs).Configure(r => r.Keys(ids));
+            var response = await Client.Views.QueryAsync<AllDocsValue>(request).ForAwait();
 
-                ThrowIfNotSuccessfulResponse(response);
+            ThrowIfNotSuccessfulResponse(response);
 
-                foreach (var row in response.Rows)
-                    o(new DocumentHeader(row.Id, row.Value.Rev));
-            }, CancellationToken.None, ObservableWorkTaskFactoryResolver());
+            return response.Rows.Select(r => new DocumentHeader(r.Id, r.Value.Rev));
         }
 
         public virtual async Task<string> GetByIdAsync(string id, string rev = null)
@@ -410,27 +403,23 @@ namespace MyCouch
             return CreateQueryInfoFrom(response);
         }
 
-        public virtual IObservable<string> GetByIds(params string[] ids)
+        public virtual Task<IEnumerable<string>> GetByIdsAsync(params string[] ids)
         {
-            return GetByIds<string>(ids);
+            return GetByIdsAsync<string>(ids);
         }
 
-        public virtual IObservable<T> GetByIds<T>(params string[] ids) where T : class
+        public virtual async Task<IEnumerable<T>> GetByIdsAsync<T>(params string[] ids) where T : class
         {
             ThrowIfDisposed();
 
             Ensure.That(ids, "ids").HasItems();
 
-            return MySingleObservable<T>.Create(async o =>
-            {
-                var request = new QueryViewRequest(SystemViewIdentity.AllDocs).Configure(r => r.Keys(ids).IncludeDocs(true));
-                var response = await Client.Views.QueryAsync<string, T>(request).ForAwait();
+            var request = new QueryViewRequest(SystemViewIdentity.AllDocs).Configure(r => r.Keys(ids).IncludeDocs(true));
+            var response = await Client.Views.QueryAsync<string, T>(request).ForAwait();
 
-                ThrowIfNotSuccessfulResponse(response);
+            ThrowIfNotSuccessfulResponse(response);
 
-                foreach (var row in response.Rows.Where(r => r.IncludedDoc != null))
-                    o(row.IncludedDoc);
-            }, CancellationToken.None, ObservableWorkTaskFactoryResolver());
+            return response.Rows.Where(r => r.IncludedDoc != null).Select(r => r.IncludedDoc);
         }
 
         public virtual Task<QueryInfo> GetValueByKeysAsync(ViewIdentity view, object[] keys, Action<string> onResult)
@@ -459,28 +448,24 @@ namespace MyCouch
             return CreateQueryInfoFrom(response);
         }
 
-        public virtual IObservable<string> GetValueByKeys(ViewIdentity view, params object[] keys)
+        public virtual Task<IEnumerable<string>> GetValueByKeysAsync(ViewIdentity view, params object[] keys)
         {
-            return GetValueByKeys<string>(view, keys);
+            return GetValueByKeysAsync<string>(view, keys);
         }
 
-        public virtual IObservable<TValue> GetValueByKeys<TValue>(ViewIdentity view, params object[] keys) where TValue : class
+        public virtual async Task<IEnumerable<TValue>> GetValueByKeysAsync<TValue>(ViewIdentity view, params object[] keys) where TValue : class
         {
             ThrowIfDisposed();
 
             Ensure.That(view, "view").IsNotNull();
             Ensure.That(keys, "keys").HasItems();
 
-            return MySingleObservable<TValue>.Create(async o =>
-            {
-                var request = new QueryViewRequest(view).Configure(r => r.Keys(keys));
-                var response = await Client.Views.QueryAsync<TValue>(request).ForAwait();
+            var request = new QueryViewRequest(view).Configure(r => r.Keys(keys));
+            var response = await Client.Views.QueryAsync<TValue>(request).ForAwait();
 
-                ThrowIfNotSuccessfulResponse(response);
+            ThrowIfNotSuccessfulResponse(response);
 
-                foreach (var row in response.Rows.Where(r => r.Value != null))
-                    o(row.Value);
-            }, CancellationToken.None, ObservableWorkTaskFactoryResolver());
+            return response.Rows.Where(r => r.Value != null).Select(r => r.Value);
         }
 
         public virtual Task<QueryInfo> GetIncludedDocByKeysAsync(ViewIdentity view, object[] keys, Action<string> onResult)
@@ -509,79 +494,63 @@ namespace MyCouch
             return CreateQueryInfoFrom(response);
         }
 
-        public virtual IObservable<string> GetIncludedDocByKeys(ViewIdentity view, params object[] keys)
+        public virtual Task<IEnumerable<string>> GetIncludedDocByKeysAsync(ViewIdentity view, params object[] keys)
         {
-            return GetIncludedDocByKeys<string>(view, keys);
+            return GetIncludedDocByKeysAsync<string>(view, keys);
         }
 
-        public virtual IObservable<TIncludedDoc> GetIncludedDocByKeys<TIncludedDoc>(ViewIdentity view, params object[] keys) where TIncludedDoc : class
+        public virtual async Task<IEnumerable<TIncludedDoc>> GetIncludedDocByKeysAsync<TIncludedDoc>(ViewIdentity view, params object[] keys) where TIncludedDoc : class
         {
             ThrowIfDisposed();
 
             Ensure.That(view, "view").IsNotNull();
             Ensure.That(keys, "keys").HasItems();
 
-            return MySingleObservable<TIncludedDoc>.Create(async o =>
-            {
-                var request = new QueryViewRequest(view).Configure(r => r.Keys(keys).IncludeDocs(true));
-                var response = await Client.Views.QueryAsync<string, TIncludedDoc>(request).ForAwait();
+            var request = new QueryViewRequest(view).Configure(r => r.Keys(keys).IncludeDocs(true));
+            var response = await Client.Views.QueryAsync<string, TIncludedDoc>(request).ForAwait();
 
-                ThrowIfNotSuccessfulResponse(response);
+            ThrowIfNotSuccessfulResponse(response);
 
-                foreach (var row in response.Rows.Where(r => r.IncludedDoc != null))
-                    o(row.IncludedDoc);
-            }, CancellationToken.None, ObservableWorkTaskFactoryResolver());
+            return response.Rows.Where(r => r.IncludedDoc != null).Select(r => r.IncludedDoc);
         }
 
-        public virtual IObservable<Row> Query(Query query)
+        public virtual async Task<IEnumerable<Row>> QueryAsync(Query query)
         {
             ThrowIfDisposed();
 
             Ensure.That(query, "query").IsNotNull();
 
-            return MySingleObservable<Row>.Create(async o =>
-            {
-                var response = await Client.Views.QueryAsync(query.ToRequest()).ForAwait();
+            var response = await Client.Views.QueryAsync(query.ToRequest()).ForAwait();
 
-                ThrowIfNotSuccessfulResponse(response);
+            ThrowIfNotSuccessfulResponse(response);
 
-                foreach (var row in response.Rows)
-                    o(new Row(row.Id, row.Key, row.Value, row.IncludedDoc));
-            }, CancellationToken.None, ObservableWorkTaskFactoryResolver());
+            return response.Rows.Select(r => new Row(r.Id, r.Key, r.Value, r.IncludedDoc));
         }
 
-        public virtual IObservable<Row<TValue>> Query<TValue>(Query query)
+        public virtual async Task<IEnumerable<Row<TValue>>> QueryAsync<TValue>(Query query)
         {
             ThrowIfDisposed();
 
             Ensure.That(query, "query").IsNotNull();
 
-            return MySingleObservable<Row<TValue>>.Create(async o =>
-            {
-                var response = await Client.Views.QueryAsync<TValue>(query.ToRequest()).ForAwait();
+            var response = await Client.Views.QueryAsync<TValue>(query.ToRequest()).ForAwait();
 
-                ThrowIfNotSuccessfulResponse(response);
+            ThrowIfNotSuccessfulResponse(response);
 
-                foreach (var row in response.Rows)
-                    o(new Row<TValue>(row.Id, row.Key, row.Value, row.IncludedDoc));
-            }, CancellationToken.None, ObservableWorkTaskFactoryResolver());
+            return response.Rows.Select(r => new Row<TValue>(r.Id, r.Key, r.Value, r.IncludedDoc));
         }
 
-        public virtual IObservable<Row<TValue, TIncludedDoc>> Query<TValue, TIncludedDoc>(Query query)
+        public virtual async Task<IEnumerable<Row<TValue, TIncludedDoc>>> QueryAsync<TValue, TIncludedDoc>(Query query)
         {
             ThrowIfDisposed();
 
             Ensure.That(query, "query").IsNotNull();
 
-            return MySingleObservable<Row<TValue, TIncludedDoc>>.Create(async o =>
-            {
-                var response = await Client.Views.QueryAsync<TValue, TIncludedDoc>(query.ToRequest()).ForAwait();
+            var response = await Client.Views.QueryAsync<TValue, TIncludedDoc>(query.ToRequest()).ForAwait();
 
-                ThrowIfNotSuccessfulResponse(response);
+            ThrowIfNotSuccessfulResponse(response);
 
-                foreach (var row in response.Rows)
-                    o(new Row<TValue, TIncludedDoc>(row.Id, row.Key, row.Value, row.IncludedDoc));
-            }, CancellationToken.None, ObservableWorkTaskFactoryResolver());
+            return response.Rows.Select(r => new Row<TValue, TIncludedDoc>(r.Id, r.Key, r.Value, r.IncludedDoc));
         }
 
         public virtual async Task<QueryInfo> QueryAsync(Query query, Action<Row> onResult)

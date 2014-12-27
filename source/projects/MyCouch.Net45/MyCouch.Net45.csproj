@@ -101,6 +101,7 @@
     <Compile Include="IReplicator.cs" />
     <Compile Include="IServerClientConnection.cs" />
     <Compile Include="IViews.cs" />
+    <Compile Include="MyBroker.cs" />
     <Compile Include="MyCouchClient.cs" />
     <Compile Include="MyCouchClientBootstrapper.cs" />
     <Compile Include="MyCouchResponseException.cs" />
@@ -108,7 +109,8 @@
     <Compile Include="MyCouchServerClient.cs" />
     <Compile Include="MyCouchStore.cs" />
     <Compile Include="MyCouchUriBuilder.cs" />
-    <Compile Include="MySingleObservable.cs" />
+    <Compile Include="MyObservable.cs" />
+    <Compile Include="MyObserver.cs" />
     <Compile Include="Net\BytesContent.cs" />
     <Compile Include="Net\BasicAuthString.cs" />
     <Compile Include="Net\Connection.cs" />

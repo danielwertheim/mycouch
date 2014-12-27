@@ -84,7 +84,9 @@ namespace MyCouch.Contexts
         {
             EnsureContinuousFeedIsRequested(request);
 
-            return MySingleObservable<string>.Create(async o =>
+            var ob = new MyObservable<string>();
+
+            Task.Factory.StartNew(async () =>
             {
                 var httpRequest = ContinuousHttpRequestFactory.Create(request);
 
@@ -101,13 +103,16 @@ namespace MyCouch.Contexts
                                 {
                                     //cancellationToken.ThrowIfCancellationRequested();
                                     if (!cancellationToken.IsCancellationRequested)
-                                        o(reader.ReadLine());
+                                        ob.Notify(reader.ReadLine());
                                 }
+                                ob.Complete();
                             }
                         }
                     }
                 }
-            }, cancellationToken, ObservableWorkTaskFactoryResolver());
+            }, cancellationToken).ForAwait();
+
+            return ob;
         }
 
         protected virtual void EnsureContinuousFeedIsRequested(GetChangesRequest request)

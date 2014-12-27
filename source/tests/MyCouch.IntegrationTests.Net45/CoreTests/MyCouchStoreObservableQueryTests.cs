@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using System.Linq;
-using System.Reactive.Linq;
 using FluentAssertions;
 using MyCouch.IntegrationTests.TestFixtures;
 using MyCouch.Testing;
@@ -33,7 +31,7 @@ namespace MyCouch.IntegrationTests.CoreTests
             var artists = ArtistsById.Skip(2).Take(3).ToArray();
             var ids = artists.Select(a => a.ArtistId).ToArray();
 
-            var headers = SUT.GetHeaders(ids).ToEnumerable();
+            var headers = SUT.GetHeadersAsync(ids).Result;
 
             headers.ToArray().ShouldBeEquivalentTo(artists.Select(a => new DocumentHeader(a.ArtistId, a.ArtistRev)).ToArray());
         }
@@ -44,7 +42,7 @@ namespace MyCouch.IntegrationTests.CoreTests
             var artists = ArtistsById.Skip(2).Take(3).ToArray();
             var ids = artists.Select(a => a.ArtistId).ToArray();
 
-            var docs = SUT.GetByIds(ids).ToEnumerable();
+            var docs = SUT.GetByIdsAsync(ids).Result;
 
             docs.Select(d => DbClient.Entities.Serializer.Deserialize<Artist>(d)).ToArray().ShouldBeEquivalentTo(artists);
         }
@@ -55,7 +53,9 @@ namespace MyCouch.IntegrationTests.CoreTests
             var artists = ArtistsById.Skip(2).Take(3).ToArray();
             var ids = artists.Select(a => a.ArtistId).ToArray();
 
-            var docs = SUT.GetByIds<Artist>(ids).ToEnumerable().ToArray();
+            var docs = SUT.GetByIdsAsync<Artist>(ids)
+                .Result
+                .ToArray();
 
             docs.ShouldBeEquivalentTo(artists);
         }
@@ -66,8 +66,8 @@ namespace MyCouch.IntegrationTests.CoreTests
             var artists = ArtistsById.Skip(2).Take(3).ToArray();
             var keys = artists.Select(a => a.Name).ToCouchKeys();
 
-            var values = SUT.GetValueByKeys(ClientTestData.Views.ArtistsAlbumsViewId, keys)
-                .ToEnumerable()
+            var values = SUT.GetValueByKeysAsync(ClientTestData.Views.ArtistsAlbumsViewId, keys)
+                .Result
                 .ToArray();
 
             values.ShouldBeEquivalentTo(artists.Select(a => DbClient.Serializer.Serialize(a.Albums)).ToArray());
@@ -79,8 +79,8 @@ namespace MyCouch.IntegrationTests.CoreTests
             var artists = ArtistsById.Skip(2).Take(3).ToArray();
             var keys = artists.Select(a => a.Name).ToCouchKeys();
 
-            var values = SUT.GetValueByKeys<Album[]>(ClientTestData.Views.ArtistsAlbumsViewId, keys)
-                .ToEnumerable()
+            var values = SUT.GetValueByKeysAsync<Album[]>(ClientTestData.Views.ArtistsAlbumsViewId, keys)
+                .Result
                 .ToArray();
 
             values.ShouldBeEquivalentTo(artists.Select(a => a.Albums).ToArray());
@@ -92,7 +92,7 @@ namespace MyCouch.IntegrationTests.CoreTests
             var artists = ArtistsById.Skip(2).Take(3).ToArray();
             var keys = artists.Select(a => a.ArtistId).ToCouchKeys();
 
-            var docs = SUT.GetIncludedDocByKeys(SystemViewIdentity.AllDocs, keys).ToEnumerable();
+            var docs = SUT.GetIncludedDocByKeysAsync(SystemViewIdentity.AllDocs, keys).Result;
 
             docs.Select(d => DbClient.Entities.Serializer.Deserialize<Artist>(d)).ToArray().ShouldBeEquivalentTo(artists);
         }
@@ -103,7 +103,9 @@ namespace MyCouch.IntegrationTests.CoreTests
             var artists = ArtistsById.Skip(2).Take(3).ToArray();
             var keys = artists.Select(a => a.ArtistId).ToCouchKeys();
 
-            var docs = SUT.GetIncludedDocByKeys<Artist>(SystemViewIdentity.AllDocs, keys).ToEnumerable().ToArray();
+            var docs = SUT.GetIncludedDocByKeysAsync<Artist>(SystemViewIdentity.AllDocs, keys)
+                .Result
+                .ToArray();
 
             docs.ShouldBeEquivalentTo(artists);
         }
@@ -113,19 +115,13 @@ namespace MyCouch.IntegrationTests.CoreTests
         {
             var expectedSum = ArtistsById.Sum(a => a.Albums.Count());
             var query = new Query(ClientTestData.Views.ArtistsTotalNumOfAlbumsViewId).Configure(q => q.Reduce(true));
-            var numOfRows = 0;
 
-            SUT.Query(query)
-                .ForEachAsync((r, i) =>
-                {
-                    numOfRows++;
-                    r.Value.Should().Be(expectedSum.ToString(MyCouchRuntime.FormatingCulture.NumberFormat));
-                })
-                .ContinueWith(t =>
-                {
-                    t.IsFaulted.Should().BeFalse();
-                    numOfRows.Should().Be(1);
-                }).Wait();
+            var r = SUT.QueryAsync(query)
+                .Result
+                .ToArray();
+
+            r.Length.Should().Be(1);
+            r.Single().Value.Should().Be(expectedSum.ToString(MyCouchRuntime.FormatingCulture.NumberFormat));
         }
 
         [MyFact(TestScenarios.MyCouchStore)]
@@ -133,19 +129,13 @@ namespace MyCouch.IntegrationTests.CoreTests
         {
             var expectedSum = ArtistsById.Sum(a => a.Albums.Count());
             var query = new Query(ClientTestData.Views.ArtistsTotalNumOfAlbumsViewId).Configure(q => q.Reduce(true));
-            var numOfRows = 0;
 
-            SUT.Query<dynamic>(query)
-                .ForEachAsync((r, i) =>
-                {
-                    numOfRows++;
-                    ((long)r.Value).Should().Be(expectedSum);
-                })
-                .ContinueWith(t =>
-                {
-                    t.IsFaulted.Should().BeFalse();
-                    numOfRows.Should().Be(1);
-                }).Wait();
+            var r = SUT.QueryAsync<dynamic>(query)
+                .Result
+                .ToArray();
+
+            r.Length.Should().Be(1);
+            ((long)r.Single().Value).Should().Be(expectedSum);
         }
 
         [MyFact(TestScenarios.MyCouchStore)]
@@ -153,77 +143,56 @@ namespace MyCouch.IntegrationTests.CoreTests
         {
             var expectedSum = ArtistsById.Sum(a => a.Albums.Count());
             var query = new Query(ClientTestData.Views.ArtistsTotalNumOfAlbumsViewId).Configure(q => q.Reduce(true));
-            var numOfRows = 0;
 
-            SUT.Query<int>(query)
-                .ForEachAsync((r, i) =>
-                {
-                    numOfRows++;
-                    r.Value.Should().Be(expectedSum);
-                })
-                .ContinueWith(t =>
-                {
-                    t.IsFaulted.Should().BeFalse();
-                    numOfRows.Should().Be(1);
-                }).Wait();
+            var r = SUT.QueryAsync<int>(query)
+                .Result
+                .ToArray();
+
+            r.Length.Should().Be(1);
+            r.Single().Value.Should().Be(expectedSum);
         }
 
         [MyFact(TestScenarios.MyCouchStore)]
         public void Query_When_IncludeDocs_and_no_value_is_returned_for_string_response_Then_the_included_docs_are_extracted()
         {
-            var len = 0;
             var query = new Query(ClientTestData.Views.ArtistsNameNoValueViewId).Configure(q => q.IncludeDocs(true));
 
-            SUT.Query(query)
-                .ForEachAsync((r, i) =>
-                {
-                    len++;
-                    ArtistsById[i].ShouldBeEquivalentTo(DbClient.Entities.Serializer.Deserialize<Artist>(r.IncludedDoc));
-                })
-                .ContinueWith(t =>
-                {
-                    t.IsFaulted.Should().BeFalse();
-                    len.Should().Be(ArtistsById.Length);
-                }).Wait();
+            var r = SUT.QueryAsync(query)
+                .Result
+                .ToArray();
+
+            r.Length.Should().Be(ArtistsById.Length);
+            r.Each((i, item) => ArtistsById[i].ShouldBeEquivalentTo(DbClient.Entities.Serializer.Deserialize<Artist>(item.IncludedDoc)));
         }
 
         [MyFact(TestScenarios.MyCouchStore)]
         public void Query_When_IncludeDocs_and_no_value_is_returned_for_entity_response_Then_the_included_docs_are_extracted()
         {
-            var len = 0;
             var query = new Query(ClientTestData.Views.ArtistsNameNoValueViewId).Configure(q => q.IncludeDocs(true));
 
-            SUT.Query<string, Artist>(query)
-                .ForEachAsync((r, i) =>
-                {
-                    len++;
-                    ArtistsById[i].ShouldBeEquivalentTo(r.IncludedDoc);
-                })
-                .ContinueWith(t =>
-                {
-                    t.IsFaulted.Should().BeFalse();
-                    len.Should().Be(ArtistsById.Length);
-                }).Wait();
+            var r = SUT.QueryAsync<string, Artist>(query)
+                .Result
+                .ToArray();
+
+            r.Length.Should().Be(ArtistsById.Length);
+            r.Each((i, item) => ArtistsById[i].ShouldBeEquivalentTo(item.IncludedDoc));
         }
 
         [MyFact(TestScenarios.MyCouchStore)]
         public void Query_When_IncludeDocs_of_non_array_doc_and_null_value_is_returned_Then_the_neither_included_docs_nor_value_is_extracted()
         {
-            var len = 0;
             var query = new Query(ClientTestData.Views.ArtistsNameNoValueViewId).Configure(q => q.IncludeDocs(true));
 
-            SUT.Query<string[], string[]>(query)
-                .ForEachAsync((r, i) =>
-                {
-                    len++;
-                    r.Value.Should().BeNull();
-                    r.IncludedDoc.Should().BeNull();
-                })
-                .ContinueWith(t =>
-                {
-                    t.IsFaulted.Should().BeFalse();
-                    len.Should().Be(ArtistsById.Length);
-                }).Wait();
+            var r = SUT.QueryAsync<string[], string[]>(query)
+                .Result
+                .ToArray();
+
+            r.Length.Should().Be(ArtistsById.Length);
+            r.Each(item =>
+            {
+                item.Value.Should().BeNull();
+                item.IncludedDoc.Should().BeNull();
+            });
         }
 
         [MyFact(TestScenarios.MyCouchStore)]
@@ -232,9 +201,9 @@ namespace MyCouch.IntegrationTests.CoreTests
             const int skip = 2;
             var albums = ArtistsById.Skip(skip).Select(a => DbClient.Serializer.Serialize(a.Albums)).ToArray();
             var query = new Query(ClientTestData.Views.ArtistsAlbumsViewId).Configure(q => q.Skip(skip));
-            
-            var values = SUT.Query(query)
-                .ToRowList()
+
+            var values = SUT.QueryAsync(query)
+                .Result
                 .OrderBy(r => r.Id)
                 .Select(r => r.Value)
                 .ToArray();
@@ -249,8 +218,8 @@ namespace MyCouch.IntegrationTests.CoreTests
             var albums = ArtistsById.Skip(skip).Select(a => a.Albums.Select(i => DbClient.Serializer.Serialize(i)).ToArray()).ToArray();
             var query = new Query(ClientTestData.Views.ArtistsAlbumsViewId).Configure(q => q.Skip(skip));
 
-            var values = SUT.Query<string[]>(query)
-                .ToRowList()
+            var values = SUT.QueryAsync<string[]>(query)
+                .Result
                 .OrderBy(r => r.Id)
                 .Select(r => r.Value)
                 .ToArray();
@@ -265,8 +234,8 @@ namespace MyCouch.IntegrationTests.CoreTests
             var albums = ArtistsById.Skip(skip).Select(a => a.Albums).ToArray();
             var query = new Query(ClientTestData.Views.ArtistsAlbumsViewId).Configure(q => q.Skip(skip));
 
-            var values = SUT.Query<Album[]>(query)
-                .ToRowList()
+            var values = SUT.QueryAsync<Album[]>(query)
+                .Result
                 .OrderBy(r => r.Id)
                 .Select(r => r.Value)
                 .ToArray();
@@ -281,8 +250,8 @@ namespace MyCouch.IntegrationTests.CoreTests
             var albums = ArtistsById.Take(limit).Select(a => DbClient.Serializer.Serialize(a.Albums)).ToArray();
             var query = new Query(ClientTestData.Views.ArtistsAlbumsViewId).Configure(q => q.Limit(limit));
 
-            var values = SUT.Query(query)
-                .ToRowList()
+            var values = SUT.QueryAsync(query)
+                .Result
                 .OrderBy(r => r.Id)
                 .Select(r => r.Value)
                 .ToArray();
@@ -296,9 +265,9 @@ namespace MyCouch.IntegrationTests.CoreTests
             const int limit = 2;
             var albums = ArtistsById.Take(limit).Select(a => a.Albums.Select(i => DbClient.Serializer.Serialize(i)).ToArray()).ToArray();
             var query = new Query(ClientTestData.Views.ArtistsAlbumsViewId).Configure(q => q.Limit(limit));
-            
-            var values = SUT.Query<string[]>(query)
-                .ToRowList()
+
+            var values = SUT.QueryAsync<string[]>(query)
+                .Result
                 .OrderBy(r => r.Id)
                 .Select(r => r.Value)
                 .ToArray();
@@ -313,8 +282,8 @@ namespace MyCouch.IntegrationTests.CoreTests
             var albums = ArtistsById.Take(limit).Select(a => a.Albums).ToArray();
             var query = new Query(ClientTestData.Views.ArtistsAlbumsViewId).Configure(q => q.Limit(limit));
 
-            var values = SUT.Query<Album[]>(query)
-                .ToRowList()
+            var values = SUT.QueryAsync<Album[]>(query)
+                .Result
                 .OrderBy(r => r.Id)
                 .Select(r => r.Value)
                 .ToArray();
@@ -328,8 +297,8 @@ namespace MyCouch.IntegrationTests.CoreTests
             var artist = ArtistsById[2];
             var query = new Query(ClientTestData.Views.ArtistsAlbumsViewId).Configure(q => q.Key(artist.Name));
 
-            var values = SUT.Query(query)
-                .ToRowList()
+            var values = SUT.QueryAsync(query)
+                .Result
                 .OrderBy(r => r.Id)
                 .Select(r => r.Value)
                 .ToArray();
@@ -343,8 +312,8 @@ namespace MyCouch.IntegrationTests.CoreTests
             var artist = ArtistsById[2];
             var query = new Query(ClientTestData.Views.ArtistsAlbumsViewId).Configure(q => q.Key(artist.Name));
 
-            var values = SUT.Query<string[]>(query)
-                .ToRowList()
+            var values = SUT.QueryAsync<string[]>(query)
+                .Result
                 .OrderBy(r => r.Id)
                 .Select(r => r.Value)
                 .ToArray();
@@ -358,8 +327,8 @@ namespace MyCouch.IntegrationTests.CoreTests
             var artist = ArtistsById[2];
             var query = new Query(ClientTestData.Views.ArtistsAlbumsViewId).Configure(q => q.Key(artist.Name));
 
-            var values = SUT.Query<Album[]>(query)
-                .ToRowList()
+            var values = SUT.QueryAsync<Album[]>(query)
+                .Result
                 .OrderBy(r => r.Id)
                 .Select(r => r.Value)
                 .ToArray();
@@ -374,8 +343,8 @@ namespace MyCouch.IntegrationTests.CoreTests
             var keys = artists.Select(a => a.Name).ToArray();
             var query = new Query(ClientTestData.Views.ArtistsAlbumsViewId).Configure(q => q.Keys(keys));
 
-            var values = SUT.Query(query)
-                .ToRowList()
+            var values = SUT.QueryAsync(query)
+                .Result
                 .OrderBy(r => r.Id)
                 .Select(r => r.Value)
                 .ToArray();
@@ -390,8 +359,8 @@ namespace MyCouch.IntegrationTests.CoreTests
             var keys = artists.Select(a => a.Name).ToArray();
             var query = new Query(ClientTestData.Views.ArtistsAlbumsViewId).Configure(q => q.Keys(keys));
 
-            var values = SUT.Query<string[]>(query)
-                .ToRowList()
+            var values = SUT.QueryAsync<string[]>(query)
+                .Result
                 .OrderBy(r => r.Id)
                 .Select(r => r.Value)
                 .ToArray();
@@ -406,8 +375,8 @@ namespace MyCouch.IntegrationTests.CoreTests
             var keys = artists.Select(a => a.Name).ToArray();
             var query = new Query(ClientTestData.Views.ArtistsAlbumsViewId).Configure(q => q.Keys(keys));
 
-            var values = SUT.Query<Album[]>(query)
-                .ToRowList()
+            var values = SUT.QueryAsync<Album[]>(query)
+                .Result
                 .OrderBy(r => r.Id)
                 .Select(r => r.Value)
                 .ToArray();
@@ -423,8 +392,8 @@ namespace MyCouch.IntegrationTests.CoreTests
                 .StartKey(artists.First().Name)
                 .EndKey(artists.Last().Name));
 
-            var values = SUT.Query(query)
-                .ToRowList()
+            var values = SUT.QueryAsync(query)
+                .Result
                 .OrderBy(r => r.Id)
                 .Select(r => r.Value)
                 .ToArray();
@@ -440,8 +409,8 @@ namespace MyCouch.IntegrationTests.CoreTests
                 .StartKey(artists.First().Name)
                 .EndKey(artists.Last().Name));
 
-            var values = SUT.Query<string[]>(query)
-                .ToRowList()
+            var values = SUT.QueryAsync<string[]>(query)
+                .Result
                 .OrderBy(r => r.Id)
                 .Select(r => r.Value)
                 .ToArray();
@@ -457,8 +426,8 @@ namespace MyCouch.IntegrationTests.CoreTests
                 .StartKey(artists.First().Name)
                 .EndKey(artists.Last().Name));
 
-            var values = SUT.Query<Album[]>(query)
-                .ToRowList()
+            var values = SUT.QueryAsync<Album[]>(query)
+                .Result
                 .OrderBy(r => r.Id)
                 .Select(r => r.Value)
                 .ToArray();
@@ -475,8 +444,8 @@ namespace MyCouch.IntegrationTests.CoreTests
                 .EndKey(artists.Last().Name)
                 .InclusiveEnd(false));
 
-            var values = SUT.Query(query)
-                .ToRowList()
+            var values = SUT.QueryAsync(query)
+                .Result
                 .OrderBy(r => r.Id)
                 .Select(r => r.Value)
                 .ToArray();
@@ -493,8 +462,8 @@ namespace MyCouch.IntegrationTests.CoreTests
                 .EndKey(artists.Last().Name)
                 .InclusiveEnd(false));
 
-            var values = SUT.Query<string[]>(query)
-                .ToRowList()
+            var values = SUT.QueryAsync<string[]>(query)
+                .Result
                 .OrderBy(r => r.Id)
                 .Select(r => r.Value)
                 .ToArray();
@@ -511,8 +480,8 @@ namespace MyCouch.IntegrationTests.CoreTests
                 .EndKey(artists.Last().Name)
                 .InclusiveEnd(false));
 
-            var values = SUT.Query<Album[]>(query)
-                .ToRowList()
+            var values = SUT.QueryAsync<Album[]>(query)
+                .Result
                 .OrderBy(r => r.Id)
                 .Select(r => r.Value)
                 .ToArray();
@@ -528,8 +497,8 @@ namespace MyCouch.IntegrationTests.CoreTests
             var query = new Query(ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId).Configure(q => q
                 .Skip(skip));
 
-            var values = SUT.Query<Artist>(query)
-                .ToRowList()
+            var values = SUT.QueryAsync<Artist>(query)
+                .Result
                 .OrderBy(r => r.Id)
                 .Select(r => r.Value)
                 .ToArray();
@@ -545,8 +514,8 @@ namespace MyCouch.IntegrationTests.CoreTests
             var query = new Query(ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId).Configure(q => q
                 .Limit(limit));
 
-            var values = SUT.Query<Artist>(query)
-                .ToRowList()
+            var values = SUT.QueryAsync<Artist>(query)
+                .Result
                 .OrderBy(r => r.Id)
                 .Select(r => r.Value)
                 .ToArray();
@@ -559,8 +528,8 @@ namespace MyCouch.IntegrationTests.CoreTests
         {
             var query = new Query(ClientTestData.Views.ArtistsNameAsKeyAndDocAsValueId);
 
-            var values = SUT.Query<Artist>(query)
-                .ToRowList()
+            var values = SUT.QueryAsync<Artist>(query)
+                .Result
                 .OrderBy(r => r.Id)
                 .Select(r => r.Value)
                 .ToArray();

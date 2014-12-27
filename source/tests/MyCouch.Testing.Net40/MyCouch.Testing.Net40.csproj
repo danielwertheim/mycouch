@@ -78,22 +78,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Microsoft.Net.Http.2.2.28\lib\net40\System.Net.Http.WebRequest.dll</HintPath>
     </Reference>
-    <Reference Include="System.Reactive.Core, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Rx-Core.2.2.5\lib\net40\System.Reactive.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.Interfaces, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Rx-Interfaces.2.2.5\lib\net40\System.Reactive.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.Linq, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Rx-Linq.2.2.5\lib\net40\System.Reactive.Linq.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.PlatformServices, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Rx-PlatformServices.2.2.5\lib\net40\System.Reactive.PlatformServices.dll</HintPath>
-    </Reference>
     <Reference Include="System.Runtime">
       <HintPath>..\..\packages\Microsoft.Bcl.1.1.9\lib\net40\System.Runtime.dll</HintPath>
     </Reference>
@@ -107,6 +91,9 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Testing.Net45\CoreExtensions.cs">
+      <Link>CoreExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\mycouch.testing.net45\model\Album.cs">
       <Link>Model\Album.cs</Link>
     </Compile>
@@ -119,14 +106,8 @@
     <Compile Include="..\MyCouch.Testing.Net45\Model\Blog.cs">
       <Link>Blog.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Testing.Net45\ObservableRowExtensions.cs">
-      <Link>ObservableRowExtensions.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Testing.Net45\Shoulds.cs">
       <Link>Shoulds.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Testing.Net45\StringExtensions.cs">
-      <Link>StringExtensions.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.testing.net45\testdata\ClientTestData.cs">
       <Link>TestData\ClientTestData.cs</Link>

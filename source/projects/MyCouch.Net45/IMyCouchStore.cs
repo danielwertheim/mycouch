@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MyCouch
@@ -15,12 +16,6 @@ namespace MyCouch
         /// The underlying db-client.
         /// </summary>
         IMyCouchClient Client { get; }
-
-        /// <summary>
-        /// Resolves the <see cref="TaskFactory"/> used when running observable queries.
-        /// By default <see cref="Task.Factory"/>.
-        /// </summary>
-        Func<TaskFactory> ObservableWorkTaskFactoryResolver { set; }
 
         /// <summary>
         /// POSTs a raw NEW document to the database.
@@ -186,8 +181,6 @@ namespace MyCouch
 
         /// <summary>
         /// Returns the document header for a document by doing a HEAD-request.
-        /// If you need multiple <see cref="DocumentHeader"/> in one batch,
-        /// see <see cref="GetHeadersAsync"/>
         /// </summary>
         /// <param name="id"></param>
         /// <param name="rev"></param>
@@ -197,8 +190,6 @@ namespace MyCouch
         /// <summary>
         /// Returns documents headers matching sent <paramref name="ids"/>, via <paramref name="onResult"/>.
         /// It will query the all-docs view and return the id and ref via <see cref="DocumentHeader"/>.
-        /// If you want the documents as the return type instead of <see cref="QueryInfo"/>,
-        /// use the observable <see cref="GetHeaders"/> instead.
         /// </summary>
         /// <param name="ids"></param>
         /// <param name="onResult"></param>
@@ -211,7 +202,7 @@ namespace MyCouch
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>
-        IObservable<DocumentHeader> GetHeaders(string[] ids);
+        Task<IEnumerable<DocumentHeader>> GetHeadersAsync(string[] ids);
 
         /// <summary>
         /// Returns a document by <param ref="id"/> and optinally a <paramref name="rev"/>.
@@ -233,8 +224,6 @@ namespace MyCouch
 
         /// <summary>
         /// Returns documents matching sent <paramref name="ids"/>, via <paramref name="onResult"/>.
-        /// If you want the documents as the return type instead of <see cref="QueryInfo"/>,
-        /// use the observable <see cref="GetByIds"/> instead.
         /// </summary>
         /// <param name="ids"></param>
         /// <param name="onResult"></param>
@@ -243,8 +232,6 @@ namespace MyCouch
 
         /// <summary>
         /// Returns entities matching sent <paramref name="ids"/>, via <paramref name="onResult"/>.
-        /// If you want the documents as the return type instead of <see cref="QueryInfo"/>,
-        /// use the observable <see cref="GetByIds"/> instead.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="ids"></param>
@@ -253,41 +240,39 @@ namespace MyCouch
         Task<QueryInfo> GetByIdsAsync<T>(string[] ids, Action<T> onResult) where T : class;
 
         /// <summary>
-        /// Returns documents matching sent <paramref name="ids"/>, via <see cref="IObservable{T}"/> of string.
-        /// If you want each document returned via callback instead, see <see cref="GetByIdsAsync"/>.
+        /// Returns documents matching sent <paramref name="ids"/>.
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>
-        IObservable<string> GetByIds(params string[] ids);
+        Task<IEnumerable<string>> GetByIdsAsync(params string[] ids);
 
         /// <summary>
-        /// Returns entities matching sent <paramref name="ids"/>, via <see cref="IObservable{T}"/> of <typeparamref name="T"/>.
-        /// If you want each document returned via callback instead, see <see cref="GetByIdsAsync{T}"/>.
+        /// Returns entities matching sent <paramref name="ids"/>.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="ids"></param>
         /// <returns></returns>
-        IObservable<T> GetByIds<T>(params string[] ids) where T : class;
+        Task<IEnumerable<T>> GetByIdsAsync<T>(params string[] ids) where T : class;
 
         Task<QueryInfo> GetValueByKeysAsync(ViewIdentity view, object[] keys, Action<string> onResult);
 
         Task<QueryInfo> GetValueByKeysAsync<T>(ViewIdentity view, object[] keys, Action<T> onResult) where T : class;
 
-        IObservable<string> GetValueByKeys(ViewIdentity view, params object[] keys);
+        Task<IEnumerable<string>> GetValueByKeysAsync(ViewIdentity view, params object[] keys);
 
-        IObservable<T> GetValueByKeys<T>(ViewIdentity view, params object[] keys) where T : class;
+        Task<IEnumerable<T>> GetValueByKeysAsync<T>(ViewIdentity view, params object[] keys) where T : class;
 
         Task<QueryInfo> GetIncludedDocByKeysAsync(ViewIdentity view, object[] keys, Action<string> onResult);
 
         Task<QueryInfo> GetIncludedDocByKeysAsync<TValue>(ViewIdentity view, object[] keys, Action<TValue> onResult) where TValue : class;
 
-        IObservable<string> GetIncludedDocByKeys(ViewIdentity view, params object[] keys);
+        Task<IEnumerable<string>> GetIncludedDocByKeysAsync(ViewIdentity view, params object[] keys);
 
-        IObservable<TIncludedDoc> GetIncludedDocByKeys<TIncludedDoc>(ViewIdentity view, params object[] keys) where TIncludedDoc : class;
+        Task<IEnumerable<TIncludedDoc>> GetIncludedDocByKeysAsync<TIncludedDoc>(ViewIdentity view, params object[] keys) where TIncludedDoc : class;
 
-        IObservable<Row> Query(Query query);
-        IObservable<Row<TValue>> Query<TValue>(Query query);
-        IObservable<Row<TValue, TIncludedDoc>> Query<TValue, TIncludedDoc>(Query query);
+        Task<IEnumerable<Row>> QueryAsync(Query query);
+        Task<IEnumerable<Row<TValue>>> QueryAsync<TValue>(Query query);
+        Task<IEnumerable<Row<TValue, TIncludedDoc>>> QueryAsync<TValue, TIncludedDoc>(Query query);
 
         Task<QueryInfo> QueryAsync(Query query, Action<Row> onResult);
         Task<QueryInfo> QueryAsync<TValue>(Query query, Action<Row<TValue>> onResult);
