@@ -46,24 +46,15 @@
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Reactive.Core">
-      <HintPath>..\..\packages\Rx-Core.2.2.5\lib\net45\System.Reactive.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.Interfaces">
-      <HintPath>..\..\packages\Rx-Interfaces.2.2.5\lib\net45\System.Reactive.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.Linq">
-      <HintPath>..\..\packages\Rx-Linq.2.2.5\lib\net45\System.Reactive.Linq.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.PlatformServices">
-      <HintPath>..\..\packages\Rx-PlatformServices.2.2.5\lib\net45\System.Reactive.PlatformServices.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Testing.Net45\CoreExtensions.cs">
+      <Link>CoreExtensions.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.testing.net45\model\Album.cs">
       <Link>Model\Album.cs</Link>
@@ -77,14 +68,8 @@
     <Compile Include="..\MyCouch.Testing.Net45\Model\Blog.cs">
       <Link>Blog.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Testing.Net45\ObservableRowExtensions.cs">
-      <Link>ObservableRowExtensions.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Testing.Net45\Shoulds.cs">
       <Link>Shoulds.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Testing.Net45\StringExtensions.cs">
-      <Link>StringExtensions.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.testing.net45\testdata\ClientTestData.cs">
       <Link>TestData\ClientTestData.cs</Link>
