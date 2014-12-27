@@ -340,9 +340,6 @@
     <Compile Include="..\MyCouch.Net45\IViews.cs">
       <Link>IViews.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\MyBroker.cs">
-      <Link>MyBroker.cs</Link>
-    </Compile>
     <Compile Include="..\MyCouch.Net45\MyCouchClient.cs">
       <Link>MyCouchClient.cs</Link>
     </Compile>

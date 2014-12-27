@@ -101,7 +101,6 @@
     <Compile Include="IReplicator.cs" />
     <Compile Include="IServerClientConnection.cs" />
     <Compile Include="IViews.cs" />
-    <Compile Include="MyBroker.cs" />
     <Compile Include="MyCouchClient.cs" />
     <Compile Include="MyCouchClientBootstrapper.cs" />
     <Compile Include="MyCouchResponseException.cs" />
