@@ -52,7 +52,7 @@
     <file src="MyCouch.Cloudant.Net40\*.xml" target="lib\net40" />
     <file src="MyCouch.Cloudant.Net45\*.dll" target="lib\net45" />
     <file src="MyCouch.Cloudant.Net45\*.xml" target="lib\net45" />
-    <file src="MyCouch.Cloudant.Pcl\*.dll" target="lib\portable-net45+netcore45" />
-    <file src="MyCouch.Cloudant.Pcl\*.xml" target="lib\portable-net45+netcore45" />
+    <file src="MyCouch.Cloudant.Pcl\*.dll" target="lib\portable-netcore45+wpa81+MonoAndroid1+MonoTouch1" />
+    <file src="MyCouch.Cloudant.Pcl\*.xml" target="lib\portable-netcore45+wpa81+MonoAndroid1+MonoTouch1" />
   </files>
 </package>
