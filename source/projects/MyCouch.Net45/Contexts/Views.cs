@@ -13,13 +13,13 @@ using MyCouch.Serialization;
 
 namespace MyCouch.Contexts
 {
-    public class Views : ApiContextBase<IDbClientConnection>, IViews
+    public class Views : ApiContextBase<IDbConnection>, IViews
     {
         protected QueryViewHttpRequestFactory QueryViewHttpRequestFactory { get; set; }
         protected ViewQueryResponseFactory ViewQueryResponseFactory { get; set; }
         protected RawResponseFactory RawResponseFactory { get; set; }
 
-        public Views(IDbClientConnection connection, ISerializer serializer)
+        public Views(IDbConnection connection, ISerializer serializer)
             : base(connection)
         {
             Ensure.That(serializer, "serializer").IsNotNull();

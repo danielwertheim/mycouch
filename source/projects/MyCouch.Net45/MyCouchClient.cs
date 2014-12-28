@@ -1,6 +1,5 @@
 ﻿using System;
 using EnsureThat;
-using MyCouch.Net;
 using MyCouch.Serialization;
 
 namespace MyCouch
@@ -9,7 +8,7 @@ namespace MyCouch
     {
         protected bool IsDisposed { get; private set; }
 
-        public IDbClientConnection Connection { get; private set; }
+        public IDbConnection Connection { get; private set; }
         public ISerializer Serializer { get; private set; }
         public ISerializer DocumentSerializer { get; private set; }
         public IChanges Changes { get; private set; }
@@ -19,18 +18,20 @@ namespace MyCouch
         public IEntities Entities { get; protected set; }
         public IViews Views { get; private set; }
 
-        public MyCouchClient(string dbUri, string dbName = null) : this(new Uri(dbUri), dbName) { }
+        public MyCouchClient(string dbUri, string dbName = null, MyCouchClientBootstrapper bootstrapper = null)
+            : this(new Uri(dbUri), dbName, bootstrapper) { }
 
-        public MyCouchClient(Uri dbUri, string dbName = null) : this(new DbClientConnection(dbUri, dbName)) { }
+        public MyCouchClient(Uri dbUri, string dbName = null, MyCouchClientBootstrapper bootstrapper = null)
+            : this(new ConnectionInfo(dbUri, dbName), bootstrapper) { }
 
-        public MyCouchClient(IDbClientConnection connection, MyCouchClientBootstrapper bootstrapper = null)
+        public MyCouchClient(ConnectionInfo connectionInfo, MyCouchClientBootstrapper bootstrapper = null)
         {
-            Ensure.That(connection, "connection").IsNotNull();
+            Ensure.That(connectionInfo, "connectionInfo").IsNotNull();
 
-            Connection = connection;
             IsDisposed = false;
-
             bootstrapper = bootstrapper ?? new MyCouchClientBootstrapper();
+
+            Connection = bootstrapper.DbConnectionFn(connectionInfo);
             Serializer = bootstrapper.SerializerFn();
             DocumentSerializer = bootstrapper.DocumentSerializerFn();
             Changes = bootstrapper.ChangesFn(Connection);

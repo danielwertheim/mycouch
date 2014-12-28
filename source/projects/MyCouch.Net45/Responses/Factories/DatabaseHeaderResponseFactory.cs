@@ -1,12 +1,12 @@
 ﻿using System.Net.Http;
 using EnsureThat;
-using MyCouch.Extensions;
+using MyCouch.Requests;
 using MyCouch.Responses.Materializers;
 using MyCouch.Serialization;
 
 namespace MyCouch.Responses.Factories
 {
-    public class DatabaseHeaderResponseFactory : ResponseFactoryBase<DatabaseHeaderResponse>
+    public class DatabaseHeaderResponseFactory : ResponseFactoryBase
     {
         protected readonly FailedResponseMaterializer FailedResponseMaterializer;
 
@@ -17,14 +17,15 @@ namespace MyCouch.Responses.Factories
             FailedResponseMaterializer = new FailedResponseMaterializer(serializer);
         }
 
-        protected override void MaterializeSuccessfulResponse(DatabaseHeaderResponse response, HttpResponseMessage httpResponse)
+        public virtual DatabaseHeaderResponse Create(DatabaseRequest request, HttpResponseMessage httpResponse)
         {
-            response.DbName = httpResponse.RequestMessage.RequestUri.ExtractDbName();
-        }
-
-        protected override void MaterializeFailedResponse(DatabaseHeaderResponse response, HttpResponseMessage httpResponse)
-        {
-            FailedResponseMaterializer.Materialize(response, httpResponse);
+            return Materialize<DatabaseHeaderResponse>(
+                httpResponse,
+                (r1, r2) =>
+                {
+                    r1.DbName = request.DbName;
+                },
+                FailedResponseMaterializer.Materialize);
         }
     }
 }

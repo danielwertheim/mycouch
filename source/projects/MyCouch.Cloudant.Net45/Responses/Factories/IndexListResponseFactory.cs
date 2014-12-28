@@ -6,7 +6,7 @@ using System.Net.Http;
 
 namespace MyCouch.Cloudant.Responses.Factories
 {
-    public class IndexListResponseFactory : ResponseFactoryBase<IndexListResponse>
+    public class IndexListResponseFactory : ResponseFactoryBase
     {
         protected readonly SimpleDeserializingResponseMaterializer SuccessfulResponseMaterializer;
         protected readonly FailedResponseMaterializer FailedResponseMaterializer;
@@ -19,14 +19,12 @@ namespace MyCouch.Cloudant.Responses.Factories
             FailedResponseMaterializer = new FailedResponseMaterializer(serializer);
         }
 
-        protected override void MaterializeSuccessfulResponse(IndexListResponse response, HttpResponseMessage httpResponse)
+        public virtual IndexListResponse Create(HttpResponseMessage httpResponse)
         {
-            SuccessfulResponseMaterializer.Materialize(response, httpResponse);
-        }
-
-        protected override void MaterializeFailedResponse(IndexListResponse response, HttpResponseMessage httpResponse)
-        {
-            FailedResponseMaterializer.Materialize(response, httpResponse);
+            return Materialize<IndexListResponse>(
+                httpResponse,
+                SuccessfulResponseMaterializer.Materialize,
+                FailedResponseMaterializer.Materialize);
         }
     }
 }

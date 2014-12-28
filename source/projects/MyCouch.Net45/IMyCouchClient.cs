@@ -11,9 +11,9 @@ namespace MyCouch
     public interface IMyCouchClient : IDisposable
     {
         /// <summary>
-        /// The underlying <see cref="IDbClientConnection"/> used to communicate with CouchDb.
+        /// The underlying <see cref="IDbConnection"/> used to communicate with CouchDb.
         /// </summary>
-        IDbClientConnection Connection { get; }
+        IDbConnection Connection { get; }
         
         /// <summary>
         /// More or less Vanilla configured serializer.
@@ -24,7 +24,7 @@ namespace MyCouch
         ISerializer Serializer { get; }
 
         /// <summary>
-        /// Supports entity conventions etc that is used in the contexts of
+        /// Supports entity conventions etc that is used in the contexts of e.g.
         /// <see cref="Views"/>
         /// <see cref="Entities"/>
         /// <see cref="Documents"/>

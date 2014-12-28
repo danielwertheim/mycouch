@@ -5,7 +5,7 @@ using MyCouch.Serialization;
 
 namespace MyCouch.Responses.Factories
 {
-    public class AttachmentResponseFactory : ResponseFactoryBase<AttachmentResponse>
+    public class AttachmentResponseFactory : ResponseFactoryBase
     {
         protected readonly AttachmentResponseMaterializer SuccessfulResponseMaterializer;
         protected readonly FailedResponseMaterializer FailedResponseMaterializer;
@@ -18,14 +18,14 @@ namespace MyCouch.Responses.Factories
             FailedResponseMaterializer = new FailedResponseMaterializer(serializer);
         }
 
-        protected override void MaterializeSuccessfulResponse(AttachmentResponse response, HttpResponseMessage httpResponse)
+        public virtual AttachmentResponse Create(HttpResponseMessage httpResponse)
         {
-            SuccessfulResponseMaterializer.Materialize(response, httpResponse);
-        }
+            Ensure.That(httpResponse, "httpResponse").IsNotNull();
 
-        protected override void MaterializeFailedResponse(AttachmentResponse response, HttpResponseMessage httpResponse)
-        {
-            FailedResponseMaterializer.Materialize(response, httpResponse);
+            return Materialize<AttachmentResponse>(
+                httpResponse,
+                SuccessfulResponseMaterializer.Materialize,
+                FailedResponseMaterializer.Materialize);
         }
     }
 }

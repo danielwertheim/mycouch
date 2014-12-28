@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace MyCouch.Cloudant.Contexts
 {
-    public class Queries : ApiContextBase<IDbClientConnection>, IQueries
+    public class Queries : ApiContextBase<IDbConnection>, IQueries
     {
         protected PostIndexHttpRequestFactory PostIndexHttpRequestFactory { get; set; }
         protected GetAllIndexesHttpRequestFactory GetAllIndexesHttpRequestFactory { get; set; }
@@ -22,7 +22,7 @@ namespace MyCouch.Cloudant.Contexts
         protected IndexListResponseFactory IndexListResponseFactory { get; set; }
         protected FindResponseFactory FindResponseFactory { get; set; }
 
-        public Queries(IDbClientConnection connection, ISerializer documentSerializer, ISerializer serializer)
+        public Queries(IDbConnection connection, ISerializer documentSerializer, ISerializer serializer)
             : base(connection)
         {
             Ensure.That(documentSerializer, "documentSerializer").IsNotNull();

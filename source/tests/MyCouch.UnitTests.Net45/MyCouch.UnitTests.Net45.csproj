@@ -62,7 +62,7 @@
     <Compile Include="Cloudant\IndexParametersConfiguratorTests.cs" />
     <Compile Include="Cloudant\Responses\SearchIndexResponseTests.cs" />
     <Compile Include="Cloudant\SearchParametersConfiguratorTests.cs" />
-    <Compile Include="Extensions\UriExtensionsTests.cs" />
+    <Compile Include="ConnectionInfoTests.cs" />
     <Compile Include="Fakes\DbClientConnectionFake.cs" />
     <Compile Include="Net\BasicAuthStringTests.cs" />
     <Compile Include="Net\DbClientConnectionTests.cs" />

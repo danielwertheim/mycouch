@@ -1,20 +1,12 @@
 ﻿using System;
-using EnsureThat;
 
 namespace MyCouch.Requests
 {
 #if !PCL
     [Serializable]
 #endif
-    public class ViewCleanupRequest : Request
+    public class ViewCleanupRequest : DatabaseRequest
     {
-        public string DbName { get; private set; }
-
-        public ViewCleanupRequest(string dbName)
-        {
-            Ensure.That(dbName, "dbName").IsNotNullOrWhiteSpace();
-
-            DbName = dbName;
-        }
+        public ViewCleanupRequest(string dbName) : base(dbName) { }
     }
 }

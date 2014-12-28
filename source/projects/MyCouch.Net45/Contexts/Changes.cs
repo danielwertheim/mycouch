@@ -13,7 +13,7 @@ using MyCouch.Serialization;
 
 namespace MyCouch.Contexts
 {
-    public class Changes : ApiContextBase<IDbClientConnection>, IChanges
+    public class Changes : ApiContextBase<IDbConnection>, IChanges
     {
         protected GetChangesHttpRequestFactory HttpRequestFactory { get; set; }
         protected GetContinuousChangesHttpRequestFactory ContinuousHttpRequestFactory { get; set; }
@@ -22,7 +22,7 @@ namespace MyCouch.Contexts
 
         public Func<TaskFactory> ObservableWorkTaskFactoryResolver { protected get; set; }
 
-        public Changes(IDbClientConnection connection, ISerializer serializer)
+        public Changes(IDbConnection connection, ISerializer serializer)
             : base(connection)
         {
             Ensure.That(serializer, "serializer").IsNotNull();
@@ -82,14 +82,12 @@ namespace MyCouch.Contexts
 
         public virtual IObservable<string> ObserveContinuous(GetChangesRequest request, CancellationToken cancellationToken)
         {
-            EnsureContinuousFeedIsRequested(request);
+            var httpRequest = ContinuousHttpRequestFactory.Create(request);
 
             var ob = new MyObservable<string>();
 
             Task.Factory.StartNew(async () =>
             {
-                var httpRequest = ContinuousHttpRequestFactory.Create(request);
-
                 using (var httpResponse = await SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ForAwait())
                 {
                     var response = ContinuousChangesResponseFactory.Create(httpResponse);
@@ -113,14 +111,6 @@ namespace MyCouch.Contexts
             }, cancellationToken).ForAwait();
 
             return ob;
-        }
-
-        protected virtual void EnsureContinuousFeedIsRequested(GetChangesRequest request)
-        {
-            Ensure.That(request, "request").IsNotNull();
-
-            if (request.Feed.HasValue && request.Feed != ChangesFeed.Continuous)
-                throw new ArgumentException(ExceptionStrings.GetContinuousChangesInvalidFeed, "request");
         }
     }
 }

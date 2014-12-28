@@ -3,14 +3,14 @@ using FluentAssertions;
 using MyCouch.Extensions;
 using Xunit;
 
-namespace MyCouch.UnitTests.Extensions
+namespace MyCouch.UnitTests
 {
-    public class UriExtensionsTests : UnitTests
+    public class ConnectionInfoTests : UnitTests
     {
         [Fact]
         public void Getting_absolute_uri_excluding_user_info_When_user_info_exists_It_should_remove_user_info()
         {
-            var r = new Uri("http://s%40:p%40ssword@localhost:5984/resource/1").GetAbsoluteUriExceptUserInfo();
+            var r = new ConnectionInfo(new Uri("http://s%40:p%40ssword@localhost:5984/resource/1")).GetAbsoluteAddressExceptUserInfo();
 
             r.Should().Be("http://localhost:5984/resource/1");
         }
@@ -18,7 +18,7 @@ namespace MyCouch.UnitTests.Extensions
         [Fact]
         public void Getting_absolute_uri_excluding_user_info_When_no_user_info_exists_It_should_return_uri()
         {
-            var r = new Uri("http://localhost:5984/resource/1").GetAbsoluteUriExceptUserInfo();
+            var r = new ConnectionInfo(new Uri("http://localhost:5984/resource/1")).GetAbsoluteAddressExceptUserInfo();
 
             r.Should().Be("http://localhost:5984/resource/1");
         }
@@ -26,7 +26,7 @@ namespace MyCouch.UnitTests.Extensions
         [Fact]
         public void Getting_user_info_parts_When_encoded_user_and_password_are_provided_It_extracts_decoded_user_and_password()
         {
-            var r = new Uri("http://s%40:p%40ssword@localhost:5984").GetUserInfoParts();
+            var r = new ConnectionInfo(new Uri("http://s%40:p%40ssword@localhost:5984")).GetUserInfoParts();
 
             r.Should().BeEquivalentTo("s@", "p@ssword");
         }
@@ -34,7 +34,7 @@ namespace MyCouch.UnitTests.Extensions
         [Fact]
         public void Getting_user_info_parts_When_non_encoded_user_and_password_are_provided_It_extracts_user_and_password()
         {
-            var r = new Uri("http://tstUser:tstPwd@localhost:5984").GetUserInfoParts();
+            var r = new ConnectionInfo(new Uri("http://tstUser:tstPwd@localhost:5984")).GetUserInfoParts();
 
             r.Should().BeEquivalentTo("tstUser", "tstPwd");
         }
@@ -42,7 +42,7 @@ namespace MyCouch.UnitTests.Extensions
         [Fact]
         public void Getting_user_info_parts_When_nothing_is_provided_It_returns_empty_array()
         {
-            var r = new Uri("http://localhost:5984").GetUserInfoParts();
+            var r = new ConnectionInfo(new Uri("http://localhost:5984")).GetUserInfoParts();
 
             r.Should().NotBeNull();
             r.Should().BeEmpty();
@@ -51,7 +51,7 @@ namespace MyCouch.UnitTests.Extensions
         [Fact]
         public void Getting_basic_auth_string_When_encoded_user_and_password_are_provided_It_returns_a_basic_auth_string()
         {
-            var r = new Uri("http://s%40:p%40ssword@localhost:5984").GetBasicAuthString();
+            var r = new ConnectionInfo(new Uri("http://s%40:p%40ssword@localhost:5984")).GetBasicAuthString();
 
             r.Value.Should().Be("s@:p@ssword".AsBase64Encoded());
         }
@@ -59,7 +59,7 @@ namespace MyCouch.UnitTests.Extensions
         [Fact]
         public void Getting_basic_auth_string_When_non_encoded_user_and_password_are_provided_It_returns_a_basic_auth_string()
         {
-            var r = new Uri("http://foo:bar@localhost:5984").GetBasicAuthString();
+            var r = new ConnectionInfo(new Uri("http://foo:bar@localhost:5984")).GetBasicAuthString();
 
             r.Value.Should().Be("foo:bar".AsBase64Encoded());
         }
@@ -67,7 +67,7 @@ namespace MyCouch.UnitTests.Extensions
         [Fact]
         public void Getting_basic_auth_string_When_nothing_is_provided_It_returns_null()
         {
-            var r = new Uri("http://localhost:5984").GetBasicAuthString();
+            var r = new ConnectionInfo(new Uri("http://localhost:5984")).GetBasicAuthString();
 
             r.Should().BeNull();
         }

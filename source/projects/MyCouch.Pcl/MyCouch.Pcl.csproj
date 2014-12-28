@@ -49,6 +49,9 @@
     <Compile Include="..\MyCouch.Net45\ChangesStyle.cs">
       <Link>ChangesStyle.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\ConnectionInfo.cs">
+      <Link>ConnectionInfo.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\Contexts\ApiContextBase.cs">
       <Link>Contexts\ApiContextBase.cs</Link>
     </Compile>
@@ -150,9 +153,6 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\Extensions\TaskExtensions.cs">
       <Link>Extensions\TaskExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Net45\Extensions\UriExtensions.cs">
-      <Link>Extensions\UriExtensions.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\HttpRequestFactories\BulkHttpRequestFactory.cs">
       <Link>HttpRequestFactories\BulkHttpRequestFactory.cs</Link>
@@ -265,8 +265,8 @@
     <Compile Include="..\MyCouch.Net45\IDatabases.cs">
       <Link>IDatabases.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\IDbClientConnection.cs">
-      <Link>IDbClientConnection.cs</Link>
+    <Compile Include="..\MyCouch.Net45\IDbConnection.cs">
+      <Link>IDbConnection.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\IDocumentHeader.cs">
       <Link>IDocumentHeader.cs</Link>
@@ -292,8 +292,8 @@
     <Compile Include="..\MyCouch.Net45\IReplicator.cs">
       <Link>IReplicator.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\IServerClientConnection.cs">
-      <Link>IServerClientConnection.cs</Link>
+    <Compile Include="..\MyCouch.Net45\IServerConnection.cs">
+      <Link>IServerConnection.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\IViews.cs">
       <Link>IViews.cs</Link>
@@ -334,8 +334,8 @@
     <Compile Include="..\MyCouch.Net45\Net\Connection.cs">
       <Link>Net\Connection.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\Net\DbClientConnection.cs">
-      <Link>Net\DbClientConnection.cs</Link>
+    <Compile Include="..\MyCouch.Net45\Net\DbConnection.cs">
+      <Link>Net\DbConnection.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Net\HttpContentTypes.cs">
       <Link>Net\HttpContentTypes.cs</Link>
@@ -349,8 +349,8 @@
     <Compile Include="..\MyCouch.Net45\Net\QueryString.cs">
       <Link>Net\QueryString.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\Net\ServerClientConnection.cs">
-      <Link>Net\ServerClientConnection.cs</Link>
+    <Compile Include="..\MyCouch.Net45\Net\ServerConnection.cs">
+      <Link>Net\ServerConnection.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Net\UrlParam.cs">
       <Link>Net\UrlParam.cs</Link>
@@ -387,6 +387,9 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\CopyDocumentRequest.cs">
       <Link>Requests\CopyDocumentRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Requests\DatabaseRequest.cs">
+      <Link>Requests\DatabaseRequest.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\DeleteAttachmentRequest.cs">
       <Link>Requests\DeleteAttachmentRequest.cs</Link>

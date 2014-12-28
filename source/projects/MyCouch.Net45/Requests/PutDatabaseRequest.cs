@@ -1,20 +1,12 @@
 ﻿using System;
-using EnsureThat;
 
 namespace MyCouch.Requests
 {
 #if !PCL
     [Serializable]
 #endif
-    public class PutDatabaseRequest : Request
+    public class PutDatabaseRequest : DatabaseRequest
     {
-        public string DbName { get; private set; }
-
-        public PutDatabaseRequest(string dbName)
-        {
-            Ensure.That(dbName, "dbName").IsNotNullOrWhiteSpace();
-
-            DbName = dbName;
-        }
+        public PutDatabaseRequest(string dbName) : base(dbName) { }
     }
 }

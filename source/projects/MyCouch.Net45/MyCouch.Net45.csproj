@@ -85,13 +85,12 @@
     <Compile Include="Extensions\StreamExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\TaskExtensions.cs" />
-    <Compile Include="Extensions\UriExtensions.cs" />
     <Compile Include="IAttachments.cs" />
     <Compile Include="IChanges.cs" />
     <Compile Include="IConnection.cs" />
     <Compile Include="IDatabase.cs" />
     <Compile Include="IDatabases.cs" />
-    <Compile Include="IDbClientConnection.cs" />
+    <Compile Include="IDbConnection.cs" />
     <Compile Include="IDocuments.cs" />
     <Compile Include="IEntities.cs" />
     <Compile Include="IMyCouchClient.cs" />
@@ -99,7 +98,7 @@
     <Compile Include="IMyCouchStore.cs" />
     <Compile Include="IQueryParameters.cs" />
     <Compile Include="IReplicator.cs" />
-    <Compile Include="IServerClientConnection.cs" />
+    <Compile Include="IServerConnection.cs" />
     <Compile Include="IViews.cs" />
     <Compile Include="MyCouchClient.cs" />
     <Compile Include="MyCouchClientBootstrapper.cs" />
@@ -113,11 +112,12 @@
     <Compile Include="Net\BytesContent.cs" />
     <Compile Include="Net\BasicAuthString.cs" />
     <Compile Include="Net\Connection.cs" />
-    <Compile Include="Net\DbClientConnection.cs" />
+    <Compile Include="ConnectionInfo.cs" />
+    <Compile Include="Net\DbConnection.cs" />
     <Compile Include="Net\HttpContentTypes.cs" />
     <Compile Include="Net\HttpRequest.cs" />
     <Compile Include="Net\JsonContent.cs" />
-    <Compile Include="Net\ServerClientConnection.cs" />
+    <Compile Include="Net\ServerConnection.cs" />
     <Compile Include="Net\UrlParam.cs" />
     <Compile Include="Net\UrlParams.cs" />
     <Compile Include="Net\UrlSegment.cs" />
@@ -173,6 +173,7 @@
     <Compile Include="Requests\GetDatabaseRequest.cs" />
     <Compile Include="Requests\GetDocumentRequest.cs" />
     <Compile Include="Requests\GetEntityRequest.cs" />
+    <Compile Include="Requests\DatabaseRequest.cs" />
     <Compile Include="Requests\HeadDatabaseRequest.cs" />
     <Compile Include="Requests\HeadDocumentRequest.cs" />
     <Compile Include="Requests\PostDocumentRequest.cs" />

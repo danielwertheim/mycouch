@@ -1,15 +1,12 @@
 using System;
-using MyCouch.Extensions;
 
 namespace MyCouch.Net
 {
-    public class ServerClientConnection : Connection, IServerClientConnection
+    public class ServerConnection : Connection, IServerConnection
     {
-        public ServerClientConnection(Uri serverUri) : base(serverUri)
+        public ServerConnection(ConnectionInfo connectionInfo) : base(connectionInfo)
         {
-            var dbName = Address.ExtractDbName();
-
-            if (!string.IsNullOrWhiteSpace(dbName))
+            if (!string.IsNullOrWhiteSpace(connectionInfo.DbName))
             {
 #if PCL
                 throw new FormatException(

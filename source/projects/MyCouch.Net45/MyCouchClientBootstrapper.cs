@@ -2,6 +2,7 @@
 using MyCouch.Contexts;
 using MyCouch.EntitySchemes;
 using MyCouch.EntitySchemes.Reflections;
+using MyCouch.Net;
 using MyCouch.Serialization;
 using MyCouch.Serialization.Meta;
 
@@ -9,6 +10,16 @@ namespace MyCouch
 {
     public class MyCouchClientBootstrapper
     {
+        /// <summary>
+        /// Used for creating a <see cref="IDbConnection"/>. Override to inject your custom connection.
+        /// </summary>
+        public Func<ConnectionInfo, IDbConnection> DbConnectionFn { get; set; }
+
+        /// <summary>
+        /// Used for creating a <see cref="IServerConnection"/>. Override to inject your custom connection.
+        /// </summary>
+        public Func<ConnectionInfo, IServerConnection> ServerConnectionFn { get; set; }
+ 
         /// <summary>
         /// Used for configuring serializers returned via <see cref="SerializerFn"/>
         /// and <see cref="DocumentSerializerFn"/>.
@@ -34,45 +45,48 @@ namespace MyCouch
         /// <summary>
         /// Used e.g. for bootstraping <see cref="IMyCouchClient.Changes"/>.
         /// </summary>
-        public Func<IDbClientConnection, IChanges> ChangesFn { get; set; }
+        public Func<IDbConnection, IChanges> ChangesFn { get; set; }
 
         /// <summary>
         /// Used e.g. for bootstraping <see cref="IMyCouchClient.Attachments"/>.
         /// </summary>
-        public Func<IDbClientConnection, IAttachments> AttachmentsFn { get; set; }
+        public Func<IDbConnection, IAttachments> AttachmentsFn { get; set; }
 
         /// <summary>
         /// Used e.g. for bootstraping <see cref="IMyCouchClient.Database"/>.
         /// </summary>
-        public Func<IDbClientConnection, IDatabase> DatabaseFn { get; set; }
+        public Func<IDbConnection, IDatabase> DatabaseFn { get; set; }
 
         /// <summary>
         /// Used e.g. for bootstraping <see cref="IMyCouchServerClient.Databases"/>.
         /// </summary>
-        public Func<IServerClientConnection, IDatabases> DatabasesFn { get; set; }
+        public Func<IServerConnection, IDatabases> DatabasesFn { get; set; }
 
         /// <summary>
         /// Used e.g. for bootstraping <see cref="IMyCouchServerClient.Replicator"/>.
         /// </summary>
-        public Func<IServerClientConnection, IReplicator> ReplicatorFn { get; set; }
+        public Func<IServerConnection, IReplicator> ReplicatorFn { get; set; }
 
         /// <summary>
         /// Used e.g. for bootstraping <see cref="IMyCouchClient.Documents"/>.
         /// </summary>
-        public Func<IDbClientConnection, IDocuments> DocumentsFn { get; set; }
+        public Func<IDbConnection, IDocuments> DocumentsFn { get; set; }
 
         /// <summary>
         /// Used e.g. for bootstraping <see cref="IMyCouchClient.Entities"/>.
         /// </summary>
-        public Func<IDbClientConnection, IEntities> EntitiesFn { get; set; }
+        public Func<IDbConnection, IEntities> EntitiesFn { get; set; }
 
         /// <summary>
         /// Used e.g. for bootstraping <see cref="IMyCouchClient.Views"/>.
         /// </summary>
-        public Func<IDbClientConnection, IViews> ViewsFn { get; set; }
+        public Func<IDbConnection, IViews> ViewsFn { get; set; }
 
         public MyCouchClientBootstrapper()
         {
+            ConfigureDbConnectionFn();
+            ConfigureServerConnectionFn();
+
             ConfigureEntityReflectorFn();
             ConfigureSerializationConfiguration();
             ConfigureSerializerFn();
@@ -86,6 +100,16 @@ namespace MyCouch
             ConfigureDocumentsFn();
             ConfigureEntitiesFn();
             ConfigureViewsFn();
+        }
+
+        protected virtual void ConfigureDbConnectionFn()
+        {
+            DbConnectionFn = cnInfo => new DbConnection(cnInfo);
+        }
+
+        protected virtual void ConfigureServerConnectionFn()
+        {
+            ServerConnectionFn = cnInfo => new ServerConnection(cnInfo);
         }
 
         protected virtual void ConfigureChangesFn()

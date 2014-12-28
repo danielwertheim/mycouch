@@ -1,6 +1,5 @@
 ﻿using System;
 using EnsureThat;
-using MyCouch.Net;
 using MyCouch.Serialization;
 
 namespace MyCouch.Cloudant
@@ -9,29 +8,30 @@ namespace MyCouch.Cloudant
     {
         protected bool IsDisposed { get; private set; }
 
-        public IServerClientConnection Connection { get; private set; }
+        public IServerConnection Connection { get; private set; }
         public ISerializer Serializer { get; private set; }
-        public ISecurity Security { get; private set; }
         public IDatabases Databases { get; private set; }
         public IReplicator Replicator { get; private set; }
+        public ISecurity Security { get; private set; }
 
-        public MyCouchCloudantServerClient(string serverUrl) : this(new Uri(serverUrl)) { }
+        public MyCouchCloudantServerClient(string serverUrl, MyCouchCloudantClientBootstrapper bootstrapper = null)
+            : this(new Uri(serverUrl), bootstrapper) { }
 
-        public MyCouchCloudantServerClient(Uri serverUri) : this(new ServerClientConnection(serverUri)) { }
+        public MyCouchCloudantServerClient(Uri serverUri, MyCouchCloudantClientBootstrapper bootstrapper = null)
+            : this(new ConnectionInfo(serverUri), bootstrapper) { }
 
-        public MyCouchCloudantServerClient(IServerClientConnection connection, MyCouchCloudantClientBootstrapper bootstrapper = null)
+        public MyCouchCloudantServerClient(ConnectionInfo connectionInfo, MyCouchCloudantClientBootstrapper bootstrapper = null)
         {
-            Ensure.That(connection, "connection").IsNotNull();
+            Ensure.That(connectionInfo, "connectionInfo").IsNotNull();
 
-            Connection = connection;
-
+            IsDisposed = false;
             bootstrapper = bootstrapper ?? new MyCouchCloudantClientBootstrapper();
 
+            Connection = bootstrapper.ServerConnectionFn(connectionInfo);
             Serializer = bootstrapper.SerializerFn();
-            Security = bootstrapper.SecurityFn(Connection);
             Databases = bootstrapper.DatabasesFn(Connection);
             Replicator = bootstrapper.ReplicatorFn(Connection);
-            IsDisposed = false;
+            Security = bootstrapper.SecurityFn(Connection);
         }
 
         public void Dispose()

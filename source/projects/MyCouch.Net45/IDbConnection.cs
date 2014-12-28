@@ -1,6 +1,6 @@
 ﻿namespace MyCouch
 {
-    public interface IDbClientConnection : IConnection
+    public interface IDbConnection : IConnection
     {
         string DbName { get; }
     }

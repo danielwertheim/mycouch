@@ -1,20 +1,12 @@
 ﻿using System;
-using EnsureThat;
 
 namespace MyCouch.Requests
 {
 #if !PCL
     [Serializable]
 #endif
-    public class DeleteDatabaseRequest : Request
+    public class DeleteDatabaseRequest : DatabaseRequest
     {
-        public string DbName { get; private set; }
-
-        public DeleteDatabaseRequest(string dbName)
-        {
-            Ensure.That(dbName, "dbName").IsNotNullOrWhiteSpace();
-
-            DbName = dbName;
-        }
+        public DeleteDatabaseRequest(string dbName) : base(dbName) { }
     }
 }

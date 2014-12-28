@@ -11,7 +11,7 @@ using MyCouch.Serialization;
 
 namespace MyCouch.Contexts
 {
-    public class Documents : ApiContextBase<IDbClientConnection>, IDocuments
+    public class Documents : ApiContextBase<IDbConnection>, IDocuments
     {
         protected BulkHttpRequestFactory BulkHttpRequestFactory { get; set; }
         protected CopyDocumentHttpRequestFactory CopyDocumentHttpRequestFactory { get; set; }
@@ -27,7 +27,7 @@ namespace MyCouch.Contexts
 
         public ISerializer Serializer { get; private set; }
 
-        public Documents(IDbClientConnection connection, ISerializer serializer)
+        public Documents(IDbConnection connection, ISerializer serializer)
             : base(connection)
         {
             Ensure.That(serializer, "serializer").IsNotNull();
