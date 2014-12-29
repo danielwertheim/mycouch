@@ -56,14 +56,14 @@ namespace MyCouch.IntegrationTests.CloudantTests
 
             response.IsSuccess.Should().Be(true);
             response.DocCount.Should().Be(2);
-            response.Docs.Should().Contain("Couch blog");
+            response.Docs.Should().Contain(t => t.Contains("Couch blog"));
             response.Docs.Should().Contain(t => t.Contains("Json blog"));
         }
 
         [MyFact(TestScenarios.Cloudant, TestScenarios.QueriesContext)]
         public void Query_with_combintation_operators_should_return_matching_docs()
         {
-            const string e = "{\"$and\":[{\"author.age\":{\"$gt\":21}},{\"yearsActive\":{\"$lt\":5}}]}{\"$and\":[{\"author.age\":{\"$gt\":21}},{\"yearsActive\":{\"$lt\":5}}]}";
+            const string e = "{\"$and\":[{\"author.age\":{\"$gt\":21}},{\"yearsActive\":{\"$lt\":5}}]}";
 
             var request = new FindRequest().Configure(q => q
                 .SelectorExpression(e)
