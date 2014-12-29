@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -27,9 +28,15 @@ namespace MyCouch.Extensions
 
         public static string GetETag(this HttpResponseHeaders headers)
         {
-            return headers.ETag == null || headers.ETag.Tag == null
-                ? string.Empty
-                : headers.ETag.Tag.Substring(1, headers.ETag.Tag.Length - 2);
+            IEnumerable<string> values;
+            if (!headers.TryGetValues("ETag", out values))
+                return string.Empty;
+
+            var eTag = values.FirstOrDefault();
+
+            return !string.IsNullOrWhiteSpace(eTag)
+                ? eTag.TrimStart('"').TrimEnd('"')
+                : string.Empty;
         }
     }
 }

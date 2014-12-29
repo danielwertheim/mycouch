@@ -363,6 +363,7 @@ namespace MyCouch.Testing
             Response.Reason.Should().BeNull();
             Response.IsEmpty.Should().BeFalse();
             Response.ETag.Should().NotBeNullOrWhiteSpace();
+            Response.ETag.Should().NotContain("\"");
 
             if (numOfRows > 0)
             {
