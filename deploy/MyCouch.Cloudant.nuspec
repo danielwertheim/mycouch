@@ -16,7 +16,7 @@
       MyCouch lets you work with raw JSON and/or entities/POCOS without requiring any implementation of interfaces or base-classes etc. MyCouch provides you with some model conventions like
       injection of $doctype to the document. It is pluggable. If you don't like some piece, then hook in your implementation instead.
 
-      Supports .Net4.0, .Net4.5 and Windows store 8.0 and 8.1 (WinRT).
+      Supports .Net4.0, .Net4.5 and a PCL for Windows store 8.0 and 8.1 (WinRT) and WP8.1.
     </description>
     <iconUrl>http://www.mycouchclient.com/logos/mycouch-nuget.png</iconUrl>
     <projectUrl>https://github.com/danielwertheim/MyCouch</projectUrl>
