@@ -22,7 +22,7 @@ namespace MyCouch
         string[] Accepts { get; set; }
 
         /// <summary>
-        /// Indicates if any <see cref="Accept"/> has been specified.
+        /// Indicates if any <see cref="Accepts"/> has been specified.
         /// </summary>
         bool HasAccepts { get; }
 
