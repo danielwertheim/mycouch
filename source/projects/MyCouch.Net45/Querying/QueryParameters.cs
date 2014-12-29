@@ -11,6 +11,11 @@ namespace MyCouch.Querying
     public class QueryParameters : IQueryParameters
     {
         public ViewIdentity ViewIdentity { get; private set; }
+        public string[] Accepts { get; set; }
+        public bool HasAccepts
+        {
+            get { return Accepts != null && Accepts.Any(); }
+        }
         public Stale? Stale { get; set; }
         public bool? IncludeDocs { get; set; }
         public bool? Descending { get; set; }

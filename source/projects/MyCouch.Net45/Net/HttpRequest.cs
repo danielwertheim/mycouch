@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 #if PCL
 using System.Reflection;
@@ -27,16 +28,20 @@ namespace MyCouch.Net
 
             RelativeUrl = relativeUrl;
             Method = method;
-            Headers = new Dictionary<string, string>
-            {
-                { "Accept", string.Format("{0},{1}", HttpContentTypes.Json, HttpContentTypes.Html) }
-            };
+            Headers = new Dictionary<string, string> { { HttpHeaders.Accept, HttpContentTypes.Json } };
+        }
+
+        public virtual HttpRequest SetAcceptHeader(params string[] accepts)
+        {
+            Headers[HttpHeaders.Accept] = string.Join(",", accepts);
+
+            return this;
         }
 
         public virtual HttpRequest SetIfMatchHeader(string rev)
         {
             if (!string.IsNullOrWhiteSpace(rev))
-                Headers.Add("If-Match", rev);
+                Headers.Add(HttpHeaders.IfMatch, rev);
 
             return this;
         }
@@ -60,14 +65,14 @@ namespace MyCouch.Net
 
         public virtual HttpRequest SetRequestTypeHeader(Type requestType)
         {
-            Headers.Add(CustomHeaders.RequestType, GetRequestTypeName(requestType));
+            Headers.Add(HttpHeaders.RequestType, GetRequestTypeName(requestType));
 #if !PCL
             if (requestType.IsGenericType)
-                Headers.Add(CustomHeaders.RequestEntityType, GetRequestEntityTypeName(requestType));
+                Headers.Add(HttpHeaders.RequestEntityType, GetRequestEntityTypeName(requestType));
 #else
             var typeInfo = requestType.GetTypeInfo();
             if(typeInfo.IsGenericType)
-                Headers.Add(CustomHeaders.RequestEntityType, GetRequestEntityTypeName(requestType));
+                Headers.Add(HttpHeaders.RequestEntityType, GetRequestEntityTypeName(requestType));
 #endif
             return this;
         }
@@ -101,17 +106,11 @@ namespace MyCouch.Net
 
         public virtual void RemoveRequestTypeHeader()
         {
-            if (Headers.ContainsKey(CustomHeaders.RequestType))
-                Headers.Remove(CustomHeaders.RequestType);
+            if (Headers.ContainsKey(HttpHeaders.RequestType))
+                Headers.Remove(HttpHeaders.RequestType);
 
-            if (Headers.ContainsKey(CustomHeaders.RequestEntityType))
-                Headers.Remove(CustomHeaders.RequestEntityType);
-        }
-
-        public static class CustomHeaders
-        {
-            public const string RequestType = "mycouch-request-type";
-            public const string RequestEntityType = "mycouch-entitytype";
+            if (Headers.ContainsKey(HttpHeaders.RequestEntityType))
+                Headers.Remove(HttpHeaders.RequestEntityType);
         }
     }
 }

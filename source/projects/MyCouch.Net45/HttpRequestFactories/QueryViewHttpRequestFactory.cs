@@ -30,6 +30,14 @@ namespace MyCouch.HttpRequestFactories
 
             httpRequest.SetRequestTypeHeader(request.GetType());
 
+            if (request.HasAccepts)
+                httpRequest.SetAcceptHeader(request.Accepts);
+            else
+            {
+                if (!string.IsNullOrWhiteSpace(request.ListName))
+                    httpRequest.SetAcceptHeader(HttpContentTypes.Json, HttpContentTypes.Html);
+            }
+
             return httpRequest;
         }
 
@@ -42,7 +50,7 @@ namespace MyCouch.HttpRequestFactories
                     GenerateRequestUrlQueryString(request));
             }
 
-            if(!string.IsNullOrWhiteSpace(request.ListName))
+            if (!string.IsNullOrWhiteSpace(request.ListName))
                 return string.Format("/_design/{0}/_list/{1}/{2}{3}",
                     new UrlSegment(request.ViewIdentity.DesignDocument),
                     new UrlSegment(request.ListName),

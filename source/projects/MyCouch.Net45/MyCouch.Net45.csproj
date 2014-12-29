@@ -115,6 +115,7 @@
     <Compile Include="ConnectionInfo.cs" />
     <Compile Include="Net\DbConnection.cs" />
     <Compile Include="Net\HttpContentTypes.cs" />
+    <Compile Include="Net\HttpHeaders.cs" />
     <Compile Include="Net\HttpRequest.cs" />
     <Compile Include="Net\JsonContent.cs" />
     <Compile Include="Net\ServerConnection.cs" />

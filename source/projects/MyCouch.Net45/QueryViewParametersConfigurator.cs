@@ -287,12 +287,15 @@ namespace MyCouch
         /// Specify if you want to target a specific list in the view.
         /// </summary>
         /// <param name="name"></param>
+        /// <param name="accept"></param>
         /// <returns></returns>
-        public virtual QueryViewParametersConfigurator WithList(string name)
+        public virtual QueryViewParametersConfigurator WithList(string name, string accept = null)
         {
             Ensure.That(name, "name").IsNotNullOrWhiteSpace();
 
             Parameters.ListName = name;
+            if (!string.IsNullOrWhiteSpace(accept))
+                Parameters.Accepts = new[] { accept };
 
             return this;
         }

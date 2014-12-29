@@ -340,6 +340,9 @@
     <Compile Include="..\MyCouch.Net45\Net\HttpContentTypes.cs">
       <Link>Net\HttpContentTypes.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Net\HttpHeaders.cs">
+      <Link>Net\HttpHeaders.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\Net\HttpRequest.cs">
       <Link>Net\HttpRequest.cs</Link>
     </Compile>

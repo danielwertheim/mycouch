@@ -15,6 +15,18 @@ namespace MyCouch
         ViewIdentity ViewIdentity { get; }
 
         /// <summary>
+        /// Used to set custom accept header values.
+        /// Applicable e.g. when specifying a <see cref="ListName"/>
+        /// that returns e.g. HTML.
+        /// </summary>
+        string[] Accepts { get; set; }
+
+        /// <summary>
+        /// Indicates if any <see cref="Accept"/> has been specified.
+        /// </summary>
+        bool HasAccepts { get; }
+
+        /// <summary>
         /// Allow the results from a stale view to be used.
         /// </summary>
         Stale? Stale { get; set; }
