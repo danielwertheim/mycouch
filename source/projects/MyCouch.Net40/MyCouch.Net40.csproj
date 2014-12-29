@@ -49,7 +49,7 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Newtonsoft.Json.6.0.5\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.7\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -74,22 +74,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Microsoft.Net.Http.2.2.28\lib\net40\System.Net.Http.WebRequest.dll</HintPath>
     </Reference>
-    <Reference Include="System.Reactive.Core, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Rx-Core.2.2.5\lib\net40\System.Reactive.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.Interfaces, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Rx-Interfaces.2.2.5\lib\net40\System.Reactive.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.Linq, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Rx-Linq.2.2.5\lib\net40\System.Reactive.Linq.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.PlatformServices, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Rx-PlatformServices.2.2.5\lib\net40\System.Reactive.PlatformServices.dll</HintPath>
-    </Reference>
     <Reference Include="System.Runtime">
       <HintPath>..\..\packages\Microsoft.Bcl.1.1.9\lib\net40\System.Runtime.dll</HintPath>
     </Reference>
@@ -106,6 +90,9 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\ChangesStyle.cs">
       <Link>ChangesStyle.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\ConnectionInfo.cs">
+      <Link>ConnectionInfo.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.net45\contexts\ApiContextBase.cs">
       <Link>Contexts\ApiContextBase.cs</Link>
@@ -208,9 +195,6 @@
     </Compile>
     <Compile Include="..\mycouch.net45\extensions\TaskExtensions.cs">
       <Link>Extensions\TaskExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.net45\extensions\UriExtensions.cs">
-      <Link>Extensions\UriExtensions.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\HttpRequestFactories\BulkHttpRequestFactory.cs">
       <Link>HttpRequestFactories\BulkHttpRequestFactory.cs</Link>
@@ -323,8 +307,8 @@
     <Compile Include="..\MyCouch.Net45\IDatabases.cs">
       <Link>IDatabases.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\IDbClientConnection.cs">
-      <Link>IDbClientConnection.cs</Link>
+    <Compile Include="..\MyCouch.Net45\IDbConnection.cs">
+      <Link>IDbConnection.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\IDocumentHeader.cs">
       <Link>IDocumentHeader.cs</Link>
@@ -350,8 +334,8 @@
     <Compile Include="..\MyCouch.Net45\IReplicator.cs">
       <Link>IReplicator.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\IServerClientConnection.cs">
-      <Link>IServerClientConnection.cs</Link>
+    <Compile Include="..\MyCouch.Net45\IServerConnection.cs">
+      <Link>IServerConnection.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\IViews.cs">
       <Link>IViews.cs</Link>
@@ -377,6 +361,12 @@
     <Compile Include="..\MyCouch.Net45\MyCouchUriBuilder.cs">
       <Link>MyCouchUriBuilder.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\MyObservable.cs">
+      <Link>MyObservable.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\MyObserver.cs">
+      <Link>MyObserver.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\Net\BasicAuthString.cs">
       <Link>Net\BasicAuthString.cs</Link>
     </Compile>
@@ -386,11 +376,14 @@
     <Compile Include="..\mycouch.net45\net\Connection.cs">
       <Link>Net\Connection.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.net45\net\DbClientConnection.cs">
-      <Link>Net\DbClientConnection.cs</Link>
+    <Compile Include="..\MyCouch.Net45\Net\DbConnection.cs">
+      <Link>Net\DbConnection.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.net45\net\HttpContentTypes.cs">
       <Link>Net\HttpContentTypes.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Net\HttpHeaders.cs">
+      <Link>Net\HttpHeaders.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.net45\net\HttpRequest.cs">
       <Link>Net\HttpRequest.cs</Link>
@@ -401,8 +394,8 @@
     <Compile Include="..\MyCouch.Net45\Net\QueryString.cs">
       <Link>Net\QueryString.cs</Link>
     </Compile>
-    <Compile Include="..\mycouch.net45\net\ServerClientConnection.cs">
-      <Link>Net\ServerClientConnection.cs</Link>
+    <Compile Include="..\MyCouch.Net45\Net\ServerConnection.cs">
+      <Link>Net\ServerConnection.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.net45\net\UrlParam.cs">
       <Link>Net\UrlParam.cs</Link>
@@ -428,8 +421,8 @@
     <Compile Include="..\mycouch.net45\querying\QueryParameters.cs">
       <Link>Querying\QueryParameters.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Net45\QueryParametersConfigurator.cs">
-      <Link>QueryParametersConfigurator.cs</Link>
+    <Compile Include="..\MyCouch.Net45\QueryViewParametersConfigurator.cs">
+      <Link>QueryViewParametersConfigurator.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.net45\requests\BulkRequest.cs">
       <Link>Requests\BulkRequest.cs</Link>
@@ -439,6 +432,9 @@
     </Compile>
     <Compile Include="..\mycouch.net45\requests\CopyDocumentRequest.cs">
       <Link>Requests\CopyDocumentRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Requests\DatabaseRequest.cs">
+      <Link>Requests\DatabaseRequest.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.net45\requests\DeleteAttachmentRequest.cs">
       <Link>Requests\DeleteAttachmentRequest.cs</Link>

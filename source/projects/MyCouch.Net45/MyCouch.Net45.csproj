@@ -38,28 +38,12 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.7\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Reactive.Core, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Rx-Core.2.2.5\lib\net45\System.Reactive.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.Interfaces, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Rx-Interfaces.2.2.5\lib\net45\System.Reactive.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.Linq, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Rx-Linq.2.2.5\lib\net45\System.Reactive.Linq.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.PlatformServices, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Rx-PlatformServices.2.2.5\lib\net45\System.Reactive.PlatformServices.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\SharedAssemblyInfo.cs">
@@ -101,13 +85,12 @@
     <Compile Include="Extensions\StreamExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\TaskExtensions.cs" />
-    <Compile Include="Extensions\UriExtensions.cs" />
     <Compile Include="IAttachments.cs" />
     <Compile Include="IChanges.cs" />
     <Compile Include="IConnection.cs" />
     <Compile Include="IDatabase.cs" />
     <Compile Include="IDatabases.cs" />
-    <Compile Include="IDbClientConnection.cs" />
+    <Compile Include="IDbConnection.cs" />
     <Compile Include="IDocuments.cs" />
     <Compile Include="IEntities.cs" />
     <Compile Include="IMyCouchClient.cs" />
@@ -115,7 +98,7 @@
     <Compile Include="IMyCouchStore.cs" />
     <Compile Include="IQueryParameters.cs" />
     <Compile Include="IReplicator.cs" />
-    <Compile Include="IServerClientConnection.cs" />
+    <Compile Include="IServerConnection.cs" />
     <Compile Include="IViews.cs" />
     <Compile Include="MyCouchClient.cs" />
     <Compile Include="MyCouchClientBootstrapper.cs" />
@@ -124,14 +107,18 @@
     <Compile Include="MyCouchServerClient.cs" />
     <Compile Include="MyCouchStore.cs" />
     <Compile Include="MyCouchUriBuilder.cs" />
+    <Compile Include="MyObservable.cs" />
+    <Compile Include="MyObserver.cs" />
     <Compile Include="Net\BytesContent.cs" />
     <Compile Include="Net\BasicAuthString.cs" />
     <Compile Include="Net\Connection.cs" />
-    <Compile Include="Net\DbClientConnection.cs" />
+    <Compile Include="ConnectionInfo.cs" />
+    <Compile Include="Net\DbConnection.cs" />
     <Compile Include="Net\HttpContentTypes.cs" />
+    <Compile Include="Net\HttpHeaders.cs" />
     <Compile Include="Net\HttpRequest.cs" />
     <Compile Include="Net\JsonContent.cs" />
-    <Compile Include="Net\ServerClientConnection.cs" />
+    <Compile Include="Net\ServerConnection.cs" />
     <Compile Include="Net\UrlParam.cs" />
     <Compile Include="Net\UrlParams.cs" />
     <Compile Include="Net\UrlSegment.cs" />
@@ -141,7 +128,7 @@
     <Compile Include="QueryInfo.cs" />
     <Compile Include="Querying\QueryExtensions.cs" />
     <Compile Include="Querying\QueryParameters.cs" />
-    <Compile Include="QueryParametersConfigurator.cs" />
+    <Compile Include="QueryViewParametersConfigurator.cs" />
     <Compile Include="Requests\BulkRequest.cs" />
     <Compile Include="Requests\CompactDatabaseRequest.cs" />
     <Compile Include="Requests\CopyDocumentRequest.cs" />
@@ -187,6 +174,7 @@
     <Compile Include="Requests\GetDatabaseRequest.cs" />
     <Compile Include="Requests\GetDocumentRequest.cs" />
     <Compile Include="Requests\GetEntityRequest.cs" />
+    <Compile Include="Requests\DatabaseRequest.cs" />
     <Compile Include="Requests\HeadDatabaseRequest.cs" />
     <Compile Include="Requests\HeadDocumentRequest.cs" />
     <Compile Include="Requests\PostDocumentRequest.cs" />

@@ -1,8 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using EnsureThat;
+using MyCouch.Extensions;
 using MyCouch.Net;
 using MyCouch.Requests;
 using MyCouch.Serialization;
@@ -30,6 +30,14 @@ namespace MyCouch.HttpRequestFactories
 
             httpRequest.SetRequestTypeHeader(request.GetType());
 
+            if (request.HasAccepts)
+                httpRequest.SetAcceptHeader(request.Accepts);
+            else
+            {
+                if (!string.IsNullOrWhiteSpace(request.ListName))
+                    httpRequest.SetAcceptHeader(HttpContentTypes.Json, HttpContentTypes.Html);
+            }
+
             return httpRequest;
         }
 
@@ -38,13 +46,20 @@ namespace MyCouch.HttpRequestFactories
             if (request.ViewIdentity is SystemViewIdentity)
             {
                 return string.Format("/{0}{1}",
-                    request.ViewIdentity.Name,
+                    new UrlSegment(request.ViewIdentity.Name),
                     GenerateRequestUrlQueryString(request));
             }
 
+            if (!string.IsNullOrWhiteSpace(request.ListName))
+                return string.Format("/_design/{0}/_list/{1}/{2}{3}",
+                    new UrlSegment(request.ViewIdentity.DesignDocument),
+                    new UrlSegment(request.ListName),
+                    new UrlSegment(request.ViewIdentity.Name),
+                    GenerateRequestUrlQueryString(request));
+
             return string.Format("/_design/{0}/_view/{1}{2}",
-                request.ViewIdentity.DesignDocument,
-                request.ViewIdentity.Name,
+                new UrlSegment(request.ViewIdentity.DesignDocument),
+                new UrlSegment(request.ViewIdentity.Name),
                 GenerateRequestUrlQueryString(request));
         }
 
@@ -121,6 +136,10 @@ namespace MyCouch.HttpRequestFactories
 
             if (request.Skip.HasValue)
                 kvs.Add(KeyNames.Skip, Serializer.ToJson(request.Skip.Value));
+
+            if (request.HasCustomQueryParameters)
+                foreach (var param in request.CustomQueryParameters)
+                    kvs.Add(param.Key, param.Value.ToStringExtended());
 
             return kvs;
         }

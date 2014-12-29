@@ -22,34 +22,24 @@ namespace MyCouch.Responses.Factories
         {
             return Materialize<ViewQueryResponse>(
                 httpResponse,
-                MaterializeSuccessfulResponse,
-                MaterializeFailedResponse);
+                SuccessfulResponseMaterializer.Materialize,
+                FailedResponseMaterializer.Materialize);
         }
 
         public virtual ViewQueryResponse<TValue> Create<TValue>(HttpResponseMessage httpResponse)
         {
             return Materialize<ViewQueryResponse<TValue>>(
                 httpResponse,
-                MaterializeSuccessfulResponse,
-                MaterializeFailedResponse);
+                SuccessfulResponseMaterializer.Materialize,
+                FailedResponseMaterializer.Materialize);
         }
 
         public virtual ViewQueryResponse<TValue, TIncludedDoc> Create<TValue, TIncludedDoc>(HttpResponseMessage httpResponse)
         {
             return Materialize<ViewQueryResponse<TValue, TIncludedDoc>>(
                 httpResponse,
-                MaterializeSuccessfulResponse,
-                MaterializeFailedResponse);
-        }
-
-        protected virtual void MaterializeSuccessfulResponse<TValue, TIncludedDoc>(ViewQueryResponse<TValue, TIncludedDoc> response, HttpResponseMessage httpResponse)
-        {
-            SuccessfulResponseMaterializer.Materialize(response, httpResponse);
-        }
-
-        protected virtual void MaterializeFailedResponse<TValue, TIncludedDoc>(ViewQueryResponse<TValue, TIncludedDoc> response, HttpResponseMessage httpResponse)
-        {
-            FailedResponseMaterializer.Materialize(response, httpResponse);
+                SuccessfulResponseMaterializer.Materialize,
+                FailedResponseMaterializer.Materialize);
         }
     }
 }

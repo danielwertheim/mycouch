@@ -18,6 +18,8 @@ namespace MyCouch.Responses.Materializers
 
         public virtual async void Materialize<TValue, TIncludedDoc>(ViewQueryResponse<TValue, TIncludedDoc> response, HttpResponseMessage httpResponse)
         {
+            response.ETag = httpResponse.Headers.GetETag();
+
             using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
             {
                 Serializer.Populate(response, content);

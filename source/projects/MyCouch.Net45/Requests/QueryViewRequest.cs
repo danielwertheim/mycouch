@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using EnsureThat;
 using MyCouch.Querying;
 
@@ -15,7 +16,29 @@ namespace MyCouch.Requests
         /// Identitfies the View index that this request will be
         /// performed against.
         /// </summary>
-        public ViewIdentity ViewIdentity { get { return State.ViewIdentity; } }
+        public ViewIdentity ViewIdentity
+        {
+            get { return State.ViewIdentity; }
+        }
+
+        /// <summary>
+        /// Used to set custom accept header values.
+        /// Applicable e.g. when specifying a <see cref="ListName"/>
+        /// that returns e.g. HTML.
+        /// </summary>
+        public string[] Accepts
+        {
+            get { return State.Accepts; }
+            set { State.Accepts = value; }
+        }
+
+        /// <summary>
+        /// Indicates if any <see cref="Accepts"/> has been specified.
+        /// </summary>
+        public bool HasAccepts
+        {
+            get { return State.HasAccepts; }
+        }
 
         /// <summary>
         /// Allow the results from a stale view to be used.
@@ -170,6 +193,32 @@ namespace MyCouch.Requests
         }
 
         /// <summary>
+        /// Specify if you want to use a specific list.
+        /// </summary>
+        public string ListName
+        {
+            get { return State.ListName; }
+            set { State.ListName = value; }
+        }
+
+        /// <summary>
+        /// Additional custom query string parameters.
+        /// </summary>
+        public IDictionary<string, object> CustomQueryParameters
+        {
+            get { return State.CustomQueryParameters; }
+            set { State.CustomQueryParameters = value; }
+        }
+
+        /// <summary>
+        /// Indicates if there are any <see cref="CustomQueryParameters"/> or not.
+        /// </summary>
+        public bool HasCustomQueryParameters
+        {
+            get { return State.HasCustomQueryParameters; }
+        }
+
+        /// <summary>
         /// Only system views like all_docs could be
         /// queried without specifying a designDocument.
         /// If a custom view is being targetted, use other cTor.
@@ -202,9 +251,9 @@ namespace MyCouch.Requests
             State = queryParameters;
         }
 
-        public virtual QueryViewRequest Configure(Action<QueryParametersConfigurator> configurator)
+        public virtual QueryViewRequest Configure(Action<QueryViewParametersConfigurator> configurator)
         {
-            configurator(new QueryParametersConfigurator(State));
+            configurator(new QueryViewParametersConfigurator(State));
 
             return this;
         }

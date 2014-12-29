@@ -1,20 +1,12 @@
 ﻿using System;
-using EnsureThat;
 
 namespace MyCouch.Requests
 {
 #if !PCL
     [Serializable]
 #endif
-    public class CompactDatabaseRequest : Request
+    public class CompactDatabaseRequest : DatabaseRequest
     {
-        public string DbName { get; private set; }
-
-        public CompactDatabaseRequest(string dbName)
-        {
-            Ensure.That(dbName, "dbName").IsNotNullOrWhiteSpace();
-
-            DbName = dbName;
-        }
+        public CompactDatabaseRequest(string dbName) : base(dbName) { }
     }
 }

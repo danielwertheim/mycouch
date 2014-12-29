@@ -18,11 +18,16 @@ namespace MyCouch.Net
             get { return HttpClient.BaseAddress; }
         }
 
-        protected Connection(Uri uri)
+        public TimeSpan Timeout
         {
-            Ensure.That(uri, "uri").IsNotNull();
+            get { return HttpClient.Timeout; }
+        }
 
-            HttpClient = CreateHttpClient(uri);
+        protected Connection(ConnectionInfo connectionInfo)
+        {
+            Ensure.That(connectionInfo, "connectionInfo").IsNotNull();
+
+            HttpClient = CreateHttpClient(connectionInfo);
             IsDisposed = false;
         }
 
@@ -52,15 +57,18 @@ namespace MyCouch.Net
                 throw new ObjectDisposedException(GetType().Name);
         }
 
-        protected HttpClient CreateHttpClient(Uri uri)
+        protected HttpClient CreateHttpClient(ConnectionInfo connectionInfo)
         {
             var client = new HttpClient
             {
-                BaseAddress = new Uri(uri.GetAbsoluteUriExceptUserInfo().TrimEnd(new[] { '/' }))
+                BaseAddress = new Uri(connectionInfo.GetAbsoluteAddressExceptUserInfo().TrimEnd(new[] { '/' }))
             };
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(HttpContentTypes.Json));
 
-            var basicAuthString = uri.GetBasicAuthString();
+            if (connectionInfo.Timeout.HasValue)
+                client.Timeout = connectionInfo.Timeout.Value;
+
+            var basicAuthString = connectionInfo.GetBasicAuthString();
             if (basicAuthString != null)
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", basicAuthString.Value);

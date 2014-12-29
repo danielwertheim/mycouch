@@ -45,7 +45,7 @@ namespace MyCouch.IntegrationTests.CoreTests
             response.Should().BeAcceptedPost(DbClient.Connection.DbName);
         }
 
-        [MyFact(TestScenarios.DatabaseContext)]
+        [MyFact(TestScenarios.DatabaseContext, TestScenarios.ViewCleanUp)]
         public void When_ViewCleanup_and_db_exists_The_response_be()
         {
             var response = SUT.ViewCleanupAsync().Result;

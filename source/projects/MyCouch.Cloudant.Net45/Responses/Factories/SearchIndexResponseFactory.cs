@@ -24,26 +24,16 @@ namespace MyCouch.Cloudant.Responses.Factories
         {
             return Materialize<SearchIndexResponse>(
                 httpResponse,
-                MaterializeSuccessfulResponse,
-                MaterializeFailedResponse);
+                SuccessfulResponseMaterializer.Materialize,
+                FailedResponseMaterializer.Materialize);
         }
 
         public virtual SearchIndexResponse<TIncludedDoc> Create<TIncludedDoc>(HttpResponseMessage httpResponse)
         {
             return Materialize<SearchIndexResponse<TIncludedDoc>>(
                 httpResponse,
-                MaterializeSuccessfulResponse,
-                MaterializeFailedResponse);
-        }
-
-        protected virtual void MaterializeSuccessfulResponse<TIncludedDoc>(SearchIndexResponse<TIncludedDoc> response, HttpResponseMessage httpResponse)
-        {
-            SuccessfulResponseMaterializer.Materialize(response, httpResponse);
-        }
-
-        protected virtual void MaterializeFailedResponse<TIncludedDoc>(SearchIndexResponse<TIncludedDoc> response, HttpResponseMessage httpResponse)
-        {
-            FailedResponseMaterializer.Materialize(response, httpResponse);
+                SuccessfulResponseMaterializer.Materialize,
+                FailedResponseMaterializer.Materialize);
         }
     }
 }

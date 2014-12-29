@@ -5,7 +5,7 @@ using MyCouch.Serialization;
 
 namespace MyCouch.Responses.Factories
 {
-    public class ContinuousChangesResponseFactory : ResponseFactoryBase<ContinuousChangesResponse>
+    public class ContinuousChangesResponseFactory : ResponseFactoryBase
     {
         protected readonly FailedResponseMaterializer FailedResponseMaterializer;
 
@@ -16,11 +16,14 @@ namespace MyCouch.Responses.Factories
             FailedResponseMaterializer = new FailedResponseMaterializer(serializer);
         }
 
-        protected override void MaterializeSuccessfulResponse(ContinuousChangesResponse response, HttpResponseMessage httpResponse) { }
-
-        protected override void MaterializeFailedResponse(ContinuousChangesResponse response, HttpResponseMessage httpResponse)
+        public virtual ContinuousChangesResponse Create(HttpResponseMessage httpResponse)
         {
-            FailedResponseMaterializer.Materialize(response, httpResponse);
+            Ensure.That(httpResponse, "httpResponse").IsNotNull();
+
+            return Materialize<ContinuousChangesResponse>(
+                httpResponse,
+                (r1, r2) => {},
+                FailedResponseMaterializer.Materialize);
         }
     }
 }

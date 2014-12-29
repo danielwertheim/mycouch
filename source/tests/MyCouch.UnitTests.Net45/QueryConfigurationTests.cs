@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using FluentAssertions;
 using MyCouch.Querying;
 using Xunit;
 
 namespace MyCouch.UnitTests
 {
-    public class QueryConfigurationTests : UnitTestsOf<QueryParametersConfigurator>
+    public class QueryConfigurationTests : UnitTestsOf<QueryViewParametersConfigurator>
     {
         private readonly IQueryParameters _parameters;
 
@@ -13,7 +14,7 @@ namespace MyCouch.UnitTests
         {
             _parameters = new QueryParameters(new ViewIdentity("foodesigndocument", "barviewname"));
 
-            SUT = new QueryParametersConfigurator(_parameters);
+            SUT = new QueryViewParametersConfigurator(_parameters);
         }
 
         [Fact]
@@ -313,6 +314,30 @@ namespace MyCouch.UnitTests
             SUT.Stale(configuredValue);
 
             _parameters.Stale.Should().Be(configuredValue);
+        }
+
+        [Fact]
+        public void When_config_of_ListName_It_configures_underlying_options_Key()
+        {
+            const string configuredValue = "mylist";
+
+            SUT.WithList(configuredValue);
+
+            _parameters.ListName.Should().Be(configuredValue);
+        }
+
+        [Fact]
+        public void When_config_of_AdditionalQueryParameters_It_configures_options_AdditionalQueryParameters()
+        {
+            var configuredValue = new Dictionary<string, object>
+            {
+                { "foo", new { bar = "fooobject" } },
+                { "bar", "bar" }
+            };
+
+            SUT.CustomQueryParameters(configuredValue);
+
+            _parameters.CustomQueryParameters.Should().Equal(configuredValue);
         }
 
         private enum FooEnum

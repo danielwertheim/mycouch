@@ -12,12 +12,12 @@ using MyCouch.Serialization;
 
 namespace MyCouch.Cloudant.Contexts
 {
-    public class Security : ApiContextBase<IServerClientConnection>, ISecurity
+    public class Security : ApiContextBase<IServerConnection>, ISecurity
     {
         protected GenerateApiKeyHttpRequestFactory GenerateApiKeyHttpRequestFactory { get; set; }
         protected GenerateApiKeyResponseFactory GenerateApiKeyResponseFactory { get; set; }
 
-        public Security(IServerClientConnection connection, ISerializer serializer)
+        public Security(IServerConnection connection, ISerializer serializer)
             : base(connection)
         {
             Ensure.That(serializer, "serializer").IsNotNull();

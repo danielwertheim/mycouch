@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using EnsureThat;
 
@@ -10,6 +11,11 @@ namespace MyCouch.Querying
     public class QueryParameters : IQueryParameters
     {
         public ViewIdentity ViewIdentity { get; private set; }
+        public string[] Accepts { get; set; }
+        public bool HasAccepts
+        {
+            get { return Accepts != null && Accepts.Any(); }
+        }
         public Stale? Stale { get; set; }
         public bool? IncludeDocs { get; set; }
         public bool? Descending { get; set; }
@@ -30,6 +36,12 @@ namespace MyCouch.Querying
         public bool? UpdateSeq { get; set; }
         public bool? Group { get; set; }
         public int? GroupLevel { get; set; }
+        public string ListName { get; set; }
+        public IDictionary<string, object> CustomQueryParameters { get; set; }
+        public bool HasCustomQueryParameters
+        {
+            get { return CustomQueryParameters != null && CustomQueryParameters.Any(); }
+        }
 
         public QueryParameters(ViewIdentity viewIdentity)
         {

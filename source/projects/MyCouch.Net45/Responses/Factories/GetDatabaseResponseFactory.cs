@@ -5,7 +5,7 @@ using MyCouch.Serialization;
 
 namespace MyCouch.Responses.Factories
 {
-    public class GetDatabaseResponseFactory : ResponseFactoryBase<GetDatabaseResponse>
+    public class GetDatabaseResponseFactory : ResponseFactoryBase
     {
         protected readonly SimpleDeserializingResponseMaterializer SuccessfulResponseMaterializer;
         protected readonly FailedResponseMaterializer FailedResponseMaterializer;
@@ -18,14 +18,12 @@ namespace MyCouch.Responses.Factories
             FailedResponseMaterializer = new FailedResponseMaterializer(serializer);
         }
 
-        protected override void MaterializeSuccessfulResponse(GetDatabaseResponse response, HttpResponseMessage httpResponse)
+        public virtual GetDatabaseResponse Create(HttpResponseMessage httpResponse)
         {
-            SuccessfulResponseMaterializer.Materialize(response, httpResponse);
-        }
-
-        protected override void MaterializeFailedResponse(GetDatabaseResponse response, HttpResponseMessage httpResponse)
-        {
-            FailedResponseMaterializer.Materialize(response, httpResponse);
+            return Materialize<GetDatabaseResponse>(
+                httpResponse,
+                SuccessfulResponseMaterializer.Materialize,
+                FailedResponseMaterializer.Materialize);
         }
     }
 }

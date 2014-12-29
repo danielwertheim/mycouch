@@ -30,34 +30,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FluentAssertions, Version=3.2.1.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+    <Reference Include="FluentAssertions, Version=3.2.2.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\FluentAssertions.3.2.1\lib\net45\FluentAssertions.dll</HintPath>
+      <HintPath>..\..\packages\FluentAssertions.3.2.2\lib\net45\FluentAssertions.dll</HintPath>
     </Reference>
-    <Reference Include="FluentAssertions.Core, Version=3.2.1.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+    <Reference Include="FluentAssertions.Core, Version=3.2.2.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\FluentAssertions.3.2.1\lib\net45\FluentAssertions.Core.dll</HintPath>
+      <HintPath>..\..\packages\FluentAssertions.3.2.2\lib\net45\FluentAssertions.Core.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.7\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Reactive.Core">
-      <HintPath>..\..\packages\Rx-Core.2.2.5\lib\net45\System.Reactive.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.Interfaces">
-      <HintPath>..\..\packages\Rx-Interfaces.2.2.5\lib\net45\System.Reactive.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.Linq">
-      <HintPath>..\..\packages\Rx-Linq.2.2.5\lib\net45\System.Reactive.Linq.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.PlatformServices">
-      <HintPath>..\..\packages\Rx-PlatformServices.2.2.5\lib\net45\System.Reactive.PlatformServices.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="xunit">
@@ -91,6 +79,9 @@
     </Compile>
     <Compile Include="..\mycouch.integrationtests.net45\coretests\EntitiesTests.cs">
       <Link>CoreTests\EntitiesTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.IntegrationTests.Net45\CoreTests\ListsTests.cs">
+      <Link>CoreTests\ListsTests.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.integrationtests.net45\coretests\MyCouchStoreCallbackQueryTests.cs">
       <Link>CoreTests\MyCouchStoreCallbackQueryTests.cs</Link>
@@ -143,6 +134,9 @@
       <Project>{189bf3ac-8cca-4e33-a14a-4d2e782728ca}</Project>
       <Name>MyCouch.Testing.Pcl</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

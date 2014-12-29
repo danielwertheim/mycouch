@@ -31,9 +31,17 @@ namespace MyCouch.IntegrationTests
             if (config.HasCredentials())
                 uriBuilder.SetBasicCredentials(config.User, config.Password);
 
-            return config.IsAgainstCloudant()
-                ? (IMyCouchServerClient)new MyCouchCloudantServerClient(new CustomCloudantServerClientConnection(uriBuilder.Build()))
-                : (IMyCouchServerClient)new MyCouchServerClient(uriBuilder.Build());
+            if (config.IsAgainstCloudant())
+            {
+                var bootstrapper = new MyCouchCloudantClientBootstrapper
+                {
+                    ServerConnectionFn = cnInfo => new CustomCloudantServerConnection(cnInfo)
+                };
+
+                return new MyCouchCloudantServerClient(uriBuilder.Build(), bootstrapper);
+            }
+
+            return new MyCouchServerClient(uriBuilder.Build());
         }
 
         internal static IMyCouchClient CreateDbClient()
@@ -50,17 +58,22 @@ namespace MyCouch.IntegrationTests
             if (config.HasCredentials())
                 uriBuilder.SetBasicCredentials(config.User, config.Password);
 
-            return config.IsAgainstCloudant()
-                ? new MyCouchCloudantClient(new CustomCloudantDbClientConnection(uriBuilder.Build()))
-                : new MyCouchClient(uriBuilder.Build());
+            if (config.IsAgainstCloudant())
+            {
+                var bootstrapper = new MyCouchCloudantClientBootstrapper
+                {
+                    DbConnectionFn = cnInfo => new CustomCloudantDbConnection(cnInfo)
+                };
+
+                return new MyCouchCloudantClient(uriBuilder.Build(), null, bootstrapper);
+            }
+
+            return new MyCouchClient(uriBuilder.Build());
         }
 
-        private class CustomCloudantDbClientConnection : DbClientConnection
+        private class CustomCloudantDbConnection : DbConnection
         {
-            public CustomCloudantDbClientConnection(Uri uri)
-                : base(uri)
-            {
-            }
+            public CustomCloudantDbConnection(ConnectionInfo connectionInfo) : base(connectionInfo) { }
 
             protected override HttpRequestMessage CreateHttpRequestMessage(HttpRequest httpRequest)
             {
@@ -84,12 +97,9 @@ namespace MyCouch.IntegrationTests
             }
         }
 
-        private class CustomCloudantServerClientConnection : ServerClientConnection
+        private class CustomCloudantServerConnection : ServerConnection
         {
-            public CustomCloudantServerClientConnection(Uri uri)
-                : base(uri)
-            {
-            }
+            public CustomCloudantServerConnection(ConnectionInfo connectionInfo) : base(connectionInfo) { }
 
             protected override HttpRequestMessage CreateHttpRequestMessage(HttpRequest httpRequest)
             {
@@ -211,6 +221,8 @@ namespace MyCouch.IntegrationTests
         public const string ViewsContext = "viewscontext";
         public const string SecurityContext = "securitycontext";
         public const string SearchesContext = "searchescontext";
+        public const string QueriesContext = "queriescontext";
+        public const string ListsContext = "listscontext";
 
         public const string Cloudant = "cloudant";
         public const string MyCouchStore = "mycouchstore";

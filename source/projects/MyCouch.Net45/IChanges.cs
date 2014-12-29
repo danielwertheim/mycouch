@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reactive.Concurrency;
 using System.Threading;
 using System.Threading.Tasks;
 using MyCouch.Requests;
@@ -13,10 +12,10 @@ namespace MyCouch
     public interface IChanges
     {
         /// <summary>
-        /// Factory method for resolving the <see cref="IScheduler"/> to
-        /// use to subscribe the observables on.
+        /// Resolves the <see cref="TaskFactory"/> used when running observable queries.
+        /// By default <see cref="Task.Factory"/>.
         /// </summary>
-        Func<IScheduler> ObservableSubscribeOnScheduler { set; }
+        Func<TaskFactory> ObservableWorkTaskFactoryResolver { set; }
 
         /// <summary>
         /// Lets you consume changes from the _changes stream.

@@ -5,7 +5,5 @@ namespace MyCouch.Requests
 #if !PCL
     [Serializable]
 #endif
-    public abstract class Request
-    {
-    }
+    public abstract class Request { }
 }

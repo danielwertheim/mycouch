@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using FluentAssertions;
 using MyCouch.HttpRequestFactories;
 using MyCouch.Net;
@@ -25,13 +26,22 @@ namespace MyCouch.UnitTests.HttpRequestFactories
         }
 
         [Fact]
+        public void When_passing_db_name_and_list_name_It_should_generate_a_relative_url()
+        {
+            var r = SUT.Create(new QueryViewRequest("my_design_doc", "my_view").Configure(c => c.WithList("mylist")));
+
+            r.RelativeUrl.Should().Be("/_design/my_design_doc/_list/mylist/my_view");
+        }
+
+        [Fact]
         public void When_not_configured_It_yields_no_content_nor_querystring()
         {
             var request = CreateRequest();
-            
+
             WithHttpRequestFor(
                 request,
-                req => {
+                req =>
+                {
                     req.Content.Should().BeNull();
                     req.RelativeUrl.ToTestUriFromRelative().Query.Should().Be(string.Empty);
                 });
@@ -509,6 +519,38 @@ namespace MyCouch.UnitTests.HttpRequestFactories
         }
 
         [Fact]
+        public void When_custom_query_parameters_are_specified_It_should_get_included_in_the_querystring()
+        {
+            var request = CreateRequest();
+            request.CustomQueryParameters = new Dictionary<string, object>
+            {
+                { "myint", 42 },
+                { "mystring", "test"},
+                { "mybool", true},
+                { "mydatetime", new DateTime(2014,1,1,13,14,15,16) }
+            };
+
+            WithHttpRequestFor(
+                request,
+                req => req.RelativeUrl.ToTestUriFromRelative().Query.Should().Be("?myint=42&mystring=test&mybool=True&mydatetime=2014-01-01T13%3A14%3A15"));
+        }
+
+        [Fact]
+        public void When_custom_query_parameters_are_specified_with_other_params_It_should_be_included_at_the_end()
+        {
+            var request = CreateRequest();
+            request.CustomQueryParameters = new Dictionary<string, object>
+            {
+                { "myint", 42 }
+            };
+            request.GroupLevel = 3;
+
+            WithHttpRequestFor(
+                request,
+                req => req.RelativeUrl.ToTestUriFromRelative().Query.Should().Be("?group_level=3&myint=42"));
+        }
+
+        [Fact]
         public void When_all_options_except_Keys_are_configured_It_yields_a_query_string_accordingly()
         {
             var request = CreateRequest();
@@ -527,10 +569,14 @@ namespace MyCouch.UnitTests.HttpRequestFactories
             request.UpdateSeq = true;
             request.Group = true;
             request.GroupLevel = 3;
+            request.CustomQueryParameters = new Dictionary<string, object>
+            {
+                { "myint", 42 }
+            };
 
             WithHttpRequestFor(
                 request,
-                req => req.RelativeUrl.ToTestUriFromRelative().Query.Should().Be("?include_docs=true&descending=true&reduce=true&inclusive_end=true&update_seq=true&group=true&group_level=3&stale=update_after&key=%22Key1%22&startkey=%22My%20start%20key%22&startkey_docid=My%20start%20key%20doc%20id&endkey=%22My%20end%20key%22&endkey_docid=My%20end%20key%20doc%20id&limit=10&skip=5"));
+                req => req.RelativeUrl.ToTestUriFromRelative().Query.Should().Be("?include_docs=true&descending=true&reduce=true&inclusive_end=true&update_seq=true&group=true&group_level=3&stale=update_after&key=%22Key1%22&startkey=%22My%20start%20key%22&startkey_docid=My%20start%20key%20doc%20id&endkey=%22My%20end%20key%22&endkey_docid=My%20end%20key%20doc%20id&limit=10&skip=5&myint=42"));
         }
 
         protected virtual QueryViewRequest CreateRequest()

@@ -8,7 +8,7 @@ using MyCouch.Serialization;
 
 namespace MyCouch.Cloudant.Responses.Factories
 {
-    public class GenerateApiKeyResponseFactory : ResponseFactoryBase<GenerateApiKeyResponse>
+    public class GenerateApiKeyResponseFactory : ResponseFactoryBase
     {
         protected readonly ISerializer Serializer;
         protected readonly FailedResponseMaterializer FailedResponseMaterializer;
@@ -21,7 +21,15 @@ namespace MyCouch.Cloudant.Responses.Factories
             FailedResponseMaterializer = new FailedResponseMaterializer(serializer);
         }
 
-        protected async override void MaterializeSuccessfulResponse(GenerateApiKeyResponse response, HttpResponseMessage httpResponse)
+        public virtual GenerateApiKeyResponse Create(HttpResponseMessage httpResponse)
+        {
+            return Materialize<GenerateApiKeyResponse>(
+                httpResponse,
+                MaterializeSuccessfulResponse,
+                FailedResponseMaterializer.Materialize);
+        }
+
+        private async void MaterializeSuccessfulResponse(GenerateApiKeyResponse response, HttpResponseMessage httpResponse)
         {
             if (response.RequestMethod != HttpMethod.Post)
                 throw new ArgumentException(GetType().Name + " only supports materializing POST responses.");
@@ -30,11 +38,6 @@ namespace MyCouch.Cloudant.Responses.Factories
             {
                 Serializer.Populate(response, content);
             }
-        }
-
-        protected override void MaterializeFailedResponse(GenerateApiKeyResponse response, HttpResponseMessage httpResponse)
-        {
-            FailedResponseMaterializer.Materialize(response, httpResponse);
         }
     }
 }

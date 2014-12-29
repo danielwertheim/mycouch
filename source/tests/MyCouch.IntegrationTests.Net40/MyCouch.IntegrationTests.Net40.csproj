@@ -31,13 +31,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FluentAssertions, Version=3.2.1.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+    <Reference Include="FluentAssertions, Version=3.2.2.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\FluentAssertions.3.2.1\lib\net40\FluentAssertions.dll</HintPath>
+      <HintPath>..\..\packages\FluentAssertions.3.2.2\lib\net40\FluentAssertions.dll</HintPath>
     </Reference>
-    <Reference Include="FluentAssertions.Core, Version=3.2.1.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+    <Reference Include="FluentAssertions.Core, Version=3.2.2.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\FluentAssertions.3.2.1\lib\net40\FluentAssertions.Core.dll</HintPath>
+      <HintPath>..\..\packages\FluentAssertions.3.2.2\lib\net40\FluentAssertions.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Threading.Tasks">
       <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
@@ -50,7 +50,7 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Newtonsoft.Json.6.0.5\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.7\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -74,22 +74,6 @@
     <Reference Include="System.Net.Http.WebRequest, Version=2.2.28.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Microsoft.Net.Http.2.2.28\lib\net40\System.Net.Http.WebRequest.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.Core, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Rx-Core.2.2.5\lib\net40\System.Reactive.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.Interfaces, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Rx-Interfaces.2.2.5\lib\net40\System.Reactive.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.Linq, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Rx-Linq.2.2.5\lib\net40\System.Reactive.Linq.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.PlatformServices, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Rx-PlatformServices.2.2.5\lib\net40\System.Reactive.PlatformServices.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime">
       <HintPath>..\..\packages\Microsoft.Bcl.1.1.9\lib\net40\System.Runtime.dll</HintPath>
@@ -131,6 +115,9 @@
     </Compile>
     <Compile Include="..\mycouch.integrationtests.net45\coretests\EntitiesTests.cs">
       <Link>CoreTests\EntitiesTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.IntegrationTests.Net45\CoreTests\ListsTests.cs">
+      <Link>CoreTests\ListsTests.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.integrationtests.net45\coretests\MyCouchStoreCallbackQueryTests.cs">
       <Link>CoreTests\MyCouchStoreCallbackQueryTests.cs</Link>
@@ -184,6 +171,9 @@
       <Project>{4fa05380-ab31-40f4-96cf-30cc41070160}</Project>
       <Name>MyCouch.Testing.Net40</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />

@@ -5,13 +5,15 @@ namespace MyCouch.Cloudant
 {
     public class MyCouchCloudantClientBootstrapper : MyCouchClientBootstrapper
     {
-        public Func<IServerClientConnection, ISecurity> SecurityFn { get; set; }
-        public Func<IDbClientConnection, ISearches> SearchesFn { get; set; }
+        public Func<IServerConnection, ISecurity> SecurityFn { get; set; }
+        public Func<IDbConnection, ISearches> SearchesFn { get; set; }
+        public Func<IDbConnection, IQueries> QueriesFn { get; set; }
 
         public MyCouchCloudantClientBootstrapper()
         {
             ConfigureSecurityFn();
             ConfigureSearchesFn();
+            ConfigureQueriesFn();
         }
 
         protected virtual void ConfigureSecurityFn()
@@ -24,6 +26,14 @@ namespace MyCouch.Cloudant
         protected virtual void ConfigureSearchesFn()
         {
             SearchesFn = cn => new Searches(
+                cn,
+                DocumentSerializerFn(),
+                SerializerFn());
+        }
+
+        protected virtual void ConfigureQueriesFn()
+        {
+            QueriesFn = cn => new Queries(
                 cn,
                 DocumentSerializerFn(),
                 SerializerFn());

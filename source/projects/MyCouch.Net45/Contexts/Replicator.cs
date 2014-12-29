@@ -11,12 +11,12 @@ using MyCouch.Serialization;
 
 namespace MyCouch.Contexts
 {
-    public class Replicator : ApiContextBase<IServerClientConnection>, IReplicator
+    public class Replicator : ApiContextBase<IServerConnection>, IReplicator
     {
         protected ReplicationResponseFactory ReplicationResponseFactory { get; set; }
         protected ReplicateDatabaseServerHttpRequestFactory ReplicateDatabaseHttpRequestFactory { get; set; }
 
-        public Replicator(IServerClientConnection connection, ISerializer serializer)
+        public Replicator(IServerConnection connection, ISerializer serializer)
             : base(connection)
         {
             Ensure.That(serializer, "serializer").IsNotNull();

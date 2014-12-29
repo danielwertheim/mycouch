@@ -22,26 +22,16 @@ namespace MyCouch.Responses.Factories
         {
             return Materialize<ChangesResponse>(
                 httpResponse,
-                MaterializeSuccessfulResponse,
-                MaterializeFailedResponse);
+                SuccessfulResponseMaterializer.Materialize,
+                FailedResponseMaterializer.Materialize);
         }
 
         public virtual ChangesResponse<T> Create<T>(HttpResponseMessage httpResponse)
         {
             return Materialize<ChangesResponse<T>>(
                 httpResponse,
-                MaterializeSuccessfulResponse,
-                MaterializeFailedResponse);
-        }
-
-        protected virtual void MaterializeSuccessfulResponse<T>(ChangesResponse<T> response, HttpResponseMessage httpResponse)
-        {
-            SuccessfulResponseMaterializer.Materialize(response, httpResponse);
-        }
-
-        protected virtual void MaterializeFailedResponse<T>(ChangesResponse<T> response, HttpResponseMessage httpResponse)
-        {
-            FailedResponseMaterializer.Materialize(response, httpResponse);
+                SuccessfulResponseMaterializer.Materialize,
+                FailedResponseMaterializer.Materialize);
         }
     }
 }

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace MyCouch
 {
     /// <summary>
@@ -11,6 +13,18 @@ namespace MyCouch
         /// performed against.
         /// </summary>
         ViewIdentity ViewIdentity { get; }
+
+        /// <summary>
+        /// Used to set custom accept header values.
+        /// Applicable e.g. when specifying a <see cref="ListName"/>
+        /// that returns e.g. HTML.
+        /// </summary>
+        string[] Accepts { get; set; }
+
+        /// <summary>
+        /// Indicates if any <see cref="Accepts"/> has been specified.
+        /// </summary>
+        bool HasAccepts { get; }
 
         /// <summary>
         /// Allow the results from a stale view to be used.
@@ -96,5 +110,20 @@ namespace MyCouch
         /// Specify the group level to be used.
         /// </summary>
         int? GroupLevel { get; set; }
+
+        /// <summary>
+        /// Specify if you want to target a specific list in the view.
+        /// </summary>
+        string ListName { get; set; }
+
+        /// <summary>
+        /// Additional custom query string parameters.
+        /// </summary>
+        IDictionary<string, object> CustomQueryParameters { get; set; }
+
+        /// <summary>
+        /// Indicates if there are any <see cref="CustomQueryParameters"/> or not.
+        /// </summary>
+        bool HasCustomQueryParameters { get; }
     }
 }

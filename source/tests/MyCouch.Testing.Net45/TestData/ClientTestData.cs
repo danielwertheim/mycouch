@@ -120,7 +120,28 @@ namespace MyCouch.Testing.TestData
                 "{" +
                     "\"_id\": \"_design/artists\"," +
                     "\"language\": \"javascript\"," +
-                    "\"views\": {" +
+                    "\"lists\": {" +
+                            "\"transformToHtml\": \"function(head, req){" +
+                                    "provides('html',function(){" +
+                                        "html = '<html><body><ol>';" +
+                                        "while (row = getRow()) {" +
+                                            "html += '<li>' + row.value.name + '</li>';" +
+                                        "}" +
+                                        "html += '</ol></body></html>';" +
+                                        "return html;" +
+                                    "});" +
+                                "}\"," +
+                            "\"transformToDoc\": \"function(head, req){" +
+                                "provides('json',function(){" +
+                                    "docs = [];" +
+                                    "while (row = getRow()) {" +
+                                        "docs.push(row.value);" +
+                                    "}" +
+                                    "send(JSON.stringify(docs));" +
+                                "});" +
+                            "}\"" +
+                         "}," +
+                         "\"views\": {" +
                         "\"albums\": {" +
                             "\"map\": \"function(doc) {  if(doc.$doctype !== 'artist') return;  emit(doc.name, doc.albums);}\"" +
                         "}," +
@@ -140,6 +161,12 @@ namespace MyCouch.Testing.TestData
             public static readonly ViewIdentity ArtistsNameNoValueViewId = new ViewIdentity("artists", "name_no_value");
             public static readonly ViewIdentity ArtistsTotalNumOfAlbumsViewId = new ViewIdentity("artists", "total_num_of_albums");
             public static readonly ViewIdentity ArtistsNameAsKeyAndDocAsValueId = new ViewIdentity("artists", "name_as_key_and_doc_as_value");
+
+            public static class ListNames
+            {
+                public static readonly string TransformToHtmlListId = "transformToHtml";
+                public static readonly string TransformToDocListId = "transformToDoc";
+            }
         }
 
         public static class Attachments

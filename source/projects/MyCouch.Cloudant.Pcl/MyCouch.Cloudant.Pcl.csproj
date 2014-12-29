@@ -11,7 +11,7 @@
     <RootNamespace>MyCouch.Cloudant</RootNamespace>
     <AssemblyName>MyCouch.Cloudant.Pcl</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Profile7</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Profile111</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
   </PropertyGroup>
@@ -38,23 +38,62 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\Contexts\Queries.cs">
+      <Link>Contexts\Queries.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\Contexts\Searches.cs">
       <Link>Contexts\Searches.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\Contexts\Security.cs">
       <Link>Contexts\Security.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\FindParametersConfigurator.cs">
+      <Link>FindParametersConfigurator.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\FormatStrings.cs">
+      <Link>FormatStrings.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\HttpRequestFactories\DeleteIndexHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\DeleteIndexHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\HttpRequestFactories\FindHttpRequestFactory.cs">
+      <Link>FindHttpRequestFactory.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\HttpRequestFactories\GenerateApiKeyHttpRequestFactory.cs">
       <Link>HttpRequestFactories\GenerateApiKeyHttpRequestFactory.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\HttpRequestFactories\GetAllIndexesHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\GetAllIndexesHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\HttpRequestFactories\PostIndexHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\PostIndexHttpRequestFactory.cs</Link>
+    </Compile>
     <Compile Include="..\mycouch.cloudant.net45\httprequestfactories\SearchIndexHttpRequestFactory.cs">
       <Link>HttpRequestFactories\SearchIndexHttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\IFindParameters.cs">
+      <Link>IFindParameters.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\IIndexParameters.cs">
+      <Link>IIndexParameters.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\IMyCouchCloudantClient.cs">
       <Link>IMyCouchCloudantClient.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\IMyCouchCloudantServerClient.cs">
       <Link>IMyCouchCloudantServerClient.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\SortableField.cs">
+      <Link>SortableField.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\IndexParametersConfigurator.cs">
+      <Link>IndexParametersConfigurator.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\IndexType.cs">
+      <Link>IndexType.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\IQueries.cs">
+      <Link>IQueries.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\ISearches.cs">
       <Link>ISearches.cs</Link>
@@ -74,20 +113,59 @@
     <Compile Include="..\MyCouch.Cloudant.Net45\MyCouchCloudantServerClient.cs">
       <Link>MyCouchCloudantServerClient.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\Querying\FindParameters.cs">
+      <Link>Querying\FindParameters.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\Querying\IndexParameters.cs">
+      <Link>Querying\IndexParameters.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\Requests\DeleteIndexRequest.cs">
+      <Link>Requests\DeleteIndexRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\Requests\FindRequest.cs">
+      <Link>Requests\FindRequest.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\Requests\GenerateApiKeyRequest.cs">
       <Link>Requests\GenerateApiKeyRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\Requests\PostIndexRequest.cs">
+      <Link>Requests\PostIndexRequest.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\Requests\SearchIndexRequest.cs">
       <Link>Requests\SearchIndexRequest.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\Responses\CloudantJsonScheme.cs">
+      <Link>Responses\CloudantJsonScheme.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\Responses\Factories\FindResponseFactory.cs">
+      <Link>Responses\Factories\FindResponseFactory.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\Responses\Factories\GenerateApiKeyResponseFactory.cs">
       <Link>Responses\Factories\GenerateApiKeyResponseFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\Responses\Factories\IndexListResponseFactory.cs">
+      <Link>Responses\Factories\IndexListResponseFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\Responses\Factories\IndexResponseFactory.cs">
+      <Link>Responses\Factories\IndexResponseFactory.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\Responses\Factories\SearchIndexResponseFactory.cs">
       <Link>Responses\Factories\SearchIndexResponseFactory.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\Responses\FindResponse.cs">
+      <Link>Responses\FindResponse.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\Responses\GenerateApiKeyResponse.cs">
       <Link>Responses\GenerateApiKeyResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\Responses\IndexListResponse.cs">
+      <Link>Responses\IndexListResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\Responses\IndexResponse.cs">
+      <Link>Responses\IndexResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\Responses\Materializers\FindResponseMaterializer.cs">
+      <Link>Responses\Materializers\FindResponseMaterializer.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Cloudant.Net45\Responses\Materializers\SearchIndexResponseMaterializer.cs">
       <Link>Responses\Materializers\SearchIndexResponseMaterializer.cs</Link>
@@ -104,6 +182,12 @@
     <Compile Include="..\MyCouch.Cloudant.Net45\SearchParametersConfigurator.cs">
       <Link>SearchParametersConfigurator.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\Serialization\Converters\SortableFieldConverter.cs">
+      <Link>Serialization\Converters\SortableFieldConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Cloudant.Net45\SortDirection.cs">
+      <Link>SortDirection.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -111,19 +195,7 @@
       <HintPath>..\..\packages\Ensure.That.2.0.0\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\EnsureThat.dll\EnsureThat.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\packages\Newtonsoft.Json.6.0.5\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.Core">
-      <HintPath>..\..\packages\Rx-Core.2.2.5\lib\portable-windows8+net45+wp8\System.Reactive.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.Interfaces">
-      <HintPath>..\..\packages\Rx-Interfaces.2.2.5\lib\portable-windows8+net45+wp8\System.Reactive.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.Linq">
-      <HintPath>..\..\packages\Rx-Linq.2.2.5\lib\portable-windows8+net45+wp8\System.Reactive.Linq.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.PlatformServices">
-      <HintPath>..\..\packages\Rx-PlatformServices.2.2.5\lib\portable-windows8+net45+wp8\System.Reactive.PlatformServices.dll</HintPath>
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.7\lib\portable-net45+wp80+win8+wpa81+aspnetcore50\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

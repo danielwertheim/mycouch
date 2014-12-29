@@ -20,8 +20,8 @@ namespace MyCouch.Responses.Factories
         {
             return Materialize<EntityResponse<TContent>>(
                 httpResponse,
-                MaterializeSuccessfulResponse,
-                MaterializeFailedResponse);
+                SuccessfulResponseMaterializer.Materialize,
+                FailedResponseMaterializer.Materialize);
         }
 
         public virtual TResponse Create<TResponse, TContent>(HttpResponseMessage httpResponse)
@@ -30,18 +30,8 @@ namespace MyCouch.Responses.Factories
         {
             return Materialize<TResponse>(
                 httpResponse,
-                MaterializeSuccessfulResponse,
-                MaterializeFailedResponse);
-        }
-
-        protected virtual void MaterializeSuccessfulResponse<T>(EntityResponse<T> response, HttpResponseMessage httpResponse) where T : class
-        {
-            SuccessfulResponseMaterializer.Materialize(response, httpResponse);
-        }
-
-        protected virtual void MaterializeFailedResponse<T>(EntityResponse<T> response, HttpResponseMessage httpResponse) where T : class
-        {
-            FailedResponseMaterializer.Materialize(response, httpResponse);
+                SuccessfulResponseMaterializer.Materialize,
+                FailedResponseMaterializer.Materialize);
         }
     }
 }

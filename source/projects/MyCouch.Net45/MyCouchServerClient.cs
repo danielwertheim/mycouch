@@ -1,6 +1,5 @@
 ﻿using System;
 using EnsureThat;
-using MyCouch.Net;
 using MyCouch.Serialization;
 
 namespace MyCouch
@@ -9,27 +8,28 @@ namespace MyCouch
     {
         protected bool IsDisposed { get; private set; }
 
-        public IServerClientConnection Connection { get; private set; }
+        public IServerConnection Connection { get; private set; }
         public ISerializer Serializer { get; private set; }
         public IDatabases Databases { get; private set; }
         public IReplicator Replicator { get; private set; }
 
-        public MyCouchServerClient(string serverUrl) : this(new Uri(serverUrl)) { }
+        public MyCouchServerClient(string serverUrl, MyCouchClientBootstrapper bootstrapper = null)
+            : this(new Uri(serverUrl), bootstrapper) { }
 
-        public MyCouchServerClient(Uri serverUri) : this(new ServerClientConnection(serverUri)) { }
+        public MyCouchServerClient(Uri serverUri, MyCouchClientBootstrapper bootstrapper = null)
+            : this(new ConnectionInfo(serverUri), bootstrapper) { }
 
-        public MyCouchServerClient(IServerClientConnection connection, MyCouchClientBootstrapper bootstrapper = null)
+        public MyCouchServerClient(ConnectionInfo connectionInfo, MyCouchClientBootstrapper bootstrapper = null)
         {
-            Ensure.That(connection, "connection").IsNotNull();
+            Ensure.That(connectionInfo, "connectionInfo").IsNotNull();
 
-            Connection = connection;
-
+            IsDisposed = false;
             bootstrapper = bootstrapper ?? new MyCouchClientBootstrapper();
 
+            Connection = bootstrapper.ServerConnectionFn(connectionInfo);
             Serializer = bootstrapper.SerializerFn();
             Databases = bootstrapper.DatabasesFn(Connection);
             Replicator = bootstrapper.ReplicatorFn(Connection);
-            IsDisposed = false;
         }
 
         public void Dispose()

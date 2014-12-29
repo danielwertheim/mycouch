@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using MyCouch.Extensions;
 
 namespace MyCouch.Responses.Materializers
 {
@@ -11,6 +12,7 @@ namespace MyCouch.Responses.Materializers
             response.RequestMethod = httpResponse.RequestMessage.Method;
             response.ContentLength = httpResponse.Content.Headers.ContentLength;
             response.ContentType = httpResponse.Content.Headers.ContentType.ToString();
+            response.ETag = httpResponse.Headers.GetETag();
         }
     }
 }

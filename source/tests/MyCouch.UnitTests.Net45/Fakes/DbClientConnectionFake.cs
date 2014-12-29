@@ -6,13 +6,15 @@ using MyCouch.Net;
 
 namespace MyCouch.UnitTests.Fakes
 {
-    public class ServerClientConnectionFake : IServerClientConnection
+    public class ServerClientConnectionFake : IServerConnection
     {
         public Uri Address { get; private set; }
+        public TimeSpan Timeout { get; private set; }
 
-        public ServerClientConnectionFake(Uri address)
+        public ServerClientConnectionFake(ConnectionInfo connectionInfo)
         {
-            Address = address;
+            Address = connectionInfo.Address;
+            Timeout = connectionInfo.Timeout.HasValue ? connectionInfo.Timeout.Value : Timeout;
         }
 
         public void Dispose() { }
@@ -38,15 +40,17 @@ namespace MyCouch.UnitTests.Fakes
         }
     }
 
-    public class DbClientConnectionFake : IDbClientConnection
+    public class DbClientConnectionFake : IDbConnection
     {
         public string DbName { get; private set; }
         public Uri Address { get; private set; }
+        public TimeSpan Timeout { get; private set; }
 
-        public DbClientConnectionFake(Uri address, string dbName)
+        public DbClientConnectionFake(ConnectionInfo connectionInfo)
         {
-            Address = address;
-            DbName = dbName;
+            Address = connectionInfo.Address;
+            DbName = connectionInfo.DbName;
+            Timeout = connectionInfo.Timeout.HasValue ? connectionInfo.Timeout.Value : Timeout;
         }
 
         public void Dispose() { }

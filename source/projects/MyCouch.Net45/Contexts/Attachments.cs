@@ -11,7 +11,7 @@ using MyCouch.Serialization;
 
 namespace MyCouch.Contexts
 {
-    public class Attachments : ApiContextBase<IDbClientConnection>, IAttachments
+    public class Attachments : ApiContextBase<IDbConnection>, IAttachments
     {
         protected AttachmentResponseFactory AttachmentResponseFactory { get; set; }
         protected DocumentHeaderResponseFactory DocumentHeaderResponseFactory { get; set; }
@@ -19,7 +19,7 @@ namespace MyCouch.Contexts
         protected PutAttachmentHttpRequestFactory PutAttachmentHttpRequestFactory { get; set; }
         protected DeleteAttachmentHttpRequestFactory DeleteAttachmentHttpRequestFactory { get; set; }
 
-        public Attachments(IDbClientConnection connection, ISerializer serializer)
+        public Attachments(IDbConnection connection, ISerializer serializer)
             : base(connection)
         {
             Ensure.That(serializer, "serializer").IsNotNull();

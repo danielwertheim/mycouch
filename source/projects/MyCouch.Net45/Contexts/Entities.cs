@@ -12,7 +12,7 @@ using MyCouch.Serialization;
 
 namespace MyCouch.Contexts
 {
-    public class Entities : ApiContextBase<IDbClientConnection>, IEntities
+    public class Entities : ApiContextBase<IDbConnection>, IEntities
     {
         public ISerializer Serializer { get; private set; }
         public IEntityReflector Reflector { get; private set;}
@@ -24,7 +24,7 @@ namespace MyCouch.Contexts
  
         protected EntityResponseFactory EntityResponseFactory { get; set; }
 
-        public Entities(IDbClientConnection connection, ISerializer serializer, IEntityReflector entityReflector)
+        public Entities(IDbConnection connection, ISerializer serializer, IEntityReflector entityReflector)
             : base(connection)
         {
             Ensure.That(serializer, "serializer").IsNotNull();

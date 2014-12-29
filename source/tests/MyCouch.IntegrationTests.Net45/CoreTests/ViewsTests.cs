@@ -9,8 +9,7 @@ using Xunit;
 
 namespace MyCouch.IntegrationTests.CoreTests
 {
-    public class ViewsTests :
-        IntegrationTestsOf<IViews>,
+    public class ViewsTests : IntegrationTestsOf<IViews>,
         IPreserveStatePerFixture,
         IUseFixture<ViewsFixture>
     {
@@ -379,7 +378,7 @@ namespace MyCouch.IntegrationTests.CoreTests
 
             var response = SUT.QueryRawAsync(query).Result;
 
-            response.Should().BeGetOfAnyJson();
+            response.Should().BeGetOfJson();
         }
     }
 }

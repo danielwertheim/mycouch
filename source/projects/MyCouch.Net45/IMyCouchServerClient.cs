@@ -11,9 +11,9 @@ namespace MyCouch
     public interface IMyCouchServerClient : IDisposable
     {
         /// <summary>
-        /// The underlying <see cref="IServerClientConnection"/> used to communicate with CouchDb.
+        /// The underlying <see cref="IServerConnection"/> used to communicate with CouchDb.
         /// </summary>
-        IServerClientConnection Connection { get; }
+        IServerConnection Connection { get; }
 
         /// <summary>
         /// The Serializer associated with this client instance. Use this if you want

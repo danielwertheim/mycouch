@@ -1,9 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Net.Http;
-using System.Reactive.Concurrency;
-using System.Reactive.Disposables;
-using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using EnsureThat;
@@ -16,16 +13,16 @@ using MyCouch.Serialization;
 
 namespace MyCouch.Contexts
 {
-    public class Changes : ApiContextBase<IDbClientConnection>, IChanges
+    public class Changes : ApiContextBase<IDbConnection>, IChanges
     {
         protected GetChangesHttpRequestFactory HttpRequestFactory { get; set; }
         protected GetContinuousChangesHttpRequestFactory ContinuousHttpRequestFactory { get; set; }
         protected ChangesResponseFactory ChangesResponseFactory { get; set; }
         protected ContinuousChangesResponseFactory ContinuousChangesResponseFactory { get; set; }
 
-        public Func<IScheduler> ObservableSubscribeOnScheduler { protected get; set; }
+        public Func<TaskFactory> ObservableWorkTaskFactoryResolver { protected get; set; }
 
-        public Changes(IDbClientConnection connection, ISerializer serializer)
+        public Changes(IDbConnection connection, ISerializer serializer)
             : base(connection)
         {
             Ensure.That(serializer, "serializer").IsNotNull();
@@ -34,7 +31,7 @@ namespace MyCouch.Contexts
             ContinuousHttpRequestFactory = new GetContinuousChangesHttpRequestFactory();
             ChangesResponseFactory = new ChangesResponseFactory(serializer);
             ContinuousChangesResponseFactory = new ContinuousChangesResponseFactory(serializer);
-            ObservableSubscribeOnScheduler = () => TaskPoolScheduler.Default;
+            ObservableWorkTaskFactoryResolver = () => Task.Factory;
         }
 
         public virtual async Task<ChangesResponse> GetAsync(GetChangesRequest request)
@@ -85,12 +82,12 @@ namespace MyCouch.Contexts
 
         public virtual IObservable<string> ObserveContinuous(GetChangesRequest request, CancellationToken cancellationToken)
         {
-            EnsureContinuousFeedIsRequested(request);
+            var httpRequest = ContinuousHttpRequestFactory.Create(request);
 
-            return Observable.Create<string>(async o =>
+            var ob = new MyObservable<string>();
+
+            Task.Factory.StartNew(async () =>
             {
-                var httpRequest = ContinuousHttpRequestFactory.Create(request);
-
                 using (var httpResponse = await SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ForAwait())
                 {
                     var response = ContinuousChangesResponseFactory.Create(httpResponse);
@@ -103,25 +100,17 @@ namespace MyCouch.Contexts
                                 while (!cancellationToken.IsCancellationRequested && !reader.EndOfStream)
                                 {
                                     //cancellationToken.ThrowIfCancellationRequested();
-                                    if(!cancellationToken.IsCancellationRequested)
-                                        o.OnNext(reader.ReadLine());
+                                    if (!cancellationToken.IsCancellationRequested)
+                                        ob.Notify(reader.ReadLine());
                                 }
+                                ob.Complete();
                             }
                         }
                     }
-                    o.OnCompleted();
-
-                    return Disposable.Empty;
                 }
-            }).SubscribeOn(ObservableSubscribeOnScheduler());
-        }
+            }, cancellationToken).ForAwait();
 
-        protected virtual void EnsureContinuousFeedIsRequested(GetChangesRequest request)
-        {
-            Ensure.That(request, "request").IsNotNull();
-
-            if (request.Feed.HasValue && request.Feed != ChangesFeed.Continuous)
-                throw new ArgumentException(ExceptionStrings.GetContinuousChangesInvalidFeed, "request");
+            return ob;
         }
     }
 }

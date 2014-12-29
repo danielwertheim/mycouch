@@ -262,5 +262,62 @@ namespace MyCouch.Testing.TestData
             public static readonly ViewIdentity Views101LatinNameSumId = new ViewIdentity("views101", "latin_name_sum");
             public static readonly SearchIndexIdentity Views101AnimalsSearchIndexId = new SearchIndexIdentity("views101", "animals");
         }
+
+        public static class Blogs
+        {
+            public static Blog[] CreateAll()
+            {
+                return new [] 
+                {
+                    CreateJsonBlog(),
+                    CreateCouchBlog(),
+                    CreateHtml5Blog()
+                };
+            }
+
+            private static Blog CreateHtml5Blog()
+            {
+                return new Blog
+                {
+                    Title = "Html5 blog",
+                    Author = new Author { Age = 21, Name = "Html5 Author" },
+                    Entries = new[]
+                    {
+                        new BlogEntry { Sequence = 1, Subject = "Semantic tags", Content = "Content on semantic tags" },
+                        new BlogEntry { Sequence = 2, Subject = "Media elements", Content = "Content on media elements" }
+                    },
+                    YearsActive = 2
+                };
+            }
+
+            private static Blog CreateCouchBlog()
+            {
+                return new Blog
+                {
+                    Title = "Couch blog",
+                    Author = new Author { Age = 32, Name = "Couch Author" },
+                    Entries = new[]
+                    {
+                        new BlogEntry { Sequence = 1, Subject = "Primary indexes", Content = "Content on primary indexes" }
+                    },
+                    YearsActive = 4
+                };
+            }
+
+            private static Blog CreateJsonBlog()
+            {
+                return new Blog
+                {
+                    Title = "Json blog",
+                    Author = new Author { Age = 43, Name = "Json Author" },
+                    Entries = new[]
+                    {
+                        new BlogEntry { Sequence = 1, Subject = "Json syntax", Content = "Content on Json syntax" },
+                        new BlogEntry { Sequence = 2, Subject = "Json arrays", Content = "Content on Json arrays" }
+                    },
+                    YearsActive = 5
+                };
+            }
+        }
     }
 }

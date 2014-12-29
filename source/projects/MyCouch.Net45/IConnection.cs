@@ -9,6 +9,8 @@ namespace MyCouch
     public interface IConnection : IDisposable
     {
         Uri Address { get; }
+        TimeSpan Timeout { get; }
+
         Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest);
         Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, CancellationToken cancellationToken);
         Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, HttpCompletionOption completionOption);
