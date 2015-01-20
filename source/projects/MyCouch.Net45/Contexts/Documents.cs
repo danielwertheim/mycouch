@@ -8,6 +8,7 @@ using MyCouch.Requests;
 using MyCouch.Responses;
 using MyCouch.Responses.Factories;
 using MyCouch.Serialization;
+using System;
 
 namespace MyCouch.Contexts
 {
@@ -21,18 +22,23 @@ namespace MyCouch.Contexts
         protected PostDocumentHttpRequestFactory PostDocumentHttpRequestFactory { get; set; }
         protected PutDocumentHttpRequestFactory PutDocumentHttpRequestFactory { get; set; }
         protected DeleteDocumentHttpRequestFactory DeleteDocumentHttpRequestFactory { get; set; }
+        protected QueryShowHttpRequestFactory QueryShowHttpRequestFactory { get; set; }
         protected DocumentResponseFactory DocumentReponseFactory { get; set; }
         protected DocumentHeaderResponseFactory DocumentHeaderReponseFactory { get; set; }
         protected BulkResponseFactory BulkReponseFactory { get; set; }
+        protected RawResponseFactory RawResponseFactory { get; set; }
 
         public ISerializer Serializer { get; private set; }
+        public ISerializer DocumentSerializer { get; private set; }
 
-        public Documents(IDbConnection connection, ISerializer serializer)
+        public Documents(IDbConnection connection, ISerializer serializer, ISerializer documentSerializer)
             : base(connection)
         {
             Ensure.That(serializer, "serializer").IsNotNull();
+            Ensure.That(documentSerializer, "documentSerializer").IsNotNull();
 
             Serializer = serializer;
+            DocumentSerializer = documentSerializer;
             BulkHttpRequestFactory = new BulkHttpRequestFactory();
             CopyDocumentHttpRequestFactory = new CopyDocumentHttpRequestFactory();
             ReplaceDocumentHttpRequestFactory = new ReplaceDocumentHttpRequestFactory();
@@ -41,10 +47,12 @@ namespace MyCouch.Contexts
             PostDocumentHttpRequestFactory = new PostDocumentHttpRequestFactory();
             PutDocumentHttpRequestFactory = new PutDocumentHttpRequestFactory();
             DeleteDocumentHttpRequestFactory = new DeleteDocumentHttpRequestFactory();
+            QueryShowHttpRequestFactory = new QueryShowHttpRequestFactory(Serializer);
 
             DocumentReponseFactory = new DocumentResponseFactory(Serializer);
             DocumentHeaderReponseFactory = new DocumentHeaderResponseFactory(Serializer);
             BulkReponseFactory = new BulkResponseFactory(Serializer);
+            RawResponseFactory = new RawResponseFactory(serializer);
         }
 
         public virtual async Task<BulkResponse> BulkAsync(BulkRequest request)
@@ -177,6 +185,16 @@ namespace MyCouch.Contexts
             }
         }
 
+        public virtual async Task<RawResponse> GetRawAsync(QueryShowRequest request)
+        {
+            var httpRequest = CreateHttpRequest(request);
+
+            using (var res = await SendAsync(httpRequest).ForAwait())
+            {
+                return ProcessRawHttpResponse(res);
+            }
+        }
+
         protected virtual HttpRequest CreateHttpRequest(BulkRequest request)
         {
             return BulkHttpRequestFactory.Create(request);
@@ -217,6 +235,11 @@ namespace MyCouch.Contexts
             return PostDocumentHttpRequestFactory.Create(request);
         }
 
+        protected virtual HttpRequest CreateHttpRequest(QueryShowRequest request)
+        {
+            return QueryShowHttpRequestFactory.Create(request);
+        }
+
         protected virtual BulkResponse ProcessBulkResponse(HttpResponseMessage response)
         {
             return BulkReponseFactory.Create(response);
@@ -230,6 +253,11 @@ namespace MyCouch.Contexts
         protected virtual DocumentResponse ProcessDocumentResponse(HttpResponseMessage response)
         {
             return DocumentReponseFactory.Create(response);
+        }
+
+        protected virtual RawResponse ProcessRawHttpResponse(HttpResponseMessage response)
+        {
+            return RawResponseFactory.Create(response);
         }
     }
 }

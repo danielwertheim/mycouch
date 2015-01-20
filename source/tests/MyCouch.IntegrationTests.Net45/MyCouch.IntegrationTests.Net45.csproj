@@ -68,6 +68,7 @@
     <Compile Include="CoreTests\EntitiesTests.cs" />
     <Compile Include="CoreTests\ReplicatorTests.cs" />
     <Compile Include="CoreTests\ListsTests.cs" />
+    <Compile Include="CoreTests\ShowTests.cs" />
     <Compile Include="CoreTests\ViewsTests.cs" />
     <Compile Include="CoreTests\DatabasesTests.cs" />
     <Compile Include="CoreTests\MyCouchStoreCallbackQueryTests.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestFixtures\QueriesFixture.cs" />
     <Compile Include="TestFixtures\SearchFixture.cs" />
+    <Compile Include="TestFixtures\ShowsFixture.cs" />
     <Compile Include="TestFixtures\ViewsFixture.cs" />
   </ItemGroup>
   <ItemGroup>

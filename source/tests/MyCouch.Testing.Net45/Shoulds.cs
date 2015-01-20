@@ -189,6 +189,11 @@ namespace MyCouch.Testing
             BeJson(HttpMethod.Get);
         }
 
+        public void BeGetOfXml()
+        {
+            BeXml(HttpMethod.Get);
+        }
+
         public void BePostOfJson()
         {
             BeJson(HttpMethod.Post);
@@ -211,6 +216,13 @@ namespace MyCouch.Testing
             Be(method, statusCode);
             Response.ContentType.Should().Be(HttpContentTypes.Json);
             Response.Content.Should().Be(content);
+        }
+
+        public void BeXml(HttpMethod method, HttpStatusCode statusCode = HttpStatusCode.OK)
+        {
+            Be(method, statusCode);
+            Response.ContentType.Should().Be(HttpContentTypes.Xml);
+            Response.Content.Should().NotBeNullOrEmpty();
         }
 
         public void BeGetOfHtml()
