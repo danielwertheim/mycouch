@@ -141,8 +141,7 @@ namespace MyCouch
         {
             DocumentsFn = cn => new Documents(
                 cn,
-                SerializerFn(),
-                DocumentSerializerFn());
+                SerializerFn());
         }
 
         protected virtual void ConfigureEntitiesFn()

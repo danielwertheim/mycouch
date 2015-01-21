@@ -31,14 +31,12 @@ namespace MyCouch.Contexts
         public ISerializer Serializer { get; private set; }
         public ISerializer DocumentSerializer { get; private set; }
 
-        public Documents(IDbConnection connection, ISerializer serializer, ISerializer documentSerializer)
+        public Documents(IDbConnection connection, ISerializer serializer)
             : base(connection)
         {
             Ensure.That(serializer, "serializer").IsNotNull();
-            Ensure.That(documentSerializer, "documentSerializer").IsNotNull();
 
             Serializer = serializer;
-            DocumentSerializer = documentSerializer;
             BulkHttpRequestFactory = new BulkHttpRequestFactory();
             CopyDocumentHttpRequestFactory = new CopyDocumentHttpRequestFactory();
             ReplaceDocumentHttpRequestFactory = new ReplaceDocumentHttpRequestFactory();
