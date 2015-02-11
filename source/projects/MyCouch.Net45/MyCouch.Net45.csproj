@@ -85,6 +85,7 @@
     <Compile Include="Extensions\StreamExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\TaskExtensions.cs" />
+    <Compile Include="HttpRequestFactories\QueryShowHttpRequestFactory.cs" />
     <Compile Include="IAttachments.cs" />
     <Compile Include="IChanges.cs" />
     <Compile Include="IConnection.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="IQueryParameters.cs" />
     <Compile Include="IReplicator.cs" />
     <Compile Include="IServerConnection.cs" />
+    <Compile Include="IShowParameters.cs" />
     <Compile Include="IViews.cs" />
     <Compile Include="MyCouchClient.cs" />
     <Compile Include="MyCouchClientBootstrapper.cs" />
@@ -128,6 +130,8 @@
     <Compile Include="QueryInfo.cs" />
     <Compile Include="Querying\QueryExtensions.cs" />
     <Compile Include="Querying\QueryParameters.cs" />
+    <Compile Include="Querying\ShowParameters.cs" />
+    <Compile Include="QueryShowParametersConfigurator.cs" />
     <Compile Include="QueryViewParametersConfigurator.cs" />
     <Compile Include="Requests\BulkRequest.cs" />
     <Compile Include="Requests\CompactDatabaseRequest.cs" />
@@ -183,6 +187,7 @@
     <Compile Include="Requests\PutDatabaseRequest.cs" />
     <Compile Include="Requests\PutDocumentRequest.cs" />
     <Compile Include="Requests\PutEntityRequest.cs" />
+    <Compile Include="Requests\QueryShowRequest.cs" />
     <Compile Include="Requests\QueryViewRequest.cs" />
     <Compile Include="Requests\ReplaceDocumentRequest.cs" />
     <Compile Include="Requests\ReplicateDatabaseRequest.cs" />
@@ -254,6 +259,7 @@
     <Compile Include="Serialization\DocumentJsonWriter.cs" />
     <Compile Include="Stale.cs" />
     <Compile Include="SystemViewIdentity.cs" />
+    <Compile Include="ShowIdentity.cs" />
     <Compile Include="ViewIdentity.cs" />
   </ItemGroup>
   <ItemGroup>

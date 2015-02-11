@@ -101,6 +101,39 @@ namespace MyCouch.Testing.TestData
             }
         }
 
+        public static class Shows
+        {
+            public const string ArtistsShows =
+                "{" +
+                    "\"_id\": \"_design/artistshows\"," +
+                    "\"shows\": {" +
+                        "\"hello\": \"function(doc, req){" +
+                                    "return '<h1>hello</h1>';" +
+                                "}\"," +
+                        "\"jsonShow\": \"function(doc, req){" +
+                                    "provides('json',function(){" +
+                                        "send(JSON.stringify({ name: doc.name}));" +
+                                    "});" +
+                                "}\"," +
+                        "\"xmlShow\": \"function(doc, req){" +
+                                    "provides('xml',function(){" +
+                                        "html = '<foo>' + doc.name + '</foo>';" +
+                                        "return html;" +
+                                    "});" +
+                                "}\"," +
+                        "\"jsonCustomQueryParamShow\": \"function(doc, req){" +
+                                    "provides('json',function(){" +
+                                        "send(JSON.stringify({ name: doc.name, foo: req.query.foo}));" +
+                                    "});" +
+                                "}\"" +
+                    "}" +
+                "}";
+            public static readonly ShowIdentity ArtistsHelloShowId = new ShowIdentity("artistshows", "hello");
+            public static readonly ShowIdentity ArtistsJsonShowId = new ShowIdentity("artistshows", "jsonShow");
+            public static readonly ShowIdentity ArtistsXmlShowId = new ShowIdentity("artistshows", "xmlShow");
+            public static readonly ShowIdentity ArtistsJsonShowWithCustomQueryParamId = new ShowIdentity("artistshows", "jsonCustomQueryParamShow");
+        }
+
         public static class Views
         {
             public static readonly ViewIdentity[] AllViewIds;
