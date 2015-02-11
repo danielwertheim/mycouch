@@ -18,6 +18,7 @@ namespace MyCouch.Requests
         {
             get { return State.ShowIdentity; }
         }
+
         /// <summary>
         /// The document id ofthe document to be transformed
         /// </summary>
@@ -26,6 +27,7 @@ namespace MyCouch.Requests
             get { return State.DocId; }
             set { State.DocId = value; }
         }
+
         /// <summary>
         /// Used to set custom accept header values.
         /// Applicable e.g. when specifying a <see cref="ShowIdentity"/>
@@ -36,6 +38,7 @@ namespace MyCouch.Requests
             get { return State.Accepts; }
             set { State.Accepts = value; }
         }
+
         /// <summary>
         /// Indicates if any <see cref="Accepts"/> has been specified.
         /// </summary>
@@ -43,6 +46,7 @@ namespace MyCouch.Requests
         {
             get { return State.HasAccepts; }
         }
+
         /// <summary>
         /// Additional custom query string parameters.
         /// </summary>
@@ -51,6 +55,7 @@ namespace MyCouch.Requests
             get { return State.CustomQueryParameters; }
             set { State.CustomQueryParameters = value; }
         }
+
         /// <summary>
         /// Indicates if there are any <see cref="CustomQueryParameters"/> or not.
         /// </summary>

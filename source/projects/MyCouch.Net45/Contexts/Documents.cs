@@ -8,7 +8,6 @@ using MyCouch.Requests;
 using MyCouch.Responses;
 using MyCouch.Responses.Factories;
 using MyCouch.Serialization;
-using System;
 
 namespace MyCouch.Contexts
 {
@@ -49,7 +48,7 @@ namespace MyCouch.Contexts
             DocumentReponseFactory = new DocumentResponseFactory(Serializer);
             DocumentHeaderReponseFactory = new DocumentHeaderResponseFactory(Serializer);
             BulkReponseFactory = new BulkResponseFactory(Serializer);
-            RawResponseFactory = new RawResponseFactory(serializer);
+            RawResponseFactory = new RawResponseFactory(Serializer);
         }
 
         public virtual async Task<BulkResponse> BulkAsync(BulkRequest request)

@@ -12,6 +12,7 @@ namespace MyCouch.HttpRequestFactories
     public class QueryShowHttpRequestFactory
     {
         protected ISerializer Serializer { get; private set; }
+
         public QueryShowHttpRequestFactory(ISerializer serializer)
         {
             Ensure.That(serializer, "serializer").IsNotNull();
@@ -62,6 +63,7 @@ namespace MyCouch.HttpRequestFactories
             return string.Join("&", GenerateJsonCompatibleKeyValues(request)
                 .Select(kv => string.Format("{0}={1}", kv.Key, UrlParam.Encode(kv.Value))));
         }
+
         protected virtual IDictionary<string, string> GenerateJsonCompatibleKeyValues(QueryShowRequest request)
         {
             var kvs = new Dictionary<string, string>();
