@@ -188,6 +188,11 @@ namespace MyCouch
         /// <param name="request"></param>
         /// <returns></returns>
         Task<DocumentHeaderResponse> DeleteAsync(DeleteDocumentRequest request);
-        Task<RawResponse> GetRawAsync(QueryShowRequest request);
+        /// <summary>
+        /// Transforms a document with a show function
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        Task<RawResponse> ShowAsync(QueryShowRequest request);
     }
 }

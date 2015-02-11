@@ -95,6 +95,9 @@
     <Compile Include="..\mycouch.integrationtests.net45\coretests\ReplicatorTests.cs">
       <Link>CoreTests\ReplicatorTests.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.IntegrationTests.Net45\CoreTests\ShowTests.cs">
+      <Link>CoreTests\ShowTests.cs</Link>
+    </Compile>
     <Compile Include="..\mycouch.integrationtests.net45\coretests\ViewsTests.cs">
       <Link>CoreTests\ViewsTests.cs</Link>
     </Compile>
@@ -112,6 +115,9 @@
     </Compile>
     <Compile Include="..\mycouch.integrationtests.net45\testfixtures\SearchFixture.cs">
       <Link>TestFixtures\SearchFixture.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.IntegrationTests.Net45\TestFixtures\ShowsFixture.cs">
+      <Link>TestFixtures\ShowsFixture.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.integrationtests.net45\testfixtures\ViewsFixture.cs">
       <Link>TestFixtures\ViewsFixture.cs</Link>

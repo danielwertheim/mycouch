@@ -29,7 +29,6 @@ namespace MyCouch.Contexts
         protected RawResponseFactory RawResponseFactory { get; set; }
 
         public ISerializer Serializer { get; private set; }
-        public ISerializer DocumentSerializer { get; private set; }
 
         public Documents(IDbConnection connection, ISerializer serializer)
             : base(connection)
@@ -183,7 +182,7 @@ namespace MyCouch.Contexts
             }
         }
 
-        public virtual async Task<RawResponse> GetRawAsync(QueryShowRequest request)
+        public virtual async Task<RawResponse> ShowAsync(QueryShowRequest request)
         {
             var httpRequest = CreateHttpRequest(request);
 

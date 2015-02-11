@@ -146,6 +146,9 @@
     <Compile Include="..\MyCouch.UnitTests.Net45\HttpRequestFactories\PutDatabaseHttpRequestFactoryTests.cs">
       <Link>HttpRequestFactories\PutDatabaseHttpRequestFactoryTests.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.UnitTests.Net45\HttpRequestFactories\QueryShowHttpRequestFactoryTests.cs">
+      <Link>HttpRequestFactories\QueryShowHttpRequestFactoryTests.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.UnitTests.Net45\HttpRequestFactories\QueryViewHttpRequestFactoryTests.cs">
       <Link>HttpRequestFactories\QueryViewHttpRequestFactoryTests.cs</Link>
     </Compile>
@@ -175,6 +178,9 @@
     </Compile>
     <Compile Include="..\mycouch.unittests.net45\serialization\ViewQueryResponseRowsDeserializerTests.cs">
       <Link>Serialization\ViewQueryResponseRowsDeserializerTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.UnitTests.Net45\ShowConfigurationTests.cs">
+      <Link>ShowConfigurationTests.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.UnitTests.Net45\UnitTestsOf.cs">
       <Link>UnitTestsOf.cs</Link>

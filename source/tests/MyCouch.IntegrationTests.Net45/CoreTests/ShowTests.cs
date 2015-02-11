@@ -33,7 +33,7 @@ namespace MyCouch.IntegrationTests.CoreTests
         {
             var query = new QueryShowRequest(ClientTestData.Shows.ArtistsHelloShowId);
 
-            var response = SUT.GetRawAsync(query).Result;
+            var response = SUT.ShowAsync(query).Result;
 
             response.Should().BeGetOfHtml();
         }
@@ -44,7 +44,7 @@ namespace MyCouch.IntegrationTests.CoreTests
             var artist = ArtistsById.First();
             var query = new QueryShowRequest(ClientTestData.Shows.ArtistsJsonShowId).Configure(c => c.DocId(artist.ArtistId));
 
-            var response = SUT.GetRawAsync(query).Result;
+            var response = SUT.ShowAsync(query).Result;
 
             response.Should().BeGetOfJson();
             var transformedArtist = DbClient.Entities.Serializer.Deserialize<dynamic>(response.Content);
@@ -62,7 +62,7 @@ namespace MyCouch.IntegrationTests.CoreTests
                 .CustomQueryParameters(customQueryParams)
                 );
 
-            var response = SUT.GetRawAsync(query).Result;
+            var response = SUT.ShowAsync(query).Result;
 
             response.Should().BeGetOfJson();
             var transformedArtist = DbClient.Entities.Serializer.Deserialize<dynamic>(response.Content);
@@ -79,7 +79,7 @@ namespace MyCouch.IntegrationTests.CoreTests
                 .Accepts(HttpContentTypes.Xml)
                 );
 
-            var response = SUT.GetRawAsync(query).Result;
+            var response = SUT.ShowAsync(query).Result;
 
             response.Should().BeGetOfXml();
             var transformedArtist = XElement.Parse(response.Content);
