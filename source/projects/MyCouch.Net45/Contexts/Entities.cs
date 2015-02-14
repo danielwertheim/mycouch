@@ -74,6 +74,16 @@ namespace MyCouch.Contexts
             return PutAsync(new PutEntityRequest<T>(entity));
         }
 
+        public virtual Task<EntityResponse<T>> PutAsync<T>(string id, T entity) where T : class
+        {
+            return PutAsync(new PutEntityRequest<T>(id, entity));
+        }
+
+        public virtual Task<EntityResponse<T>> PutAsync<T>(string id, string rev, T entity) where T : class
+        {
+            return PutAsync(new PutEntityRequest<T>(id, rev, entity));
+        }
+
         public virtual async Task<EntityResponse<T>> PutAsync<T>(PutEntityRequest<T> request) where T : class
         {
             var httpRequest = CreateHttpRequest(request);
@@ -142,6 +152,9 @@ namespace MyCouch.Contexts
         {
             var entityResponse = EntityResponseFactory.Create<T>(response);
             entityResponse.Content = request.Entity;
+
+            if(!string.IsNullOrWhiteSpace(request.ExplicitId))
+                Reflector.IdMember.SetValueTo(entityResponse.Content, entityResponse.Id);
 
             if (entityResponse.IsSuccess)
                 Reflector.RevMember.SetValueTo(entityResponse.Content, entityResponse.Rev);
