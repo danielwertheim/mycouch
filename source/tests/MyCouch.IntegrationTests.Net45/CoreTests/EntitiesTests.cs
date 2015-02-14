@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FluentAssertions;
 using MyCouch.Testing;
 using MyCouch.Testing.Model;
 using MyCouch.Testing.TestData;
+using Newtonsoft.Json.Linq;
 
 namespace MyCouch.IntegrationTests.CoreTests
 {
@@ -18,7 +20,7 @@ namespace MyCouch.IntegrationTests.CoreTests
         {
             var artist = ClientTestData.Artists.CreateArtist();
 
-            var response = SUT.PostAsync(new {artist.Name }).Result;
+            var response = SUT.PostAsync(new { artist.Name }).Result;
 
             response.Should().BeSuccessfulPost();
         }
@@ -88,7 +90,7 @@ namespace MyCouch.IntegrationTests.CoreTests
         }
 
         [MyFact(TestScenarios.EntitiesContext)]
-        public void When_put_of_a_new_entity_Then_the_document_is_created()
+        public void When_PUT_of_a_new_entity_Then_the_document_is_created()
         {
             var artist = ClientTestData.Artists.CreateArtist();
             var initialId = artist.ArtistId;
@@ -99,7 +101,7 @@ namespace MyCouch.IntegrationTests.CoreTests
         }
 
         [MyFact(TestScenarios.EntitiesContext)]
-        public void When_put_of_an_existing_entity_Then_the_document_is_replaced()
+        public void When_PUT_of_an_existing_entity_Then_the_document_is_replaced()
         {
             var artist = ClientTestData.Artists.CreateArtist();
             var initialId = artist.ArtistId;
@@ -111,7 +113,7 @@ namespace MyCouch.IntegrationTests.CoreTests
         }
 
         [MyFact(TestScenarios.EntitiesContext)]
-        public void When_put_of_an_existing_entity_Using_wrong_rev_Then_a_conflict_is_detected()
+        public void When_PUT_of_an_existing_entity_Using_wrong_rev_Then_a_conflict_is_detected()
         {
             var postResponse = SUT.PostAsync(ClientTestData.Artists.Artist1).Result;
 
@@ -119,6 +121,43 @@ namespace MyCouch.IntegrationTests.CoreTests
             var response = SUT.PutAsync(ClientTestData.Artists.Artist1).Result;
 
             response.Should().Be409Put(ClientTestData.Artists.Artist1Id);
+        }
+
+        [MyFact(TestScenarios.EntitiesContext)]
+        public void When_PUT_of_a_new_entity_using_explicit_id_Then_the_document_is_created()
+        {
+            var artist = ClientTestData.Artists.CreateArtist();
+            var explicitId = Guid.NewGuid().ToString("N");
+
+            var response = SUT.PutAsync(explicitId, artist).Result;
+
+            response.Should().BeSuccessfulPutOfNew(explicitId, e => e.ArtistId, e => e.ArtistRev);
+        }
+
+        [MyFact(TestScenarios.EntitiesContext)]
+        public void When_PUT_of_a_new_anonymous_using_explicit_id_Then_the_document_is_created()
+        {
+            var artist = ClientTestData.Artists.CreateArtist();
+            var explicitId = Guid.NewGuid().ToString("N");
+
+            var response = SUT.PutAsync(explicitId, new { artist.Name }).Result;
+
+            response.Should().BeSuccessfulPutOfNew(explicitId);
+        }
+
+        [MyFact(TestScenarios.EntitiesContext)]
+        public void When_PUT_of_an_existing_entity_using_explicit_id_and_rev_Then_the_document_is_replaced()
+        {
+            var initialArtist = ClientTestData.Artists.CreateArtist();
+            SUT.PostAsync(initialArtist).Wait();
+
+            var response = SUT.PutAsync(initialArtist.ArtistId, initialArtist.ArtistRev, new { Score = 42 }).Result;
+
+            response.Should().BeSuccessfulPut(initialArtist.ArtistId);
+
+            var get = DbClient.Entities.GetAsync<JObject>(response.Id, response.Rev).Result;
+            get.Should().BeSuccessfulGet(response.Id, response.Rev);
+            get.Content["score"].Value<int>().Should().Be(42);
         }
 
         [MyFact(TestScenarios.EntitiesContext)]
@@ -178,7 +217,7 @@ namespace MyCouch.IntegrationTests.CoreTests
         }
 
         [MyFact(TestScenarios.EntitiesContext)]
-        public void When_put_of_a_new_entity_extending_a_document_Then_the_entity_will_be_created()
+        public void When_PUT_of_a_new_entity_extending_a_document_Then_the_entity_will_be_created()
         {
             var id = "956cba86-a20c-4a85-a8b4-a7039ba771c8";
             var entity = new Inherited { _id = id, Value = "Test" };
@@ -189,7 +228,7 @@ namespace MyCouch.IntegrationTests.CoreTests
         }
 
         [MyFact(TestScenarios.EntitiesContext)]
-        public void When_put_of_an_existing_entity_extending_a_document_Then_the_entity_will_be_updated()
+        public void When_PUT_of_an_existing_entity_extending_a_document_Then_the_entity_will_be_updated()
         {
             var id = "b638d1c5-772a-48f4-b6ee-f2c1f7d5e410";
             var entity = new Inherited { _id = id, Value = "Test" };
@@ -201,7 +240,7 @@ namespace MyCouch.IntegrationTests.CoreTests
         }
 
         [MyFact(TestScenarios.EntitiesContext)]
-        public void When_put_of_a_new_and_then_a_put_of_an_existing_entity_extending_a_document_Then_the_entity_will_first_be_created_and_then_updated()
+        public void When_PUT_of_a_new_and_then_a_PUT_of_an_existing_entity_extending_a_document_Then_the_entity_will_first_be_created_and_then_updated()
         {
             var id = "b638d1c5-772a-48f4-b6ee-f2c1f7d5e410";
             var entity = new Inherited { _id = id, Value = "Test" };
@@ -217,7 +256,7 @@ namespace MyCouch.IntegrationTests.CoreTests
         public void When_PUT_of_id_with_slash_It_will_encode_and_decode_id()
         {
             var id = "test/1";
-            var entity = new DocumentWithId {Id = id};
+            var entity = new DocumentWithId { Id = id };
 
             var putResponse = SUT.PutAsync(entity).Result;
             putResponse.Should().BeSuccessfulPutOfNew(id, i => i.Id, i => i.Rev);

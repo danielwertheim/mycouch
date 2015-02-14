@@ -68,13 +68,34 @@ namespace MyCouch
         Task<EntityResponse<T>> PostAsync<T>(PostEntityRequest<T> request) where T : class;
 
         /// <summary>
-        /// Inserts or Updates sent entity and returns it in the response, and if successful, then with an
+        /// Inserts (if no _rev is defined) or Updates (if _rev is defined) sent entity and returns it in the response, and if successful, then with an
         /// updated _rev value.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="entity"></param>
         /// <returns></returns>
         Task<EntityResponse<T>> PutAsync<T>(T entity) where T : class;
+
+        /// <summary>
+        /// Inserts (if no _rev is defined) or Updates (if _rev is defined) sent entity and returns it in the response, and if successful, then with an
+        /// updated _rev value.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="id">Used as explicit id instead of extracting it from the entity.</param>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        Task<EntityResponse<T>> PutAsync<T>(string id, T entity) where T : class;
+
+        /// <summary>
+        /// Inserts (if no _rev is defined) or Updates (if _rev is defined) sent entity and returns it in the response, and if successful, then with an
+        /// updated _rev value.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="id">Used as explicit id instead of extracting it from the entity.</param>
+        /// <param name="rev">Used as explicit rev instead of extracting it from the entity.</param>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        Task<EntityResponse<T>> PutAsync<T>(string id, string rev, T entity) where T : class;
 
         /// <summary>
         /// Inserts or Updates sent entity and returns it in the response, and if successful, then with an

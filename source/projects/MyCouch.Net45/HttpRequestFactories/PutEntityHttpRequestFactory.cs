@@ -36,6 +36,9 @@ namespace MyCouch.HttpRequestFactories
 
         protected virtual string GetEntityId<T>(PutEntityRequest<T> request) where T : class
         {
+            if (!string.IsNullOrWhiteSpace(request.ExplicitId))
+                return request.ExplicitId;
+
             var entityId = Reflector.IdMember.GetValueFrom(request.Entity);
 
             Ensure.That(entityId, "request")
@@ -47,15 +50,16 @@ namespace MyCouch.HttpRequestFactories
 
         protected virtual string GetEntityRev<T>(PutEntityRequest<T> request) where T : class
         {
+            if (!string.IsNullOrWhiteSpace(request.ExplicitRev))
+                return request.ExplicitRev;
+
             return Reflector.RevMember.GetValueFrom(request.Entity);
         }
 
         protected virtual string GenerateRelativeUrl(string entityId, string entityRev, bool batch)
         {
-            var urlParams = new UrlParams
-            {
-                new UrlParam("rev", entityRev)
-            };
+            var urlParams = new UrlParams();
+            urlParams.AddIfNotNullOrWhiteSpace("rev", entityRev);
             urlParams.AddIfTrue("batch", batch);
 
             return string.Format("/{0}{1}", new UrlSegment(entityId), new QueryString(urlParams));
