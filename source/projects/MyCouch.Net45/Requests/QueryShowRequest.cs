@@ -63,14 +63,17 @@ namespace MyCouch.Requests
         {
             get { return State.HasCustomQueryParameters; }
         }
+
         public QueryShowRequest(string designDocument, string showName)
             : this(new ShowIdentity(designDocument, showName)) { }
+
         public QueryShowRequest(ShowIdentity showIdentity)
         {
             Ensure.That(showIdentity, "showIdentity").IsNotNull();
 
             State = new ShowParameters(showIdentity);
         }
+
         public virtual QueryShowRequest Configure(Action<QueryShowParametersConfigurator> configurator)
         {
             configurator(new QueryShowParametersConfigurator(State));
