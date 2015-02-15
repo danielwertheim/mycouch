@@ -14,9 +14,9 @@ namespace MyCouch.EntitySchemes
     {
         protected IDynamicPropertyFactory DynamicPropertyFactory { get; private set; }
 #if !PCL
-        protected ConcurrentDictionary<Type, DynamicProperty> IdPropertyCache { get; private set; }
+        protected ConcurrentDictionary<Type, DynamicProperty> DynamicPropertyCache { get; private set; }
 #else
-        protected Dictionary<Type, DynamicProperty> IdPropertyCache { get; private set; }
+        protected Dictionary<Type, DynamicProperty> DynamicPropertyCache { get; private set; }
 #endif
         protected EntityMember(IDynamicPropertyFactory dynamicPropertyFactory)
         {
@@ -24,9 +24,9 @@ namespace MyCouch.EntitySchemes
 
             DynamicPropertyFactory = dynamicPropertyFactory;
 #if !PCL
-            IdPropertyCache = new ConcurrentDictionary<Type, DynamicProperty>();
+            DynamicPropertyCache = new ConcurrentDictionary<Type, DynamicProperty>();
 #else
-            IdPropertyCache = new Dictionary<Type, DynamicProperty>();
+            DynamicPropertyCache = new Dictionary<Type, DynamicProperty>();
 #endif
         }
 
@@ -50,20 +50,20 @@ namespace MyCouch.EntitySchemes
         protected virtual IStringGetter GetGetterFor(Type type)
         {
 #if !PCL
-            return IdPropertyCache.GetOrAdd(
+            return DynamicPropertyCache.GetOrAdd(
                 type, 
                 t => DynamicPropertyFactory.PropertyFor(GetPropertyFor(type))).Getter;
 #else
-            if (IdPropertyCache.ContainsKey(type))
-                return IdPropertyCache[type].Getter;
+            if (DynamicPropertyCache.ContainsKey(type))
+                return DynamicPropertyCache[type].Getter;
 
-            lock (IdPropertyCache)
+            lock (DynamicPropertyCache)
             {
-                if (IdPropertyCache.ContainsKey(type))
-                    return IdPropertyCache[type].Getter;
+                if (DynamicPropertyCache.ContainsKey(type))
+                    return DynamicPropertyCache[type].Getter;
 
                 var r = DynamicPropertyFactory.PropertyFor(GetPropertyFor(type));
-                IdPropertyCache.Add(type, r);
+                DynamicPropertyCache.Add(type, r);
 
                 return r.Getter;
             }
@@ -73,27 +73,50 @@ namespace MyCouch.EntitySchemes
         protected virtual IStringSetter GetSetterFor(Type type)
         {
 #if !PCL
-            return IdPropertyCache.GetOrAdd(
+            return DynamicPropertyCache.GetOrAdd(
                 type,
                 t => DynamicPropertyFactory.PropertyFor(GetPropertyFor(type))).Setter;
 #else
-            if (IdPropertyCache.ContainsKey(type))
-                return IdPropertyCache[type].Setter;
+            if (DynamicPropertyCache.ContainsKey(type))
+                return DynamicPropertyCache[type].Setter;
 
-            lock (IdPropertyCache)
+            lock (DynamicPropertyCache)
             {
-                if (IdPropertyCache.ContainsKey(type))
-                    return IdPropertyCache[type].Setter;
+                if (DynamicPropertyCache.ContainsKey(type))
+                    return DynamicPropertyCache[type].Setter;
 
                 var r = DynamicPropertyFactory.PropertyFor(GetPropertyFor(type));
-                IdPropertyCache.Add(type, r);
+                DynamicPropertyCache.Add(type, r);
 
                 return r.Setter;
             }
 #endif
         }
 
-        public virtual PropertyInfo GetPropertyFor(Type type)
+        public virtual string GetPropertyNameFor(Type type)
+        {
+#if !PCL
+            return DynamicPropertyCache.GetOrAdd(
+                type,
+                t => DynamicPropertyFactory.PropertyFor(GetPropertyFor(type))).Name;
+#else
+            if (DynamicPropertyCache.ContainsKey(type))
+                return DynamicPropertyCache[type].Name;
+
+            lock (DynamicPropertyCache)
+            {
+                if (DynamicPropertyCache.ContainsKey(type))
+                    return DynamicPropertyCache[type].Name;
+
+                var r = DynamicPropertyFactory.PropertyFor(GetPropertyFor(type));
+                DynamicPropertyCache.Add(type, r);
+
+                return r.Name;
+            }
+#endif
+        }
+
+        protected virtual PropertyInfo GetPropertyFor(Type type)
         {
             return GetPropertiesFor(type).Select(p => new
             {

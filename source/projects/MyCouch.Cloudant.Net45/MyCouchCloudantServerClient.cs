@@ -25,7 +25,7 @@ namespace MyCouch.Cloudant
             Ensure.That(connectionInfo, "connectionInfo").IsNotNull();
 
             IsDisposed = false;
-            bootstrapper = bootstrapper ?? new MyCouchCloudantClientBootstrapper();
+            bootstrapper = bootstrapper ?? MyCouchCloudantClientBootstrappers.Default;
 
             Connection = bootstrapper.ServerConnectionFn(connectionInfo);
             Serializer = bootstrapper.SerializerFn();
