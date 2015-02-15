@@ -64,10 +64,10 @@ namespace MyCouch.Serialization
 
             if (name == CouchIdMemberName)
             {
-                var id = EntityReflector.IdMember.GetPropertyFor(DocType);
-                if (id != null)
+                var idMemberName = EntityReflector.IdMember.GetPropertyNameFor(DocType);
+                if (idMemberName != null)
                 {
-                    SetToken(JsonToken.PropertyName, id.Name);
+                    SetToken(JsonToken.PropertyName, idMemberName);
                     HasTranslatedId = true;
                     return;
                 }
@@ -75,10 +75,10 @@ namespace MyCouch.Serialization
 
             if (name == CouchRevMemberName)
             {
-                var rev = EntityReflector.RevMember.GetPropertyFor(DocType);
-                if (rev != null)
+                var revMemberName = EntityReflector.RevMember.GetPropertyNameFor(DocType);
+                if (revMemberName != null)
                 {
-                    SetToken(JsonToken.PropertyName, rev.Name);
+                    SetToken(JsonToken.PropertyName, revMemberName);
                     HasTranslatedRev = true;
                     return;
                 }

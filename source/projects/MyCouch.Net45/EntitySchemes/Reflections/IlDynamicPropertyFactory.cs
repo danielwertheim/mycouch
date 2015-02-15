@@ -13,21 +13,25 @@ namespace MyCouch.EntitySchemes.Reflections
 
         public virtual DynamicProperty PropertyFor(PropertyInfo property)
         {
+            if (property == null)
+                return new DynamicProperty();
+
             return new DynamicProperty(
+                property.Name,
                 CreateStringGetter(property),
                 CreateStringSetter(property));
         }
 
         protected virtual IStringGetter CreateStringGetter(PropertyInfo property)
         {
-            return property != null && property.CanRead
+            return property.CanRead
                 ? new DynamicStringGetter(CreateIlGetter(property))
                 : new FakeStringGetter() as IStringGetter;
         }
 
         protected virtual IStringSetter CreateStringSetter(PropertyInfo property)
         {
-            return property != null && property.CanWrite
+            return property.CanWrite
                 ? new DynamicStringSetter(CreateIlSetter(property))
                 : new FakeStringSetter() as IStringSetter;
         }
