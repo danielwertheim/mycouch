@@ -235,6 +235,9 @@
     <Compile Include="..\MyCouch.Net45\HttpRequestFactories\PutEntityHttpRequestFactory.cs">
       <Link>HttpRequestFactories\PutEntityHttpRequestFactory.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\HttpRequestFactories\QueryShowHttpRequestFactory.cs">
+      <Link>HttpRequestFactories\QueryShowHttpRequestFactory.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\HttpRequestFactories\QueryViewHttpRequestFactory.cs">
       <Link>HttpRequestFactories\QueryViewHttpRequestFactory.cs</Link>
     </Compile>
@@ -294,6 +297,9 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\IServerConnection.cs">
       <Link>IServerConnection.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\IShowParameters.cs">
+      <Link>IShowParameters.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\IViews.cs">
       <Link>IViews.cs</Link>
@@ -379,6 +385,12 @@
     <Compile Include="..\MyCouch.Net45\Querying\QueryParameters.cs">
       <Link>Querying\QueryParameters.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\Querying\ShowParameters.cs">
+      <Link>Querying\ShowParameters.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\QueryShowParametersConfigurator.cs">
+      <Link>QueryShowParametersConfigurator.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\QueryViewParametersConfigurator.cs">
       <Link>QueryViewParametersConfigurator.cs</Link>
     </Compile>
@@ -444,6 +456,9 @@
     </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\PutEntityRequest.cs">
       <Link>Requests\PutEntityRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.Net45\Requests\QueryShowRequest.cs">
+      <Link>Requests\QueryShowRequest.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.Net45\Requests\QueryViewRequest.cs">
       <Link>Requests\QueryViewRequest.cs</Link>
@@ -649,6 +664,9 @@
     <Compile Include="..\MyCouch.Net45\Serialization\SerializationContractResolver.cs">
       <Link>Serialization\SerializationContractResolver.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.Net45\ShowIdentity.cs">
+      <Link>ShowIdentity.cs</Link>
+    </Compile>
     <Compile Include="..\MyCouch.Net45\Stale.cs">
       <Link>Stale.cs</Link>
     </Compile>
@@ -665,7 +683,7 @@
       <HintPath>..\..\packages\Ensure.That.2.0.0\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\EnsureThat.dll\EnsureThat.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\packages\Newtonsoft.Json.6.0.7\lib\portable-net45+wp80+win8+wpa81+aspnetcore50\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.8\lib\portable-net45+wp80+win8+wpa81+aspnetcore50\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup />

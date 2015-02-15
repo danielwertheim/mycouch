@@ -41,7 +41,7 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Newtonsoft.Json.6.0.7\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -64,6 +64,7 @@
     <Compile Include="Cloudant\SearchParametersConfiguratorTests.cs" />
     <Compile Include="ConnectionInfoTests.cs" />
     <Compile Include="Fakes\DbClientConnectionFake.cs" />
+    <Compile Include="HttpRequestFactories\QueryShowHttpRequestFactoryTests.cs" />
     <Compile Include="Net\BasicAuthStringTests.cs" />
     <Compile Include="Net\DbClientConnectionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -80,12 +81,14 @@
     <Compile Include="HttpRequestFactories\QueryViewHttpRequestFactoryTests.cs" />
     <Compile Include="HttpRequestFactories\ReplicateDatabaseHttpRequestFactoryTests.cs" />
     <Compile Include="HttpRequestFactories\ViewCleanupHttpRequestFactoryTests.cs" />
+    <Compile Include="Requests\QueryShowRequestTests.cs" />
     <Compile Include="Requests\QueryViewRequestTests.cs" />
     <Compile Include="EntitySchemes\EntityIdMemberTests.cs" />
     <Compile Include="EntitySchemes\EntityRevMemberTests.cs" />
     <Compile Include="Serialization\DocumentSerializationTests.cs" />
     <Compile Include="Serialization\SerializerTests.cs" />
     <Compile Include="Serialization\ViewQueryResponseRowsDeserializerTests.cs" />
+    <Compile Include="ShowConfigurationTests.cs" />
     <Compile Include="UnitTestsOf.cs" />
     <Compile Include="UriBuilderTests.cs" />
   </ItemGroup>

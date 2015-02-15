@@ -50,7 +50,7 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Newtonsoft.Json.6.0.7\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -131,6 +131,9 @@
     <Compile Include="..\MyCouch.IntegrationTests.Net45\CoreTests\ReplicatorTests.cs">
       <Link>CoreTests\ReplicatorTests.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.IntegrationTests.Net45\CoreTests\ShowTests.cs">
+      <Link>CoreTests\ShowTests.cs</Link>
+    </Compile>
     <Compile Include="..\mycouch.integrationtests.net45\coretests\ViewsTests.cs">
       <Link>CoreTests\ViewsTests.cs</Link>
     </Compile>
@@ -148,6 +151,9 @@
     </Compile>
     <Compile Include="..\mycouch.integrationtests.net45\testfixtures\SearchFixture.cs">
       <Link>TestFixtures\SearchFixture.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.IntegrationTests.Net45\TestFixtures\ShowsFixture.cs">
+      <Link>TestFixtures\ShowsFixture.cs</Link>
     </Compile>
     <Compile Include="..\mycouch.integrationtests.net45\testfixtures\ViewsFixture.cs">
       <Link>TestFixtures\ViewsFixture.cs</Link>

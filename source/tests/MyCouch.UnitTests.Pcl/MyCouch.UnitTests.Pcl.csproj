@@ -40,7 +40,7 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Newtonsoft.Json.6.0.7\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -110,6 +110,9 @@
     <Compile Include="..\mycouch.unittests.net45\httprequestfactories\PutDatabaseHttpRequestFactoryTests.cs">
       <Link>HttpRequestFactories\PutDatabaseHttpRequestFactoryTests.cs</Link>
     </Compile>
+    <Compile Include="..\MyCouch.UnitTests.Net45\HttpRequestFactories\QueryShowHttpRequestFactoryTests.cs">
+      <Link>HttpRequestFactories\QueryShowHttpRequestFactoryTests.cs</Link>
+    </Compile>
     <Compile Include="..\mycouch.unittests.net45\httprequestfactories\QueryViewHttpRequestFactoryTests.cs">
       <Link>HttpRequestFactories\QueryViewHttpRequestFactoryTests.cs</Link>
     </Compile>
@@ -139,6 +142,9 @@
     </Compile>
     <Compile Include="..\mycouch.unittests.net45\serialization\ViewQueryResponseRowsDeserializerTests.cs">
       <Link>Serialization\ViewQueryResponseRowsDeserializerTests.cs</Link>
+    </Compile>
+    <Compile Include="..\MyCouch.UnitTests.Net45\ShowConfigurationTests.cs">
+      <Link>ShowConfigurationTests.cs</Link>
     </Compile>
     <Compile Include="..\MyCouch.UnitTests.Net45\UnitTestsOf.cs">
       <Link>UnitTestsOf.cs</Link>

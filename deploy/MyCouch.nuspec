@@ -30,17 +30,17 @@
     <dependencies>
        <group targetFramework="net40">
          <dependency id="Ensure.That" version="2.0.0" />
-         <dependency id="Newtonsoft.Json" version="6.0.7" />
+         <dependency id="Newtonsoft.Json" version="6.0.8" />
          <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
          <dependency id="Microsoft.Net.Http" version="2.2.28" />
        </group>
        <group targetFramework="net45">
          <dependency id="Ensure.That" version="2.0.0" />
-         <dependency id="Newtonsoft.Json" version="6.0.7" />
+         <dependency id="Newtonsoft.Json" version="6.0.8" />
        </group>
        <group targetFramework="portable-net45+netcore45">
          <dependency id="Ensure.That" version="2.0.0" />
-         <dependency id="Newtonsoft.Json" version="6.0.7" />
+         <dependency id="Newtonsoft.Json" version="6.0.8" />
        </group>
     </dependencies>
   </metadata>
