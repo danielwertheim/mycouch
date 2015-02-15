@@ -24,7 +24,7 @@ namespace MyCouch
             Ensure.That(connectionInfo, "connectionInfo").IsNotNull();
 
             IsDisposed = false;
-            bootstrapper = bootstrapper ?? new MyCouchClientBootstrapper();
+            bootstrapper = bootstrapper ?? MyCouchClientBootstrappers.Default;
 
             Connection = bootstrapper.ServerConnectionFn(connectionInfo);
             Serializer = bootstrapper.SerializerFn();

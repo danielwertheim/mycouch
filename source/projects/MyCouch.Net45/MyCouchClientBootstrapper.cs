@@ -8,6 +8,16 @@ using MyCouch.Serialization.Meta;
 
 namespace MyCouch
 {
+    internal static class MyCouchClientBootstrappers
+    {
+        internal static MyCouchClientBootstrapper Default { get; private set; }
+
+        static MyCouchClientBootstrappers()
+        {
+            Default = new MyCouchClientBootstrapper();
+        }
+    }
+
     public class MyCouchClientBootstrapper
     {
         /// <summary>

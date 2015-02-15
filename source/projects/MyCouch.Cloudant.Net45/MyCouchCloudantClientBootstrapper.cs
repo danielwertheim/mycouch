@@ -3,6 +3,16 @@ using MyCouch.Cloudant.Contexts;
 
 namespace MyCouch.Cloudant
 {
+    internal static class MyCouchCloudantClientBootstrappers
+    {
+        internal static MyCouchCloudantClientBootstrapper Default { get; private set; }
+
+        static MyCouchCloudantClientBootstrappers()
+        {
+            Default = new MyCouchCloudantClientBootstrapper();
+        }
+    }
+
     public class MyCouchCloudantClientBootstrapper : MyCouchClientBootstrapper
     {
         public Func<IServerConnection, ISecurity> SecurityFn { get; set; }
