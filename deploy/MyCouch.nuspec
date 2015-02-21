@@ -18,7 +18,7 @@
 
       Supports .Net4.0, .Net4.5 and a PCL for Windows store 8.0 and 8.1 (WinRT) and WP8.1.
     </description>
-    <iconUrl>http://www.mycouchclient.com/logos/mycouch-nuget.png</iconUrl>
+    <iconUrl>https://raw.githubusercontent.com/danielwertheim/mycouch/master/resources/mycouch-nuget.png</iconUrl>
     <projectUrl>https://github.com/danielwertheim/MyCouch</projectUrl>
     <licenseUrl>https://github.com/danielwertheim/MyCouch#license</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
