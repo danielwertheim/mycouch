@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -283,8 +284,6 @@ namespace MyCouch.IntegrationTests
 
     public static class TestEnvironments
     {
-        private const string TestEnvironmentsBaseUrl = "http://localhost:8991/testenvironments/";
-
         public static TestEnvironment GetMachineSpecificOrDefaultTestEnvironment()
         {
             var environments = GetTestEnvironments();
@@ -297,29 +296,22 @@ namespace MyCouch.IntegrationTests
 
         private static IDictionary<string, TestEnvironment> GetTestEnvironments()
         {
-            using (var client = new HttpClient())
-            {
-                HttpResponseMessage r;
-                const string exMessage = "Could not load test environments from: " + TestEnvironmentsBaseUrl;
+            var fullPath = GetTestEnvironmentFullPath(@".\..\..\..\..\..\testenvironments.local.json");
+            var content = File.ReadAllText(fullPath);
+            var environments = JsonConvert.DeserializeObject<TestEnvironment[]>(content);
+            if (environments == null || !environments.Any())
+                throw new Exception("Could not load TestEnvironments for integration tests from file: " + fullPath);
 
-                try
-                {
-                    r = client.GetAsync(TestEnvironmentsBaseUrl).Result;
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception(exMessage, ex);
-                }
+            return environments.ToDictionary(e => e.Key, e => e);
+        }
 
-                if (!r.IsSuccessStatusCode)
-                    throw new Exception(exMessage);
+        private static string GetTestEnvironmentFullPath(string relativePath)
+        {
+            var fullPath = Path.GetFullPath(relativePath);
+            if (!File.Exists(fullPath))
+                throw new FileNotFoundException("Could not find test environments JSON file.", relativePath);
 
-                var environments = JsonConvert.DeserializeObject<TestEnvironment[]>(r.Content.ReadAsStringAsync().Result);
-                if (environments == null || !environments.Any())
-                    throw new Exception(exMessage);
-
-                return environments.ToDictionary(e => e.Key, e => e);
-            }
+            return fullPath;
         }
     }
 }
