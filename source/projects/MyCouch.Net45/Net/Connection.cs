@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
@@ -59,7 +60,12 @@ namespace MyCouch.Net
 
         protected HttpClient CreateHttpClient(ConnectionInfo connectionInfo)
         {
-            var client = new HttpClient
+            var handler = new HttpClientHandler
+            {
+                AllowAutoRedirect = false
+            };
+
+            var client = new HttpClient(handler, true)
             {
                 BaseAddress = new Uri(connectionInfo.GetAbsoluteAddressExceptUserInfo().TrimEnd(new[] { '/' }))
             };
@@ -85,7 +91,18 @@ namespace MyCouch.Net
 
             using (var message = CreateHttpRequestMessage(httpRequest))
             {
-                return await HttpClient.SendAsync(message).ForAwait();
+                var response = await HttpClient.SendAsync(message).ForAwait();
+
+                if (ShouldFollowResponse(response))
+                {
+                    using (var followMessage = CreateHttpRequestMessage(httpRequest))
+                    {
+                        followMessage.RequestUri = response.Headers.Location;
+                        return await HttpClient.SendAsync(followMessage).ForAwait();
+                    }
+                }
+
+                return response;
             }
         }
 
@@ -97,7 +114,18 @@ namespace MyCouch.Net
 
             using (var message = CreateHttpRequestMessage(httpRequest))
             {
-                return await HttpClient.SendAsync(message, cancellationToken).ForAwait();
+                var response = await HttpClient.SendAsync(message, cancellationToken).ForAwait();
+
+                if (ShouldFollowResponse(response))
+                {
+                    using (var followMessage = CreateHttpRequestMessage(httpRequest))
+                    {
+                        followMessage.RequestUri = response.Headers.Location;
+                        return await HttpClient.SendAsync(followMessage, cancellationToken).ForAwait();
+                    }
+                }
+
+                return response;
             }
         }
 
@@ -109,7 +137,18 @@ namespace MyCouch.Net
 
             using (var message = CreateHttpRequestMessage(httpRequest))
             {
-                return await HttpClient.SendAsync(message, completionOption).ForAwait();
+                var response = await HttpClient.SendAsync(message, completionOption).ForAwait();
+
+                if (ShouldFollowResponse(response))
+                {
+                    using (var followMessage = CreateHttpRequestMessage(httpRequest))
+                    {
+                        followMessage.RequestUri = response.Headers.Location;
+                        return await HttpClient.SendAsync(followMessage, completionOption).ForAwait();
+                    }
+                }
+
+                return response;
             }
         }
 
@@ -121,7 +160,18 @@ namespace MyCouch.Net
 
             using (var message = CreateHttpRequestMessage(httpRequest))
             {
-                return await HttpClient.SendAsync(message, completionOption, cancellationToken).ForAwait();
+                var response = await HttpClient.SendAsync(message, completionOption, cancellationToken).ForAwait();
+
+                if (ShouldFollowResponse(response))
+                {
+                    using (var followMessage = CreateHttpRequestMessage(httpRequest))
+                    {
+                        followMessage.RequestUri = response.Headers.Location;
+                        return await HttpClient.SendAsync(followMessage, completionOption, cancellationToken).ForAwait();
+                    }
+                }
+
+                return response;
             }
         }
 
@@ -138,6 +188,11 @@ namespace MyCouch.Net
                 message.Headers.TryAddWithoutValidation(kv.Key, kv.Value);
 
             return message;
+        }
+
+        protected virtual bool ShouldFollowResponse(HttpResponseMessage response)
+        {
+            return response.StatusCode == HttpStatusCode.MovedPermanently && response.Headers.Location != null;
         }
 
         protected virtual void OnBeforeSend(HttpRequest httpRequest) { }
