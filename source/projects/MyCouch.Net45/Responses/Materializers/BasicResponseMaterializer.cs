@@ -11,7 +11,7 @@ namespace MyCouch.Responses.Materializers
             response.StatusCode = httpResponse.StatusCode;
             response.RequestMethod = httpResponse.RequestMessage.Method;
             response.ContentLength = httpResponse.Content.Headers.ContentLength;
-            response.ContentType = httpResponse.Content.Headers.ContentType.ToString();
+            response.ContentType = httpResponse.Content.Headers.ContentType != null ? httpResponse.Content.Headers.ContentType.ToString() : null;
             response.ETag = httpResponse.Headers.GetETag();
         }
     }
