@@ -63,6 +63,7 @@
     <Compile Include="CloudantTests\SecurityTests.cs" />
     <Compile Include="CoreTests\AttachmentsTests.cs" />
     <Compile Include="CoreTests\ChangesTests.cs" />
+    <Compile Include="CoreTests\ClientTests.cs" />
     <Compile Include="CoreTests\DatabaseTests.cs" />
     <Compile Include="CoreTests\DocumentsTests.cs" />
     <Compile Include="CoreTests\EntitiesTests.cs" />

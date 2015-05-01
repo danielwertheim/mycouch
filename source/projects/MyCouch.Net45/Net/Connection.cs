@@ -24,6 +24,9 @@ namespace MyCouch.Net
             get { return HttpClient.Timeout; }
         }
 
+        public Action<HttpRequest> BeforeSend { protected get; set; }
+        public Action<HttpResponseMessage> AfterSend { protected get; set; }
+
         protected Connection(ConnectionInfo connectionInfo)
         {
             Ensure.That(connectionInfo, "connectionInfo").IsNotNull();
@@ -102,6 +105,8 @@ namespace MyCouch.Net
                     }
                 }
 
+                OnAfterSend(response);
+
                 return response;
             }
         }
@@ -124,6 +129,8 @@ namespace MyCouch.Net
                         return await HttpClient.SendAsync(followMessage, cancellationToken).ForAwait();
                     }
                 }
+
+                OnAfterSend(response);
 
                 return response;
             }
@@ -148,6 +155,8 @@ namespace MyCouch.Net
                     }
                 }
 
+                OnAfterSend(response);
+
                 return response;
             }
         }
@@ -170,6 +179,8 @@ namespace MyCouch.Net
                         return await HttpClient.SendAsync(followMessage, completionOption, cancellationToken).ForAwait();
                     }
                 }
+
+                OnAfterSend(response);
 
                 return response;
             }
@@ -195,7 +206,17 @@ namespace MyCouch.Net
             return response.StatusCode == HttpStatusCode.MovedPermanently && response.Headers.Location != null;
         }
 
-        protected virtual void OnBeforeSend(HttpRequest httpRequest) { }
+        protected virtual void OnBeforeSend(HttpRequest httpRequest)
+        {
+            if (BeforeSend != null)
+                BeforeSend(httpRequest);
+        }
+
+        protected virtual void OnAfterSend(HttpResponseMessage httpResponse)
+        {
+            if (AfterSend != null)
+                AfterSend(httpResponse);
+        }
 
         protected virtual string GenerateRequestUri(HttpRequest httpRequest)
         {
