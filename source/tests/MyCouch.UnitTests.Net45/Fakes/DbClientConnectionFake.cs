@@ -10,6 +10,8 @@ namespace MyCouch.UnitTests.Fakes
     {
         public Uri Address { get; private set; }
         public TimeSpan Timeout { get; private set; }
+        public Action<HttpRequest> BeforeSend { set; private get; }
+        public Action<HttpResponseMessage> AfterSend { set; private get; }
 
         public ServerClientConnectionFake(ConnectionInfo connectionInfo)
         {
@@ -45,6 +47,8 @@ namespace MyCouch.UnitTests.Fakes
         public string DbName { get; private set; }
         public Uri Address { get; private set; }
         public TimeSpan Timeout { get; private set; }
+        public Action<HttpRequest> BeforeSend { set; private get; }
+        public Action<HttpResponseMessage> AfterSend { set; private get; }
 
         public DbClientConnectionFake(ConnectionInfo connectionInfo)
         {

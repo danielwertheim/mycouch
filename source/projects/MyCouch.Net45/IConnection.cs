@@ -10,6 +10,8 @@ namespace MyCouch
     {
         Uri Address { get; }
         TimeSpan Timeout { get; }
+        Action<HttpRequest> BeforeSend { set; }
+        Action<HttpResponseMessage> AfterSend { set; }
 
         Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest);
         Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, CancellationToken cancellationToken);

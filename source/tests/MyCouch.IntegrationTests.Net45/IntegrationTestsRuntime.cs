@@ -213,6 +213,7 @@ namespace MyCouch.IntegrationTests
 
     public static class TestScenarios
     {
+        public const string Client = "client";
         public const string AttachmentsContext = "attachmentscontext";
         public const string ChangesContext = "changescontext";
         public const string DatabaseContext = "databasecontext";
