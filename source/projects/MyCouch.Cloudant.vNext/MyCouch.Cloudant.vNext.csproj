@@ -5,11 +5,11 @@
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E774D145-2ED3-4560-93E7-F61712398EA7}</ProjectGuid>
+    <ProjectGuid>{E19ABA19-29F9-4658-8E15-6995A11377ED}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MyCouch</RootNamespace>
-    <AssemblyName>MyCouch.vNext</AssemblyName>
+    <RootNamespace>MyCouch.Cloudant</RootNamespace>
+    <AssemblyName>MyCouch.Cloudant.vNext</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -34,7 +34,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>1591</NoWarn>
-    <DocumentationFile>bin\Release\MyCouch.vNext.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\MyCouch.Cloudant.vNext.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <None Include="project.json" />
@@ -43,7 +43,13 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <Import Project="..\MyCouch\MyCouch.projitems" Label="Shared" />
+  <ItemGroup>
+    <ProjectReference Include="..\MyCouch.vNext\MyCouch.vNext.csproj">
+      <Project>{e774d145-2ed3-4560-93e7-f61712398ea7}</Project>
+      <Name>MyCouch.vNext</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="..\MyCouch.Cloudant\MyCouch.Cloudant.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

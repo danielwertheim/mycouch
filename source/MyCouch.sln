@@ -54,8 +54,11 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MyCouch.Cloudant", "project
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCouch.vNext", "projects\MyCouch.vNext\MyCouch.vNext.csproj", "{E774D145-2ED3-4560-93E7-F61712398EA7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCouch.Cloudant.vNext", "projects\MyCouch.Cloudant.vNext\MyCouch.Cloudant.vNext.csproj", "{E19ABA19-29F9-4658-8E15-6995A11377ED}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		projects\MyCouch.Cloudant\MyCouch.Cloudant.projitems*{e19aba19-29f9-4658-8e15-6995a11377ed}*SharedItemsImports = 4
 		projects\MyCouch.Cloudant\MyCouch.Cloudant.projitems*{5a0d4e69-6a48-49d6-8b68-89c7b3ea6603}*SharedItemsImports = 4
 		projects\MyCouch.Cloudant\MyCouch.Cloudant.projitems*{63e1fa0f-ec04-4450-98cb-34c05839657d}*SharedItemsImports = 4
 		projects\MyCouch.Cloudant\MyCouch.Cloudant.projitems*{93089f62-c493-460c-945d-4f32cd94b450}*SharedItemsImports = 4
@@ -139,6 +142,10 @@ Global
 		{E774D145-2ED3-4560-93E7-F61712398EA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E774D145-2ED3-4560-93E7-F61712398EA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E774D145-2ED3-4560-93E7-F61712398EA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E19ABA19-29F9-4658-8E15-6995A11377ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E19ABA19-29F9-4658-8E15-6995A11377ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E19ABA19-29F9-4658-8E15-6995A11377ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E19ABA19-29F9-4658-8E15-6995A11377ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
