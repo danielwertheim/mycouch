@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>32fc2540-a01d-484a-b25e-21b7d4367e8b</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>MyCouch.Testing</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)CoreExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)JsonTestdata.Designer.cs">
+      <DependentUpon>JsonTestdata.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Album.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Animal.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Artist.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Blog.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Shoulds.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TestData\ClientTestData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TestData\CloudantTestData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TestsOf.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)JsonTestdata.resx">
+      <LastGenOutput>JsonTestdata.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

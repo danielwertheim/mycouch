@@ -8,14 +8,14 @@ using Xunit;
 
 namespace MyCouch.IntegrationTests.CoreTests
 {
-    public class MyCouchStoreObservableQueryTests :
+    public class MyCouchStoreQueryTests :
         IntegrationTestsOf<MyCouchStore>,
         IPreserveStatePerFixture,
         IUseFixture<ViewsFixture>
     {
         protected Artist[] ArtistsById { get; set; }
 
-        public MyCouchStoreObservableQueryTests()
+        public MyCouchStoreQueryTests()
         {
             SUT = new MyCouchStore(DbClient);
         }

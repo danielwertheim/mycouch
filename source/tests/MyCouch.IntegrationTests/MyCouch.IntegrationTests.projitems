@@ -23,7 +23,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)CoreTests\ListsTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CoreTests\MyCouchStoreCallbackQueryTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CoreTests\MyCouchStoreCrudTests.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CoreTests\MyCouchStoreObservableQueryTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CoreTests\MyCouchStoreQueryTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CoreTests\ReplicatorTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CoreTests\ShowTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CoreTests\ViewsTests.cs" />

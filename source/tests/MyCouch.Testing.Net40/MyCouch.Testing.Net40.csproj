@@ -94,38 +94,6 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="..\MyCouch.Testing.Net45\CoreExtensions.cs">
-      <Link>CoreExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.testing.net45\model\Album.cs">
-      <Link>Model\Album.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.testing.net45\model\Animal.cs">
-      <Link>Model\Animal.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.testing.net45\model\Artist.cs">
-      <Link>Model\Artist.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Testing.Net45\Model\Blog.cs">
-      <Link>Blog.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Testing.Net45\Shoulds.cs">
-      <Link>Shoulds.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.testing.net45\testdata\ClientTestData.cs">
-      <Link>TestData\ClientTestData.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.testing.net45\testdata\CloudantTestData.cs">
-      <Link>TestData\CloudantTestData.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Testing.Net45\TestsOf.cs">
-      <Link>TestsOf.cs</Link>
-    </Compile>
-    <Compile Include="JsonTestdata.Designer.cs">
-      <DependentUpon>JsonTestdata.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -144,12 +112,7 @@
       <Name>MyCouch.Net40</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="JsonTestdata.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>JsonTestdata.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
+  <Import Project="..\MyCouch.Testing\MyCouch.Testing.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
