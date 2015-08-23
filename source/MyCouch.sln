@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{72CA66FC-D747-44D6-AB61-0B1891CA075E}"
 	ProjectSection(SolutionItems) = preProject
@@ -48,7 +48,21 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCouch.IntegrationTests.Pc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCouch.IntegrationTests.Net45", "tests\MyCouch.IntegrationTests.Net45\MyCouch.IntegrationTests.Net45.csproj", "{810E7A2F-F4F7-4761-8E47-1E5215AFCA8A}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MyCouch", "projects\MyCouch\MyCouch.shproj", "{C376D027-8CA6-47C6-9AC4-278CF314AA69}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MyCouch.Cloudant", "projects\MyCouch.Cloudant\MyCouch.Cloudant.shproj", "{8AC29AC2-E647-4874-B34C-3A8B935AD703}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		projects\MyCouch.Cloudant\MyCouch.Cloudant.projitems*{5a0d4e69-6a48-49d6-8b68-89c7b3ea6603}*SharedItemsImports = 4
+		projects\MyCouch.Cloudant\MyCouch.Cloudant.projitems*{63e1fa0f-ec04-4450-98cb-34c05839657d}*SharedItemsImports = 4
+		projects\MyCouch.Cloudant\MyCouch.Cloudant.projitems*{93089f62-c493-460c-945d-4f32cd94b450}*SharedItemsImports = 4
+		projects\MyCouch\MyCouch.projitems*{7f6e9978-92f3-4b66-95dd-ada46b2a3bc5}*SharedItemsImports = 4
+		projects\MyCouch\MyCouch.projitems*{36d1cbc7-dbe6-4fa9-83fc-abfb2fb003a5}*SharedItemsImports = 4
+		projects\MyCouch\MyCouch.projitems*{da67c219-8fd3-4da8-892f-1d31dd473243}*SharedItemsImports = 4
+		projects\MyCouch.Cloudant\MyCouch.Cloudant.projitems*{8ac29ac2-e647-4874-b34c-3a8b935ad703}*SharedItemsImports = 13
+		projects\MyCouch\MyCouch.projitems*{c376d027-8ca6-47c6-9ac4-278cf314aa69}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
