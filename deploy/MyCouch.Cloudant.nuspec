@@ -30,20 +30,25 @@
     <dependencies>
        <group targetFramework="net40">
          <dependency id="MyCouch" version="[$version$]" />
-         <dependency id="Ensure.That" version="2.0.0" />
-         <dependency id="Newtonsoft.Json" version="6.0.8" />
+         <dependency id="Ensure.That" version="3.0.0" />
+         <dependency id="Newtonsoft.Json" version="7.0.1" />
          <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
-         <dependency id="Microsoft.Net.Http" version="2.2.28" />
+         <dependency id="Microsoft.Net.Http" version="2.2.29" />
        </group>
        <group targetFramework="net45">
          <dependency id="MyCouch" version="[$version$]" />
-         <dependency id="Ensure.That" version="2.0.0" />
-         <dependency id="Newtonsoft.Json" version="6.0.8" />
+         <dependency id="Ensure.That" version="3.0.0" />
+         <dependency id="Newtonsoft.Json" version="7.0.1" />
        </group>
-       <group targetFramework="portable-net45+netcore45">
+       <group targetFramework="portable-netcore45+wpa81+MonoAndroid1+MonoTouch1">
          <dependency id="MyCouch" version="[$version$]" />
-         <dependency id="Ensure.That" version="2.0.0" />
-         <dependency id="Newtonsoft.Json" version="6.0.8" />
+         <dependency id="Ensure.That" version="3.0.0" />
+         <dependency id="Newtonsoft.Json" version="7.0.1" />
+       </group>
+       <group targetFramework="dotnet">
+         <dependency id="MyCouch" version="[$version$]" />
+         <dependency id="Ensure.That" version="3.0.0" />
+         <dependency id="Newtonsoft.Json" version="7.0.1" />
        </group>
     </dependencies>
   </metadata>
@@ -54,5 +59,7 @@
     <file src="MyCouch.Cloudant.Net45\*.xml" target="lib\net45" />
     <file src="MyCouch.Cloudant.Pcl\*.dll" target="lib\portable-netcore45+wpa81+MonoAndroid1+MonoTouch1" />
     <file src="MyCouch.Cloudant.Pcl\*.xml" target="lib\portable-netcore45+wpa81+MonoAndroid1+MonoTouch1" />
+    <file src="MyCouch.Cloudant.vNext\*.dll" target="lib\dotnet" />
+    <file src="MyCouch.Cloudant.vNext\*.xml" target="lib\dotnet" />
   </files>
 </package>
