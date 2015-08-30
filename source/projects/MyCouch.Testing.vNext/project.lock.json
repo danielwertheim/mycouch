@@ -11,6 +11,34 @@
           "lib/dotnet/EnsureThat.vNext.dll": {}
         }
       },
+      "FluentAssertions/4.0.0": {
+        "dependencies": {
+          "System.Collections": "[4.0.10, )",
+          "System.Diagnostics.Debug": "[4.0.10, )",
+          "System.Globalization": "[4.0.10, )",
+          "System.Linq": "[4.0.0, )",
+          "System.Linq.Expressions": "[4.0.10, )",
+          "System.ObjectModel": "[4.0.10, )",
+          "System.Reflection": "[4.0.10, )",
+          "System.Reflection.Extensions": "[4.0.0, )",
+          "System.Reflection.Primitives": "[4.0.0, )",
+          "System.Reflection.TypeExtensions": "[4.0.0, )",
+          "System.Runtime": "[4.0.20, )",
+          "System.Runtime.Extensions": "[4.0.10, )",
+          "System.Text.RegularExpressions": "[4.0.10, )",
+          "System.Threading": "[4.0.10, )",
+          "System.Threading.Tasks": "[4.0.10, )",
+          "System.Xml.XDocument": "[4.0.10, )"
+        },
+        "compile": {
+          "lib/dotnet/FluentAssertions.Core.dll": {},
+          "lib/dotnet/FluentAssertions.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/FluentAssertions.Core.dll": {},
+          "lib/dotnet/FluentAssertions.dll": {}
+        }
+      },
       "Microsoft.CSharp/4.0.0": {
         "dependencies": {
           "System.Runtime": "[4.0.20, )",
@@ -818,6 +846,20 @@
           "lib/net46/EnsureThat.vNext.dll": {}
         }
       },
+      "FluentAssertions/4.0.0": {
+        "frameworkAssemblies": [
+          "System.Xml",
+          "System.Xml.Linq"
+        ],
+        "compile": {
+          "lib/net45/FluentAssertions.Core.dll": {},
+          "lib/net45/FluentAssertions.dll": {}
+        },
+        "runtime": {
+          "lib/net45/FluentAssertions.Core.dll": {},
+          "lib/net45/FluentAssertions.dll": {}
+        }
+      },
       "Microsoft.NETCore/5.0.0": {
         "dependencies": {
           "Microsoft.CSharp": "[4.0.0, )",
@@ -1487,6 +1529,16 @@
         },
         "runtime": {
           "lib/dotnet/EnsureThat.vNext.dll": {}
+        }
+      },
+      "FluentAssertions/4.0.0": {
+        "compile": {
+          "lib/dotnet/FluentAssertions.Core.dll": {},
+          "lib/dotnet/FluentAssertions.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/FluentAssertions.Core.dll": {},
+          "lib/dotnet/FluentAssertions.dll": {}
         }
       },
       "Microsoft.CSharp/4.0.0": {
@@ -2591,6 +2643,34 @@
           "lib/dotnet/EnsureThat.vNext.dll": {}
         }
       },
+      "FluentAssertions/4.0.0": {
+        "dependencies": {
+          "System.Collections": "[4.0.10, )",
+          "System.Diagnostics.Debug": "[4.0.10, )",
+          "System.Globalization": "[4.0.10, )",
+          "System.Linq": "[4.0.0, )",
+          "System.Linq.Expressions": "[4.0.10, )",
+          "System.ObjectModel": "[4.0.10, )",
+          "System.Reflection": "[4.0.10, )",
+          "System.Reflection.Extensions": "[4.0.0, )",
+          "System.Reflection.Primitives": "[4.0.0, )",
+          "System.Reflection.TypeExtensions": "[4.0.0, )",
+          "System.Runtime": "[4.0.20, )",
+          "System.Runtime.Extensions": "[4.0.10, )",
+          "System.Text.RegularExpressions": "[4.0.10, )",
+          "System.Threading": "[4.0.10, )",
+          "System.Threading.Tasks": "[4.0.10, )",
+          "System.Xml.XDocument": "[4.0.10, )"
+        },
+        "compile": {
+          "lib/dotnet/FluentAssertions.Core.dll": {},
+          "lib/dotnet/FluentAssertions.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/FluentAssertions.Core.dll": {},
+          "lib/dotnet/FluentAssertions.dll": {}
+        }
+      },
       "Microsoft.CSharp/4.0.0": {
         "dependencies": {
           "System.Runtime": "[4.0.20, )",
@@ -3669,6 +3749,20 @@
           "lib/net46/EnsureThat.vNext.dll": {}
         }
       },
+      "FluentAssertions/4.0.0": {
+        "frameworkAssemblies": [
+          "System.Xml",
+          "System.Xml.Linq"
+        ],
+        "compile": {
+          "lib/net45/FluentAssertions.Core.dll": {},
+          "lib/net45/FluentAssertions.dll": {}
+        },
+        "runtime": {
+          "lib/net45/FluentAssertions.Core.dll": {},
+          "lib/net45/FluentAssertions.dll": {}
+        }
+      },
       "Microsoft.NETCore/5.0.0": {
         "dependencies": {
           "Microsoft.CSharp": "[4.0.0, )",
@@ -4364,6 +4458,20 @@
           "lib/net46/EnsureThat.vNext.dll": {}
         }
       },
+      "FluentAssertions/4.0.0": {
+        "frameworkAssemblies": [
+          "System.Xml",
+          "System.Xml.Linq"
+        ],
+        "compile": {
+          "lib/net45/FluentAssertions.Core.dll": {},
+          "lib/net45/FluentAssertions.dll": {}
+        },
+        "runtime": {
+          "lib/net45/FluentAssertions.Core.dll": {},
+          "lib/net45/FluentAssertions.dll": {}
+        }
+      },
       "Microsoft.NETCore/5.0.0": {
         "dependencies": {
           "Microsoft.CSharp": "[4.0.0, )",
@@ -5057,6 +5165,16 @@
         },
         "runtime": {
           "lib/dotnet/EnsureThat.vNext.dll": {}
+        }
+      },
+      "FluentAssertions/4.0.0": {
+        "compile": {
+          "lib/dotnet/FluentAssertions.Core.dll": {},
+          "lib/dotnet/FluentAssertions.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/FluentAssertions.Core.dll": {},
+          "lib/dotnet/FluentAssertions.dll": {}
         }
       },
       "Microsoft.CSharp/4.0.0": {
@@ -6267,6 +6385,16 @@
           "lib/dotnet/EnsureThat.vNext.dll": {}
         }
       },
+      "FluentAssertions/4.0.0": {
+        "compile": {
+          "lib/dotnet/FluentAssertions.Core.dll": {},
+          "lib/dotnet/FluentAssertions.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/FluentAssertions.Core.dll": {},
+          "lib/dotnet/FluentAssertions.dll": {}
+        }
+      },
       "Microsoft.CSharp/4.0.0": {
         "dependencies": {
           "System.Runtime": "[4.0.20, )",
@@ -7412,6 +7540,16 @@
         },
         "runtime": {
           "lib/dotnet/EnsureThat.vNext.dll": {}
+        }
+      },
+      "FluentAssertions/4.0.0": {
+        "compile": {
+          "lib/dotnet/FluentAssertions.Core.dll": {},
+          "lib/dotnet/FluentAssertions.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/FluentAssertions.Core.dll": {},
+          "lib/dotnet/FluentAssertions.dll": {}
         }
       },
       "Microsoft.CSharp/4.0.0": {
@@ -8622,6 +8760,16 @@
           "lib/dotnet/EnsureThat.vNext.dll": {}
         }
       },
+      "FluentAssertions/4.0.0": {
+        "compile": {
+          "lib/dotnet/FluentAssertions.Core.dll": {},
+          "lib/dotnet/FluentAssertions.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/FluentAssertions.Core.dll": {},
+          "lib/dotnet/FluentAssertions.dll": {}
+        }
+      },
       "Microsoft.CSharp/4.0.0": {
         "dependencies": {
           "System.Runtime": "[4.0.20, )",
@@ -9767,6 +9915,16 @@
         },
         "runtime": {
           "lib/dotnet/EnsureThat.vNext.dll": {}
+        }
+      },
+      "FluentAssertions/4.0.0": {
+        "compile": {
+          "lib/dotnet/FluentAssertions.Core.dll": {},
+          "lib/dotnet/FluentAssertions.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/FluentAssertions.Core.dll": {},
+          "lib/dotnet/FluentAssertions.dll": {}
         }
       },
       "Microsoft.CSharp/4.0.0": {
@@ -10972,6 +11130,16 @@
           "lib/dotnet/EnsureThat.vNext.dll": {}
         }
       },
+      "FluentAssertions/4.0.0": {
+        "compile": {
+          "lib/dotnet/FluentAssertions.Core.dll": {},
+          "lib/dotnet/FluentAssertions.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/FluentAssertions.Core.dll": {},
+          "lib/dotnet/FluentAssertions.dll": {}
+        }
+      },
       "Microsoft.CSharp/4.0.0": {
         "dependencies": {
           "System.Runtime": "[4.0.20, )",
@@ -12117,6 +12285,34 @@
         },
         "runtime": {
           "lib/dotnet/EnsureThat.vNext.dll": {}
+        }
+      },
+      "FluentAssertions/4.0.0": {
+        "dependencies": {
+          "System.Collections": "[4.0.10, )",
+          "System.Diagnostics.Debug": "[4.0.10, )",
+          "System.Globalization": "[4.0.10, )",
+          "System.Linq": "[4.0.0, )",
+          "System.Linq.Expressions": "[4.0.10, )",
+          "System.ObjectModel": "[4.0.10, )",
+          "System.Reflection": "[4.0.10, )",
+          "System.Reflection.Extensions": "[4.0.0, )",
+          "System.Reflection.Primitives": "[4.0.0, )",
+          "System.Reflection.TypeExtensions": "[4.0.0, )",
+          "System.Runtime": "[4.0.20, )",
+          "System.Runtime.Extensions": "[4.0.10, )",
+          "System.Text.RegularExpressions": "[4.0.10, )",
+          "System.Threading": "[4.0.10, )",
+          "System.Threading.Tasks": "[4.0.10, )",
+          "System.Xml.XDocument": "[4.0.10, )"
+        },
+        "compile": {
+          "lib/dotnet/FluentAssertions.Core.dll": {},
+          "lib/dotnet/FluentAssertions.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/FluentAssertions.Core.dll": {},
+          "lib/dotnet/FluentAssertions.dll": {}
         }
       },
       "Microsoft.CSharp/4.0.0": {
@@ -13409,6 +13605,34 @@
         },
         "runtime": {
           "lib/dotnet/EnsureThat.vNext.dll": {}
+        }
+      },
+      "FluentAssertions/4.0.0": {
+        "dependencies": {
+          "System.Collections": "[4.0.10, )",
+          "System.Diagnostics.Debug": "[4.0.10, )",
+          "System.Globalization": "[4.0.10, )",
+          "System.Linq": "[4.0.0, )",
+          "System.Linq.Expressions": "[4.0.10, )",
+          "System.ObjectModel": "[4.0.10, )",
+          "System.Reflection": "[4.0.10, )",
+          "System.Reflection.Extensions": "[4.0.0, )",
+          "System.Reflection.Primitives": "[4.0.0, )",
+          "System.Reflection.TypeExtensions": "[4.0.0, )",
+          "System.Runtime": "[4.0.20, )",
+          "System.Runtime.Extensions": "[4.0.10, )",
+          "System.Text.RegularExpressions": "[4.0.10, )",
+          "System.Threading": "[4.0.10, )",
+          "System.Threading.Tasks": "[4.0.10, )",
+          "System.Xml.XDocument": "[4.0.10, )"
+        },
+        "compile": {
+          "lib/dotnet/FluentAssertions.Core.dll": {},
+          "lib/dotnet/FluentAssertions.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/FluentAssertions.Core.dll": {},
+          "lib/dotnet/FluentAssertions.dll": {}
         }
       },
       "Microsoft.CSharp/4.0.0": {
@@ -14709,6 +14933,94 @@
         "lib/dotnet/EnsureThat.vNext.dll",
         "lib/dotnet/EnsureThat.vNext.xml",
         "package/services/metadata/core-properties/e2f4a1f3b1d34ab19b009089abf71f71.psmdcp",
+        "[Content_Types].xml"
+      ]
+    },
+    "FluentAssertions/4.0.0": {
+      "sha512": "AZJ1faVNtNhEscVjFXhUZXqhuMV4/u104RCXuL70R+y2HMF+ZL8Est5xRgo8cN5pMhVfSUdsyVZVXuJBRrXUBw==",
+      "type": "Package",
+      "files": [
+        "_rels/.rels",
+        "FluentAssertions.nuspec",
+        "lib/dotnet/FluentAssertions.Core.dll",
+        "lib/dotnet/FluentAssertions.Core.pdb",
+        "lib/dotnet/FluentAssertions.dll",
+        "lib/dotnet/FluentAssertions.pdb",
+        "lib/dotnet/FluentAssertions.xml",
+        "lib/monoandroid/FluentAssertions.Core.dll",
+        "lib/monoandroid/FluentAssertions.Core.pdb",
+        "lib/monoandroid/FluentAssertions.Core.xml",
+        "lib/monotouch/FluentAssertions.Core.dll",
+        "lib/monotouch/FluentAssertions.Core.pdb",
+        "lib/monotouch/FluentAssertions.Core.xml",
+        "lib/net40/FluentAssertions.Core.dll",
+        "lib/net40/FluentAssertions.Core.pdb",
+        "lib/net40/FluentAssertions.Core.xml",
+        "lib/net40/FluentAssertions.dll",
+        "lib/net40/FluentAssertions.pdb",
+        "lib/net40/FluentAssertions.xml",
+        "lib/net45/FluentAssertions.Core.dll",
+        "lib/net45/FluentAssertions.Core.pdb",
+        "lib/net45/FluentAssertions.Core.xml",
+        "lib/net45/FluentAssertions.dll",
+        "lib/net45/FluentAssertions.pdb",
+        "lib/net45/FluentAssertions.xml",
+        "lib/portable-monotouch+monoandroid+xamarin.ios/FluentAssertions.Core.dll",
+        "lib/portable-monotouch+monoandroid+xamarin.ios/FluentAssertions.Core.pdb",
+        "lib/portable-monotouch+monoandroid+xamarin.ios/FluentAssertions.Core.xml",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/FluentAssertions.Core.dll",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/FluentAssertions.Core.pdb",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/FluentAssertions.Core.xml",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/FluentAssertions.dll",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/FluentAssertions.pdb",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/FluentAssertions.XML",
+        "lib/portable-win81+wpa81/FluentAssertions.Core.dll",
+        "lib/portable-win81+wpa81/FluentAssertions.Core.pdb",
+        "lib/portable-win81+wpa81/FluentAssertions.Core.xml",
+        "lib/portable-win81+wpa81/FluentAssertions.dll",
+        "lib/portable-win81+wpa81/FluentAssertions.pdb",
+        "lib/portable-win81+wpa81/FluentAssertions.pri",
+        "lib/portable-win81+wpa81/FluentAssertions.xml",
+        "lib/sl5/FluentAssertions.Core.dll",
+        "lib/sl5/FluentAssertions.Core.pdb",
+        "lib/sl5/FluentAssertions.Core.xml",
+        "lib/sl5/FluentAssertions.dll",
+        "lib/sl5/FluentAssertions.pdb",
+        "lib/sl5/FluentAssertions.xml",
+        "lib/sl5/Microsoft.CSharp.dll",
+        "lib/sl5/Microsoft.CSharp.xml",
+        "lib/sl5/Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight.dll",
+        "lib/sl5/Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight.xml",
+        "lib/sl5/System.Xml.Linq.dll",
+        "lib/sl5/System.Xml.Linq.xml",
+        "lib/sl5/de/Microsoft.CSharp.resources.dll",
+        "lib/sl5/de/System.Xml.Linq.resources.dll",
+        "lib/sl5/es/Microsoft.CSharp.resources.dll",
+        "lib/sl5/es/System.Xml.Linq.resources.dll",
+        "lib/sl5/fr/Microsoft.CSharp.resources.dll",
+        "lib/sl5/fr/System.Xml.Linq.resources.dll",
+        "lib/sl5/it/Microsoft.CSharp.resources.dll",
+        "lib/sl5/it/System.Xml.Linq.resources.dll",
+        "lib/sl5/ja/Microsoft.CSharp.resources.dll",
+        "lib/sl5/ja/System.Xml.Linq.resources.dll",
+        "lib/sl5/ko/Microsoft.CSharp.resources.dll",
+        "lib/sl5/ko/System.Xml.Linq.resources.dll",
+        "lib/sl5/ru/Microsoft.CSharp.resources.dll",
+        "lib/sl5/ru/System.Xml.Linq.resources.dll",
+        "lib/sl5/zh-Hans/Microsoft.CSharp.resources.dll",
+        "lib/sl5/zh-Hans/System.Xml.Linq.resources.dll",
+        "lib/sl5/zh-Hant/Microsoft.CSharp.resources.dll",
+        "lib/sl5/zh-Hant/System.Xml.Linq.resources.dll",
+        "lib/wp8/FluentAssertions.Core.dll",
+        "lib/wp8/FluentAssertions.Core.pdb",
+        "lib/wp8/FluentAssertions.Core.xml",
+        "lib/wp8/FluentAssertions.dll",
+        "lib/wp8/FluentAssertions.pdb",
+        "lib/wp8/FluentAssertions.xml",
+        "lib/xamarin.ios/FluentAssertions.Core.dll",
+        "lib/xamarin.ios/FluentAssertions.Core.pdb",
+        "lib/xamarin.ios/FluentAssertions.Core.xml",
+        "package/services/metadata/core-properties/7dc7413b48c741dcb1760ddc427b24d7.psmdcp",
         "[Content_Types].xml"
       ]
     },
@@ -17470,7 +17782,7 @@
   },
   "projectFileDependencyGroups": {
     "": [
-      "Ensure.That >= 3.1.0",
+      "FluentAssertions >= 4.0.0",
       "Microsoft.NETCore >= 5.0.0",
       "Microsoft.NETCore.Portable.Compatibility >= 1.0.0",
       "Newtonsoft.Json >= 7.0.1"

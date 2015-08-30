@@ -10,11 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)CoreExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)JsonTestdata.Designer.cs">
-      <DependentUpon>JsonTestdata.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)JsonTestdata.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Album.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Animal.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Artist.cs" />
@@ -23,11 +19,5 @@
     <Compile Include="$(MSBuildThisFileDirectory)TestData\ClientTestData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestData\CloudantTestData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestsOf.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)JsonTestdata.resx">
-      <LastGenOutput>JsonTestdata.Designer.cs</LastGenOutput>
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
   </ItemGroup>
 </Project>

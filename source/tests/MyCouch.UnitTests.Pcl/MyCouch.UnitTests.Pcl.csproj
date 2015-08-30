@@ -71,7 +71,7 @@
       <Name>MyCouch.Pcl</Name>
     </ProjectReference>
     <ProjectReference Include="..\MyCouch.Testing.Pcl\MyCouch.Testing.Pcl.csproj">
-      <Project>{189bf3ac-8cca-4e33-a14a-4d2e782728ca}</Project>
+      <Project>{11b3a91d-5805-47fc-aa47-f2e7b89592ee}</Project>
       <Name>MyCouch.Testing.Pcl</Name>
     </ProjectReference>
   </ItemGroup>
