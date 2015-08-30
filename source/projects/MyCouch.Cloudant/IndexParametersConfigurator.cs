@@ -1,4 +1,4 @@
-﻿using EnsureThat;
+﻿using MyCouch.EnsureThat;
 using System.Linq;
 
 namespace MyCouch.Cloudant

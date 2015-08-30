@@ -1,4 +1,4 @@
-﻿using EnsureThat;
+﻿using MyCouch.EnsureThat;
 using MyCouch.Cloudant.Serialization.Converters;
 using Newtonsoft.Json;
 

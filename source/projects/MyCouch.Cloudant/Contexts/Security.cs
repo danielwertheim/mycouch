@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
-using EnsureThat;
+using MyCouch.EnsureThat;
 using MyCouch.Cloudant.HttpRequestFactories;
 using MyCouch.Cloudant.Requests;
 using MyCouch.Cloudant.Responses;

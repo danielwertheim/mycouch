@@ -5,7 +5,7 @@ using MyCouch.Cloudant.Requests;
 using MyCouch.Cloudant.Responses;
 using MyCouch.Cloudant.Responses.Factories;
 using MyCouch.Contexts;
-using EnsureThat;
+using MyCouch.EnsureThat;
 using MyCouch.Extensions;
 using MyCouch.Net;
 using MyCouch.Serialization;

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Text;
-using EnsureThat;
+using MyCouch.EnsureThat;
 
 namespace MyCouch.Net
 {

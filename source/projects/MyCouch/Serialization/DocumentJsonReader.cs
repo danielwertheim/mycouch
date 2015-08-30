@@ -3,7 +3,7 @@ using System.IO;
 #if PCL
 using System.Reflection;
 #endif
-using EnsureThat;
+using MyCouch.EnsureThat;
 using MyCouch.EntitySchemes;
 using Newtonsoft.Json;
 

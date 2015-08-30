@@ -1,4 +1,4 @@
-﻿using EnsureThat;
+﻿using MyCouch.EnsureThat;
 using MyCouch.Querying;
 using System;
 using System.Collections.Generic;

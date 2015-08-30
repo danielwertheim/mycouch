@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Reflection;
 using MyCouch.Extensions;
 #endif
-using EnsureThat;
+using MyCouch.EnsureThat;
 
 namespace MyCouch.Net
 {

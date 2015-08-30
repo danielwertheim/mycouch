@@ -3,14 +3,6 @@
   "version": 1,
   "targets": {
     ".NETPlatform,Version=v5.0": {
-      "Ensure.That/3.1.0": {
-        "compile": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        },
-        "runtime": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        }
-      },
       "FluentAssertions/4.0.0": {
         "dependencies": {
           "System.Collections": "[4.0.10, )",
@@ -838,14 +830,6 @@
       }
     },
     ".NETFramework,Version=v4.6": {
-      "Ensure.That/3.1.0": {
-        "compile": {
-          "lib/net46/EnsureThat.vNext.dll": {}
-        },
-        "runtime": {
-          "lib/net46/EnsureThat.vNext.dll": {}
-        }
-      },
       "FluentAssertions/4.0.0": {
         "frameworkAssemblies": [
           "System.Xml",
@@ -1523,14 +1507,6 @@
       }
     },
     "UAP,Version=v10.0": {
-      "Ensure.That/3.1.0": {
-        "compile": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        },
-        "runtime": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        }
-      },
       "FluentAssertions/4.0.0": {
         "compile": {
           "lib/dotnet/FluentAssertions.Core.dll": {},
@@ -2635,14 +2611,6 @@
       }
     },
     "DNXCore,Version=v5.0": {
-      "Ensure.That/3.1.0": {
-        "compile": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        },
-        "runtime": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        }
-      },
       "FluentAssertions/4.0.0": {
         "dependencies": {
           "System.Collections": "[4.0.10, )",
@@ -3741,14 +3709,6 @@
       }
     },
     ".NETFramework,Version=v4.6/win-x86": {
-      "Ensure.That/3.1.0": {
-        "compile": {
-          "lib/net46/EnsureThat.vNext.dll": {}
-        },
-        "runtime": {
-          "lib/net46/EnsureThat.vNext.dll": {}
-        }
-      },
       "FluentAssertions/4.0.0": {
         "frameworkAssemblies": [
           "System.Xml",
@@ -4450,14 +4410,6 @@
       }
     },
     ".NETFramework,Version=v4.6/win-x64": {
-      "Ensure.That/3.1.0": {
-        "compile": {
-          "lib/net46/EnsureThat.vNext.dll": {}
-        },
-        "runtime": {
-          "lib/net46/EnsureThat.vNext.dll": {}
-        }
-      },
       "FluentAssertions/4.0.0": {
         "frameworkAssemblies": [
           "System.Xml",
@@ -5159,14 +5111,6 @@
       }
     },
     "UAP,Version=v10.0/win10-x86": {
-      "Ensure.That/3.1.0": {
-        "compile": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        },
-        "runtime": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        }
-      },
       "FluentAssertions/4.0.0": {
         "compile": {
           "lib/dotnet/FluentAssertions.Core.dll": {},
@@ -6377,14 +6321,6 @@
       }
     },
     "UAP,Version=v10.0/win10-x86-aot": {
-      "Ensure.That/3.1.0": {
-        "compile": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        },
-        "runtime": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        }
-      },
       "FluentAssertions/4.0.0": {
         "compile": {
           "lib/dotnet/FluentAssertions.Core.dll": {},
@@ -7534,14 +7470,6 @@
       }
     },
     "UAP,Version=v10.0/win10-x64": {
-      "Ensure.That/3.1.0": {
-        "compile": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        },
-        "runtime": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        }
-      },
       "FluentAssertions/4.0.0": {
         "compile": {
           "lib/dotnet/FluentAssertions.Core.dll": {},
@@ -8752,14 +8680,6 @@
       }
     },
     "UAP,Version=v10.0/win10-x64-aot": {
-      "Ensure.That/3.1.0": {
-        "compile": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        },
-        "runtime": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        }
-      },
       "FluentAssertions/4.0.0": {
         "compile": {
           "lib/dotnet/FluentAssertions.Core.dll": {},
@@ -9909,14 +9829,6 @@
       }
     },
     "UAP,Version=v10.0/win10-arm": {
-      "Ensure.That/3.1.0": {
-        "compile": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        },
-        "runtime": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        }
-      },
       "FluentAssertions/4.0.0": {
         "compile": {
           "lib/dotnet/FluentAssertions.Core.dll": {},
@@ -11122,14 +11034,6 @@
       }
     },
     "UAP,Version=v10.0/win10-arm-aot": {
-      "Ensure.That/3.1.0": {
-        "compile": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        },
-        "runtime": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        }
-      },
       "FluentAssertions/4.0.0": {
         "compile": {
           "lib/dotnet/FluentAssertions.Core.dll": {},
@@ -12279,14 +12183,6 @@
       }
     },
     "DNXCore,Version=v5.0/win7-x86": {
-      "Ensure.That/3.1.0": {
-        "compile": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        },
-        "runtime": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        }
-      },
       "FluentAssertions/4.0.0": {
         "dependencies": {
           "System.Collections": "[4.0.10, )",
@@ -13599,14 +13495,6 @@
       }
     },
     "DNXCore,Version=v5.0/win7-x64": {
-      "Ensure.That/3.1.0": {
-        "compile": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        },
-        "runtime": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        }
-      },
       "FluentAssertions/4.0.0": {
         "dependencies": {
           "System.Collections": "[4.0.10, )",
@@ -14920,22 +14808,6 @@
     }
   },
   "libraries": {
-    "Ensure.That/3.1.0": {
-      "sha512": "RTKVHoXtRhMpEvLlQGDvE5b+VXgBoRFFcCM2Q0gVFZjoEJHnZivIrRkYQFb6lr0MhqqvOMGdIJr0u5NTXIUtug==",
-      "type": "Package",
-      "files": [
-        "_rels/.rels",
-        "Ensure.That.nuspec",
-        "lib/portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1/EnsureThat.vDinasour.dll",
-        "lib/portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1/EnsureThat.vDinasour.xml",
-        "lib/net46/EnsureThat.vNext.dll",
-        "lib/net46/EnsureThat.vNext.xml",
-        "lib/dotnet/EnsureThat.vNext.dll",
-        "lib/dotnet/EnsureThat.vNext.xml",
-        "package/services/metadata/core-properties/e2f4a1f3b1d34ab19b009089abf71f71.psmdcp",
-        "[Content_Types].xml"
-      ]
-    },
     "FluentAssertions/4.0.0": {
       "sha512": "AZJ1faVNtNhEscVjFXhUZXqhuMV4/u104RCXuL70R+y2HMF+ZL8Est5xRgo8cN5pMhVfSUdsyVZVXuJBRrXUBw==",
       "type": "Package",

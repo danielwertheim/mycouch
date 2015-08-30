@@ -1,4 +1,4 @@
-﻿using EnsureThat;
+﻿using MyCouch.EnsureThat;
 using MyCouch.Responses.Factories;
 using MyCouch.Responses.Materializers;
 using MyCouch.Serialization;

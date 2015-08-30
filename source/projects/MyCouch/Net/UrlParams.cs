@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using EnsureThat;
+using MyCouch.EnsureThat;
 
 namespace MyCouch.Net
 {

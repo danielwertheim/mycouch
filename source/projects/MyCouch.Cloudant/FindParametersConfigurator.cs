@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using EnsureThat;
+using MyCouch.EnsureThat;
 
 namespace MyCouch.Cloudant
 {

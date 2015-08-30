@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using EnsureThat;
+using MyCouch.EnsureThat;
 using MyCouch.EntitySchemes;
 using MyCouch.Serialization.Meta;
 using Newtonsoft.Json;

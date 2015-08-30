@@ -1,4 +1,4 @@
-using EnsureThat;
+using MyCouch.EnsureThat;
 
 namespace MyCouch.Serialization.Conventions
 {

@@ -1,5 +1,5 @@
 ﻿using System.Net.Http;
-using EnsureThat;
+using MyCouch.EnsureThat;
 using MyCouch.Cloudant.Responses.Materializers;
 using MyCouch.Responses.Factories;
 using MyCouch.Responses.Materializers;

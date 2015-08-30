@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using EnsureThat;
+using MyCouch.EnsureThat;
 using MyCouch.Extensions;
 using MyCouch.Querying;
 using MyCouch.Requests;

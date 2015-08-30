@@ -3,14 +3,6 @@
   "version": 1,
   "targets": {
     ".NETPlatform,Version=v5.0": {
-      "Ensure.That/3.1.0": {
-        "compile": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        },
-        "runtime": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        }
-      },
       "Microsoft.CSharp/4.0.0": {
         "dependencies": {
           "System.Runtime": "[4.0.20, )",
@@ -810,14 +802,6 @@
       }
     },
     ".NETFramework,Version=v4.6": {
-      "Ensure.That/3.1.0": {
-        "compile": {
-          "lib/net46/EnsureThat.vNext.dll": {}
-        },
-        "runtime": {
-          "lib/net46/EnsureThat.vNext.dll": {}
-        }
-      },
       "Microsoft.NETCore/5.0.0": {
         "dependencies": {
           "Microsoft.CSharp": "[4.0.0, )",
@@ -1481,14 +1465,6 @@
       }
     },
     "UAP,Version=v10.0": {
-      "Ensure.That/3.1.0": {
-        "compile": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        },
-        "runtime": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        }
-      },
       "Microsoft.CSharp/4.0.0": {
         "dependencies": {
           "System.Runtime": "[4.0.20, )",
@@ -2583,14 +2559,6 @@
       }
     },
     "DNXCore,Version=v5.0": {
-      "Ensure.That/3.1.0": {
-        "compile": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        },
-        "runtime": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        }
-      },
       "Microsoft.CSharp/4.0.0": {
         "dependencies": {
           "System.Runtime": "[4.0.20, )",
@@ -3661,14 +3629,6 @@
       }
     },
     ".NETFramework,Version=v4.6/win-x86": {
-      "Ensure.That/3.1.0": {
-        "compile": {
-          "lib/net46/EnsureThat.vNext.dll": {}
-        },
-        "runtime": {
-          "lib/net46/EnsureThat.vNext.dll": {}
-        }
-      },
       "Microsoft.NETCore/5.0.0": {
         "dependencies": {
           "Microsoft.CSharp": "[4.0.0, )",
@@ -4356,14 +4316,6 @@
       }
     },
     ".NETFramework,Version=v4.6/win-x64": {
-      "Ensure.That/3.1.0": {
-        "compile": {
-          "lib/net46/EnsureThat.vNext.dll": {}
-        },
-        "runtime": {
-          "lib/net46/EnsureThat.vNext.dll": {}
-        }
-      },
       "Microsoft.NETCore/5.0.0": {
         "dependencies": {
           "Microsoft.CSharp": "[4.0.0, )",
@@ -5051,14 +5003,6 @@
       }
     },
     "UAP,Version=v10.0/win10-x86": {
-      "Ensure.That/3.1.0": {
-        "compile": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        },
-        "runtime": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        }
-      },
       "Microsoft.CSharp/4.0.0": {
         "dependencies": {
           "System.Runtime": "[4.0.20, )",
@@ -6259,14 +6203,6 @@
       }
     },
     "UAP,Version=v10.0/win10-x86-aot": {
-      "Ensure.That/3.1.0": {
-        "compile": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        },
-        "runtime": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        }
-      },
       "Microsoft.CSharp/4.0.0": {
         "dependencies": {
           "System.Runtime": "[4.0.20, )",
@@ -7406,14 +7342,6 @@
       }
     },
     "UAP,Version=v10.0/win10-x64": {
-      "Ensure.That/3.1.0": {
-        "compile": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        },
-        "runtime": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        }
-      },
       "Microsoft.CSharp/4.0.0": {
         "dependencies": {
           "System.Runtime": "[4.0.20, )",
@@ -8614,14 +8542,6 @@
       }
     },
     "UAP,Version=v10.0/win10-x64-aot": {
-      "Ensure.That/3.1.0": {
-        "compile": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        },
-        "runtime": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        }
-      },
       "Microsoft.CSharp/4.0.0": {
         "dependencies": {
           "System.Runtime": "[4.0.20, )",
@@ -9761,14 +9681,6 @@
       }
     },
     "UAP,Version=v10.0/win10-arm": {
-      "Ensure.That/3.1.0": {
-        "compile": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        },
-        "runtime": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        }
-      },
       "Microsoft.CSharp/4.0.0": {
         "dependencies": {
           "System.Runtime": "[4.0.20, )",
@@ -10964,14 +10876,6 @@
       }
     },
     "UAP,Version=v10.0/win10-arm-aot": {
-      "Ensure.That/3.1.0": {
-        "compile": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        },
-        "runtime": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        }
-      },
       "Microsoft.CSharp/4.0.0": {
         "dependencies": {
           "System.Runtime": "[4.0.20, )",
@@ -12111,14 +12015,6 @@
       }
     },
     "DNXCore,Version=v5.0/win7-x86": {
-      "Ensure.That/3.1.0": {
-        "compile": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        },
-        "runtime": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        }
-      },
       "Microsoft.CSharp/4.0.0": {
         "dependencies": {
           "System.Runtime": "[4.0.20, )",
@@ -13403,14 +13299,6 @@
       }
     },
     "DNXCore,Version=v5.0/win7-x64": {
-      "Ensure.That/3.1.0": {
-        "compile": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        },
-        "runtime": {
-          "lib/dotnet/EnsureThat.vNext.dll": {}
-        }
-      },
       "Microsoft.CSharp/4.0.0": {
         "dependencies": {
           "System.Runtime": "[4.0.20, )",
@@ -14696,22 +14584,6 @@
     }
   },
   "libraries": {
-    "Ensure.That/3.1.0": {
-      "sha512": "RTKVHoXtRhMpEvLlQGDvE5b+VXgBoRFFcCM2Q0gVFZjoEJHnZivIrRkYQFb6lr0MhqqvOMGdIJr0u5NTXIUtug==",
-      "type": "Package",
-      "files": [
-        "_rels/.rels",
-        "Ensure.That.nuspec",
-        "lib/portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1/EnsureThat.vDinasour.dll",
-        "lib/portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1/EnsureThat.vDinasour.xml",
-        "lib/net46/EnsureThat.vNext.dll",
-        "lib/net46/EnsureThat.vNext.xml",
-        "lib/dotnet/EnsureThat.vNext.dll",
-        "lib/dotnet/EnsureThat.vNext.xml",
-        "package/services/metadata/core-properties/e2f4a1f3b1d34ab19b009089abf71f71.psmdcp",
-        "[Content_Types].xml"
-      ]
-    },
     "Microsoft.CSharp/4.0.0": {
       "sha512": "oWqeKUxHXdK6dL2CFjgMcaBISbkk+AqEg+yvJHE4DElNzS4QaTsCflgkkqZwVlWby1Dg9zo9n+iCAMFefFdJ/A==",
       "type": "Package",
@@ -17470,7 +17342,6 @@
   },
   "projectFileDependencyGroups": {
     "": [
-      "Ensure.That >= 3.1.0",
       "Microsoft.NETCore >= 5.0.0",
       "Microsoft.NETCore.Portable.Compatibility >= 1.0.0",
       "Newtonsoft.Json >= 7.0.1"

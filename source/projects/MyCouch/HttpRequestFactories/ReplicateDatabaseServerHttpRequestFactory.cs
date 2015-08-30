@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Net.Http;
-using EnsureThat;
+using MyCouch.EnsureThat;
 using MyCouch.Net;
 using MyCouch.Requests;
 using MyCouch.Serialization;
