@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1A1AAB8A-674B-4BBA-9ED0-2CFCB227D4A7}</ProjectGuid>
+    <ProjectGuid>{A9FE0E65-AB90-487D-8922-1A1C0A6D121F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MyCouch.UnitTests</RootNamespace>
-    <AssemblyName>MyCouch.UnitTests.vNext</AssemblyName>
+    <RootNamespace>MyCouch.IntegrationTests.vNext</RootNamespace>
+    <AssemblyName>MyCouch.IntegrationTests.vNext</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -76,7 +76,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <Import Project="..\MyCouch.UnitTests\MyCouch.UnitTests.projitems" Label="Shared" />
+  <Import Project="..\MyCouch.IntegrationTests\MyCouch.IntegrationTests.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

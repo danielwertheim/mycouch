@@ -68,6 +68,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCouch.Testing.Pcl", "test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCouch.UnitTests.vNext", "tests\MyCouch.UnitTests.vNext\MyCouch.UnitTests.vNext.csproj", "{1A1AAB8A-674B-4BBA-9ED0-2CFCB227D4A7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCouch.IntegrationTests.vNext", "tests\MyCouch.IntegrationTests.vNext\MyCouch.IntegrationTests.vNext.csproj", "{A9FE0E65-AB90-487D-8922-1A1C0A6D121F}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		tests\MyCouch.IntegrationTests\MyCouch.IntegrationTests.projitems*{7cb7b3ce-fad9-41ab-aacb-0977ac141bd9}*SharedItemsImports = 13
@@ -81,6 +83,7 @@ Global
 		tests\MyCouch.UnitTests\MyCouch.UnitTests.projitems*{fa43d274-0f74-424e-80fe-21a19816bac9}*SharedItemsImports = 13
 		tests\MyCouch.Testing\MyCouch.Testing.projitems*{4fa05380-ab31-40f4-96cf-30cc41070160}*SharedItemsImports = 4
 		tests\MyCouch.IntegrationTests\MyCouch.IntegrationTests.projitems*{df76366d-f94c-4e23-a582-21ef11eb5db0}*SharedItemsImports = 4
+		tests\MyCouch.IntegrationTests\MyCouch.IntegrationTests.projitems*{a9fe0e65-ab90-487d-8922-1a1c0a6d121f}*SharedItemsImports = 4
 		projects\MyCouch.Cloudant\MyCouch.Cloudant.projitems*{93089f62-c493-460c-945d-4f32cd94b450}*SharedItemsImports = 4
 		tests\MyCouch.Testing\MyCouch.Testing.projitems*{735b956a-803f-45fe-ac4e-d3b90be50e73}*SharedItemsImports = 4
 		tests\MyCouch.UnitTests\MyCouch.UnitTests.projitems*{6e78d4c6-c93b-4f61-989c-83b2c49b9012}*SharedItemsImports = 4
@@ -180,6 +183,10 @@ Global
 		{1A1AAB8A-674B-4BBA-9ED0-2CFCB227D4A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A1AAB8A-674B-4BBA-9ED0-2CFCB227D4A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A1AAB8A-674B-4BBA-9ED0-2CFCB227D4A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9FE0E65-AB90-487D-8922-1A1C0A6D121F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9FE0E65-AB90-487D-8922-1A1C0A6D121F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9FE0E65-AB90-487D-8922-1A1C0A6D121F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9FE0E65-AB90-487D-8922-1A1C0A6D121F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -207,5 +214,6 @@ Global
 		{8D298086-99C8-4DD8-9A2C-D4921CCE86DE} = {F2BCAF1A-9F1F-4F7D-A6FC-68615520987F}
 		{11B3A91D-5805-47FC-AA47-F2E7B89592EE} = {F2BCAF1A-9F1F-4F7D-A6FC-68615520987F}
 		{1A1AAB8A-674B-4BBA-9ED0-2CFCB227D4A7} = {AF893198-DB75-41E3-B4D2-8E75A9EC0CE2}
+		{A9FE0E65-AB90-487D-8922-1A1C0A6D121F} = {B9338953-973E-48FE-A11A-8CF09F7FEA09}
 	EndGlobalSection
 EndGlobal
