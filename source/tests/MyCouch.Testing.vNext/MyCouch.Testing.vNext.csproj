@@ -45,11 +45,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MyCouch.Cloudant.vNext\MyCouch.Cloudant.vNext.csproj">
+    <ProjectReference Include="..\..\projects\MyCouch.Cloudant.vNext\MyCouch.Cloudant.vNext.csproj">
       <Project>{e19aba19-29f9-4658-8e15-6995a11377ed}</Project>
       <Name>MyCouch.Cloudant.vNext</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MyCouch.vNext\MyCouch.vNext.csproj">
+    <ProjectReference Include="..\..\projects\MyCouch.vNext\MyCouch.vNext.csproj">
       <Project>{e774d145-2ed3-4560-93e7-f61712398ea7}</Project>
       <Name>MyCouch.vNext</Name>
     </ProjectReference>

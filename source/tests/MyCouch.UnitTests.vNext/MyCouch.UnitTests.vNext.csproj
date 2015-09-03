@@ -64,7 +64,7 @@
       <Project>{e19aba19-29f9-4658-8e15-6995a11377ed}</Project>
       <Name>MyCouch.Cloudant.vNext</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\projects\MyCouch.Testing.vNext\MyCouch.Testing.vNext.csproj">
+    <ProjectReference Include="..\MyCouch.Testing.vNext\MyCouch.Testing.vNext.csproj">
       <Project>{8d298086-99c8-4dd8-9a2c-d4921cce86de}</Project>
       <Name>MyCouch.Testing.vNext</Name>
     </ProjectReference>

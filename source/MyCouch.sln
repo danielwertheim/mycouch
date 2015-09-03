@@ -62,7 +62,7 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MyCouch.IntegrationTests", 
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MyCouch.Testing", "tests\MyCouch.Testing\MyCouch.Testing.shproj", "{32FC2540-A01D-484A-B25E-21B7D4367E8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCouch.Testing.vNext", "projects\MyCouch.Testing.vNext\MyCouch.Testing.vNext.csproj", "{8D298086-99C8-4DD8-9A2C-D4921CCE86DE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCouch.Testing.vNext", "tests\MyCouch.Testing.vNext\MyCouch.Testing.vNext.csproj", "{8D298086-99C8-4DD8-9A2C-D4921CCE86DE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCouch.Testing.Pcl", "tests\MyCouch.Testing.Pcl\MyCouch.Testing.Pcl.csproj", "{11B3A91D-5805-47FC-AA47-F2E7B89592EE}"
 EndProject
