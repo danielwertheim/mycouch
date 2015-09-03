@@ -30,17 +30,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FluentAssertions, Version=3.2.2.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\FluentAssertions.3.2.2\lib\net45\FluentAssertions.dll</HintPath>
+    <Reference Include="FluentAssertions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentAssertions.4.0.0\lib\net45\FluentAssertions.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="FluentAssertions.Core, Version=3.2.2.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\FluentAssertions.3.2.2\lib\net45\FluentAssertions.Core.dll</HintPath>
+    <Reference Include="FluentAssertions.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentAssertions.4.0.0\lib\net45\FluentAssertions.Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -55,102 +55,6 @@
   <ItemGroup>
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.unittests.net45\cloudant\httprequestfactories\GenerateApiKeyHttpRequestFactoryTests.cs">
-      <Link>Cloudant\HttpRequestFactories\GenerateApiKeyHttpRequestFactoryTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.unittests.net45\cloudant\httprequestfactories\SearchIndexHttpRequestFactoryTests.cs">
-      <Link>Cloudant\HttpRequestFactories\SearchIndexHttpRequestFactoryTests.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.UnitTests.Net45\Cloudant\IndexParametersConfiguratorTests.cs">
-      <Link>Cloudant\IndexParametersConfiguratorTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.unittests.net45\cloudant\responses\SearchIndexResponseTests.cs">
-      <Link>Cloudant\Responses\SearchIndexResponseTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.unittests.net45\cloudant\SearchParametersConfiguratorTests.cs">
-      <Link>Cloudant\SearchParametersConfiguratorTests.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.UnitTests.Net45\ConnectionInfoTests.cs">
-      <Link>ConnectionInfoTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.unittests.net45\entityschemes\EntityIdMemberTests.cs">
-      <Link>EntitySchemes\EntityIdMemberTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.unittests.net45\entityschemes\EntityRevMemberTests.cs">
-      <Link>EntitySchemes\EntityRevMemberTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.unittests.net45\fakes\DbClientConnectionFake.cs">
-      <Link>Fakes\DbClientConnectionFake.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.unittests.net45\httprequestfactories\BulkHttpRequestFactoryTests.cs">
-      <Link>HttpRequestFactories\BulkHttpRequestFactoryTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.unittests.net45\httprequestfactories\CompactDatabaseHttpRequestFactoryTests.cs">
-      <Link>HttpRequestFactories\CompactDatabaseHttpRequestFactoryTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.unittests.net45\httprequestfactories\DeleteDatabaseHttpRequestFactoryTests.cs">
-      <Link>HttpRequestFactories\DeleteDatabaseHttpRequestFactoryTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.unittests.net45\httprequestfactories\GetChangesHttpRequestFactoryTests.cs">
-      <Link>HttpRequestFactories\GetChangesHttpRequestFactoryTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.unittests.net45\httprequestfactories\GetContinuousChangesHttpRequestFactoryTests.cs">
-      <Link>HttpRequestFactories\GetContinuousChangesHttpRequestFactoryTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.unittests.net45\httprequestfactories\GetDatabaseHttpRequestFactoryTests.cs">
-      <Link>HttpRequestFactories\GetDatabaseHttpRequestFactoryTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.unittests.net45\httprequestfactories\GetDocumentHttpRequestFactoryTests.cs">
-      <Link>HttpRequestFactories\GetDocumentHttpRequestFactoryTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.unittests.net45\httprequestfactories\HeadDatabaseHttpRequestFactoryTests.cs">
-      <Link>HttpRequestFactories\HeadDatabaseHttpRequestFactoryTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.unittests.net45\httprequestfactories\PutDatabaseHttpRequestFactoryTests.cs">
-      <Link>HttpRequestFactories\PutDatabaseHttpRequestFactoryTests.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.UnitTests.Net45\HttpRequestFactories\QueryShowHttpRequestFactoryTests.cs">
-      <Link>HttpRequestFactories\QueryShowHttpRequestFactoryTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.unittests.net45\httprequestfactories\QueryViewHttpRequestFactoryTests.cs">
-      <Link>HttpRequestFactories\QueryViewHttpRequestFactoryTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.unittests.net45\httprequestfactories\ReplicateDatabaseHttpRequestFactoryTests.cs">
-      <Link>HttpRequestFactories\ReplicateDatabaseHttpRequestFactoryTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.unittests.net45\httprequestfactories\ViewCleanupHttpRequestFactoryTests.cs">
-      <Link>HttpRequestFactories\ViewCleanupHttpRequestFactoryTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.unittests.net45\net\BasicAuthStringTests.cs">
-      <Link>Net\BasicAuthStringTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.unittests.net45\net\DbClientConnectionTests.cs">
-      <Link>Net\DbClientConnectionTests.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.UnitTests.Net45\QueryConfigurationTests.cs">
-      <Link>QueryConfigurationTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.unittests.net45\requests\QueryViewRequestTests.cs">
-      <Link>Requests\QueryViewRequestTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.unittests.net45\serialization\DocumentSerializationTests.cs">
-      <Link>Serialization\DocumentSerializationTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.unittests.net45\serialization\SerializerTests.cs">
-      <Link>Serialization\SerializerTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.unittests.net45\serialization\ViewQueryResponseRowsDeserializerTests.cs">
-      <Link>Serialization\ViewQueryResponseRowsDeserializerTests.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.UnitTests.Net45\ShowConfigurationTests.cs">
-      <Link>ShowConfigurationTests.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.UnitTests.Net45\UnitTestsOf.cs">
-      <Link>UnitTestsOf.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.UnitTests.Net45\UriBuilderTests.cs">
-      <Link>UriBuilderTests.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -167,13 +71,14 @@
       <Name>MyCouch.Pcl</Name>
     </ProjectReference>
     <ProjectReference Include="..\MyCouch.Testing.Pcl\MyCouch.Testing.Pcl.csproj">
-      <Project>{189bf3ac-8cca-4e33-a14a-4d2e782728ca}</Project>
+      <Project>{11b3a91d-5805-47fc-aa47-f2e7b89592ee}</Project>
       <Name>MyCouch.Testing.Pcl</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
+  <Import Project="..\MyCouch.UnitTests\MyCouch.UnitTests.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

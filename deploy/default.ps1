@@ -1,4 +1,4 @@
-Framework "4.5.1"
+Framework "4.6"
 
 Properties {
     $solution_name = "MyCouch"
@@ -11,11 +11,17 @@ Properties {
     $build_config = "Release"
     $build_name = "${project_name}-v${build_version}-${build_config}"
     $build_dir_path = "${builds_dir_path}\${build_name}"
-    $testrunner = "../tools/xunit-v1.9.2/xunit.console.clr4.exe"
+    $testrunner = "tools\xunit.runners.1.9.2\tools\xunit.console.clr4.exe"
     $nuget = "nuget.exe"
+    $buildToolsVersions = "14"
 }
 
 task default -depends Clean, Build, Copy, Tests-UnitTest, Nuget-Pack
+
+task Tools {
+    Exec {nuget restore ./tools/packages.config -o ./tools/}
+    & $nuget restore "tools/packages.config" -outputdirectory "tools"
+}
 
 task Clean {
     Clean-Directory("$build_dir_path")
@@ -30,16 +36,19 @@ task Copy {
     CopyTo-Build("$project_name.Net40")
     CopyTo-Build("$project_name.Net45")
     CopyTo-Build("$project_name.Pcl")
+    CopyTo-Build("$project_name.vNext")
     
     CopyTo-Build("$project_name_cloudant.Net40")
     CopyTo-Build("$project_name_cloudant.Net45")
     CopyTo-Build("$project_name_cloudant.Pcl")
+    CopyTo-Build("$project_name_cloudant.vNext")
 }
 
 task Tests-UnitTest {
     UnitTest-Project("Net40")
     UnitTest-Project("Net45")
     UnitTest-Project("Pcl")
+    UnitTest-Project("vNext")
 }
 
 task NuGet-Pack {

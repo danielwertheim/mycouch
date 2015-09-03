@@ -30,17 +30,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FluentAssertions, Version=3.2.2.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\FluentAssertions.3.2.2\lib\net45\FluentAssertions.dll</HintPath>
+    <Reference Include="FluentAssertions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentAssertions.4.0.0\lib\net45\FluentAssertions.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="FluentAssertions.Core, Version=3.2.2.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\FluentAssertions.3.2.2\lib\net45\FluentAssertions.Core.dll</HintPath>
+    <Reference Include="FluentAssertions.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentAssertions.4.0.0\lib\net45\FluentAssertions.Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -55,75 +55,6 @@
   <ItemGroup>
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.integrationtests.net45\cloudanttests\SearchTests.cs">
-      <Link>CloudantTests\SearchTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.integrationtests.net45\cloudanttests\SecurityTests.cs">
-      <Link>CloudantTests\SecurityTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.integrationtests.net45\coretests\AttachmentsTests.cs">
-      <Link>CoreTests\AttachmentsTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.integrationtests.net45\coretests\ChangesTests.cs">
-      <Link>CoreTests\ChangesTests.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests.Net45\CoreTests\ClientTests.cs">
-      <Link>CoreTests\ClientTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.integrationtests.net45\coretests\DatabasesTests.cs">
-      <Link>CoreTests\DatabasesTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.integrationtests.net45\coretests\DatabaseTests.cs">
-      <Link>CoreTests\DatabaseTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.integrationtests.net45\coretests\DocumentsTests.cs">
-      <Link>CoreTests\DocumentsTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.integrationtests.net45\coretests\EntitiesTests.cs">
-      <Link>CoreTests\EntitiesTests.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests.Net45\CoreTests\ListsTests.cs">
-      <Link>CoreTests\ListsTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.integrationtests.net45\coretests\MyCouchStoreCallbackQueryTests.cs">
-      <Link>CoreTests\MyCouchStoreCallbackQueryTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.integrationtests.net45\coretests\MyCouchStoreCrudTests.cs">
-      <Link>CoreTests\MyCouchStoreCrudTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.integrationtests.net45\coretests\MyCouchStoreObservableQueryTests.cs">
-      <Link>CoreTests\MyCouchStoreObservableQueryTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.integrationtests.net45\coretests\ReplicatorTests.cs">
-      <Link>CoreTests\ReplicatorTests.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests.Net45\CoreTests\ShowTests.cs">
-      <Link>CoreTests\ShowTests.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.integrationtests.net45\coretests\ViewsTests.cs">
-      <Link>CoreTests\ViewsTests.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests.Net45\IntegrationTestsOf.cs">
-      <Link>IntegrationTestsOf.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests.Net45\IntegrationTestsRuntime.cs">
-      <Link>IntegrationTestsRuntime.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests.Net45\IPreserveStatePerFixture.cs">
-      <Link>IPreserveStatePerFixture.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests.Net45\MyFactAttribute.cs">
-      <Link>MyFactAttribute.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.integrationtests.net45\testfixtures\SearchFixture.cs">
-      <Link>TestFixtures\SearchFixture.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.IntegrationTests.Net45\TestFixtures\ShowsFixture.cs">
-      <Link>TestFixtures\ShowsFixture.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.integrationtests.net45\testfixtures\ViewsFixture.cs">
-      <Link>TestFixtures\ViewsFixture.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -140,13 +71,14 @@
       <Name>MyCouch.Pcl</Name>
     </ProjectReference>
     <ProjectReference Include="..\MyCouch.Testing.Pcl\MyCouch.Testing.Pcl.csproj">
-      <Project>{189bf3ac-8cca-4e33-a14a-4d2e782728ca}</Project>
+      <Project>{11b3a91d-5805-47fc-aa47-f2e7b89592ee}</Project>
       <Name>MyCouch.Testing.Pcl</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
+  <Import Project="..\MyCouch.IntegrationTests\MyCouch.IntegrationTests.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
