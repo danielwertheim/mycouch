@@ -70,7 +70,7 @@ namespace MyCouch.Net
 
             var client = new HttpClient(handler, true)
             {
-                BaseAddress = new Uri(connectionInfo.GetAbsoluteAddressExceptUserInfo().TrimEnd(new[] { '/' }))
+                BaseAddress = new Uri(connectionInfo.GetAddressExceptUserInfo().TrimEnd('/'))
             };
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(HttpContentTypes.Json));
 

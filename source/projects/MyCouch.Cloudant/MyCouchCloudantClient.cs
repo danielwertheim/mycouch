@@ -20,13 +20,13 @@ namespace MyCouch.Cloudant
         public ISearches Searches { get; private set; }
         public IQueries Queries { get; private set; }
 
-        public MyCouchCloudantClient(string dbUri, string dbName = null, MyCouchCloudantClientBootstrapper bootstrapper = null)
-            : this(new Uri(dbUri), dbName, bootstrapper) { }
+        public MyCouchCloudantClient(string serverAddress, string dbName, MyCouchCloudantClientBootstrapper bootstrapper = null)
+            : this(new Uri(serverAddress), dbName, bootstrapper) { }
 
-        public MyCouchCloudantClient(Uri dbUri, string dbName = null, MyCouchCloudantClientBootstrapper bootstrapper = null)
-            : this(new ConnectionInfo(dbUri, dbName), bootstrapper) { }
+        public MyCouchCloudantClient(Uri serverAddress, string dbName, MyCouchCloudantClientBootstrapper bootstrapper = null)
+            : this(new DbConnectionInfo(serverAddress, dbName), bootstrapper) { }
 
-        public MyCouchCloudantClient(ConnectionInfo connectionInfo, MyCouchCloudantClientBootstrapper bootstrapper = null)
+        public MyCouchCloudantClient(DbConnectionInfo connectionInfo, MyCouchCloudantClientBootstrapper bootstrapper = null)
         {
             Ensure.That(connectionInfo, "connectionInfo").IsNotNull();
 

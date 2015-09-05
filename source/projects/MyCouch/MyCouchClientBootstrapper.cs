@@ -23,12 +23,12 @@ namespace MyCouch
         /// <summary>
         /// Used for creating a <see cref="IDbConnection"/>. Override to inject your custom connection.
         /// </summary>
-        public Func<ConnectionInfo, IDbConnection> DbConnectionFn { get; set; }
+        public Func<DbConnectionInfo, IDbConnection> DbConnectionFn { get; set; }
 
         /// <summary>
         /// Used for creating a <see cref="IServerConnection"/>. Override to inject your custom connection.
         /// </summary>
-        public Func<ConnectionInfo, IServerConnection> ServerConnectionFn { get; set; }
+        public Func<ServerConnectionInfo, IServerConnection> ServerConnectionFn { get; set; }
  
         /// <summary>
         /// Used for configuring serializers returned via <see cref="SerializerFn"/>

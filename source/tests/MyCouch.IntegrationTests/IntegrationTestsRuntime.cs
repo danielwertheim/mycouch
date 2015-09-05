@@ -53,8 +53,7 @@ namespace MyCouch.IntegrationTests
         private static IMyCouchClient CreateDbClient(string dbName)
         {
             var config = Environment;
-            var uriBuilder = new MyCouchUriBuilder(config.ServerUrl)
-                .SetDbName(dbName);
+            var uriBuilder = new MyCouchUriBuilder(config.ServerUrl);
 
             if (config.HasCredentials())
                 uriBuilder.SetBasicCredentials(config.User, config.Password);
@@ -69,12 +68,12 @@ namespace MyCouch.IntegrationTests
                 return new MyCouchCloudantClient(uriBuilder.Build(), null, bootstrapper);
             }
 
-            return new MyCouchClient(uriBuilder.Build());
+            return new MyCouchClient(uriBuilder.Build(), dbName);
         }
 
         private class CustomCloudantDbConnection : DbConnection
         {
-            public CustomCloudantDbConnection(ConnectionInfo connectionInfo) : base(connectionInfo) { }
+            public CustomCloudantDbConnection(DbConnectionInfo connectionInfo) : base(connectionInfo) { }
 
             protected override HttpRequestMessage CreateHttpRequestMessage(HttpRequest httpRequest)
             {
@@ -100,7 +99,7 @@ namespace MyCouch.IntegrationTests
 
         private class CustomCloudantServerConnection : ServerConnection
         {
-            public CustomCloudantServerConnection(ConnectionInfo connectionInfo) : base(connectionInfo) { }
+            public CustomCloudantServerConnection(ServerConnectionInfo connectionInfo) : base(connectionInfo) { }
 
             protected override HttpRequestMessage CreateHttpRequestMessage(HttpRequest httpRequest)
             {

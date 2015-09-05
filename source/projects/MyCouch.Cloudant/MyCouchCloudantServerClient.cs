@@ -14,13 +14,13 @@ namespace MyCouch.Cloudant
         public IReplicator Replicator { get; private set; }
         public ISecurity Security { get; private set; }
 
-        public MyCouchCloudantServerClient(string serverUrl, MyCouchCloudantClientBootstrapper bootstrapper = null)
-            : this(new Uri(serverUrl), bootstrapper) { }
+        public MyCouchCloudantServerClient(string serverAddress, MyCouchCloudantClientBootstrapper bootstrapper = null)
+            : this(new Uri(serverAddress), bootstrapper) { }
 
-        public MyCouchCloudantServerClient(Uri serverUri, MyCouchCloudantClientBootstrapper bootstrapper = null)
-            : this(new ConnectionInfo(serverUri), bootstrapper) { }
+        public MyCouchCloudantServerClient(Uri serverAddress, MyCouchCloudantClientBootstrapper bootstrapper = null)
+            : this(new ServerConnectionInfo(serverAddress), bootstrapper) { }
 
-        public MyCouchCloudantServerClient(ConnectionInfo connectionInfo, MyCouchCloudantClientBootstrapper bootstrapper = null)
+        public MyCouchCloudantServerClient(ServerConnectionInfo connectionInfo, MyCouchCloudantClientBootstrapper bootstrapper = null)
         {
             Ensure.That(connectionInfo, "connectionInfo").IsNotNull();
 

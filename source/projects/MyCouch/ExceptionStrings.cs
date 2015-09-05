@@ -2,11 +2,6 @@
 {
     public static class ExceptionStrings
     {
-        public static string CanNotExtractDbNameFromDbUri
-        {
-            get { return "Could not extract DbName from passed URI: {0}. Please specify using specific contructor."; }
-        }
-
         public static string ServerClientSeemsToConnectToDb
         {
             get { return "The URI: {0}, seems to specify a DB. A server client should not have a DB specified."; }

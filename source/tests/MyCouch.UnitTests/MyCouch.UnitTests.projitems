@@ -32,7 +32,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)HttpRequestFactories\ReplicateDatabaseHttpRequestFactoryTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpRequestFactories\ViewCleanupHttpRequestFactoryTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Net\BasicAuthStringTests.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Net\DbClientConnectionTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Net\ConnectionTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)QueryConfigurationTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Requests\QueryShowRequestTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Requests\QueryViewRequestTests.cs" />
