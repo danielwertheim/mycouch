@@ -4,7 +4,7 @@ namespace MyCouch.Net
 {
     public class DbConnection : Connection, IDbConnection
     {
-        public string DbName { get; private set; }
+        public string DbName { get; }
 
         public DbConnection(DbConnectionInfo connectionInfo) : base(connectionInfo)
         {

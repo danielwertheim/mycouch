@@ -12,21 +12,9 @@ namespace MyCouch.IntegrationTests
         protected IMyCouchServerClient ServerClient { get; private set; }
         protected IMyCouchClient DbClient { get; private set; }
 
-        protected IMyCouchCloudantServerClient CloudantServerClient
-        {
-            get
-            {
-                return ServerClient as IMyCouchCloudantServerClient;
-            }
-        }
+        protected IMyCouchCloudantServerClient CloudantServerClient => ServerClient as IMyCouchCloudantServerClient;
 
-        protected IMyCouchCloudantClient CloudantDbClient
-        {
-            get
-            {
-                return DbClient as IMyCouchCloudantClient;
-            }
-        }
+        protected IMyCouchCloudantClient CloudantDbClient => DbClient as IMyCouchCloudantClient;
 
         protected IntegrationTestsOf()
         {
@@ -55,10 +43,8 @@ namespace MyCouch.IntegrationTests
             DbClient = null;
 
             var disposableSut = SUT as IDisposable;
-            if (disposableSut == null)
-                return;
 
-            disposableSut.Dispose();
+            disposableSut?.Dispose();
         }
 
         protected void EnsureCleanEnvironment()

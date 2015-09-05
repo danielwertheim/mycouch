@@ -12,10 +12,7 @@ namespace MyCouch
         protected string Username;
         protected string Password;
 
-        protected virtual bool ShouldUseBasicCredentials
-        {
-            get { return !string.IsNullOrWhiteSpace(Username); }
-        }
+        protected virtual bool ShouldUseBasicCredentials => !string.IsNullOrWhiteSpace(Username);
 
         public MyCouchUriBuilder(string serverUri)
         {

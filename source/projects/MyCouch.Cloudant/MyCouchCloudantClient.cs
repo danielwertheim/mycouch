@@ -9,16 +9,16 @@ namespace MyCouch.Cloudant
         protected bool IsDisposed { get; private set; }
 
         public IDbConnection Connection { get; private set; }
-        public ISerializer Serializer { get; private set; }
-        public ISerializer DocumentSerializer { get; private set; }
-        public IChanges Changes { get; private set; }
-        public IAttachments Attachments { get; private set; }
-        public IDatabase Database { get; private set; }
-        public IDocuments Documents { get; private set; }
+        public ISerializer Serializer { get; }
+        public ISerializer DocumentSerializer { get; }
+        public IChanges Changes { get; }
+        public IAttachments Attachments { get; }
+        public IDatabase Database { get; }
+        public IDocuments Documents { get; }
         public IEntities Entities { get; protected set; }
-        public IViews Views { get; private set; }
-        public ISearches Searches { get; private set; }
-        public IQueries Queries { get; private set; }
+        public IViews Views { get; }
+        public ISearches Searches { get; }
+        public IQueries Queries { get; }
 
         public MyCouchCloudantClient(string serverAddress, string dbName, MyCouchCloudantClientBootstrapper bootstrapper = null)
             : this(new Uri(serverAddress), dbName, bootstrapper) { }
