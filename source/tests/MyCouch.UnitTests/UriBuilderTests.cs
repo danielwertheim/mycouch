@@ -68,18 +68,6 @@ namespace MyCouch.UnitTests
         }
 
         [Fact]
-        public void When_setting_dbname_It_will_return_uri_with_dbname()
-        {
-            SUT = new MyCouchUriBuilder("https://foo.myhost.com:5984");
-
-            var uri = SUT
-                .SetDbName("mydb")
-                .Build();
-
-            uri.ToString().Should().Be("https://foo.myhost.com:5984/mydb");
-        }
-
-        [Fact]
         public void When_setting_basic_credentials_It_will_return_uri_with_credentials()
         {
             SUT = new MyCouchUriBuilder("https://foo.myhost.com:5984/mydb");

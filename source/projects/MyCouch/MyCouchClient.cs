@@ -18,13 +18,13 @@ namespace MyCouch
         public IEntities Entities { get; protected set; }
         public IViews Views { get; private set; }
 
-        public MyCouchClient(string dbUri, string dbName = null, MyCouchClientBootstrapper bootstrapper = null)
-            : this(new Uri(dbUri), dbName, bootstrapper) { }
+        public MyCouchClient(string serverAddress, string dbName, MyCouchClientBootstrapper bootstrapper = null)
+            : this(new Uri(serverAddress), dbName, bootstrapper) { }
 
-        public MyCouchClient(Uri dbUri, string dbName = null, MyCouchClientBootstrapper bootstrapper = null)
-            : this(new ConnectionInfo(dbUri, dbName), bootstrapper) { }
+        public MyCouchClient(Uri serverAddress, string dbName, MyCouchClientBootstrapper bootstrapper = null)
+            : this(new DbConnectionInfo(serverAddress, dbName), bootstrapper) { }
 
-        public MyCouchClient(ConnectionInfo connectionInfo, MyCouchClientBootstrapper bootstrapper = null)
+        public MyCouchClient(DbConnectionInfo connectionInfo, MyCouchClientBootstrapper bootstrapper = null)
         {
             Ensure.That(connectionInfo, "connectionInfo").IsNotNull();
 

@@ -14,15 +14,9 @@ namespace MyCouch.Net
         protected HttpClient HttpClient { get; private set; }
         protected bool IsDisposed { get; private set; }
 
-        public Uri Address
-        {
-            get { return HttpClient.BaseAddress; }
-        }
+        public Uri Address => HttpClient.BaseAddress;
 
-        public TimeSpan Timeout
-        {
-            get { return HttpClient.Timeout; }
-        }
+        public TimeSpan Timeout => HttpClient.Timeout;
 
         public Action<HttpRequest> BeforeSend { protected get; set; }
         public Action<HttpResponseMessage> AfterSend { protected get; set; }
@@ -70,7 +64,7 @@ namespace MyCouch.Net
 
             var client = new HttpClient(handler, true)
             {
-                BaseAddress = new Uri(connectionInfo.GetAbsoluteAddressExceptUserInfo().TrimEnd(new[] { '/' }))
+                BaseAddress = new Uri(connectionInfo.GetAddressExceptUserInfo().TrimEnd('/'))
             };
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(HttpContentTypes.Json));
 

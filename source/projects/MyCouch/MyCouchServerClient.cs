@@ -9,17 +9,17 @@ namespace MyCouch
         protected bool IsDisposed { get; private set; }
 
         public IServerConnection Connection { get; private set; }
-        public ISerializer Serializer { get; private set; }
-        public IDatabases Databases { get; private set; }
-        public IReplicator Replicator { get; private set; }
+        public ISerializer Serializer { get; }
+        public IDatabases Databases { get; }
+        public IReplicator Replicator { get; }
 
-        public MyCouchServerClient(string serverUrl, MyCouchClientBootstrapper bootstrapper = null)
-            : this(new Uri(serverUrl), bootstrapper) { }
+        public MyCouchServerClient(string serverAddress, MyCouchClientBootstrapper bootstrapper = null)
+            : this(new Uri(serverAddress), bootstrapper) { }
 
-        public MyCouchServerClient(Uri serverUri, MyCouchClientBootstrapper bootstrapper = null)
-            : this(new ConnectionInfo(serverUri), bootstrapper) { }
+        public MyCouchServerClient(Uri serverAddress, MyCouchClientBootstrapper bootstrapper = null)
+            : this(new ServerConnectionInfo(serverAddress), bootstrapper) { }
 
-        public MyCouchServerClient(ConnectionInfo connectionInfo, MyCouchClientBootstrapper bootstrapper = null)
+        public MyCouchServerClient(ServerConnectionInfo connectionInfo, MyCouchClientBootstrapper bootstrapper = null)
         {
             Ensure.That(connectionInfo, "connectionInfo").IsNotNull();
 

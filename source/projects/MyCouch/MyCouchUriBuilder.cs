@@ -9,14 +9,10 @@ namespace MyCouch
     {
         protected string Scheme;
         protected string Authority;
-        protected string DbName;
         protected string Username;
         protected string Password;
 
-        protected virtual bool ShouldUseBasicCredentials
-        {
-            get { return !string.IsNullOrWhiteSpace(Username); }
-        }
+        protected virtual bool ShouldUseBasicCredentials => !string.IsNullOrWhiteSpace(Username);
 
         public MyCouchUriBuilder(string serverUri)
         {
@@ -25,16 +21,6 @@ namespace MyCouch
             var tmp = new Uri(serverUri);
             Scheme = tmp.Scheme;
             Authority = tmp.Authority.Replace("/", string.Empty);
-            DbName = tmp.LocalPath.Replace("/", string.Empty);
-        }
-
-        public virtual MyCouchUriBuilder SetDbName(string dbname)
-        {
-            Ensure.That(dbname, "dbname").IsNotNullOrWhiteSpace();
-
-            DbName = dbname.Replace("/", string.Empty);
-
-            return this;
         }
 
         public virtual MyCouchUriBuilder SetBasicCredentials(string username, string password)
@@ -50,11 +36,7 @@ namespace MyCouch
 
         public virtual Uri Build()
         {
-            var url = string.Format("{0}://{1}{2}/{3}",
-                Scheme,
-                GetCredentialsForBuild(),
-                Authority,
-                DbName).RemoveTrailing("/");
+            var url = $"{Scheme}://{GetCredentialsForBuild()}{Authority}".RemoveTrailing("/");
 
             return new Uri(url);
         }
@@ -62,9 +44,7 @@ namespace MyCouch
         protected virtual string GetCredentialsForBuild()
         {
             return ShouldUseBasicCredentials
-                ? string.Format("{0}:{1}@",
-                    UrlParam.Encode(Username),
-                    UrlParam.Encode(Password))
+                ? $"{UrlParam.Encode(Username)}:{UrlParam.Encode(Password)}@"
                 : string.Empty;
         }
     }

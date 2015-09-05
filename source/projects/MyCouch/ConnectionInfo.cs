@@ -8,33 +8,56 @@ namespace MyCouch
 #if !PCL
     [Serializable]
 #endif
-    public class ConnectionInfo
+    public class DbConnectionInfo : ConnectionInfo
     {
-        public Uri Address { get; private set; }
         public string DbName { get; private set; }
+
+        public DbConnectionInfo(Uri serverAddress, string dbName) : base(serverAddress)
+        {
+            Ensure.That(dbName, "dbName").IsNotNullOrWhiteSpace();
+
+            DbName = dbName;
+        }
+
+        public override string GetAddressExceptUserInfo()
+        {
+            return $"{ServerAddress.GetComponents(UriComponents.AbsoluteUri & ~UriComponents.UserInfo, UriFormat.UriEscaped)}{DbName}";
+        }
+    }
+
+#if !PCL
+    [Serializable]
+#endif
+    public class ServerConnectionInfo : ConnectionInfo
+    {
+        public ServerConnectionInfo(Uri serverAddress) : base(serverAddress) { }
+
+        public override string GetAddressExceptUserInfo()
+        {
+            return ServerAddress.GetComponents(UriComponents.AbsoluteUri & ~UriComponents.UserInfo, UriFormat.UriEscaped).TrimEnd('/');
+        }
+    }
+
+#if !PCL
+    [Serializable]
+#endif
+    public abstract class ConnectionInfo
+    {
+        public Uri ServerAddress { get; }
         public TimeSpan? Timeout { get; set; }
 
-        public ConnectionInfo(Uri address, string dbName = null)
+        protected ConnectionInfo(Uri serverAddress)
         {
-            Ensure.That(address, "address").IsNotNull();
+            Ensure.That(serverAddress, "serverAddress").IsNotNull();
 
-            Address = address;
-            DbName = dbName ?? ExtractDbName(address);
+            ServerAddress = serverAddress;
         }
 
-        private static string ExtractDbName(Uri value)
-        {
-            return value.LocalPath.TrimStart('/').TrimEnd('/', '?').Split("/".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
-        }
-
-        public virtual string GetAbsoluteAddressExceptUserInfo()
-        {
-            return Address.GetComponents(UriComponents.AbsoluteUri & ~UriComponents.UserInfo, UriFormat.UriEscaped);
-        }
+        public abstract string GetAddressExceptUserInfo();
 
         public virtual BasicAuthString GetBasicAuthString()
         {
-            if (string.IsNullOrWhiteSpace(Address.UserInfo))
+            if (string.IsNullOrWhiteSpace(ServerAddress.UserInfo))
                 return null;
 
             var parts = GetUserInfoParts();
@@ -44,9 +67,9 @@ namespace MyCouch
 
         public virtual string[] GetUserInfoParts()
         {
-            return Address.UserInfo
+            return ServerAddress.UserInfo
                 .Split(new[] { ":" }, StringSplitOptions.RemoveEmptyEntries)
-                .Select(p => Uri.UnescapeDataString(p))
+                .Select(Uri.UnescapeDataString)
                 .ToArray();
         }
     }
