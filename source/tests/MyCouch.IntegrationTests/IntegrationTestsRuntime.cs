@@ -30,10 +30,10 @@ namespace MyCouch.IntegrationTests
         internal static IMyCouchServerClient CreateServerClient()
         {
             var config = Environment;
-            var uriBuilder = new MyCouchUriBuilder(config.ServerUrl);
+            var connectionInfo = new ServerConnectionInfo(config.ServerUrl);
 
             if (config.HasCredentials())
-                uriBuilder.SetBasicCredentials(config.User, config.Password);
+                connectionInfo.BasicAuth = new BasicAuthString(config.User, config.Password);
 
             if (config.IsAgainstCloudant())
             {
@@ -42,10 +42,10 @@ namespace MyCouch.IntegrationTests
                     ServerConnectionFn = cnInfo => new CustomCloudantServerConnection(cnInfo)
                 };
 
-                return new MyCouchCloudantServerClient(uriBuilder.Build(), bootstrapper);
+                return new MyCouchCloudantServerClient(connectionInfo, bootstrapper);
             }
 
-            return new MyCouchServerClient(uriBuilder.Build());
+            return new MyCouchServerClient(connectionInfo);
         }
 
         internal static IMyCouchClient CreateDbClient()
@@ -56,10 +56,10 @@ namespace MyCouch.IntegrationTests
         private static IMyCouchClient CreateDbClient(string dbName)
         {
             var config = Environment;
-            var uriBuilder = new MyCouchUriBuilder(config.ServerUrl);
+            var connectionInfo = new DbConnectionInfo(config.ServerUrl, dbName);
 
             if (config.HasCredentials())
-                uriBuilder.SetBasicCredentials(config.User, config.Password);
+                connectionInfo.BasicAuth = new BasicAuthString(config.User, config.Password);
 
             if (config.IsAgainstCloudant())
             {
@@ -68,10 +68,10 @@ namespace MyCouch.IntegrationTests
                     DbConnectionFn = cnInfo => new CustomCloudantDbConnection(cnInfo)
                 };
 
-                return new MyCouchCloudantClient(uriBuilder.Build(), null, bootstrapper);
+                return new MyCouchCloudantClient(connectionInfo, bootstrapper);
             }
 
-            return new MyCouchClient(uriBuilder.Build(), dbName);
+            return new MyCouchClient(connectionInfo);
         }
 
         private class CustomCloudantDbConnection : DbConnection

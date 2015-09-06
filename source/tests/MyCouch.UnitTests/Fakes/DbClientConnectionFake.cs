@@ -15,7 +15,7 @@ namespace MyCouch.UnitTests.Fakes
 
         public ServerClientConnectionFake(ConnectionInfo connectionInfo)
         {
-            Address = connectionInfo.ServerAddress;
+            Address = connectionInfo.Address;
             Timeout = connectionInfo.Timeout ?? Timeout;
         }
 
@@ -52,7 +52,7 @@ namespace MyCouch.UnitTests.Fakes
 
         public DbClientConnectionFake(DbConnectionInfo connectionInfo)
         {
-            Address = connectionInfo.ServerAddress;
+            Address = connectionInfo.Address;
             DbName = connectionInfo.DbName;
             Timeout = connectionInfo.Timeout ?? Timeout;
         }

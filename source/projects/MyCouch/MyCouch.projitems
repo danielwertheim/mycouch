@@ -122,7 +122,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)MyCouchRuntime.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MyCouchServerClient.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MyCouchStore.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)MyCouchUriBuilder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MyObservable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MyObserver.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Net\BasicAuthString.cs" />

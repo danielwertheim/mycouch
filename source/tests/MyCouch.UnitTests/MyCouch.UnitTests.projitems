@@ -41,6 +41,5 @@
     <Compile Include="$(MSBuildThisFileDirectory)Serialization\ViewQueryResponseRowsDeserializerTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ShowConfigurationTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UnitTestsOf.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UriBuilderTests.cs" />
   </ItemGroup>
 </Project>

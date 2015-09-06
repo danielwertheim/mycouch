@@ -64,17 +64,16 @@ namespace MyCouch.Net
 
             var client = new HttpClient(handler, true)
             {
-                BaseAddress = new Uri(connectionInfo.GetAddressExceptUserInfo().TrimEnd('/'))
+                BaseAddress = connectionInfo.Address
             };
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(HttpContentTypes.Json));
 
             if (connectionInfo.Timeout.HasValue)
                 client.Timeout = connectionInfo.Timeout.Value;
 
-            var basicAuthString = connectionInfo.GetBasicAuthString();
-            if (basicAuthString != null)
+            if (connectionInfo.BasicAuth != null)
             {
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", basicAuthString.Value);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", connectionInfo.BasicAuth.Value);
             }
 
             return client;
@@ -202,19 +201,17 @@ namespace MyCouch.Net
 
         protected virtual void OnBeforeSend(HttpRequest httpRequest)
         {
-            if (BeforeSend != null)
-                BeforeSend(httpRequest);
+            BeforeSend?.Invoke(httpRequest);
         }
 
         protected virtual void OnAfterSend(HttpResponseMessage httpResponse)
         {
-            if (AfterSend != null)
-                AfterSend(httpResponse);
+            AfterSend?.Invoke(httpResponse);
         }
 
         protected virtual string GenerateRequestUri(HttpRequest httpRequest)
         {
-            return string.Format("{0}/{1}", Address.ToString().TrimEnd('/'), httpRequest.RelativeUrl.TrimStart('/'));
+            return $"{Address.ToString().TrimEnd('/')}/{httpRequest.RelativeUrl.TrimStart('/')}";
         }
     }
 }
