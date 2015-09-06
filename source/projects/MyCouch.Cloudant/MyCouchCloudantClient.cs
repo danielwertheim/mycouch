@@ -15,7 +15,7 @@ namespace MyCouch.Cloudant
         public IAttachments Attachments { get; }
         public IDatabase Database { get; }
         public IDocuments Documents { get; }
-        public IEntities Entities { get; protected set; }
+        public IEntities Entities { get; }
         public IViews Views { get; }
         public ISearches Searches { get; }
         public IQueries Queries { get; }

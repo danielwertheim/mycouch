@@ -4,18 +4,6 @@ namespace MyCouch.Extensions
 {
     internal static class ObjectExtensions
     {
-        internal static T To<T>(this object value)
-        {
-            return (T) value;
-        }
-
-        internal static bool IsNumeric(this object value)
-        {
-            return
-                value is short || value is int || value is long || value is ushort || value is uint || value is ulong ||
-                value is float || value is double || value is decimal;
-        }
-
         internal static string ToStringExtended(this object v)
         {
             if (v == null)
@@ -30,6 +18,7 @@ namespace MyCouch.Extensions
 
                 return d.ToString(MyCouchRuntime.DateTimeFormatPattern, MyCouchRuntime.FormatingCulture);
             }
+            //TODO: Invert
 
             //DUE TO P*N*S IMPLEMENTATION IN THE BEAST WINRT, WE CAN NOT USE IConvertible
 #if !PCL

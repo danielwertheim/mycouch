@@ -1,5 +1,3 @@
-using System;
-
 namespace MyCouch.Net
 {
     public class DbConnection : Connection, IDbConnection

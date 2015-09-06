@@ -16,14 +16,6 @@ namespace MyCouch.Extensions
             return string.Concat(prefix, value);
         }
 
-        public static string RemoveStarting(this string value, string starting)
-        {
-            while (value.StartsWith(starting))
-                value = value.Substring(starting.Length);
-
-            return value;
-        }
-
         public static string RemoveTrailing(this string value, string ending)
         {
             while (value.EndsWith(ending))
