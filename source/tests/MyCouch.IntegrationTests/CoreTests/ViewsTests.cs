@@ -9,20 +9,17 @@ using Xunit;
 
 namespace MyCouch.IntegrationTests.CoreTests
 {
+    [Trait("Category", "IntegrationTests.CoreTests")]
     public class ViewsTests : IntegrationTestsOf<IViews>,
         IPreserveStatePerFixture,
-        IUseFixture<ViewsFixture>
+        IClassFixture<ViewsFixture>
     {
         protected Artist[] ArtistsById { get; set; }
 
-        public ViewsTests()
-        {
-            SUT = DbClient.Views;
-        }
-
-        public void SetFixture(ViewsFixture data)
+        public ViewsTests(ViewsFixture data)
         {
             ArtistsById = data.Init(Environment);
+            SUT = DbClient.Views;
         }
 
         [MyFact(TestScenarios.ViewsContext)]

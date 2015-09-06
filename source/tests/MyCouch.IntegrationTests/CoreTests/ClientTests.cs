@@ -1,7 +1,9 @@
 using FluentAssertions;
+using Xunit;
 
 namespace MyCouch.IntegrationTests.CoreTests
 {
+    [Trait("Category", "IntegrationTests.CoreTests")]
     public class ClientTests : IntegrationTestsOf<IMyCouchClient>
     {
         public ClientTests()

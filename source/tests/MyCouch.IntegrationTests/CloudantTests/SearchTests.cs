@@ -10,20 +10,17 @@ using Xunit;
 
 namespace MyCouch.IntegrationTests.CloudantTests
 {
+    [Trait("Category", "IntegrationTests.CloudantTests")]
     public class SearchTests : IntegrationTestsOf<ISearches>,
         IPreserveStatePerFixture,
-        IUseFixture<SearchFixture>
+        IClassFixture<SearchFixture>
     {
         protected Animal[] Animals { get; set; }
 
-        public SearchTests()
-        {
-            SUT = CloudantDbClient.Searches;
-        }
-
-        public void SetFixture(SearchFixture data)
+        public SearchTests(SearchFixture data)
         {
             Animals = data.Init(Environment);
+            SUT = CloudantDbClient.Searches;
         }
 
         [MyFact(TestScenarios.Cloudant, TestScenarios.SearchesContext)]

@@ -12,20 +12,17 @@ using System.Xml.Linq;
 
 namespace MyCouch.IntegrationTests.CoreTests
 {
+    [Trait("Category", "IntegrationTests.CoreTests")]
     public class ShowTests : IntegrationTestsOf<IDocuments>,
         IPreserveStatePerFixture,
-        IUseFixture<ShowsFixture>
+        IClassFixture<ShowsFixture>
     {
         protected Artist[] ArtistsById { get; set; }
 
-        public ShowTests()
-        {
-            SUT = DbClient.Documents;
-        }
-
-        public void SetFixture(ShowsFixture data)
+        public ShowTests(ShowsFixture data)
         {
             ArtistsById = data.Init(Environment);
+            SUT = DbClient.Documents;
         }
 
         [MyFact(TestScenarios.ShowsContext)]

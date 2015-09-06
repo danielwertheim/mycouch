@@ -9,6 +9,9 @@ using MyCouch.Net;
 using MyCouch.Requests;
 using MyCouch.Responses;
 using Newtonsoft.Json;
+using Xunit;
+
+[assembly: CollectionBehavior(DisableTestParallelization = true)]
 
 namespace MyCouch.IntegrationTests
 {

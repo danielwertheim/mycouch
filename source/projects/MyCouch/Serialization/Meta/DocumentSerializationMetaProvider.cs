@@ -1,7 +1,4 @@
 ﻿using System;
-#if net40
-using System.Linq;
-#endif
 #if !PCL
 using System.Collections.Concurrent;
 #else
@@ -70,9 +67,6 @@ namespace MyCouch.Serialization.Meta
         {
 #if PCL
             return docType.GetTypeInfo().GetCustomAttribute<DocumentAttribute>();
-
-#elif net40
-            return docType.GetCustomAttributes(typeof (DocumentAttribute), true).FirstOrDefault() as DocumentAttribute;
 #else
             return docType.GetCustomAttribute<DocumentAttribute>(true);
 #endif

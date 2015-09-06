@@ -8,21 +8,18 @@ using Xunit;
 
 namespace MyCouch.IntegrationTests.CoreTests
 {
+    [Trait("Category", "IntegrationTests.CoreTests")]
     public class MyCouchStoreQueryTests :
         IntegrationTestsOf<MyCouchStore>,
         IPreserveStatePerFixture,
-        IUseFixture<ViewsFixture>
+        IClassFixture<ViewsFixture>
     {
         protected Artist[] ArtistsById { get; set; }
 
-        public MyCouchStoreQueryTests()
-        {
-            SUT = new MyCouchStore(DbClient);
-        }
-
-        public void SetFixture(ViewsFixture data)
+        public MyCouchStoreQueryTests(ViewsFixture data)
         {
             ArtistsById = data.Init(Environment);
+            SUT = new MyCouchStore(DbClient);
         }
 
         [MyFact(TestScenarios.MyCouchStore)]

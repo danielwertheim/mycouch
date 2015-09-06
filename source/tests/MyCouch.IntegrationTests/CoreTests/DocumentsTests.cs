@@ -3,9 +3,11 @@ using FluentAssertions;
 using MyCouch.Requests;
 using MyCouch.Testing;
 using MyCouch.Testing.TestData;
+using Xunit;
 
 namespace MyCouch.IntegrationTests.CoreTests
 {
+    [Trait("Category", "IntegrationTests.CoreTests")]
     public class DocumentsTests : IntegrationTestsOf<IDocuments>
     {
         public DocumentsTests()

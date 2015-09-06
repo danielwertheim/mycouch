@@ -2,9 +2,11 @@ using System;
 using MyCouch.Requests;
 using MyCouch.Testing;
 using MyCouch.Testing.TestData;
+using Xunit;
 
 namespace MyCouch.IntegrationTests.CoreTests
 {
+    [Trait("Category", "IntegrationTests.CoreTests")]
     public class ReplicatorTests : IntegrationTestsOf<IReplicator>
     {
         public ReplicatorTests()
