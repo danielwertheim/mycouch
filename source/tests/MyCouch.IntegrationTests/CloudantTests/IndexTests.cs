@@ -3,9 +3,11 @@ using MyCouch.Cloudant;
 using MyCouch.Cloudant.Requests;
 using System.Linq;
 using System.Net;
+using Xunit;
 
 namespace MyCouch.IntegrationTests.CloudantTests
 {
+    [Trait("Category", "IntegrationTests.CloudantTests")]
     public class IndexTests : IntegrationTestsOf<IQueries>
     {
         public IndexTests()

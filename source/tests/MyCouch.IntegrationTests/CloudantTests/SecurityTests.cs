@@ -1,8 +1,10 @@
 ﻿using MyCouch.Cloudant;
 using MyCouch.Testing;
+using Xunit;
 
 namespace MyCouch.IntegrationTests.CloudantTests
 {
+    [Trait("Category", "IntegrationTests.CloudantTests")]
     public class SecurityTests : IntegrationTestsOf<ISecurity>
     {
         public SecurityTests()

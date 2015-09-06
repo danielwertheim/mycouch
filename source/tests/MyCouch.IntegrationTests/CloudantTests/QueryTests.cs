@@ -9,18 +9,15 @@ using Newtonsoft.Json.Linq;
 
 namespace MyCouch.IntegrationTests.CloudantTests
 {
+    [Trait("Category", "IntegrationTests.CloudantTests")]
     public class QueryTests : IntegrationTestsOf<IQueries>,
         IPreserveStatePerFixture,
-        IUseFixture<QueriesFixture>
+        IClassFixture<QueriesFixture>
     {
-        public QueryTests()
-        {
-            SUT = CloudantDbClient.Queries;
-        }
-
-        public void SetFixture(QueriesFixture data)
+        public QueryTests(QueriesFixture data)
         {
             data.Init(Environment);
+            SUT = CloudantDbClient.Queries;
         }
 
         [MyFact(TestScenarios.Cloudant, TestScenarios.QueriesContext)]

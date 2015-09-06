@@ -96,9 +96,7 @@ namespace MyCouch.Net
 #if net45
             return requestType.GenericTypeArguments[0].Name;
 #endif
-#if net40
-            return requestType.GetGenericArguments()[0].Name;
-#endif
+
 #if PCL
             return requestType.GenericTypeArguments[0].Name;
 #endif

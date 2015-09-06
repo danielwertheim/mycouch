@@ -8,22 +8,20 @@ using Xunit;
 
 namespace MyCouch.IntegrationTests.CoreTests
 {
+    [Trait("Category", "IntegrationTests.CoreTests")]
     public class MyCouchStoreCallbackQueryTests :
         IntegrationTestsOf<MyCouchStore>,
         IPreserveStatePerFixture,
-        IUseFixture<ViewsFixture>
+        IClassFixture<ViewsFixture>
     {
         protected Artist[] ArtistsById { get; set; }
 
-        public MyCouchStoreCallbackQueryTests()
+        public MyCouchStoreCallbackQueryTests(ViewsFixture data)
         {
+            ArtistsById = data.Init(Environment);
             SUT = new MyCouchStore(DbClient);
         }
 
-        public void SetFixture(ViewsFixture data)
-        {
-            ArtistsById = data.Init(Environment);
-        }
         [MyFact(TestScenarios.MyCouchStore)]
         public void GetHeadersAync_When_getting_three_headers_It_returns_the_three_requested_headers()
         {

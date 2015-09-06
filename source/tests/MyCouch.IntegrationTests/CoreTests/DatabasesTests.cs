@@ -1,9 +1,11 @@
 ﻿using System.Net.Http;
 using MyCouch.Testing;
 using MyCouch.Testing.TestData;
+using Xunit;
 
 namespace MyCouch.IntegrationTests.CoreTests
 {
+    [Trait("Category", "IntegrationTests.CoreTests")]
     public class DatabasesTests : IntegrationTestsOf<IDatabases>
     {
         public DatabasesTests()
