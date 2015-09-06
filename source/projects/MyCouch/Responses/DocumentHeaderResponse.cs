@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace MyCouch.Responses
 {
-#if !PCL
+#if !PCL && !vNext
     [Serializable]
 #endif
     public class DocumentHeaderResponse : Response,

@@ -3,7 +3,7 @@ using MyCouch.EnsureThat;
 
 namespace MyCouch.Requests
 {
-#if !PCL
+#if !PCL && !vNext
     [Serializable]
 #endif
     public class PutEntityRequest<T> : Request where T : class

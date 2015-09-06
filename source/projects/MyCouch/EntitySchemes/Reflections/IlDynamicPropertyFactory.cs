@@ -1,4 +1,4 @@
-﻿#if !PCL
+﻿#if !PCL && !vNext
 using System;
 using System.Reflection;
 using System.Reflection.Emit;

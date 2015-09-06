@@ -2,7 +2,7 @@ using System;
 
 namespace MyCouch
 {
-#if !PCL
+#if !PCL && !vNext
     [Serializable]
 #endif
     public class DeleteManyResult
@@ -14,7 +14,7 @@ namespace MyCouch
             get { return Rows == null || Rows.Length == 0; }
         }
 
-#if !PCL
+#if !PCL && !vNext
     [Serializable]
 #endif
         public class Row

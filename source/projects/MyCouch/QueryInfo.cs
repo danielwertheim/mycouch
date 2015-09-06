@@ -2,7 +2,7 @@ using System;
 
 namespace MyCouch
 {
-#if !PCL
+#if !PCL && !vNext
     [Serializable]
 #endif
     public class QueryInfo

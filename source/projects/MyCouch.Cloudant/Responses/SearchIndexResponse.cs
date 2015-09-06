@@ -7,12 +7,12 @@ using Newtonsoft.Json;
 
 namespace MyCouch.Cloudant.Responses
 {
-#if !PCL
+#if !PCL && !vNext
     [Serializable]
 #endif
     public class SearchIndexResponse : SearchIndexResponse<string> { }
 
-#if !PCL
+#if !PCL && !vNext
     [Serializable]
 #endif
     public class SearchIndexResponse<TIncludedDoc> : Response
@@ -50,7 +50,7 @@ namespace MyCouch.Cloudant.Responses
                 Bookmark,
                 GroupCount);
         }
-#if !PCL
+#if !PCL && !vNext
         [Serializable]
 #endif
         public class Row
@@ -70,7 +70,7 @@ namespace MyCouch.Cloudant.Responses
             }
         }
 
-#if !PCL
+#if !PCL && !vNext
         [Serializable]
 #endif
         public class Group

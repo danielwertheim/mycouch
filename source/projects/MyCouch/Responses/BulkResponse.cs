@@ -2,7 +2,7 @@
 
 namespace MyCouch.Responses
 {
-#if !PCL
+#if !PCL && !vNext
     [Serializable]
 #endif
     public class BulkResponse : Response
@@ -13,7 +13,7 @@ namespace MyCouch.Responses
             get { return Rows == null || Rows.Length == 0; }
         }
 
-#if !PCL
+#if !PCL && !vNext
         [Serializable]
 #endif
         public class Row

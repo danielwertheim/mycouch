@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace MyCouch.Querying
 {
-#if !PCL
+#if !PCL && !vNext
     [Serializable]
 #endif
     public class ShowParameters : IShowParameters

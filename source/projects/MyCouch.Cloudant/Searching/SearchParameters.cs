@@ -4,7 +4,7 @@ using MyCouch.EnsureThat;
 
 namespace MyCouch.Cloudant.Searching
 {
-#if !PCL
+#if !PCL && !vNext
     [Serializable]
 #endif
     public class SearchParameters : ISearchParameters

@@ -48,7 +48,7 @@ namespace MyCouch.Responses.Materializers
             return info;
         }
 
-#if !PCL
+#if !PCL && !vNext
         [Serializable]
 #endif
         protected class FailedResponseInfo

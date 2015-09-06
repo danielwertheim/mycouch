@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MyCouch.Cloudant.Requests
 {
-#if !PCL
+#if !PCL && !vNext
     [Serializable]
 #endif
     public class PostIndexRequest : Request, IIndexParameters

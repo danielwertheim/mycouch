@@ -12,7 +12,7 @@ namespace MyCouch.UnitTests.EntitySchemes
             SUT = new EntityIdMember(new LambdaDynamicPropertyFactory());
         }
     }
-#if !PCL
+#if !PCL && !vNext
     public class EntityIdMemberTestsWithIlPropertyFactoryTests : EntityIdMemberTests
     {
         public EntityIdMemberTestsWithIlPropertyFactoryTests()

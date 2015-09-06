@@ -4,7 +4,7 @@ using System;
 
 namespace MyCouch.Cloudant.Requests
 {
-#if !PCL
+#if !PCL && !vNext
     [Serializable]
 #endif
     public class DeleteIndexRequest : Request

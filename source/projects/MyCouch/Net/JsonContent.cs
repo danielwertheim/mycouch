@@ -3,7 +3,7 @@ using System.Net.Http;
 
 namespace MyCouch.Net
 {
-#if !PCL
+#if !PCL && !vNext
     [Serializable]
 #endif
     public class JsonContent : StringContent

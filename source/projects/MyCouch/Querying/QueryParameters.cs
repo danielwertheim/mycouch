@@ -5,7 +5,7 @@ using MyCouch.EnsureThat;
 
 namespace MyCouch.Querying
 {
-#if !PCL
+#if !PCL && !vNext
     [Serializable]
 #endif
     public class QueryParameters : IQueryParameters

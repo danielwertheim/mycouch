@@ -3,7 +3,7 @@ using MyCouch.EnsureThat;
 
 namespace MyCouch
 {
-#if !PCL
+#if !PCL && !vNext
     [Serializable]
 #endif
     public class ShowIdentity

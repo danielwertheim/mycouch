@@ -4,9 +4,9 @@ namespace MyCouch.EntitySchemes.Reflections
 {
     public class DynamicProperty
     {
-        public string Name { get; private set; }
-        public IStringGetter Getter { get; private set; }
-        public IStringSetter Setter { get; private set; }
+        public string Name { get; }
+        public IStringGetter Getter { get; }
+        public IStringSetter Setter { get; }
 
         public DynamicProperty()
         {

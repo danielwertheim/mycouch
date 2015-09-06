@@ -1,23 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-#if PCL
 using System.Reflection;
-using MyCouch.Extensions;
-#endif
 using MyCouch.EnsureThat;
 
 namespace MyCouch.Net
 {
-#if !PCL
+#if !PCL && !vNext
     [Serializable]
 #endif
     public class HttpRequest
     {
         public HttpMethod Method { get; private set; }
         public string RelativeUrl { get; private set; }
-        public IDictionary<string, string> Headers { get; private set; }
+        public IDictionary<string, string> Headers { get; }
         public HttpContent Content { get; private set; }
 
         public HttpRequest(HttpMethod method) : this(method, "/") {}
@@ -66,12 +62,12 @@ namespace MyCouch.Net
         public virtual HttpRequest SetRequestTypeHeader(Type requestType)
         {
             Headers.Add(HttpHeaders.RequestType, GetRequestTypeName(requestType));
-#if !PCL
-            if (requestType.IsGenericType)
+#if PCL || vNext
+            var typeInfo = requestType.GetTypeInfo();
+            if (typeInfo.IsGenericType)
                 Headers.Add(HttpHeaders.RequestEntityType, GetRequestEntityTypeName(requestType));
 #else
-            var typeInfo = requestType.GetTypeInfo();
-            if(typeInfo.IsGenericType)
+            if (requestType.IsGenericType)
                 Headers.Add(HttpHeaders.RequestEntityType, GetRequestEntityTypeName(requestType));
 #endif
             return this;
@@ -79,13 +75,13 @@ namespace MyCouch.Net
 
         protected virtual string GetRequestTypeName(Type requestType)
         {
-#if !PCL
-            return requestType.IsGenericType
+#if PCL || vNext
+            var typeInfo = requestType.GetTypeInfo();
+            return typeInfo.IsGenericType
                 ? requestType.Name.Substring(0, requestType.Name.IndexOf('`'))
                 : requestType.Name;
 #else
-            var typeInfo = requestType.GetTypeInfo();
-            return typeInfo.IsGenericType
+            return requestType.IsGenericType
                 ? requestType.Name.Substring(0, requestType.Name.IndexOf('`'))
                 : requestType.Name;
 #endif
@@ -93,13 +89,7 @@ namespace MyCouch.Net
 
         protected virtual string GetRequestEntityTypeName(Type requestType)
         {
-#if net45
             return requestType.GenericTypeArguments[0].Name;
-#endif
-
-#if PCL
-            return requestType.GenericTypeArguments[0].Name;
-#endif
         }
 
         public virtual void RemoveRequestTypeHeader()

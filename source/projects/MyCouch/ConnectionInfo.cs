@@ -5,7 +5,7 @@ using MyCouch.Net;
 
 namespace MyCouch
 {
-#if !PCL
+#if !PCL && !vNext
     [Serializable]
 #endif
     public class DbConnectionInfo : ConnectionInfo
@@ -21,7 +21,7 @@ namespace MyCouch
         }
     }
 
-#if !PCL
+#if !PCL && !vNext
     [Serializable]
 #endif
     public class ServerConnectionInfo : ConnectionInfo
@@ -30,7 +30,7 @@ namespace MyCouch
         public ServerConnectionInfo(Uri serverAddress) : base(serverAddress) { }
     }
 
-#if !PCL
+#if !PCL && !vNext
     [Serializable]
 #endif
     public abstract class ConnectionInfo

@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace MyCouch.Cloudant.Responses
 {
-#if !PCL
+#if !PCL && !vNext
     [Serializable]
 #endif
     public class IndexListResponse : Response
@@ -25,7 +25,7 @@ namespace MyCouch.Cloudant.Responses
                 IsEmpty,
                 IndexCount);
         }
-#if !PCL
+#if !PCL && !vNext
         [Serializable]
 #endif
         public class Index
@@ -36,7 +36,7 @@ namespace MyCouch.Cloudant.Responses
             public string Type { get; set; }
             public Definition Def { get; set; }
 
-#if !PCL
+#if !PCL && !vNext
             [Serializable]
 #endif
             public class Definition

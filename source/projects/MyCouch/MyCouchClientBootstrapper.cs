@@ -171,10 +171,10 @@ namespace MyCouch
 
         protected virtual void ConfigureEntityReflectorFn()
         {
-#if !PCL
-            var entityReflector = new Lazy<IEntityReflector>(() => new EntityReflector(new IlDynamicPropertyFactory()));
-#else
+#if PCL || vNext
             var entityReflector = new Lazy<IEntityReflector>(() => new EntityReflector(new LambdaDynamicPropertyFactory()));
+#else
+            var entityReflector = new Lazy<IEntityReflector>(() => new EntityReflector(new IlDynamicPropertyFactory()));
 #endif
             EntityReflectorFn = () => entityReflector.Value;
         }

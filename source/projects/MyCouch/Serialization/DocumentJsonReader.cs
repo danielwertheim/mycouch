@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-#if PCL
+#if PCL || vNext
 using System.Reflection;
 #endif
 using MyCouch.EnsureThat;
@@ -20,7 +20,7 @@ namespace MyCouch.Serialization
         protected int Level { get; private set; }
         protected bool HasTranslatedId { get; private set; }
         protected bool HasTranslatedRev { get; private set; }
-#if PCL
+#if PCL || vNext
         protected readonly TypeInfo DocTypeInfo;
 #endif
 
@@ -34,7 +34,7 @@ namespace MyCouch.Serialization
             EntityReflector = entityReflector;
             Reader = reader;
             CloseInput = false;
-#if PCL
+#if PCL || vNext
             DocTypeInfo = docType.GetTypeInfo();
 #endif
         }
@@ -99,11 +99,11 @@ namespace MyCouch.Serialization
             if (DocType == typeof(object))
                 return false;
 
-#if !PCL
-            if (!DocType.IsClass)
+#if PCL || vNext
+            if (!DocTypeInfo.IsClass)
                 return false;
 #else
-            if(!DocTypeInfo.IsClass)
+            if (!DocType.IsClass)
                 return false;
 #endif
 

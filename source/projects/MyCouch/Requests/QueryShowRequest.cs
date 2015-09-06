@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace MyCouch.Requests
 {
-#if !PCL
+#if !PCL && !vNext
     [Serializable]
 #endif
     public class QueryShowRequest : Request, IShowParameters

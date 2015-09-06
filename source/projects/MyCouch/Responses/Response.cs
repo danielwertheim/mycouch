@@ -4,7 +4,7 @@ using System.Net.Http;
 
 namespace MyCouch.Responses
 {
-#if !PCL
+#if !PCL && !vNext
     [Serializable]
 #endif
     public abstract class Response

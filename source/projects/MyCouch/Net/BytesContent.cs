@@ -4,7 +4,7 @@ using System.Net.Http.Headers;
 
 namespace MyCouch.Net
 {
-#if !PCL
+#if !PCL && !vNext
     [Serializable]
 #endif
     public class BytesContent : ByteArrayContent

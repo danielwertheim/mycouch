@@ -10,7 +10,7 @@ namespace MyCouch
     /// to extract custom values for e.g. the $doctype property
     /// injected upon serialization of documents for persisting documents.
     /// </summary>
-#if !PCL
+#if !PCL && !vNext
     [Serializable]
 #endif
     [AttributeUsage(AttributeTargets.Class)]

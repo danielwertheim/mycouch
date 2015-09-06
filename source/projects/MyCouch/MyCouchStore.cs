@@ -614,7 +614,7 @@ namespace MyCouch
             throw new MyCouchResponseException(response);
         }
 
-#if !PCL
+#if !PCL && !vNext
         [Serializable]
 #endif
         private class AllDocsValue

@@ -4,12 +4,12 @@ using Newtonsoft.Json;
 
 namespace MyCouch.Responses
 {
-#if !PCL
+#if !PCL && !vNext
     [Serializable]
 #endif
     public class ChangesResponse : ChangesResponse<string> { }
 
-#if !PCL
+#if !PCL && !vNext
     [Serializable]
 #endif
     public class ChangesResponse<TIncludedDoc> : Response
@@ -18,7 +18,7 @@ namespace MyCouch.Responses
         public string LastSeq { get; set; }
         public Row[] Results { get; set; }
 
-#if !PCL
+#if !PCL && !vNext
         [Serializable]
 #endif
         public class Change
@@ -26,7 +26,7 @@ namespace MyCouch.Responses
             public string Rev { get; set; }
         }
 
-#if !PCL
+#if !PCL && !vNext
         [Serializable]
 #endif
         public class Row

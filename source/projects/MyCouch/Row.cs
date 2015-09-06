@@ -4,7 +4,7 @@ using MyCouch.Extensions;
 
 namespace MyCouch
 {
-#if !PCL
+#if !PCL && !vNext
     [Serializable]
 #endif
     public class Row : Row<string, string>
@@ -14,7 +14,7 @@ namespace MyCouch
         { }
     }
 
-#if !PCL
+#if !PCL && !vNext
     [Serializable]
 #endif
     public class Row<TValue> : Row<TValue, string>
@@ -24,7 +24,7 @@ namespace MyCouch
         { }
     }
 
-#if !PCL
+#if !PCL && !vNext
     [Serializable]
 #endif
     public class Row<TValue, TIncludedDoc>

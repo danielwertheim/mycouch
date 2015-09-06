@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
+#if !PCL && !vNext
 using System.Runtime.Serialization;
+#endif
 using MyCouch.Responses;
 
 namespace MyCouch
 {
-#if !PCL
+#if !PCL && !vNext
     [Serializable]
 #endif
     public class MyCouchResponseException : Exception
@@ -37,7 +39,7 @@ namespace MyCouch
             Reason = reason;
         }
 
-#if !PCL
+#if !PCL && !vNext
         protected MyCouchResponseException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         { }

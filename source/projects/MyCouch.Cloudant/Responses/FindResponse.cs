@@ -6,12 +6,12 @@ using System.Linq;
 
 namespace MyCouch.Cloudant.Responses
 {
-#if !PCL
+#if !PCL && !vNext
     [Serializable]
 #endif
     public class FindResponse : FindResponse<string> { }
 
-#if !PCL
+#if !PCL && !vNext
     [Serializable]
 #endif
     public class FindResponse<TIncludedDoc> : Response

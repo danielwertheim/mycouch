@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace MyCouch.Cloudant.Responses
 {
-#if !PCL
+#if !PCL && !vNext
     [Serializable]
 #endif
     public class GenerateApiKeyResponse : Response

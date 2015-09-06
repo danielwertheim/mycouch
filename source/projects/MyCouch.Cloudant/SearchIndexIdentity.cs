@@ -6,7 +6,7 @@ namespace MyCouch.Cloudant
     /// <summary>
     /// Used to identify a certain search index in a design document.
     /// </summary>
-#if !PCL
+#if !PCL && !vNext
     [Serializable]
 #endif
     public class SearchIndexIdentity

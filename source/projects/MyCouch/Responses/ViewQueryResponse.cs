@@ -6,17 +6,17 @@ using Newtonsoft.Json;
 
 namespace MyCouch.Responses
 {
-#if !PCL
+#if !PCL && !vNext
     [Serializable]
 #endif
     public class ViewQueryResponse : ViewQueryResponse<string> { }
 
-#if !PCL
+#if !PCL && !vNext
     [Serializable]
 #endif
     public class ViewQueryResponse<TValue> : ViewQueryResponse<TValue, string> { }
 
-#if !PCL
+#if !PCL && !vNext
     [Serializable]
 #endif
     public class ViewQueryResponse<TValue, TIncludedDoc> : Response
@@ -45,7 +45,7 @@ namespace MyCouch.Responses
                 OffSet,
                 UpdateSeq);
         }
-#if !PCL
+#if !PCL && !vNext
         [Serializable]
 #endif
         public class Row
