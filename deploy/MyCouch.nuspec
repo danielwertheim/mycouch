@@ -16,7 +16,7 @@
       MyCouch lets you work with raw JSON and/or entities/POCOS without requiring any implementation of interfaces or base-classes etc. MyCouch provides you with some model conventions like
       injection of $doctype to the document. It is pluggable. If you don't like some piece, then hook in your implementation instead.
 
-      Supports .Net4.0, .Net4.5 and a PCL for Windows store 8.0 and 8.1 (WinRT) and WP8.1.
+      Supports .Net4.5 and a PCL for Windows store 8.0 and 8.1 (WinRT) and WP8.1.
     </description>
     <iconUrl>https://raw.githubusercontent.com/danielwertheim/mycouch/master/resources/mycouch-nuget.png</iconUrl>
     <projectUrl>https://github.com/danielwertheim/MyCouch</projectUrl>
@@ -28,29 +28,18 @@
       <frameworkAssembly assemblyName="System.Net.Http" targetFramework="net45" />
     </frameworkAssemblies>
     <dependencies>
-       <group targetFramework="net40">
-         <dependency id="Ensure.That" version="3.0.0" />
-         <dependency id="Newtonsoft.Json" version="7.0.1" />
-         <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
-         <dependency id="Microsoft.Net.Http" version="2.2.29" />
-       </group>
        <group targetFramework="net45">
-         <dependency id="Ensure.That" version="3.0.0" />
          <dependency id="Newtonsoft.Json" version="7.0.1" />
        </group>
        <group targetFramework="portable-netcore45+wpa81+MonoAndroid1+MonoTouch1">
-         <dependency id="Ensure.That" version="3.0.0" />
          <dependency id="Newtonsoft.Json" version="7.0.1" />
        </group>
        <group targetFramework="dotnet">
-         <dependency id="Ensure.That" version="3.0.0" />
          <dependency id="Newtonsoft.Json" version="7.0.1" />
        </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="MyCouch.Net40\*.dll" target="lib\net40" />
-    <file src="MyCouch.Net40\*.xml" target="lib\net40" />
     <file src="MyCouch.Net45\*.dll" target="lib\net45" />
     <file src="MyCouch.Net45\*.xml" target="lib\net45" />
     <file src="MyCouch.Pcl\*.dll" target="lib\portable-netcore45+wpa81+MonoAndroid1+MonoTouch1" />

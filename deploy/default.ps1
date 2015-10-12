@@ -7,7 +7,7 @@ Properties {
     $project_name = "MyCouch"
     $project_name_cloudant = "MyCouch.Cloudant"
     $builds_dir_path = "builds"
-    $build_version = "3.2.0"
+    $build_version = "4.0.0-rc1"
     $build_config = "Release"
     $build_name = "${project_name}-v${build_version}-${build_config}"
     $build_dir_path = "${builds_dir_path}\${build_name}"
@@ -33,19 +33,16 @@ task Build {
 }
 
 task Copy {
-    CopyTo-Build("$project_name.Net40")
     CopyTo-Build("$project_name.Net45")
     CopyTo-Build("$project_name.Pcl")
     CopyTo-Build("$project_name.vNext")
     
-    CopyTo-Build("$project_name_cloudant.Net40")
     CopyTo-Build("$project_name_cloudant.Net45")
     CopyTo-Build("$project_name_cloudant.Pcl")
     CopyTo-Build("$project_name_cloudant.vNext")
 }
 
 task Tests-UnitTest {
-    UnitTest-Project("Net40")
     UnitTest-Project("Net45")
     UnitTest-Project("Pcl")
     UnitTest-Project("vNext")
