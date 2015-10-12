@@ -65,7 +65,7 @@ namespace MyCouch.Serialization.Meta
 
         protected virtual DocumentAttribute ExtractMetaDataAttribute(Type docType)
         {
-#if PCL
+#if PCL || vNext
             return docType.GetTypeInfo().GetCustomAttribute<DocumentAttribute>();
 #else
             return docType.GetCustomAttribute<DocumentAttribute>(true);
@@ -74,15 +74,7 @@ namespace MyCouch.Serialization.Meta
 
         protected virtual bool CheckIfDocTypeIsAnonymous(Type docType)
         {
-#if !PCL
-            return docType.IsClass &&
-                docType.IsNotPublic &&
-                docType.IsSealed &&
-                docType.IsGenericType &&
-                docType.BaseType == typeof(object) &&
-                docType.Namespace == null &&
-                docType.Name.StartsWith(AnonymousTypePrefix);
-#else
+#if PCL || vNext
             var info = docType.GetTypeInfo();
 
             return info.IsClass &&
@@ -92,6 +84,14 @@ namespace MyCouch.Serialization.Meta
                 info.BaseType == typeof(object) &&
                 info.Namespace == null &&
                 info.Name.StartsWith(AnonymousTypePrefix);
+#else
+            return docType.IsClass &&
+                docType.IsNotPublic &&
+                docType.IsSealed &&
+                docType.IsGenericType &&
+                docType.BaseType == typeof(object) &&
+                docType.Namespace == null &&
+                docType.Name.StartsWith(AnonymousTypePrefix);
 #endif
         }
     }
