@@ -5,7 +5,7 @@
     <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{11B3A91D-5805-47FC-AA47-F2E7B89592EE}</ProjectGuid>
+    <ProjectGuid>{8D298086-99C8-4DD8-9A2C-D4921CCE86DE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MyCouch.Testing</RootNamespace>
@@ -34,15 +34,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="project.json" />
     <!-- A reference to the entire .NET Framework is automatically included -->
-    <ProjectReference Include="..\..\projects\MyCouch.Cloudant.Pcl\MyCouch.Cloudant.Pcl.csproj">
-      <Project>{5a0d4e69-6a48-49d6-8b68-89c7b3ea6603}</Project>
-      <Name>MyCouch.Cloudant.Pcl</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\projects\MyCouch.Pcl\MyCouch.Pcl.csproj">
-      <Project>{da67c219-8fd3-4da8-892f-1d31dd473243}</Project>
-      <Name>MyCouch.Pcl</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\SharedAssemblyInfo.cs">
@@ -51,23 +44,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="FluentAssertions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\FluentAssertions.4.0.0\lib\portable-net40+sl5+win8+wp8+wpa81\FluentAssertions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="FluentAssertions.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\FluentAssertions.4.0.0\lib\portable-net40+sl5+win8+wp8+wpa81\FluentAssertions.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Newtonsoft.Json.7.0.1\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
+    <ProjectReference Include="..\..\projects\MyCouch.Cloudant.Pcl\MyCouch.Cloudant.Pcl.csproj">
+      <Project>{e19aba19-29f9-4658-8e15-6995a11377ed}</Project>
+      <Name>MyCouch.Cloudant.Pcl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\projects\MyCouch.Pcl\MyCouch.Pcl.csproj">
+      <Project>{e774d145-2ed3-4560-93e7-f61712398ea7}</Project>
+      <Name>MyCouch.Pcl</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <Import Project="..\MyCouch.Testing\MyCouch.Testing.projitems" Label="Shared" />
+  <Import Project="..\..\tests\MyCouch.Testing\MyCouch.Testing.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

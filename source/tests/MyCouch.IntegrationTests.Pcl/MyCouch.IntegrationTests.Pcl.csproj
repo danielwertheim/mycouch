@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\..\packages\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props" Condition="Exists('..\..\packages\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DF76366D-F94C-4E23-A582-21EF11EB5DB0}</ProjectGuid>
+    <ProjectGuid>{A9FE0E65-AB90-487D-8922-1A1C0A6D121F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MyCouch.IntegrationTests</RootNamespace>
+    <RootNamespace>MyCouch.IntegrationTests.Pcl</RootNamespace>
     <AssemblyName>MyCouch.IntegrationTests.Pcl</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -71,21 +71,21 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\projects\MyCouch.Cloudant.Pcl\MyCouch.Cloudant.Pcl.csproj">
-      <Project>{5a0d4e69-6a48-49d6-8b68-89c7b3ea6603}</Project>
+      <Project>{e19aba19-29f9-4658-8e15-6995a11377ed}</Project>
       <Name>MyCouch.Cloudant.Pcl</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\projects\MyCouch.Pcl\MyCouch.Pcl.csproj">
-      <Project>{da67c219-8fd3-4da8-892f-1d31dd473243}</Project>
-      <Name>MyCouch.Pcl</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MyCouch.Testing.Pcl\MyCouch.Testing.Pcl.csproj">
-      <Project>{11b3a91d-5805-47fc-aa47-f2e7b89592ee}</Project>
+      <Project>{8d298086-99c8-4dd8-9a2c-d4921cce86de}</Project>
       <Name>MyCouch.Testing.Pcl</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\projects\MyCouch.Pcl\MyCouch.Pcl.csproj">
+      <Project>{e774d145-2ed3-4560-93e7-f61712398ea7}</Project>
+      <Name>MyCouch.Pcl</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
