@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>7cb7b3ce-fad9-41ab-aacb-0977ac141bd9</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>MyCouch.IntegrationTests</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)CloudantTests\IndexTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CloudantTests\QueryTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CloudantTests\SearchTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CloudantTests\SecurityTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CoreTests\AttachmentsTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CoreTests\ChangesTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CoreTests\ClientTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CoreTests\DatabasesTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CoreTests\DatabaseTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CoreTests\DocumentsTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CoreTests\EntitiesTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CoreTests\ListsTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CoreTests\MyCouchStoreCallbackQueryTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CoreTests\MyCouchStoreCrudTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CoreTests\MyCouchStoreQueryTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CoreTests\ReplicatorTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CoreTests\ShowTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CoreTests\ViewsTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IntegrationTestsOf.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IntegrationTestsRuntime.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IPreserveStatePerFixture.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MyFactAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TestFixtures\QueriesFixture.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TestFixtures\SearchFixture.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TestFixtures\ShowsFixture.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TestFixtures\ViewsFixture.cs" />
+  </ItemGroup>
+</Project>

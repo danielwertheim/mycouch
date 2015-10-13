@@ -15,7 +15,7 @@ namespace MrLab
 
         private async static Task Test()
         {
-            using (var client = new MyCouchClient("http://sa:test@localhost:5984/foo"))
+            using (var client = new MyCouchClient("http://sa:test@localhost:5984/", "foo"))
             {
                 var db = await client.Database.PutAsync();
 

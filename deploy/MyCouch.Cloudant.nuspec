@@ -5,18 +5,14 @@
     <title>MyCouch.Cloudant client</title>
     <version>$version$</version>
     <authors>danielwertheim</authors>
-    <copyright>Copyright 2014 Daniel Wertheim</copyright>
+    <copyright>Copyright 2014, 2015 Daniel Wertheim</copyright>
     <summary>Simple async CouchDB and Cloudant client.</summary>
     <description>
       MyCouch is the simple asynchronous CouchDB and Cloudant client for .Net - building on top of the asynchronous HTTP client and uses JSON.Net to provide flexible serialization behaviour.
 
       This package contains support for Cloudant specific features. If you want pure CouchDB support go with the "MyCouch" package instead.
 
-      It tries to keep the domain language of CouchDb and lets you work with requests and responses but also provides you with an alternative simplifying async API.
-      MyCouch lets you work with raw JSON and/or entities/POCOS without requiring any implementation of interfaces or base-classes etc. MyCouch provides you with some model conventions like
-      injection of $doctype to the document. It is pluggable. If you don't like some piece, then hook in your implementation instead.
-
-      Supports .Net4.0, .Net4.5 and a PCL for Windows store 8.0 and 8.1 (WinRT) and WP8.1.
+      It tries to keep the domain language of Cloudant and CouchDB and lets you work with requests and responses but also provides you with an alternative simplifying async API. MyCouch lets you work with raw JSON and/or entities/POCOS without requiring any implementation of interfaces or base-classes etc. MyCouch provides you with some model conventions like injection of $doctype to the document. It is pluggable. If you don't like some piece, then hook in your implementation instead.
     </description>
     <iconUrl>https://raw.githubusercontent.com/danielwertheim/mycouch/master/resources/mycouch-nuget.png</iconUrl>
     <projectUrl>https://github.com/danielwertheim/MyCouch</projectUrl>
@@ -28,31 +24,32 @@
       <frameworkAssembly assemblyName="System.Net.Http" targetFramework="net45" />
     </frameworkAssemblies>
     <dependencies>
-       <group targetFramework="net40">
-         <dependency id="MyCouch" version="[$version$]" />
-         <dependency id="Ensure.That" version="2.0.0" />
-         <dependency id="Newtonsoft.Json" version="6.0.8" />
-         <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
-         <dependency id="Microsoft.Net.Http" version="2.2.28" />
-       </group>
        <group targetFramework="net45">
          <dependency id="MyCouch" version="[$version$]" />
-         <dependency id="Ensure.That" version="2.0.0" />
-         <dependency id="Newtonsoft.Json" version="6.0.8" />
+         <dependency id="Newtonsoft.Json" version="7.0.1" />
        </group>
-       <group targetFramework="portable-net45+netcore45">
+       <group targetFramework="net46">
          <dependency id="MyCouch" version="[$version$]" />
-         <dependency id="Ensure.That" version="2.0.0" />
-         <dependency id="Newtonsoft.Json" version="6.0.8" />
+         <dependency id="Newtonsoft.Json" version="7.0.1" />
+       </group>
+       <group targetFramework="portable-netcore45+wpa81+MonoAndroid1+MonoTouch1">
+         <dependency id="MyCouch" version="[$version$]" />
+         <dependency id="Newtonsoft.Json" version="7.0.1" />
+       </group>
+       <group targetFramework="DNXCore5.0">
+         <dependency id="MyCouch" version="[$version$]" />
+         <dependency id="Newtonsoft.Json" version="7.0.1" />
        </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="MyCouch.Cloudant.Net40\*.dll" target="lib\net40" />
-    <file src="MyCouch.Cloudant.Net40\*.xml" target="lib\net40" />
     <file src="MyCouch.Cloudant.Net45\*.dll" target="lib\net45" />
     <file src="MyCouch.Cloudant.Net45\*.xml" target="lib\net45" />
+    <file src="MyCouch.Cloudant.Net45\*.dll" target="lib\net46" />
+    <file src="MyCouch.Cloudant.Net45\*.xml" target="lib\net46" />
     <file src="MyCouch.Cloudant.Pcl\*.dll" target="lib\portable-netcore45+wpa81+MonoAndroid1+MonoTouch1" />
     <file src="MyCouch.Cloudant.Pcl\*.xml" target="lib\portable-netcore45+wpa81+MonoAndroid1+MonoTouch1" />
+    <file src="MyCouch.Cloudant.Pcl\*.dll" target="lib\DNXCore5.0" />
+    <file src="MyCouch.Cloudant.Pcl\*.xml" target="lib\DNXCore5.0" />
   </files>
 </package>

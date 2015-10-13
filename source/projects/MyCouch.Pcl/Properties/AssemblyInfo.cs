@@ -1,5 +1,5 @@
 ﻿using System.Resources;
 using System.Reflection;
 
-[assembly: AssemblyTitle("MyCouch.Pcl")]
+[assembly: AssemblyTitle("MyCouch.vNext")]
 [assembly: NeutralResourcesLanguage("en")]

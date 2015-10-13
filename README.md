@@ -1,7 +1,15 @@
 # MyCouch #
 The asynchronous CouchDb and Cloudant client for .Net - builds on top of the asynchronous HTTP client and uses JSON.Net to provide flexible serialization behaviour. It tries to keep the domain language of CouchDb instead of bringing in generic repositories and other confusing stuff. MyCouch lets you work with raw JSON and/or entities/POCOS without requiring any implementation of interfaces, baseclasses etc. MyCouch provides you with some model conventions like injection of `$doctype` to the document. It is plug-gable. If you don't like some piece, then hook in your implementation instead.
 
-**Supports:** Net4.0, Net4.5, Windows store 8 & 8.1.
+**Supports:** Net4.5+, Windows store 8 & 8.1, DNXCore5.0
+
+**MyCouch**
+
+[![Nuget](https://img.shields.io/nuget/v/mycouch.svg)](https://www.nuget.org/packages/mycouch/) [![Users](https://img.shields.io/nuget/dt/mycouch.svg)](https://www.nuget.org/packages/mycouch/)
+
+**MyCouch.Cloudant**
+
+[![Nuget](https://img.shields.io/nuget/v/mycouch.cloudant.svg)](https://www.nuget.org/packages/mycouch.cloudant/) [![Users](https://img.shields.io/nuget/dt/mycouch.cloudant.svg)](https://www.nuget.org/packages/mycouch.cloudant/)
 
 ## Documentation, Roadmap, Milestones & Issues ##
 The documentation is contained in the [project wiki](https://github.com/danielwertheim/mycouch/wiki).
@@ -14,10 +22,10 @@ The ["Issues list" here on GitHub](https://github.com/danielwertheim/mycouch/iss
 ## NuGet ##
 MyCouch is distributed via NuGet.
 
-- [CouchDb package](https://nuget.org/packages/MyCouch/)
+- [CouchDB package](https://nuget.org/packages/MyCouch/)
 - [Cloudant package](https://nuget.org/packages/MyCouch.Cloudant/)
 
-But basically, in a .Net4.0, .Net4.5 or Windows Store 8 or 8.1 or WP8.1 app project, open up the Package manager console, and invoke:
+So...
 
     pm:> install-package mycouch
 
@@ -28,7 +36,7 @@ or if you also want some [Cloudant](http://cloudant.com) specific features like 
 ## Quick sample - using Requests and Responses ##
 
 ```csharp
-using(var client = new MyCouchClient("http://localhost:5984/mydb"))
+using(var client = new MyCouchClient("http://localhost:5984/", "mydb"))
 {
     //POST with server generated id
     await client.Documents.PostAsync("{\"name\":\"Daniel\"}");
@@ -63,7 +71,7 @@ using(var client = new MyCouchServerClient("http://localhost:5984"))
 
 ## Quick sample - using MyCouchStore ##
 ```csharp
-using(var store = new MyCouchStore("http://localhost:5984"))
+using(var store = new MyCouchStore("http://localhost:5984", "mydb"))
 {
     var mySomething = await store.StoreAsync(new Something("foo", "bar", 42));
 
@@ -76,7 +84,7 @@ using(var store = new MyCouchStore("http://localhost:5984"))
 ```
 
 ## Get up and running with the source ##
-Please note. **No NuGet packages are checked in**. If you are using the latest version of NuGet (v2.7.1+) **you should be able to just build and the packages will be restored**. If this does not work, you could install the missing NuGet packages using a simple PowerShell script [as covered here](http://danielwertheim.se/2013/08/12/nuget-restore-powershell-vs-rake)
+Please note. **No NuGet packages are checked in**. If you are using an awesome version of NuGet **you should be able to just build and the packages will be restored**.
 
 ## Test environments ##
 Test environment configurations to the integration tests should be configured in a file: `\testenvironments.local.json` placed next to `\testenvironments.samples.json`, which you can use as a template.
@@ -88,7 +96,7 @@ This is described in the wiki, under: ["How-to Contribute"](https://github.com/d
 So you have issues or questions... Great! That means someone is using it. Use the issues function here at the project page or contact me via mail: firstname@lastname.se; or Twitter: [@danielwertheim](https://twitter.com/danielwertheim)
 
 ## NOTE! ##
-**It's your data.** Ensure to **test against isolated test-environments and test-accounts first** e.g. a separate Cloudant account, specific CouchDb instances etc.
+**It's your data.** Ensure to **test against isolated test-environments and test-accounts first** e.g. a separate Cloudant account, specific CouchDB instances etc.
 
 ## License ##
 The MIT License (MIT)
