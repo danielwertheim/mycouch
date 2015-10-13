@@ -35,11 +35,11 @@ task Build {
 task Copy {
     CopyTo-Build("$project_name.Net45")
     CopyTo-Build("$project_name.Pcl")
-    CopyTo-Build("$project_name.vNext")
+    #CopyTo-Build("$project_name.vNext")
     
     CopyTo-Build("$project_name_cloudant.Net45")
     CopyTo-Build("$project_name_cloudant.Pcl")
-    CopyTo-Build("$project_name_cloudant.vNext")
+    #CopyTo-Build("$project_name_cloudant.vNext")
 }
 
 task Tests-UnitTest {
