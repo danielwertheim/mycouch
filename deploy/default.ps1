@@ -11,7 +11,7 @@ Properties {
     $build_config = "Release"
     $build_name = "${project_name}-v${build_version}-${build_config}"
     $build_dir_path = "${builds_dir_path}\${build_name}"
-    $testrunner = "tools\xunit.runners.1.9.2\tools\xunit.console.clr4.exe"
+    $testrunner = "tools\xunit.runner.console.2.1.0\tools\xunit.console.exe"
     $nuget = "nuget.exe"
     $buildToolsVersions = "14"
 }
@@ -45,7 +45,7 @@ task Copy {
 task Tests-UnitTest {
     UnitTest-Project("Net45")
     UnitTest-Project("Pcl")
-    UnitTest-Project("vNext")
+    #UnitTest-Project("vNext")
 }
 
 task NuGet-Pack {
