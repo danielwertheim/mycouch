@@ -16,7 +16,7 @@
     </description>
     <iconUrl>https://raw.githubusercontent.com/danielwertheim/mycouch/master/resources/mycouch-nuget.png</iconUrl>
     <projectUrl>https://github.com/danielwertheim/MyCouch</projectUrl>
-    <licenseUrl>https://github.com/danielwertheim/MyCouch#license</licenseUrl>
+    <licenseUrl>https://github.com/danielwertheim/MyCouch/LICENSE.md</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <releaseNotes>Can be found on project site: https://github.com/danielwertheim/mycouch/wiki/release-notes</releaseNotes>
     <tags>couchdb cloudant lucene nosql</tags>
