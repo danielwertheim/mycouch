@@ -327,7 +327,7 @@ namespace MyCouch
             ThrowIfNotSuccessfulResponse(response);
 
             foreach (var row in response.Rows)
-                onResult(new DocumentHeader(row.Id, row.Value.Rev));
+                onResult(new DocumentHeader(row.Key as string, row.Value == null ? null : row.Value.Rev));
 
             return CreateQueryInfoFrom(response);
         }
@@ -343,7 +343,7 @@ namespace MyCouch
 
             ThrowIfNotSuccessfulResponse(response);
 
-            return response.Rows.Select(r => new DocumentHeader(r.Id, r.Value.Rev));
+            return response.Rows.Select(r => new DocumentHeader(r.Key as string, r.Value == null ? null : r.Value.Rev));
         }
 
         public virtual async Task<string> GetByIdAsync(string id, string rev = null)
