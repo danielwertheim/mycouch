@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>8ac29ac2-e647-4874-b34c-3a8b935ad703</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>MyCouch.Cloudant</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Contexts\Queries.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Contexts\Searches.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Contexts\Security.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FindParametersConfigurator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FormatStrings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpRequestFactories\DeleteIndexHttpRequestFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpRequestFactories\FindHttpRequestFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpRequestFactories\GenerateApiKeyHttpRequestFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpRequestFactories\GetAllIndexesHttpRequestFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpRequestFactories\PostIndexHttpRequestFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpRequestFactories\SearchIndexHttpRequestFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IFindParameters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IIndexParameters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IMyCouchCloudantClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IMyCouchCloudantServerClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IndexParametersConfigurator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IndexType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IQueries.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ISearches.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ISearchParameters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ISecurity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MyCouchCloudantClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MyCouchCloudantClientBootstrapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MyCouchCloudantServerClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Querying\FindParameters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Querying\IndexParameters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Requests\DeleteIndexRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Requests\FindRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Requests\GenerateApiKeyRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Requests\PostIndexRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Requests\SearchIndexRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Responses\CloudantJsonScheme.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Responses\Factories\FindResponseFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Responses\Factories\GenerateApiKeyResponseFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Responses\Factories\IndexListResponseFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Responses\Factories\IndexResponseFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Responses\Factories\SearchIndexResponseFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Responses\FindResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Responses\GenerateApiKeyResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Responses\IndexListResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Responses\IndexResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Responses\Materializers\FindResponseMaterializer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Responses\Materializers\SearchIndexResponseMaterializer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Responses\SearchIndexResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SearchIndexIdentity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Searching\SearchParameters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SearchParametersConfigurator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Serialization\Converters\SortableFieldConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SortableField.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SortDirection.cs" />
+  </ItemGroup>
+</Project>

@@ -1,26 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5A0D4E69-6A48-49D6-8B68-89C7B3EA6603}</ProjectGuid>
+    <ProjectGuid>{E19ABA19-29F9-4658-8E15-6995A11377ED}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MyCouch.Cloudant</RootNamespace>
     <AssemblyName>MyCouch.Cloudant.Pcl</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Profile111</TargetFrameworkProfile>
+    <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkProfile>Profile111</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;PCL;CLOUDANT</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;PCL</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -28,186 +29,29 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;PCL;CLOUDANT</DefineConstants>
+    <DefineConstants>TRACE;PCL</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>1591</NoWarn>
     <DocumentationFile>bin\Release\MyCouch.Cloudant.Pcl.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="project.json" />
+    <!-- A reference to the entire .NET Framework is automatically included -->
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\Contexts\Queries.cs">
-      <Link>Contexts\Queries.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\Contexts\Searches.cs">
-      <Link>Contexts\Searches.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\Contexts\Security.cs">
-      <Link>Contexts\Security.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\FindParametersConfigurator.cs">
-      <Link>FindParametersConfigurator.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\FormatStrings.cs">
-      <Link>FormatStrings.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\HttpRequestFactories\DeleteIndexHttpRequestFactory.cs">
-      <Link>HttpRequestFactories\DeleteIndexHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\HttpRequestFactories\FindHttpRequestFactory.cs">
-      <Link>FindHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\HttpRequestFactories\GenerateApiKeyHttpRequestFactory.cs">
-      <Link>HttpRequestFactories\GenerateApiKeyHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\HttpRequestFactories\GetAllIndexesHttpRequestFactory.cs">
-      <Link>HttpRequestFactories\GetAllIndexesHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\HttpRequestFactories\PostIndexHttpRequestFactory.cs">
-      <Link>HttpRequestFactories\PostIndexHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\mycouch.cloudant.net45\httprequestfactories\SearchIndexHttpRequestFactory.cs">
-      <Link>HttpRequestFactories\SearchIndexHttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\IFindParameters.cs">
-      <Link>IFindParameters.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\IIndexParameters.cs">
-      <Link>IIndexParameters.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\IMyCouchCloudantClient.cs">
-      <Link>IMyCouchCloudantClient.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\IMyCouchCloudantServerClient.cs">
-      <Link>IMyCouchCloudantServerClient.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\SortableField.cs">
-      <Link>SortableField.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\IndexParametersConfigurator.cs">
-      <Link>IndexParametersConfigurator.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\IndexType.cs">
-      <Link>IndexType.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\IQueries.cs">
-      <Link>IQueries.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\ISearches.cs">
-      <Link>ISearches.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\ISearchParameters.cs">
-      <Link>ISearchParameters.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\ISecurity.cs">
-      <Link>ISecurity.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\MyCouchCloudantClient.cs">
-      <Link>MyCouchCloudantClient.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\MyCouchCloudantClientBootstrapper.cs">
-      <Link>MyCouchCloudantClientBootstrapper.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\MyCouchCloudantServerClient.cs">
-      <Link>MyCouchCloudantServerClient.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\Querying\FindParameters.cs">
-      <Link>Querying\FindParameters.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\Querying\IndexParameters.cs">
-      <Link>Querying\IndexParameters.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\Requests\DeleteIndexRequest.cs">
-      <Link>Requests\DeleteIndexRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\Requests\FindRequest.cs">
-      <Link>Requests\FindRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\Requests\GenerateApiKeyRequest.cs">
-      <Link>Requests\GenerateApiKeyRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\Requests\PostIndexRequest.cs">
-      <Link>Requests\PostIndexRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\Requests\SearchIndexRequest.cs">
-      <Link>Requests\SearchIndexRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\Responses\CloudantJsonScheme.cs">
-      <Link>Responses\CloudantJsonScheme.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\Responses\Factories\FindResponseFactory.cs">
-      <Link>Responses\Factories\FindResponseFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\Responses\Factories\GenerateApiKeyResponseFactory.cs">
-      <Link>Responses\Factories\GenerateApiKeyResponseFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\Responses\Factories\IndexListResponseFactory.cs">
-      <Link>Responses\Factories\IndexListResponseFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\Responses\Factories\IndexResponseFactory.cs">
-      <Link>Responses\Factories\IndexResponseFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\Responses\Factories\SearchIndexResponseFactory.cs">
-      <Link>Responses\Factories\SearchIndexResponseFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\Responses\FindResponse.cs">
-      <Link>Responses\FindResponse.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\Responses\GenerateApiKeyResponse.cs">
-      <Link>Responses\GenerateApiKeyResponse.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\Responses\IndexListResponse.cs">
-      <Link>Responses\IndexListResponse.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\Responses\IndexResponse.cs">
-      <Link>Responses\IndexResponse.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\Responses\Materializers\FindResponseMaterializer.cs">
-      <Link>Responses\Materializers\FindResponseMaterializer.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\Responses\Materializers\SearchIndexResponseMaterializer.cs">
-      <Link>Responses\Materializers\SearchIndexResponseMaterializer.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\Responses\SearchIndexResponse.cs">
-      <Link>Responses\SearchIndexResponse.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\SearchIndexIdentity.cs">
-      <Link>SearchIndexIdentity.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\Searching\SearchParameters.cs">
-      <Link>Searching\SearchParameters.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\SearchParametersConfigurator.cs">
-      <Link>SearchParametersConfigurator.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\Serialization\Converters\SortableFieldConverter.cs">
-      <Link>Serialization\Converters\SortableFieldConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\MyCouch.Cloudant.Net45\SortDirection.cs">
-      <Link>SortDirection.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="EnsureThat">
-      <HintPath>..\..\packages\Ensure.That.2.0.0\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\EnsureThat.dll\EnsureThat.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\packages\Newtonsoft.Json.6.0.8\lib\portable-net45+wp80+win8+wpa81+aspnetcore50\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
     <ProjectReference Include="..\MyCouch.Pcl\MyCouch.Pcl.csproj">
-      <Project>{da67c219-8fd3-4da8-892f-1d31dd473243}</Project>
+      <Project>{e774d145-2ed3-4560-93e7-f61712398ea7}</Project>
       <Name>MyCouch.Pcl</Name>
     </ProjectReference>
   </ItemGroup>
+  <Import Project="..\MyCouch.Cloudant\MyCouch.Cloudant.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

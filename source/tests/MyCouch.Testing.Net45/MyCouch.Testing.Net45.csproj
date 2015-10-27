@@ -17,7 +17,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;net45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -30,17 +30,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FluentAssertions, Version=3.2.2.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\FluentAssertions.3.2.2\lib\net45\FluentAssertions.dll</HintPath>
+    <Reference Include="FluentAssertions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentAssertions.4.0.0\lib\net45\FluentAssertions.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="FluentAssertions.Core, Version=3.2.2.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\FluentAssertions.3.2.2\lib\net45\FluentAssertions.Core.dll</HintPath>
+    <Reference Include="FluentAssertions.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentAssertions.4.0.0\lib\net45\FluentAssertions.Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -53,21 +53,7 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="CoreExtensions.cs" />
-    <Compile Include="JsonTestdata.Designer.cs">
-      <DependentUpon>JsonTestdata.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Model\Album.cs" />
-    <Compile Include="Model\Animal.cs" />
-    <Compile Include="Model\Artist.cs" />
-    <Compile Include="Model\Blog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Shoulds.cs" />
-    <Compile Include="TestData\ClientTestData.cs" />
-    <Compile Include="TestData\CloudantTestData.cs" />
-    <Compile Include="TestsOf.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -82,12 +68,7 @@
       <Name>MyCouch.Net45</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="JsonTestdata.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>JsonTestdata.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
+  <Import Project="..\MyCouch.Testing\MyCouch.Testing.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
