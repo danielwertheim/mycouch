@@ -12,11 +12,23 @@ namespace MyCouch.Requests
     {
         protected List<string> Documents { get; private set; }
 
+        /// <summary>
+        /// If true, Sets the database commit mode to use all-or-nothing semantics. Default is false.
+        /// </summary>
+        public bool AllOrNothing { get; set; }
+
+        /// <summary>
+        ///  If false, prevents the database from assigning them new revision IDs. Default is true.
+        /// </summary>
+        public bool NewEdits { get; set; }
+
         public virtual bool IsEmpty { get { return !Documents.Any(); } }
 
         public BulkRequest()
         {
             Documents = new List<string>();
+            AllOrNothing = false;
+            NewEdits = true;
         }
 
         /// <summary>

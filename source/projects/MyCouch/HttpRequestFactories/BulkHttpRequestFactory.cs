@@ -27,7 +27,15 @@ namespace MyCouch.HttpRequestFactories
             var sb = new StringBuilder();
             var documents = request.GetDocuments();
 
-            sb.Append("{\"docs\":[");
+            sb.Append("{");
+
+            if (request.AllOrNothing)
+                sb.Append("\"all_or_nothing\":true,");
+
+            if (!request.NewEdits)
+                sb.Append("\"new_edits\":false,");
+
+            sb.Append("\"docs\":[");
             for (var i = 0; i < documents.Length; i++)
             {
                 sb.Append(documents[i]);
