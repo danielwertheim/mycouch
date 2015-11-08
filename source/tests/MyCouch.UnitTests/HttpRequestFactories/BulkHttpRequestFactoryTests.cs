@@ -13,6 +13,28 @@ namespace MyCouch.UnitTests.HttpRequestFactories
         }
 
         [Fact]
+        public void When_the_request_is_configured_with_all_or_nothing_It_generates_body_for_it()
+        {
+            var r = SUT.Create(new BulkRequest
+            {
+                AllOrNothing = true
+            });
+
+            r.Content.ReadAsStringAsync().Result.Should().Contain("\"all_or_nothing\":true");
+        }
+
+        [Fact]
+        public void When_the_request_is_configured_with_new_edits_false_It_generates_body_for_it()
+        {
+            var r = SUT.Create(new BulkRequest
+            {
+                NewEdits = false
+            });
+
+            r.Content.ReadAsStringAsync().Result.Should().Contain("\"new_edits\":false");
+        }
+
+        [Fact]
         public void When_the_request_is_empty_It_generates_an_empty_json_array_as_content()
         {
             var r = SUT.Create(new BulkRequest());
