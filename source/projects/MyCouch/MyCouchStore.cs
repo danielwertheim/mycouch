@@ -326,7 +326,7 @@ namespace MyCouch
 
             ThrowIfNotSuccessfulResponse(response);
 
-            foreach (var row in response.Rows)
+            foreach (var row in response.Rows.Where(r => r.Id != null))
                 onResult(new DocumentHeader(row.Id, row.Value.Rev));
 
             return CreateQueryInfoFrom(response);

@@ -39,6 +39,23 @@ namespace MyCouch.IntegrationTests.CoreTests
         }
 
         [MyFact(TestScenarios.MyCouchStore)]
+        public void GetHeadersAync_When_getting_one_existing_and_one_non_existing_header_It_returns_only_the_existing_one()
+        {
+            var artists = ArtistsById.Skip(2).Take(1).ToArray();
+            var ids = artists.Select(a => a.ArtistId).ToList();
+            ids.Add("16dcd30f8ba04f7a8702e30e9503f53f");
+            var headers = new List<DocumentHeader>();
+
+            SUT.GetHeadersAsync(ids.ToArray(), headers.Add).ContinueWith(t =>
+            {
+                t.IsFaulted.Should().BeFalse();
+
+                headers.ToArray()
+                    .ShouldBeEquivalentTo(artists.Select(a => new DocumentHeader(a.ArtistId, a.ArtistRev)).ToArray());
+            }).Wait();
+        }
+
+        [MyFact(TestScenarios.MyCouchStore)]
         public void GetByIdsAync_for_json_When_Ids_are_specified_Then_matching_docs_are_returned()
         {
             var artists = ArtistsById.Skip(2).Take(3).ToArray();
