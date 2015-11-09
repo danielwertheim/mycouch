@@ -326,7 +326,7 @@ namespace MyCouch
 
             ThrowIfNotSuccessfulResponse(response);
 
-            foreach (var row in response.Rows.Where(r => r.Id != null))
+            foreach (var row in response.Rows.Where(r => r.Id != null && AllDocsItemRepresentsActualExistingDoc(r.Value)))
                 onResult(new DocumentHeader(row.Id, row.Value.Rev));
 
             return CreateQueryInfoFrom(response);
@@ -343,7 +343,9 @@ namespace MyCouch
 
             ThrowIfNotSuccessfulResponse(response);
 
-            return response.Rows.Select(r => new DocumentHeader(r.Id, r.Value.Rev));
+            return response.Rows
+                .Where(r => r.Id != null && AllDocsItemRepresentsActualExistingDoc(r.Value))
+                .Select(r => new DocumentHeader(r.Id, r.Value.Rev));
         }
 
         public virtual async Task<string> GetByIdAsync(string id, string rev = null)
@@ -393,11 +395,11 @@ namespace MyCouch
             Ensure.That(onResult, "onResult").IsNotNull();
 
             var request = new QueryViewRequest(SystemViewIdentity.AllDocs).Configure(r => r.Keys(ids).IncludeDocs(true));
-            var response = await Client.Views.QueryAsync<string, T>(request).ForAwait();
+            var response = await Client.Views.QueryAsync<AllDocsValue, T>(request).ForAwait();
 
             ThrowIfNotSuccessfulResponse(response);
 
-            foreach (var row in response.Rows.Where(r => r.IncludedDoc != null))
+            foreach (var row in response.Rows.Where(r => r.Id != null && r.IncludedDoc != null && AllDocsItemRepresentsActualExistingDoc(r.Value)))
                 onResult(row.IncludedDoc);
 
             return CreateQueryInfoFrom(response);
@@ -415,11 +417,18 @@ namespace MyCouch
             Ensure.That(ids, "ids").HasItems();
 
             var request = new QueryViewRequest(SystemViewIdentity.AllDocs).Configure(r => r.Keys(ids).IncludeDocs(true));
-            var response = await Client.Views.QueryAsync<string, T>(request).ForAwait();
+            var response = await Client.Views.QueryAsync<AllDocsValue, T>(request).ForAwait();
 
             ThrowIfNotSuccessfulResponse(response);
 
-            return response.Rows.Where(r => r.IncludedDoc != null).Select(r => r.IncludedDoc);
+            return response.Rows
+                .Where(r => r.Id != null && r.IncludedDoc != null && AllDocsItemRepresentsActualExistingDoc(r.Value))
+                .Select(r => r.IncludedDoc);
+        }
+
+        private bool AllDocsItemRepresentsActualExistingDoc(AllDocsValue value)
+        {
+            return value != null && !value.Deleted;
         }
 
         public virtual Task<QueryInfo> GetValueByKeysAsync(ViewIdentity view, object[] keys, Action<string> onResult)
@@ -620,6 +629,7 @@ namespace MyCouch
         private class AllDocsValue
         {
             public string Rev { get; set; }
+            public bool Deleted { get; set; }
         }
     }
 }
