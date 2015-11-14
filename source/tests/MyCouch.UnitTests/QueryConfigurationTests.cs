@@ -289,7 +289,7 @@ namespace MyCouch.UnitTests
         }
 
         [Fact]
-        public void When_config_of_Keys_It_configures_underlying_options_Key()
+        public void When_config_of_Keys_It_configures_underlying_options_Keys()
         {
             var configuredValue = new object[] {
                 "fake key",
@@ -300,6 +300,16 @@ namespace MyCouch.UnitTests
                 true,
                 new object[] {"complex1", 42}
             };
+
+            SUT.Keys(configuredValue);
+
+            _parameters.Keys.Should().BeEquivalentTo(configuredValue);
+        }
+
+        [Fact]
+        public void When_config_of_Keys_with_value_types_It_configures_underlying_options_Keys()
+        {
+            var configuredValue = new[] { 10, 30 };
 
             SUT.Keys(configuredValue);
 

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using MyCouch.EnsureThat;
 
 namespace MyCouch
@@ -91,7 +92,7 @@ namespace MyCouch
         {
             Ensure.That(value, "value").HasItems();
 
-            Parameters.Keys = value as object[];
+            Parameters.Keys = value.Select(i => i as object).ToArray();
 
             return this;
         }

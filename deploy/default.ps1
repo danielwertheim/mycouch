@@ -7,7 +7,7 @@ Properties {
     $project_name = "MyCouch"
     $project_name_cloudant = "MyCouch.Cloudant"
     $builds_dir_path = "builds"
-    $build_version = "4.0.0-rc4"
+    $build_version = "4.0.0-rc5"
     $build_config = "Release"
     $build_name = "${project_name}-v${build_version}-${build_config}"
     $build_dir_path = "${builds_dir_path}\${build_name}"
