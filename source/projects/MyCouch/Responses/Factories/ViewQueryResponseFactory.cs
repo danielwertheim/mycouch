@@ -1,5 +1,7 @@
 ﻿using System.Net.Http;
+using System.Threading.Tasks;
 using MyCouch.EnsureThat;
+using MyCouch.Extensions;
 using MyCouch.Responses.Materializers;
 using MyCouch.Serialization;
 
@@ -18,28 +20,28 @@ namespace MyCouch.Responses.Factories
             FailedResponseMaterializer = new FailedResponseMaterializer(serializer);
         }
 
-        public virtual ViewQueryResponse Create(HttpResponseMessage httpResponse)
+        public virtual async Task<ViewQueryResponse> CreateAsync(HttpResponseMessage httpResponse)
         {
-            return Materialize<ViewQueryResponse>(
+            return await MaterializeAsync<ViewQueryResponse>(
                 httpResponse,
-                SuccessfulResponseMaterializer.Materialize,
-                FailedResponseMaterializer.Materialize);
+                SuccessfulResponseMaterializer.MaterializeAsync,
+                FailedResponseMaterializer.MaterializeAsync).ForAwait();
         }
 
-        public virtual ViewQueryResponse<TValue> Create<TValue>(HttpResponseMessage httpResponse)
+        public virtual async Task<ViewQueryResponse<TValue>> CreateAsync<TValue>(HttpResponseMessage httpResponse)
         {
-            return Materialize<ViewQueryResponse<TValue>>(
+            return await MaterializeAsync<ViewQueryResponse<TValue>>(
                 httpResponse,
-                SuccessfulResponseMaterializer.Materialize,
-                FailedResponseMaterializer.Materialize);
+                SuccessfulResponseMaterializer.MaterializeAsync,
+                FailedResponseMaterializer.MaterializeAsync).ForAwait();
         }
 
-        public virtual ViewQueryResponse<TValue, TIncludedDoc> Create<TValue, TIncludedDoc>(HttpResponseMessage httpResponse)
+        public virtual async Task<ViewQueryResponse<TValue, TIncludedDoc>> CreateAsync<TValue, TIncludedDoc>(HttpResponseMessage httpResponse)
         {
-            return Materialize<ViewQueryResponse<TValue, TIncludedDoc>>(
+            return await MaterializeAsync<ViewQueryResponse<TValue, TIncludedDoc>>(
                 httpResponse,
-                SuccessfulResponseMaterializer.Materialize,
-                FailedResponseMaterializer.Materialize);
+                SuccessfulResponseMaterializer.MaterializeAsync,
+                FailedResponseMaterializer.MaterializeAsync).ForAwait();
         }
     }
 }

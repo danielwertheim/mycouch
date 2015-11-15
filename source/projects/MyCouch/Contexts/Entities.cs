@@ -14,8 +14,8 @@ namespace MyCouch.Contexts
 {
     public class Entities : ApiContextBase<IDbConnection>, IEntities
     {
-        public ISerializer Serializer { get; private set; }
-        public IEntityReflector Reflector { get; private set;}
+        public ISerializer Serializer { get; }
+        public IEntityReflector Reflector { get; }
 
         protected GetEntityHttpRequestFactory GetHttpRequestFactory { get; set; }
         protected PostEntityHttpRequestFactory PostHttpRequestFactory { get; set; }
@@ -46,11 +46,11 @@ namespace MyCouch.Contexts
 
         public virtual async Task<GetEntityResponse<T>> GetAsync<T>(GetEntityRequest request) where T : class
         {
-            var httpRequest = CreateHttpRequest(request);
+            var httpRequest = GetHttpRequestFactory.Create(request);
 
             using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                return ProcessEntityResponse<T>(request, res);
+                return await EntityResponseFactory.CreateAsync<GetEntityResponse<T>, T>(res).ForAwait();
             }
         }
 
@@ -61,11 +61,11 @@ namespace MyCouch.Contexts
 
         public virtual async Task<EntityResponse<T>> PostAsync<T>(PostEntityRequest<T> request) where T : class
         {
-            var httpRequest = CreateHttpRequest(request);
+            var httpRequest = PostHttpRequestFactory.Create(request);
 
             using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                return ProcessEntityResponse(request, res);
+                return await ProcessEntityResponseAsync(request, res).ForAwait();
             }
         }
 
@@ -86,11 +86,11 @@ namespace MyCouch.Contexts
 
         public virtual async Task<EntityResponse<T>> PutAsync<T>(PutEntityRequest<T> request) where T : class
         {
-            var httpRequest = CreateHttpRequest(request);
+            var httpRequest = PutHttpRequestFactory.Create(request);
 
             using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                return ProcessEntityResponse(request, res);
+                return await ProcessEntityResponseAsync(request, res).ForAwait();
             }
         }
 
@@ -101,42 +101,17 @@ namespace MyCouch.Contexts
 
         public virtual async Task<EntityResponse<T>> DeleteAsync<T>(DeleteEntityRequest<T> request) where T : class
         {
-            var httpRequest = CreateHttpRequest(request);
+            var httpRequest = DeleteHttpRequestFactory.Create(request);
 
             using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                return ProcessEntityResponse(request, res);
+                return await ProcessEntityResponseAsync(request, res).ForAwait();
             }
         }
 
-        protected virtual HttpRequest CreateHttpRequest(GetEntityRequest request)
+        protected virtual async Task<EntityResponse<T>> ProcessEntityResponseAsync<T>(PostEntityRequest<T> request, HttpResponseMessage response) where T : class
         {
-            return GetHttpRequestFactory.Create(request);
-        }
-
-        protected virtual HttpRequest CreateHttpRequest<T>(PostEntityRequest<T> request) where T : class
-        {
-            return PostHttpRequestFactory.Create(request);
-        }
-
-        protected virtual HttpRequest CreateHttpRequest<T>(PutEntityRequest<T> request) where T : class
-        {
-            return PutHttpRequestFactory.Create(request);
-        }
-
-        protected virtual HttpRequest CreateHttpRequest<T>(DeleteEntityRequest<T> request) where T : class
-        {
-            return DeleteHttpRequestFactory.Create(request);
-        }
-
-        protected virtual GetEntityResponse<T> ProcessEntityResponse<T>(GetEntityRequest request, HttpResponseMessage response) where T : class
-        {
-            return EntityResponseFactory.Create<GetEntityResponse<T>, T>(response);
-        }
-
-        protected virtual EntityResponse<T> ProcessEntityResponse<T>(PostEntityRequest<T> request, HttpResponseMessage response) where T : class
-        {
-            var entityResponse = EntityResponseFactory.Create<T>(response);
+            var entityResponse = await EntityResponseFactory.CreateAsync<T>(response).ForAwait();
             entityResponse.Content = request.Entity;
 
             if (entityResponse.IsSuccess)
@@ -148,9 +123,9 @@ namespace MyCouch.Contexts
             return entityResponse;
         }
 
-        protected virtual EntityResponse<T> ProcessEntityResponse<T>(PutEntityRequest<T> request, HttpResponseMessage response) where T : class
+        protected virtual async Task<EntityResponse<T>> ProcessEntityResponseAsync<T>(PutEntityRequest<T> request, HttpResponseMessage response) where T : class
         {
-            var entityResponse = EntityResponseFactory.Create<T>(response);
+            var entityResponse = await EntityResponseFactory.CreateAsync<T>(response).ForAwait();
             entityResponse.Content = request.Entity;
 
             if(!string.IsNullOrWhiteSpace(request.ExplicitId))
@@ -162,9 +137,9 @@ namespace MyCouch.Contexts
             return entityResponse;
         }
 
-        protected virtual EntityResponse<T> ProcessEntityResponse<T>(DeleteEntityRequest<T> request, HttpResponseMessage response) where T : class
+        protected virtual async Task<EntityResponse<T>> ProcessEntityResponseAsync<T>(DeleteEntityRequest<T> request, HttpResponseMessage response) where T : class
         {
-            var entityResponse = EntityResponseFactory.Create<T>(response);
+            var entityResponse = await EntityResponseFactory.CreateAsync<T>(response).ForAwait();
             entityResponse.Content = request.Entity;
 
             if (entityResponse.IsSuccess)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Threading.Tasks;
 using MyCouch.EnsureThat;
 using MyCouch.Extensions;
 using MyCouch.Responses.Factories;
@@ -21,15 +22,15 @@ namespace MyCouch.Cloudant.Responses.Factories
             FailedResponseMaterializer = new FailedResponseMaterializer(serializer);
         }
 
-        public virtual GenerateApiKeyResponse Create(HttpResponseMessage httpResponse)
+        public virtual async Task<GenerateApiKeyResponse> CreateAsync(HttpResponseMessage httpResponse)
         {
-            return Materialize<GenerateApiKeyResponse>(
+            return await MaterializeAsync<GenerateApiKeyResponse>(
                 httpResponse,
-                MaterializeSuccessfulResponse,
-                FailedResponseMaterializer.Materialize);
+                MaterializeSuccessfulResponseAsync,
+                FailedResponseMaterializer.MaterializeAsync).ForAwait();
         }
 
-        private async void MaterializeSuccessfulResponse(GenerateApiKeyResponse response, HttpResponseMessage httpResponse)
+        private async Task MaterializeSuccessfulResponseAsync(GenerateApiKeyResponse response, HttpResponseMessage httpResponse)
         {
             if (response.RequestMethod != HttpMethod.Post)
                 throw new ArgumentException(GetType().Name + " only supports materializing POST responses.");

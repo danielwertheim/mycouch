@@ -194,6 +194,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Responses\Factories\RawResponseFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Responses\Factories\ReplicationResponseFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Responses\Factories\ResponseFactoryBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Responses\Factories\ResponseMaterializer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Responses\Factories\ViewQueryResponseFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Responses\GetDatabaseResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Responses\GetEntityResponse.cs" />

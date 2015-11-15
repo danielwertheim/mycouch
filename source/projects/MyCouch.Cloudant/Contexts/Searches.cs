@@ -1,5 +1,4 @@
-﻿using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MyCouch.Cloudant.HttpRequestFactories;
 using MyCouch.Cloudant.Requests;
 using MyCouch.Cloudant.Responses;
@@ -7,7 +6,6 @@ using MyCouch.Cloudant.Responses.Factories;
 using MyCouch.Contexts;
 using MyCouch.EnsureThat;
 using MyCouch.Extensions;
-using MyCouch.Net;
 using MyCouch.Serialization;
 
 namespace MyCouch.Cloudant.Contexts
@@ -31,11 +29,11 @@ namespace MyCouch.Cloudant.Contexts
         {
             Ensure.That(request, "request").IsNotNull();
 
-            var httpRequest = CreateHttpRequest(request);
+            var httpRequest = SearchIndexHttpRequestFactory.Create(request);
 
             using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                return ProcessHttpResponse(res);
+                return await SearchIndexResponseFactory.CreateAsync(res).ForAwait();
             }
         }
 
@@ -43,32 +41,12 @@ namespace MyCouch.Cloudant.Contexts
         {
             Ensure.That(request, "request").IsNotNull();
 
-            var httpRequest = CreateHttpRequest(request);
+            var httpRequest = SearchIndexHttpRequestFactory.Create(request);
 
             using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                return ProcessHttpResponse<TIncludedDoc>(res);
+                return await SearchIndexResponseFactory.CreateAsync<TIncludedDoc>(res).ForAwait();
             }
-        }
-
-        protected virtual SearchIndexRequest CreateSearchIndexRequest(string designDocument, string searchIndexName)
-        {
-            return new SearchIndexRequest(designDocument, searchIndexName);
-        }
-
-        protected virtual HttpRequest CreateHttpRequest(SearchIndexRequest request)
-        {
-            return SearchIndexHttpRequestFactory.Create(request);
-        }
-
-        protected virtual SearchIndexResponse ProcessHttpResponse(HttpResponseMessage response)
-        {
-            return SearchIndexResponseFactory.Create(response);
-        }
-
-        protected virtual SearchIndexResponse<TIncludedDoc> ProcessHttpResponse<TIncludedDoc>(HttpResponseMessage response)
-        {
-            return SearchIndexResponseFactory.Create<TIncludedDoc>(response);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using MyCouch.EnsureThat;
 using MyCouch.Extensions;
 using MyCouch.Serialization;
@@ -18,7 +19,7 @@ namespace MyCouch.Responses.Materializers
             Serializer = serializer;
         }
 
-        public virtual async void Materialize(DocumentResponse response, HttpResponseMessage httpResponse)
+        public virtual async Task MaterializeAsync(DocumentResponse response, HttpResponseMessage httpResponse)
         {
             if(response.RequestMethod != HttpMethod.Get)
                 throw new ArgumentException(GetType().Name + " only supports materializing GET responses for raw documents.");

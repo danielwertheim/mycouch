@@ -1,9 +1,7 @@
-﻿using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MyCouch.EnsureThat;
 using MyCouch.Extensions;
 using MyCouch.HttpRequestFactories;
-using MyCouch.Net;
 using MyCouch.Requests;
 using MyCouch.Responses;
 using MyCouch.Responses.Factories;
@@ -43,21 +41,21 @@ namespace MyCouch.Contexts
 
         public virtual async Task<AttachmentResponse> GetAsync(GetAttachmentRequest request)
         {
-            var httpRequest = CreateHttpRequest(request);
+            var httpRequest = GetAttachmentHttpRequestFactory.Create(request);
 
             using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                return ProcessAttachmentResponse(res);
+                return await AttachmentResponseFactory.CreateAsync(res).ForAwait();
             }
         }
 
         public virtual async Task<DocumentHeaderResponse> PutAsync(PutAttachmentRequest request)
         {
-            var httpRequest = CreateHttpRequest(request);
+            var httpRequest = PutAttachmentHttpRequestFactory.Create(request);
 
             using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                return ProcessDocumentHeaderResponse(res);
+                return await DocumentHeaderResponseFactory.CreateAsync(res).ForAwait();
             }
         }
 
@@ -68,37 +66,12 @@ namespace MyCouch.Contexts
 
         public virtual async Task<DocumentHeaderResponse> DeleteAsync(DeleteAttachmentRequest request)
         {
-            var httpRequest = CreateHttpRequest(request);
+            var httpRequest = DeleteAttachmentHttpRequestFactory.Create(request);
 
             using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                return ProcessDocumentHeaderResponse(res);
+                return await DocumentHeaderResponseFactory.CreateAsync(res).ForAwait();
             }
-        }
-
-        protected virtual HttpRequest CreateHttpRequest(GetAttachmentRequest request)
-        {
-            return GetAttachmentHttpRequestFactory.Create(request);
-        }
-
-        protected virtual HttpRequest CreateHttpRequest(PutAttachmentRequest request)
-        {
-            return PutAttachmentHttpRequestFactory.Create(request);
-        }
-
-        protected virtual HttpRequest CreateHttpRequest(DeleteAttachmentRequest request)
-        {
-            return DeleteAttachmentHttpRequestFactory.Create(request);
-        }
-
-        protected virtual AttachmentResponse ProcessAttachmentResponse(HttpResponseMessage response)
-        {
-            return AttachmentResponseFactory.Create(response);
-        }
-
-        protected virtual DocumentHeaderResponse ProcessDocumentHeaderResponse(HttpResponseMessage response)
-        {
-            return DocumentHeaderResponseFactory.Create(response);
         }
     }
 }

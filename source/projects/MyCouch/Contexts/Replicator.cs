@@ -1,9 +1,7 @@
-using System.Net.Http;
 using System.Threading.Tasks;
 using MyCouch.EnsureThat;
 using MyCouch.Extensions;
 using MyCouch.HttpRequestFactories;
-using MyCouch.Net;
 using MyCouch.Requests;
 using MyCouch.Responses;
 using MyCouch.Responses.Factories;
@@ -32,22 +30,12 @@ namespace MyCouch.Contexts
 
         public virtual async Task<ReplicationResponse> ReplicateAsync(ReplicateDatabaseRequest request)
         {
-            var httpRequest = CreateHttpRequest(request);
+            var httpRequest = ReplicateDatabaseHttpRequestFactory.Create(request);
 
             using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                return ProcessReplicationResponse(res);
+                return await ReplicationResponseFactory.CreateAsync(res).ForAwait();
             }
-        }
-
-        protected virtual HttpRequest CreateHttpRequest(ReplicateDatabaseRequest request)
-        {
-            return ReplicateDatabaseHttpRequestFactory.Create(request);
-        }
-
-        protected virtual ReplicationResponse ProcessReplicationResponse(HttpResponseMessage response)
-        {
-            return ReplicationResponseFactory.Create(response);
         }
     }
 }

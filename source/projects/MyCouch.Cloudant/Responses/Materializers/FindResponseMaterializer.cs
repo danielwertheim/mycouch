@@ -2,6 +2,7 @@
 using MyCouch.Extensions;
 using MyCouch.Serialization;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace MyCouch.Cloudant.Responses.Materializers
 {
@@ -16,7 +17,7 @@ namespace MyCouch.Cloudant.Responses.Materializers
             Serializer = serializer;
         }
 
-        public virtual async void Materialize<TIncludedDoc>(FindResponse<TIncludedDoc> response, HttpResponseMessage httpResponse)
+        public virtual async Task MaterializeAsync<TIncludedDoc>(FindResponse<TIncludedDoc> response, HttpResponseMessage httpResponse)
         {
             using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
             {

@@ -1,5 +1,6 @@
 using System.IO;
 using System.Net.Http;
+using System.Threading.Tasks;
 using MyCouch.EnsureThat;
 using MyCouch.Extensions;
 using MyCouch.Serialization;
@@ -17,7 +18,7 @@ namespace MyCouch.Responses.Materializers
             Serializer = serializer;
         }
 
-        public virtual async void Materialize(DocumentHeaderResponse response, HttpResponseMessage httpResponse)
+        public virtual async Task MaterializeAsync(DocumentHeaderResponse response, HttpResponseMessage httpResponse)
         {
             if (httpResponse.RequestMessage.Method != HttpMethod.Head)
             {

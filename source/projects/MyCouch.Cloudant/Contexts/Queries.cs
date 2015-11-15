@@ -5,9 +5,7 @@ using MyCouch.Cloudant.Responses;
 using MyCouch.Cloudant.Responses.Factories;
 using MyCouch.Contexts;
 using MyCouch.Extensions;
-using MyCouch.Net;
 using MyCouch.Serialization;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace MyCouch.Cloudant.Contexts
@@ -42,21 +40,21 @@ namespace MyCouch.Cloudant.Contexts
         {
             Ensure.That(request, "request").IsNotNull();
 
-            var httpRequest = CreateHttpRequest(request);
+            var httpRequest = PostIndexHttpRequestFactory.Create(request);
 
             using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                return ProcessIndexResponse(res);
+                return await IndexResponseFactory.CreateAsync(res).ForAwait();
             }
         }
 
         public virtual async Task<IndexListResponse> GetAllAsync()
         {
-            var httpRequest = CreateHttpRequest();
+            var httpRequest = GetAllIndexesHttpRequestFactory.Create();
 
             using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                return ProcessIndexListResponse(res);
+                return await IndexListResponseFactory.CreateAsync(res).ForAwait();
             }
         }
 
@@ -64,11 +62,11 @@ namespace MyCouch.Cloudant.Contexts
         {
             Ensure.That(request, "request").IsNotNull();
 
-            var httpRequest = CreateHttpRequest(request);
+            var httpRequest = DeleteIndexHttpRequestFactory.Create(request);
 
             using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                return ProcessIndexResponse(res);
+                return await IndexResponseFactory.CreateAsync(res).ForAwait();
             }
         }
 
@@ -76,11 +74,11 @@ namespace MyCouch.Cloudant.Contexts
         {
             Ensure.That(request, "request").IsNotNull();
 
-            var httpRequest = CreateHttpRequest(request);
+            var httpRequest = FindHttpRequestFactory.Create(request);
 
             using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                return ProcessFindResponse(res);
+                return await FindResponseFactory.CreateAsync(res).ForAwait();
             }
         }
 
@@ -88,52 +86,12 @@ namespace MyCouch.Cloudant.Contexts
         {
             Ensure.That(request, "request").IsNotNull();
 
-            var httpRequest = CreateHttpRequest(request);
+            var httpRequest = FindHttpRequestFactory.Create(request);
 
             using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                return ProcessFindResponse<TIncludedDoc>(res);
+                return await FindResponseFactory.CreateAsync<TIncludedDoc>(res).ForAwait();
             }
-        }
-
-        protected virtual HttpRequest CreateHttpRequest(DeleteIndexRequest request)
-        {
-            return DeleteIndexHttpRequestFactory.Create(request);
-        }
-
-        protected virtual HttpRequest CreateHttpRequest()
-        {
-            return GetAllIndexesHttpRequestFactory.Create();
-        }
-
-        protected virtual HttpRequest CreateHttpRequest(PostIndexRequest request)
-        {
-            return PostIndexHttpRequestFactory.Create(request);
-        }
-
-        protected virtual IndexResponse ProcessIndexResponse(HttpResponseMessage response)
-        {
-            return IndexResponseFactory.Create(response);
-        }
-
-        protected virtual IndexListResponse ProcessIndexListResponse(HttpResponseMessage response)
-        {
-            return IndexListResponseFactory.Create(response);
-        }
-
-        protected virtual HttpRequest CreateHttpRequest(FindRequest request)
-        {
-            return FindHttpRequestFactory.Create(request);
-        }
-
-        protected virtual FindResponse ProcessFindResponse(HttpResponseMessage response)
-        {
-            return FindResponseFactory.Create(response);
-        }
-
-        protected virtual FindResponse<TIncludedDoc> ProcessFindResponse<TIncludedDoc>(HttpResponseMessage response)
-        {
-            return FindResponseFactory.Create<TIncludedDoc>(response);
         }
     }
 }
