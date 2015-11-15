@@ -1,5 +1,6 @@
 ﻿using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using MyCouch.EnsureThat;
 using MyCouch.EntitySchemes;
 using MyCouch.Extensions;
@@ -21,7 +22,7 @@ namespace MyCouch.Responses.Materializers
             EntityReflector = entityReflector;
         }
 
-        public virtual async void Materialize<T>(EntityResponse<T> response, HttpResponseMessage httpResponse) where T : class
+        public virtual async Task MaterializeAsync<T>(EntityResponse<T> response, HttpResponseMessage httpResponse) where T : class
         {
             using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
             {

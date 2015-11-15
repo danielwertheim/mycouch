@@ -1,16 +1,17 @@
 ﻿using System.Net.Http;
+using System.Threading.Tasks;
 using MyCouch.Extensions;
 
 namespace MyCouch.Responses.Materializers
 {
     public class AttachmentResponseMaterializer
     {
-        public virtual void Materialize(AttachmentResponse response, HttpResponseMessage httpResponse)
+        public virtual async Task MaterializeAsync(AttachmentResponse response, HttpResponseMessage httpResponse)
         {
             SetMissingIdFromRequestUri(response, httpResponse);
             SetMissingRevFromRequestHeaders(response, httpResponse);
             SetMissingNameFromRequestUri(response, httpResponse);
-            SetContent(response, httpResponse);
+            await SetContentAsync(response, httpResponse).ForAwait();
         }
 
         protected virtual void SetMissingIdFromRequestUri(AttachmentResponse response, HttpResponseMessage httpResponse)
@@ -31,7 +32,7 @@ namespace MyCouch.Responses.Materializers
                 response.Rev = httpResponse.Headers.GetETag();
         }
 
-        protected virtual async void SetContent(AttachmentResponse response, HttpResponseMessage httpResponse)
+        protected virtual async Task SetContentAsync(AttachmentResponse response, HttpResponseMessage httpResponse)
         {
             response.Content = await httpResponse.Content.ReadAsByteArrayAsync().ForAwait();
         }

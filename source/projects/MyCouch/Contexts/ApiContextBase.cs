@@ -8,7 +8,7 @@ namespace MyCouch.Contexts
 {
     public abstract class ApiContextBase<TConnection> where TConnection : class, IConnection
     {
-        protected TConnection Connection { get; private set; }
+        protected TConnection Connection { get; }
 
         protected ApiContextBase(TConnection connection)
         {

@@ -1,6 +1,8 @@
 ﻿using System.Net.Http;
+using System.Threading.Tasks;
 using MyCouch.EnsureThat;
 using MyCouch.Cloudant.Responses.Materializers;
+using MyCouch.Extensions;
 using MyCouch.Responses.Factories;
 using MyCouch.Responses.Materializers;
 using MyCouch.Serialization;
@@ -20,20 +22,20 @@ namespace MyCouch.Cloudant.Responses.Factories
             FailedResponseMaterializer = new FailedResponseMaterializer(serializer);
         }
 
-        public virtual SearchIndexResponse Create(HttpResponseMessage httpResponse)
+        public virtual async Task<SearchIndexResponse> CreateAsync(HttpResponseMessage httpResponse)
         {
-            return Materialize<SearchIndexResponse>(
+            return await MaterializeAsync<SearchIndexResponse>(
                 httpResponse,
-                SuccessfulResponseMaterializer.Materialize,
-                FailedResponseMaterializer.Materialize);
+                SuccessfulResponseMaterializer.MaterializeAsync,
+                FailedResponseMaterializer.MaterializeAsync).ForAwait();
         }
 
-        public virtual SearchIndexResponse<TIncludedDoc> Create<TIncludedDoc>(HttpResponseMessage httpResponse)
+        public virtual async Task<SearchIndexResponse<TIncludedDoc>> CreateAsync<TIncludedDoc>(HttpResponseMessage httpResponse)
         {
-            return Materialize<SearchIndexResponse<TIncludedDoc>>(
+            return await MaterializeAsync<SearchIndexResponse<TIncludedDoc>>(
                 httpResponse,
-                SuccessfulResponseMaterializer.Materialize,
-                FailedResponseMaterializer.Materialize);
+                SuccessfulResponseMaterializer.MaterializeAsync,
+                FailedResponseMaterializer.MaterializeAsync);
         }
     }
 }

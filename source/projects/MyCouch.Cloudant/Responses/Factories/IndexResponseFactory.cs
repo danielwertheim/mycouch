@@ -3,6 +3,8 @@ using MyCouch.Responses.Factories;
 using MyCouch.Responses.Materializers;
 using MyCouch.Serialization;
 using System.Net.Http;
+using System.Threading.Tasks;
+using MyCouch.Extensions;
 
 namespace MyCouch.Cloudant.Responses.Factories
 {
@@ -18,12 +20,12 @@ namespace MyCouch.Cloudant.Responses.Factories
             FailedResponseMaterializer = new FailedResponseMaterializer(serializer);
         }
 
-        public virtual IndexResponse Create(HttpResponseMessage httpResponse)
+        public virtual async Task<IndexResponse> CreateAsync(HttpResponseMessage httpResponse)
         {
-            return Materialize<IndexResponse>(
+            return await MaterializeAsync<IndexResponse>(
                 httpResponse,
-                SuccessfulResponseMaterializer.Materialize,
-                FailedResponseMaterializer.Materialize);
+                SuccessfulResponseMaterializer.MaterializeAsync,
+                FailedResponseMaterializer.MaterializeAsync).ForAwait();
         }
     }
 }

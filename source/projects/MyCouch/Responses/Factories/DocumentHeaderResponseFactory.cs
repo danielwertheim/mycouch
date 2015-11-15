@@ -1,5 +1,7 @@
 ﻿using System.Net.Http;
+using System.Threading.Tasks;
 using MyCouch.EnsureThat;
+using MyCouch.Extensions;
 using MyCouch.Responses.Materializers;
 using MyCouch.Serialization;
 
@@ -18,12 +20,12 @@ namespace MyCouch.Responses.Factories
             FailedResponseMaterializer = new FailedDocumentHeaderResponseMaterializer(serializer);
         }
 
-        public virtual DocumentHeaderResponse Create(HttpResponseMessage httpResponse)
+        public virtual async Task<DocumentHeaderResponse> CreateAsync(HttpResponseMessage httpResponse)
         {
-            return Materialize<DocumentHeaderResponse>(
+            return await MaterializeAsync<DocumentHeaderResponse>(
                 httpResponse,
-                SuccessfulResponseMaterializer.Materialize,
-                FailedResponseMaterializer.Materialize);
+                SuccessfulResponseMaterializer.MaterializeAsync,
+                FailedResponseMaterializer.MaterializeAsync).ForAwait();
         }
     }
 }

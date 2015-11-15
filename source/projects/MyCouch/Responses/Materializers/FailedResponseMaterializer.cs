@@ -18,16 +18,16 @@ namespace MyCouch.Responses.Materializers
             Serializer = serializer;
         }
 
-        public virtual void Materialize(Response response, HttpResponseMessage httpResponse)
+        public virtual async Task MaterializeAsync(Response response, HttpResponseMessage httpResponse)
         {
             var errorAndReasonExists = !string.IsNullOrWhiteSpace(response.Error) && !string.IsNullOrWhiteSpace(response.Reason);
             if (errorAndReasonExists)
                 return;
 
-            SetErrorAndReason(response, httpResponse);
+            await SetErrorAndReasonAsync(response, httpResponse).ForAwait();
         }
 
-        protected virtual async void SetErrorAndReason(Response response, HttpResponseMessage httpResponse)
+        protected virtual async Task SetErrorAndReasonAsync(Response response, HttpResponseMessage httpResponse)
         {
             var info = await GetInfoAsync(httpResponse);
 

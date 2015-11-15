@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using System.Threading.Tasks;
 using MyCouch.EnsureThat;
 using MyCouch.Extensions;
 using MyCouch.Serialization;
@@ -16,9 +17,9 @@ namespace MyCouch.Responses.Materializers
             _failedResponseMaterializer = new FailedResponseMaterializer(serializer);
         }
 
-        public virtual void Materialize(DocumentHeaderResponse response, HttpResponseMessage httpResponse)
+        public virtual async Task MaterializeAsync(DocumentHeaderResponse response, HttpResponseMessage httpResponse)
         {
-            _failedResponseMaterializer.Materialize(response, httpResponse);
+            await _failedResponseMaterializer.MaterializeAsync(response, httpResponse).ForAwait();
 
             SetMissingIdFromRequestUri(response, httpResponse);
         }

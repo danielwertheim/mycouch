@@ -1,5 +1,6 @@
-﻿using System;
-using System.Net.Http;
+﻿using System.Net.Http;
+using System.Threading.Tasks;
+using MyCouch.Extensions;
 using MyCouch.Responses.Materializers;
 
 namespace MyCouch.Responses.Factories
@@ -13,19 +14,23 @@ namespace MyCouch.Responses.Factories
             BasicResponseMaterializer = new BasicResponseMaterializer();
         }
 
-        protected virtual TResponse Materialize<TResponse>(
+        protected virtual async Task<TResponse> MaterializeAsync<TResponse>(
             HttpResponseMessage httpResponse,
-            Action<TResponse, HttpResponseMessage> sucessfulResponseMaterializer,
-            Action<TResponse, HttpResponseMessage> failedResponseMaterializer) where TResponse : Response, new()
+            ResponseMaterializer<TResponse> sucessfulResponseMaterializer = null,
+            ResponseMaterializer<TResponse> failedResponseMaterializer = null) where TResponse : Response, new()
         {
             var response = new TResponse();
 
-            BasicResponseMaterializer.Materialize(response, httpResponse);
+            await BasicResponseMaterializer.MaterializeAsync(response, httpResponse).ForAwait();
 
-            if (response.IsSuccess)
-                sucessfulResponseMaterializer(response, httpResponse);
-            else
-                failedResponseMaterializer(response, httpResponse);
+            if (response.IsSuccess && sucessfulResponseMaterializer != null)
+            {
+                await sucessfulResponseMaterializer(response, httpResponse).ForAwait();
+                return response;
+            }
+
+            if(!response.IsSuccess && failedResponseMaterializer != null)
+                await failedResponseMaterializer(response, httpResponse).ForAwait();
 
             return response;
         }

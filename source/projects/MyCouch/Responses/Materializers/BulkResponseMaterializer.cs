@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using System.Threading.Tasks;
 using MyCouch.EnsureThat;
 using MyCouch.Extensions;
 using MyCouch.Serialization;
@@ -16,7 +17,7 @@ namespace MyCouch.Responses.Materializers
             Serializer = serializer;
         }
 
-        public virtual async void Materialize(BulkResponse response, HttpResponseMessage httpResponse)
+        public virtual async Task MaterializeAsync(BulkResponse response, HttpResponseMessage httpResponse)
         {
             using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
                 response.Rows = Serializer.Deserialize<BulkResponse.Row[]>(content);

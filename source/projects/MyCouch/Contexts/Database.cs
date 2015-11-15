@@ -1,9 +1,7 @@
-﻿using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MyCouch.EnsureThat;
 using MyCouch.Extensions;
 using MyCouch.HttpRequestFactories;
-using MyCouch.Net;
 using MyCouch.Requests;
 using MyCouch.Responses;
 using MyCouch.Responses.Factories;
@@ -42,94 +40,55 @@ namespace MyCouch.Contexts
         public virtual async Task<DatabaseHeaderResponse> HeadAsync()
         {
             var request = new HeadDatabaseRequest(Connection.DbName);
-            var httpRequest = CreateHttpRequest(request);
+            var httpRequest = HeadHttpRequestFactory.Create(request);
 
             using (var httpResponse = await SendAsync(httpRequest).ForAwait())
-                return ProcessDatabaseHeaderResponse(request, httpResponse);
+                return await DatabaseHeaderResponseFactory.CreateAsync(request, httpResponse).ForAwait();
         }
 
         public virtual async Task<GetDatabaseResponse> GetAsync()
         {
-            var httpRequest = CreateHttpRequest(new GetDatabaseRequest(Connection.DbName));
+            var request = new GetDatabaseRequest(Connection.DbName);
+            var httpRequest = GetHttpRequestFactory.Create(request);
 
             using (var httpResponse = await SendAsync(httpRequest).ForAwait())
-                return ProcessGetDatabaseResponse(httpResponse);
+                return await GetDatabaseResponseFactory.CreateAsync(httpResponse).ForAwait();
         }
 
         public virtual async Task<DatabaseHeaderResponse> PutAsync()
         {
             var request = new PutDatabaseRequest(Connection.DbName);
-            var httpRequest = CreateHttpRequest(request);
+            var httpRequest = PutHttpRequestFactory.Create(request);
 
             using (var httpResponse = await SendAsync(httpRequest).ForAwait())
-                return ProcessDatabaseHeaderResponse(request, httpResponse);
+                return await DatabaseHeaderResponseFactory.CreateAsync(request, httpResponse).ForAwait();
         }
 
         public virtual async Task<DatabaseHeaderResponse> DeleteAsync()
         {
             var request = new DeleteDatabaseRequest(Connection.DbName);
-            var httpRequest = CreateHttpRequest(request);
+            var httpRequest = DeleteHttpRequestFactory.Create(request);
 
             using (var httpResponse = await SendAsync(httpRequest).ForAwait())
-                return ProcessDatabaseHeaderResponse(request, httpResponse);
+                return await DatabaseHeaderResponseFactory.CreateAsync(request, httpResponse).ForAwait();
         }
 
         public virtual async Task<DatabaseHeaderResponse> CompactAsync()
         {
             var request = new CompactDatabaseRequest(Connection.DbName);
-            var httpRequest = CreateHttpRequest(request);
+            var httpRequest = CompactHttpRequestFactory.Create(request);
 
             using (var httpResponse = await SendAsync(httpRequest).ForAwait())
-                return ProcessDatabaseHeaderResponse(request, httpResponse);
+                return await DatabaseHeaderResponseFactory.CreateAsync(request, httpResponse).ForAwait();
         }
 
         public virtual async Task<DatabaseHeaderResponse> ViewCleanupAsync()
         {
             var request = new ViewCleanupRequest(Connection.DbName);
-            var httpRequest = CreateHttpRequest(request);
+            var httpRequest = ViewCleanupHttpRequestFactory.Create(request);
 
             using (var httpResponse = await SendAsync(httpRequest).ForAwait())
-                return ProcessDatabaseHeaderResponse(request, httpResponse);
-        }
-
-        protected virtual HttpRequest CreateHttpRequest(GetDatabaseRequest request)
-        {
-            return GetHttpRequestFactory.Create(request);
-        }
-
-        protected virtual HttpRequest CreateHttpRequest(HeadDatabaseRequest request)
-        {
-            return HeadHttpRequestFactory.Create(request);
-        }
-
-        protected virtual HttpRequest CreateHttpRequest(PutDatabaseRequest request)
-        {
-            return PutHttpRequestFactory.Create(request);
-        }
-
-        protected virtual HttpRequest CreateHttpRequest(DeleteDatabaseRequest request)
-        {
-            return DeleteHttpRequestFactory.Create(request);
-        }
-
-        protected virtual HttpRequest CreateHttpRequest(CompactDatabaseRequest request)
-        {
-            return CompactHttpRequestFactory.Create(request);
-        }
-
-        protected virtual HttpRequest CreateHttpRequest(ViewCleanupRequest request)
-        {
-            return ViewCleanupHttpRequestFactory.Create(request);
-        }
-
-        protected virtual DatabaseHeaderResponse ProcessDatabaseHeaderResponse(DatabaseRequest request, HttpResponseMessage response)
-        {
-            return DatabaseHeaderResponseFactory.Create(request, response);
-        }
-
-        protected virtual GetDatabaseResponse ProcessGetDatabaseResponse(HttpResponseMessage response)
-        {
-            return GetDatabaseResponseFactory.Create(response);
+                return await DatabaseHeaderResponseFactory.CreateAsync(request, httpResponse).ForAwait();
         }
     }
 }

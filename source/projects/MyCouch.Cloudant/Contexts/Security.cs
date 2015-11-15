@@ -1,5 +1,4 @@
-﻿using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MyCouch.EnsureThat;
 using MyCouch.Cloudant.HttpRequestFactories;
 using MyCouch.Cloudant.Requests;
@@ -7,7 +6,6 @@ using MyCouch.Cloudant.Responses;
 using MyCouch.Cloudant.Responses.Factories;
 using MyCouch.Contexts;
 using MyCouch.Extensions;
-using MyCouch.Net;
 using MyCouch.Serialization;
 
 namespace MyCouch.Cloudant.Contexts
@@ -35,22 +33,12 @@ namespace MyCouch.Cloudant.Contexts
         {
             Ensure.That(request, "request").IsNotNull();
 
-            var httpRequest = CreateHttpRequest(request);
+            var httpRequest = GenerateApiKeyHttpRequestFactory.Create(request);
 
             using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                return ProcessHttpResponse(res);
+                return await GenerateApiKeyResponseFactory.CreateAsync(res).ForAwait();
             }
-        }
-
-        protected virtual HttpRequest CreateHttpRequest(GenerateApiKeyRequest request)
-        {
-            return GenerateApiKeyHttpRequestFactory.Create(request);
-        }
-
-        protected virtual GenerateApiKeyResponse ProcessHttpResponse(HttpResponseMessage response)
-        {
-            return GenerateApiKeyResponseFactory.Create(response);
         }
     }
 }

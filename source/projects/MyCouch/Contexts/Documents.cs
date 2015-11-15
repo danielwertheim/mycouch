@@ -53,11 +53,11 @@ namespace MyCouch.Contexts
 
         public virtual async Task<BulkResponse> BulkAsync(BulkRequest request)
         {
-            var httpRequest = CreateHttpRequest(request);
+            var httpRequest = BulkHttpRequestFactory.Create(request);
 
             using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                return ProcessBulkResponse(res);
+                return await BulkReponseFactory.CreateAsync(res).ForAwait();
             }
         }
 
@@ -73,11 +73,11 @@ namespace MyCouch.Contexts
 
         public virtual async Task<DocumentHeaderResponse> CopyAsync(CopyDocumentRequest request)
         {
-            var httpRequest = CreateHttpRequest(request);
+            var httpRequest = CopyDocumentHttpRequestFactory.Create(request);
 
             using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                return ProcessDocumentHeaderResponse(res);
+                return await DocumentHeaderReponseFactory.CreateAsync(res).ForAwait();
             }
         }
 
@@ -93,11 +93,11 @@ namespace MyCouch.Contexts
 
         public virtual async Task<DocumentHeaderResponse> ReplaceAsync(ReplaceDocumentRequest request)
         {
-            var httpRequest = CreateHttpRequest(request);
+            var httpRequest = ReplaceDocumentHttpRequestFactory.Create(request);
 
             using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                return ProcessDocumentHeaderResponse(res);
+                return await DocumentHeaderReponseFactory.CreateAsync(res).ForAwait();
             }
         }
 
@@ -108,11 +108,11 @@ namespace MyCouch.Contexts
 
         public virtual async Task<DocumentHeaderResponse> HeadAsync(HeadDocumentRequest request)
         {
-            var httpRequest = CreateHttpRequest(request);
+            var httpRequest = HeadDocumentHttpRequestFactory.Create(request);
 
             using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                return ProcessDocumentHeaderResponse(res);
+                return await DocumentHeaderReponseFactory.CreateAsync(res).ForAwait();
             }
         }
 
@@ -123,11 +123,11 @@ namespace MyCouch.Contexts
 
         public virtual async Task<DocumentResponse> GetAsync(GetDocumentRequest request)
         {
-            var httpRequest = CreateHttpRequest(request);
+            var httpRequest = GetDocumentHttpRequestFactory.Create(request);
 
             using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                return ProcessDocumentResponse(res);
+                return await DocumentReponseFactory.CreateAsync(res).ForAwait();
             }
         }
 
@@ -138,11 +138,11 @@ namespace MyCouch.Contexts
 
         public virtual async Task<DocumentHeaderResponse> PostAsync(PostDocumentRequest request)
         {
-            var httpRequest = CreateHttpRequest(request);
+            var httpRequest = PostDocumentHttpRequestFactory.Create(request);
 
             using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                return ProcessDocumentHeaderResponse(res);
+                return await DocumentHeaderReponseFactory.CreateAsync(res).ForAwait();
             }
         }
 
@@ -158,11 +158,11 @@ namespace MyCouch.Contexts
 
         public virtual async Task<DocumentHeaderResponse> PutAsync(PutDocumentRequest request)
         {
-            var httpRequest = CreateHttpRequest(request);
+            var httpRequest = PutDocumentHttpRequestFactory.Create(request);
 
             using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                return ProcessDocumentHeaderResponse(res);
+                return await DocumentHeaderReponseFactory.CreateAsync(res).ForAwait();
             }
         }
 
@@ -173,87 +173,22 @@ namespace MyCouch.Contexts
 
         public virtual async Task<DocumentHeaderResponse> DeleteAsync(DeleteDocumentRequest request)
         {
-            var httpRequest = CreateHttpRequest(request);
+            var httpRequest = DeleteDocumentHttpRequestFactory.Create(request);
 
             using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                return ProcessDocumentHeaderResponse(res);
+                return await DocumentHeaderReponseFactory.CreateAsync(res).ForAwait();
             }
         }
 
         public virtual async Task<RawResponse> ShowAsync(QueryShowRequest request)
         {
-            var httpRequest = CreateHttpRequest(request);
+            var httpRequest = QueryShowHttpRequestFactory.Create(request);
 
             using (var res = await SendAsync(httpRequest).ForAwait())
             {
-                return ProcessRawHttpResponse(res);
+                return await RawResponseFactory.CreateAsync(res).ForAwait();
             }
-        }
-
-        protected virtual HttpRequest CreateHttpRequest(BulkRequest request)
-        {
-            return BulkHttpRequestFactory.Create(request);
-        }
-
-        protected virtual HttpRequest CreateHttpRequest(CopyDocumentRequest request)
-        {
-            return CopyDocumentHttpRequestFactory.Create(request);
-        }
-
-        protected virtual HttpRequest CreateHttpRequest(ReplaceDocumentRequest request)
-        {
-            return ReplaceDocumentHttpRequestFactory.Create(request);
-        }
-
-        protected virtual HttpRequest CreateHttpRequest(HeadDocumentRequest request)
-        {
-            return HeadDocumentHttpRequestFactory.Create(request);
-        }
-
-        protected virtual HttpRequest CreateHttpRequest(GetDocumentRequest request)
-        {
-            return GetDocumentHttpRequestFactory.Create(request);
-        }
-
-        protected virtual HttpRequest CreateHttpRequest(DeleteDocumentRequest request)
-        {
-            return DeleteDocumentHttpRequestFactory.Create(request);
-        }
-
-        protected virtual HttpRequest CreateHttpRequest(PutDocumentRequest request)
-        {
-            return PutDocumentHttpRequestFactory.Create(request);
-        }
-
-        protected virtual HttpRequest CreateHttpRequest(PostDocumentRequest request)
-        {
-            return PostDocumentHttpRequestFactory.Create(request);
-        }
-
-        protected virtual HttpRequest CreateHttpRequest(QueryShowRequest request)
-        {
-            return QueryShowHttpRequestFactory.Create(request);
-        }
-
-        protected virtual BulkResponse ProcessBulkResponse(HttpResponseMessage response)
-        {
-            return BulkReponseFactory.Create(response);
-        }
-
-        protected virtual DocumentHeaderResponse ProcessDocumentHeaderResponse(HttpResponseMessage response)
-        {
-            return DocumentHeaderReponseFactory.Create(response);
-        }
-
-        protected virtual DocumentResponse ProcessDocumentResponse(HttpResponseMessage response)
-        {
-            return DocumentReponseFactory.Create(response);
-        }
-
-        protected virtual RawResponse ProcessRawHttpResponse(HttpResponseMessage response)
-        {
-            return RawResponseFactory.Create(response);
         }
     }
 }

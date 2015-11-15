@@ -40,7 +40,7 @@ namespace MyCouch.Contexts
 
             using (var httpResponse = await SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead).ForAwait())
             {
-                return ChangesResponseFactory.Create(httpResponse);
+                return await ChangesResponseFactory.CreateAsync(httpResponse).ForAwait();
             }
         }
 
@@ -50,7 +50,7 @@ namespace MyCouch.Contexts
 
             using (var httpResponse = await SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead).ForAwait())
             {
-                return ChangesResponseFactory.Create<TIncludedDoc>(httpResponse);
+                return await ChangesResponseFactory.CreateAsync<TIncludedDoc>(httpResponse).ForAwait();
             }
         }
 
@@ -60,7 +60,7 @@ namespace MyCouch.Contexts
 
             using (var httpResponse = await SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ForAwait())
             {
-                var response = ContinuousChangesResponseFactory.Create(httpResponse);
+                var response = await ContinuousChangesResponseFactory.CreateAsync(httpResponse).ForAwait();
                 if (response.IsSuccess)
                 {
                     using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
@@ -90,7 +90,7 @@ namespace MyCouch.Contexts
             {
                 using (var httpResponse = await SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ForAwait())
                 {
-                    var response = ContinuousChangesResponseFactory.Create(httpResponse);
+                    var response = await ContinuousChangesResponseFactory.CreateAsync(httpResponse).ForAwait();
                     if (response.IsSuccess)
                     {
                         using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
