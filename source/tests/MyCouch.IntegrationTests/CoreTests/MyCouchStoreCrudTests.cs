@@ -17,37 +17,37 @@ namespace MyCouch.IntegrationTests.CoreTests
         [MyFact(TestScenarios.MyCouchStore)]
         public virtual void FlowTestOfJson()
         {
-            var storeJson = SUT.StoreAsync(ClientTestData.Artists.Artist1Json);
-            storeJson.Result.Id.Should().Be(ClientTestData.Artists.Artist1Id);
-            storeJson.Result.Rev.Should().NotBeNullOrEmpty();
+            var storeJson = SUT.StoreAsync(ClientTestData.Artists.Artist1Json).Result;
+            storeJson.Id.Should().Be(ClientTestData.Artists.Artist1Id);
+            storeJson.Rev.Should().NotBeNullOrEmpty();
 
-            var getJsonById = SUT.GetByIdAsync(storeJson.Result.Id);
+            var getJsonById = SUT.GetByIdAsync(storeJson.Id);
             getJsonById.Result.Should().NotBeNullOrEmpty();
 
-            var getJsonByIdAndRev = SUT.GetByIdAsync(storeJson.Result.Id, storeJson.Result.Rev);
+            var getJsonByIdAndRev = SUT.GetByIdAsync(storeJson.Id, storeJson.Rev);
             getJsonByIdAndRev.Result.Should().NotBeNullOrEmpty();
 
-            var deleteByIdAndRev = SUT.DeleteAsync(storeJson.Result.Id, storeJson.Result.Rev);
-            deleteByIdAndRev.Result.Should().BeTrue();
+            var deleteByIdAndRev = SUT.DeleteAsync(storeJson.Id, storeJson.Rev).Result;
+            deleteByIdAndRev.Should().BeTrue();
         }
 
         [MyFact(TestScenarios.MyCouchStore)]
         public virtual void FlowTestOfEntities()
         {
-            var storeEntity = SUT.StoreAsync(ClientTestData.Artists.Artist2);
+            var storeEntity = SUT.StoreAsync(ClientTestData.Artists.Artist2).Result;
 
-            storeEntity.Result.ArtistId.Should().Be(ClientTestData.Artists.Artist2Id);
-            storeEntity.Result.ArtistRev.Should().NotBeNullOrEmpty();
+            storeEntity.ArtistId.Should().Be(ClientTestData.Artists.Artist2Id);
+            storeEntity.ArtistRev.Should().NotBeNullOrEmpty();
 
-            var getEntityById = SUT.GetByIdAsync<Artist>(storeEntity.Result.ArtistId);
+            var getEntityById = SUT.GetByIdAsync<Artist>(storeEntity.ArtistId);
             getEntityById.Result.Should().NotBeNull();
             getEntityById.Result.ArtistId.Should().Be(ClientTestData.Artists.Artist2Id);
-            getEntityById.Result.ArtistRev.Should().Be(storeEntity.Result.ArtistRev);
+            getEntityById.Result.ArtistRev.Should().Be(storeEntity.ArtistRev);
 
-            var getEntityByIdAndRev = SUT.GetByIdAsync<Artist>(storeEntity.Result.ArtistId, storeEntity.Result.ArtistRev);
+            var getEntityByIdAndRev = SUT.GetByIdAsync<Artist>(storeEntity.ArtistId, storeEntity.ArtistRev);
             getEntityByIdAndRev.Result.Should().NotBeNull();
             getEntityByIdAndRev.Result.ArtistId.Should().Be(ClientTestData.Artists.Artist2Id);
-            getEntityByIdAndRev.Result.ArtistRev.Should().Be(storeEntity.Result.ArtistRev);
+            getEntityByIdAndRev.Result.ArtistRev.Should().Be(storeEntity.ArtistRev);
 
             var deleteByEntity = SUT.DeleteAsync(getEntityById.Result);
             deleteByEntity.Result.Should().BeTrue();
