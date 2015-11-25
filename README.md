@@ -11,10 +11,12 @@ The asynchronous CouchDb and Cloudant client for .Net - builds on top of the asy
 
 [![Nuget](https://img.shields.io/nuget/v/mycouch.cloudant.svg)](https://www.nuget.org/packages/mycouch.cloudant/) [![Users](https://img.shields.io/nuget/dt/mycouch.cloudant.svg)](https://www.nuget.org/packages/mycouch.cloudant/)
 
-## Documentation, Roadmap, Milestones & Issues ##
+## Documentation, Release Notes & Issues ##
 The documentation is contained in the [project wiki](https://github.com/danielwertheim/mycouch/wiki).
 
-The ["Issues list" here on GitHub](https://github.com/danielwertheim/mycouch/issues) is used for tracking issues and headings.
+The **Release Notes** is well worth a read for [news and breaking changes info](https://github.com/danielwertheim/mycouch/wiki/release-notes).
+
+The ["Issues list" here on GitHub](https://github.com/danielwertheim/mycouch/issues) is used for tracking issues.
 
 ## More MyCouch projects ##
 [MyCouch.AspNet.Identity](https://github.com/danielwertheim/mycouch.aspnet.identity) - an ASP.Net identity provider for CouchDb and Cloudant
