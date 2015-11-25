@@ -21,7 +21,7 @@
     <releaseNotes>Can be found on project site: https://github.com/danielwertheim/mycouch/wiki/release-notes</releaseNotes>
     <tags>couchdb cloudant nosql</tags>
     <frameworkAssemblies>
-      <frameworkAssembly assemblyName="System.Net.Http" targetFramework="net45" />
+      <frameworkAssembly assemblyName="System.Net.Http" />
     </frameworkAssemblies>
     <dependencies>
        <group targetFramework="net45">
