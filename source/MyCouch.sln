@@ -6,7 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{72CA66FC-D747-44D6-AB61-0B1891CA075E}"
 	ProjectSection(SolutionItems) = preProject
 		NuGet.Config = NuGet.Config
-		SharedAssemblyInfo.cs = SharedAssemblyInfo.cs
+		GlobalAssemblyInfo.cs = GlobalAssemblyInfo.cs
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cloudant", "Cloudant", "{7D312491-214B-4BCC-AB6A-C0141D3A5216}"

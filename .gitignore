@@ -1,9 +1,12 @@
+# node
+node_modules/
+
 # vs
-.vs
-AppPackages/
+.vs/
 [Aa]pp_[Dd]ata/
 [Bb]in/
 [D]ebug/
+[Aa]rtifacts/
 [Oo]bj/
 [Tt]est[Rr]esult/
 [Tt]emp/
@@ -13,12 +16,15 @@ AppPackages/
 *.suo
 *.cache
 
-# deploy
-deploy/build
-deploy/builds
+# dnx
+project.lock.json
+artifacts/
 
-#tools
-tools/
+# deploy
+source/build/artifacts/
+source/build/node_modules/
+source/build/tools/
+!source/build/tools/packages.config
 
 # misc
 *~
@@ -37,6 +43,7 @@ testenvironments.local.json
 _ReSharper.*
 *.resharper*
 *.[Rr]e[Ss]harper.user
+*.DotSettings.user
 
 #windows stuff
 Thumbs.db

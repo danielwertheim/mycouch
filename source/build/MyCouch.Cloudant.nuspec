@@ -12,7 +12,7 @@
 
       This package contains support for Cloudant specific features. If you want pure CouchDB support go with the "MyCouch" package instead.
 
-      It tries to keep the domain language of Cloudant and CouchDB and lets you work with requests and responses but also provides you with an alternative simplifying async API. MyCouch lets you work with raw JSON and/or entities/POCOS without requiring any implementation of interfaces or base-classes etc. MyCouch provides you with some model conventions like injection of $doctype to the document. It is pluggable. If you don't like some piece, then hook in your implementation instead.
+      It tries to keep the domain language of Cloudant and CouchDB and lets you work with requests and responses but also provides you with an alternative simplifying async API. MyCouch lets you work with raw JSON and/or entities/POCOS without requiring any implementation of interfaces or base-classes etc, and it provides you with some model conventions like injection of $doctype to the document.
     </description>
     <iconUrl>https://raw.githubusercontent.com/danielwertheim/mycouch/master/resources/mycouch-nuget.png</iconUrl>
     <projectUrl>https://github.com/danielwertheim/MyCouch</projectUrl>
@@ -21,7 +21,7 @@
     <releaseNotes>Can be found on project site: https://github.com/danielwertheim/mycouch/wiki/release-notes</releaseNotes>
     <tags>couchdb cloudant lucene nosql</tags>
     <frameworkAssemblies>
-      <frameworkAssembly assemblyName="System.Net.Http" targetFramework="net45" />
+      <frameworkAssembly assemblyName="System.Net.Http" />
     </frameworkAssemblies>
     <dependencies>
        <group targetFramework="net45">
@@ -43,13 +43,13 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="MyCouch.Cloudant.Net45\*.dll" target="lib\net45" />
-    <file src="MyCouch.Cloudant.Net45\*.xml" target="lib\net45" />
-    <file src="MyCouch.Cloudant.Net45\*.dll" target="lib\net46" />
-    <file src="MyCouch.Cloudant.Net45\*.xml" target="lib\net46" />
-    <file src="MyCouch.Cloudant.Pcl\*.dll" target="lib\portable-netcore45+wpa81+MonoAndroid1+MonoTouch1" />
-    <file src="MyCouch.Cloudant.Pcl\*.xml" target="lib\portable-netcore45+wpa81+MonoAndroid1+MonoTouch1" />
-    <file src="MyCouch.Cloudant.Pcl\*.dll" target="lib\DNXCore5.0" />
-    <file src="MyCouch.Cloudant.Pcl\*.xml" target="lib\DNXCore5.0" />
+    <file src="MyCouch.Cloudant.Net45\MyCouch.Cloudant.Net45.dll" target="lib\net45" />
+    <file src="MyCouch.Cloudant.Net45\MyCouch.Cloudant.Net45.xml" target="lib\net45" />
+    <file src="MyCouch.Cloudant.Net45\MyCouch.Cloudant.Net45.dll" target="lib\net46" />
+    <file src="MyCouch.Cloudant.Net45\MyCouch.Cloudant.Net45.xml" target="lib\net46" />
+    <file src="MyCouch.Cloudant.Pcl\MyCouch.Cloudant.Pcl.dll" target="lib\portable-netcore45+wpa81+MonoAndroid1+MonoTouch1" />
+    <file src="MyCouch.Cloudant.Pcl\MyCouch.Cloudant.Pcl.xml" target="lib\portable-netcore45+wpa81+MonoAndroid1+MonoTouch1" />
+    <file src="MyCouch.Cloudant.Pcl\MyCouch.Cloudant.Pcl.dll" target="lib\DNXCore5.0" />
+    <file src="MyCouch.Cloudant.Pcl\MyCouch.Cloudant.Pcl.xml" target="lib\DNXCore5.0" />
   </files>
 </package>
