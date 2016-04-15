@@ -5,11 +5,11 @@ The asynchronous CouchDb and Cloudant client for .Net - builds on top of the asy
 
 **MyCouch**
 
-[![Nuget](https://img.shields.io/nuget/v/mycouch.svg)](https://www.nuget.org/packages/mycouch/) [![Users](https://img.shields.io/nuget/dt/mycouch.svg)](https://www.nuget.org/packages/mycouch/)
+[![Nuget](https://img.shields.io/nuget/v/mycouch.svg)](https://www.nuget.org/packages/mycouch/)
 
 **MyCouch.Cloudant**
 
-[![Nuget](https://img.shields.io/nuget/v/mycouch.cloudant.svg)](https://www.nuget.org/packages/mycouch.cloudant/) [![Users](https://img.shields.io/nuget/dt/mycouch.cloudant.svg)](https://www.nuget.org/packages/mycouch.cloudant/)
+[![Nuget](https://img.shields.io/nuget/v/mycouch.cloudant.svg)](https://www.nuget.org/packages/mycouch.cloudant/)
 
 ## Documentation, Release Notes & Issues ##
 The documentation is contained in the [project wiki](https://github.com/danielwertheim/mycouch/wiki).
