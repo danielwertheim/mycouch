@@ -17,9 +17,9 @@ namespace MyCouch
 
         public IMyCouchClient Client { get; protected set; }
 
-        public MyCouchStore(string dbUri, string dbName = null) : this(new MyCouchClient(dbUri, dbName)) { }
+        public MyCouchStore(string serverAddress, string dbName = null) : this(new MyCouchClient(serverAddress, dbName)) { }
 
-        public MyCouchStore(Uri dbUri, string dbName = null) : this(new MyCouchClient(dbUri, dbName)) { }
+        public MyCouchStore(Uri serverAddress, string dbName = null) : this(new MyCouchClient(serverAddress, dbName)) { }
 
         public MyCouchStore(IMyCouchClient client)
         {
