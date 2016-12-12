@@ -13,12 +13,12 @@
           "lib/portable-net40+sl5+win8+wp8+wpa81/FluentAssertions.dll": {}
         }
       },
-      "Newtonsoft.Json/7.0.1": {
+      "Newtonsoft.Json/9.0.1": {
         "compile": {
-          "lib/portable-net40+sl5+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+          "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
         },
         "runtime": {
-          "lib/portable-net40+sl5+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+          "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
         }
       }
     }
@@ -28,9 +28,9 @@
       "sha512": "AZJ1faVNtNhEscVjFXhUZXqhuMV4/u104RCXuL70R+y2HMF+ZL8Est5xRgo8cN5pMhVfSUdsyVZVXuJBRrXUBw==",
       "type": "Package",
       "files": [
+        "FluentAssertions.nuspec",
         "[Content_Types].xml",
         "_rels/.rels",
-        "FluentAssertions.nuspec",
         "lib/dotnet/FluentAssertions.Core.dll",
         "lib/dotnet/FluentAssertions.Core.pdb",
         "lib/dotnet/FluentAssertions.dll",
@@ -60,9 +60,9 @@
         "lib/portable-net40+sl5+win8+wp8+wpa81/FluentAssertions.Core.dll",
         "lib/portable-net40+sl5+win8+wp8+wpa81/FluentAssertions.Core.pdb",
         "lib/portable-net40+sl5+win8+wp8+wpa81/FluentAssertions.Core.xml",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/FluentAssertions.XML",
         "lib/portable-net40+sl5+win8+wp8+wpa81/FluentAssertions.dll",
         "lib/portable-net40+sl5+win8+wp8+wpa81/FluentAssertions.pdb",
-        "lib/portable-net40+sl5+win8+wp8+wpa81/FluentAssertions.XML",
         "lib/portable-win81+wpa81/FluentAssertions.Core.dll",
         "lib/portable-win81+wpa81/FluentAssertions.Core.pdb",
         "lib/portable-win81+wpa81/FluentAssertions.Core.xml",
@@ -70,16 +70,22 @@
         "lib/portable-win81+wpa81/FluentAssertions.pdb",
         "lib/portable-win81+wpa81/FluentAssertions.pri",
         "lib/portable-win81+wpa81/FluentAssertions.xml",
-        "lib/sl5/de/Microsoft.CSharp.resources.dll",
-        "lib/sl5/de/System.Xml.Linq.resources.dll",
-        "lib/sl5/es/Microsoft.CSharp.resources.dll",
-        "lib/sl5/es/System.Xml.Linq.resources.dll",
         "lib/sl5/FluentAssertions.Core.dll",
         "lib/sl5/FluentAssertions.Core.pdb",
         "lib/sl5/FluentAssertions.Core.xml",
         "lib/sl5/FluentAssertions.dll",
         "lib/sl5/FluentAssertions.pdb",
         "lib/sl5/FluentAssertions.xml",
+        "lib/sl5/Microsoft.CSharp.dll",
+        "lib/sl5/Microsoft.CSharp.xml",
+        "lib/sl5/Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight.dll",
+        "lib/sl5/Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight.xml",
+        "lib/sl5/System.Xml.Linq.dll",
+        "lib/sl5/System.Xml.Linq.xml",
+        "lib/sl5/de/Microsoft.CSharp.resources.dll",
+        "lib/sl5/de/System.Xml.Linq.resources.dll",
+        "lib/sl5/es/Microsoft.CSharp.resources.dll",
+        "lib/sl5/es/System.Xml.Linq.resources.dll",
         "lib/sl5/fr/Microsoft.CSharp.resources.dll",
         "lib/sl5/fr/System.Xml.Linq.resources.dll",
         "lib/sl5/it/Microsoft.CSharp.resources.dll",
@@ -88,14 +94,8 @@
         "lib/sl5/ja/System.Xml.Linq.resources.dll",
         "lib/sl5/ko/Microsoft.CSharp.resources.dll",
         "lib/sl5/ko/System.Xml.Linq.resources.dll",
-        "lib/sl5/Microsoft.CSharp.dll",
-        "lib/sl5/Microsoft.CSharp.xml",
-        "lib/sl5/Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight.dll",
-        "lib/sl5/Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight.xml",
         "lib/sl5/ru/Microsoft.CSharp.resources.dll",
         "lib/sl5/ru/System.Xml.Linq.resources.dll",
-        "lib/sl5/System.Xml.Linq.dll",
-        "lib/sl5/System.Xml.Linq.xml",
         "lib/sl5/zh-Hans/Microsoft.CSharp.resources.dll",
         "lib/sl5/zh-Hans/System.Xml.Linq.resources.dll",
         "lib/sl5/zh-Hant/Microsoft.CSharp.resources.dll",
@@ -112,12 +112,13 @@
         "package/services/metadata/core-properties/7dc7413b48c741dcb1760ddc427b24d7.psmdcp"
       ]
     },
-    "Newtonsoft.Json/7.0.1": {
-      "sha512": "q3V4KLetMLnt1gpAVWgtXnHjKs0UG/RalBc29u2ZKxd5t5Ze4JBL5WiiYIklJyK/5CRiIiNwigVQUo0FgbsuWA==",
-      "type": "Package",
+    "Newtonsoft.Json/9.0.1": {
+      "sha512": "U82mHQSKaIk+lpSVCbWYKNavmNH1i5xrExDEquU1i6I5pV6UMOqRnJRSlKO3cMPfcpp0RgDY+8jUXHdQ4IfXvw==",
+      "type": "package",
+      "path": "Newtonsoft.Json/9.0.1",
       "files": [
-        "[Content_Types].xml",
-        "_rels/.rels",
+        "Newtonsoft.Json.9.0.1.nupkg.sha512",
+        "Newtonsoft.Json.nuspec",
         "lib/net20/Newtonsoft.Json.dll",
         "lib/net20/Newtonsoft.Json.xml",
         "lib/net35/Newtonsoft.Json.dll",
@@ -126,12 +127,12 @@
         "lib/net40/Newtonsoft.Json.xml",
         "lib/net45/Newtonsoft.Json.dll",
         "lib/net45/Newtonsoft.Json.xml",
+        "lib/netstandard1.0/Newtonsoft.Json.dll",
+        "lib/netstandard1.0/Newtonsoft.Json.xml",
         "lib/portable-net40+sl5+wp80+win8+wpa81/Newtonsoft.Json.dll",
         "lib/portable-net40+sl5+wp80+win8+wpa81/Newtonsoft.Json.xml",
-        "lib/portable-net45+wp80+win8+wpa81+dnxcore50/Newtonsoft.Json.dll",
-        "lib/portable-net45+wp80+win8+wpa81+dnxcore50/Newtonsoft.Json.xml",
-        "Newtonsoft.Json.nuspec",
-        "package/services/metadata/core-properties/49e907fc018c4c7ab632e6d4ad4766f8.psmdcp",
+        "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.xml",
         "tools/install.ps1"
       ]
     }
@@ -139,7 +140,7 @@
   "projectFileDependencyGroups": {
     "": [
       "FluentAssertions >= 4.0.0",
-      "Newtonsoft.Json >= 7.0.1"
+      "Newtonsoft.Json >= 9.0.1"
     ],
     ".NETPortable,Version=v4.5,Profile=Profile111": []
   }
