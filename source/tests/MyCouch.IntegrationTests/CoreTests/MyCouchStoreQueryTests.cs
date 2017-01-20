@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using MyCouch.IntegrationTests.TestFixtures;
@@ -544,6 +545,26 @@ namespace MyCouch.IntegrationTests.CoreTests
                 .ToArray();
 
             values.ShouldBeEquivalentTo(ArtistsById);
+        }
+
+
+        [MyFact(TestScenarios.MyCouchStore)]
+        public void Query_When_Key_is_specified_using_custom_query_parameters_Then_the_matching_row_is_returned()
+        {
+            var artist = ArtistsById[2];
+            var query = new Query(ClientTestData.Views.ArtistsAlbumsViewId)
+                .Configure(q => q.CustomQueryParameters(new Dictionary<string, object>
+                {
+                    ["key"] = $"\"{artist.Name}\""
+                }));
+
+            var values = SUT.QueryAsync(query)
+                .Result
+                .OrderBy(r => r.Id)
+                .Select(r => r.Value)
+                .ToArray();
+
+            values.ShouldBeEquivalentTo(new[] { DbClient.Serializer.Serialize(artist.Albums) });
         }
     }
 }

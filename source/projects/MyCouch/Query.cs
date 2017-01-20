@@ -201,7 +201,11 @@ namespace MyCouch
         /// <summary>
         /// Additional custom query string parameters.
         /// </summary>
-        public IDictionary<string, object> CustomQueryParameters { get; set; }
+        public IDictionary<string, object> CustomQueryParameters
+        {
+            get { return State.CustomQueryParameters; }
+            set { State.CustomQueryParameters = value; }
+        }
 
         /// <summary>
         /// Indicates if there are any <see cref="CustomQueryParameters"/> or not.
