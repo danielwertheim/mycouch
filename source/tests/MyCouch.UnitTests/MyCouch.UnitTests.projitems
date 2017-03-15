@@ -34,6 +34,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Net\BasicAuthStringTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Net\ConnectionTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)QueryConfigurationTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)QueryTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Requests\QueryShowRequestTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Requests\QueryViewRequestTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Serialization\DocumentSerializationTests.cs" />
