@@ -55,7 +55,7 @@ namespace MyCouch.Net
                 throw new ObjectDisposedException(GetType().Name);
         }
 
-        protected HttpClient CreateHttpClient(ConnectionInfo connectionInfo)
+        protected virtual HttpClient CreateHttpClient(ConnectionInfo connectionInfo)
         {
             var handler = new HttpClientHandler
             {
