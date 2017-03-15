@@ -8,7 +8,7 @@ var gulp = require('gulp'),
     argv = require('yargs').argv,
     sequence = require('run-sequence');
 
-var ver = '4.0.0',
+var ver = '5.0.0',
     config = {
         srcdir: './../',
         projects: ['MyCouch.Net45', 'MyCouch.Pcl', 'MyCouch.Cloudant.Net45', 'MyCouch.Cloudant.Pcl'],

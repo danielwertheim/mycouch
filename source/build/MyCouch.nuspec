@@ -24,18 +24,7 @@
       <frameworkAssembly assemblyName="System.Net.Http" />
     </frameworkAssemblies>
     <dependencies>
-       <group targetFramework="net45">
-         <dependency id="Newtonsoft.Json" version="7.0.1" />
-       </group>
-       <group targetFramework="net46">
-         <dependency id="Newtonsoft.Json" version="7.0.1" />
-       </group>
-       <group targetFramework="portable-netcore45+wpa81+MonoAndroid1+MonoTouch1">
-         <dependency id="Newtonsoft.Json" version="7.0.1" />
-       </group>
-       <group targetFramework="DNXCore5.0">
-         <dependency id="Newtonsoft.Json" version="7.0.1" />
-       </group>
+	  <dependency id="Newtonsoft.Json" version="9.0.1" />
     </dependencies>
   </metadata>
   <files>
