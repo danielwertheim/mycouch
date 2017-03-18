@@ -1,6 +1,3 @@
-# node
-node_modules/
-
 # vs
 .vs/
 [Aa]pp_[Dd]ata/
@@ -21,10 +18,9 @@ project.lock.json
 artifacts/
 
 # deploy
-source/build/artifacts/
-source/build/node_modules/
-source/build/tools/
-!source/build/tools/packages.config
+build/
+tools/
+!tools/packages.config
 
 # misc
 *~
