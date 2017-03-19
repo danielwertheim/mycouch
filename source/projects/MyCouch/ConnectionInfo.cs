@@ -38,6 +38,9 @@ namespace MyCouch
         public Uri Address { get; }
         public TimeSpan? Timeout { get; set; }
         public BasicAuthString BasicAuth { get; set; }
+        public bool AllowAutoRedirect { get; set; } = false;
+        public bool ExpectContinue { get; set; } = false;
+        public bool UseProxy { get; set; } = false;
 
         protected ConnectionInfo(Uri address)
         {
