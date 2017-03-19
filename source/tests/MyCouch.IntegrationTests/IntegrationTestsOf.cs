@@ -49,7 +49,7 @@ namespace MyCouch.IntegrationTests
             disposableSut?.Dispose();
         }
 
-        protected void EnsureCleanEnvironment()
+        private void EnsureCleanEnvironment()
         {
             if (!(this is IPreserveStatePerFixture))
                 IntegrationTestsRuntime.EnsureCleanEnvironment();

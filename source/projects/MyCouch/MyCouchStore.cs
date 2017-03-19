@@ -109,7 +109,7 @@ namespace MyCouch
             return response.Content;
         }
 
-        public async virtual Task<DocumentHeader> SetAsync(string id, string doc)
+        public virtual async Task<DocumentHeader> SetAsync(string id, string doc)
         {
             ThrowIfDisposed();
 
@@ -123,7 +123,7 @@ namespace MyCouch
                 : await StoreAsync(header.Id, header.Rev, doc).ForAwait();
         }
 
-        public async virtual Task<T> SetAsync<T>(T entity) where T : class
+        public virtual async Task<T> SetAsync<T>(T entity) where T : class
         {
             ThrowIfDisposed();
 
@@ -314,7 +314,7 @@ namespace MyCouch
             return new DocumentHeader(response.Id, response.Rev);
         }
 
-        public async virtual Task<QueryInfo> GetHeadersAsync(string[] ids, Action<DocumentHeader> onResult)
+        public virtual async Task<QueryInfo> GetHeadersAsync(string[] ids, Action<DocumentHeader> onResult)
         {
             ThrowIfDisposed();
 
@@ -332,7 +332,7 @@ namespace MyCouch
             return CreateQueryInfoFrom(response);
         }
 
-        public async virtual Task<IEnumerable<DocumentHeader>> GetHeadersAsync(string[] ids)
+        public virtual async Task<IEnumerable<DocumentHeader>> GetHeadersAsync(string[] ids)
         {
             ThrowIfDisposed();
 
@@ -387,7 +387,7 @@ namespace MyCouch
             return GetByIdsAsync<string>(ids, onResult);
         }
 
-        public async virtual Task<QueryInfo> GetByIdsAsync<T>(string[] ids, Action<T> onResult) where T : class
+        public virtual async Task<QueryInfo> GetByIdsAsync<T>(string[] ids, Action<T> onResult) where T : class
         {
             ThrowIfDisposed();
 
@@ -438,7 +438,7 @@ namespace MyCouch
             return GetValueByKeysAsync<string>(view, keys, onResult);
         }
 
-        public async virtual Task<QueryInfo> GetValueByKeysAsync<TValue>(ViewIdentity view, object[] keys, Action<TValue> onResult) where TValue : class
+        public virtual async Task<QueryInfo> GetValueByKeysAsync<TValue>(ViewIdentity view, object[] keys, Action<TValue> onResult) where TValue : class
         {
             ThrowIfDisposed();
 
@@ -484,7 +484,7 @@ namespace MyCouch
             return GetIncludedDocByKeysAsync<string>(view, keys, onResult);
         }
 
-        public async virtual Task<QueryInfo> GetIncludedDocByKeysAsync<TIncludedDoc>(ViewIdentity view, object[] keys, Action<TIncludedDoc> onResult) where TIncludedDoc : class
+        public virtual async Task<QueryInfo> GetIncludedDocByKeysAsync<TIncludedDoc>(ViewIdentity view, object[] keys, Action<TIncludedDoc> onResult) where TIncludedDoc : class
         {
             ThrowIfDisposed();
 
