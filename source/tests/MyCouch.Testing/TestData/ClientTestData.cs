@@ -16,7 +16,7 @@ namespace MyCouch.Testing.TestData
             public const string Artist3Id = "test:3";
             public const string Artist4Id = "test:4";
 
-            public static readonly Artist Artist1 = new Artist
+            public static Artist Artist1 => new Artist
             {
                 ArtistId = Artist1Id,
                 Name = "Fake artist 1", 
@@ -25,7 +25,7 @@ namespace MyCouch.Testing.TestData
                     new Album { Name = "Greatest fakes #1" }
                 }
             };
-            public static readonly Artist Artist2 = new Artist
+            public static Artist Artist2 => new Artist
             {
                 ArtistId = Artist2Id, 
                 Name = "Fake artist 1", 
@@ -34,7 +34,7 @@ namespace MyCouch.Testing.TestData
                     new Album { Name = "Greatest fakes #2.1" }, new Album { Name = "Greatest fakes #2.2" }
                 }
             };
-            public static readonly Artist Artist3 = new Artist
+            public static Artist Artist3 => new Artist
             {
                 ArtistId = Artist3Id, 
                 Name = "Fake artist 1", 
@@ -43,7 +43,7 @@ namespace MyCouch.Testing.TestData
                     new Album { Name = "Greatest fakes #3.1" }, new Album { Name = "Greatest fakes #3.2" }, new Album { Name = "Greatest fakes #3.3" }
                 }
             };
-            public static readonly Artist Artist4 = new Artist
+            public static Artist Artist4 => new Artist
             {
                 ArtistId = Artist4Id,
                 Name = "Fake artist 1", 
