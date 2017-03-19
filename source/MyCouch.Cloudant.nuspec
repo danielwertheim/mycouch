@@ -26,19 +26,19 @@
     <dependencies>
        <group targetFramework="net45">
          <dependency id="MyCouch" version="[$version$]" />
-         <dependency id="Newtonsoft.Json" version="7.0.1" />
+         <dependency id="Newtonsoft.Json" version="9.0.0" />
        </group>
        <group targetFramework="net46">
          <dependency id="MyCouch" version="[$version$]" />
-         <dependency id="Newtonsoft.Json" version="7.0.1" />
+         <dependency id="Newtonsoft.Json" version="9.0.0" />
        </group>
        <group targetFramework="portable-netcore45+wpa81+MonoAndroid1+MonoTouch1">
          <dependency id="MyCouch" version="[$version$]" />
-         <dependency id="Newtonsoft.Json" version="7.0.1" />
+         <dependency id="Newtonsoft.Json" version="9.0.0" />
        </group>
        <group targetFramework="DNXCore5.0">
          <dependency id="MyCouch" version="[$version$]" />
-         <dependency id="Newtonsoft.Json" version="7.0.1" />
+         <dependency id="Newtonsoft.Json" version="9.0.0" />
        </group>
     </dependencies>
   </metadata>

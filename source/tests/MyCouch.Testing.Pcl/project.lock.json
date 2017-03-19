@@ -1,9 +1,9 @@
 {
-  "locked": false,
-  "version": 1,
+  "version": 2,
   "targets": {
     ".NETPortable,Version=v4.5,Profile=Profile111": {
-      "FluentAssertions/4.0.0": {
+      "FluentAssertions/4.19.2": {
+        "type": "package",
         "compile": {
           "lib/portable-net40+sl5+win8+wp8+wpa81/FluentAssertions.Core.dll": {},
           "lib/portable-net40+sl5+win8+wp8+wpa81/FluentAssertions.dll": {}
@@ -13,35 +13,40 @@
           "lib/portable-net40+sl5+win8+wp8+wpa81/FluentAssertions.dll": {}
         }
       },
-      "Newtonsoft.Json/7.0.1": {
+      "Newtonsoft.Json/9.0.1": {
+        "type": "package",
         "compile": {
-          "lib/portable-net40+sl5+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+          "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
         },
         "runtime": {
-          "lib/portable-net40+sl5+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+          "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+        }
+      },
+      "MyCouch.Cloudant.Pcl/1.0.0": {
+        "type": "project",
+        "framework": ".NETPortable,Version=v4.5,Profile=Profile111",
+        "dependencies": {
+          "MyCouch.Pcl": "1.0.0",
+          "Newtonsoft.Json": "9.0.1"
+        }
+      },
+      "MyCouch.Pcl/1.0.0": {
+        "type": "project",
+        "framework": ".NETPortable,Version=v4.5,Profile=Profile111",
+        "dependencies": {
+          "Newtonsoft.Json": "9.0.1"
         }
       }
     }
   },
   "libraries": {
-    "FluentAssertions/4.0.0": {
-      "sha512": "AZJ1faVNtNhEscVjFXhUZXqhuMV4/u104RCXuL70R+y2HMF+ZL8Est5xRgo8cN5pMhVfSUdsyVZVXuJBRrXUBw==",
-      "type": "Package",
+    "FluentAssertions/4.19.2": {
+      "sha512": "RLp96ucizCjVWpUUX3IY0SQpJ/bFrTFF/F/0QNTZGxp3Clp5Nw6N5jQ8YjBZeDvx9D9IKWts12dvkmPZL0LzpQ==",
+      "type": "package",
+      "path": "fluentassertions/4.19.2",
       "files": [
-        "[Content_Types].xml",
-        "_rels/.rels",
-        "FluentAssertions.nuspec",
-        "lib/dotnet/FluentAssertions.Core.dll",
-        "lib/dotnet/FluentAssertions.Core.pdb",
-        "lib/dotnet/FluentAssertions.dll",
-        "lib/dotnet/FluentAssertions.pdb",
-        "lib/dotnet/FluentAssertions.xml",
-        "lib/monoandroid/FluentAssertions.Core.dll",
-        "lib/monoandroid/FluentAssertions.Core.pdb",
-        "lib/monoandroid/FluentAssertions.Core.xml",
-        "lib/monotouch/FluentAssertions.Core.dll",
-        "lib/monotouch/FluentAssertions.Core.pdb",
-        "lib/monotouch/FluentAssertions.Core.xml",
+        "fluentassertions.4.19.2.nupkg.sha512",
+        "fluentassertions.nuspec",
         "lib/net40/FluentAssertions.Core.dll",
         "lib/net40/FluentAssertions.Core.pdb",
         "lib/net40/FluentAssertions.Core.xml",
@@ -54,15 +59,18 @@
         "lib/net45/FluentAssertions.dll",
         "lib/net45/FluentAssertions.pdb",
         "lib/net45/FluentAssertions.xml",
-        "lib/portable-monotouch+monoandroid+xamarin.ios/FluentAssertions.Core.dll",
-        "lib/portable-monotouch+monoandroid+xamarin.ios/FluentAssertions.Core.pdb",
-        "lib/portable-monotouch+monoandroid+xamarin.ios/FluentAssertions.Core.xml",
+        "lib/netstandard1.3/FluentAssertions.Core.XML",
+        "lib/netstandard1.3/FluentAssertions.Core.dll",
+        "lib/netstandard1.3/FluentAssertions.Core.pdb",
+        "lib/netstandard1.3/FluentAssertions.dll",
+        "lib/netstandard1.3/FluentAssertions.pdb",
+        "lib/netstandard1.3/FluentAssertions.xml",
         "lib/portable-net40+sl5+win8+wp8+wpa81/FluentAssertions.Core.dll",
         "lib/portable-net40+sl5+win8+wp8+wpa81/FluentAssertions.Core.pdb",
         "lib/portable-net40+sl5+win8+wp8+wpa81/FluentAssertions.Core.xml",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/FluentAssertions.XML",
         "lib/portable-net40+sl5+win8+wp8+wpa81/FluentAssertions.dll",
         "lib/portable-net40+sl5+win8+wp8+wpa81/FluentAssertions.pdb",
-        "lib/portable-net40+sl5+win8+wp8+wpa81/FluentAssertions.XML",
         "lib/portable-win81+wpa81/FluentAssertions.Core.dll",
         "lib/portable-win81+wpa81/FluentAssertions.Core.pdb",
         "lib/portable-win81+wpa81/FluentAssertions.Core.xml",
@@ -70,16 +78,22 @@
         "lib/portable-win81+wpa81/FluentAssertions.pdb",
         "lib/portable-win81+wpa81/FluentAssertions.pri",
         "lib/portable-win81+wpa81/FluentAssertions.xml",
-        "lib/sl5/de/Microsoft.CSharp.resources.dll",
-        "lib/sl5/de/System.Xml.Linq.resources.dll",
-        "lib/sl5/es/Microsoft.CSharp.resources.dll",
-        "lib/sl5/es/System.Xml.Linq.resources.dll",
         "lib/sl5/FluentAssertions.Core.dll",
         "lib/sl5/FluentAssertions.Core.pdb",
         "lib/sl5/FluentAssertions.Core.xml",
         "lib/sl5/FluentAssertions.dll",
         "lib/sl5/FluentAssertions.pdb",
         "lib/sl5/FluentAssertions.xml",
+        "lib/sl5/Microsoft.CSharp.dll",
+        "lib/sl5/Microsoft.CSharp.xml",
+        "lib/sl5/Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight.dll",
+        "lib/sl5/Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight.xml",
+        "lib/sl5/System.Xml.Linq.dll",
+        "lib/sl5/System.Xml.Linq.xml",
+        "lib/sl5/de/Microsoft.CSharp.resources.dll",
+        "lib/sl5/de/System.Xml.Linq.resources.dll",
+        "lib/sl5/es/Microsoft.CSharp.resources.dll",
+        "lib/sl5/es/System.Xml.Linq.resources.dll",
         "lib/sl5/fr/Microsoft.CSharp.resources.dll",
         "lib/sl5/fr/System.Xml.Linq.resources.dll",
         "lib/sl5/it/Microsoft.CSharp.resources.dll",
@@ -88,36 +102,45 @@
         "lib/sl5/ja/System.Xml.Linq.resources.dll",
         "lib/sl5/ko/Microsoft.CSharp.resources.dll",
         "lib/sl5/ko/System.Xml.Linq.resources.dll",
-        "lib/sl5/Microsoft.CSharp.dll",
-        "lib/sl5/Microsoft.CSharp.xml",
-        "lib/sl5/Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight.dll",
-        "lib/sl5/Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight.xml",
         "lib/sl5/ru/Microsoft.CSharp.resources.dll",
         "lib/sl5/ru/System.Xml.Linq.resources.dll",
-        "lib/sl5/System.Xml.Linq.dll",
-        "lib/sl5/System.Xml.Linq.xml",
         "lib/sl5/zh-Hans/Microsoft.CSharp.resources.dll",
         "lib/sl5/zh-Hans/System.Xml.Linq.resources.dll",
         "lib/sl5/zh-Hant/Microsoft.CSharp.resources.dll",
         "lib/sl5/zh-Hant/System.Xml.Linq.resources.dll",
+        "lib/uap10.0/FluentAssertions.Core.XML",
+        "lib/uap10.0/FluentAssertions.Core.dll",
+        "lib/uap10.0/FluentAssertions.Core.pdb",
+        "lib/uap10.0/FluentAssertions.dll",
+        "lib/uap10.0/FluentAssertions.pdb",
+        "lib/uap10.0/FluentAssertions.xml",
+        "lib/win81/FluentAssertions.Core.dll",
+        "lib/win81/FluentAssertions.Core.pdb",
+        "lib/win81/FluentAssertions.Core.xml",
+        "lib/win81/FluentAssertions.dll",
+        "lib/win81/FluentAssertions.pdb",
+        "lib/win81/FluentAssertions.pri",
+        "lib/win81/FluentAssertions.xml",
         "lib/wp8/FluentAssertions.Core.dll",
         "lib/wp8/FluentAssertions.Core.pdb",
         "lib/wp8/FluentAssertions.Core.xml",
         "lib/wp8/FluentAssertions.dll",
         "lib/wp8/FluentAssertions.pdb",
         "lib/wp8/FluentAssertions.xml",
-        "lib/xamarin.ios/FluentAssertions.Core.dll",
-        "lib/xamarin.ios/FluentAssertions.Core.pdb",
-        "lib/xamarin.ios/FluentAssertions.Core.xml",
-        "package/services/metadata/core-properties/7dc7413b48c741dcb1760ddc427b24d7.psmdcp"
+        "lib/wpa81/FluentAssertions.Core.dll",
+        "lib/wpa81/FluentAssertions.Core.pdb",
+        "lib/wpa81/FluentAssertions.Core.xml",
+        "lib/wpa81/FluentAssertions.dll",
+        "lib/wpa81/FluentAssertions.pdb",
+        "lib/wpa81/FluentAssertions.pri",
+        "lib/wpa81/FluentAssertions.xml"
       ]
     },
-    "Newtonsoft.Json/7.0.1": {
-      "sha512": "q3V4KLetMLnt1gpAVWgtXnHjKs0UG/RalBc29u2ZKxd5t5Ze4JBL5WiiYIklJyK/5CRiIiNwigVQUo0FgbsuWA==",
-      "type": "Package",
+    "Newtonsoft.Json/9.0.1": {
+      "sha512": "U82mHQSKaIk+lpSVCbWYKNavmNH1i5xrExDEquU1i6I5pV6UMOqRnJRSlKO3cMPfcpp0RgDY+8jUXHdQ4IfXvw==",
+      "type": "package",
+      "path": "newtonsoft.json/9.0.1",
       "files": [
-        "[Content_Types].xml",
-        "_rels/.rels",
         "lib/net20/Newtonsoft.Json.dll",
         "lib/net20/Newtonsoft.Json.xml",
         "lib/net35/Newtonsoft.Json.dll",
@@ -126,21 +149,64 @@
         "lib/net40/Newtonsoft.Json.xml",
         "lib/net45/Newtonsoft.Json.dll",
         "lib/net45/Newtonsoft.Json.xml",
+        "lib/netstandard1.0/Newtonsoft.Json.dll",
+        "lib/netstandard1.0/Newtonsoft.Json.xml",
         "lib/portable-net40+sl5+wp80+win8+wpa81/Newtonsoft.Json.dll",
         "lib/portable-net40+sl5+wp80+win8+wpa81/Newtonsoft.Json.xml",
-        "lib/portable-net45+wp80+win8+wpa81+dnxcore50/Newtonsoft.Json.dll",
-        "lib/portable-net45+wp80+win8+wpa81+dnxcore50/Newtonsoft.Json.xml",
-        "Newtonsoft.Json.nuspec",
-        "package/services/metadata/core-properties/49e907fc018c4c7ab632e6d4ad4766f8.psmdcp",
+        "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.xml",
+        "newtonsoft.json.9.0.1.nupkg.sha512",
+        "newtonsoft.json.nuspec",
         "tools/install.ps1"
       ]
+    },
+    "MyCouch.Cloudant.Pcl/1.0.0": {
+      "type": "project",
+      "path": "../../projects/MyCouch.Cloudant.Pcl/project.json",
+      "msbuildProject": "../../projects/MyCouch.Cloudant.Pcl/MyCouch.Cloudant.Pcl.csproj"
+    },
+    "MyCouch.Pcl/1.0.0": {
+      "type": "project",
+      "path": "../../projects/MyCouch.Pcl/project.json",
+      "msbuildProject": "../../projects/MyCouch.Pcl/MyCouch.Pcl.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "": [
-      "FluentAssertions >= 4.0.0",
-      "Newtonsoft.Json >= 7.0.1"
+      "FluentAssertions >= 4.19.2",
+      "Newtonsoft.Json >= 9.0.1"
     ],
     ".NETPortable,Version=v4.5,Profile=Profile111": []
+  },
+  "packageFolders": {
+    "C:\\Users\\danielwertheim\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "restore": {
+      "projectUniqueName": "D:\\dev\\mycouch\\source\\tests\\MyCouch.Testing.Pcl\\MyCouch.Testing.Pcl.csproj",
+      "projectName": "MyCouch.Testing.Pcl",
+      "projectPath": "D:\\dev\\mycouch\\source\\tests\\MyCouch.Testing.Pcl\\MyCouch.Testing.Pcl.csproj",
+      "projectJsonPath": "D:\\dev\\mycouch\\source\\tests\\MyCouch.Testing.Pcl\\project.json",
+      "projectStyle": "ProjectJson",
+      "frameworks": {
+        "portable45-net45+win8+wpa81": {
+          "projectReferences": {
+            "D:\\dev\\mycouch\\source\\projects\\MyCouch.Cloudant.Pcl\\MyCouch.Cloudant.Pcl.csproj": {
+              "projectPath": "D:\\dev\\mycouch\\source\\projects\\MyCouch.Cloudant.Pcl\\MyCouch.Cloudant.Pcl.csproj"
+            },
+            "D:\\dev\\mycouch\\source\\projects\\MyCouch.Pcl\\MyCouch.Pcl.csproj": {
+              "projectPath": "D:\\dev\\mycouch\\source\\projects\\MyCouch.Pcl\\MyCouch.Pcl.csproj"
+            }
+          }
+        }
+      }
+    },
+    "dependencies": {
+      "FluentAssertions": "4.19.2",
+      "Newtonsoft.Json": "9.0.1"
+    },
+    "frameworks": {
+      "portable45-net45+win8+wpa81": {}
+    }
   }
 }
