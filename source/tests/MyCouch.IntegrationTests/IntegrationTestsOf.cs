@@ -1,9 +1,11 @@
 ﻿using System;
 using MyCouch.Cloudant;
 using MyCouch.Testing;
+using Xunit;
 
 namespace MyCouch.IntegrationTests
 {
+    [Collection("Integration tests")]
     public abstract class IntegrationTestsOf<T> :
         TestsOf<T>,
         IDisposable where T : class
