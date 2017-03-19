@@ -20,7 +20,7 @@ namespace MyCouch.IntegrationTests
         {
             Environment = TestEnvironments.GetMachineSpecificOrDefaultTestEnvironment();
 
-            if(Environment.IsAgainstCloudant() && !Environment.HasSupportFor(TestScenarios.Cloudant))
+            if (Environment.IsAgainstCloudant() && !Environment.HasSupportFor(TestScenarios.Cloudant))
                 throw new NotSupportedException("The test environment's ServerClient and/or DbClient is configured to run against Cloudant, but the environment has no support for Cloudant.");
         }
 
@@ -33,16 +33,15 @@ namespace MyCouch.IntegrationTests
                 connectionInfo.BasicAuth = new BasicAuthString(config.User, config.Password);
 
             if (config.IsAgainstCloudant())
-            {
-                var bootstrapper = new MyCouchCloudantClientBootstrapper
+                return new MyCouchCloudantServerClient(connectionInfo, new MyCouchCloudantClientBootstrapper
                 {
-                    ServerConnectionFn = cnInfo => new CustomCloudantServerConnection(cnInfo)
-                };
+                    ServerConnectionFn = cnInfo => new CustomServerConnection(cnInfo)
+                });
 
-                return new MyCouchCloudantServerClient(connectionInfo, bootstrapper);
-            }
-
-            return new MyCouchServerClient(connectionInfo);
+            return new MyCouchServerClient(connectionInfo, new MyCouchClientBootstrapper
+            {
+                ServerConnectionFn = cnInfo => new CustomServerConnection(cnInfo)
+            });
         }
 
         internal static IMyCouchClient CreateDbClient()
@@ -59,21 +58,20 @@ namespace MyCouch.IntegrationTests
                 connectionInfo.BasicAuth = new BasicAuthString(config.User, config.Password);
 
             if (config.IsAgainstCloudant())
-            {
-                var bootstrapper = new MyCouchCloudantClientBootstrapper
+                return new MyCouchCloudantClient(connectionInfo, new MyCouchCloudantClientBootstrapper
                 {
-                    DbConnectionFn = cnInfo => new CustomCloudantDbConnection(cnInfo)
-                };
+                    DbConnectionFn = cnInfo => new CustomDbConnection(cnInfo)
+                });
 
-                return new MyCouchCloudantClient(connectionInfo, bootstrapper);
-            }
-
-            return new MyCouchClient(connectionInfo);
+            return new MyCouchClient(connectionInfo, new MyCouchClientBootstrapper
+            {
+                DbConnectionFn = cnInfo => new CustomDbConnection(cnInfo)
+            });
         }
 
-        private class CustomCloudantDbConnection : DbConnection
+        private class CustomDbConnection : DbConnection
         {
-            public CustomCloudantDbConnection(DbConnectionInfo connectionInfo) : base(connectionInfo) { }
+            public CustomDbConnection(DbConnectionInfo connectionInfo) : base(connectionInfo) { }
 
             protected override HttpRequestMessage CreateHttpRequestMessage(HttpRequest httpRequest)
             {
@@ -82,24 +80,24 @@ namespace MyCouch.IntegrationTests
                 if (message.Method == HttpMethod.Post || message.Method == HttpMethod.Put || message.Method == HttpMethod.Delete)
                 {
                     message.RequestUri = string.IsNullOrEmpty(message.RequestUri.Query)
-                        ? new Uri(message.RequestUri + "?w=3")
-                        : new Uri(message.RequestUri + "&w=3");
+                        ? new Uri(message.RequestUri + "?w=1")
+                        : new Uri(message.RequestUri + "&w=1");
                 }
 
                 if (message.Method == HttpMethod.Get || message.Method == HttpMethod.Head)
                 {
                     message.RequestUri = string.IsNullOrEmpty(message.RequestUri.Query)
-                        ? new Uri(message.RequestUri + "?r=3")
-                        : new Uri(message.RequestUri + "&r=3");
+                        ? new Uri(message.RequestUri + "?r=1")
+                        : new Uri(message.RequestUri + "&r=1");
                 }
 
                 return message;
             }
         }
 
-        private class CustomCloudantServerConnection : ServerConnection
+        private class CustomServerConnection : ServerConnection
         {
-            public CustomCloudantServerConnection(ServerConnectionInfo connectionInfo) : base(connectionInfo) { }
+            public CustomServerConnection(ServerConnectionInfo connectionInfo) : base(connectionInfo) { }
 
             protected override HttpRequestMessage CreateHttpRequestMessage(HttpRequest httpRequest)
             {
@@ -108,8 +106,8 @@ namespace MyCouch.IntegrationTests
                 if (message.Method == HttpMethod.Post || message.Method == HttpMethod.Put || message.Method == HttpMethod.Delete)
                 {
                     message.RequestUri = string.IsNullOrEmpty(message.RequestUri.Query)
-                        ? new Uri(message.RequestUri + "?w=3")
-                        : new Uri(message.RequestUri + "&w=3");
+                        ? new Uri(message.RequestUri + "?w=1")
+                        : new Uri(message.RequestUri + "&w=1");
                 }
 
                 if (message.Method == HttpMethod.Get || message.Method == HttpMethod.Head)
@@ -145,7 +143,7 @@ namespace MyCouch.IntegrationTests
                 CreateDb(Environment.TempDbName);
             }
 
-            if(Environment.HasSupportFor(TestScenarios.Replication))
+            if (Environment.HasSupportFor(TestScenarios.Replication))
                 ClearAllDocuments("_replicator");
         }
 
@@ -205,7 +203,7 @@ namespace MyCouch.IntegrationTests
                 bulkRequest.Delete(row.Id, row.Value.rev.ToString());
             }
 
-            if(!bulkRequest.IsEmpty)
+            if (!bulkRequest.IsEmpty)
                 client.Documents.BulkAsync(bulkRequest).Wait();
         }
     }
@@ -248,7 +246,7 @@ namespace MyCouch.IntegrationTests
         public string TempDbName { get; set; }
         public string User { get; set; }
         public string Password { get; set; }
-        
+
         public bool HasCredentials()
         {
             return !string.IsNullOrEmpty(User);
