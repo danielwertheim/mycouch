@@ -9,10 +9,9 @@
     <Import_RootNamespace>MyCouch.IntegrationTests</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)CloudantTests\IndexTests.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CloudantTests\QueryTests.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CloudantTests\SearchTests.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CloudantTests\SecurityTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CoreTests\IndexTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CoreTests\QueryTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CoreTests\SearchTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CoreTests\AttachmentsTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CoreTests\ChangesTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CoreTests\ClientTests.cs" />

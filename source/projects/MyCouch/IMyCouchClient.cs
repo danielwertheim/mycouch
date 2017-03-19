@@ -58,6 +58,16 @@ namespace MyCouch
         IEntities Entities { get; }
 
         /// <summary>
+        /// Used to access the Query API, inspired by MongoDB syntax.
+        /// </summary>
+        IQueries Queries { get; }
+
+        /// <summary>
+        /// Used to access Search Indexes.
+        /// </summary>
+        ISearches Searches { get; }
+
+        /// <summary>
         /// View oriented API operations, for accessing and managing views.
         /// </summary>
         IViews Views { get; }

@@ -22,14 +22,6 @@
           "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
         }
       },
-      "MyCouch.Cloudant.Pcl/1.0.0": {
-        "type": "project",
-        "framework": ".NETPortable,Version=v4.5,Profile=Profile111",
-        "dependencies": {
-          "MyCouch.Pcl": "1.0.0",
-          "Newtonsoft.Json": "9.0.1"
-        }
-      },
       "MyCouch.Pcl/1.0.0": {
         "type": "project",
         "framework": ".NETPortable,Version=v4.5,Profile=Profile111",
@@ -160,11 +152,6 @@
         "tools/install.ps1"
       ]
     },
-    "MyCouch.Cloudant.Pcl/1.0.0": {
-      "type": "project",
-      "path": "../../projects/MyCouch.Cloudant.Pcl/project.json",
-      "msbuildProject": "../../projects/MyCouch.Cloudant.Pcl/MyCouch.Cloudant.Pcl.csproj"
-    },
     "MyCouch.Pcl/1.0.0": {
       "type": "project",
       "path": "../../projects/MyCouch.Pcl/project.json",
@@ -191,9 +178,6 @@
       "frameworks": {
         "portable45-net45+win8+wpa81": {
           "projectReferences": {
-            "D:\\dev\\mycouch\\source\\projects\\MyCouch.Cloudant.Pcl\\MyCouch.Cloudant.Pcl.csproj": {
-              "projectPath": "D:\\dev\\mycouch\\source\\projects\\MyCouch.Cloudant.Pcl\\MyCouch.Cloudant.Pcl.csproj"
-            },
             "D:\\dev\\mycouch\\source\\projects\\MyCouch.Pcl\\MyCouch.Pcl.csproj": {
               "projectPath": "D:\\dev\\mycouch\\source\\projects\\MyCouch.Pcl\\MyCouch.Pcl.csproj"
             }

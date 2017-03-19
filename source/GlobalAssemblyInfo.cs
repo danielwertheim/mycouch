@@ -9,9 +9,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("Release")]
 #endif
 
-[assembly: AssemblyDescription("MyCouch - the async .Net client for CouchDb and Cloudant.")]
+[assembly: AssemblyDescription("MyCouch - the async .Net client for CouchDB.")]
 [assembly: AssemblyCompany("Daniel Wertheim")]
-[assembly: AssemblyCopyright("Copyright © 2014, 2015 Daniel Wertheim")]
+[assembly: AssemblyCopyright("Copyright © 2014, 2015, 2016, 2017 Daniel Wertheim")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

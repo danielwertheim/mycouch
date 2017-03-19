@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using MyCouch.Cloudant;
 using MyCouch.Net;
 using MyCouch.Requests;
 using MyCouch.Responses;
@@ -19,9 +18,6 @@ namespace MyCouch.IntegrationTests
         static IntegrationTestsRuntime()
         {
             Environment = TestEnvironments.GetMachineSpecificOrDefaultTestEnvironment();
-
-            if (Environment.IsAgainstCloudant() && !Environment.HasSupportFor(TestScenarios.Cloudant))
-                throw new NotSupportedException("The test environment's ServerClient and/or DbClient is configured to run against Cloudant, but the environment has no support for Cloudant.");
         }
 
         internal static IMyCouchServerClient CreateServerClient()
@@ -31,12 +27,6 @@ namespace MyCouch.IntegrationTests
 
             if (config.HasCredentials())
                 connectionInfo.BasicAuth = new BasicAuthString(config.User, config.Password);
-
-            if (config.IsAgainstCloudant())
-                return new MyCouchCloudantServerClient(connectionInfo, new MyCouchCloudantClientBootstrapper
-                {
-                    ServerConnectionFn = cnInfo => new CustomServerConnection(cnInfo)
-                });
 
             return new MyCouchServerClient(connectionInfo, new MyCouchClientBootstrapper
             {
@@ -56,12 +46,6 @@ namespace MyCouch.IntegrationTests
 
             if (config.HasCredentials())
                 connectionInfo.BasicAuth = new BasicAuthString(config.User, config.Password);
-
-            if (config.IsAgainstCloudant())
-                return new MyCouchCloudantClient(connectionInfo, new MyCouchCloudantClientBootstrapper
-                {
-                    DbConnectionFn = cnInfo => new CustomDbConnection(cnInfo)
-                });
 
             return new MyCouchClient(connectionInfo, new MyCouchClientBootstrapper
             {
@@ -224,7 +208,6 @@ namespace MyCouch.IntegrationTests
         public const string ListsContext = "listscontext";
         public const string ShowsContext = "showscontext";
 
-        public const string Cloudant = "cloudant";
         public const string MyCouchStore = "mycouchstore";
 
         public const string CreateDbs = "createdbs";
@@ -252,15 +235,7 @@ namespace MyCouch.IntegrationTests
             return !string.IsNullOrEmpty(User);
         }
 
-        public bool IsAgainstCloudant()
-        {
-            return ServerUrl.ToLower().Contains("cloudant.com");
-        }
-
-        public bool SupportsEverything
-        {
-            get { return Supports.Contains("*"); }
-        }
+        public bool SupportsEverything => Supports.Contains("*");
 
         public TestEnvironment()
         {

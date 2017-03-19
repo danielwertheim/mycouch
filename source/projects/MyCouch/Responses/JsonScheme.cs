@@ -44,5 +44,7 @@
         public const string DiskSize = "disk_size";
         public const string DataSize = "data_size";
         public const string DiskFormatVersion = "disk_format_version";
+
+        public const string DesignDoc = "ddoc";
     }
 }

@@ -67,10 +67,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\projects\MyCouch.Cloudant.Pcl\MyCouch.Cloudant.Pcl.csproj">
-      <Project>{e19aba19-29f9-4658-8e15-6995a11377ed}</Project>
-      <Name>MyCouch.Cloudant.Pcl</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MyCouch.Testing.Pcl\MyCouch.Testing.Pcl.csproj">
       <Project>{8d298086-99c8-4dd8-9a2c-d4921cce86de}</Project>
       <Name>MyCouch.Testing.Pcl</Name>

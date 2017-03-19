@@ -1,15 +1,11 @@
 # MyCouch #
-The asynchronous CouchDb and Cloudant client for .Net - builds on top of the asynchronous HTTP client and uses JSON.Net to provide flexible serialization behaviour. It tries to keep the domain language of CouchDb instead of bringing in generic repositories and other confusing stuff. MyCouch lets you work with raw JSON and/or entities/POCOS without requiring any implementation of interfaces, baseclasses etc. MyCouch provides you with some model conventions like injection of `$doctype` to the document.
+The asynchronous CouchDB client for .NET - builds on top of the asynchronous HTTP client and uses JSON.Net to provide flexible serialization behaviour. It tries to keep the domain language of CouchDB instead of bringing in generic repositories and other confusing stuff. MyCouch lets you work with raw JSON and/or entities/POCOS without requiring any implementation of interfaces, baseclasses etc. MyCouch provides you with some model conventions like injection of `$doctype` to the document.
 
 **Supports:** Net4.5+, Windows store 8 & 8.1, DNXCore5.0
 
 **MyCouch**
 
 [![Nuget](https://img.shields.io/nuget/v/mycouch.svg)](https://www.nuget.org/packages/mycouch/)
-
-**MyCouch.Cloudant**
-
-[![Nuget](https://img.shields.io/nuget/v/mycouch.cloudant.svg)](https://www.nuget.org/packages/mycouch.cloudant/)
 
 ## Documentation, Release Notes & Issues ##
 The documentation is contained in the [project wiki](https://github.com/danielwertheim/mycouch/wiki).
@@ -19,21 +15,16 @@ The **Release Notes** is well worth a read for [news and breaking changes info](
 The ["Issues list" here on GitHub](https://github.com/danielwertheim/mycouch/issues) is used for tracking issues.
 
 ## More MyCouch projects ##
-[MyCouch.AspNet.Identity](https://github.com/danielwertheim/mycouch.aspnet.identity) - an ASP.Net identity provider for CouchDb and Cloudant
+[MyCouch.AspNet.Identity](https://github.com/danielwertheim/mycouch.aspnet.identity) - an ASP.Net identity provider for CouchDB
 
 ## NuGet ##
 MyCouch is distributed via NuGet.
 
 - [CouchDB package](https://nuget.org/packages/MyCouch/)
-- [Cloudant package](https://nuget.org/packages/MyCouch.Cloudant/)
 
 So...
 
     pm:> install-package mycouch
-
-or if you also want some [Cloudant](http://cloudant.com) specific features like [Lucene searches](https://cloudant.com/for-developers/search/):
-
-	pm:> install-package mycouch.cloudant
 
 ## Quick sample - using Requests and Responses ##
 

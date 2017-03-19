@@ -1,23 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{72CA66FC-D747-44D6-AB61-0B1891CA075E}"
 	ProjectSection(SolutionItems) = preProject
-		NuGet.Config = NuGet.Config
 		GlobalAssemblyInfo.cs = GlobalAssemblyInfo.cs
+		NuGet.Config = NuGet.Config
 	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cloudant", "Cloudant", "{7D312491-214B-4BCC-AB6A-C0141D3A5216}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F2BCAF1A-9F1F-4F7D-A6FC-68615520987F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCouch.Net45", "projects\MyCouch.Net45\MyCouch.Net45.csproj", "{7F6E9978-92F3-4B66-95DD-ADA46B2A3BC5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCouch.Testing.Net45", "tests\MyCouch.Testing.Net45\MyCouch.Testing.Net45.csproj", "{735B956A-803F-45FE-AC4E-D3B90BE50E73}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCouch.Cloudant.Net45", "projects\MyCouch.Cloudant.Net45\MyCouch.Cloudant.Net45.csproj", "{93089F62-C493-460C-945D-4F32CD94B450}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{AF893198-DB75-41E3-B4D2-8E75A9EC0CE2}"
 EndProject
@@ -33,11 +29,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCouch.IntegrationTests.Ne
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MyCouch", "projects\MyCouch\MyCouch.shproj", "{C376D027-8CA6-47C6-9AC4-278CF314AA69}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MyCouch.Cloudant", "projects\MyCouch.Cloudant\MyCouch.Cloudant.shproj", "{8AC29AC2-E647-4874-B34C-3A8B935AD703}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCouch.Pcl", "projects\MyCouch.Pcl\MyCouch.Pcl.csproj", "{E774D145-2ED3-4560-93E7-F61712398EA7}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCouch.Cloudant.Pcl", "projects\MyCouch.Cloudant.Pcl\MyCouch.Cloudant.Pcl.csproj", "{E19ABA19-29F9-4658-8E15-6995A11377ED}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MyCouch.UnitTests", "tests\MyCouch.UnitTests\MyCouch.UnitTests.shproj", "{FA43D274-0F74-424E-80FE-21A19816BAC9}"
 EndProject
@@ -53,21 +45,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCouch.IntegrationTests.Pc
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		tests\MyCouch.IntegrationTests\MyCouch.IntegrationTests.projitems*{7cb7b3ce-fad9-41ab-aacb-0977ac141bd9}*SharedItemsImports = 13
-		projects\MyCouch.Cloudant\MyCouch.Cloudant.projitems*{e19aba19-29f9-4658-8e15-6995a11377ed}*SharedItemsImports = 4
-		tests\MyCouch.Testing\MyCouch.Testing.projitems*{32fc2540-a01d-484a-b25e-21b7d4367e8b}*SharedItemsImports = 13
-		tests\MyCouch.Testing\MyCouch.Testing.projitems*{8d298086-99c8-4dd8-9a2c-d4921cce86de}*SharedItemsImports = 4
-		tests\MyCouch.UnitTests\MyCouch.UnitTests.projitems*{fa43d274-0f74-424e-80fe-21a19816bac9}*SharedItemsImports = 13
-		tests\MyCouch.IntegrationTests\MyCouch.IntegrationTests.projitems*{a9fe0e65-ab90-487d-8922-1a1c0a6d121f}*SharedItemsImports = 4
-		projects\MyCouch.Cloudant\MyCouch.Cloudant.projitems*{93089f62-c493-460c-945d-4f32cd94b450}*SharedItemsImports = 4
-		tests\MyCouch.Testing\MyCouch.Testing.projitems*{735b956a-803f-45fe-ac4e-d3b90be50e73}*SharedItemsImports = 4
-		tests\MyCouch.UnitTests\MyCouch.UnitTests.projitems*{6e78d4c6-c93b-4f61-989c-83b2c49b9012}*SharedItemsImports = 4
-		projects\MyCouch\MyCouch.projitems*{e774d145-2ed3-4560-93e7-f61712398ea7}*SharedItemsImports = 4
-		projects\MyCouch\MyCouch.projitems*{7f6e9978-92f3-4b66-95dd-ada46b2a3bc5}*SharedItemsImports = 4
 		tests\MyCouch.UnitTests\MyCouch.UnitTests.projitems*{1a1aab8a-674b-4bba-9ed0-2cfcb227d4a7}*SharedItemsImports = 4
-		projects\MyCouch.Cloudant\MyCouch.Cloudant.projitems*{8ac29ac2-e647-4874-b34c-3a8b935ad703}*SharedItemsImports = 13
-		projects\MyCouch\MyCouch.projitems*{c376d027-8ca6-47c6-9ac4-278cf314aa69}*SharedItemsImports = 13
+		tests\MyCouch.Testing\MyCouch.Testing.projitems*{32fc2540-a01d-484a-b25e-21b7d4367e8b}*SharedItemsImports = 13
+		tests\MyCouch.UnitTests\MyCouch.UnitTests.projitems*{6e78d4c6-c93b-4f61-989c-83b2c49b9012}*SharedItemsImports = 4
+		tests\MyCouch.Testing\MyCouch.Testing.projitems*{735b956a-803f-45fe-ac4e-d3b90be50e73}*SharedItemsImports = 4
+		tests\MyCouch.IntegrationTests\MyCouch.IntegrationTests.projitems*{7cb7b3ce-fad9-41ab-aacb-0977ac141bd9}*SharedItemsImports = 13
+		projects\MyCouch\MyCouch.projitems*{7f6e9978-92f3-4b66-95dd-ada46b2a3bc5}*SharedItemsImports = 4
 		tests\MyCouch.IntegrationTests\MyCouch.IntegrationTests.projitems*{810e7a2f-f4f7-4761-8e47-1e5215afca8a}*SharedItemsImports = 4
+		tests\MyCouch.Testing\MyCouch.Testing.projitems*{8d298086-99c8-4dd8-9a2c-d4921cce86de}*SharedItemsImports = 4
+		tests\MyCouch.IntegrationTests\MyCouch.IntegrationTests.projitems*{a9fe0e65-ab90-487d-8922-1a1c0a6d121f}*SharedItemsImports = 4
+		projects\MyCouch\MyCouch.projitems*{c376d027-8ca6-47c6-9ac4-278cf314aa69}*SharedItemsImports = 13
+		projects\MyCouch\MyCouch.projitems*{e774d145-2ed3-4560-93e7-f61712398ea7}*SharedItemsImports = 4
+		tests\MyCouch.UnitTests\MyCouch.UnitTests.projitems*{fa43d274-0f74-424e-80fe-21a19816bac9}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -82,10 +71,6 @@ Global
 		{735B956A-803F-45FE-AC4E-D3B90BE50E73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{735B956A-803F-45FE-AC4E-D3B90BE50E73}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{735B956A-803F-45FE-AC4E-D3B90BE50E73}.Release|Any CPU.Build.0 = Release|Any CPU
-		{93089F62-C493-460C-945D-4F32CD94B450}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{93089F62-C493-460C-945D-4F32CD94B450}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{93089F62-C493-460C-945D-4F32CD94B450}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{93089F62-C493-460C-945D-4F32CD94B450}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6E78D4C6-C93B-4F61-989C-83B2C49B9012}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6E78D4C6-C93B-4F61-989C-83B2C49B9012}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E78D4C6-C93B-4F61-989C-83B2C49B9012}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -102,10 +87,6 @@ Global
 		{E774D145-2ED3-4560-93E7-F61712398EA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E774D145-2ED3-4560-93E7-F61712398EA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E774D145-2ED3-4560-93E7-F61712398EA7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E19ABA19-29F9-4658-8E15-6995A11377ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E19ABA19-29F9-4658-8E15-6995A11377ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E19ABA19-29F9-4658-8E15-6995A11377ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E19ABA19-29F9-4658-8E15-6995A11377ED}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8D298086-99C8-4DD8-9A2C-D4921CCE86DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8D298086-99C8-4DD8-9A2C-D4921CCE86DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D298086-99C8-4DD8-9A2C-D4921CCE86DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -124,14 +105,11 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{735B956A-803F-45FE-AC4E-D3B90BE50E73} = {F2BCAF1A-9F1F-4F7D-A6FC-68615520987F}
-		{93089F62-C493-460C-945D-4F32CD94B450} = {7D312491-214B-4BCC-AB6A-C0141D3A5216}
 		{AF893198-DB75-41E3-B4D2-8E75A9EC0CE2} = {F2BCAF1A-9F1F-4F7D-A6FC-68615520987F}
 		{6E78D4C6-C93B-4F61-989C-83B2C49B9012} = {AF893198-DB75-41E3-B4D2-8E75A9EC0CE2}
 		{B9338953-973E-48FE-A11A-8CF09F7FEA09} = {F2BCAF1A-9F1F-4F7D-A6FC-68615520987F}
 		{64DDD3E7-FDCB-4839-9261-FEF848026F7A} = {F804C04F-07AF-4FCA-9FA8-F172AC3CE423}
 		{810E7A2F-F4F7-4761-8E47-1E5215AFCA8A} = {B9338953-973E-48FE-A11A-8CF09F7FEA09}
-		{8AC29AC2-E647-4874-B34C-3A8B935AD703} = {7D312491-214B-4BCC-AB6A-C0141D3A5216}
-		{E19ABA19-29F9-4658-8E15-6995A11377ED} = {7D312491-214B-4BCC-AB6A-C0141D3A5216}
 		{FA43D274-0F74-424E-80FE-21A19816BAC9} = {AF893198-DB75-41E3-B4D2-8E75A9EC0CE2}
 		{7CB7B3CE-FAD9-41AB-AACB-0977AC141BD9} = {B9338953-973E-48FE-A11A-8CF09F7FEA09}
 		{32FC2540-A01D-484A-B25E-21B7D4367E8B} = {F2BCAF1A-9F1F-4F7D-A6FC-68615520987F}

@@ -33,10 +33,7 @@ namespace MyCouch.IntegrationTests.CoreTests
 
             var response = SUT.GetAsync().Result;
 
-            if (Environment.IsAgainstCloudant())
-                response.Should().BeSuccessfulCloudant(DbClient.Connection.DbName);
-            else
-                response.Should().BeSuccessful(DbClient.Connection.DbName);
+            response.Should().BeSuccessful(DbClient.Connection.DbName);
         }
 
         [MyFact(TestScenarios.DatabaseContext, TestScenarios.CompactDbs)]

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using FluentAssertions;
-using MyCouch.Cloudant.Responses;
 using MyCouch.Net;
 using MyCouch.Responses;
 
@@ -16,11 +15,6 @@ namespace MyCouch.Testing
         public static ContentResponseAssertions Should(this TextResponse response)
         {
             return new ContentResponseAssertions(response);
-        }
-
-        public static GenerateApiKeyResponseAssertions Should(this GenerateApiKeyResponse response)
-        {
-            return new GenerateApiKeyResponseAssertions(response);
         }
 
         public static SearchIndexResponseAssertions Should(this SearchIndexResponse response)
@@ -146,20 +140,6 @@ namespace MyCouch.Testing
             Response.DocDelCount.Should().BeGreaterThan(0);
             Response.DiskFormatVersion.Should().BeGreaterThan(0);
         }
-
-        public void BeSuccessfulCloudant(string dbName)
-        {
-            Response.Should().Be(HttpMethod.Get);
-            Response.IsSuccess.Should().BeTrue();
-            Response.DbName.Should().NotBeNullOrEmpty();
-            Response.DbName.Should().Be(dbName);
-            Response.UpdateSeq.Should().NotBeNullOrEmpty();
-            Response.DataSize.Should().Be(0);
-            Response.DiskSize.Should().BeGreaterThan(0);
-            Response.DocCount.Should().BeGreaterThan(0);
-            Response.DocDelCount.Should().BeGreaterThan(0);
-            Response.DiskFormatVersion.Should().BeGreaterThan(0);
-        }
     }
 
     public class ReplicationResponseAssertions : ResponseAssertions<ReplicationResponse>
@@ -236,19 +216,6 @@ namespace MyCouch.Testing
             Be(method, statusCode);
             Response.ContentType.Should().Contain(HttpContentTypes.Html);
             Response.Content.Should().NotBeNullOrEmpty();
-        }
-    }
-
-    public class GenerateApiKeyResponseAssertions : ResponseAssertions<GenerateApiKeyResponse>
-    {
-        [DebuggerStepThrough]
-        public GenerateApiKeyResponseAssertions(GenerateApiKeyResponse response) : base(response) { }
-
-        public void BeSuccessful()
-        {
-            Response.Should().Be(HttpMethod.Post, HttpStatusCode.Created);
-            Response.Key.Should().NotBeNullOrWhiteSpace();
-            Response.Password.Should().NotBeNullOrWhiteSpace();
         }
     }
 

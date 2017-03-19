@@ -9,11 +9,10 @@
     <Import_RootNamespace>MyCouch.UnitTests</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)Cloudant\HttpRequestFactories\GenerateApiKeyHttpRequestFactoryTests.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Cloudant\HttpRequestFactories\SearchIndexHttpRequestFactoryTests.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Cloudant\IndexParametersConfiguratorTests.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Cloudant\Responses\SearchIndexResponseTests.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Cloudant\SearchParametersConfiguratorTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpRequestFactories\SearchIndexHttpRequestFactoryTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IndexParametersConfiguratorTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Responses\SearchIndexResponseTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SearchParametersConfiguratorTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ConnectionInfoTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EntitySchemes\EntityIdMemberTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EntitySchemes\EntityRevMemberTests.cs" />
