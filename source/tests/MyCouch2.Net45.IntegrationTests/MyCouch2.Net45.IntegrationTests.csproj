@@ -64,5 +64,6 @@
     </PackageReference>
   </ItemGroup>
   <Import Project="..\MyCouch.Testing\MyCouch.Testing.projitems" Label="Shared" />
+  <Import Project="..\MyCouch.IntegrationTests\MyCouch.IntegrationTests.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

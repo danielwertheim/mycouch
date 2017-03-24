@@ -34,6 +34,7 @@ Global
 		tests\MyCouch.Testing\MyCouch.Testing.projitems*{23b1e968-f4d8-4f32-aaf8-87fd9fb9c20b}*SharedItemsImports = 4
 		tests\MyCouch.UnitTests\MyCouch.UnitTests.projitems*{23b1e968-f4d8-4f32-aaf8-87fd9fb9c20b}*SharedItemsImports = 4
 		tests\MyCouch.Testing\MyCouch.Testing.projitems*{32fc2540-a01d-484a-b25e-21b7d4367e8b}*SharedItemsImports = 13
+		tests\MyCouch.IntegrationTests\MyCouch.IntegrationTests.projitems*{3ac6111d-9e13-4c9d-9f14-6cbcb75c5989}*SharedItemsImports = 4
 		tests\MyCouch.Testing\MyCouch.Testing.projitems*{3ac6111d-9e13-4c9d-9f14-6cbcb75c5989}*SharedItemsImports = 4
 		tests\MyCouch.IntegrationTests\MyCouch.IntegrationTests.projitems*{7cb7b3ce-fad9-41ab-aacb-0977ac141bd9}*SharedItemsImports = 13
 		tests\MyCouch.UnitTests\MyCouch.UnitTests.projitems*{fa43d274-0f74-424e-80fe-21a19816bac9}*SharedItemsImports = 13
