@@ -17,15 +17,15 @@ namespace MyCouch.Testing
             return new ContentResponseAssertions(response);
         }
 
-        public static SearchIndexResponseAssertions Should(this SearchIndexResponse response)
-        {
-            return new SearchIndexResponseAssertions(response);
-        }
+        //public static SearchIndexResponseAssertions Should(this SearchIndexResponse response)
+        //{
+        //    return new SearchIndexResponseAssertions(response);
+        //}
 
-        public static SearchIndexResponseAssertions<TIncludedDoc> Should<TIncludedDoc>(this SearchIndexResponse<TIncludedDoc> response)
-        {
-            return new SearchIndexResponseAssertions<TIncludedDoc>(response);
-        }
+        //public static SearchIndexResponseAssertions<TIncludedDoc> Should<TIncludedDoc>(this SearchIndexResponse<TIncludedDoc> response)
+        //{
+        //    return new SearchIndexResponseAssertions<TIncludedDoc>(response);
+        //}
 
         public static ViewQueryResponseAssertions Should(this ViewQueryResponse response)
         {
@@ -219,43 +219,43 @@ namespace MyCouch.Testing
         }
     }
 
-    public class SearchIndexResponseAssertions : SearchIndexResponseAssertions<string>
-    {
-        [DebuggerStepThrough]
-        public SearchIndexResponseAssertions(SearchIndexResponse response) : base(response) { }
-    }
+    //public class SearchIndexResponseAssertions : SearchIndexResponseAssertions<string>
+    //{
+    //    [DebuggerStepThrough]
+    //    public SearchIndexResponseAssertions(SearchIndexResponse response) : base(response) { }
+    //}
 
-    public class SearchIndexResponseAssertions<TIncludedDoc>
-    {
-        protected readonly SearchIndexResponse<TIncludedDoc> Response;
+    //public class SearchIndexResponseAssertions<TIncludedDoc>
+    //{
+    //    protected readonly SearchIndexResponse<TIncludedDoc> Response;
 
-        [DebuggerStepThrough]
-        public SearchIndexResponseAssertions(SearchIndexResponse<TIncludedDoc> response)
-        {
-            Response = response;
-        }
+    //    [DebuggerStepThrough]
+    //    public SearchIndexResponseAssertions(SearchIndexResponse<TIncludedDoc> response)
+    //    {
+    //        Response = response;
+    //    }
 
-        public void BeSuccessfulGet(int numOfRows)
-        {
-            BeSuccessful(HttpMethod.Get, numOfRows);
-        }
+    //    public void BeSuccessfulGet(int numOfRows)
+    //    {
+    //        BeSuccessful(HttpMethod.Get, numOfRows);
+    //    }
 
-        private void BeSuccessful(HttpMethod method, int numOfRows)
-        {
-            Response.RequestMethod.Should().Be(method);
-            Response.IsSuccess.Should().BeTrue();
-            Response.StatusCode.Should().Be(HttpStatusCode.OK);
-            Response.Error.Should().BeNull();
-            Response.Reason.Should().BeNull();
-            Response.IsEmpty.Should().BeFalse();
+    //    private void BeSuccessful(HttpMethod method, int numOfRows)
+    //    {
+    //        Response.RequestMethod.Should().Be(method);
+    //        Response.IsSuccess.Should().BeTrue();
+    //        Response.StatusCode.Should().Be(HttpStatusCode.OK);
+    //        Response.Error.Should().BeNull();
+    //        Response.Reason.Should().BeNull();
+    //        Response.IsEmpty.Should().BeFalse();
 
-            if (numOfRows > 0)
-            {
-                Response.Rows.Should().NotBeNull();
-                Response.RowCount.Should().Be(numOfRows);
-            }
-        }
-    }
+    //        if (numOfRows > 0)
+    //        {
+    //            Response.Rows.Should().NotBeNull();
+    //            Response.RowCount.Should().Be(numOfRows);
+    //        }
+    //    }
+    //}
 
     public class ViewQueryResponseAssertions : ViewQueryResponseAssertions<string, string>
     {

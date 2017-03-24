@@ -17,7 +17,7 @@ namespace MyCouch
         public IDocuments Documents { get; }
         public IEntities Entities { get; }
         public IQueries Queries { get; }
-        public ISearches Searches { get; }
+        //public ISearches Searches { get; }
         public IViews Views { get; }
 
         public MyCouchClient(string serverAddress, string dbName, MyCouchClientBootstrapper bootstrapper = null)
@@ -42,7 +42,7 @@ namespace MyCouch
             Documents = bootstrapper.DocumentsFn(Connection);
             Entities = bootstrapper.EntitiesFn(Connection);
             Queries = bootstrapper.QueriesFn(Connection);
-            Searches = bootstrapper.SearchesFn(Connection);
+            //Searches = bootstrapper.SearchesFn(Connection);
             Views = bootstrapper.ViewsFn(Connection);
         }
 

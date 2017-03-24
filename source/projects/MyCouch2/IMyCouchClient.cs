@@ -62,10 +62,10 @@ namespace MyCouch
         /// </summary>
         IQueries Queries { get; }
 
-        /// <summary>
-        /// Used to access Search Indexes.
-        /// </summary>
-        ISearches Searches { get; }
+        ///// <summary>
+        ///// Used to access Search Indexes.
+        ///// </summary>
+        //ISearches Searches { get; }
 
         /// <summary>
         /// View oriented API operations, for accessing and managing views.
