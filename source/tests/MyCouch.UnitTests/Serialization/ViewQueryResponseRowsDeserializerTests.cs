@@ -25,7 +25,7 @@ namespace MyCouch.UnitTests.Serialization
         }
     }
 
-#if !PCL && !vNext
+#if net45
     public class ViewQueryResponseRowsDeserializerWithEntityContractResolverUsingIlTests : ViewQueryResponseRowsDeserializerTests
     {
         public ViewQueryResponseRowsDeserializerWithEntityContractResolverUsingIlTests()

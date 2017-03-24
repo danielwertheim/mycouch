@@ -16,7 +16,7 @@ namespace MyCouch.UnitTests.Serialization
             SUT = new DefaultSerializer(configuration, new DocumentSerializationMetaProvider(), entityReflector);
         }
     }
-#if !PCL && !vNext
+#if net45
     public class DocumentSerializationWithIlPropertyFactoryTests : DocumentSerializationTests
     {
         public DocumentSerializationWithIlPropertyFactoryTests()

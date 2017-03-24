@@ -23,6 +23,8 @@ namespace MrLab
                     new Person { Id = "persons/1", Name = "Daniel" });
 
                 var get = await client.Entities.GetAsync<Person>(put.Id);
+
+                var r = await client.Views.QueryAsync(new QueryViewRequest("").Configure(k => k.Keys("123", "123")));
             }
         }
     }
