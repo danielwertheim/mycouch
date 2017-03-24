@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyCouch2", "projects\MyCouc
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FC7CB96C-9CAB-4BB4-BA16-F581AE5386B0}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{71E3A448-56E7-42BC-94FB-EE3343B8E05C}"
-EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MyCouch.Testing", "tests\MyCouch.Testing\MyCouch.Testing.shproj", "{32FC2540-A01D-484A-B25E-21B7D4367E8B}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MyCouch.UnitTests", "tests\MyCouch.UnitTests\MyCouch.UnitTests.shproj", "{FA43D274-0F74-424E-80FE-21A19816BAC9}"
@@ -27,7 +25,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCouch2.Net45.UnitTests", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCouch2.Net45.IntegrationTests", "tests\MyCouch2.Net45.IntegrationTests\MyCouch2.Net45.IntegrationTests.csproj", "{3AC6111D-9E13-4C9D-9F14-6CBCB75C5989}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MrLab", "samples\MrLab\MrLab.csproj", "{64DDD3E7-FDCB-4839-9261-FEF848026F7A}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
