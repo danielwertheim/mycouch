@@ -5,9 +5,6 @@ using MyCouch.Querying;
 
 namespace MyCouch.Requests
 {
-#if net45
-    [Serializable]
-#endif
     public class QueryViewRequest : Request, IQueryParameters
     {
         protected IQueryParameters State { get; private set; }

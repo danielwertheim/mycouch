@@ -1,14 +1,10 @@
-﻿using System;
-using MyCouch.EnsureThat;
+﻿using MyCouch.EnsureThat;
 
 namespace MyCouch
 {
     /// <summary>
     /// Used to identify a certain search index in a design document.
     /// </summary>
-#if net45
-    [Serializable]
-#endif
     public class SearchIndexIdentity
     {
         public string DesignDocument { get; private set; }

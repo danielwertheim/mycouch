@@ -1,11 +1,7 @@
-﻿using System;
-using MyCouch.EnsureThat;
+﻿using MyCouch.EnsureThat;
 
 namespace MyCouch
 {
-#if net45
-    [Serializable]
-#endif
     public class ShowIdentity
     {
         public string DesignDocument { get; private set; }

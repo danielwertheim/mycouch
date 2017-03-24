@@ -6,9 +6,6 @@ using MyCouch.EnsureThat;
 
 namespace MyCouch.Net
 {
-#if net45
-    [Serializable]
-#endif
     public class HttpRequest
     {
         public HttpMethod Method { get; private set; }
@@ -16,7 +13,7 @@ namespace MyCouch.Net
         public IDictionary<string, string> Headers { get; }
         public HttpContent Content { get; private set; }
 
-        public HttpRequest(HttpMethod method) : this(method, "/") {}
+        public HttpRequest(HttpMethod method) : this(method, "/") { }
 
         public HttpRequest(HttpMethod method, string relativeUrl)
         {
@@ -62,29 +59,18 @@ namespace MyCouch.Net
         public virtual HttpRequest SetRequestTypeHeader(Type requestType)
         {
             Headers.Add(HttpHeaders.RequestType, GetRequestTypeName(requestType));
-#if NETSTANDARD1_1 || vNext || PCL
             var typeInfo = requestType.GetTypeInfo();
             if (typeInfo.IsGenericType)
                 Headers.Add(HttpHeaders.RequestEntityType, GetRequestEntityTypeName(requestType));
-#else
-            if (requestType.IsGenericType)
-                Headers.Add(HttpHeaders.RequestEntityType, GetRequestEntityTypeName(requestType));
-#endif
             return this;
         }
 
         protected virtual string GetRequestTypeName(Type requestType)
         {
-#if NETSTANDARD1_1 || vNext || PCL
             var typeInfo = requestType.GetTypeInfo();
             return typeInfo.IsGenericType
                 ? requestType.Name.Substring(0, requestType.Name.IndexOf('`'))
                 : requestType.Name;
-#else
-            return requestType.IsGenericType
-                ? requestType.Name.Substring(0, requestType.Name.IndexOf('`'))
-                : requestType.Name;
-#endif
         }
 
         protected virtual string GetRequestEntityTypeName(Type requestType)

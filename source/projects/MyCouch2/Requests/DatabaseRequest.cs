@@ -1,11 +1,7 @@
-﻿using System;
-using MyCouch.EnsureThat;
+﻿using MyCouch.EnsureThat;
 
 namespace MyCouch.Requests
 {
-#if net45
-    [Serializable]
-#endif
     public abstract class DatabaseRequest : Request
     {
         public string DbName { get; private set; }

@@ -1,13 +1,9 @@
 ﻿using MyCouch.EnsureThat;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace MyCouch.Querying
 {
-#if net45
-    [Serializable]
-#endif
     public class ShowParameters : IShowParameters
     {
 

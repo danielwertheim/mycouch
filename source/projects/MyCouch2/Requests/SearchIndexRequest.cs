@@ -6,9 +6,6 @@
 
 //namespace MyCouch.Requests
 //{
-//#if net45
-//    [Serializable]
-//#endif
 //    public class SearchIndexRequest : Request, ISearchParameters
 //    {
 //        protected ISearchParameters State { get; private set; }

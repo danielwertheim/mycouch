@@ -90,15 +90,10 @@ namespace MyCouch.EnsureThat
                 throw ExceptionFactory.CreateForParamValidation(param,
                     ExceptionMessages.EnsureExtensions_IsNotClass_WasNull);
 
-#if NETSTANDARD1_1 || vNext || PCL
             if (!param.Value.GetTypeInfo().IsClass)
                 throw ExceptionFactory.CreateForParamValidation(param,
                     ExceptionMessages.EnsureExtensions_IsNotClass.Inject(param.Value.FullName));
-#else
-            if (!param.Value.IsClass)
-                throw ExceptionFactory.CreateForParamValidation(param,
-                    ExceptionMessages.EnsureExtensions_IsNotClass.Inject(param.Value.FullName));
-#endif
+
             return param;
         }
     }

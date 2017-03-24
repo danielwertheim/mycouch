@@ -1,11 +1,7 @@
-using System;
 using Newtonsoft.Json;
 
 namespace MyCouch.Responses
 {
-#if net45
-    [Serializable]
-#endif
     public class GetEntityResponse<T> : EntityResponse<T>,
         IDocumentHeader
         where T : class

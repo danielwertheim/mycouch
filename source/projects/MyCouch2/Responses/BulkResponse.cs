@@ -1,10 +1,5 @@
-﻿using System;
-
-namespace MyCouch.Responses
+﻿namespace MyCouch.Responses
 {
-#if net45
-    [Serializable]
-#endif
     public class BulkResponse : Response
     {
         public Row[] Rows { get; set; }
@@ -13,9 +8,6 @@ namespace MyCouch.Responses
             get { return Rows == null || Rows.Length == 0; }
         }
 
-#if net45
-        [Serializable]
-#endif
         public class Row
         {
             public string Id { get; set; }

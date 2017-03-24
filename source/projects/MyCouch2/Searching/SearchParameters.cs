@@ -4,9 +4,6 @@
 
 //namespace MyCouch.Searching
 //{
-//#if net45
-//    [Serializable]
-//#endif
 //    public class SearchParameters : ISearchParameters
 //    {
 //        public SearchIndexIdentity IndexIdentity { get; private set; }

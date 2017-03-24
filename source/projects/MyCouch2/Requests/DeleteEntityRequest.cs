@@ -1,11 +1,7 @@
-﻿using System;
-using MyCouch.EnsureThat;
+﻿using MyCouch.EnsureThat;
 
 namespace MyCouch.Requests
 {
-#if net45
-    [Serializable]
-#endif
     public class DeleteEntityRequest<T> : Request where T : class
     {
         public T Entity { get; set; }

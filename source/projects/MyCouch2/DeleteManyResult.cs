@@ -1,10 +1,5 @@
-using System;
-
 namespace MyCouch
 {
-#if net45
-    [Serializable]
-#endif
     public class DeleteManyResult
     {
         public Row[] Rows { get; set; }
@@ -14,9 +9,6 @@ namespace MyCouch
             get { return Rows == null || Rows.Length == 0; }
         }
 
-#if net45
-    [Serializable]
-#endif
         public class Row
         {
             public string Id { get; set; }

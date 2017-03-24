@@ -2,9 +2,6 @@
 
 namespace MyCouch.Responses
 {
-#if net45
-    [Serializable]
-#endif
     public abstract class BytesResponse : ContentResponse<byte[]>
     {
         public override bool IsEmpty

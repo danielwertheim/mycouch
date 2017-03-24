@@ -2,9 +2,6 @@
 
 namespace MyCouch.Responses
 {
-#if net45
-    [Serializable]
-#endif
     public abstract class TextResponse : ContentResponse<string>
     {
         public override bool IsEmpty

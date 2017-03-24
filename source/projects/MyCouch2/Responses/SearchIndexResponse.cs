@@ -6,14 +6,8 @@
 
 //namespace MyCouch.Responses
 //{
-//#if net45
-//    [Serializable]
-//#endif
 //    public class SearchIndexResponse : SearchIndexResponse<string> { }
 
-//#if net45
-//    [Serializable]
-//#endif
 //    public class SearchIndexResponse<TIncludedDoc> : Response
 //    {
 //        public Row[] Rows { get; set; }
@@ -49,9 +43,6 @@
 //                Bookmark,
 //                GroupCount);
 //        }
-//#if net45
-//        [Serializable]
-//#endif
 //        public class Row
 //        {
 //            public string Id { get; set; }
@@ -69,9 +60,6 @@
 //            }
 //        }
 
-//#if net45
-//        [Serializable]
-//#endif
 //        public class Group
 //        {
 //            public string By { get; set; }

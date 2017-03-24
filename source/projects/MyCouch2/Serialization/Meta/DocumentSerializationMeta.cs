@@ -3,9 +3,6 @@ using MyCouch.EnsureThat;
 
 namespace MyCouch.Serialization.Meta
 {
-#if net45
-    [Serializable]
-#endif
     public class DocumentSerializationMeta
     {
         public Type Type { get; private set; }

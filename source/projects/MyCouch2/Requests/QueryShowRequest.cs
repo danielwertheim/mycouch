@@ -5,9 +5,6 @@ using System.Collections.Generic;
 
 namespace MyCouch.Requests
 {
-#if net45
-    [Serializable]
-#endif
     public class QueryShowRequest : Request, IShowParameters
     {
         protected IShowParameters State { get; private set; }

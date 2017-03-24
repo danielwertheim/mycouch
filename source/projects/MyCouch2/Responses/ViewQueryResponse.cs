@@ -6,19 +6,10 @@ using Newtonsoft.Json;
 
 namespace MyCouch.Responses
 {
-#if net45
-    [Serializable]
-#endif
     public class ViewQueryResponse : ViewQueryResponse<string> { }
 
-#if net45
-    [Serializable]
-#endif
     public class ViewQueryResponse<TValue> : ViewQueryResponse<TValue, string> { }
 
-#if net45
-    [Serializable]
-#endif
     public class ViewQueryResponse<TValue, TIncludedDoc> : Response
     {
         [JsonProperty(JsonScheme.TotalRows)]
@@ -45,9 +36,7 @@ namespace MyCouch.Responses
                 OffSet,
                 UpdateSeq);
         }
-#if net45
-        [Serializable]
-#endif
+
         public class Row
         {
             public string Id { get; set; }

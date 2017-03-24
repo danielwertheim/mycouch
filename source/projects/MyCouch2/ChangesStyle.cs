@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace MyCouch
 {
-#if net45
-    [Serializable]
-#endif
     public enum ChangesStyle
     {
         AllDocs,

@@ -1,13 +1,8 @@
-﻿using System;
-
-namespace MyCouch
+﻿namespace MyCouch
 {
     /// <summary>
     /// Used to identify a certain system view like all_docs.
     /// </summary>
-#if net45
-    [Serializable]
-#endif
     public class SystemViewIdentity : ViewIdentity
     {
         public static SystemViewIdentity AllDocs

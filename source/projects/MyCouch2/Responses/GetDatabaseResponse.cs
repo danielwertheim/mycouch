@@ -1,12 +1,7 @@
-﻿using System;
-using MyCouch.Serialization.Converters;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace MyCouch.Responses
 {
-#if net45
-    [Serializable]
-#endif
     public class GetDatabaseResponse : Response
     {
         [JsonProperty(JsonScheme.DbName)]

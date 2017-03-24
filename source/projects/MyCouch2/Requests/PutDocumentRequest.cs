@@ -3,9 +3,6 @@ using MyCouch.EnsureThat;
 
 namespace MyCouch.Requests
 {
-#if net45
-    [Serializable]
-#endif
     public class PutDocumentRequest : Request
     {
         public string Id { get; private set; }

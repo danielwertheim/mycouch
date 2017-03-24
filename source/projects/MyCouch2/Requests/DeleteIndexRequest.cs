@@ -1,11 +1,7 @@
 ﻿using MyCouch.EnsureThat;
-using System;
 
 namespace MyCouch.Requests
 {
-#if net45
-    [Serializable]
-#endif
     public class DeleteIndexRequest : Request
     {
         public string DesignDoc { get; private set; }

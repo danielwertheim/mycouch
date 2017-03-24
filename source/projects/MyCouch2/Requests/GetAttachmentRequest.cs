@@ -1,11 +1,7 @@
-﻿using System;
-using MyCouch.EnsureThat;
+﻿using MyCouch.EnsureThat;
 
 namespace MyCouch.Requests
 {
-#if net45
-    [Serializable]
-#endif
     public class GetAttachmentRequest : Request
     {
         public string DocId { get; private set; }

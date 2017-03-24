@@ -3,9 +3,6 @@ using Newtonsoft.Json;
 
 namespace MyCouch.Responses
 {
-#if net45
-    [Serializable]
-#endif
     public class DocumentResponse : TextResponse,
         IDocumentHeader
     {

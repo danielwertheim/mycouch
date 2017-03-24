@@ -1,7 +1,5 @@
 ﻿using System;
-#if NETSTANDARD1_1 || vNext || PCL
 using System.Reflection;
-#endif
 using MyCouch.EntitySchemes.Reflections;
 
 namespace MyCouch.EntitySchemes
@@ -37,16 +35,10 @@ namespace MyCouch.EntitySchemes
             if (membername.Equals("id", StringComparison.OrdinalIgnoreCase))
                 return 4 * factor;
 
-#if NETSTANDARD1_1 || vNext || PCL
             var typeInfo = entityType.GetTypeInfo();
             return typeInfo.BaseType == typeof(object)
                 ? null
                 : GetMemberRankingIndex(typeInfo.BaseType, membername, (factor * 10));
-#else
-            return entityType.BaseType == typeof(object)
-                ? null
-                : GetMemberRankingIndex(entityType.BaseType, membername, (factor * 10));
-#endif
         }
     }
 }

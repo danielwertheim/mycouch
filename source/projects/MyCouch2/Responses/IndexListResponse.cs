@@ -4,9 +4,6 @@ using System.Linq;
 
 namespace MyCouch.Responses
 {
-#if net45
-    [Serializable]
-#endif
     public class IndexListResponse : Response
     {
         public Index[] Indexes { get; set; }
@@ -24,9 +21,7 @@ namespace MyCouch.Responses
                 IsEmpty,
                 IndexCount);
         }
-#if net45
-        [Serializable]
-#endif
+
         public class Index
         {
             [JsonProperty(JsonScheme.DesignDoc)]
@@ -35,9 +30,6 @@ namespace MyCouch.Responses
             public string Type { get; set; }
             public Definition Def { get; set; }
 
-#if net45
-            [Serializable]
-#endif
             public class Definition
             {
                 public SortableField[] Fields { get; set; }

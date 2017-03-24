@@ -1,18 +1,11 @@
 ﻿using MyCouch.Serialization.Converters;
 using Newtonsoft.Json;
-using System;
 using System.Linq;
 
 namespace MyCouch.Responses
 {
-#if net45
-    [Serializable]
-#endif
     public class FindResponse : FindResponse<string> { }
 
-#if net45
-    [Serializable]
-#endif
     public class FindResponse<TIncludedDoc> : Response
     {
         [JsonConverter(typeof(MultiTypeDeserializationJsonConverter))]

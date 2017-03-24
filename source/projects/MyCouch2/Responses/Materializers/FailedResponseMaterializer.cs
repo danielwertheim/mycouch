@@ -48,9 +48,6 @@ namespace MyCouch.Responses.Materializers
             return info;
         }
 
-#if net45
-        [Serializable]
-#endif
         protected class FailedResponseInfo
         {
             public string Error { get; set; }

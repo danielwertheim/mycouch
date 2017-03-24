@@ -1,16 +1,10 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
-#if net45
-using System.Runtime.Serialization;
-#endif
 using MyCouch.Responses;
 
 namespace MyCouch
 {
-#if net45
-    [Serializable]
-#endif
     public class MyCouchResponseException : Exception
     {
         public HttpMethod HttpMethod { get; private set; }
@@ -38,11 +32,5 @@ namespace MyCouch
             Error = error;
             Reason = reason;
         }
-
-#if net45
-        protected MyCouchResponseException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        { }
-#endif
     }
 }

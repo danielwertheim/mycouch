@@ -1,11 +1,7 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace MyCouch.Responses
 {
-#if net45
-    [Serializable]
-#endif
     public class ReplicationResponse : Response,
         IDocumentHeader
     {

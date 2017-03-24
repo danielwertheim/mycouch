@@ -623,9 +623,6 @@ namespace MyCouch
             throw new MyCouchResponseException(response);
         }
 
-#if net45
-        [Serializable]
-#endif
         private class AllDocsValue
         {
             public string Rev { get; set; }

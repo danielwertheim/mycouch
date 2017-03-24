@@ -4,9 +4,6 @@ using System.Collections.Generic;
 
 namespace MyCouch.Requests
 {
-#if net45
-    [Serializable]
-#endif
     public class PostIndexRequest : Request, IIndexParameters
     {
         protected IIndexParameters State { get; private set; }

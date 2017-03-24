@@ -5,9 +5,6 @@ using MyCouch.Net;
 
 namespace MyCouch
 {
-#if net45
-    [Serializable]
-#endif
     public class DbConnectionInfo : ConnectionInfo
     {
         public string DbName { get; }
@@ -21,18 +18,12 @@ namespace MyCouch
         }
     }
 
-#if net45
-    [Serializable]
-#endif
     public class ServerConnectionInfo : ConnectionInfo
     {
         public ServerConnectionInfo(string serverAddress) : this(new Uri(serverAddress)) { }
         public ServerConnectionInfo(Uri serverAddress) : base(serverAddress) { }
     }
 
-#if net45
-    [Serializable]
-#endif
     public abstract class ConnectionInfo
     {
         public Uri Address { get; }

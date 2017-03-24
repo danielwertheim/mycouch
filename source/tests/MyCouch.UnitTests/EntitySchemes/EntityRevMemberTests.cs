@@ -12,7 +12,7 @@ namespace MyCouch.UnitTests.EntitySchemes
             SUT = new EntityRevMember(new LambdaDynamicPropertyFactory());
         }
     }
-#if net45
+
     public class EntityRevMemberTestsWithIlPropertyFactoryTests : EntityRevMemberTests
     {
         public EntityRevMemberTestsWithIlPropertyFactoryTests()
@@ -20,7 +20,7 @@ namespace MyCouch.UnitTests.EntitySchemes
             SUT = new EntityRevMember(new IlDynamicPropertyFactory());
         }
     }
-#endif
+
     public abstract class EntityRevMemberTests : UnitTestsOf<EntityRevMember>
     {
         [Fact]
