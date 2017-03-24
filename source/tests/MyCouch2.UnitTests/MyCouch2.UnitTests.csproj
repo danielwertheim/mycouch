@@ -2,7 +2,8 @@
 
   <PropertyGroup>    
     <TargetFramework>netcoreapp1.1</TargetFramework>    
-    <RootNamespace>MyCouch.UnitTests</RootNamespace>
+    <RootNamespace>MyCouch.UnitTests</RootNamespace>    
+    <AssemblyName>MyCouch2.UnitTests</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,7 +23,5 @@
   </ItemGroup>
 
   <Import Project="..\MyCouch.Testing\MyCouch.Testing.projitems" Label="Shared" />
-
-  <Import Project="..\MyCouch.UnitTests\MyCouch.UnitTests.projitems" Label="Shared" />
 
 </Project>
