@@ -3,6 +3,19 @@
   <PropertyGroup>
     <TargetFramework>netstandard1.1</TargetFramework>
     <RootNamespace>MyCouch</RootNamespace>
+    <PackageId>MyCouch</PackageId>
+    <Version>5.0.0</Version>
+    <Authors>danielwertheim</Authors>
+    <Company>Daniel Wertheim</Company>
+    <Product>MyCouch.CouchDB client</Product>
+    <Copyright>Copyright © 2014, 2015, 2016, 2017 Daniel Wertheim</Copyright>
+    <RepositoryUrl>https://github.com/danielwertheim/mycouch</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageTags>CouchDB NoSQL</PackageTags>
+    <PackageProjectUrl>https://github.com/danielwertheim/mycouch</PackageProjectUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/danielwertheim/mycouch/master/LICENSE.md</PackageLicenseUrl>
+    <Description>MyCouch is the simple asynchronous CouchDB and Cloudant client for .Net - building on top of the asynchronous HTTP client and uses JSON.Net to provide flexible serialization behaviour. It tries to keep the domain language of CouchDB and lets you work with requests and responses but also provides you with an alternative simplifying async API. MyCouch lets you work with raw JSON and/or entities/POCOS without requiring any implementation of interfaces or base-classes etc, and it provides you with some model conventions like injection of $doctype to the document.</Description>
+    <PackageReleaseNotes>Can be found on project site: https://github.com/danielwertheim/mycouch/wiki/release-notes</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
