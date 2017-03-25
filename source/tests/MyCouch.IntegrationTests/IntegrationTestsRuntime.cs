@@ -269,7 +269,7 @@ namespace MyCouch.IntegrationTests
 
         private static IDictionary<string, TestEnvironment> GetTestEnvironments()
         {
-            var fullPath = GetTestEnvironmentFullPath(@".\..\..\..\..\..\testenvironments.local.json");
+            var fullPath = GetTestEnvironmentFullPath(@".\testenvironments.json");
             var content = File.ReadAllText(fullPath);
             var environments = JsonConvert.DeserializeObject<TestEnvironment[]>(content);
             if (environments == null || !environments.Any())

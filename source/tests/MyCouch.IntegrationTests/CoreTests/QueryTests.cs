@@ -8,7 +8,6 @@ using Newtonsoft.Json.Linq;
 
 namespace MyCouch.IntegrationTests.CoreTests
 {
-    [Trait("Category", "IntegrationTests.CoreTests")]
     public class QueryTests : IntegrationTestsOf<IQueries>,
         IPreserveStatePerFixture,
         IClassFixture<QueriesFixture>

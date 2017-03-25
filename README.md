@@ -1,7 +1,7 @@
 # MyCouch #
 The asynchronous CouchDB client for .NET - builds on top of the asynchronous HTTP client and uses JSON.Net to provide flexible serialization behaviour. It tries to keep the domain language of CouchDB instead of bringing in generic repositories and other confusing stuff. MyCouch lets you work with raw JSON and/or entities/POCOS without requiring any implementation of interfaces, baseclasses etc. MyCouch provides you with some model conventions like injection of `$doctype` to the document.
 
-**Supports:** Net4.5+, Windows store 8 & 8.1, DNXCore5.0
+**.NET Standard 1.3**. MyCouch (after v5.0.0) is now built as a .NET Standard 1.3 library.
 
 **MyCouch**
 
@@ -76,17 +76,5 @@ using(var store = new MyCouchStore("http://localhost:5984", "mydb"))
 }
 ```
 
-## Get up and running with the source ##
-Please note. **No NuGet packages are checked in**. If you are using an awesome version of NuGet **you should be able to just build and the packages will be restored**.
-
-## Test environments ##
-Test environment configurations to the integration tests should be configured in a file: `\testenvironments.local.json` placed next to `\testenvironments.samples.json`, which you can use as a template.
-
-## How-to Contribute ##
-This is described in the wiki, under: ["How-to Contribute"](https://github.com/danielwertheim/mycouch/wiki/how-to-contribute).
-
 ## Issues, questions, etc ##
 So you have issues or questions... Great! That means someone is using it. Use the issues function here at the project page or contact me via mail: firstname@lastname.se; or Twitter: [@danielwertheim](https://twitter.com/danielwertheim)
-
-## NOTE! ##
-**It's your data.** Ensure to **test against isolated test-environments and test-accounts first** e.g. a separate Cloudant account, specific CouchDB instances etc.

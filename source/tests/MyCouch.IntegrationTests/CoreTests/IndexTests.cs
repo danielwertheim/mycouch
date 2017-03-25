@@ -2,11 +2,9 @@
 using MyCouch.Requests;
 using System.Linq;
 using System.Net;
-using Xunit;
 
 namespace MyCouch.IntegrationTests.CoreTests
 {
-    [Trait("Category", "IntegrationTests.CoreTests")]
     public class IndexTests : IntegrationTestsOf<IQueries>
     {
         public IndexTests()

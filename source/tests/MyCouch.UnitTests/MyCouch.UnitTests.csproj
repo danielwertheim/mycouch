@@ -1,9 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>    
-    <TargetFramework>netcoreapp1.1</TargetFramework>    
-    <RootNamespace>MyCouch.UnitTests</RootNamespace>    
-    <AssemblyName>MyCouch2.UnitTests</AssemblyName>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,13 +13,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\projects\MyCouch2\MyCouch2.csproj" />
+    <ProjectReference Include="..\..\projects\MyCouch\MyCouch.csproj" />
+    <ProjectReference Include="..\MyCouch.Testing\MyCouch.Testing.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
-
-  <Import Project="..\MyCouch.Testing\MyCouch.Testing.projitems" Label="Shared" />
 
 </Project>

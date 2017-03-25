@@ -2,11 +2,9 @@ using System.Linq;
 using FluentAssertions;
 using MyCouch.Testing.Model;
 using MyCouch.Testing.TestData;
-using Xunit;
 
 namespace MyCouch.IntegrationTests.CoreTests
 {
-    [Trait("Category", "IntegrationTests.CoreTests")]
     public class MyCouchStoreCrudTests : IntegrationTestsOf<MyCouchStore>
     {
         public MyCouchStoreCrudTests()

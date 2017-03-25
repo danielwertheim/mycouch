@@ -6,11 +6,9 @@ using MyCouch.Requests;
 using MyCouch.Responses;
 using MyCouch.Testing;
 using MyCouch.Testing.TestData;
-using Xunit;
 
 namespace MyCouch.IntegrationTests.CoreTests
 {
-    [Trait("Category", "IntegrationTests.CoreTests")]
     public class ChangesTests : IntegrationTestsOf<IChanges>
     {
         protected readonly Func<string, int> GetSeqNumber = s => int.Parse(s.Substring(0, s.IndexOf('-', 1)));

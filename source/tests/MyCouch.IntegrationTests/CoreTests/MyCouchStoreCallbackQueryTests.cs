@@ -8,7 +8,6 @@ using Xunit;
 
 namespace MyCouch.IntegrationTests.CoreTests
 {
-    [Trait("Category", "IntegrationTests.CoreTests")]
     public class MyCouchStoreCallbackQueryTests :
         IntegrationTestsOf<MyCouchStore>,
         IPreserveStatePerFixture,

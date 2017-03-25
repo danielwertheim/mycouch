@@ -13,10 +13,6 @@
 *.suo
 *.cache
 
-# dnx
-project.lock.json
-artifacts/
-
 # deploy
 build/
 tools/
@@ -27,13 +23,10 @@ tools/
 *.swp
 *.sdf
 *.orig
-testenvironments.local.json
+testenvironments.json
 
 # nuget
 [Pp]ackages/
-
-# approvals#
-*.received.txt
 
 # resharper
 _ReSharper.*

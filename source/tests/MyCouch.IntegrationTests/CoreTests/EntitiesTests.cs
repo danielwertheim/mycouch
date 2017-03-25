@@ -5,11 +5,9 @@ using MyCouch.Testing;
 using MyCouch.Testing.Model;
 using MyCouch.Testing.TestData;
 using Newtonsoft.Json.Linq;
-using Xunit;
 
 namespace MyCouch.IntegrationTests.CoreTests
 {
-    [Trait("Category", "IntegrationTests.CoreTests")]
     public class EntitiesTests : IntegrationTestsOf<IEntities>
     {
         public EntitiesTests()

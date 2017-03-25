@@ -12,7 +12,6 @@ using System.Xml.Linq;
 
 namespace MyCouch.IntegrationTests.CoreTests
 {
-    [Trait("Category", "IntegrationTests.CoreTests")]
     public class ShowTests : IntegrationTestsOf<IDocuments>,
         IPreserveStatePerFixture,
         IClassFixture<ShowsFixture>

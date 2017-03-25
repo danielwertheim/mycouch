@@ -9,7 +9,6 @@
 
 //namespace MyCouch.IntegrationTests.CoreTests
 //{
-//    [Trait("Category", "IntegrationTests.CoreTests")]
 //    public class SearchTests : IntegrationTestsOf<ISearches>,
 //        IPreserveStatePerFixture,
 //        IClassFixture<SearchFixture>
