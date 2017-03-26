@@ -23,6 +23,7 @@ tools/
 *.swp
 *.sdf
 *.orig
+*.pfx
 testenvironments.json
 
 # nuget
