@@ -30,7 +30,9 @@ Task("Build").Does(() => {
                 .SetVerbosity(Verbosity.Minimal)
                 .WithTarget("Rebuild")
                 .WithProperty("TreatWarningsAsErrors", "true")
-                .WithProperty("Version", config.SemVer)); 
+                .WithProperty("Version", config.SemVer)
+                .WithProperty("AssemblyVersion", config.SemVer)
+                .WithProperty("FileVersion", config.SemVer));
     }    
 });
 
@@ -55,7 +57,14 @@ Task("IntegrationTests").Does(() => {
 });
 
 Task("Pack").Does(() => {
-    Information("Should pack...");
+    foreach(var sln in GetFiles(config.SrcDir + "projects/**/*.csproj")) {
+        DotNetBuild(sln, settings =>
+            settings.SetConfiguration(config.BuildProfile)
+                .SetVerbosity(Verbosity.Minimal)
+                .WithTarget("Pack")
+                .WithProperty("TreatWarningsAsErrors", "true")
+                .WithProperty("Version", config.SemVer));
+    }
 });
 
 RunTarget(config.Target);
