@@ -5,6 +5,7 @@ var config = BuildConfig.Create(Context, BuildSystem);
 Information("SrcDir: " + config.SrcDir);
 Information("OutDir: " + config.OutDir);
 Information("SemVer: " + config.SemVer);
+Information("BuildVersion: " + config.BuildVersion);
 Information("BuildProfile: " + config.BuildProfile);
 Information("IsTeamCityBuild: " + config.IsTeamCityBuild);
 
@@ -31,8 +32,8 @@ Task("Build").Does(() => {
                 .WithTarget("Rebuild")
                 .WithProperty("TreatWarningsAsErrors", "true")
                 .WithProperty("Version", config.SemVer)
-                .WithProperty("AssemblyVersion", config.SemVer)
-                .WithProperty("FileVersion", config.SemVer));
+                .WithProperty("AssemblyVersion", config.BuildVersion)
+                .WithProperty("FileVersion", config.BuildVersion));
     }    
 });
 

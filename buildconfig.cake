@@ -8,6 +8,7 @@ public class BuildConfig
     
     public string Target { get; private set; }
     public string SemVer { get; private set; }
+    public string BuildVersion { get; private set; }
     public string BuildProfile { get; private set; }
     public bool IsTeamCityBuild { get; private set; }
     
@@ -24,6 +25,7 @@ public class BuildConfig
         {
             Target = context.Argument("target", "Default"),
             SemVer = Version + (IsPreRelease ? "-b" + buildRevision : string.Empty),
+            BuildVersion = Version + "." + buildRevision,
             BuildProfile = context.Argument("configuration", "Release"),
             IsTeamCityBuild = buildSystem.TeamCity.IsRunningOnTeamCity
         };
