@@ -65,6 +65,10 @@ Task("Pack").Does(() => {
                 .WithProperty("TreatWarningsAsErrors", "true")
                 .WithProperty("Version", config.SemVer));
     }
+
+    CopyFiles(
+        GetFiles(config.SrcDir + "projects/**/*.nupkg"),
+        config.OutDir);
 });
 
 RunTarget(config.Target);
