@@ -3,7 +3,7 @@ using System.IO;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using MyCouch.EnsureThat;
+using EnsureThat;
 using MyCouch.Extensions;
 using MyCouch.HttpRequestFactories;
 using MyCouch.Requests;

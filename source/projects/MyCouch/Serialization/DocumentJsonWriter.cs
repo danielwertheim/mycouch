@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using MyCouch.EnsureThat;
+using EnsureThat;
 using MyCouch.EntitySchemes;
 using MyCouch.Serialization.Conventions;
 using MyCouch.Serialization.Meta;

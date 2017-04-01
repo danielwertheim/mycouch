@@ -1,4 +1,4 @@
-﻿using MyCouch.EnsureThat;
+﻿using EnsureThat;
 using MyCouch.Requests;
 using MyCouch.Net;
 using System.Net.Http;

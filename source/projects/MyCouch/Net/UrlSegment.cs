@@ -1,5 +1,5 @@
 ﻿using System;
-using MyCouch.EnsureThat;
+using EnsureThat;
 
 namespace MyCouch.Net
 {

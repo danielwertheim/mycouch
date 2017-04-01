@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using MyCouch.EnsureThat;
+using EnsureThat;
 using MyCouch.Querying;
 
 namespace MyCouch.Requests

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Reflection;
-using MyCouch.EnsureThat;
+using EnsureThat;
 
 namespace MyCouch.Net
 {

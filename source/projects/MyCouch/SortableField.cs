@@ -1,4 +1,4 @@
-﻿using MyCouch.EnsureThat;
+﻿using EnsureThat;
 using MyCouch.Serialization.Converters;
 using Newtonsoft.Json;
 

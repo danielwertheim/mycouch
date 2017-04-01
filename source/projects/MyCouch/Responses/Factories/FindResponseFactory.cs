@@ -1,4 +1,4 @@
-﻿using MyCouch.EnsureThat;
+﻿using EnsureThat;
 using MyCouch.Responses.Materializers;
 using MyCouch.Serialization;
 using System.Net.Http;

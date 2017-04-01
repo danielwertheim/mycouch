@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
-using MyCouch.EnsureThat;
+using EnsureThat;
 using MyCouch.EntitySchemes;
 using Newtonsoft.Json;
 

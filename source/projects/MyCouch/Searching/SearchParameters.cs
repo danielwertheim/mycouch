@@ -1,6 +1,6 @@
 ﻿//using System;
 //using System.Collections.Generic;
-//using MyCouch.EnsureThat;
+//using EnsureThat;
 
 //namespace MyCouch.Searching
 //{

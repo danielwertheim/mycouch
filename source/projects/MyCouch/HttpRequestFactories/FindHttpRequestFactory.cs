@@ -1,4 +1,4 @@
-﻿using MyCouch.EnsureThat;
+﻿using EnsureThat;
 using MyCouch.Net;
 using MyCouch.Serialization;
 using System.Linq;

@@ -1,4 +1,4 @@
-﻿using MyCouch.EnsureThat;
+﻿using EnsureThat;
 using MyCouch.HttpRequestFactories;
 using MyCouch.Requests;
 using MyCouch.Responses;

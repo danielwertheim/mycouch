@@ -1,7 +1,7 @@
 //using System.Collections.Generic;
 //using System.Linq;
 //using System.Net.Http;
-//using MyCouch.EnsureThat;
+//using EnsureThat;
 //using MyCouch.Net;
 //using MyCouch.Requests;
 //using MyCouch.Serialization;

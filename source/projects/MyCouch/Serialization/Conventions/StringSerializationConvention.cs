@@ -1,5 +1,5 @@
 ﻿using System;
-using MyCouch.EnsureThat;
+using EnsureThat;
 using MyCouch.Serialization.Meta;
 
 namespace MyCouch.Serialization.Conventions

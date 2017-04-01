@@ -1,4 +1,4 @@
-﻿using MyCouch.EnsureThat;
+﻿using EnsureThat;
 using MyCouch.Extensions;
 using MyCouch.Serialization;
 using System.Net.Http;
