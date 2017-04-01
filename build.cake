@@ -11,6 +11,7 @@ Information("IsTeamCityBuild: " + config.IsTeamCityBuild);
 
 Task("Default")
     .IsDependentOn("InitOutDir")
+    .IsDependentOn("Restore")
     .IsDependentOn("Build")
     .IsDependentOn("UnitTests");
 
@@ -24,10 +25,22 @@ Task("InitOutDir").Does(() => {
     CleanDirectory(config.OutDir);
 });
 
+Task("Restore").Does(() => {
+    foreach(var sln in GetFiles(config.SrcDir + "*.sln")) {
+        DotNetBuild(sln, settings =>
+            settings
+                .SetConfiguration(config.BuildProfile)
+                .SetVerbosity(Verbosity.Minimal)
+                .WithTarget("Restore")
+                .WithProperty("TreatWarningsAsErrors", "true"));
+    }
+});
+
 Task("Build").Does(() => {
     foreach(var sln in GetFiles(config.SrcDir + "*.sln")) {
         DotNetBuild(sln, settings => 
-            settings.SetConfiguration(config.BuildProfile)
+            settings
+                .SetConfiguration(config.BuildProfile)
                 .SetVerbosity(Verbosity.Minimal)
                 .WithTarget("Rebuild")
                 .WithProperty("TreatWarningsAsErrors", "true")
@@ -60,7 +73,8 @@ Task("IntegrationTests").Does(() => {
 Task("Pack").Does(() => {
     foreach(var sln in GetFiles(config.SrcDir + "projects/**/*.csproj")) {
         DotNetBuild(sln, settings =>
-            settings.SetConfiguration(config.BuildProfile)
+            settings
+                .SetConfiguration(config.BuildProfile)
                 .SetVerbosity(Verbosity.Minimal)
                 .WithTarget("Pack")
                 .WithProperty("TreatWarningsAsErrors", "true")
