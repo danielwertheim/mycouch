@@ -24,7 +24,6 @@ tools/
 *.sdf
 *.orig
 *.pfx
-testenvironments.json
 
 # nuget
 [Pp]ackages/

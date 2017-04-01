@@ -231,28 +231,13 @@ namespace MyCouch.IntegrationTests
         public string Password { get; set; }
 
         public bool HasCredentials()
-        {
-            return !string.IsNullOrEmpty(User);
-        }
+            => !string.IsNullOrEmpty(User);
 
-        public bool SupportsEverything => Supports.Contains("*");
-
-        public TestEnvironment()
-        {
-            Key = DefaultEnvironmentKey;
-            Supports = new[] { "*" };
-            ServerUrl = "http://localhost:5984";
-            PrimaryDbName = "mycouchtests_pri";
-            SecondaryDbName = "mycouchtests_sec";
-            TempDbName = "mycouchtests_tmp";
-            User = "sa";
-            Password = "test";
-        }
+        public bool SupportsEverything
+            => Supports.Contains("*");
 
         public virtual bool HasSupportFor(params string[] requirements)
-        {
-            return SupportsEverything || requirements.All(r => Supports.Contains(r, StringComparer.OrdinalIgnoreCase));
-        }
+            => SupportsEverything || requirements.All(r => Supports.Contains(r, StringComparer.OrdinalIgnoreCase));
     }
 
     public static class TestEnvironments
@@ -260,9 +245,8 @@ namespace MyCouch.IntegrationTests
         public static TestEnvironment GetMachineSpecificOrDefaultTestEnvironment()
         {
             var environments = GetTestEnvironments();
-            TestEnvironment machineSpecific;
 
-            return environments.TryGetValue(Environment.MachineName, out machineSpecific)
+            return environments.TryGetValue(Environment.MachineName, out TestEnvironment machineSpecific)
                 ? machineSpecific
                 : environments[TestEnvironment.DefaultEnvironmentKey];
         }
