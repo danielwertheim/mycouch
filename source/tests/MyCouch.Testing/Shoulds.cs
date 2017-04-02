@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using FluentAssertions;
-using MyCouch.Cloudant.Responses;
 using MyCouch.Net;
 using MyCouch.Responses;
 
@@ -18,20 +17,15 @@ namespace MyCouch.Testing
             return new ContentResponseAssertions(response);
         }
 
-        public static GenerateApiKeyResponseAssertions Should(this GenerateApiKeyResponse response)
-        {
-            return new GenerateApiKeyResponseAssertions(response);
-        }
+        //public static SearchIndexResponseAssertions Should(this SearchIndexResponse response)
+        //{
+        //    return new SearchIndexResponseAssertions(response);
+        //}
 
-        public static SearchIndexResponseAssertions Should(this SearchIndexResponse response)
-        {
-            return new SearchIndexResponseAssertions(response);
-        }
-
-        public static SearchIndexResponseAssertions<TIncludedDoc> Should<TIncludedDoc>(this SearchIndexResponse<TIncludedDoc> response)
-        {
-            return new SearchIndexResponseAssertions<TIncludedDoc>(response);
-        }
+        //public static SearchIndexResponseAssertions<TIncludedDoc> Should<TIncludedDoc>(this SearchIndexResponse<TIncludedDoc> response)
+        //{
+        //    return new SearchIndexResponseAssertions<TIncludedDoc>(response);
+        //}
 
         public static ViewQueryResponseAssertions Should(this ViewQueryResponse response)
         {
@@ -108,7 +102,7 @@ namespace MyCouch.Testing
                 statusCodes.Should().Contain(Response.StatusCode);
             else
                 Response.StatusCode.Should().Be(HttpStatusCode.OK);
-            
+
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
         }
@@ -139,30 +133,12 @@ namespace MyCouch.Testing
             Response.IsSuccess.Should().BeTrue();
             Response.DbName.Should().NotBeNullOrEmpty();
             Response.DbName.Should().Be(dbName);
-            Response.CommittedUpdateSeq.Should().NotBeNullOrEmpty();
             Response.UpdateSeq.Should().NotBeNullOrEmpty();
             Response.DataSize.Should().BeGreaterThan(0);
             Response.DiskSize.Should().BeGreaterThan(0);
             Response.DocCount.Should().BeGreaterThan(0);
             Response.DocDelCount.Should().BeGreaterThan(0);
             Response.DiskFormatVersion.Should().BeGreaterThan(0);
-            Response.InstanceStartTimeUtc.Should().BeCloseTo(DateTime.UtcNow, (int)TimeSpan.FromSeconds(30).TotalMilliseconds);
-        }
-
-        public void BeSuccessfulCloudant(string dbName)
-        {
-            Response.Should().Be(HttpMethod.Get);
-            Response.IsSuccess.Should().BeTrue();
-            Response.DbName.Should().NotBeNullOrEmpty();
-            Response.DbName.Should().Be(dbName);
-            Response.CommittedUpdateSeq.Should().BeNull();
-            Response.UpdateSeq.Should().NotBeNullOrEmpty();
-            Response.DataSize.Should().Be(0);
-            Response.DiskSize.Should().BeGreaterThan(0);
-            Response.DocCount.Should().BeGreaterThan(0);
-            Response.DocDelCount.Should().BeGreaterThan(0);
-            Response.DiskFormatVersion.Should().BeGreaterThan(0);
-            Response.InstanceStartTimeUtc.HasValue.Should().BeFalse();
         }
     }
 
@@ -243,56 +219,43 @@ namespace MyCouch.Testing
         }
     }
 
-    public class GenerateApiKeyResponseAssertions : ResponseAssertions<GenerateApiKeyResponse>
-    {
-        [DebuggerStepThrough]
-        public GenerateApiKeyResponseAssertions(GenerateApiKeyResponse response) : base(response) { }
+    //public class SearchIndexResponseAssertions : SearchIndexResponseAssertions<string>
+    //{
+    //    [DebuggerStepThrough]
+    //    public SearchIndexResponseAssertions(SearchIndexResponse response) : base(response) { }
+    //}
 
-        public void BeSuccessful()
-        {
-            Response.Should().Be(HttpMethod.Post, HttpStatusCode.Created);
-            Response.Key.Should().NotBeNullOrWhiteSpace();
-            Response.Password.Should().NotBeNullOrWhiteSpace();
-        }
-    }
+    //public class SearchIndexResponseAssertions<TIncludedDoc>
+    //{
+    //    protected readonly SearchIndexResponse<TIncludedDoc> Response;
 
-    public class SearchIndexResponseAssertions : SearchIndexResponseAssertions<string>
-    {
-        [DebuggerStepThrough]
-        public SearchIndexResponseAssertions(SearchIndexResponse response) : base(response) { }
-    }
+    //    [DebuggerStepThrough]
+    //    public SearchIndexResponseAssertions(SearchIndexResponse<TIncludedDoc> response)
+    //    {
+    //        Response = response;
+    //    }
 
-    public class SearchIndexResponseAssertions<TIncludedDoc>
-    {
-        protected readonly SearchIndexResponse<TIncludedDoc> Response;
+    //    public void BeSuccessfulGet(int numOfRows)
+    //    {
+    //        BeSuccessful(HttpMethod.Get, numOfRows);
+    //    }
 
-        [DebuggerStepThrough]
-        public SearchIndexResponseAssertions(SearchIndexResponse<TIncludedDoc> response)
-        {
-            Response = response;
-        }
+    //    private void BeSuccessful(HttpMethod method, int numOfRows)
+    //    {
+    //        Response.RequestMethod.Should().Be(method);
+    //        Response.IsSuccess.Should().BeTrue();
+    //        Response.StatusCode.Should().Be(HttpStatusCode.OK);
+    //        Response.Error.Should().BeNull();
+    //        Response.Reason.Should().BeNull();
+    //        Response.IsEmpty.Should().BeFalse();
 
-        public void BeSuccessfulGet(int numOfRows)
-        {
-            BeSuccessful(HttpMethod.Get, numOfRows);
-        }
-
-        private void BeSuccessful(HttpMethod method, int numOfRows)
-        {
-            Response.RequestMethod.Should().Be(method);
-            Response.IsSuccess.Should().BeTrue();
-            Response.StatusCode.Should().Be(HttpStatusCode.OK);
-            Response.Error.Should().BeNull();
-            Response.Reason.Should().BeNull();
-            Response.IsEmpty.Should().BeFalse();
-
-            if (numOfRows > 0)
-            {
-                Response.Rows.Should().NotBeNull();
-                Response.RowCount.Should().Be(numOfRows);
-            }
-        }
-    }
+    //        if (numOfRows > 0)
+    //        {
+    //            Response.Rows.Should().NotBeNull();
+    //            Response.RowCount.Should().Be(numOfRows);
+    //        }
+    //    }
+    //}
 
     public class ViewQueryResponseAssertions : ViewQueryResponseAssertions<string, string>
     {
@@ -374,8 +337,11 @@ namespace MyCouch.Testing
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
             Response.IsEmpty.Should().BeFalse();
-            Response.ETag.Should().NotBeNullOrWhiteSpace();
-            Response.ETag.Should().NotContain("\"");
+
+            //https://issues.apache.org/jira/browse/COUCHDB-3331
+            //Response.ETag.Should().NotBeNullOrWhiteSpace();
+            if (!string.IsNullOrWhiteSpace(Response.ETag))
+                Response.ETag.Should().NotContain("\"");
 
             if (numOfRows > 0)
             {
@@ -423,15 +389,15 @@ namespace MyCouch.Testing
             Response.Content.Should().NotBeNull();
 
             Response.Id.Should().NotBeNullOrEmpty();
-            if(initialId != null)
+            if (initialId != null)
                 Response.Id.Should().Be(initialId);
 
             Response.Rev.Should().NotBeNullOrEmpty();
 
-            if(idAccessor != null)
+            if (idAccessor != null)
                 idAccessor(Response.Content).Should().Be(Response.Id);
 
-            if(revAccessor != null)
+            if (revAccessor != null)
                 revAccessor(Response.Content).Should().Be(Response.Rev);
         }
 
@@ -481,7 +447,7 @@ namespace MyCouch.Testing
             Response.Content.Should().NotBeNull();
 
             Response.Id.Should().NotBeNullOrEmpty();
-            if(initialId != null)
+            if (initialId != null)
                 Response.Id.Should().Be(initialId);
 
             Response.Rev.Should().NotBeNullOrEmpty();
@@ -495,9 +461,11 @@ namespace MyCouch.Testing
 
         public void BeSuccessfulDelete(string initialId, Func<T, string> idAccessor = null, Func<T, string> revAccessor = null)
         {
+            var codes = new[] { HttpStatusCode.Accepted, HttpStatusCode.Created, HttpStatusCode.OK, };
+
             Response.RequestMethod.Should().Be(HttpMethod.Delete);
             Response.IsSuccess.Should().BeTrue("StatusCode:" + Response.StatusCode);
-            Response.StatusCode.Should().Be(HttpStatusCode.OK);
+            codes.Should().Contain(Response.StatusCode);
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
             Response.IsEmpty.Should().BeFalse();
@@ -613,9 +581,11 @@ namespace MyCouch.Testing
 
         public void BeSuccessfulBatchPost(string initialId)
         {
+            var codes = new[] { HttpStatusCode.Accepted, HttpStatusCode.Created };
+
             Response.RequestMethod.Should().Be(HttpMethod.Post);
             Response.IsSuccess.Should().BeTrue("StatusCode:" + Response.StatusCode);
-            Response.StatusCode.Should().Be(HttpStatusCode.Accepted);
+            codes.Should().Contain(Response.StatusCode);
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
             Response.Id.Should().Be(initialId);
@@ -636,9 +606,11 @@ namespace MyCouch.Testing
 
         public void BeSuccessfulBatchPut(string initialId)
         {
+            var codes = new[] { HttpStatusCode.Accepted, HttpStatusCode.Created };
+
             Response.RequestMethod.Should().Be(HttpMethod.Put);
             Response.IsSuccess.Should().BeTrue("StatusCode:" + Response.StatusCode);
-            Response.StatusCode.Should().Be(HttpStatusCode.Accepted);
+            codes.Should().Contain(Response.StatusCode);
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
             Response.Id.Should().Be(initialId);
@@ -672,9 +644,11 @@ namespace MyCouch.Testing
 
         public void BeSuccessfulBatchPutOfNew(string initialId)
         {
+            var codes = new[] { HttpStatusCode.Accepted, HttpStatusCode.Created };
+
             Response.RequestMethod.Should().Be(HttpMethod.Put);
             Response.IsSuccess.Should().BeTrue("StatusCode:" + Response.StatusCode);
-            Response.StatusCode.Should().Be(HttpStatusCode.Accepted);
+            codes.Should().Contain(Response.StatusCode);
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
             Response.Id.Should().NotBeNullOrEmpty();
@@ -683,9 +657,11 @@ namespace MyCouch.Testing
 
         public void BeSuccessfulDelete(string initialId)
         {
+            var codes = new[] { HttpStatusCode.Accepted, HttpStatusCode.Created, HttpStatusCode.OK };
+
             Response.RequestMethod.Should().Be(HttpMethod.Delete);
             Response.IsSuccess.Should().BeTrue("StatusCode:" + Response.StatusCode);
-            Response.StatusCode.Should().Be(HttpStatusCode.OK);
+            codes.Should().Contain(Response.StatusCode);
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
             Response.Id.Should().Be(initialId);

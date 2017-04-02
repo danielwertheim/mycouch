@@ -1,11 +1,7 @@
-﻿using System;
-using MyCouch.EnsureThat;
+﻿using EnsureThat;
 
 namespace MyCouch.Requests
 {
-#if !PCL && !vNext
-    [Serializable]
-#endif
     public class PostEntityRequest<T> : Request where T : class
     {
         public bool Batch { get; set; }

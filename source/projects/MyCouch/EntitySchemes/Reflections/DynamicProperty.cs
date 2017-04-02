@@ -1,4 +1,4 @@
-﻿using MyCouch.EnsureThat;
+﻿using EnsureThat;
 
 namespace MyCouch.EntitySchemes.Reflections
 {

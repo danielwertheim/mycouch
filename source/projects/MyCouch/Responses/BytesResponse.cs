@@ -2,9 +2,6 @@
 
 namespace MyCouch.Responses
 {
-#if !PCL && !vNext
-    [Serializable]
-#endif
     public abstract class BytesResponse : ContentResponse<byte[]>
     {
         public override bool IsEmpty

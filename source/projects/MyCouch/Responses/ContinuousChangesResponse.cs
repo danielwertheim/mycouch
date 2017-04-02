@@ -1,9 +1,4 @@
-﻿using System;
-
-namespace MyCouch.Responses
+﻿namespace MyCouch.Responses
 {
-#if !PCL && !vNext
-    [Serializable]
-#endif
     public class ContinuousChangesResponse : Response { }
 }

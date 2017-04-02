@@ -1,11 +1,8 @@
 ﻿using System;
-using MyCouch.EnsureThat;
+using EnsureThat;
 
 namespace MyCouch.Requests
 {
-#if !PCL && !vNext
-    [Serializable]
-#endif
     public class PutDocumentRequest : Request
     {
         public string Id { get; private set; }

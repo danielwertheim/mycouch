@@ -43,8 +43,8 @@
         public const string CompactRunning = "compact_running";
         public const string DiskSize = "disk_size";
         public const string DataSize = "data_size";
-        public const string InstanceStartTime = "instance_start_time";
         public const string DiskFormatVersion = "disk_format_version";
-        public const string CommittedUpdateSeq = "committed_update_seq";
+
+        public const string DesignDoc = "ddoc";
     }
 }

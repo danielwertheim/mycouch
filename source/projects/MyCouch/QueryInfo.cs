@@ -1,10 +1,5 @@
-using System;
-
 namespace MyCouch
 {
-#if !PCL && !vNext
-    [Serializable]
-#endif
     public class QueryInfo
     {
         public long TotalRows { get; private set; }

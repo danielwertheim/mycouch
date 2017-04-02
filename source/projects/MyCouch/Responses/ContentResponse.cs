@@ -2,9 +2,6 @@
 
 namespace MyCouch.Responses
 {
-#if !PCL && !vNext
-    [Serializable]
-#endif
     public abstract class ContentResponse<TContent> : Response
     {
         public TContent Content { get; set; }

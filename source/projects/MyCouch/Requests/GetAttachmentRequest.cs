@@ -1,11 +1,7 @@
-﻿using System;
-using MyCouch.EnsureThat;
+﻿using EnsureThat;
 
 namespace MyCouch.Requests
 {
-#if !PCL && !vNext
-    [Serializable]
-#endif
     public class GetAttachmentRequest : Request
     {
         public string DocId { get; private set; }

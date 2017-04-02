@@ -1,11 +1,8 @@
 ﻿using System;
-using MyCouch.EnsureThat;
+using EnsureThat;
 
 namespace MyCouch.Serialization.Meta
 {
-#if !PCL && !vNext
-    [Serializable]
-#endif
     public class DocumentSerializationMeta
     {
         public Type Type { get; private set; }

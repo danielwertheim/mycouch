@@ -1,9 +1,4 @@
-﻿using System;
-
-namespace MyCouch.Requests
+﻿namespace MyCouch.Requests
 {
-#if !PCL && !vNext
-    [Serializable]
-#endif
     public abstract class Request { }
 }

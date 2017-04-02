@@ -1,11 +1,7 @@
-﻿using System;
-using System.Net.Http;
+﻿using System.Net.Http;
 
 namespace MyCouch.Net
 {
-#if !PCL && !vNext
-    [Serializable]
-#endif
     public class JsonContent : StringContent
     {
         public JsonContent()

@@ -1,6 +1,3 @@
-# node
-node_modules/
-
 # vs
 .vs/
 [Aa]pp_[Dd]ata/
@@ -16,28 +13,20 @@ node_modules/
 *.suo
 *.cache
 
-# dnx
-project.lock.json
-artifacts/
-
 # deploy
-source/build/artifacts/
-source/build/node_modules/
-source/build/tools/
-!source/build/tools/packages.config
+build/
+tools/
+!tools/packages.config
 
 # misc
 *~
 *.swp
 *.sdf
 *.orig
-testenvironments.local.json
+*.pfx
 
 # nuget
 [Pp]ackages/
-
-# approvals#
-*.received.txt
 
 # resharper
 _ReSharper.*

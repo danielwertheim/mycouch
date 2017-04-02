@@ -48,13 +48,9 @@ namespace MyCouch.EntitySchemes.Reflections
             var objExpr = Expression.Parameter(typeof(object), "theItem");
             var castedObjExpr = Expression.Convert(objExpr, type);
             var parameter = Expression.Parameter(typeof(TProp), "param");
-#if PCL || vNext
+
             return Expression.Lambda<Action<object, TProp>>(
                 Expression.Call(castedObjExpr, property.SetMethod, parameter), new[] { objExpr, parameter }).Compile();
-#else
-            return Expression.Lambda<Action<object, TProp>>(
-                Expression.Call(castedObjExpr, property.GetSetMethod(true), parameter), new[] { objExpr, parameter }).Compile();
-#endif
         }
     }
 }

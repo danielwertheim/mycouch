@@ -2,11 +2,9 @@ using System.Linq;
 using FluentAssertions;
 using MyCouch.Testing.Model;
 using MyCouch.Testing.TestData;
-using Xunit;
 
 namespace MyCouch.IntegrationTests.CoreTests
 {
-    [Trait("Category", "IntegrationTests.CoreTests")]
     public class MyCouchStoreCrudTests : IntegrationTestsOf<MyCouchStore>
     {
         public MyCouchStoreCrudTests()
@@ -122,7 +120,7 @@ namespace MyCouch.IntegrationTests.CoreTests
         [MyFact(TestScenarios.MyCouchStore)]
         public virtual void DeleteAsync_When_entity_does_not_exist_It_returns_false()
         {
-            var deleted = SUT.DeleteAsync(new Artist { ArtistId = "7a4b2d4d66e9484bbd50f5dfadd099f9", ArtistRev = "foo_rev" }).Result;
+            var deleted = SUT.DeleteAsync(new Artist { ArtistId = "b16eeb5b827f4d0886d0e64ad80e3270", ArtistRev = "foo_rev" }).Result;
 
             deleted.Should().BeFalse();
         }

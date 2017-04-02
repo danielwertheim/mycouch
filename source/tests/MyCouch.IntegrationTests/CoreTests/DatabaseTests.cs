@@ -1,11 +1,9 @@
 ﻿using System.Net.Http;
 using MyCouch.Testing;
 using MyCouch.Testing.TestData;
-using Xunit;
 
 namespace MyCouch.IntegrationTests.CoreTests
 {
-    [Trait("Category", "IntegrationTests.CoreTests")]
     public class DatabaseTests : IntegrationTestsOf<IDatabase>
     {
         public DatabaseTests()
@@ -33,10 +31,7 @@ namespace MyCouch.IntegrationTests.CoreTests
 
             var response = SUT.GetAsync().Result;
 
-            if (Environment.IsAgainstCloudant())
-                response.Should().BeSuccessfulCloudant(DbClient.Connection.DbName);
-            else
-                response.Should().BeSuccessful(DbClient.Connection.DbName);
+            response.Should().BeSuccessful(DbClient.Connection.DbName);
         }
 
         [MyFact(TestScenarios.DatabaseContext, TestScenarios.CompactDbs)]

@@ -1,5 +1,5 @@
 ﻿using System;
-using MyCouch.EnsureThat;
+using EnsureThat;
 using MyCouch.Serialization;
 
 namespace MyCouch
@@ -16,6 +16,8 @@ namespace MyCouch
         public IDatabase Database { get; }
         public IDocuments Documents { get; }
         public IEntities Entities { get; }
+        public IQueries Queries { get; }
+        //public ISearches Searches { get; }
         public IViews Views { get; }
 
         public MyCouchClient(string serverAddress, string dbName, MyCouchClientBootstrapper bootstrapper = null)
@@ -39,6 +41,8 @@ namespace MyCouch
             Database = bootstrapper.DatabaseFn(Connection);
             Documents = bootstrapper.DocumentsFn(Connection);
             Entities = bootstrapper.EntitiesFn(Connection);
+            Queries = bootstrapper.QueriesFn(Connection);
+            //Searches = bootstrapper.SearchesFn(Connection);
             Views = bootstrapper.ViewsFn(Connection);
         }
 

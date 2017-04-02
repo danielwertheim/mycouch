@@ -1,9 +1,10 @@
 ﻿using System;
-using MyCouch.Cloudant;
 using MyCouch.Testing;
+using Xunit;
 
 namespace MyCouch.IntegrationTests
 {
+    [Collection("Integration tests")]
     public abstract class IntegrationTestsOf<T> :
         TestsOf<T>,
         IDisposable where T : class
@@ -11,10 +12,6 @@ namespace MyCouch.IntegrationTests
         protected readonly TestEnvironment Environment;
         protected IMyCouchServerClient ServerClient { get; private set; }
         protected IMyCouchClient DbClient { get; private set; }
-
-        protected IMyCouchCloudantServerClient CloudantServerClient => ServerClient as IMyCouchCloudantServerClient;
-
-        protected IMyCouchCloudantClient CloudantDbClient => DbClient as IMyCouchCloudantClient;
 
         protected IntegrationTestsOf()
         {
@@ -47,7 +44,7 @@ namespace MyCouch.IntegrationTests
             disposableSut?.Dispose();
         }
 
-        protected void EnsureCleanEnvironment()
+        private void EnsureCleanEnvironment()
         {
             if (!(this is IPreserveStatePerFixture))
                 IntegrationTestsRuntime.EnsureCleanEnvironment();

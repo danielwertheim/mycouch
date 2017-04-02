@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 using System.Text;
-using MyCouch.EnsureThat;
+using EnsureThat;
 using MyCouch.Net;
 using MyCouch.Requests;
 

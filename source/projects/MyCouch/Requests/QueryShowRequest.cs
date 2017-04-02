@@ -1,13 +1,10 @@
-﻿using MyCouch.EnsureThat;
+﻿using EnsureThat;
 using MyCouch.Querying;
 using System;
 using System.Collections.Generic;
 
 namespace MyCouch.Requests
 {
-#if !PCL && !vNext
-    [Serializable]
-#endif
     public class QueryShowRequest : Request, IShowParameters
     {
         protected IShowParameters State { get; private set; }

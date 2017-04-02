@@ -25,7 +25,6 @@ namespace MyCouch.UnitTests.Serialization
         }
     }
 
-#if !PCL && !vNext
     public class ViewQueryResponseRowsDeserializerWithEntityContractResolverUsingIlTests : ViewQueryResponseRowsDeserializerTests
     {
         public ViewQueryResponseRowsDeserializerWithEntityContractResolverUsingIlTests()
@@ -36,7 +35,6 @@ namespace MyCouch.UnitTests.Serialization
             return new EntityReflector(new IlDynamicPropertyFactory());
         }
     }
-#endif
 
     public abstract class ViewQueryResponseRowsDeserializerTests : UnitTestsOf<DefaultSerializer>
     {

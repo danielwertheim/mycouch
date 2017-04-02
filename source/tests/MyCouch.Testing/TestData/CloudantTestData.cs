@@ -1,5 +1,4 @@
-﻿using MyCouch.Cloudant;
-using MyCouch.Testing.Model;
+﻿using MyCouch.Testing.Model;
 
 namespace MyCouch.Testing.TestData
 {

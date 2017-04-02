@@ -1,5 +1,4 @@
-﻿#if !PCL && !vNext
-using System;
+﻿using System;
 using System.Reflection;
 using System.Reflection.Emit;
 
@@ -38,7 +37,7 @@ namespace MyCouch.EntitySchemes.Reflections
 
         protected virtual Func<object, string> CreateIlGetter(PropertyInfo property)
         {
-            var propGetMethod = property.GetGetMethod(true);
+            var propGetMethod = property.GetMethod;
             if (propGetMethod == null)
                 return null;
 
@@ -50,7 +49,7 @@ namespace MyCouch.EntitySchemes.Reflections
             generator.Emit(OpCodes.Castclass, property.DeclaringType);
             generator.EmitCall(OpCodes.Callvirt, propGetMethod, null);
 
-            if (!property.PropertyType.IsClass)
+            if (!property.PropertyType.GetTypeInfo().IsClass)
                 generator.Emit(OpCodes.Box, property.PropertyType);
 
             generator.Emit(OpCodes.Ret);
@@ -64,7 +63,7 @@ namespace MyCouch.EntitySchemes.Reflections
             var name = string.Format("_{0}{1}_", "Get", property.Name);
             var returnType = property.PropertyType;
 
-            return !property.DeclaringType.IsInterface
+            return !property.DeclaringType.GetTypeInfo().IsInterface
                 ? new DynamicMethod(
                     name,
                     returnType,
@@ -81,7 +80,7 @@ namespace MyCouch.EntitySchemes.Reflections
 
         protected virtual Action<object, string> CreateIlSetter(PropertyInfo property)
         {
-            var propSetMethod = property.GetSetMethod(true);
+            var propSetMethod = property.SetMethod;
             if (propSetMethod == null)
                 return null;
 
@@ -92,7 +91,7 @@ namespace MyCouch.EntitySchemes.Reflections
             generator.Emit(OpCodes.Castclass, property.DeclaringType);
             generator.Emit(OpCodes.Ldarg_1);
 
-            generator.Emit(property.PropertyType.IsClass
+            generator.Emit(property.PropertyType.GetTypeInfo().IsClass
                 ? OpCodes.Castclass
                 : OpCodes.Unbox_Any,
                 property.PropertyType);
@@ -109,7 +108,7 @@ namespace MyCouch.EntitySchemes.Reflections
             var name = string.Format("_{0}{1}_", "Set", property.Name);
             var returnType = VoidType;
 
-            return !property.DeclaringType.IsInterface
+            return !property.DeclaringType.GetTypeInfo().IsInterface
                 ? new DynamicMethod(
                     name,
                     returnType,
@@ -125,4 +124,3 @@ namespace MyCouch.EntitySchemes.Reflections
         }
     }
 }
-#endif

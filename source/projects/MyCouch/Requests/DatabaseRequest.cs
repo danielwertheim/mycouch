@@ -1,11 +1,7 @@
-﻿using System;
-using MyCouch.EnsureThat;
+﻿using EnsureThat;
 
 namespace MyCouch.Requests
 {
-#if !PCL && !vNext
-    [Serializable]
-#endif
     public abstract class DatabaseRequest : Request
     {
         public string DbName { get; private set; }

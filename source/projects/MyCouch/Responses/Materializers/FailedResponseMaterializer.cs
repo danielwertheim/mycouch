@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using MyCouch.EnsureThat;
+using EnsureThat;
 using MyCouch.Extensions;
 using MyCouch.Serialization;
 
@@ -48,9 +48,6 @@ namespace MyCouch.Responses.Materializers
             return info;
         }
 
-#if !PCL && !vNext
-        [Serializable]
-#endif
         protected class FailedResponseInfo
         {
             public string Error { get; set; }

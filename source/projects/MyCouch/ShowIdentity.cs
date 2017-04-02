@@ -1,11 +1,7 @@
-﻿using System;
-using MyCouch.EnsureThat;
+﻿using EnsureThat;
 
 namespace MyCouch
 {
-#if !PCL && !vNext
-    [Serializable]
-#endif
     public class ShowIdentity
     {
         public string DesignDocument { get; private set; }

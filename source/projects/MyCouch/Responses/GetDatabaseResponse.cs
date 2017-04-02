@@ -1,12 +1,7 @@
-﻿using System;
-using MyCouch.Serialization.Converters;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace MyCouch.Responses
 {
-#if !PCL && !vNext
-    [Serializable]
-#endif
     public class GetDatabaseResponse : Response
     {
         [JsonProperty(JsonScheme.DbName)]
@@ -33,14 +28,7 @@ namespace MyCouch.Responses
         [JsonProperty(JsonScheme.DataSize)]
         public long DataSize { get; set; }
 
-        [JsonProperty(JsonScheme.InstanceStartTime)]
-        [JsonConverter(typeof(UnixEpochDateTimeConverter))]
-        public DateTime? InstanceStartTimeUtc { get; set; }
-
         [JsonProperty(JsonScheme.DiskFormatVersion)]
         public int DiskFormatVersion { get; set; }
-
-        [JsonProperty(JsonScheme.CommittedUpdateSeq)]
-        public string CommittedUpdateSeq { get; set; }
     }
 }

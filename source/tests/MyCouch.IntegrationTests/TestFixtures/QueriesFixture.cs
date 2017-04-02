@@ -1,13 +1,8 @@
-﻿using MyCouch.Cloudant;
-using MyCouch.Cloudant.Requests;
-using MyCouch.Requests;
+﻿using MyCouch.Requests;
 using MyCouch.Testing.Model;
 using MyCouch.Testing.TestData;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FluentAssertions;
 
 namespace MyCouch.IntegrationTests.TestFixtures
@@ -15,10 +10,9 @@ namespace MyCouch.IntegrationTests.TestFixtures
     public class QueriesFixture : IDisposable
     {
         private Blog[] _blogs;
+
         internal void Init(TestEnvironment environment)
         {
-            environment.IsAgainstCloudant().Should().Be(true);
-
             if (_blogs != null && _blogs.Any())
                 return;
 
@@ -26,24 +20,19 @@ namespace MyCouch.IntegrationTests.TestFixtures
 
             _blogs = CloudantTestData.Blogs.CreateAll();
 
-            using (var client = IntegrationTestsRuntime.CreateDbClient() as IMyCouchCloudantClient)
+            using (var client = IntegrationTestsRuntime.CreateDbClient())
             {
                 var bulk = new BulkRequest();
                 bulk.Include(_blogs.Select(i => client.Entities.Serializer.Serialize(i)).ToArray());
 
                 var bulkResponse = client.Documents.BulkAsync(bulk).Result;
 
-                CreateIndexes(client);
+                CreateIndex1(client);
+                CreateIndex2(client);
             }
         }
 
-        private void CreateIndexes(IMyCouchCloudantClient client)
-        {
-            CreateIndex1(client);
-            CreateIndex2(client);
-        }
-
-        private static void CreateIndex1(IMyCouchCloudantClient client)
+        private static void CreateIndex1(IMyCouchClient client)
         {
             var indexRequest = new PostIndexRequest();
             indexRequest.Configure(q => q.DesignDocument("TestDoc")
@@ -56,7 +45,7 @@ namespace MyCouch.IntegrationTests.TestFixtures
             response.IsSuccess.Should().Be(true);
         }
 
-        private static void CreateIndex2(IMyCouchCloudantClient client)
+        private static void CreateIndex2(IMyCouchClient client)
         {
             var indexRequest = new PostIndexRequest();
             indexRequest.Configure(q => q.DesignDocument("TestDoc")

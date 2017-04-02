@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
-using MyCouch.EnsureThat;
+using EnsureThat;
 using MyCouch.EntitySchemes;
 using MyCouch.Extensions;
 using MyCouch.HttpRequestFactories;

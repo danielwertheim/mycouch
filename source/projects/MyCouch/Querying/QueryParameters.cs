@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using MyCouch.EnsureThat;
+using EnsureThat;
 
 namespace MyCouch.Querying
 {
-#if !PCL && !vNext
-    [Serializable]
-#endif
     public class QueryParameters : IQueryParameters
     {
         public ViewIdentity ViewIdentity { get; private set; }

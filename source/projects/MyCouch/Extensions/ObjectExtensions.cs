@@ -19,8 +19,7 @@ namespace MyCouch.Extensions
                 return d.ToString(MyCouchRuntime.DateTimeFormatPattern, MyCouchRuntime.FormatingCulture);
             }
 
-            //DUE TO P*N*S IMPLEMENTATION IN THE BEAST WINRT, WE CAN NOT USE IConvertible
-#if PCL
+            //No IConvertible
             if (v is byte)
             {
                 var i = (byte)v;
@@ -71,13 +70,6 @@ namespace MyCouch.Extensions
             }
 
             return v.ToString();
-#else
-            var c = v as IConvertible;
-
-            return c != null
-                ? c.ToString(MyCouchRuntime.FormatingCulture)
-                : v.ToString();
-#endif
         }
     }
 }

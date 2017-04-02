@@ -1,9 +1,7 @@
 ﻿using System;
 using System.IO;
-#if PCL || vNext
 using System.Reflection;
-#endif
-using MyCouch.EnsureThat;
+using EnsureThat;
 using MyCouch.EntitySchemes;
 using Newtonsoft.Json;
 
@@ -20,9 +18,8 @@ namespace MyCouch.Serialization
         protected int Level { get; private set; }
         protected bool HasTranslatedId { get; private set; }
         protected bool HasTranslatedRev { get; private set; }
-#if PCL || vNext
+
         protected readonly TypeInfo DocTypeInfo;
-#endif
 
         public DocumentJsonReader(TextReader reader, Type docType, IEntityReflector entityReflector)
             : base(reader)
@@ -34,9 +31,7 @@ namespace MyCouch.Serialization
             EntityReflector = entityReflector;
             Reader = reader;
             CloseInput = false;
-#if PCL || vNext
             DocTypeInfo = docType.GetTypeInfo();
-#endif
         }
 
         public override bool Read()
@@ -99,13 +94,8 @@ namespace MyCouch.Serialization
             if (DocType == typeof(object))
                 return false;
 
-#if PCL || vNext
             if (!DocTypeInfo.IsClass)
                 return false;
-#else
-            if (!DocType.IsClass)
-                return false;
-#endif
 
             return true;
         }

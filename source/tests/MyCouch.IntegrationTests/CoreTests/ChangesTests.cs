@@ -6,19 +6,12 @@ using MyCouch.Requests;
 using MyCouch.Responses;
 using MyCouch.Testing;
 using MyCouch.Testing.TestData;
-using Xunit;
 
 namespace MyCouch.IntegrationTests.CoreTests
 {
-    [Trait("Category", "IntegrationTests.CoreTests")]
     public class ChangesTests : IntegrationTestsOf<IChanges>
     {
-        protected readonly Func<string, int> StringToNumeric = s =>
-        {
-            var digits = s.ToCharArray().Where(c => Char.IsDigit(c));
-            var tmp = new String(digits.ToArray());
-            return int.Parse(tmp);
-        };
+        protected readonly Func<string, int> GetSeqNumber = s => int.Parse(s.Substring(0, s.IndexOf('-', 1)));
 
         public ChangesTests()
         {
@@ -38,7 +31,7 @@ namespace MyCouch.IntegrationTests.CoreTests
             var changesAfterPostOfDoc = SUT.GetAsync(changesRequestWithInclude).Result;
             VerifyChanges(changes0, changesAfterPostOfDoc, postOfDoc.Id, postOfDoc.Rev, shouldBeDeleted: false);
 
-            var change = changesAfterPostOfDoc.Results.OrderBy(c => StringToNumeric(c.Seq)).Last();
+            var change = changesAfterPostOfDoc.Results.OrderBy(c => GetSeqNumber(c.Seq)).Last();
             var postedDoc = DbClient.Documents.GetAsync(postOfDoc.Id, postOfDoc.Rev).Result.Content;
 
             change.IncludedDoc.Should().Be(postedDoc);
@@ -143,7 +136,7 @@ namespace MyCouch.IntegrationTests.CoreTests
         {
             current.Should().BeSuccessfulGet();
 
-            var lastChange = current.Results.Select(c => new { NumericSeq = StringToNumeric(c.Seq), Change = c }).OrderBy(i => i.NumericSeq).Last();
+            var lastChange = current.Results.Select(c => new { NumericSeq = GetSeqNumber(c.Seq), Change = c }).OrderBy(i => i.NumericSeq).Last();
             lastChange.Change.Id.Should().Be(expectedId);
             lastChange.Change.Changes.Single().Rev.Should().Be(expectedRev);
             lastChange.Change.Deleted.Should().Be(shouldBeDeleted);

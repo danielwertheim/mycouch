@@ -4,9 +4,6 @@ using System.Net.Http;
 
 namespace MyCouch.Responses
 {
-#if !PCL && !vNext
-    [Serializable]
-#endif
     public abstract class Response
     {
         protected const string NullValueForDebugOutput = "<NULL>";

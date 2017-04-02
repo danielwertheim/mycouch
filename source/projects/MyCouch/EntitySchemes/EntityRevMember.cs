@@ -34,17 +34,11 @@ namespace MyCouch.EntitySchemes
 
             if (membername.Equals("rev", StringComparison.OrdinalIgnoreCase))
                 return 4 * factor;
-#if PCL || vNext
+
             var typeInfo = entityType.GetTypeInfo();
             return typeInfo.BaseType == typeof(object)
                 ? null
                 : GetMemberRankingIndex(typeInfo.BaseType, membername, (factor * 10));
-
-#else
-            return entityType.BaseType == typeof(object)
-                ? null
-                : GetMemberRankingIndex(entityType.BaseType, membername, (factor * 10));
-#endif
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using MyCouch.EnsureThat;
+using EnsureThat;
 using MyCouch.Extensions;
 using MyCouch.HttpRequestFactories;
 using MyCouch.Requests;

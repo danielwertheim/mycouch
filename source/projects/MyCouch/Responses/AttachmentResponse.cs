@@ -2,9 +2,6 @@
 
 namespace MyCouch.Responses
 {
-#if !PCL && !vNext
-    [Serializable]
-#endif
     public class AttachmentResponse : BytesResponse,
         IDocumentHeader
     {

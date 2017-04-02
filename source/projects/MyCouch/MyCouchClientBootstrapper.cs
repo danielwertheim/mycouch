@@ -88,6 +88,16 @@ namespace MyCouch
         public Func<IDbConnection, IEntities> EntitiesFn { get; set; }
 
         /// <summary>
+        /// Used e.g. for bootrstraping <see cref="IMyCouchClient.Queries"/>.
+        /// </summary>
+        public Func<IDbConnection, IQueries> QueriesFn { get; set; }
+
+        ///// <summary>
+        ///// Used e.g. for bootrstraping <see cref="IMyCouchClient.Searches"/>.
+        ///// </summary>
+        //public Func<IDbConnection, ISearches> SearchesFn { get; set; }
+
+        /// <summary>
         /// Used e.g. for bootstraping <see cref="IMyCouchClient.Views"/>.
         /// </summary>
         public Func<IDbConnection, IViews> ViewsFn { get; set; }
@@ -109,6 +119,8 @@ namespace MyCouch
             ConfigureReplicatorFn();
             ConfigureDocumentsFn();
             ConfigureEntitiesFn();
+            ConfigureQueriesFn();
+            //ConfigureSearchesFn();
             ConfigureViewsFn();
         }
 
@@ -162,6 +174,22 @@ namespace MyCouch
                 EntityReflectorFn());
         }
 
+        protected virtual void ConfigureQueriesFn()
+        {
+            QueriesFn = cn => new Queries(
+                cn,
+                DocumentSerializerFn(),
+                SerializerFn());
+        }
+
+        //protected virtual void ConfigureSearchesFn()
+        //{
+        //    SearchesFn = cn => new Searches(
+        //        cn,
+        //        DocumentSerializerFn(),
+        //        SerializerFn());
+        //}
+
         protected virtual void ConfigureViewsFn()
         {
             ViewsFn = cn => new Views(
@@ -171,11 +199,9 @@ namespace MyCouch
 
         protected virtual void ConfigureEntityReflectorFn()
         {
-#if PCL || vNext
-            var entityReflector = new Lazy<IEntityReflector>(() => new EntityReflector(new LambdaDynamicPropertyFactory()));
-#else
+            //var entityReflector = new Lazy<IEntityReflector>(() => new EntityReflector(new LambdaDynamicPropertyFactory()));
             var entityReflector = new Lazy<IEntityReflector>(() => new EntityReflector(new IlDynamicPropertyFactory()));
-#endif
+
             EntityReflectorFn = () => entityReflector.Value;
         }
 

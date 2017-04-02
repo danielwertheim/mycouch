@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
-using MyCouch.EnsureThat;
+using EnsureThat;
 using MyCouch.Extensions;
 
 namespace MyCouch.Net
@@ -59,7 +59,8 @@ namespace MyCouch.Net
         {
             var handler = new HttpClientHandler
             {
-                AllowAutoRedirect = false
+                AllowAutoRedirect = connectionInfo.AllowAutoRedirect,
+                UseProxy = connectionInfo.UseProxy
             };
 
             var client = new HttpClient(handler, true)
@@ -67,6 +68,7 @@ namespace MyCouch.Net
                 BaseAddress = connectionInfo.Address
             };
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(HttpContentTypes.Json));
+            client.DefaultRequestHeaders.ExpectContinue = connectionInfo.ExpectContinue;
 
             if (connectionInfo.Timeout.HasValue)
                 client.Timeout = connectionInfo.Timeout.Value;
