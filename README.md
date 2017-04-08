@@ -1,7 +1,7 @@
 # MyCouch #
 The asynchronous CouchDB client for .NET - builds on top of the asynchronous HTTP client and uses JSON.Net to provide flexible serialization behaviour. It tries to keep the domain language of CouchDB instead of bringing in generic repositories and other confusing stuff. MyCouch lets you work with raw JSON and/or entities/POCOS without requiring any implementation of interfaces, baseclasses etc. MyCouch provides you with some model conventions like injection of `$doctype` to the document.
 
-**.NET Standard 1.3**. MyCouch (after v5.0.0) is now built as a .NET Standard 1.3 library.
+**.NET Standard 1.1**. MyCouch (after v5.0.0) is now built as a .NET Standard 1.1 library.
 
 **MyCouch**
 
