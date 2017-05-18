@@ -29,14 +29,9 @@ namespace MyCouch.Responses.Materializers
                 var get = response as GetEntityResponse<T>;
                 if (get != null)
                 {
-                    response.Content = Serializer.DeserializeCopied<T>(content);
+                    response.Content = Serializer.Deserialize<T>(content);
                     response.Id = EntityReflector.IdMember.GetValueFrom(response.Content);
                     response.Rev = EntityReflector.RevMember.GetValueFrom(response.Content);
-
-                    var tmp = Serializer.Deserialize<Temp>(content);
-                    get.Conflicts = tmp._conflicts;
-                    get.Id = get.Id ?? tmp.Id;
-                    get.Rev = get.Rev ?? tmp.Rev;
                 }
                 else
                     Serializer.Populate(response, content);

@@ -121,28 +121,6 @@ namespace MyCouch.Serialization
             }
         }
 
-        public virtual T DeserializeCopied<T>(Stream data) where T : class
-        {
-            if (StreamIsEmpty(data))
-                return null;
-
-            using (var copy = new MemoryStream())
-            {
-                data.CopyTo(copy);
-
-                copy.Position = 0;
-                data.Position = 0;
-
-                using (var sr = new StreamReader(copy, MyCouchRuntime.DefaultEncoding))
-                {
-                    using (var jsonReader = Configuration.ApplyConfigToReader(CreateReaderFor<T>(sr)))
-                    {
-                        return InternalSerializer.Deserialize<T>(jsonReader);
-                    }
-                }
-            }
-        }
-
         public virtual void Populate<T>(T item, Stream data) where T : class
         {
             if (StreamIsEmpty(data))
