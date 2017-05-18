@@ -32,9 +32,9 @@ namespace MyCouch.Responses.Materializers
 
                 var jt = JObject.Parse(response.Content);
 
-                response.Id = jt.Value<string>(JsonScheme._Id);
-                response.Rev = jt.Value<string>(JsonScheme._Rev);
-                response.Conflicts = jt.Values<string>(JsonScheme.Conflicts)?.ToArray();
+                response.Id = jt[JsonScheme._Id]?.Value<string>();
+                response.Rev = jt[JsonScheme._Rev]?.Value<string>();
+                response.Conflicts = jt[JsonScheme.Conflicts]?.Values<string>().ToArray();
 
                 SetMissingIdFromRequestUri(response, httpResponse.RequestMessage);
                 SetMissingRevFromResponseHeaders(response, httpResponse.Headers);
