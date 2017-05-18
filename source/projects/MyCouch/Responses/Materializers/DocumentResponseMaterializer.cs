@@ -35,7 +35,7 @@ namespace MyCouch.Responses.Materializers
                 response.Conflicts = t._conflicts;
 
                 SetMissingIdFromRequestUri(response, httpResponse.RequestMessage);
-                SetMissingRevFromRequestHeaders(response, httpResponse.Headers);
+                SetMissingRevFromResponseHeaders(response, httpResponse.Headers);
             }
         }
 
@@ -45,7 +45,7 @@ namespace MyCouch.Responses.Materializers
                 response.Id = request.ExtractIdFromUri(false);
         }
 
-        protected virtual void SetMissingRevFromRequestHeaders(DocumentResponse response, HttpResponseHeaders responseHeaders)
+        protected virtual void SetMissingRevFromResponseHeaders(DocumentResponse response, HttpResponseHeaders responseHeaders)
         {
             if (string.IsNullOrWhiteSpace(response.Rev))
                 response.Rev = responseHeaders.GetETag();
