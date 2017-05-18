@@ -52,12 +52,5 @@ namespace MyCouch.Responses.Materializers
             if (string.IsNullOrWhiteSpace(response.Rev))
                 response.Rev = responseHeaders.GetETag();
         }
-
-        private class Temp
-        {
-            public string Id { get; set; }
-            public string Rev { get; set; }
-            public string[] _conflicts { get; set; }
-        }
     }
 }
