@@ -9,7 +9,6 @@ namespace MyCouch.Serialization
         string Serialize<T>(T item) where T : class;
         T Deserialize<T>(string data);
         T Deserialize<T>(Stream data);
-        T DeserializeCopied<T>(Stream data) where T : class;
         void Populate<T>(T item, Stream data) where T : class;
         void Populate<T>(T item, string json) where T : class;
 

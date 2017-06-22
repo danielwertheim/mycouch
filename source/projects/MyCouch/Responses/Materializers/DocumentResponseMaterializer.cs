@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Extensions;
 using MyCouch.Serialization;
+using Newtonsoft.Json.Linq;
 
 namespace MyCouch.Responses.Materializers
 {
@@ -21,21 +23,21 @@ namespace MyCouch.Responses.Materializers
 
         public virtual async Task MaterializeAsync(DocumentResponse response, HttpResponseMessage httpResponse)
         {
-            if(response.RequestMethod != HttpMethod.Get)
+            if (response.RequestMethod != HttpMethod.Get)
                 throw new ArgumentException(GetType().Name + " only supports materializing GET responses for raw documents.");
 
             using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
             {
                 response.Content = content.ReadAsString();
 
-                content.Position = 0;
-                var t = Serializer.Deserialize<Temp>(content);
-                response.Id = t._id;
-                response.Rev = t._rev;
-                response.Conflicts = t._conflicts;
+                var jt = JObject.Parse(response.Content);
+
+                response.Id = jt[JsonScheme._Id]?.Value<string>();
+                response.Rev = jt[JsonScheme._Rev]?.Value<string>();
+                response.Conflicts = jt[JsonScheme.Conflicts]?.Values<string>().ToArray();
 
                 SetMissingIdFromRequestUri(response, httpResponse.RequestMessage);
-                SetMissingRevFromRequestHeaders(response, httpResponse.Headers);
+                SetMissingRevFromResponseHeaders(response, httpResponse.Headers);
             }
         }
 
@@ -45,17 +47,10 @@ namespace MyCouch.Responses.Materializers
                 response.Id = request.ExtractIdFromUri(false);
         }
 
-        protected virtual void SetMissingRevFromRequestHeaders(DocumentResponse response, HttpResponseHeaders responseHeaders)
+        protected virtual void SetMissingRevFromResponseHeaders(DocumentResponse response, HttpResponseHeaders responseHeaders)
         {
             if (string.IsNullOrWhiteSpace(response.Rev))
                 response.Rev = responseHeaders.GetETag();
-        }
-
-        private class Temp
-        {
-            public string _id { get; set; }
-            public string _rev { get; set; }
-            public string[] _conflicts { get; set; }
         }
     }
 }
