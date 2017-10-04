@@ -12,10 +12,10 @@ namespace MyCouch.Requests
 
         public PutAttachmentRequest(string docId, string name, string contentType, byte[] content)
         {
-            Ensure.That(docId, "docId").IsNotNullOrWhiteSpace();
-            Ensure.That(name, "name").IsNotNullOrWhiteSpace();
-            Ensure.That(contentType, "contentType").IsNotNullOrWhiteSpace();
-            Ensure.That(content, "content").IsNotNull().HasItems();
+            EnsureArg.IsNotNullOrWhiteSpace(docId, nameof(docId));
+            EnsureArg.IsNotNullOrWhiteSpace(name, nameof(name));
+            EnsureArg.IsNotNullOrWhiteSpace(contentType, nameof(contentType));
+            EnsureArg.HasItems(content, nameof(content));
 
             DocId = docId;
             Name = name;
