@@ -38,16 +38,17 @@ Task("Restore").Does(() => {
 
 Task("Build").Does(() => {
     foreach(var sln in GetFiles(config.SrcDir + "*.sln")) {
-        DotNetBuild(sln, settings => 
+        DotNetBuild(sln, settings =>
             settings
                 .SetConfiguration(config.BuildProfile)
                 .SetVerbosity(Verbosity.Minimal)
                 .WithTarget("Rebuild")
                 .WithProperty("TreatWarningsAsErrors", "true")
+                .WithProperty("NoRestore", "true")
                 .WithProperty("Version", config.SemVer)
                 .WithProperty("AssemblyVersion", config.BuildVersion)
                 .WithProperty("FileVersion", config.BuildVersion));
-    }    
+    }
 });
 
 Task("UnitTests").Does(() => {
@@ -71,6 +72,8 @@ Task("IntegrationTests").Does(() => {
 });
 
 Task("Pack").Does(() => {
+    DeleteFiles(config.SrcDir + "projects/**/*.nupkg");
+
     foreach(var sln in GetFiles(config.SrcDir + "projects/**/*.csproj")) {
         DotNetBuild(sln, settings =>
             settings
@@ -78,6 +81,8 @@ Task("Pack").Does(() => {
                 .SetVerbosity(Verbosity.Minimal)
                 .WithTarget("Pack")
                 .WithProperty("TreatWarningsAsErrors", "true")
+                .WithProperty("NoRestore", "true")
+                .WithProperty("NoBuild", "true")
                 .WithProperty("Version", config.SemVer));
     }
 
