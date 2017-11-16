@@ -57,12 +57,6 @@ namespace MyCouch.HttpRequestFactories
             return sb.ToString();
         }
 
-        protected virtual string GetSelectorContent(string selectorExpression)
-        {
-            var selector = Serializer.Deserialize<dynamic>(selectorExpression);
-            return Serializer.ToJson(selector);
-        }
-
         protected static class KeyNames
         {
             public const string Selector = "selector";
