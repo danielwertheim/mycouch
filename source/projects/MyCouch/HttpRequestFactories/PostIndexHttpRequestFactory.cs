@@ -42,7 +42,7 @@ namespace MyCouch.HttpRequestFactories
             if (!string.IsNullOrWhiteSpace(request.DesignDocument))
                 sb.AppendFormat(FormatStrings.JsonPropertyAppendFormat, KeyNames.DesignDocument, Serializer.ToJson(request.DesignDocument));
             if (request.Type.HasValue)
-                sb.AppendFormat(FormatStrings.JsonPropertyAppendFormat, KeyNames.Type, Serializer.ToJson(request.Type.Value.ToString()));
+                sb.AppendFormat(FormatStrings.JsonPropertyAppendFormat, KeyNames.Type, Serializer.ToJson(request.Type.Value.AsString()));
             if (!string.IsNullOrWhiteSpace(request.Name))
                 sb.AppendFormat(FormatStrings.JsonPropertyAppendFormat, KeyNames.Name, Serializer.ToJson(request.Name));
 
