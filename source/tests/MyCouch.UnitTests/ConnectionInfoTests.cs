@@ -26,6 +26,21 @@ namespace MyCouch.UnitTests
             SUT.DbName.Should().Be("mydb");
             SUT.BasicAuth.Should().BeNull();
         }
+
+        [Theory]
+        [InlineData("http://mydomain.com:8081/cloud/", "/mydb/", "http://mydomain.com:8081/cloud/mydb")]
+        [InlineData("http://mydomain.com:8081/cloud/", "/mydb", "http://mydomain.com:8081/cloud/mydb")]
+        [InlineData("http://mydomain.com:8081/cloud/", "mydb/", "http://mydomain.com:8081/cloud/mydb")]
+        [InlineData("http://mydomain.com:8081/cloud/", "mydb", "http://mydomain.com:8081/cloud/mydb")]
+        [InlineData("https://mydomain.com:443/cloud/", "mydb", "https://mydomain.com/cloud/mydb")]
+        public void When_created_with_segments_It_should_initialize_properly(string baseAddress, string dbName, string expectedResult)
+        {
+            SUT = new DbConnectionInfo(baseAddress, dbName);
+
+            SUT.Address.OriginalString.Should().Be(expectedResult);
+            SUT.DbName.Should().Be("mydb");
+            SUT.BasicAuth.Should().BeNull();
+        }
     }
 
     public class ServerConnectionInfoTests : UnitTestsOf<ServerConnectionInfo>
