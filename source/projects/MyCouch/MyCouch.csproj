@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.1;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net451;netstandard1.1;netstandard2.0</TargetFrameworks>
     <Version>0.0.0</Version>
     <Authors>danielwertheim</Authors>
     <Company>danielwertheim</Company>
@@ -25,7 +25,23 @@
     <NoWarn>1701;1702;1705;1591</NoWarn>
   </PropertyGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net451'">
+    <Reference Include="System"></Reference>
+    <Reference Include="System.Core"></Reference>
+    <Reference Include="System.Configuration"></Reference>
+    <Reference Include="Microsoft.CSharp"></Reference>
+    <Reference Include="System.Net.Http"></Reference>
+    <PackageReference Include="Ensure.That" Version="7.1.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+  </ItemGroup>
+  
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.1'">
+    <PackageReference Include="Ensure.That" Version="7.1.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="System.Reflection.Emit.Lightweight" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="Ensure.That" Version="7.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="System.Reflection.Emit.Lightweight" Version="4.3.0" />
