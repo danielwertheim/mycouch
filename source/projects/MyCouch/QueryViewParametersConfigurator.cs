@@ -56,7 +56,7 @@ namespace MyCouch
         /// <returns></returns>
         public virtual QueryViewParametersConfigurator Key(string value)
         {
-            Ensure.That(value, "value").IsNotNullOrWhiteSpace();
+            Ensure.String.IsNotNullOrWhiteSpace(value, nameof(value));
 
             return SetKey(value);
         }
@@ -78,7 +78,7 @@ namespace MyCouch
         /// <returns></returns>
         public virtual QueryViewParametersConfigurator Key<T>(T[] value)
         {
-            Ensure.That(value, "value").HasItems();
+            EnsureArg.HasItems(value, nameof(value));
 
             return SetKey(value);
         }
@@ -90,7 +90,7 @@ namespace MyCouch
         /// <returns></returns>
         public virtual QueryViewParametersConfigurator Keys<T>(params T[] value)
         {
-            Ensure.That(value, "value").HasItems();
+            EnsureArg.HasItems(value, nameof(value));
 
             Parameters.Keys = value.Select(i => i as object).ToArray();
 
@@ -104,7 +104,7 @@ namespace MyCouch
         /// <returns></returns>
         public virtual QueryViewParametersConfigurator StartKey(string value)
         {
-            Ensure.That(value, "value").IsNotNullOrWhiteSpace();
+            Ensure.String.IsNotNullOrWhiteSpace(value, nameof(value));
 
             return SetStartKey(value);
         }
@@ -126,7 +126,7 @@ namespace MyCouch
         /// <returns></returns>
         public virtual QueryViewParametersConfigurator StartKey<T>(T[] value)
         {
-            Ensure.That(value, "value").HasItems();
+            EnsureArg.HasItems(value, nameof(value));
 
             return SetStartKey(value);
         }
@@ -138,7 +138,7 @@ namespace MyCouch
         /// <returns></returns>
         public virtual QueryViewParametersConfigurator StartKeyDocId(string value)
         {
-            Ensure.That(value, "value").IsNotNullOrWhiteSpace();
+            Ensure.String.IsNotNullOrWhiteSpace(value, nameof(value));
 
             Parameters.StartKeyDocId = value;
 
@@ -152,7 +152,7 @@ namespace MyCouch
         /// <returns></returns>
         public virtual QueryViewParametersConfigurator EndKey(string value)
         {
-            Ensure.That(value, "value").IsNotNullOrWhiteSpace();
+            Ensure.String.IsNotNullOrWhiteSpace(value, nameof(value));
 
             return SetEndKey(value);
         }
@@ -174,7 +174,7 @@ namespace MyCouch
         /// <returns></returns>
         public virtual QueryViewParametersConfigurator EndKey<T>(T[] value)
         {
-            Ensure.That(value, "value").HasItems();
+            EnsureArg.HasItems(value, nameof(value));
 
             return SetEndKey(value);
         }
@@ -186,7 +186,7 @@ namespace MyCouch
         /// <returns></returns>
         public virtual QueryViewParametersConfigurator EndKeyDocId(string value)
         {
-            Ensure.That(value, "value").IsNotNullOrWhiteSpace();
+            Ensure.String.IsNotNullOrWhiteSpace(value, nameof(value));
 
             Parameters.EndKeyDocId = value;
 
@@ -277,7 +277,7 @@ namespace MyCouch
         /// <returns></returns>
         public virtual QueryViewParametersConfigurator CustomQueryParameters(IDictionary<string, object> parameters)
         {
-            Ensure.That(parameters, "parameters").HasItems();
+            EnsureArg.HasItems(parameters, nameof(parameters));
 
             Parameters.CustomQueryParameters = parameters;
 
@@ -292,7 +292,7 @@ namespace MyCouch
         /// <returns></returns>
         public virtual QueryViewParametersConfigurator WithList(string name, string accept = null)
         {
-            Ensure.That(name, "name").IsNotNullOrWhiteSpace();
+            EnsureArg.IsNotNullOrWhiteSpace(name, nameof(name));
 
             Parameters.ListName = name;
             if (!string.IsNullOrWhiteSpace(accept))
@@ -303,7 +303,7 @@ namespace MyCouch
 
         protected virtual QueryViewParametersConfigurator SetKey(object value)
         {
-            Ensure.That(value, "value").IsNotNull();
+            EnsureArg.IsNotNull(value, nameof(value));
 
             Parameters.Key = value;
 
@@ -312,7 +312,7 @@ namespace MyCouch
 
         protected virtual QueryViewParametersConfigurator SetStartKey(object value)
         {
-            Ensure.That(value, "value").IsNotNull();
+            EnsureArg.IsNotNull(value, nameof(value));
 
             Parameters.StartKey = value;
 
@@ -321,7 +321,7 @@ namespace MyCouch
 
         protected virtual QueryViewParametersConfigurator SetEndKey(object value)
         {
-            Ensure.That(value, "value").IsNotNull();
+            EnsureArg.IsNotNull(value, nameof(value));
 
             Parameters.EndKey = value;
 

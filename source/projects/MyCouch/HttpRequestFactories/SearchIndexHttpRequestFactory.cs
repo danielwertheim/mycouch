@@ -14,14 +14,14 @@
 
 //        public SearchIndexHttpRequestFactory(ISerializer serializer)
 //        {
-//            Ensure.That(serializer, "Serializer").IsNotNull();
+//            Ensure.Any.IsNotNull(serializer, nameof(serializer));
 
 //            Serializer = serializer;
 //        }
 
 //        public virtual HttpRequest Create(SearchIndexRequest request)
 //        {
-//            Ensure.That(request, "request").IsNotNull();
+//            Ensure.Any.IsNotNull(request, nameof(request));
 
 //            return new HttpRequest(HttpMethod.Get, GenerateRelativeUrl(request))
 //                .SetRequestTypeHeader(request.GetType());

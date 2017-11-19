@@ -12,7 +12,7 @@ namespace MyCouch
 
         public SortableField(string name, SortDirection sortDirection = SortDirection.Asc)
         {
-            Ensure.That(name, "name").IsNotNullOrWhiteSpace();
+            EnsureArg.IsNotNullOrWhiteSpace(name, nameof(name));
 
             Name = name;
             SortDirection = sortDirection;

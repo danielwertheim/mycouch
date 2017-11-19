@@ -20,7 +20,7 @@
 //        /// <returns></returns>
 //        public virtual SearchParametersConfigurator Expression(string value)
 //        {
-//            Ensure.That(value, "value").IsNotNullOrWhiteSpace();
+//            Ensure.String.IsNotNullOrWhiteSpace(value, nameof(value));
 
 //            Parameters.Expression = value;
 
@@ -50,7 +50,7 @@
 //        /// <returns></returns>
 //        public virtual SearchParametersConfigurator Bookmark(string value)
 //        {
-//            Ensure.That(value, "value").IsNotNullOrWhiteSpace();
+//            Ensure.String.IsNotNullOrWhiteSpace(value, nameof(value));
 
 //            Parameters.Bookmark = value;
 
@@ -132,7 +132,7 @@
 //        /// <returns></returns>
 //        public virtual SearchParametersConfigurator GroupField(string value)
 //        {
-//            Ensure.That(value, "value").IsNotNullOrWhiteSpace();
+//            Ensure.String.IsNotNullOrWhiteSpace(value, nameof(value));
 
 //            Parameters.GroupField = value;
 
@@ -172,8 +172,8 @@
 //        /// </summary>
 //        public virtual SearchParametersConfigurator DrillDown(string name, string value)
 //        {
-//            Ensure.That(name, "name").IsNotNullOrWhiteSpace();
-//            Ensure.That(value, "value").IsNotNullOrWhiteSpace();
+//            EnsureArg.IsNotNullOrWhiteSpace(name, nameof(name));
+//            Ensure.String.IsNotNullOrWhiteSpace(value, nameof(value));
 
 //            Parameters.DrillDown = new KeyValuePair<string, string>(name, value);
 

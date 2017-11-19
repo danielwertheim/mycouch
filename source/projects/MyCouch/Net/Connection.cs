@@ -23,7 +23,7 @@ namespace MyCouch.Net
 
         protected Connection(ConnectionInfo connectionInfo)
         {
-            Ensure.That(connectionInfo, "connectionInfo").IsNotNull();
+            EnsureArg.IsNotNull(connectionInfo, nameof(connectionInfo));
 
             HttpClient = CreateHttpClient(connectionInfo);
             IsDisposed = false;

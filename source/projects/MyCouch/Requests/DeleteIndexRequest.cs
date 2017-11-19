@@ -10,8 +10,8 @@ namespace MyCouch.Requests
 
         public DeleteIndexRequest(string designDoc, string name, IndexType type = IndexType.Json)
         {
-            Ensure.That(designDoc, "designDoc").IsNotNullOrWhiteSpace();
-            Ensure.That(name, "name").IsNotNullOrWhiteSpace();
+            EnsureArg.IsNotNullOrWhiteSpace(designDoc, nameof(designDoc));
+            EnsureArg.IsNotNullOrWhiteSpace(name, nameof(name));
 
             DesignDoc = designDoc;
             Name = name;

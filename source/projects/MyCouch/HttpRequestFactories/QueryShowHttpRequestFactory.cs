@@ -15,14 +15,14 @@ namespace MyCouch.HttpRequestFactories
 
         public QueryShowHttpRequestFactory(ISerializer serializer)
         {
-            Ensure.That(serializer, "serializer").IsNotNull();
+            Ensure.Any.IsNotNull(serializer, nameof(serializer));
 
             Serializer = serializer;
         }
 
         public virtual HttpRequest Create(QueryShowRequest request)
         {
-            Ensure.That(request, "request").IsNotNull();
+            Ensure.Any.IsNotNull(request, nameof(request));
 
             var httpRequest = new HttpRequest(HttpMethod.Get, GenerateRelativeUrl(request));
 

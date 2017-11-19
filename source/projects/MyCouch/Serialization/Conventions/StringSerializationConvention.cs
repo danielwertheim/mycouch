@@ -11,8 +11,8 @@ namespace MyCouch.Serialization.Conventions
 
         public StringSerializationConvention(string propertyName, Func<DocumentSerializationMeta, string> convention)
         {
-            Ensure.That(propertyName, "propertyName").IsNotNullOrWhiteSpace();
-            Ensure.That(convention, "convention").IsNotNull();
+            EnsureArg.IsNotNullOrWhiteSpace(propertyName, nameof(propertyName));
+            EnsureArg.IsNotNull(convention, nameof(convention));
 
             PropertyName = propertyName;
             Convention = convention;

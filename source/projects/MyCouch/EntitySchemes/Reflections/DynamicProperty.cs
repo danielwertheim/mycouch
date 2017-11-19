@@ -17,9 +17,9 @@ namespace MyCouch.EntitySchemes.Reflections
 
         public DynamicProperty(string name, IStringGetter getter, IStringSetter setter)
         {
-            Ensure.That(name, "name").IsNotNullOrWhiteSpace();
-            Ensure.That(getter, "getter").IsNotNull();
-            Ensure.That(setter, "setter").IsNotNull();
+            Ensure.String.IsNotNullOrWhiteSpace(name, nameof(name));
+            Ensure.Any.IsNotNull(getter, nameof(getter));
+            Ensure.Any.IsNotNull(setter, nameof(setter));
 
             Name = name;
             Getter = getter;

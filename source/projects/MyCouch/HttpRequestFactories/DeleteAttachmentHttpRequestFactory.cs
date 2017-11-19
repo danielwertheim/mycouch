@@ -9,7 +9,7 @@ namespace MyCouch.HttpRequestFactories
     {
         public virtual HttpRequest Create(DeleteAttachmentRequest request)
         {
-            Ensure.That(request, "request").IsNotNull();
+            Ensure.Any.IsNotNull(request, nameof(request));
 
             var httpRequest = new HttpRequest(HttpMethod.Delete, GenerateRelativeUrl(request))
                 .SetRequestTypeHeader(request.GetType())

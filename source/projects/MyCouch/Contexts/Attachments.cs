@@ -20,7 +20,7 @@ namespace MyCouch.Contexts
         public Attachments(IDbConnection connection, ISerializer serializer)
             : base(connection)
         {
-            Ensure.That(serializer, "serializer").IsNotNull();
+            Ensure.Any.IsNotNull(serializer, nameof(serializer));
 
             AttachmentResponseFactory = new AttachmentResponseFactory(serializer);
             DocumentHeaderResponseFactory = new DocumentHeaderResponseFactory(serializer);

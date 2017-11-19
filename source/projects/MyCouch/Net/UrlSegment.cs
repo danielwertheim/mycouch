@@ -9,7 +9,7 @@ namespace MyCouch.Net
 
         public UrlSegment(string value)
         {
-            Ensure.That(value, "value").IsNotNullOrWhiteSpace();
+            Ensure.String.IsNotNullOrWhiteSpace(value, nameof(value));
 
             Value = Uri.EscapeDataString(value);
         }

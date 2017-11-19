@@ -14,7 +14,7 @@ namespace MyCouch.Responses.Factories
 
         public DatabaseHeaderResponseFactory(ISerializer serializer)
         {
-            Ensure.That(serializer, "serializer").IsNotNull();
+            Ensure.Any.IsNotNull(serializer, nameof(serializer));
 
             FailedResponseMaterializer = new FailedResponseMaterializer(serializer);
         }

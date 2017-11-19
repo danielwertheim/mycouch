@@ -14,7 +14,7 @@ namespace MyCouch.EntitySchemes
         protected ConcurrentDictionary<Type, DynamicProperty> DynamicPropertyCache { get; private set; }
         protected EntityMember(IDynamicPropertyFactory dynamicPropertyFactory)
         {
-            Ensure.That(dynamicPropertyFactory, "dynamicPropertyFactory").IsNotNull();
+            Ensure.Any.IsNotNull(dynamicPropertyFactory, nameof(dynamicPropertyFactory));
 
             DynamicPropertyFactory = dynamicPropertyFactory;
 

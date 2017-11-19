@@ -32,7 +32,7 @@ namespace MyCouch.Contexts
         public Documents(IDbConnection connection, ISerializer serializer)
             : base(connection)
         {
-            Ensure.That(serializer, "serializer").IsNotNull();
+            Ensure.Any.IsNotNull(serializer, nameof(serializer));
 
             Serializer = serializer;
             BulkHttpRequestFactory = new BulkHttpRequestFactory();

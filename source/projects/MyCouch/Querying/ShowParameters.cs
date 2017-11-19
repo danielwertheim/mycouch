@@ -47,7 +47,7 @@ namespace MyCouch.Querying
 
         public ShowParameters(ShowIdentity showIdentity)
         {
-            Ensure.That(showIdentity, "showIdentity").IsNotNull();
+            EnsureArg.IsNotNull(showIdentity, nameof(showIdentity));
 
             ShowIdentity = showIdentity;
         }

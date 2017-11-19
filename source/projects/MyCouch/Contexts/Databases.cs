@@ -24,7 +24,7 @@ namespace MyCouch.Contexts
         public Databases(IServerConnection connection, ISerializer serializer)
             : base(connection)
         {
-            Ensure.That(serializer, "serializer").IsNotNull();
+            Ensure.Any.IsNotNull(serializer, nameof(serializer));
 
             DatabaseHeaderResponseFactory = new DatabaseHeaderResponseFactory(serializer);
             GetDatabaseResponseFactory = new GetDatabaseResponseFactory(serializer);

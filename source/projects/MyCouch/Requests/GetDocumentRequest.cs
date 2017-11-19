@@ -10,7 +10,7 @@ namespace MyCouch.Requests
 
         public GetDocumentRequest(string id, string rev = null)
         {
-            Ensure.That(id, "id").IsNotNullOrWhiteSpace();
+            EnsureArg.IsNotNullOrWhiteSpace(id, nameof(id));
 
             Id = id;
             Rev = rev;

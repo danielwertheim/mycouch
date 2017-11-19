@@ -10,11 +10,11 @@ namespace MyCouch
         public string DbName { get; }
 
         public DbConnectionInfo(string serverAddress, string dbName) : this(new Uri(serverAddress), dbName) { }
-        public DbConnectionInfo(Uri serverAddress, string dbName) : base(new Uri(serverAddress, dbName))
+        public DbConnectionInfo(Uri serverAddress, string dbName) : base(UriMagic.Abracadabra(serverAddress.OriginalString, dbName))
         {
-            Ensure.That(dbName, "dbName").IsNotNullOrWhiteSpace();
+            Ensure.String.IsNotNullOrWhiteSpace(dbName, nameof(dbName));
 
-            DbName = dbName;
+            DbName = dbName.Trim(' ', '/');
         }
     }
 
@@ -35,7 +35,7 @@ namespace MyCouch
 
         protected ConnectionInfo(Uri address)
         {
-            Ensure.That(address, "address").IsNotNull();
+            Ensure.Any.IsNotNull(address, nameof(address));
 
             Address = RemoveUserInfoFrom(address);
 

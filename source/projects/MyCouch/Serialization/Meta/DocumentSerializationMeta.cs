@@ -13,8 +13,8 @@ namespace MyCouch.Serialization.Meta
 
         public DocumentSerializationMeta(Type type, string docType, bool isAnonymous)
         {
-            Ensure.That(type, "type").IsNotNull();
-            Ensure.That(docType, "docType").IsNotNull();
+            EnsureArg.IsNotNull(type, nameof(type));
+            EnsureArg.IsNotNull(docType, nameof(docType));
 
             Type = type;
             DocType = docType;

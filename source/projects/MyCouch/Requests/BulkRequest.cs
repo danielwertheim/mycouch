@@ -56,7 +56,7 @@ namespace MyCouch.Requests
         /// <returns></returns>
         public virtual BulkRequest Delete(params DocumentHeader[] headers)
         {
-            Ensure.That(headers, "headers").HasItems();
+            EnsureArg.HasItems(headers, nameof(headers));
 
             foreach (var header in headers)
                 Delete(header.Id, header.Rev);
@@ -72,8 +72,8 @@ namespace MyCouch.Requests
         /// <returns></returns>
         public virtual BulkRequest Delete(string id, string rev)
         {
-            Ensure.That(id, "id").IsNotNullOrWhiteSpace();
-            Ensure.That(rev, "rev").IsNotNullOrWhiteSpace();
+            EnsureArg.IsNotNullOrWhiteSpace(id, nameof(id));
+            EnsureArg.IsNotNullOrWhiteSpace(rev, nameof(rev));
 
             Include(string.Format("{{\"_id\":\"{0}\",\"_rev\":\"{1}\",\"_deleted\":true}}", id, rev));
 

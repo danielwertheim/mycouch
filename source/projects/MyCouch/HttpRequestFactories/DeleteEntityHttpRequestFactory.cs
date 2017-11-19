@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using EnsureThat;
 using MyCouch.EntitySchemes;
 using MyCouch.Net;
@@ -12,14 +13,14 @@ namespace MyCouch.HttpRequestFactories
 
         public DeleteEntityHttpRequestFactory(IEntityReflector reflector)
         {
-            Ensure.That(reflector, "reflector").IsNotNull();
+            Ensure.Any.IsNotNull(reflector, nameof(reflector));
 
             Reflector = reflector;
         }
 
         public virtual HttpRequest Create<T>(DeleteEntityRequest<T> request) where T : class
         {
-            Ensure.That(request, "request").IsNotNull();
+            Ensure.Any.IsNotNull(request, nameof(request));
 
             var entityId = GetEntityId(request);
             var entityRev = GetEntityRev(request);
@@ -33,9 +34,8 @@ namespace MyCouch.HttpRequestFactories
         {
             var entityId = Reflector.IdMember.GetValueFrom(request.Entity);
 
-            Ensure.That(entityId, "request")
-                .WithExtraMessageOf(() => "Could not extract entity Id from entity being deleted. Ensure member exists.")
-                .IsNotNullOrWhiteSpace();
+            if (string.IsNullOrWhiteSpace(entityId))
+                throw new ArgumentException("Could not extract entity Id from entity being deleted. Ensure member exists.", nameof(request));
 
             return entityId;
         }
@@ -43,9 +43,9 @@ namespace MyCouch.HttpRequestFactories
         protected virtual string GetEntityRev<T>(DeleteEntityRequest<T> request) where T : class
         {
             var entityRev = Reflector.RevMember.GetValueFrom(request.Entity);
-            Ensure.That(entityRev, "request")
-                .WithExtraMessageOf(() => "Could not extract entity rev from entity being deleted. Ensure member exists.")
-                .IsNotNullOrWhiteSpace();
+            if (string.IsNullOrWhiteSpace(entityRev))
+                throw new ArgumentException("Could not extract entity rev from entity being deleted. Ensure member exists.", nameof(request));
+
             return entityRev;
         }
 

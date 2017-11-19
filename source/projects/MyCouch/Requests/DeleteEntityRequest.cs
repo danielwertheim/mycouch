@@ -8,7 +8,7 @@ namespace MyCouch.Requests
 
         public DeleteEntityRequest(T entity)
         {
-            Ensure.That(entity, "entity").IsNotNull();
+            EnsureArg.IsNotNull(entity, nameof(entity));
 
             Entity = entity;
         }

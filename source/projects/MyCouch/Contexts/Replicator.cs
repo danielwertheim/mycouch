@@ -17,7 +17,7 @@ namespace MyCouch.Contexts
         public Replicator(IServerConnection connection, ISerializer serializer)
             : base(connection)
         {
-            Ensure.That(serializer, "serializer").IsNotNull();
+            Ensure.Any.IsNotNull(serializer, nameof(serializer));
 
             ReplicationResponseFactory = new ReplicationResponseFactory(serializer);
             ReplicateDatabaseHttpRequestFactory = new ReplicateDatabaseServerHttpRequestFactory(serializer);

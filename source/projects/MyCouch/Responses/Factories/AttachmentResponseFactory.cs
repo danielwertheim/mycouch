@@ -14,7 +14,7 @@ namespace MyCouch.Responses.Factories
 
         public AttachmentResponseFactory(ISerializer serializer)
         {
-            Ensure.That(serializer, "serializer").IsNotNull();
+            Ensure.Any.IsNotNull(serializer, nameof(serializer));
 
             SuccessfulResponseMaterializer = new AttachmentResponseMaterializer();
             FailedResponseMaterializer = new FailedResponseMaterializer(serializer);
@@ -22,7 +22,7 @@ namespace MyCouch.Responses.Factories
 
         public virtual async Task<AttachmentResponse> CreateAsync(HttpResponseMessage httpResponse)
         {
-            Ensure.That(httpResponse, "httpResponse").IsNotNull();
+            EnsureArg.IsNotNull(httpResponse, nameof(httpResponse));
 
             return await MaterializeAsync<AttachmentResponse>(
                 httpResponse,

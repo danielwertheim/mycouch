@@ -21,7 +21,7 @@ namespace MyCouch
 
         public MyCouchServerClient(ServerConnectionInfo connectionInfo, MyCouchClientBootstrapper bootstrapper = null)
         {
-            Ensure.That(connectionInfo, "connectionInfo").IsNotNull();
+            EnsureArg.IsNotNull(connectionInfo, nameof(connectionInfo));
 
             IsDisposed = false;
             bootstrapper = bootstrapper ?? MyCouchClientBootstrappers.Default;

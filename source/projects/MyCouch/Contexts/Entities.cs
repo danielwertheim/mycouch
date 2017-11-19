@@ -27,8 +27,8 @@ namespace MyCouch.Contexts
         public Entities(IDbConnection connection, ISerializer serializer, IEntityReflector entityReflector)
             : base(connection)
         {
-            Ensure.That(serializer, "serializer").IsNotNull();
-            Ensure.That(entityReflector, "entityReflector").IsNotNull();
+            Ensure.Any.IsNotNull(serializer, nameof(serializer));
+            Ensure.Any.IsNotNull(entityReflector, nameof(entityReflector));
 
             Serializer = serializer;
             Reflector = entityReflector;

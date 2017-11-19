@@ -11,7 +11,7 @@ namespace MyCouch.Net
 
         public UrlParam(string key, string value = null)
         {
-            Ensure.That(key, "key").IsNotNullOrWhiteSpace();
+            EnsureArg.IsNotNullOrWhiteSpace(key, nameof(key));
 
             Key = key;
 

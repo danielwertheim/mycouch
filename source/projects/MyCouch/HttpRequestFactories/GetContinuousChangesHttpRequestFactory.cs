@@ -9,7 +9,7 @@ namespace MyCouch.HttpRequestFactories
     {
         public override HttpRequest Create(GetChangesRequest request)
         {
-            Ensure.That(request, "request").IsNotNull();
+            Ensure.Any.IsNotNull(request, nameof(request));
 
             EnsureContinuousFeedIsRequested(request);
 

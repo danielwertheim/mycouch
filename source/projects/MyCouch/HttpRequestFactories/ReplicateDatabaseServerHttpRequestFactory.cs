@@ -13,14 +13,14 @@ namespace MyCouch.HttpRequestFactories
 
         public ReplicateDatabaseServerHttpRequestFactory(ISerializer serializer)
         {
-            Ensure.That(serializer, "serializer").IsNotNull();
+            Ensure.Any.IsNotNull(serializer, nameof(serializer));
 
             Serializer = serializer;
         }
 
         public virtual HttpRequest Create(ReplicateDatabaseRequest request)
         {
-            Ensure.That(request, "request").IsNotNull();
+            Ensure.Any.IsNotNull(request, nameof(request));
 
             return new HttpRequest(HttpMethod.Put, GenerateRelativeUrl(request))
                 .SetRequestTypeHeader(request.GetType())
@@ -34,9 +34,9 @@ namespace MyCouch.HttpRequestFactories
 
         protected virtual string GenerateRequestBody(ReplicateDatabaseRequest request)
         {
-            Ensure.That(request, "request").IsNotNull();
-            Ensure.That(request.Source, "request.Source").IsNotNullOrWhiteSpace();
-            Ensure.That(request.Target, "request.Target").IsNotNullOrWhiteSpace();
+            EnsureArg.IsNotNull(request, nameof(request));
+            EnsureArg.IsNotNullOrWhiteSpace(request.Source, nameof(request.Source));
+            EnsureArg.IsNotNullOrWhiteSpace(request.Target, nameof(request.Target));
 
             var tmp = new Dictionary<string, object>
             {

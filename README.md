@@ -1,30 +1,11 @@
 # MyCouch #
 The asynchronous CouchDB client for .NET - builds on top of the asynchronous HTTP client and uses JSON.Net to provide flexible serialization behaviour. It tries to keep the domain language of CouchDB instead of bringing in generic repositories and other confusing stuff. MyCouch lets you work with raw JSON and/or entities/POCOS without requiring any implementation of interfaces, baseclasses etc. MyCouch provides you with some model conventions like injection of `$doctype` to the document.
 
-**.NET Standard 1.1**. MyCouch (after v5.0.0) is now built as a .NET Standard 1.1 library.
-
-**MyCouch**
+**Multiple target frameworks:** `.NET4.5.1`, `.NET Standard 1.1`, `.NET Standard 2.0`; using a .NET Standard project.
 
 [![Nuget](https://img.shields.io/nuget/v/mycouch.svg)](https://www.nuget.org/packages/mycouch/)
 
-## Documentation, Release Notes & Issues ##
 The documentation is contained in the [project wiki](https://github.com/danielwertheim/mycouch/wiki).
-
-The **Release Notes** is well worth a read for [news and breaking changes info](https://github.com/danielwertheim/mycouch/wiki/release-notes).
-
-The ["Issues list" here on GitHub](https://github.com/danielwertheim/mycouch/issues) is used for tracking issues.
-
-## More MyCouch projects ##
-[MyCouch.AspNet.Identity](https://github.com/danielwertheim/mycouch.aspnet.identity) - an ASP.Net identity provider for CouchDB
-
-## NuGet ##
-MyCouch is distributed via NuGet.
-
-- [CouchDB package](https://nuget.org/packages/MyCouch/)
-
-So...
-
-    pm:> install-package mycouch
 
 ## Quick sample - using Requests and Responses ##
 

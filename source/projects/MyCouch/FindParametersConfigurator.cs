@@ -20,7 +20,7 @@ namespace MyCouch
         /// <returns></returns>
         public virtual FindParametersConfigurator SelectorExpression(string value, params object[] formattingArgs)
         {
-            Ensure.That(value, "value").IsNotNullOrWhiteSpace();
+            Ensure.String.IsNotNullOrWhiteSpace(value, nameof(value));
 
             Parameters.SelectorExpression = formattingArgs != null && formattingArgs.Any()
                 ? string.Format(value, formattingArgs)
@@ -36,7 +36,7 @@ namespace MyCouch
         /// <returns></returns>
         public virtual FindParametersConfigurator Limit(int value)
         {
-            Ensure.That(value, "value").IsGt(0);
+            EnsureArg.IsGt(value, 0, nameof(value));
 
             Parameters.Limit = value;
 
@@ -62,7 +62,7 @@ namespace MyCouch
         /// <returns></returns>
         public virtual FindParametersConfigurator Sort(params SortableField[] fields)
         {
-            Ensure.That(fields, "fields").HasItems();
+            EnsureArg.HasItems(fields, nameof(fields));
 
             Parameters.Sort = fields.ToList();
 
@@ -76,7 +76,7 @@ namespace MyCouch
         /// <returns></returns>
         public virtual FindParametersConfigurator Sort(params string[] fields)
         {
-            Ensure.That(fields, "fields").HasItems();
+            EnsureArg.HasItems(fields, nameof(fields));
 
             Parameters.Sort = fields.Select(f => new SortableField(f)).ToList();
 
@@ -90,7 +90,7 @@ namespace MyCouch
         /// <returns></returns>
         public virtual FindParametersConfigurator Fields(params string[] fields)
         {
-            Ensure.That(fields, "fields").HasItems();
+            EnsureArg.HasItems(fields, nameof(fields));
 
             Parameters.Fields = fields.ToList();
 
@@ -105,7 +105,7 @@ namespace MyCouch
         /// <returns></returns>
         public virtual FindParametersConfigurator ReadQuorum(int value)
         {
-            Ensure.That(value, "value").IsGte(1);
+            EnsureArg.IsGte(value, 1, nameof(value));
 
             Parameters.ReadQuorum = value;
 

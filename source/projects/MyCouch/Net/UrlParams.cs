@@ -15,14 +15,14 @@ namespace MyCouch.Net
 
         public virtual void Add(UrlParam urlParam)
         {
-            Ensure.That(urlParam, "urlParam").IsNotNull();
+            EnsureArg.IsNotNull(urlParam, nameof(urlParam));
 
             State.Add(urlParam);
         }
 
         public virtual void AddRequired(string key, string value)
         {
-            Ensure.That(value, "value").IsNotNullOrWhiteSpace();
+            Ensure.String.IsNotNullOrWhiteSpace(value, nameof(value));
 
             Add(new UrlParam(key, value));
         }

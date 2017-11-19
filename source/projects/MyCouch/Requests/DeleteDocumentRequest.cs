@@ -9,8 +9,8 @@ namespace MyCouch.Requests
 
         public DeleteDocumentRequest(string id, string rev)
         {
-            Ensure.That(id, "id").IsNotNullOrWhiteSpace();
-            Ensure.That(rev, "rev").IsNotNullOrWhiteSpace();
+            EnsureArg.IsNotNullOrWhiteSpace(id, nameof(id));
+            EnsureArg.IsNotNullOrWhiteSpace(rev, nameof(rev));
 
             Id = id;
             Rev = rev;

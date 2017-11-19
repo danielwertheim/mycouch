@@ -9,7 +9,7 @@ namespace MyCouch.Requests
 
         public PostEntityRequest(T entity)
         {
-            Ensure.That(entity, "entity").IsNotNull();
+            EnsureArg.IsNotNull(entity, nameof(entity));
 
             Batch = false;
             Entity = entity;

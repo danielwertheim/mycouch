@@ -21,8 +21,8 @@ namespace MyCouch.Requests
 
         public CopyDocumentRequest(string srcId, string newId)
         {
-            Ensure.That(srcId, "srcId").IsNotNullOrWhiteSpace();
-            Ensure.That(newId, "newId").IsNotNullOrWhiteSpace();
+            EnsureArg.IsNotNullOrWhiteSpace(srcId, nameof(srcId));
+            EnsureArg.IsNotNullOrWhiteSpace(newId, nameof(newId));
 
             SrcId = srcId;
             NewId = newId;
@@ -30,9 +30,9 @@ namespace MyCouch.Requests
 
         public CopyDocumentRequest(string srcId, string srcRev, string newId)
         {
-            Ensure.That(srcId, "srcId").IsNotNullOrWhiteSpace();
-            Ensure.That(srcRev, "srcRev").IsNotNullOrWhiteSpace();
-            Ensure.That(newId, "newId").IsNotNullOrWhiteSpace();
+            EnsureArg.IsNotNullOrWhiteSpace(srcId, nameof(srcId));
+            EnsureArg.IsNotNullOrWhiteSpace(srcRev, nameof(srcRev));
+            EnsureArg.IsNotNullOrWhiteSpace(newId, nameof(newId));
 
             SrcId = srcId;
             SrcRev = srcRev;

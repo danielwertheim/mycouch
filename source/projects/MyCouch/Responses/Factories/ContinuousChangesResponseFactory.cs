@@ -13,14 +13,14 @@ namespace MyCouch.Responses.Factories
 
         public ContinuousChangesResponseFactory(ISerializer serializer)
         {
-            Ensure.That(serializer, "serializer").IsNotNull();
+            Ensure.Any.IsNotNull(serializer, nameof(serializer));
 
             FailedResponseMaterializer = new FailedResponseMaterializer(serializer);
         }
 
         public virtual async Task<ContinuousChangesResponse> CreateAsync(HttpResponseMessage httpResponse)
         {
-            Ensure.That(httpResponse, "httpResponse").IsNotNull();
+            EnsureArg.IsNotNull(httpResponse, nameof(httpResponse));
 
             return await MaterializeAsync<ContinuousChangesResponse>(
                 httpResponse,

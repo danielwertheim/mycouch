@@ -13,7 +13,7 @@ namespace MyCouch.Serialization
 
         public SerializationConfiguration(IContractResolver contractResolver)
         {
-            Ensure.That(contractResolver, "contractResolver").IsNotNull();
+            EnsureArg.IsNotNull(contractResolver, nameof(contractResolver));
 
             Settings = new JsonSerializerSettings
             {

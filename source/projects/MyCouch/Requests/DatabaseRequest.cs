@@ -8,7 +8,7 @@ namespace MyCouch.Requests
 
         protected DatabaseRequest(string dbName)
         {
-            Ensure.That(dbName, "dbName").IsNotNullOrWhiteSpace();
+            EnsureArg.IsNotNullOrWhiteSpace(dbName, nameof(dbName));
 
             DbName = dbName;
         }

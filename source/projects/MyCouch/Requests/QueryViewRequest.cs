@@ -229,21 +229,21 @@ namespace MyCouch.Requests
 
         public QueryViewRequest(SystemViewIdentity systemViewIdentity)
         {
-            Ensure.That(systemViewIdentity, "systemViewIdentity").IsNotNull();
-
+            EnsureArg.IsNotNull(systemViewIdentity, nameof(systemViewIdentity));
+            
             State = new QueryParameters(systemViewIdentity);
         }
 
         public QueryViewRequest(ViewIdentity viewIdentity)
         {
-            Ensure.That(viewIdentity, "viewIdentity").IsNotNull();
+            EnsureArg.IsNotNull(viewIdentity, nameof(viewIdentity));
 
             State = new QueryParameters(viewIdentity);
         }
 
         internal QueryViewRequest(IQueryParameters queryParameters)
         {
-            Ensure.That(queryParameters, "queryParameters").IsNotNull();
+            EnsureArg.IsNotNull(queryParameters, nameof(queryParameters));
 
             State = queryParameters;
         }

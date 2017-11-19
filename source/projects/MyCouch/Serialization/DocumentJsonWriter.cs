@@ -23,9 +23,9 @@ namespace MyCouch.Serialization
         public DocumentJsonWriter(TextWriter textWriter, DocumentSerializationMeta documentMeta, SerializationConventions conventions, IEntityReflector entityReflector)
             : base(textWriter)
         {
-            Ensure.That(documentMeta, "documentMeta").IsNotNull();
-            Ensure.That(conventions, "conventions").IsNotNull();
-            Ensure.That(conventions, "entityReflector").IsNotNull();
+            EnsureArg.IsNotNull(documentMeta, nameof(documentMeta));
+            EnsureArg.IsNotNull(conventions, nameof(conventions));
+            EnsureArg.IsNotNull(entityReflector, nameof(entityReflector));
 
             HasWrittenDocumentMeta = false;
             DocumentMeta = documentMeta;

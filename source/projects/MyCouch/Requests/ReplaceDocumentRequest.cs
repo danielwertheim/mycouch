@@ -26,9 +26,9 @@ namespace MyCouch.Requests
 
         public ReplaceDocumentRequest(string srcId, string trgId, string trgRev)
         {
-            Ensure.That(srcId, "srcId").IsNotNullOrWhiteSpace();
-            Ensure.That(trgId, "trgId").IsNotNullOrWhiteSpace();
-            Ensure.That(trgRev, "trgRev").IsNotNullOrWhiteSpace();
+            EnsureArg.IsNotNullOrWhiteSpace(srcId, nameof(srcId));
+            EnsureArg.IsNotNullOrWhiteSpace(trgId, nameof(trgId));
+            EnsureArg.IsNotNullOrWhiteSpace(trgRev, nameof(trgRev));
 
             SrcId = srcId;
             TrgId = trgId;
@@ -37,10 +37,10 @@ namespace MyCouch.Requests
 
         public ReplaceDocumentRequest(string srcId, string srcRev, string trgId, string trgRev)
         {
-            Ensure.That(srcId, "srcId").IsNotNullOrWhiteSpace();
-            Ensure.That(srcRev, "srcRev").IsNotNullOrWhiteSpace();
-            Ensure.That(trgId, "trgId").IsNotNullOrWhiteSpace();
-            Ensure.That(trgRev, "trgRev").IsNotNullOrWhiteSpace();
+            EnsureArg.IsNotNullOrWhiteSpace(srcId, nameof(srcId));
+            EnsureArg.IsNotNullOrWhiteSpace(srcRev, nameof(srcRev));
+            EnsureArg.IsNotNullOrWhiteSpace(trgId, nameof(trgId));
+            EnsureArg.IsNotNullOrWhiteSpace(trgRev, nameof(trgRev));
 
             SrcId = srcId;
             SrcRev = srcRev;
