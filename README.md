@@ -5,7 +5,6 @@ The asynchronous CouchDB client for .NET - builds on top of the asynchronous HTT
 
 [![Nuget](https://img.shields.io/nuget/v/mycouch.svg)](https://www.nuget.org/packages/mycouch/)
 
-## Documentation ##
 The documentation is contained in the [project wiki](https://github.com/danielwertheim/mycouch/wiki).
 
 ## Quick sample - using Requests and Responses ##
