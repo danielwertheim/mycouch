@@ -15,8 +15,8 @@ namespace MyCouch.Responses.Materializers
 
         public EntityResponseMaterializer(ISerializer serializer, IEntityReflector entityReflector)
         {
-            Ensure.That(serializer, "serializer").IsNotNull();
-            Ensure.That(entityReflector, "entityReflector").IsNotNull();
+            Ensure.Any.IsNotNull(serializer, nameof(serializer));
+            Ensure.Any.IsNotNull(entityReflector, nameof(entityReflector));
 
             Serializer = serializer;
             EntityReflector = entityReflector;
@@ -26,12 +26,11 @@ namespace MyCouch.Responses.Materializers
         {
             using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
             {
-                var get = response as GetEntityResponse<T>;
-                if (get != null)
+                if (response is GetEntityResponse<T> get)
                 {
                     response.Content = Serializer.Deserialize<T>(content);
-                    response.Id = EntityReflector.IdMember.GetValueFrom(response.Content);
-                    response.Rev = EntityReflector.RevMember.GetValueFrom(response.Content);
+                    response.Id = EntityReflector.IdMember.GetValueFrom(get.Content);
+                    response.Rev = EntityReflector.RevMember.GetValueFrom(get.Content);
                 }
                 else
                     Serializer.Populate(response, content);

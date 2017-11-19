@@ -24,8 +24,8 @@ namespace MyCouch.Serialization
         public DocumentJsonReader(TextReader reader, Type docType, IEntityReflector entityReflector)
             : base(reader)
         {
-            Ensure.That(docType, "docType").IsNotNull();
-            Ensure.That(entityReflector, "entityReflector").IsNotNull();
+            EnsureArg.IsNotNull(docType, nameof(docType));
+            EnsureArg.IsNotNull(entityReflector, nameof(entityReflector));
 
             DocType = docType;
             EntityReflector = entityReflector;

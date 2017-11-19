@@ -14,7 +14,7 @@ namespace MyCouch
 
         public virtual QueryShowParametersConfigurator DocId(string value)
         {
-            Ensure.That(value, "value").IsNotNullOrWhiteSpace();
+            Ensure.String.IsNotNullOrWhiteSpace(value, nameof(value));
 
             Parameters.DocId = value;
 
@@ -22,7 +22,7 @@ namespace MyCouch
         }
         public virtual QueryShowParametersConfigurator Accepts(params string[] accepts)
         {
-            Ensure.That(accepts, "accepts").HasItems();
+            EnsureArg.HasItems(accepts, nameof(accepts));
 
             Parameters.Accepts = accepts;
 
@@ -31,7 +31,7 @@ namespace MyCouch
 
         public virtual QueryShowParametersConfigurator CustomQueryParameters(IDictionary<string, object> parameters)
         {
-            Ensure.That(parameters, "parameters").HasItems();
+            EnsureArg.HasItems(parameters, nameof(parameters));
 
             Parameters.CustomQueryParameters = parameters;
 

@@ -14,7 +14,7 @@
 
 //        public SearchIndexResponseFactory(ISerializer serializer)
 //        {
-//            Ensure.That(serializer, "serializer").IsNotNull();
+//            Ensure.Any.IsNotNull(serializer, nameof(serializer));
 
 //            SuccessfulResponseMaterializer = new SearchIndexResponseMaterializer(serializer);
 //            FailedResponseMaterializer = new FailedResponseMaterializer(serializer);

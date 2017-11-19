@@ -9,7 +9,7 @@ namespace MyCouch.Requests
 
         public PostDocumentRequest(string content)
         {
-            Ensure.That(content, "content").IsNotNullOrWhiteSpace();
+            EnsureArg.IsNotNullOrWhiteSpace(content, nameof(content));
 
             Batch = false;
             Content = content;

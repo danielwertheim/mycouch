@@ -26,7 +26,7 @@ namespace MyCouch.Requests
         public PutAttachmentRequest(string docId, string docRev, string name, string contentType, byte[] content) 
             : this(docId, name, contentType, content)
         {
-            Ensure.That(docRev, "docRev").IsNotNullOrWhiteSpace();
+            EnsureArg.IsNotNullOrWhiteSpace(docRev, nameof(docRev));
             DocRev = docRev;
         }
     }

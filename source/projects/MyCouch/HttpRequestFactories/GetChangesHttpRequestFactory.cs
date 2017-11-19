@@ -9,7 +9,7 @@ namespace MyCouch.HttpRequestFactories
     {
         public override HttpRequest Create(GetChangesRequest request)
         {
-            Ensure.That(request, "request").IsNotNull();
+            Ensure.Any.IsNotNull(request, nameof(request));
 
             EnsureNonContinuousFeedIsRequested(request);
 
@@ -19,7 +19,7 @@ namespace MyCouch.HttpRequestFactories
         protected virtual void EnsureNonContinuousFeedIsRequested(GetChangesRequest request)
         {
             if (request.Feed.HasValue && request.Feed == ChangesFeed.Continuous)
-                throw new ArgumentException(ExceptionStrings.GetChangesForNonContinuousFeedOnly, "request");
+                throw new ArgumentException(ExceptionStrings.GetChangesForNonContinuousFeedOnly, nameof(request));
         }
     }
 }

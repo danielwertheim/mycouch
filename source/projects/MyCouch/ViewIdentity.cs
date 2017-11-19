@@ -13,8 +13,8 @@ namespace MyCouch
 
         public ViewIdentity(string designDocument, string name)
         {
-            Ensure.That(designDocument, "designDocument").IsNotNullOrWhiteSpace();
-            Ensure.That(name, "name").IsNotNullOrWhiteSpace();
+            EnsureArg.IsNotNullOrWhiteSpace(designDocument, nameof(designDocument));
+            EnsureArg.IsNotNullOrWhiteSpace(name, nameof(name));
 
             DesignDocument = designDocument;
             Name = name;
@@ -22,7 +22,7 @@ namespace MyCouch
 
         protected ViewIdentity(string name)
         {
-            Ensure.That(name, "name").IsNotNullOrWhiteSpace();
+            EnsureArg.IsNotNullOrWhiteSpace(name, nameof(name));
 
             Name = name;
         }

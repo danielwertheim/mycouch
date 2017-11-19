@@ -14,7 +14,7 @@ namespace MyCouch.Responses.Factories
 
         public BulkResponseFactory(ISerializer serializer)
         {
-            Ensure.That(serializer, "serializer").IsNotNull();
+            Ensure.Any.IsNotNull(serializer, nameof(serializer));
 
             SuccessfulResponseMaterializer = new BulkResponseMaterializer(serializer);
             FailedResponseMaterializer = new FailedResponseMaterializer(serializer);
@@ -22,7 +22,7 @@ namespace MyCouch.Responses.Factories
 
         public virtual async Task<BulkResponse> CreateAsync(HttpResponseMessage httpResponse)
         {
-            Ensure.That(httpResponse, "httpResponse").IsNotNull();
+            EnsureArg.IsNotNull(httpResponse, nameof(httpResponse));
 
             return await MaterializeAsync<BulkResponse>(
                 httpResponse,

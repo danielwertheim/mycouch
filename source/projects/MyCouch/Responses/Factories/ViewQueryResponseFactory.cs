@@ -14,7 +14,7 @@ namespace MyCouch.Responses.Factories
 
         public ViewQueryResponseFactory(ISerializer serializer)
         {
-            Ensure.That(serializer, "serializer").IsNotNull();
+            Ensure.Any.IsNotNull(serializer, nameof(serializer));
 
             SuccessfulResponseMaterializer = new ViewQueryResponseMaterializer(serializer);
             FailedResponseMaterializer = new FailedResponseMaterializer(serializer);

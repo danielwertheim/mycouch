@@ -9,7 +9,7 @@ namespace MyCouch.HttpRequestFactories
     {
         public virtual HttpRequest Create(CopyDocumentRequest request)
         {
-            Ensure.That(request, "request").IsNotNull();
+            Ensure.Any.IsNotNull(request, nameof(request));
 
             var httpRequest = new HttpRequest(new HttpMethod("COPY"), GenerateRelativeUrl(request))
                 .SetRequestTypeHeader(request.GetType())

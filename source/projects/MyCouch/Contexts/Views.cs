@@ -20,7 +20,7 @@ namespace MyCouch.Contexts
         public Views(IDbConnection connection, ISerializer serializer)
             : base(connection)
         {
-            Ensure.That(serializer, "serializer").IsNotNull();
+            Ensure.Any.IsNotNull(serializer, nameof(serializer));
 
             QueryViewHttpRequestFactory = new QueryViewHttpRequestFactory(serializer);
             ViewQueryResponseFactory = new ViewQueryResponseFactory(serializer);
@@ -117,7 +117,7 @@ namespace MyCouch.Contexts
 
         private static void EnsureThatNoListFunctionIsUsed(QueryViewRequest request)
         {
-            Ensure.That(request, "request").IsNotNull();
+            Ensure.Any.IsNotNull(request, nameof(request));
             if (!string.IsNullOrWhiteSpace(request.ListName))
                 throw new NotSupportedException(
                     "This method does not support list functions to be used. Use QueryRawAsync instead.");

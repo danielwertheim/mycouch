@@ -19,8 +19,8 @@ namespace MyCouch.Requests
         /// <param name="content"></param>
         public PutDocumentRequest(string id, string content)
         {
-            Ensure.That(id, "id").IsNotNullOrWhiteSpace();
-            Ensure.That(content, "content").IsNotNullOrWhiteSpace();
+            EnsureArg.IsNotNullOrWhiteSpace(id, nameof(id));
+            EnsureArg.IsNotNullOrWhiteSpace(content, nameof(content));
 
             Initialize(id, null, content);
         }
@@ -33,9 +33,9 @@ namespace MyCouch.Requests
         /// <param name="content"></param>
         public PutDocumentRequest(string id, string rev, string content)
         {
-            Ensure.That(id, "id").IsNotNullOrWhiteSpace();
-            Ensure.That(rev, "rev").IsNotNullOrWhiteSpace();
-            Ensure.That(content, "content").IsNotNullOrWhiteSpace();
+            EnsureArg.IsNotNullOrWhiteSpace(id, nameof(id));
+            EnsureArg.IsNotNullOrWhiteSpace(rev, nameof(rev));
+            EnsureArg.IsNotNullOrWhiteSpace(content, nameof(content));
 
             Initialize(id, rev, content);
         }
@@ -60,8 +60,7 @@ namespace MyCouch.Requests
         {
             var r = new PutDocumentRequest(id, content);
 
-            if (cfg != null)
-                cfg(r);
+            cfg?.Invoke(r);
 
             return r;
         }
@@ -78,8 +77,7 @@ namespace MyCouch.Requests
         {
             var r = new PutDocumentRequest(id, rev, content);
 
-            if (cfg != null)
-                cfg(r);
+            cfg?.Invoke(r);
 
             return r;
         }

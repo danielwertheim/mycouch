@@ -220,14 +220,14 @@ namespace MyCouch
 
         public Query(SystemViewIdentity systemViewIdentity)
         {
-            Ensure.That(systemViewIdentity, "systemViewIdentity").IsNotNull();
+            EnsureArg.IsNotNull(systemViewIdentity, nameof(systemViewIdentity));
 
             State = new QueryParameters(systemViewIdentity);
         }
 
         public Query(ViewIdentity viewIdentity)
         {
-            Ensure.That(viewIdentity, "viewIdentity").IsNotNull();
+            EnsureArg.IsNotNull(viewIdentity, nameof(viewIdentity));
 
             State = new QueryParameters(viewIdentity);
         }

@@ -9,8 +9,8 @@ namespace MyCouch
 
         public ShowIdentity(string designDocument, string name)
         {
-            Ensure.That(designDocument, "designDocument").IsNotNullOrWhiteSpace();
-            Ensure.That(name, "name").IsNotNullOrWhiteSpace();
+            EnsureArg.IsNotNullOrWhiteSpace(designDocument, nameof(designDocument));
+            EnsureArg.IsNotNullOrWhiteSpace(name, nameof(name));
 
             DesignDocument = designDocument;
             Name = name;

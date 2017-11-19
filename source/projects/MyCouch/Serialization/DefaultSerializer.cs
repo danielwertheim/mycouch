@@ -19,8 +19,8 @@ namespace MyCouch.Serialization
 
         public DefaultSerializer(SerializationConfiguration configuration, IDocumentSerializationMetaProvider documentMetaProvider, IEntityReflector entityReflector = null)
         {
-            Ensure.That(configuration, "configuration").IsNotNull();
-            Ensure.That(documentMetaProvider, "documentMetaProvider").IsNotNull();
+            EnsureArg.IsNotNull(configuration, nameof(configuration));
+            EnsureArg.IsNotNull(documentMetaProvider, nameof(documentMetaProvider));
 
             Configuration = configuration;
             DocumentMetaProvider = documentMetaProvider;

@@ -9,7 +9,7 @@ namespace MyCouch.HttpRequestFactories
     {
         public virtual HttpRequest Create(DeleteDocumentRequest request)
         {
-            Ensure.That(request, "request").IsNotNull();
+            Ensure.Any.IsNotNull(request, nameof(request));
 
             return new HttpRequest(HttpMethod.Delete, GenerateRelativeUrl(request))
                 .SetRequestTypeHeader(request.GetType())

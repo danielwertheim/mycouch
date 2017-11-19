@@ -22,8 +22,8 @@ namespace MyCouch.Contexts
         public Queries(IDbConnection connection, ISerializer documentSerializer, ISerializer serializer)
             : base(connection)
         {
-            Ensure.That(documentSerializer, "documentSerializer").IsNotNull();
-            Ensure.That(serializer, "serializer").IsNotNull();
+            Ensure.Any.IsNotNull(documentSerializer, nameof(documentSerializer));
+            Ensure.Any.IsNotNull(serializer, nameof(serializer));
 
             PostIndexHttpRequestFactory = new PostIndexHttpRequestFactory(serializer);
             GetAllIndexesHttpRequestFactory = new GetAllIndexesHttpRequestFactory();
@@ -37,7 +37,7 @@ namespace MyCouch.Contexts
 
         public virtual async Task<IndexResponse> PostAsync(PostIndexRequest request)
         {
-            Ensure.That(request, "request").IsNotNull();
+            Ensure.Any.IsNotNull(request, nameof(request));
 
             var httpRequest = PostIndexHttpRequestFactory.Create(request);
 
@@ -59,7 +59,7 @@ namespace MyCouch.Contexts
 
         public virtual async Task<IndexResponse> DeleteAsync(DeleteIndexRequest request)
         {
-            Ensure.That(request, "request").IsNotNull();
+            Ensure.Any.IsNotNull(request, nameof(request));
 
             var httpRequest = DeleteIndexHttpRequestFactory.Create(request);
 
@@ -71,7 +71,7 @@ namespace MyCouch.Contexts
 
         public virtual async Task<FindResponse> FindAsync(FindRequest request)
         {
-            Ensure.That(request, "request").IsNotNull();
+            Ensure.Any.IsNotNull(request, nameof(request));
 
             var httpRequest = FindHttpRequestFactory.Create(request);
 
@@ -83,7 +83,7 @@ namespace MyCouch.Contexts
 
         public virtual async Task<FindResponse<TIncludedDoc>> FindAsync<TIncludedDoc>(FindRequest request)
         {
-            Ensure.That(request, "request").IsNotNull();
+            Ensure.Any.IsNotNull(request, nameof(request));
 
             var httpRequest = FindHttpRequestFactory.Create(request);
 

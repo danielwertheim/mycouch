@@ -17,7 +17,7 @@ namespace MyCouch.Net
 
         public HttpRequest(HttpMethod method, string relativeUrl)
         {
-            Ensure.That(relativeUrl, "relativeUrl").IsNotNullOrWhiteSpace();
+            EnsureArg.IsNotNullOrWhiteSpace(relativeUrl, nameof(relativeUrl));
 
             RelativeUrl = relativeUrl;
             Method = method;

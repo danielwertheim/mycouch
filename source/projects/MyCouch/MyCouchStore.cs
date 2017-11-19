@@ -23,7 +23,7 @@ namespace MyCouch
 
         public MyCouchStore(IMyCouchClient client)
         {
-            Ensure.That(client, "client").IsNotNull();
+            EnsureArg.IsNotNull(client, nameof(client));
 
             Client = client;
             IsDisposed = false;
@@ -55,7 +55,7 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
-            Ensure.That(doc, "doc").IsNotNullOrWhiteSpace();
+            EnsureArg.IsNotNullOrWhiteSpace(doc, nameof(doc));
 
             var response = await Client.Documents.PostAsync(doc).ForAwait();
 
@@ -68,8 +68,8 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
-            Ensure.That(id, "id").IsNotNullOrWhiteSpace();
-            Ensure.That(doc, "doc").IsNotNullOrWhiteSpace();
+            EnsureArg.IsNotNullOrWhiteSpace(id, nameof(id));
+            EnsureArg.IsNotNullOrWhiteSpace(doc, nameof(doc));
 
             var response = await Client.Documents.PutAsync(id, doc).ForAwait();
 
@@ -82,9 +82,9 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
-            Ensure.That(id, "id").IsNotNullOrWhiteSpace();
-            Ensure.That(rev, "rev").IsNotNullOrWhiteSpace();
-            Ensure.That(doc, "doc").IsNotNullOrWhiteSpace();
+            EnsureArg.IsNotNullOrWhiteSpace(id, nameof(id));
+            EnsureArg.IsNotNullOrWhiteSpace(rev, nameof(rev));
+            EnsureArg.IsNotNullOrWhiteSpace(doc, nameof(doc));
 
             var response = await Client.Documents.PutAsync(id, rev, doc).ForAwait();
 
@@ -97,7 +97,7 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
-            Ensure.That(entity, "entity").IsNotNull();
+            EnsureArg.IsNotNull(entity, nameof(entity));
 
             var id = Client.Entities.Reflector.IdMember.GetValueFrom(entity);
             var response = string.IsNullOrEmpty(id)
@@ -113,8 +113,8 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
-            Ensure.That(id, "id").IsNotNullOrWhiteSpace();
-            Ensure.That(doc, "doc").IsNotNullOrWhiteSpace();
+            EnsureArg.IsNotNullOrWhiteSpace(id, nameof(id));
+            EnsureArg.IsNotNullOrWhiteSpace(doc, nameof(doc));
 
             var header = await GetHeaderAsync(id);
 
@@ -127,10 +127,11 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
-            Ensure.That(entity, "entity").IsNotNull();
+            EnsureArg.IsNotNull(entity, nameof(entity));
 
             var id = Client.Entities.Reflector.IdMember.GetValueFrom(entity);
-            Ensure.That(id, "EntityId").IsNotNullOrWhiteSpace();
+            if (string.IsNullOrWhiteSpace(id))
+                throw new ArgumentException($"EntityId could not be extracted. Ensure member exists on type: '{typeof(T).Name}'.", nameof(entity));
 
             var header = await GetHeaderAsync(id).ForAwait();
             if (header != null)
@@ -147,8 +148,8 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
-            Ensure.That(srcId, "srcId").IsNotNullOrWhiteSpace();
-            Ensure.That(newId, "newId").IsNotNullOrWhiteSpace();
+            EnsureArg.IsNotNullOrWhiteSpace(srcId, nameof(srcId));
+            EnsureArg.IsNotNullOrWhiteSpace(newId, nameof(newId));
 
             var response = await Client.Documents.CopyAsync(srcId, newId).ForAwait();
 
@@ -161,9 +162,9 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
-            Ensure.That(srcId, "srcId").IsNotNullOrWhiteSpace();
-            Ensure.That(srcRev, "srcRev").IsNotNullOrWhiteSpace();
-            Ensure.That(newId, "newId").IsNotNullOrWhiteSpace();
+            EnsureArg.IsNotNullOrWhiteSpace(srcId, nameof(srcId));
+            EnsureArg.IsNotNullOrWhiteSpace(srcRev, nameof(srcRev));
+            EnsureArg.IsNotNullOrWhiteSpace(newId, nameof(newId));
 
             var response = await Client.Documents.CopyAsync(srcId, srcRev, newId).ForAwait();
 
@@ -176,9 +177,9 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
-            Ensure.That(srcId, "srcId").IsNotNullOrWhiteSpace();
-            Ensure.That(trgId, "trgId").IsNotNullOrWhiteSpace();
-            Ensure.That(trgRev, "trgRev").IsNotNullOrWhiteSpace();
+            EnsureArg.IsNotNullOrWhiteSpace(srcId, nameof(srcId));
+            EnsureArg.IsNotNullOrWhiteSpace(trgId, nameof(trgId));
+            EnsureArg.IsNotNullOrWhiteSpace(trgRev, nameof(trgRev));
 
             var response = await Client.Documents.ReplaceAsync(srcId, trgId, trgRev).ForAwait();
 
@@ -191,9 +192,9 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
-            Ensure.That(srcId, "srcId").IsNotNullOrWhiteSpace();
-            Ensure.That(trgId, "trgId").IsNotNullOrWhiteSpace();
-            Ensure.That(trgRev, "trgRev").IsNotNullOrWhiteSpace();
+            EnsureArg.IsNotNullOrWhiteSpace(srcId, nameof(srcId));
+            EnsureArg.IsNotNullOrWhiteSpace(trgId, nameof(trgId));
+            EnsureArg.IsNotNullOrWhiteSpace(trgRev, nameof(trgRev));
 
             var response = await Client.Documents.ReplaceAsync(srcId, srcRev, trgId, trgRev).ForAwait();
 
@@ -206,7 +207,7 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
-            Ensure.That(id, "id").IsNotNullOrWhiteSpace();
+            EnsureArg.IsNotNullOrWhiteSpace(id, nameof(id));
 
             var head = await GetHeaderAsync(id).ForAwait();
             if (head == null)
@@ -219,8 +220,8 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
-            Ensure.That(id, "id").IsNotNullOrWhiteSpace();
-            Ensure.That(rev, "rev").IsNotNullOrWhiteSpace();
+            EnsureArg.IsNotNullOrWhiteSpace(id, nameof(id));
+            EnsureArg.IsNotNullOrWhiteSpace(rev, nameof(rev));
 
             var response = await Client.Documents.DeleteAsync(id, rev).ForAwait();
             if (response.StatusCode == HttpStatusCode.NotFound)
@@ -235,7 +236,7 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
-            Ensure.That(entity, "entity").IsNotNull();
+            EnsureArg.IsNotNull(entity, nameof(entity));
 
             if (lookupRev)
             {
@@ -260,7 +261,7 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
-            Ensure.That(documents, "documents").HasItems();
+            EnsureArg.HasItems(documents, nameof(documents));
 
             var request = new BulkRequest()
                 .Delete(documents);
@@ -286,7 +287,7 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
-            Ensure.That(id, "id").IsNotNullOrWhiteSpace();
+            EnsureArg.IsNotNullOrWhiteSpace(id, nameof(id));
 
             var response = await Client.Documents.HeadAsync(id, rev).ForAwait();
 
@@ -302,7 +303,7 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
-            Ensure.That(id, "id").IsNotNullOrWhiteSpace();
+            EnsureArg.IsNotNullOrWhiteSpace(id, nameof(id));
 
             var response = await Client.Documents.HeadAsync(id, rev).ForAwait();
 
@@ -318,8 +319,8 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
-            Ensure.That(ids, "ids").HasItems();
-            Ensure.That(onResult, "onResult").IsNotNull();
+            EnsureArg.HasItems(ids, nameof(ids));
+            EnsureArg.IsNotNull(onResult, nameof(onResult));
 
             var request = new QueryViewRequest(SystemViewIdentity.AllDocs).Configure(r => r.Keys(ids));
             var response = await Client.Views.QueryAsync<AllDocsValue>(request).ForAwait();
@@ -336,7 +337,7 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
-            Ensure.That(ids, "ids").HasItems();
+            EnsureArg.HasItems(ids, nameof(ids));
 
             var request = new QueryViewRequest(SystemViewIdentity.AllDocs).Configure(r => r.Keys(ids));
             var response = await Client.Views.QueryAsync<AllDocsValue>(request).ForAwait();
@@ -352,7 +353,7 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
-            Ensure.That(id, "id").IsNotNullOrWhiteSpace();
+            EnsureArg.IsNotNullOrWhiteSpace(id, nameof(id));
 
             var response = await Client.Documents.GetAsync(id, rev).ForAwait();
 
@@ -368,7 +369,7 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
-            Ensure.That(id, "id").IsNotNullOrWhiteSpace();
+            EnsureArg.IsNotNullOrWhiteSpace(id, nameof(id));
 
             var response = await Client.Entities.GetAsync<TEntity>(id, rev).ForAwait();
 
@@ -391,8 +392,8 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
-            Ensure.That(ids, "ids").HasItems();
-            Ensure.That(onResult, "onResult").IsNotNull();
+            EnsureArg.HasItems(ids, nameof(ids));
+            EnsureArg.IsNotNull(onResult, nameof(onResult));
 
             var request = new QueryViewRequest(SystemViewIdentity.AllDocs).Configure(r => r.Keys(ids).IncludeDocs(true));
             var response = await Client.Views.QueryAsync<AllDocsValue, T>(request).ForAwait();
@@ -414,7 +415,7 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
-            Ensure.That(ids, "ids").HasItems();
+            EnsureArg.HasItems(ids, nameof(ids));
 
             var request = new QueryViewRequest(SystemViewIdentity.AllDocs).Configure(r => r.Keys(ids).IncludeDocs(true));
             var response = await Client.Views.QueryAsync<AllDocsValue, T>(request).ForAwait();
@@ -442,9 +443,9 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
-            Ensure.That(view, "view").IsNotNull();
-            Ensure.That(keys, "keys").HasItems();
-            Ensure.That(onResult, "onResult").IsNotNull();
+            EnsureArg.IsNotNull(view, nameof(view));
+            EnsureArg.HasItems(keys, nameof(keys));
+            EnsureArg.IsNotNull(onResult, nameof(onResult));
 
             var request = new QueryViewRequest(view).Configure(r => r.Keys(keys));
             var response = await Client.Views.QueryAsync<TValue>(request).ForAwait();
@@ -466,8 +467,8 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
-            Ensure.That(view, "view").IsNotNull();
-            Ensure.That(keys, "keys").HasItems();
+            EnsureArg.IsNotNull(view, nameof(view));
+            EnsureArg.HasItems(keys, nameof(keys));
 
             var request = new QueryViewRequest(view).Configure(r => r.Keys(keys));
             var response = await Client.Views.QueryAsync<TValue>(request).ForAwait();
@@ -488,9 +489,9 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
-            Ensure.That(view, "view").IsNotNull();
-            Ensure.That(keys, "keys").HasItems();
-            Ensure.That(onResult, "onResult").IsNotNull();
+            EnsureArg.IsNotNull(view, nameof(view));
+            EnsureArg.HasItems(keys, nameof(keys));
+            EnsureArg.IsNotNull(onResult, nameof(onResult));
 
             var request = new QueryViewRequest(view).Configure(r => r.Keys(keys).IncludeDocs(true));
             var response = await Client.Views.QueryAsync<string, TIncludedDoc>(request).ForAwait();
@@ -512,8 +513,8 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
-            Ensure.That(view, "view").IsNotNull();
-            Ensure.That(keys, "keys").HasItems();
+            EnsureArg.IsNotNull(view, nameof(view));
+            EnsureArg.HasItems(keys, nameof(keys));
 
             var request = new QueryViewRequest(view).Configure(r => r.Keys(keys).IncludeDocs(true));
             var response = await Client.Views.QueryAsync<string, TIncludedDoc>(request).ForAwait();
@@ -527,7 +528,7 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
-            Ensure.That(query, "query").IsNotNull();
+            EnsureArg.IsNotNull(query, nameof(query));
 
             var response = await Client.Views.QueryAsync(query.ToRequest()).ForAwait();
 
@@ -540,7 +541,7 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
-            Ensure.That(query, "query").IsNotNull();
+            EnsureArg.IsNotNull(query, nameof(query));
 
             var response = await Client.Views.QueryAsync<TValue>(query.ToRequest()).ForAwait();
 
@@ -553,7 +554,7 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
-            Ensure.That(query, "query").IsNotNull();
+            EnsureArg.IsNotNull(query, nameof(query));
 
             var response = await Client.Views.QueryAsync<TValue, TIncludedDoc>(query.ToRequest()).ForAwait();
 
@@ -566,7 +567,7 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
-            Ensure.That(query, "query").IsNotNull();
+            EnsureArg.IsNotNull(query, nameof(query));
 
             var response = await Client.Views.QueryAsync(query.ToRequest()).ForAwait();
 
@@ -582,7 +583,7 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
-            Ensure.That(query, "query").IsNotNull();
+            EnsureArg.IsNotNull(query, nameof(query));
 
             var response = await Client.Views.QueryAsync<TValue>(query.ToRequest()).ForAwait();
 
@@ -598,7 +599,7 @@ namespace MyCouch
         {
             ThrowIfDisposed();
 
-            Ensure.That(query, "query").IsNotNull();
+            EnsureArg.IsNotNull(query, nameof(query));
 
             var response = await Client.Views.QueryAsync<TValue, TIncludedDoc>(query.ToRequest()).ForAwait();
 

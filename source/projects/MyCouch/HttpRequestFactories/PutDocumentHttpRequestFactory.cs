@@ -9,7 +9,7 @@ namespace MyCouch.HttpRequestFactories
     {
         public virtual HttpRequest Create(PutDocumentRequest request)
         {
-            Ensure.That(request, "request").IsNotNull();
+            Ensure.Any.IsNotNull(request, nameof(request));
 
             return new HttpRequest(HttpMethod.Put, GenerateRelativeUrl(request))
                 .SetRequestTypeHeader(request.GetType())

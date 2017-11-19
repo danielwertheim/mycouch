@@ -15,14 +15,14 @@ namespace MyCouch.HttpRequestFactories
 
         public PostIndexHttpRequestFactory(ISerializer serializer)
         {
-            Ensure.That(serializer, "Serializer").IsNotNull();
+            Ensure.Any.IsNotNull(serializer, nameof(serializer));
 
             Serializer = serializer;
         }
 
         public virtual HttpRequest Create(PostIndexRequest request)
         {
-            Ensure.That(request, "request").IsNotNull();
+            Ensure.Any.IsNotNull(request, nameof(request));
 
             return new HttpRequest(HttpMethod.Post, GenerateRelativeUrl(request))
                 .SetRequestTypeHeader(request.GetType())
@@ -31,7 +31,7 @@ namespace MyCouch.HttpRequestFactories
 
         protected virtual string GenerateRequestBody(PostIndexRequest request)
         {
-            Ensure.That(request.Fields, "request.Fields").HasItems();
+            EnsureArg.HasItems(request.Fields, nameof(request.Fields));
 
             var sb = new StringBuilder();
 

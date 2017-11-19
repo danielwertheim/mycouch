@@ -8,7 +8,7 @@ namespace MyCouch.Serialization.Conventions
 
         public SerializationConventionWriter(DocumentJsonWriter jsonWriter)
         {
-            Ensure.That(jsonWriter, "jsonWriter").IsNotNull();
+            EnsureArg.IsNotNull(jsonWriter, nameof(jsonWriter));
 
             InnerWriter = jsonWriter;
         }

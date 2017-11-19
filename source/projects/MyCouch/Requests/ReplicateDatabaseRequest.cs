@@ -17,9 +17,9 @@ namespace MyCouch.Requests
 
         public ReplicateDatabaseRequest(string id, string source, string target)
         {
-            Ensure.That("id", "id").IsNotNull();
-            Ensure.That(source, "source").IsNotNullOrWhiteSpace();
-            Ensure.That(target, "target").IsNotNullOrWhiteSpace();
+            EnsureArg.IsNotNull(id, nameof(id));
+            EnsureArg.IsNotNullOrWhiteSpace(source, nameof(source));
+            EnsureArg.IsNotNullOrWhiteSpace(target, nameof(target));
 
             Id = id;
             Source = source;

@@ -10,8 +10,8 @@ namespace MyCouch.Net
 
         public BasicAuthString(string username, string password)
         {
-            Ensure.That(username, "username").IsNotNullOrEmpty();
-            Ensure.That(password, "password").IsNotNullOrEmpty();
+            EnsureArg.IsNotNullOrEmpty(username, nameof(username));
+            EnsureArg.IsNotNullOrEmpty(password, nameof(password));
 
             Value = GenerateBasicAuthorizationCredentials(username, password);
         }

@@ -14,7 +14,7 @@ namespace MyCouch.Responses.Factories
 
         public DocumentHeaderResponseFactory(ISerializer serializer)
         {
-            Ensure.That(serializer, "serializer").IsNotNull();
+            Ensure.Any.IsNotNull(serializer, nameof(serializer));
 
             SuccessfulResponseMaterializer = new DocumentHeaderResponseMaterializer(serializer);
             FailedResponseMaterializer = new FailedDocumentHeaderResponseMaterializer(serializer);

@@ -27,8 +27,8 @@ namespace MyCouch.Requests
         /// <param name="entity"></param>
         public PutEntityRequest(string id, T entity)
         {
-            Ensure.That(id, "id").IsNotNullOrWhiteSpace();
-            Ensure.That(entity, "entity").IsNotNull();
+            EnsureArg.IsNotNullOrWhiteSpace(id, nameof(id));
+            EnsureArg.IsNotNull(entity, nameof(entity));
 
             Initialize(id, null, entity);
         }
@@ -42,9 +42,9 @@ namespace MyCouch.Requests
         /// <param name="entity"></param>
         public PutEntityRequest(string id, string rev, T entity)
         {
-            Ensure.That(id, "id").IsNotNullOrWhiteSpace();
-            Ensure.That(rev, "rev").IsNotNullOrWhiteSpace();
-            Ensure.That(entity, "entity").IsNotNull();
+            EnsureArg.IsNotNullOrWhiteSpace(id, nameof(id));
+            EnsureArg.IsNotNullOrWhiteSpace(rev, nameof(rev));
+            EnsureArg.IsNotNull(entity, nameof(entity));
 
             Initialize(id, rev, entity);
         }
@@ -56,7 +56,7 @@ namespace MyCouch.Requests
         /// <param name="entity"></param>
         public PutEntityRequest(T entity)
         {
-            Ensure.That(entity, "entity").IsNotNull();
+            EnsureArg.IsNotNull(entity, nameof(entity));
 
             Batch = false;
             Entity = entity;

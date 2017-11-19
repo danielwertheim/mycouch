@@ -19,7 +19,7 @@ namespace MyCouch
         /// <returns></returns>
         public virtual IndexParametersConfigurator DesignDocument(string value)
         {
-            Ensure.That(value, "value").IsNotNullOrWhiteSpace();
+            Ensure.String.IsNotNullOrWhiteSpace(value, nameof(value));
 
             Parameters.DesignDocument = value;
 
@@ -44,7 +44,7 @@ namespace MyCouch
         /// <returns></returns>
         public virtual IndexParametersConfigurator Name(string value)
         {
-            Ensure.That(value, "value").IsNotNullOrWhiteSpace();
+            Ensure.String.IsNotNullOrWhiteSpace(value, nameof(value));
 
             Parameters.Name = value;
 
@@ -58,7 +58,7 @@ namespace MyCouch
         /// <returns></returns>
         public virtual IndexParametersConfigurator Fields(params SortableField[] fields)
         {
-            Ensure.That(fields, "fields").HasItems();
+            EnsureArg.HasItems(fields, nameof(fields));
 
             Parameters.Fields = fields.ToList();
 
@@ -72,7 +72,7 @@ namespace MyCouch
         /// <returns></returns>
         public virtual IndexParametersConfigurator Fields(params string[] fields)
         {
-            Ensure.That(fields, "fields").HasItems();
+            EnsureArg.HasItems(fields, nameof(fields));
 
             Parameters.Fields = fields.Select(f => new SortableField(f)).ToList();
 

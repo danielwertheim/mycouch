@@ -14,7 +14,7 @@ namespace MyCouch.Responses.Factories
 
         public ChangesResponseFactory(ISerializer serializer)
         {
-            Ensure.That(serializer, "serializer").IsNotNull();
+            Ensure.Any.IsNotNull(serializer, nameof(serializer));
 
             SuccessfulResponseMaterializer = new ChangesResponseMaterializer(serializer);
             FailedResponseMaterializer = new FailedResponseMaterializer(serializer);

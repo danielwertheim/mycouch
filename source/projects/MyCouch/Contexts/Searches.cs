@@ -18,7 +18,7 @@
 //            : base(connection)
 //        {
 //            Ensure.That(documentSerializer, "documentSerializer").IsNotNull();
-//            Ensure.That(serializer, "serializer").IsNotNull();
+//            Ensure.Any.IsNotNull(serializer, nameof(serializer));
 
 //            SearchIndexHttpRequestFactory = new SearchIndexHttpRequestFactory(serializer);
 //            SearchIndexResponseFactory = new SearchIndexResponseFactory(documentSerializer);
@@ -26,7 +26,7 @@
 
 //        public virtual async Task<SearchIndexResponse> SearchAsync(SearchIndexRequest request)
 //        {
-//            Ensure.That(request, "request").IsNotNull();
+//            Ensure.Any.IsNotNull(request, nameof(request));
 
 //            var httpRequest = SearchIndexHttpRequestFactory.Create(request);
 
@@ -38,7 +38,7 @@
 
 //        public virtual async Task<SearchIndexResponse<TIncludedDoc>> SearchAsync<TIncludedDoc>(SearchIndexRequest request)
 //        {
-//            Ensure.That(request, "request").IsNotNull();
+//            Ensure.Any.IsNotNull(request, nameof(request));
 
 //            var httpRequest = SearchIndexHttpRequestFactory.Create(request);
 

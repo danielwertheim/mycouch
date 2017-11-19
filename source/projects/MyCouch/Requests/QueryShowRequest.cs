@@ -66,7 +66,7 @@ namespace MyCouch.Requests
 
         public QueryShowRequest(ShowIdentity showIdentity)
         {
-            Ensure.That(showIdentity, "showIdentity").IsNotNull();
+            EnsureArg.IsNotNull(showIdentity, nameof(showIdentity));
 
             State = new ShowParameters(showIdentity);
         }

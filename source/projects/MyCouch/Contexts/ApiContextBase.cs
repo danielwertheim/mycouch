@@ -12,7 +12,7 @@ namespace MyCouch.Contexts
 
         protected ApiContextBase(TConnection connection)
         {
-            Ensure.That(connection, "connection").IsNotNull();
+            Ensure.Any.IsNotNull(connection, nameof(connection));
 
             Connection = connection;
         }

@@ -10,9 +10,9 @@ namespace MyCouch.Requests
 
         public DeleteAttachmentRequest(string docId, string docRev, string name)
         {
-            Ensure.That(docId, "docId").IsNotNullOrWhiteSpace();
-            Ensure.That(docRev, "docRev").IsNotNullOrWhiteSpace();
-            Ensure.That(name, "name").IsNotNullOrWhiteSpace();
+            EnsureArg.IsNotNullOrWhiteSpace(docId, nameof(docId));
+            EnsureArg.IsNotNullOrWhiteSpace(docRev, nameof(docRev));
+            EnsureArg.IsNotNullOrWhiteSpace(name, nameof(name));
 
             DocId = docId;
             DocRev = docRev;

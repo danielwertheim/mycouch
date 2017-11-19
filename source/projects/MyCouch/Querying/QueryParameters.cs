@@ -41,7 +41,7 @@ namespace MyCouch.Querying
 
         public QueryParameters(ViewIdentity viewIdentity)
         {
-            Ensure.That(viewIdentity, "viewIdentity").IsNotNull();
+            EnsureArg.IsNotNull(viewIdentity, nameof(viewIdentity));
 
             ViewIdentity = viewIdentity;
         }

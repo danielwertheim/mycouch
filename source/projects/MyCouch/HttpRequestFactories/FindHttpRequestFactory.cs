@@ -14,14 +14,14 @@ namespace MyCouch.HttpRequestFactories
 
         public FindHttpRequestFactory(ISerializer serializer)
         {
-            Ensure.That(serializer, "Serializer").IsNotNull();
+            Ensure.Any.IsNotNull(serializer, nameof(serializer));
 
             Serializer = serializer;
         }
 
         public virtual HttpRequest Create(FindRequest request)
         {
-            Ensure.That(request, "request").IsNotNull();
+            Ensure.Any.IsNotNull(request, nameof(request));
 
             return new HttpRequest(HttpMethod.Post, GenerateRelativeUrl(request))
                 .SetRequestTypeHeader(request.GetType())
@@ -35,7 +35,7 @@ namespace MyCouch.HttpRequestFactories
 
         protected virtual string GenerateRequestBody(FindRequest request)
         {
-            Ensure.That(request.SelectorExpression, "request.SelectorExpression").IsNotNullOrWhiteSpace();
+            Ensure.String.IsNotNullOrWhiteSpace(request.SelectorExpression, nameof(request.SelectorExpression));
 
             var sb = new StringBuilder();
             sb.Append("{");

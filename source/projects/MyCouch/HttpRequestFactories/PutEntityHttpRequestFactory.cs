@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using EnsureThat;
 using MyCouch.EntitySchemes;
 using MyCouch.Net;
@@ -14,8 +15,8 @@ namespace MyCouch.HttpRequestFactories
 
         public PutEntityHttpRequestFactory(IEntityReflector reflector, ISerializer serializer)
         {
-            Ensure.That(reflector, "reflector").IsNotNull();
-            Ensure.That(serializer, "serializer").IsNotNull();
+            EnsureArg.IsNotNull(reflector, nameof(reflector));
+            Ensure.Any.IsNotNull(serializer, nameof(serializer));
 
             Reflector = reflector;
             Serializer = serializer;
@@ -23,7 +24,7 @@ namespace MyCouch.HttpRequestFactories
 
         public virtual HttpRequest Create<T>(PutEntityRequest<T> request) where T : class
         {
-            Ensure.That(request, "request").IsNotNull();
+            Ensure.Any.IsNotNull(request, nameof(request));
 
             var entityId = GetEntityId(request);
             var entityRev = GetEntityRev(request);
@@ -40,10 +41,8 @@ namespace MyCouch.HttpRequestFactories
                 return request.ExplicitId;
 
             var entityId = Reflector.IdMember.GetValueFrom(request.Entity);
-
-            Ensure.That(entityId, "request")
-                .WithExtraMessageOf(() => "Could not extract entity Id from entity being PUT. Ensure member exists.")
-                .IsNotNullOrWhiteSpace();
+            if(string.IsNullOrWhiteSpace(entityId))
+                throw new ArgumentException("Could not extract entity Id from entity being PUT. Ensure member exists.", nameof(request));
 
             return entityId;
         }

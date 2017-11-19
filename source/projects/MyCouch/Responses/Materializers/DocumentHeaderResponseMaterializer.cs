@@ -13,7 +13,7 @@ namespace MyCouch.Responses.Materializers
 
         public DocumentHeaderResponseMaterializer(ISerializer serializer)
         {
-            Ensure.That(serializer, "serializer").IsNotNull();
+            Ensure.Any.IsNotNull(serializer, nameof(serializer));
 
             Serializer = serializer;
         }

@@ -15,7 +15,7 @@ namespace MyCouch
 
         public IDisposable Subscribe(IObserver<T> observer)
         {
-            Ensure.That(observer, "observer").IsNotNull();
+            EnsureArg.IsNotNull(observer, nameof(observer));
 
             if (!_observers.Contains(observer))
                 _observers.Add(observer);
@@ -45,8 +45,8 @@ namespace MyCouch
 
             public Unsubscriber(IList<IObserver<T>> observers, IObserver<T> observer)
             {
-                Ensure.That(observers, "observers").HasItems();
-                Ensure.That(observer, "observer").IsNotNull();
+                EnsureArg.HasItems(observers, nameof(observers));
+                EnsureArg.IsNotNull(observer, nameof(observer));
 
                 _observers = observers;
                 _observer = observer;
