@@ -32,7 +32,7 @@ Task("Restore").Does(() => {
                 .SetConfiguration(config.BuildProfile)
                 .SetVerbosity(Verbosity.Minimal)
                 .WithTarget("Restore")
-                .WithProperty("TreatWarningsAsErrors", "true"));
+                .WithProperty("TreatWarningsAsErrors", "false")); //false Until Ensure.That...
     }
 });
 
@@ -43,7 +43,7 @@ Task("Build").Does(() => {
                 .SetConfiguration(config.BuildProfile)
                 .SetVerbosity(Verbosity.Minimal)
                 .WithTarget("Rebuild")
-                .WithProperty("TreatWarningsAsErrors", "true")
+                .WithProperty("TreatWarningsAsErrors", "false") //false Until Ensure.That...
                 .WithProperty("NoRestore", "true")
                 .WithProperty("Version", config.SemVer)
                 .WithProperty("AssemblyVersion", config.BuildVersion)
@@ -80,7 +80,7 @@ Task("Pack").Does(() => {
                 .SetConfiguration(config.BuildProfile)
                 .SetVerbosity(Verbosity.Minimal)
                 .WithTarget("Pack")
-                .WithProperty("TreatWarningsAsErrors", "true")
+                .WithProperty("TreatWarningsAsErrors", "false") //false Until Ensure.That...
                 .WithProperty("NoRestore", "true")
                 .WithProperty("NoBuild", "true")
                 .WithProperty("Version", config.SemVer));
