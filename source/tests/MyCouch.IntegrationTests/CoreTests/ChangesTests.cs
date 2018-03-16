@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using FluentAssertions;
 using MyCouch.Requests;
 using MyCouch.Responses;
@@ -86,6 +87,32 @@ namespace MyCouch.IntegrationTests.CoreTests
                 Interlocked.Increment(ref numOfChanges);
                 if (numOfChanges == expectedNumOfChanges)
                     cancellation.Cancel();
+            }, cancellation.Token);
+
+            var postOfDoc = DbClient.Documents.PostAsync(ClientTestData.Artists.Artist1Json).Result;
+            var putOfDoc = DbClient.Documents.PutAsync(postOfDoc.Id, postOfDoc.Rev, ClientTestData.Artists.Artist1Json).Result;
+            var deleteOfDoc = DbClient.Documents.DeleteAsync(putOfDoc.Id, putOfDoc.Rev).Result;
+
+            var response = changes.Result;
+
+            response.IsSuccess.Should().BeTrue();
+        }
+
+        [MyFact(TestScenarios.ChangesContext)]
+        public virtual void When_getting_Continuous_changes_via_asynccallback_and_performing_three_changes_It_will_extract_three_changes()
+        {
+            var lastSequence = GetLastSequence();
+            var changesRequest = new GetChangesRequest { Feed = ChangesFeed.Continuous, Since = lastSequence };
+            var numOfChanges = 0;
+            const int expectedNumOfChanges = 3;
+            var cancellation = new CancellationTokenSource();
+
+            var changes = SUT.GetAsync(changesRequest, data =>
+            {
+                Interlocked.Increment(ref numOfChanges);
+                if (numOfChanges == expectedNumOfChanges)
+                    cancellation.Cancel();
+                return Task.CompletedTask;
             }, cancellation.Token);
 
             var postOfDoc = DbClient.Documents.PostAsync(ClientTestData.Artists.Artist1Json).Result;

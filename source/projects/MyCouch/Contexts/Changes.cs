@@ -54,7 +54,16 @@ namespace MyCouch.Contexts
             }
         }
 
-        public virtual async Task<ContinuousChangesResponse> GetAsync(GetChangesRequest request, Action<string> onRead, CancellationToken cancellationToken)
+        public virtual Task<ContinuousChangesResponse> GetAsync(GetChangesRequest request, Action<string> onRead, CancellationToken cancellationToken)
+        {
+            return GetAsync(request, data =>
+            {
+                onRead(data);
+                return Task.FromResult(0);
+            }, cancellationToken);
+        }
+
+        public virtual async Task<ContinuousChangesResponse> GetAsync(GetChangesRequest request, Func<string,Task> onRead, CancellationToken cancellationToken)
         {
             var httpRequest = ContinuousHttpRequestFactory.Create(request);
 
@@ -71,7 +80,7 @@ namespace MyCouch.Contexts
                             {
                                 //cancellationToken.ThrowIfCancellationRequested();
                                 if(!cancellationToken.IsCancellationRequested)
-                                    onRead(reader.ReadLine());
+                                    await onRead(reader.ReadLine()).ForAwait();
                             }
                         }
                     }
