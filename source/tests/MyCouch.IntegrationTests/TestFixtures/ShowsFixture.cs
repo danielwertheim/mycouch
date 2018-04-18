@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
 using MyCouch.Requests;
 using MyCouch.Testing.Model;
 using MyCouch.Testing.TestData;

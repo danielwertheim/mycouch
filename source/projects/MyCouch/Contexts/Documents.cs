@@ -1,9 +1,7 @@
-﻿using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Extensions;
 using MyCouch.HttpRequestFactories;
-using MyCouch.Net;
 using MyCouch.Requests;
 using MyCouch.Responses;
 using MyCouch.Responses.Factories;

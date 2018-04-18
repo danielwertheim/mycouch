@@ -4,7 +4,6 @@ using EnsureThat;
 using MyCouch.EntitySchemes;
 using MyCouch.Extensions;
 using MyCouch.HttpRequestFactories;
-using MyCouch.Net;
 using MyCouch.Requests;
 using MyCouch.Responses;
 using MyCouch.Responses.Factories;

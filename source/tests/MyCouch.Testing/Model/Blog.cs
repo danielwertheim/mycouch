@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MyCouch.Testing.Model
+﻿namespace MyCouch.Testing.Model
 {
     public class Blog
     {
