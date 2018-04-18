@@ -21,22 +21,12 @@ namespace MyCouch.UnitTests.Fakes
 
         public void Dispose() { }
 
-        public Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest)
+        public Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, CancellationToken cancellationToken = default)
         {
             return null;
         }
 
-        public Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, CancellationToken cancellationToken)
-        {
-            return null;
-        }
-
-        public Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, HttpCompletionOption completionOption)
-        {
-            return null;
-        }
-
-        public Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, HttpCompletionOption completionOption, CancellationToken cancellationToken)
+        public Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, HttpCompletionOption completionOption, CancellationToken cancellationToken = default)
         {
             return null;
         }
@@ -59,22 +49,12 @@ namespace MyCouch.UnitTests.Fakes
 
         public void Dispose() { }
 
-        public Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest)
+        public Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, CancellationToken cancellationToken = default)
         {
             return null;
         }
 
-        public Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, CancellationToken cancellationToken)
-        {
-            return null;
-        }
-
-        public Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, HttpCompletionOption completionOption)
-        {
-            return null;
-        }
-
-        public Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, HttpCompletionOption completionOption, CancellationToken cancellationToken)
+        public Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, HttpCompletionOption completionOption, CancellationToken cancellationToken = default)
         {
             return null;
         }

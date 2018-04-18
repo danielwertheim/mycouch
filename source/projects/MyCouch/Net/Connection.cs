@@ -81,32 +81,7 @@ namespace MyCouch.Net
             return client;
         }
 
-        public virtual async Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest)
-        {
-            ThrowIfDisposed();
-
-            OnBeforeSend(httpRequest);
-
-            using (var message = CreateHttpRequestMessage(httpRequest))
-            {
-                var response = await HttpClient.SendAsync(message).ForAwait();
-
-                if (ShouldFollowResponse(response))
-                {
-                    using (var followMessage = CreateHttpRequestMessage(httpRequest))
-                    {
-                        followMessage.RequestUri = response.Headers.Location;
-                        return await HttpClient.SendAsync(followMessage).ForAwait();
-                    }
-                }
-
-                OnAfterSend(response);
-
-                return response;
-            }
-        }
-
-        public virtual async Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, CancellationToken cancellationToken)
+        public virtual async Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
 
@@ -131,32 +106,7 @@ namespace MyCouch.Net
             }
         }
 
-        public virtual async Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, HttpCompletionOption completionOption)
-        {
-            ThrowIfDisposed();
-
-            OnBeforeSend(httpRequest);
-
-            using (var message = CreateHttpRequestMessage(httpRequest))
-            {
-                var response = await HttpClient.SendAsync(message, completionOption).ForAwait();
-
-                if (ShouldFollowResponse(response))
-                {
-                    using (var followMessage = CreateHttpRequestMessage(httpRequest))
-                    {
-                        followMessage.RequestUri = response.Headers.Location;
-                        return await HttpClient.SendAsync(followMessage, completionOption).ForAwait();
-                    }
-                }
-
-                OnAfterSend(response);
-
-                return response;
-            }
-        }
-
-        public virtual async Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, HttpCompletionOption completionOption, CancellationToken cancellationToken)
+        public virtual async Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, HttpCompletionOption completionOption, CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
 

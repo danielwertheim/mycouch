@@ -27,17 +27,7 @@ namespace MyCouch.Contexts
             RawResponseFactory = new RawResponseFactory(serializer);
         }
 
-        public virtual async Task<RawResponse> QueryRawAsync(QueryViewRequest request)
-        {
-            var httpRequest = QueryViewHttpRequestFactory.Create(request);
-
-            using (var res = await SendAsync(httpRequest).ForAwait())
-            {
-                return await RawResponseFactory.CreateAsync(res).ForAwait();
-            }
-        }
-
-        public virtual async Task<RawResponse> QueryRawAsync(QueryViewRequest request, CancellationToken cancellationToken)
+        public virtual async Task<RawResponse> QueryRawAsync(QueryViewRequest request, CancellationToken cancellationToken = default)
         {
             var httpRequest = QueryViewHttpRequestFactory.Create(request);
 
@@ -47,19 +37,7 @@ namespace MyCouch.Contexts
             }
         }
 
-        public virtual async Task<ViewQueryResponse> QueryAsync(QueryViewRequest request)
-        {
-            EnsureThatNoListFunctionIsUsed(request);
-
-            var httpRequest = QueryViewHttpRequestFactory.Create(request);
-
-            using (var res = await SendAsync(httpRequest).ForAwait())
-            {
-                return await ViewQueryResponseFactory.CreateAsync(res).ForAwait();
-            }
-        }
-
-        public virtual async Task<ViewQueryResponse> QueryAsync(QueryViewRequest request, CancellationToken cancellationToken)
+        public virtual async Task<ViewQueryResponse> QueryAsync(QueryViewRequest request, CancellationToken cancellationToken = default)
         {
             EnsureThatNoListFunctionIsUsed(request);
 
@@ -71,19 +49,7 @@ namespace MyCouch.Contexts
             }
         }
 
-        public virtual async Task<ViewQueryResponse<TValue>> QueryAsync<TValue>(QueryViewRequest request)
-        {
-            EnsureThatNoListFunctionIsUsed(request);
-
-            var httpRequest = QueryViewHttpRequestFactory.Create(request);
-
-            using (var res = await SendAsync(httpRequest).ForAwait())
-            {
-                return await ViewQueryResponseFactory.CreateAsync<TValue>(res).ForAwait();
-            }
-        }
-
-        public virtual async Task<ViewQueryResponse<TValue>> QueryAsync<TValue>(QueryViewRequest request, CancellationToken cancellationToken)
+        public virtual async Task<ViewQueryResponse<TValue>> QueryAsync<TValue>(QueryViewRequest request, CancellationToken cancellationToken = default)
         {
             EnsureThatNoListFunctionIsUsed(request);
 
@@ -95,17 +61,7 @@ namespace MyCouch.Contexts
             }
         }
 
-        public virtual async Task<ViewQueryResponse<TValue, TIncludedDoc>> QueryAsync<TValue, TIncludedDoc>(QueryViewRequest request)
-        {
-            EnsureThatNoListFunctionIsUsed(request);
-
-            var httpRequest = QueryViewHttpRequestFactory.Create(request);
-
-            using (var res = await SendAsync(httpRequest).ForAwait())
-                return await ViewQueryResponseFactory.CreateAsync<TValue, TIncludedDoc>(res).ForAwait();
-        }
-
-        public virtual async Task<ViewQueryResponse<TValue, TIncludedDoc>> QueryAsync<TValue, TIncludedDoc>(QueryViewRequest request, CancellationToken cancellationToken)
+        public virtual async Task<ViewQueryResponse<TValue, TIncludedDoc>> QueryAsync<TValue, TIncludedDoc>(QueryViewRequest request, CancellationToken cancellationToken = default)
         {
             EnsureThatNoListFunctionIsUsed(request);
 
