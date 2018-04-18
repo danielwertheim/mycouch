@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Extensions;
 using MyCouch.HttpRequestFactories;
@@ -37,58 +38,58 @@ namespace MyCouch.Contexts
             ViewCleanupHttpRequestFactory = new ViewCleanupHttpRequestFactory();
         }
 
-        public virtual async Task<DatabaseHeaderResponse> HeadAsync()
+        public virtual async Task<DatabaseHeaderResponse> HeadAsync(CancellationToken cancellationToken = default)
         {
             var request = new HeadDatabaseRequest(Connection.DbName);
             var httpRequest = HeadHttpRequestFactory.Create(request);
 
-            using (var httpResponse = await SendAsync(httpRequest).ForAwait())
-                return await DatabaseHeaderResponseFactory.CreateAsync(request, httpResponse).ForAwait();
+            using (var httpResponse = await SendAsync(httpRequest, cancellationToken).ForAwait())
+                return await DatabaseHeaderResponseFactory.CreateAsync(request, httpResponse, cancellationToken).ForAwait();
         }
 
-        public virtual async Task<GetDatabaseResponse> GetAsync()
+        public virtual async Task<GetDatabaseResponse> GetAsync(CancellationToken cancellationToken = default)
         {
             var request = new GetDatabaseRequest(Connection.DbName);
             var httpRequest = GetHttpRequestFactory.Create(request);
 
-            using (var httpResponse = await SendAsync(httpRequest).ForAwait())
-                return await GetDatabaseResponseFactory.CreateAsync(httpResponse).ForAwait();
+            using (var httpResponse = await SendAsync(httpRequest, cancellationToken).ForAwait())
+                return await GetDatabaseResponseFactory.CreateAsync(httpResponse, cancellationToken).ForAwait();
         }
 
-        public virtual async Task<DatabaseHeaderResponse> PutAsync()
+        public virtual async Task<DatabaseHeaderResponse> PutAsync(CancellationToken cancellationToken = default)
         {
             var request = new PutDatabaseRequest(Connection.DbName);
             var httpRequest = PutHttpRequestFactory.Create(request);
 
-            using (var httpResponse = await SendAsync(httpRequest).ForAwait())
-                return await DatabaseHeaderResponseFactory.CreateAsync(request, httpResponse).ForAwait();
+            using (var httpResponse = await SendAsync(httpRequest, cancellationToken).ForAwait())
+                return await DatabaseHeaderResponseFactory.CreateAsync(request, httpResponse, cancellationToken).ForAwait();
         }
 
-        public virtual async Task<DatabaseHeaderResponse> DeleteAsync()
+        public virtual async Task<DatabaseHeaderResponse> DeleteAsync(CancellationToken cancellationToken = default)
         {
             var request = new DeleteDatabaseRequest(Connection.DbName);
             var httpRequest = DeleteHttpRequestFactory.Create(request);
 
-            using (var httpResponse = await SendAsync(httpRequest).ForAwait())
-                return await DatabaseHeaderResponseFactory.CreateAsync(request, httpResponse).ForAwait();
+            using (var httpResponse = await SendAsync(httpRequest, cancellationToken).ForAwait())
+                return await DatabaseHeaderResponseFactory.CreateAsync(request, httpResponse, cancellationToken).ForAwait();
         }
 
-        public virtual async Task<DatabaseHeaderResponse> CompactAsync()
+        public virtual async Task<DatabaseHeaderResponse> CompactAsync(CancellationToken cancellationToken = default)
         {
             var request = new CompactDatabaseRequest(Connection.DbName);
             var httpRequest = CompactHttpRequestFactory.Create(request);
 
-            using (var httpResponse = await SendAsync(httpRequest).ForAwait())
-                return await DatabaseHeaderResponseFactory.CreateAsync(request, httpResponse).ForAwait();
+            using (var httpResponse = await SendAsync(httpRequest, cancellationToken).ForAwait())
+                return await DatabaseHeaderResponseFactory.CreateAsync(request, httpResponse, cancellationToken).ForAwait();
         }
 
-        public virtual async Task<DatabaseHeaderResponse> ViewCleanupAsync()
+        public virtual async Task<DatabaseHeaderResponse> ViewCleanupAsync(CancellationToken cancellationToken = default)
         {
             var request = new ViewCleanupRequest(Connection.DbName);
             var httpRequest = ViewCleanupHttpRequestFactory.Create(request);
 
-            using (var httpResponse = await SendAsync(httpRequest).ForAwait())
-                return await DatabaseHeaderResponseFactory.CreateAsync(request, httpResponse).ForAwait();
+            using (var httpResponse = await SendAsync(httpRequest, cancellationToken).ForAwait())
+                return await DatabaseHeaderResponseFactory.CreateAsync(request, httpResponse, cancellationToken).ForAwait();
         }
     }
 }

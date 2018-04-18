@@ -34,23 +34,23 @@ namespace MyCouch.Contexts
             ObservableWorkTaskFactoryResolver = () => Task.Factory;
         }
 
-        public virtual async Task<ChangesResponse> GetAsync(GetChangesRequest request)
+        public virtual async Task<ChangesResponse> GetAsync(GetChangesRequest request, CancellationToken cancellationToken = default)
         {
             var httpRequest = HttpRequestFactory.Create(request);
 
-            using (var httpResponse = await SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead).ForAwait())
+            using (var httpResponse = await SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ForAwait())
             {
-                return await ChangesResponseFactory.CreateAsync(httpResponse).ForAwait();
+                return await ChangesResponseFactory.CreateAsync(httpResponse, cancellationToken).ForAwait();
             }
         }
 
-        public virtual async Task<ChangesResponse<TIncludedDoc>> GetAsync<TIncludedDoc>(GetChangesRequest request)
+        public virtual async Task<ChangesResponse<TIncludedDoc>> GetAsync<TIncludedDoc>(GetChangesRequest request, CancellationToken cancellationToken = default)
         {
             var httpRequest = HttpRequestFactory.Create(request);
 
-            using (var httpResponse = await SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead).ForAwait())
+            using (var httpResponse = await SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ForAwait())
             {
-                return await ChangesResponseFactory.CreateAsync<TIncludedDoc>(httpResponse).ForAwait();
+                return await ChangesResponseFactory.CreateAsync<TIncludedDoc>(httpResponse, cancellationToken).ForAwait();
             }
         }
 
@@ -69,7 +69,7 @@ namespace MyCouch.Contexts
 
             using (var httpResponse = await SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ForAwait())
             {
-                var response = await ContinuousChangesResponseFactory.CreateAsync(httpResponse).ForAwait();
+                var response = await ContinuousChangesResponseFactory.CreateAsync(httpResponse, cancellationToken).ForAwait();
                 if (response.IsSuccess)
                 {
                     using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
@@ -99,7 +99,7 @@ namespace MyCouch.Contexts
             {
                 using (var httpResponse = await SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ForAwait())
                 {
-                    var response = await ContinuousChangesResponseFactory.CreateAsync(httpResponse).ForAwait();
+                    var response = await ContinuousChangesResponseFactory.CreateAsync(httpResponse, cancellationToken).ForAwait();
                     if (response.IsSuccess)
                     {
                         using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())

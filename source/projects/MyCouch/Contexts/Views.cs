@@ -33,7 +33,7 @@ namespace MyCouch.Contexts
 
             using (var res = await SendAsync(httpRequest, cancellationToken).ForAwait())
             {
-                return await RawResponseFactory.CreateAsync(res).ForAwait();
+                return await RawResponseFactory.CreateAsync(res, cancellationToken).ForAwait();
             }
         }
 
@@ -45,7 +45,7 @@ namespace MyCouch.Contexts
 
             using (var res = await SendAsync(httpRequest, cancellationToken).ForAwait())
             {
-                return await ViewQueryResponseFactory.CreateAsync(res).ForAwait();
+                return await ViewQueryResponseFactory.CreateAsync(res, cancellationToken).ForAwait();
             }
         }
 
@@ -57,7 +57,7 @@ namespace MyCouch.Contexts
 
             using (var res = await SendAsync(httpRequest, cancellationToken).ForAwait())
             {
-                return await ViewQueryResponseFactory.CreateAsync<TValue>(res).ForAwait();
+                return await ViewQueryResponseFactory.CreateAsync<TValue>(res, cancellationToken).ForAwait();
             }
         }
 
@@ -68,7 +68,7 @@ namespace MyCouch.Contexts
             var httpRequest = QueryViewHttpRequestFactory.Create(request);
 
             using (var res = await SendAsync(httpRequest, cancellationToken).ForAwait())
-                return await ViewQueryResponseFactory.CreateAsync<TValue, TIncludedDoc>(res).ForAwait();
+                return await ViewQueryResponseFactory.CreateAsync<TValue, TIncludedDoc>(res, cancellationToken).ForAwait();
         }
 
         private static void EnsureThatNoListFunctionIsUsed(QueryViewRequest request)

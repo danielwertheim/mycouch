@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using MyCouch.Requests;
 using MyCouch.Responses;
 
@@ -13,21 +14,23 @@ namespace MyCouch
         /// Lets you create an index
         /// </summary>
         /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<IndexResponse> PostAsync(PostIndexRequest request);
+        Task<IndexResponse> PostAsync(PostIndexRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a list of all indexes in the database.
         /// </summary>
         /// <returns></returns>
-        Task<IndexListResponse> GetAllAsync();
+        Task<IndexListResponse> GetAllAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lets you delete an existing index
         /// </summary>
         /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<IndexResponse> DeleteAsync(DeleteIndexRequest request);
+        Task<IndexResponse> DeleteAsync(DeleteIndexRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lets you find documents by querying indexes using the
@@ -35,8 +38,9 @@ namespace MyCouch
         /// Any returned IncludedDoc will be treated as JSON.
         /// </summary>
         /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<FindResponse> FindAsync(FindRequest request);
+        Task<FindResponse> FindAsync(FindRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lets you find documents by querying indexes using the
@@ -45,7 +49,8 @@ namespace MyCouch
         /// </summary>
         /// <typeparam name="TIncludedDoc"></typeparam>
         /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<FindResponse<TIncludedDoc>> FindAsync<TIncludedDoc>(FindRequest request);
+        Task<FindResponse<TIncludedDoc>> FindAsync<TIncludedDoc>(FindRequest request, CancellationToken cancellationToken = default);
     }
 }

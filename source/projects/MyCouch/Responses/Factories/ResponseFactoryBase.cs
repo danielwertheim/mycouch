@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using MyCouch.Extensions;
 using MyCouch.Responses.Materializers;
@@ -17,7 +18,7 @@ namespace MyCouch.Responses.Factories
         protected virtual async Task<TResponse> MaterializeAsync<TResponse>(
             HttpResponseMessage httpResponse,
             ResponseMaterializer<TResponse> sucessfulResponseMaterializer = null,
-            ResponseMaterializer<TResponse> failedResponseMaterializer = null) where TResponse : Response, new()
+            ResponseMaterializer<TResponse> failedResponseMaterializer = null, CancellationToken cancellationToken = default) where TResponse : Response, new()
         {
             var response = new TResponse();
 

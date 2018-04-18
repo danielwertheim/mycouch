@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.EntitySchemes;
@@ -20,7 +21,7 @@ namespace MyCouch.Contexts
         protected PostEntityHttpRequestFactory PostHttpRequestFactory { get; set; }
         protected PutEntityHttpRequestFactory PutHttpRequestFactory { get; set; }
         protected DeleteEntityHttpRequestFactory DeleteHttpRequestFactory { get; set; }
- 
+
         protected EntityResponseFactory EntityResponseFactory { get; set; }
 
         public Entities(IDbConnection connection, ISerializer serializer, IEntityReflector entityReflector)
@@ -38,79 +39,79 @@ namespace MyCouch.Contexts
             DeleteHttpRequestFactory = new DeleteEntityHttpRequestFactory(Reflector);
         }
 
-        public virtual Task<GetEntityResponse<T>> GetAsync<T>(string id, string rev = null) where T : class
+        public virtual Task<GetEntityResponse<T>> GetAsync<T>(string id, string rev = null, CancellationToken cancellationToken = default) where T : class
         {
-            return GetAsync<T>(new GetEntityRequest(id, rev));
+            return GetAsync<T>(new GetEntityRequest(id, rev), cancellationToken);
         }
 
-        public virtual async Task<GetEntityResponse<T>> GetAsync<T>(GetEntityRequest request) where T : class
+        public virtual async Task<GetEntityResponse<T>> GetAsync<T>(GetEntityRequest request, CancellationToken cancellationToken = default) where T : class
         {
             var httpRequest = GetHttpRequestFactory.Create(request);
 
-            using (var res = await SendAsync(httpRequest).ForAwait())
+            using (var res = await SendAsync(httpRequest, cancellationToken).ForAwait())
             {
-                return await EntityResponseFactory.CreateAsync<GetEntityResponse<T>, T>(res).ForAwait();
+                return await EntityResponseFactory.CreateAsync<GetEntityResponse<T>, T>(res, cancellationToken).ForAwait();
             }
         }
 
-        public virtual Task<EntityResponse<T>> PostAsync<T>(T entity) where T : class
+        public virtual Task<EntityResponse<T>> PostAsync<T>(T entity, CancellationToken cancellationToken = default) where T : class
         {
-            return PostAsync(new PostEntityRequest<T>(entity));
+            return PostAsync(new PostEntityRequest<T>(entity), cancellationToken);
         }
 
-        public virtual async Task<EntityResponse<T>> PostAsync<T>(PostEntityRequest<T> request) where T : class
+        public virtual async Task<EntityResponse<T>> PostAsync<T>(PostEntityRequest<T> request, CancellationToken cancellationToken = default) where T : class
         {
             var httpRequest = PostHttpRequestFactory.Create(request);
 
-            using (var res = await SendAsync(httpRequest).ForAwait())
+            using (var res = await SendAsync(httpRequest, cancellationToken).ForAwait())
             {
-                return await ProcessEntityResponseAsync(request, res).ForAwait();
+                return await ProcessEntityResponseAsync(request, res, cancellationToken).ForAwait();
             }
         }
 
-        public virtual Task<EntityResponse<T>> PutAsync<T>(T entity) where T : class
+        public virtual Task<EntityResponse<T>> PutAsync<T>(T entity, CancellationToken cancellationToken = default) where T : class
         {
-            return PutAsync(new PutEntityRequest<T>(entity));
+            return PutAsync(new PutEntityRequest<T>(entity), cancellationToken);
         }
 
-        public virtual Task<EntityResponse<T>> PutAsync<T>(string id, T entity) where T : class
+        public virtual Task<EntityResponse<T>> PutAsync<T>(string id, T entity, CancellationToken cancellationToken = default) where T : class
         {
-            return PutAsync(new PutEntityRequest<T>(id, entity));
+            return PutAsync(new PutEntityRequest<T>(id, entity), cancellationToken);
         }
 
-        public virtual Task<EntityResponse<T>> PutAsync<T>(string id, string rev, T entity) where T : class
+        public virtual Task<EntityResponse<T>> PutAsync<T>(string id, string rev, T entity, CancellationToken cancellationToken = default) where T : class
         {
-            return PutAsync(new PutEntityRequest<T>(id, rev, entity));
+            return PutAsync(new PutEntityRequest<T>(id, rev, entity), cancellationToken);
         }
 
-        public virtual async Task<EntityResponse<T>> PutAsync<T>(PutEntityRequest<T> request) where T : class
+        public virtual async Task<EntityResponse<T>> PutAsync<T>(PutEntityRequest<T> request, CancellationToken cancellationToken = default) where T : class
         {
             var httpRequest = PutHttpRequestFactory.Create(request);
 
-            using (var res = await SendAsync(httpRequest).ForAwait())
+            using (var res = await SendAsync(httpRequest, cancellationToken).ForAwait())
             {
-                return await ProcessEntityResponseAsync(request, res).ForAwait();
+                return await ProcessEntityResponseAsync(request, res, cancellationToken).ForAwait();
             }
         }
 
-        public virtual Task<EntityResponse<T>> DeleteAsync<T>(T entity) where T : class
+        public virtual Task<EntityResponse<T>> DeleteAsync<T>(T entity, CancellationToken cancellationToken = default) where T : class
         {
-            return DeleteAsync(new DeleteEntityRequest<T>(entity));
+            return DeleteAsync(new DeleteEntityRequest<T>(entity), cancellationToken);
         }
 
-        public virtual async Task<EntityResponse<T>> DeleteAsync<T>(DeleteEntityRequest<T> request) where T : class
+        public virtual async Task<EntityResponse<T>> DeleteAsync<T>(DeleteEntityRequest<T> request, CancellationToken cancellationToken = default) where T : class
         {
             var httpRequest = DeleteHttpRequestFactory.Create(request);
 
-            using (var res = await SendAsync(httpRequest).ForAwait())
+            using (var res = await SendAsync(httpRequest, cancellationToken).ForAwait())
             {
-                return await ProcessEntityResponseAsync(request, res).ForAwait();
+                return await ProcessEntityResponseAsync(request, res, cancellationToken).ForAwait();
             }
         }
 
-        protected virtual async Task<EntityResponse<T>> ProcessEntityResponseAsync<T>(PostEntityRequest<T> request, HttpResponseMessage response) where T : class
+        protected virtual async Task<EntityResponse<T>> ProcessEntityResponseAsync<T>(PostEntityRequest<T> request, HttpResponseMessage response, CancellationToken cancellationToken = default) where T : class
         {
-            var entityResponse = await EntityResponseFactory.CreateAsync<T>(response).ForAwait();
+            var entityResponse = await EntityResponseFactory.CreateAsync<T>(response, cancellationToken).ForAwait();
             entityResponse.Content = request.Entity;
 
             if (entityResponse.IsSuccess)
@@ -122,9 +123,9 @@ namespace MyCouch.Contexts
             return entityResponse;
         }
 
-        protected virtual async Task<EntityResponse<T>> ProcessEntityResponseAsync<T>(PutEntityRequest<T> request, HttpResponseMessage response) where T : class
+        protected virtual async Task<EntityResponse<T>> ProcessEntityResponseAsync<T>(PutEntityRequest<T> request, HttpResponseMessage response, CancellationToken cancellationToken = default) where T : class
         {
-            var entityResponse = await EntityResponseFactory.CreateAsync<T>(response).ForAwait();
+            var entityResponse = await EntityResponseFactory.CreateAsync<T>(response, cancellationToken).ForAwait();
             entityResponse.Content = request.Entity;
 
             if(!string.IsNullOrWhiteSpace(request.ExplicitId))
@@ -136,9 +137,10 @@ namespace MyCouch.Contexts
             return entityResponse;
         }
 
-        protected virtual async Task<EntityResponse<T>> ProcessEntityResponseAsync<T>(DeleteEntityRequest<T> request, HttpResponseMessage response) where T : class
+        protected virtual async Task<EntityResponse<T>> ProcessEntityResponseAsync<T>(DeleteEntityRequest<T> request, HttpResponseMessage response, CancellationToken cancellationToken = default)
+            where T : class
         {
-            var entityResponse = await EntityResponseFactory.CreateAsync<T>(response).ForAwait();
+            var entityResponse = await EntityResponseFactory.CreateAsync<T>(response, cancellationToken).ForAwait();
             entityResponse.Content = request.Entity;
 
             if (entityResponse.IsSuccess)

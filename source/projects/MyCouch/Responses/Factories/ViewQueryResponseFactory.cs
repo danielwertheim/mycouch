@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Extensions;
@@ -20,28 +21,28 @@ namespace MyCouch.Responses.Factories
             FailedResponseMaterializer = new FailedResponseMaterializer(serializer);
         }
 
-        public virtual async Task<ViewQueryResponse> CreateAsync(HttpResponseMessage httpResponse)
+        public virtual async Task<ViewQueryResponse> CreateAsync(HttpResponseMessage httpResponse, CancellationToken cancellationToken = default)
         {
             return await MaterializeAsync<ViewQueryResponse>(
                 httpResponse,
                 SuccessfulResponseMaterializer.MaterializeAsync,
-                FailedResponseMaterializer.MaterializeAsync).ForAwait();
+                FailedResponseMaterializer.MaterializeAsync, cancellationToken).ForAwait();
         }
 
-        public virtual async Task<ViewQueryResponse<TValue>> CreateAsync<TValue>(HttpResponseMessage httpResponse)
+        public virtual async Task<ViewQueryResponse<TValue>> CreateAsync<TValue>(HttpResponseMessage httpResponse, CancellationToken cancellationToken = default)
         {
             return await MaterializeAsync<ViewQueryResponse<TValue>>(
                 httpResponse,
                 SuccessfulResponseMaterializer.MaterializeAsync,
-                FailedResponseMaterializer.MaterializeAsync).ForAwait();
+                FailedResponseMaterializer.MaterializeAsync, cancellationToken).ForAwait();
         }
 
-        public virtual async Task<ViewQueryResponse<TValue, TIncludedDoc>> CreateAsync<TValue, TIncludedDoc>(HttpResponseMessage httpResponse)
+        public virtual async Task<ViewQueryResponse<TValue, TIncludedDoc>> CreateAsync<TValue, TIncludedDoc>(HttpResponseMessage httpResponse, CancellationToken cancellationToken = default)
         {
             return await MaterializeAsync<ViewQueryResponse<TValue, TIncludedDoc>>(
                 httpResponse,
                 SuccessfulResponseMaterializer.MaterializeAsync,
-                FailedResponseMaterializer.MaterializeAsync).ForAwait();
+                FailedResponseMaterializer.MaterializeAsync, cancellationToken).ForAwait();
         }
     }
 }

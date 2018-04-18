@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using MyCouch.EntitySchemes;
 using MyCouch.Extensions;
@@ -18,22 +19,23 @@ namespace MyCouch.Responses.Factories
             FailedResponseMaterializer = new FailedEntityResponseMaterializer(serializer);
         }
 
-        public virtual async Task<EntityResponse<TContent>> CreateAsync<TContent>(HttpResponseMessage httpResponse) where TContent : class
+        public virtual async Task<EntityResponse<TContent>> CreateAsync<TContent>(HttpResponseMessage httpResponse, CancellationToken cancellationToken = default)
+            where TContent : class
         {
             return await MaterializeAsync<EntityResponse<TContent>>(
                 httpResponse,
                 SuccessfulResponseMaterializer.MaterializeAsync,
-                FailedResponseMaterializer.MaterializeAsync).ForAwait();
+                FailedResponseMaterializer.MaterializeAsync, cancellationToken).ForAwait();
         }
 
-        public virtual async Task<TResponse> CreateAsync<TResponse, TContent>(HttpResponseMessage httpResponse)
+        public virtual async Task<TResponse> CreateAsync<TResponse, TContent>(HttpResponseMessage httpResponse, CancellationToken cancellationToken = default)
             where TResponse : EntityResponse<TContent>, new()
             where TContent : class
         {
             return await MaterializeAsync<TResponse>(
                 httpResponse,
                 SuccessfulResponseMaterializer.MaterializeAsync,
-                FailedResponseMaterializer.MaterializeAsync).ForAwait();
+                FailedResponseMaterializer.MaterializeAsync, cancellationToken).ForAwait();
         }
     }
 }

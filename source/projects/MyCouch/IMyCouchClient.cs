@@ -14,7 +14,7 @@ namespace MyCouch
         /// The underlying <see cref="IDbConnection"/> used to communicate with CouchDb.
         /// </summary>
         IDbConnection Connection { get; }
-        
+
         /// <summary>
         /// More or less Vanilla configured serializer.
         /// </summary>
