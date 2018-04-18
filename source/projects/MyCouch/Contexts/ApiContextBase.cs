@@ -17,22 +17,12 @@ namespace MyCouch.Contexts
             Connection = connection;
         }
 
-        protected virtual Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest)
-        {
-            return Connection.SendAsync(httpRequest);
-        }
-
-        protected virtual Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, CancellationToken cancellationToken)
+        protected virtual Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, CancellationToken cancellationToken = default)
         {
             return Connection.SendAsync(httpRequest, cancellationToken);
         }
 
-        protected virtual Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, HttpCompletionOption completionOption)
-        {
-            return Connection.SendAsync(httpRequest, completionOption);
-        }
-
-        protected virtual Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, HttpCompletionOption completionOption, CancellationToken cancellationToken)
+        protected virtual Task<HttpResponseMessage> SendAsync(HttpRequest httpRequest, HttpCompletionOption completionOption, CancellationToken cancellationToken = default)
         {
             return Connection.SendAsync(httpRequest, completionOption, cancellationToken);
         }
