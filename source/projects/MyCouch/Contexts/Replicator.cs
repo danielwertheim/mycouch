@@ -35,7 +35,7 @@ namespace MyCouch.Contexts
 
             using (var res = await SendAsync(httpRequest, cancellationToken).ForAwait())
             {
-                return await ReplicationResponseFactory.CreateAsync(res, cancellationToken).ForAwait();
+                return await ReplicationResponseFactory.CreateAsync(res).ForAwait();
             }
         }
     }

@@ -1,5 +1,4 @@
 ﻿using System.Net.Http;
-using System.Threading;
 using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Extensions;
@@ -20,7 +19,7 @@ namespace MyCouch.Responses.Factories
             FailedResponseMaterializer = new FailedResponseMaterializer(serializer);
         }
 
-        public virtual async Task<DatabaseHeaderResponse> CreateAsync(DatabaseRequest request, HttpResponseMessage httpResponse, CancellationToken cancellationToken = default)
+        public virtual async Task<DatabaseHeaderResponse> CreateAsync(DatabaseRequest request, HttpResponseMessage httpResponse)
         {
             return await MaterializeAsync<DatabaseHeaderResponse>(
                 httpResponse,
@@ -29,7 +28,7 @@ namespace MyCouch.Responses.Factories
                     r1.DbName = request.DbName;
                     return Task.FromResult(true);
                 },
-                FailedResponseMaterializer.MaterializeAsync, cancellationToken).ForAwait();
+                FailedResponseMaterializer.MaterializeAsync).ForAwait();
         }
     }
 }

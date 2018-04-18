@@ -40,7 +40,7 @@ namespace MyCouch.Contexts
 
             using (var httpResponse = await SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ForAwait())
             {
-                return await ChangesResponseFactory.CreateAsync(httpResponse, cancellationToken).ForAwait();
+                return await ChangesResponseFactory.CreateAsync(httpResponse).ForAwait();
             }
         }
 
@@ -50,7 +50,7 @@ namespace MyCouch.Contexts
 
             using (var httpResponse = await SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ForAwait())
             {
-                return await ChangesResponseFactory.CreateAsync<TIncludedDoc>(httpResponse, cancellationToken).ForAwait();
+                return await ChangesResponseFactory.CreateAsync<TIncludedDoc>(httpResponse).ForAwait();
             }
         }
 
@@ -69,7 +69,7 @@ namespace MyCouch.Contexts
 
             using (var httpResponse = await SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ForAwait())
             {
-                var response = await ContinuousChangesResponseFactory.CreateAsync(httpResponse, cancellationToken).ForAwait();
+                var response = await ContinuousChangesResponseFactory.CreateAsync(httpResponse).ForAwait();
                 if (response.IsSuccess)
                 {
                     using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
@@ -99,7 +99,7 @@ namespace MyCouch.Contexts
             {
                 using (var httpResponse = await SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ForAwait())
                 {
-                    var response = await ContinuousChangesResponseFactory.CreateAsync(httpResponse, cancellationToken).ForAwait();
+                    var response = await ContinuousChangesResponseFactory.CreateAsync(httpResponse).ForAwait();
                     if (response.IsSuccess)
                     {
                         using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())

@@ -50,7 +50,7 @@ namespace MyCouch.Contexts
 
             using (var res = await SendAsync(httpRequest, cancellationToken).ForAwait())
             {
-                return await EntityResponseFactory.CreateAsync<GetEntityResponse<T>, T>(res, cancellationToken).ForAwait();
+                return await EntityResponseFactory.CreateAsync<GetEntityResponse<T>, T>(res).ForAwait();
             }
         }
 
@@ -65,7 +65,7 @@ namespace MyCouch.Contexts
 
             using (var res = await SendAsync(httpRequest, cancellationToken).ForAwait())
             {
-                return await ProcessEntityResponseAsync(request, res, cancellationToken).ForAwait();
+                return await ProcessEntityResponseAsync(request, res).ForAwait();
             }
         }
 
@@ -90,7 +90,7 @@ namespace MyCouch.Contexts
 
             using (var res = await SendAsync(httpRequest, cancellationToken).ForAwait())
             {
-                return await ProcessEntityResponseAsync(request, res, cancellationToken).ForAwait();
+                return await ProcessEntityResponseAsync(request, res).ForAwait();
             }
         }
 
@@ -105,13 +105,14 @@ namespace MyCouch.Contexts
 
             using (var res = await SendAsync(httpRequest, cancellationToken).ForAwait())
             {
-                return await ProcessEntityResponseAsync(request, res, cancellationToken).ForAwait();
+                return await ProcessEntityResponseAsync(request, res).ForAwait();
             }
         }
 
-        protected virtual async Task<EntityResponse<T>> ProcessEntityResponseAsync<T>(PostEntityRequest<T> request, HttpResponseMessage response, CancellationToken cancellationToken = default) where T : class
+        protected virtual async Task<EntityResponse<T>> ProcessEntityResponseAsync<T>(PostEntityRequest<T> request, HttpResponseMessage response)
+            where T : class
         {
-            var entityResponse = await EntityResponseFactory.CreateAsync<T>(response, cancellationToken).ForAwait();
+            var entityResponse = await EntityResponseFactory.CreateAsync<T>(response).ForAwait();
             entityResponse.Content = request.Entity;
 
             if (entityResponse.IsSuccess)
@@ -123,9 +124,10 @@ namespace MyCouch.Contexts
             return entityResponse;
         }
 
-        protected virtual async Task<EntityResponse<T>> ProcessEntityResponseAsync<T>(PutEntityRequest<T> request, HttpResponseMessage response, CancellationToken cancellationToken = default) where T : class
+        protected virtual async Task<EntityResponse<T>> ProcessEntityResponseAsync<T>(PutEntityRequest<T> request, HttpResponseMessage response)
+            where T : class
         {
-            var entityResponse = await EntityResponseFactory.CreateAsync<T>(response, cancellationToken).ForAwait();
+            var entityResponse = await EntityResponseFactory.CreateAsync<T>(response).ForAwait();
             entityResponse.Content = request.Entity;
 
             if(!string.IsNullOrWhiteSpace(request.ExplicitId))
@@ -137,10 +139,10 @@ namespace MyCouch.Contexts
             return entityResponse;
         }
 
-        protected virtual async Task<EntityResponse<T>> ProcessEntityResponseAsync<T>(DeleteEntityRequest<T> request, HttpResponseMessage response, CancellationToken cancellationToken = default)
+        protected virtual async Task<EntityResponse<T>> ProcessEntityResponseAsync<T>(DeleteEntityRequest<T> request, HttpResponseMessage response)
             where T : class
         {
-            var entityResponse = await EntityResponseFactory.CreateAsync<T>(response, cancellationToken).ForAwait();
+            var entityResponse = await EntityResponseFactory.CreateAsync<T>(response).ForAwait();
             entityResponse.Content = request.Entity;
 
             if (entityResponse.IsSuccess)

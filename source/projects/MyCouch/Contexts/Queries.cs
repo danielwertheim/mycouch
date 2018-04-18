@@ -44,7 +44,7 @@ namespace MyCouch.Contexts
 
             using (var res = await SendAsync(httpRequest, cancellationToken).ForAwait())
             {
-                return await IndexResponseFactory.CreateAsync(res, cancellationToken).ForAwait();
+                return await IndexResponseFactory.CreateAsync(res).ForAwait();
             }
         }
 
@@ -54,7 +54,7 @@ namespace MyCouch.Contexts
 
             using (var res = await SendAsync(httpRequest, cancellationToken).ForAwait())
             {
-                return await IndexListResponseFactory.CreateAsync(res, cancellationToken).ForAwait();
+                return await IndexListResponseFactory.CreateAsync(res).ForAwait();
             }
         }
 
@@ -66,7 +66,7 @@ namespace MyCouch.Contexts
 
             using (var res = await SendAsync(httpRequest, cancellationToken).ForAwait())
             {
-                return await IndexResponseFactory.CreateAsync(res, cancellationToken).ForAwait();
+                return await IndexResponseFactory.CreateAsync(res).ForAwait();
             }
         }
 
@@ -78,7 +78,7 @@ namespace MyCouch.Contexts
 
             using (var res = await SendAsync(httpRequest, cancellationToken).ForAwait())
             {
-                return await FindResponseFactory.CreateAsync(res, cancellationToken).ForAwait();
+                return await FindResponseFactory.CreateAsync(res).ForAwait();
             }
         }
 
@@ -90,7 +90,7 @@ namespace MyCouch.Contexts
 
             using (var res = await SendAsync(httpRequest, cancellationToken).ForAwait())
             {
-                return await FindResponseFactory.CreateAsync<TIncludedDoc>(res, cancellationToken).ForAwait();
+                return await FindResponseFactory.CreateAsync<TIncludedDoc>(res).ForAwait();
             }
         }
     }

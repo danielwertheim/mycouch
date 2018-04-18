@@ -11,6 +11,7 @@ namespace MyCouch
         /// Gets information about the database.
         /// </summary>
         /// <param name="dbName"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
         Task<GetDatabaseResponse> GetAsync(string dbName, CancellationToken cancellationToken = default);
 

@@ -46,7 +46,7 @@ namespace MyCouch.Contexts
 
             using (var res = await SendAsync(httpRequest, cancellationToken).ForAwait())
             {
-                return await AttachmentResponseFactory.CreateAsync(res, cancellationToken).ForAwait();
+                return await AttachmentResponseFactory.CreateAsync(res).ForAwait();
             }
         }
 
@@ -56,7 +56,7 @@ namespace MyCouch.Contexts
 
             using (var res = await SendAsync(httpRequest, cancellationToken).ForAwait())
             {
-                return await DocumentHeaderResponseFactory.CreateAsync(res, cancellationToken).ForAwait();
+                return await DocumentHeaderResponseFactory.CreateAsync(res).ForAwait();
             }
         }
 
@@ -71,7 +71,7 @@ namespace MyCouch.Contexts
 
             using (var res = await SendAsync(httpRequest, cancellationToken).ForAwait())
             {
-                return await DocumentHeaderResponseFactory.CreateAsync(res, cancellationToken).ForAwait();
+                return await DocumentHeaderResponseFactory.CreateAsync(res).ForAwait();
             }
         }
     }

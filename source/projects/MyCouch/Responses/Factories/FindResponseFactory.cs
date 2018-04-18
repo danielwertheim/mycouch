@@ -2,7 +2,6 @@
 using MyCouch.Responses.Materializers;
 using MyCouch.Serialization;
 using System.Net.Http;
-using System.Threading;
 using System.Threading.Tasks;
 using MyCouch.Extensions;
 
@@ -21,20 +20,20 @@ namespace MyCouch.Responses.Factories
             FailedResponseMaterializer = new FailedResponseMaterializer(serializer);
         }
 
-        public virtual async Task<FindResponse> CreateAsync(HttpResponseMessage httpResponse, CancellationToken cancellationToken = default)
+        public virtual async Task<FindResponse> CreateAsync(HttpResponseMessage httpResponse)
         {
             return await MaterializeAsync<FindResponse>(
                 httpResponse,
                 SuccessfulResponseMaterializer.MaterializeAsync,
-                FailedResponseMaterializer.MaterializeAsync, cancellationToken).ForAwait();
+                FailedResponseMaterializer.MaterializeAsync).ForAwait();
         }
 
-        public virtual async Task<FindResponse<TIncludedDoc>> CreateAsync<TIncludedDoc>(HttpResponseMessage httpResponse, CancellationToken cancellationToken = default)
+        public virtual async Task<FindResponse<TIncludedDoc>> CreateAsync<TIncludedDoc>(HttpResponseMessage httpResponse)
         {
             return await MaterializeAsync<FindResponse<TIncludedDoc>>(
                 httpResponse,
                 SuccessfulResponseMaterializer.MaterializeAsync,
-                FailedResponseMaterializer.MaterializeAsync, cancellationToken).ForAwait();
+                FailedResponseMaterializer.MaterializeAsync).ForAwait();
         }
     }
 }

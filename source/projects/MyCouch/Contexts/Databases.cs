@@ -48,7 +48,7 @@ namespace MyCouch.Contexts
             var httpRequest = GetHttpRequestFactory.Create(request);
 
             using (var httpResponse = await SendAsync(httpRequest, cancellationToken).ForAwait())
-                return await GetDatabaseResponseFactory.CreateAsync(httpResponse, cancellationToken).ForAwait();
+                return await GetDatabaseResponseFactory.CreateAsync(httpResponse).ForAwait();
         }
 
         public virtual Task<DatabaseHeaderResponse> HeadAsync(string dbName, CancellationToken cancellationToken = default)
@@ -61,7 +61,7 @@ namespace MyCouch.Contexts
             var httpRequest = HeadHttpRequestFactory.Create(request);
 
             using (var httpResponse = await SendAsync(httpRequest, cancellationToken).ForAwait())
-                return await DatabaseHeaderResponseFactory.CreateAsync(request, httpResponse, cancellationToken).ForAwait();
+                return await DatabaseHeaderResponseFactory.CreateAsync(request, httpResponse).ForAwait();
         }
 
         public virtual Task<DatabaseHeaderResponse> PutAsync(string dbName, CancellationToken cancellationToken = default)
@@ -74,7 +74,7 @@ namespace MyCouch.Contexts
             var httpRequest = PutHttpRequestFactory.Create(request);
 
             using (var httpResponse = await SendAsync(httpRequest, cancellationToken).ForAwait())
-                return await DatabaseHeaderResponseFactory.CreateAsync(request, httpResponse, cancellationToken).ForAwait();
+                return await DatabaseHeaderResponseFactory.CreateAsync(request, httpResponse).ForAwait();
         }
 
         public virtual Task<DatabaseHeaderResponse> DeleteAsync(string dbName, CancellationToken cancellationToken = default)
@@ -87,7 +87,7 @@ namespace MyCouch.Contexts
             var httpRequest = DeleteHttpRequestFactory.Create(request);
 
             using (var httpResponse = await SendAsync(httpRequest, cancellationToken).ForAwait())
-                return await DatabaseHeaderResponseFactory.CreateAsync(request, httpResponse, cancellationToken).ForAwait();
+                return await DatabaseHeaderResponseFactory.CreateAsync(request, httpResponse).ForAwait();
         }
 
         public virtual Task<DatabaseHeaderResponse> CompactAsync(string dbName, CancellationToken cancellationToken = default)
@@ -100,7 +100,7 @@ namespace MyCouch.Contexts
             var httpRequest = CompactHttpRequestFactory.Create(request);
 
             using (var httpResponse = await SendAsync(httpRequest, cancellationToken).ForAwait())
-                return await DatabaseHeaderResponseFactory.CreateAsync(request, httpResponse, cancellationToken).ForAwait();
+                return await DatabaseHeaderResponseFactory.CreateAsync(request, httpResponse).ForAwait();
         }
 
         public virtual Task<DatabaseHeaderResponse> ViewCleanupAsync(string dbName, CancellationToken cancellationToken = default)
@@ -113,7 +113,7 @@ namespace MyCouch.Contexts
             var httpRequest = ViewCleanupHttpRequestFactory.Create(request);
 
             using (var httpResponse = await SendAsync(httpRequest, cancellationToken).ForAwait())
-                return await DatabaseHeaderResponseFactory.CreateAsync(request, httpResponse, cancellationToken).ForAwait();
+                return await DatabaseHeaderResponseFactory.CreateAsync(request, httpResponse).ForAwait();
         }
     }
 }
