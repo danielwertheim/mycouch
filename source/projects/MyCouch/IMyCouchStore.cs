@@ -191,6 +191,7 @@ namespace MyCouch
         /// </summary>
         /// <param name="id"></param>
         /// <param name="rev"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
         Task<bool> ExistsAsync(string id, string rev = null, CancellationToken cancellationToken = default);
 
@@ -281,6 +282,7 @@ namespace MyCouch
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="ids"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
         Task<IEnumerable<T>> GetByIdsAsync<T>(params string[] ids) where T : class;
 

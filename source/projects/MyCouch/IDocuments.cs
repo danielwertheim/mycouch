@@ -34,7 +34,7 @@ namespace MyCouch
         /// <summary>
         /// Copies the document having a document id matching <paramref name="srcId"/> to a new document
         /// with a new id being <paramref name="newId"/>.
-        /// For more options use <see cref="CopyAsync(CopyDocumentRequest)"/> instead.
+        /// For more options use <see cref="CopyAsync(CopyDocumentRequest, CancellationToken)"/> instead.
         /// </summary>
         /// <param name="srcId"></param>
         /// <param name="newId"></param>
@@ -45,7 +45,7 @@ namespace MyCouch
         /// <summary>
         /// Copies the document having a document id matching <paramref name="srcId"/> and rev matching <paramref name="srcRev"/>
         /// to a new document with a new id being <paramref name="newId"/>.
-        /// For more options use <see cref="CopyAsync(CopyDocumentRequest)"/> instead.
+        /// For more options use <see cref="CopyAsync(CopyDocumentRequest, CancellationToken)"/> instead.
         /// </summary>
         /// <param name="srcId"></param>
         /// <param name="srcRev"></param>
@@ -125,6 +125,7 @@ namespace MyCouch
         /// Optional. Lets you specify a specific document revision.
         /// If not specified, you will get the latest document.
         /// </param>
+        /// <param name="cancellationToken"></param>
         /// <returns>Untyped response with JSON.</returns>
         Task<DocumentResponse> GetAsync(string id, string rev = null, CancellationToken cancellationToken = default);
 

@@ -35,6 +35,7 @@ namespace MyCouch
         /// Optional. Lets you specify a specific document revision.
         /// If not specified, you will get the latest document.
         /// </param>
+        /// <param name="cancellationToken"></param>
         /// <returns>
         /// Typed entity-response (<see cref="EntityResponse{T}"/> of <typeparamref name="T"/>)
         /// representation of the document
