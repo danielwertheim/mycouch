@@ -175,13 +175,6 @@ namespace MyCouch
         /// Issues a bulk delete of passed <see cref="DocumentHeader"/> in <paramref name="documents"/>.
         /// </summary>
         /// <param name="documents"></param>
-        /// <returns></returns>
-        Task<DeleteManyResult> DeleteManyAsync(params DocumentHeader[] documents);
-
-        /// <summary>
-        /// Issues a bulk delete of passed <see cref="DocumentHeader"/> in <paramref name="documents"/>.
-        /// </summary>
-        /// <param name="documents"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         Task<DeleteManyResult> DeleteManyAsync(DocumentHeader[] documents, CancellationToken cancellationToken = default);
@@ -266,13 +259,6 @@ namespace MyCouch
         /// Returns documents matching sent <paramref name="ids"/>.
         /// </summary>
         /// <param name="ids"></param>
-        /// <returns></returns>
-        Task<IEnumerable<string>> GetByIdsAsync(params string[] ids);
-
-        /// <summary>
-        /// Returns documents matching sent <paramref name="ids"/>.
-        /// </summary>
-        /// <param name="ids"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         Task<IEnumerable<string>> GetByIdsAsync(string[] ids, CancellationToken cancellationToken = default);
@@ -284,35 +270,86 @@ namespace MyCouch
         /// <param name="ids"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<IEnumerable<T>> GetByIdsAsync<T>(params string[] ids) where T : class;
-
-        /// <summary>
-        /// Returns entities matching sent <paramref name="ids"/>.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="ids"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
         Task<IEnumerable<T>> GetByIdsAsync<T>(string[] ids, CancellationToken cancellationToken = default) where T : class;
 
+        /// <summary>
+        /// Gets JSON by keys using callback.
+        /// </summary>
+        /// <param name="view"></param>
+        /// <param name="keys"></param>
+        /// <param name="onResult"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         Task<QueryInfo> GetValueByKeysAsync(ViewIdentity view, object[] keys, Action<string> onResult, CancellationToken cancellationToken = default);
 
+        /// <summary>
+        /// Gets values by keys deserialized as <typeparamref name="T"/> using callback.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="view"></param>
+        /// <param name="keys"></param>
+        /// <param name="onResult"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         Task<QueryInfo> GetValueByKeysAsync<T>(ViewIdentity view, object[] keys, Action<T> onResult, CancellationToken cancellationToken = default) where T : class;
 
-        Task<IEnumerable<string>> GetValueByKeysAsync(ViewIdentity view, params object[] keys);
+        /// <summary>
+        /// Gets JSON by keys.
+        /// </summary>
+        /// <param name="view"></param>
+        /// <param name="keys"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         Task<IEnumerable<string>> GetValueByKeysAsync(ViewIdentity view, object[] keys, CancellationToken cancellationToken = default);
 
-        Task<IEnumerable<T>> GetValueByKeysAsync<T>(ViewIdentity view, params object[] keys) where T : class;
+        /// <summary>
+        /// Gets values by keys deserialized as <typeparamref name="T"/>.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="view"></param>
+        /// <param name="keys"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         Task<IEnumerable<T>> GetValueByKeysAsync<T>(ViewIdentity view, object[] keys, CancellationToken cancellationToken = default) where T : class;
 
+        /// <summary>
+        /// Gets included docs by keys as JSON using callback.
+        /// </summary>
+        /// <param name="view"></param>
+        /// <param name="keys"></param>
+        /// <param name="onResult"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         Task<QueryInfo> GetIncludedDocByKeysAsync(ViewIdentity view, object[] keys, Action<string> onResult, CancellationToken cancellationToken = default);
 
-        Task<QueryInfo> GetIncludedDocByKeysAsync<TValue>(ViewIdentity view, object[] keys, Action<TValue> onResult, CancellationToken cancellationToken = default) where TValue : class;
+        /// <summary>
+        /// Gets included docs by keys deserialized as <typeparamref name="TIncludedDoc"/> using callback.
+        /// </summary>
+        /// <typeparam name="TIncludedDoc"></typeparam>
+        /// <param name="view"></param>
+        /// <param name="keys"></param>
+        /// <param name="onResult"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<QueryInfo> GetIncludedDocByKeysAsync<TIncludedDoc>(ViewIdentity view, object[] keys, Action<TIncludedDoc> onResult, CancellationToken cancellationToken = default) where TIncludedDoc : class;
 
-        Task<IEnumerable<string>> GetIncludedDocByKeysAsync(ViewIdentity view, params object[] keys);
+        /// <summary>
+        /// Gets included docs by keys as JSON.
+        /// </summary>
+        /// <param name="view"></param>
+        /// <param name="keys"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         Task<IEnumerable<string>> GetIncludedDocByKeysAsync(ViewIdentity view, object[] keys, CancellationToken cancellationToken = default);
 
-        Task<IEnumerable<TIncludedDoc>> GetIncludedDocByKeysAsync<TIncludedDoc>(ViewIdentity view, params object[] keys) where TIncludedDoc : class;
+        /// <summary>
+        /// Gets included docs by keys deserialized as <typeparamref name="TIncludedDoc"/>.
+        /// </summary>
+        /// <typeparam name="TIncludedDoc"></typeparam>
+        /// <param name="view"></param>
+        /// <param name="keys"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         Task<IEnumerable<TIncludedDoc>> GetIncludedDocByKeysAsync<TIncludedDoc>(ViewIdentity view, object[] keys, CancellationToken cancellationToken = default) where TIncludedDoc : class;
 
         Task<IEnumerable<Row>> QueryAsync(Query query, CancellationToken cancellationToken = default);

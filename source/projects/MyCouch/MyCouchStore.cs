@@ -260,11 +260,6 @@ namespace MyCouch
             return true;
         }
 
-        public virtual Task<DeleteManyResult> DeleteManyAsync(params DocumentHeader[] documents)
-        {
-            return DeleteManyAsync(documents, CancellationToken.None);
-        }
-
         public virtual async Task<DeleteManyResult> DeleteManyAsync(DocumentHeader[] documents, CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
@@ -414,19 +409,9 @@ namespace MyCouch
             return CreateQueryInfoFrom(response, cancellationToken);
         }
 
-        public virtual Task<IEnumerable<string>> GetByIdsAsync(params string[] ids)
-        {
-            return GetByIdsAsync<string>(ids, CancellationToken.None);
-        }
-
         public Task<IEnumerable<string>> GetByIdsAsync(string[] ids, CancellationToken cancellationToken = default)
         {
             return GetByIdsAsync<string>(ids, cancellationToken);
-        }
-
-        public virtual Task<IEnumerable<T>> GetByIdsAsync<T>(params string[] ids) where T : class
-        {
-            return GetByIdsAsync<T>(ids, CancellationToken.None);
         }
 
         public virtual async Task<IEnumerable<T>> GetByIdsAsync<T>(string[] ids, CancellationToken cancellationToken = default) where T : class
@@ -476,20 +461,9 @@ namespace MyCouch
             return CreateQueryInfoFrom(response, cancellationToken);
         }
 
-        public virtual Task<IEnumerable<string>> GetValueByKeysAsync(ViewIdentity view, params object[] keys)
-        {
-            return GetValueByKeysAsync<string>(view, keys);
-        }
-
         public virtual Task<IEnumerable<string>> GetValueByKeysAsync(ViewIdentity view, object[] keys, CancellationToken cancellationToken = default)
         {
             return GetValueByKeysAsync<string>(view, keys, cancellationToken);
-        }
-
-        public virtual Task<IEnumerable<TValue>> GetValueByKeysAsync<TValue>(ViewIdentity view, params object[] keys)
-            where TValue : class
-        {
-            return GetValueByKeysAsync<TValue>(view, keys, CancellationToken.None);
         }
 
         public virtual async Task<IEnumerable<TValue>> GetValueByKeysAsync<TValue>(ViewIdentity view, object[] keys, CancellationToken cancellationToken = default)
@@ -534,20 +508,9 @@ namespace MyCouch
             return CreateQueryInfoFrom(response, cancellationToken);
         }
 
-        public virtual Task<IEnumerable<string>> GetIncludedDocByKeysAsync(ViewIdentity view, params object[] keys)
-        {
-            return GetIncludedDocByKeysAsync<string>(view, keys);
-        }
-
         public virtual Task<IEnumerable<string>> GetIncludedDocByKeysAsync(ViewIdentity view, object[] keys, CancellationToken cancellationToken = default)
         {
             return GetIncludedDocByKeysAsync<string>(view, keys, cancellationToken);
-        }
-
-        public virtual Task<IEnumerable<TIncludedDoc>> GetIncludedDocByKeysAsync<TIncludedDoc>(ViewIdentity view, params object[] keys)
-            where TIncludedDoc : class
-        {
-            return GetIncludedDocByKeysAsync<TIncludedDoc>(view, keys, CancellationToken.None);
         }
 
         public virtual async Task<IEnumerable<TIncludedDoc>> GetIncludedDocByKeysAsync<TIncludedDoc>(ViewIdentity view, object[] keys, CancellationToken cancellationToken = default)
@@ -666,9 +629,13 @@ namespace MyCouch
             throw new MyCouchResponseException(response);
         }
 
+        // ReSharper disable once ClassNeverInstantiated.Local
         private class AllDocsValue
         {
+            // ReSharper disable once UnusedAutoPropertyAccessor.Local
             public string Rev { get; set; }
+
+            // ReSharper disable once UnusedAutoPropertyAccessor.Local
             public bool Deleted { get; set; }
         }
     }
