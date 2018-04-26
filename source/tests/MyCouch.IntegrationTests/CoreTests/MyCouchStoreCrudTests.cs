@@ -166,7 +166,7 @@ namespace MyCouch.IntegrationTests.CoreTests
         {
             var stored = SUT.StoreAsync(ClientTestData.Artists.Artist1).Result;
 
-            var deleted = SUT.DeleteAsync(new Artist { ArtistId = stored.ArtistId }, true).Result;
+            var deleted = SUT.DeleteAsync(new Artist { ArtistId = stored.ArtistId }).Result;
             var exists = SUT.ExistsAsync(stored.ArtistId).Result;
 
             exists.Should().BeFalse();

@@ -233,14 +233,15 @@ namespace MyCouch
             return true;
         }
 
-        public virtual async Task<bool> DeleteAsync<TEntity>(TEntity entity, bool lookupRev = false, CancellationToken cancellationToken = default)
+        public virtual async Task<bool> DeleteAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default)
             where TEntity : class
         {
             ThrowIfDisposed();
 
             EnsureArg.IsNotNull(entity, nameof(entity));
 
-            if (lookupRev)
+            var rev = Client.Entities.Reflector.RevMember.GetValueFrom(entity);
+            if (string.IsNullOrWhiteSpace(rev))
             {
                 var id = Client.Entities.Reflector.IdMember.GetValueFrom(entity);
                 var head = await GetHeaderAsync(id, null, cancellationToken).ForAwait();
@@ -263,7 +264,6 @@ namespace MyCouch
         {
             return DeleteManyAsync(documents, CancellationToken.None);
         }
-
 
         public virtual async Task<DeleteManyResult> DeleteManyAsync(DocumentHeader[] documents, CancellationToken cancellationToken = default)
         {

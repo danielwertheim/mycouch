@@ -163,20 +163,13 @@ namespace MyCouch
 
         /// <summary>
         /// Deletes a document by extracting id and rev from sent entity.
+        /// If rev is not assigned, it will be lookedup using a HEAD request.
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
         /// <param name="entity"></param>
-        /// <param name="lookupRev">
-        /// If true (default is false), an additional HEAD-request is performed
-        /// to lookup the last known rev.</param>
         /// <param name="cancellationToken"></param>
-        /// <remarks>
-        /// If you know the current revision, ensure it is assigned in the entity
-        /// and use false for <paramref name="lookupRev"/>,
-        /// that will save you from an additional HEAD-request.
-        /// </remarks>
         /// <returns></returns>
-        Task<bool> DeleteAsync<TEntity>(TEntity entity, bool lookupRev = false, CancellationToken cancellationToken = default) where TEntity : class;
+        Task<bool> DeleteAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : class;
 
         /// <summary>
         /// Issues a bulk delete of passed <see cref="DocumentHeader"/> in <paramref name="documents"/>.
