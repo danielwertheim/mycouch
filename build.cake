@@ -2,12 +2,12 @@
 
 var config = BuildConfig.Create(Context, BuildSystem);
 
-Information("SrcDir: " + config.SrcDir);
-Information("OutDir: " + config.OutDir);
-Information("SemVer: " + config.SemVer);
-Information("BuildVersion: " + config.BuildVersion);
-Information("BuildProfile: " + config.BuildProfile);
-Information("IsTeamCityBuild: " + config.IsTeamCityBuild);
+Information($"SrcDir: '{config.SrcDir}'");
+Information($"OutDir: '{config.OutDir}'");
+Information($"SemVer: '{config.SemVer}'");
+Information($"BuildVersion: '{config.BuildVersion}'");
+Information($"BuildProfile: '{config.BuildProfile}'");
+Information($"IsTeamCityBuild: '{config.IsTeamCityBuild}'");
 
 Task("Default")
     .IsDependentOn("InitOutDir")
@@ -16,7 +16,7 @@ Task("Default")
     .IsDependentOn("UnitTests");
 
 Task("CI")
-    .IsDependentOn("Default")    
+    .IsDependentOn("Default")
     .IsDependentOn("IntegrationTests")
     .IsDependentOn("Pack");
 /********************************************/
@@ -26,19 +26,20 @@ Task("InitOutDir").Does(() => {
 });
 
 Task("Restore").Does(() => {
-    foreach(var sln in GetFiles(config.SrcDir + "*.sln")) {
-        DotNetBuild(sln, settings =>
+    foreach(var sln in GetFiles($"{config.SrcDir}*.sln")) {
+        MSBuild(sln, settings =>
             settings
                 .SetConfiguration(config.BuildProfile)
                 .SetVerbosity(Verbosity.Minimal)
                 .WithTarget("Restore")
-                .WithProperty("TreatWarningsAsErrors", "true"));
+                .WithProperty("TreatWarningsAsErrors", "true")
+                .WithProperty("Version", config.SemVer));
     }
 });
 
 Task("Build").Does(() => {
-    foreach(var sln in GetFiles(config.SrcDir + "*.sln")) {
-        DotNetBuild(sln, settings =>
+    foreach(var sln in GetFiles($"{config.SrcDir}*.sln")) {
+        MSBuild(sln, settings =>
             settings
                 .SetConfiguration(config.BuildProfile)
                 .SetVerbosity(Verbosity.Minimal)
@@ -56,7 +57,7 @@ Task("UnitTests").Does(() => {
         Configuration = config.BuildProfile,
         NoBuild = true
     };
-    foreach(var testProj in GetFiles(config.SrcDir + "tests/**/*.UnitTests.csproj")) {
+    foreach(var testProj in GetFiles($"{config.SrcDir}tests/**/*.UnitTests.csproj")) {
         DotNetCoreTest(testProj.FullPath, settings);
     }
 });
@@ -66,16 +67,16 @@ Task("IntegrationTests").Does(() => {
         Configuration = config.BuildProfile,
         NoBuild = true
     };
-    foreach(var testProj in GetFiles(config.SrcDir + "tests/**/*.IntegrationTests.csproj")) {
+    foreach(var testProj in GetFiles($"{config.SrcDir}tests/**/*.IntegrationTests.csproj")) {
         DotNetCoreTest(testProj.FullPath, settings);
     }
 });
 
 Task("Pack").Does(() => {
-    DeleteFiles(config.SrcDir + "projects/**/*.nupkg");
+    DeleteFiles($"{config.SrcDir}projects/**/*.nupkg");
 
-    foreach(var sln in GetFiles(config.SrcDir + "projects/**/*.csproj")) {
-        DotNetBuild(sln, settings =>
+    foreach(var proj in GetFiles($"{config.SrcDir}projects/**/*.csproj")) {
+        MSBuild(proj, settings =>
             settings
                 .SetConfiguration(config.BuildProfile)
                 .SetVerbosity(Verbosity.Minimal)
@@ -87,8 +88,17 @@ Task("Pack").Does(() => {
     }
 
     CopyFiles(
-        GetFiles(config.SrcDir + "projects/**/*.nupkg"),
+        GetFiles($"{config.SrcDir}projects/**/*.nupkg"),
         config.OutDir);
+});
+
+Task("Upload").Does(() => {
+    foreach(var nupkg in GetFiles($"{config.OutDir}*.nupkg")) {
+        NuGetPush(nupkg, new NuGetPushSettings {
+            Source = config.NuGetSource,
+            ApiKey = config.NuGetApiKey
+        });
+    }
 });
 
 RunTarget(config.Target);

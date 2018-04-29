@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using MyCouch.EntitySchemes;
 using MyCouch.Requests;
 using MyCouch.Responses;
@@ -34,11 +35,12 @@ namespace MyCouch
         /// Optional. Lets you specify a specific document revision.
         /// If not specified, you will get the latest document.
         /// </param>
+        /// <param name="cancellationToken"></param>
         /// <returns>
         /// Typed entity-response (<see cref="EntityResponse{T}"/> of <typeparamref name="T"/>)
         /// representation of the document
         /// </returns>
-        Task<GetEntityResponse<T>> GetAsync<T>(string id, string rev = null) where T : class;
+        Task<GetEntityResponse<T>> GetAsync<T>(string id, string rev = null, CancellationToken cancellationToken = default) where T : class;
 
         /// <summary>
         /// Gets typed entity-response (<see cref="EntityResponse{T}"/> of <typeparamref name="T"/>)
@@ -46,8 +48,9 @@ namespace MyCouch
         /// </summary>
         /// <typeparam name="T">The type you want the document deserialized as.</typeparam>
         /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<GetEntityResponse<T>> GetAsync<T>(GetEntityRequest request) where T : class;
+        Task<GetEntityResponse<T>> GetAsync<T>(GetEntityRequest request, CancellationToken cancellationToken = default) where T : class;
 
         /// <summary>
         /// Inserts sent entity. The resulting JSON that is inserted will have some additional
@@ -55,8 +58,9 @@ namespace MyCouch
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="entity"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<EntityResponse<T>> PostAsync<T>(T entity) where T : class;
+        Task<EntityResponse<T>> PostAsync<T>(T entity, CancellationToken cancellationToken = default) where T : class;
 
         /// <summary>
         /// Inserts sent entity. The resulting JSON that is inserted will have some additional
@@ -64,8 +68,9 @@ namespace MyCouch
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<EntityResponse<T>> PostAsync<T>(PostEntityRequest<T> request) where T : class;
+        Task<EntityResponse<T>> PostAsync<T>(PostEntityRequest<T> request, CancellationToken cancellationToken = default) where T : class;
 
         /// <summary>
         /// Inserts (if no _rev is defined) or Updates (if _rev is defined) sent entity and returns it in the response, and if successful, then with an
@@ -73,8 +78,9 @@ namespace MyCouch
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="entity"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<EntityResponse<T>> PutAsync<T>(T entity) where T : class;
+        Task<EntityResponse<T>> PutAsync<T>(T entity, CancellationToken cancellationToken = default) where T : class;
 
         /// <summary>
         /// Inserts (if no _rev is defined) or Updates (if _rev is defined) sent entity and returns it in the response, and if successful, then with an
@@ -83,8 +89,9 @@ namespace MyCouch
         /// <typeparam name="T"></typeparam>
         /// <param name="id">Used as explicit id instead of extracting it from the entity.</param>
         /// <param name="entity"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<EntityResponse<T>> PutAsync<T>(string id, T entity) where T : class;
+        Task<EntityResponse<T>> PutAsync<T>(string id, T entity, CancellationToken cancellationToken = default) where T : class;
 
         /// <summary>
         /// Inserts (if no _rev is defined) or Updates (if _rev is defined) sent entity and returns it in the response, and if successful, then with an
@@ -94,8 +101,9 @@ namespace MyCouch
         /// <param name="id">Used as explicit id instead of extracting it from the entity.</param>
         /// <param name="rev">Used as explicit rev instead of extracting it from the entity.</param>
         /// <param name="entity"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<EntityResponse<T>> PutAsync<T>(string id, string rev, T entity) where T : class;
+        Task<EntityResponse<T>> PutAsync<T>(string id, string rev, T entity, CancellationToken cancellationToken = default) where T : class;
 
         /// <summary>
         /// Inserts or Updates sent entity and returns it in the response, and if successful, then with an
@@ -103,15 +111,17 @@ namespace MyCouch
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<EntityResponse<T>> PutAsync<T>(PutEntityRequest<T> request) where T : class;
+        Task<EntityResponse<T>> PutAsync<T>(PutEntityRequest<T> request, CancellationToken cancellationToken = default) where T : class;
 
         /// <summary>
         /// Deletes the document that matches the values of the document _id and _rev extracted from <paramref name="entity"/>.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="entity"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<EntityResponse<T>> DeleteAsync<T>(T entity) where T : class;
+        Task<EntityResponse<T>> DeleteAsync<T>(T entity, CancellationToken cancellationToken = default) where T : class;
     }
 }

@@ -115,7 +115,7 @@
 //            var orgDoc = Animals.Single(a => a.AnimalId == response.Rows[0].Id);
 //            var returnedDoc = response.Rows[0].IncludedDoc;
 
-//            returnedDoc.ShouldBeEquivalentTo(orgDoc);
+//            returnedDoc.Should().BeEquivalentTo(orgDoc);
 //        }
 
 //        [MyFact(TestScenarios.SearchesContext)]

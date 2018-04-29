@@ -40,7 +40,7 @@ namespace MyCouch.IntegrationTests.CoreTests
                     .Select(a => new DocumentHeader(a.ArtistId, a.ArtistRev))
                     .ToList();
 
-                headers.ShouldBeEquivalentTo(expectedArtistHeaders);
+                headers.Should().BeEquivalentTo(expectedArtistHeaders);
             }).Wait();
         }
 
@@ -56,7 +56,7 @@ namespace MyCouch.IntegrationTests.CoreTests
                 .Where(a => a != ArtistBeingDeleted)
                 .Select(a => new DocumentHeader(a.ArtistId, a.ArtistRev))
                 .ToList();
-            headers.ShouldBeEquivalentTo(expectedArtistHeaders);
+            headers.Should().BeEquivalentTo(expectedArtistHeaders);
         }
 
         [MyFact(TestScenarios.MyCouchStore)]
@@ -74,7 +74,7 @@ namespace MyCouch.IntegrationTests.CoreTests
                     .Where(a => a != ArtistBeingDeleted)
                     .ToList();
 
-                matches.ShouldBeEquivalentTo(expectedArtists);
+                matches.Should().BeEquivalentTo(expectedArtists);
             }).Wait();
         }
 
@@ -89,7 +89,7 @@ namespace MyCouch.IntegrationTests.CoreTests
             var expectedArtists = artists
                 .Where(a => a != ArtistBeingDeleted)
                 .ToList();
-            matches.ShouldBeEquivalentTo(expectedArtists);
+            matches.Should().BeEquivalentTo(expectedArtists);
         }
     }
 }

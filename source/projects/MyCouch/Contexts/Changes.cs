@@ -34,27 +34,27 @@ namespace MyCouch.Contexts
             ObservableWorkTaskFactoryResolver = () => Task.Factory;
         }
 
-        public virtual async Task<ChangesResponse> GetAsync(GetChangesRequest request)
+        public virtual async Task<ChangesResponse> GetAsync(GetChangesRequest request, CancellationToken cancellationToken = default)
         {
             var httpRequest = HttpRequestFactory.Create(request);
 
-            using (var httpResponse = await SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead).ForAwait())
+            using (var httpResponse = await SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ForAwait())
             {
                 return await ChangesResponseFactory.CreateAsync(httpResponse).ForAwait();
             }
         }
 
-        public virtual async Task<ChangesResponse<TIncludedDoc>> GetAsync<TIncludedDoc>(GetChangesRequest request)
+        public virtual async Task<ChangesResponse<TIncludedDoc>> GetAsync<TIncludedDoc>(GetChangesRequest request, CancellationToken cancellationToken = default)
         {
             var httpRequest = HttpRequestFactory.Create(request);
 
-            using (var httpResponse = await SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead).ForAwait())
+            using (var httpResponse = await SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ForAwait())
             {
                 return await ChangesResponseFactory.CreateAsync<TIncludedDoc>(httpResponse).ForAwait();
             }
         }
 
-        public virtual Task<ContinuousChangesResponse> GetAsync(GetChangesRequest request, Action<string> onRead, CancellationToken cancellationToken)
+        public virtual Task<ContinuousChangesResponse> GetAsync(GetChangesRequest request, Action<string> onRead, CancellationToken cancellationToken = default)
         {
             return GetAsync(request, data =>
             {
@@ -63,7 +63,7 @@ namespace MyCouch.Contexts
             }, cancellationToken);
         }
 
-        public virtual async Task<ContinuousChangesResponse> GetAsync(GetChangesRequest request, Func<string,Task> onRead, CancellationToken cancellationToken)
+        public virtual async Task<ContinuousChangesResponse> GetAsync(GetChangesRequest request, Func<string,Task> onRead, CancellationToken cancellationToken = default)
         {
             var httpRequest = ContinuousHttpRequestFactory.Create(request);
 
@@ -89,7 +89,7 @@ namespace MyCouch.Contexts
             }
         }
 
-        public virtual IObservable<string> ObserveContinuous(GetChangesRequest request, CancellationToken cancellationToken)
+        public virtual IObservable<string> ObserveContinuous(GetChangesRequest request, CancellationToken cancellationToken = default)
         {
             var httpRequest = ContinuousHttpRequestFactory.Create(request);
 

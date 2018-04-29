@@ -18,7 +18,8 @@ namespace MyCouch.Responses.Factories
             FailedResponseMaterializer = new FailedEntityResponseMaterializer(serializer);
         }
 
-        public virtual async Task<EntityResponse<TContent>> CreateAsync<TContent>(HttpResponseMessage httpResponse) where TContent : class
+        public virtual async Task<EntityResponse<TContent>> CreateAsync<TContent>(HttpResponseMessage httpResponse)
+            where TContent : class
         {
             return await MaterializeAsync<EntityResponse<TContent>>(
                 httpResponse,

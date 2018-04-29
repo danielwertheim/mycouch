@@ -20,7 +20,7 @@ namespace MyCouch
         /// </summary>
         string Name { get; set; }
         /// <summary>
-        /// Index fields 
+        /// Index fields
         /// </summary>
         IList<SortableField> Fields { get; set; }
     }

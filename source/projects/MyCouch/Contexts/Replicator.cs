@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 using EnsureThat;
 using MyCouch.Extensions;
@@ -23,16 +24,16 @@ namespace MyCouch.Contexts
             ReplicateDatabaseHttpRequestFactory = new ReplicateDatabaseServerHttpRequestFactory(serializer);
         }
 
-        public virtual Task<ReplicationResponse> ReplicateAsync(string id, string source, string target)
+        public virtual Task<ReplicationResponse> ReplicateAsync(string id, string source, string target, CancellationToken cancellationToken = default)
         {
-            return ReplicateAsync(new ReplicateDatabaseRequest(id, source, target));
+            return ReplicateAsync(new ReplicateDatabaseRequest(id, source, target), cancellationToken);
         }
 
-        public virtual async Task<ReplicationResponse> ReplicateAsync(ReplicateDatabaseRequest request)
+        public virtual async Task<ReplicationResponse> ReplicateAsync(ReplicateDatabaseRequest request, CancellationToken cancellationToken = default)
         {
             var httpRequest = ReplicateDatabaseHttpRequestFactory.Create(request);
 
-            using (var res = await SendAsync(httpRequest).ForAwait())
+            using (var res = await SendAsync(httpRequest, cancellationToken).ForAwait())
             {
                 return await ReplicationResponseFactory.CreateAsync(res).ForAwait();
             }

@@ -166,7 +166,7 @@ namespace MyCouch.IntegrationTests.CoreTests
         {
             var stored = SUT.StoreAsync(ClientTestData.Artists.Artist1).Result;
 
-            var deleted = SUT.DeleteAsync(new Artist { ArtistId = stored.ArtistId }, true).Result;
+            var deleted = SUT.DeleteAsync(new Artist { ArtistId = stored.ArtistId }).Result;
             var exists = SUT.ExistsAsync(stored.ArtistId).Result;
 
             exists.Should().BeFalse();
@@ -180,9 +180,9 @@ namespace MyCouch.IntegrationTests.CoreTests
             var stored2 = SUT.StoreAsync(ClientTestData.Artists.Artist2).Result;
             var stored3 = SUT.StoreAsync(ClientTestData.Artists.Artist3).Result;
 
-            var result = SUT.DeleteManyAsync(
+            var result = SUT.DeleteManyAsync(new[]{
                 new DocumentHeader(stored2.ArtistId, stored2.ArtistRev),
-                new DocumentHeader(stored3.ArtistId, stored3.ArtistRev)).Result;
+                new DocumentHeader(stored3.ArtistId, stored3.ArtistRev)}).Result;
 
             SUT.ExistsAsync(stored1.ArtistId).Result.Should().BeTrue();
             SUT.ExistsAsync(stored2.ArtistId).Result.Should().BeFalse();
@@ -202,9 +202,9 @@ namespace MyCouch.IntegrationTests.CoreTests
             var stored2 = SUT.StoreAsync(ClientTestData.Artists.Artist2).Result;
             var stored3 = SUT.StoreAsync(ClientTestData.Artists.Artist3).Result;
 
-            var result = SUT.DeleteManyAsync(
+            var result = SUT.DeleteManyAsync(new[]{
                 new DocumentHeader(stored2.ArtistId, stored3.ArtistRev),
-                new DocumentHeader(stored3.ArtistId, stored2.ArtistRev)).Result;
+                new DocumentHeader(stored3.ArtistId, stored2.ArtistRev)}).Result;
 
             SUT.ExistsAsync(stored1.ArtistId).Result.Should().BeTrue();
             SUT.ExistsAsync(stored2.ArtistId).Result.Should().BeTrue();
