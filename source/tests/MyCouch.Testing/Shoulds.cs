@@ -304,7 +304,7 @@ namespace MyCouch.Testing
         {
             BeSuccessful(method, expected.Length);
             for (var i = 0; i < Response.RowCount; i++)
-                Response.Rows[i].Value.ShouldBeEquivalentTo(expected[i]);
+                Response.Rows[i].Value.Should().BeEquivalentTo(expected[i]);
         }
 
         private void BeSuccessful<TKey>(HttpMethod method, T[] expected, Func<ViewQueryResponse<T, TIncludedDoc>.Row, TKey> orderBy = null)
@@ -316,7 +316,7 @@ namespace MyCouch.Testing
                 : Response.Rows;
 
             for (var i = 0; i < Response.RowCount; i++)
-                actual[i].Value.ShouldBeEquivalentTo(expected[i]);
+                actual[i].Value.Should().BeEquivalentTo(expected[i]);
         }
 
         public void BeSuccessfulPost(int numOfRows)

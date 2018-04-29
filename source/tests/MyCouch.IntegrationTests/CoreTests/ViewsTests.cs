@@ -68,7 +68,7 @@ namespace MyCouch.IntegrationTests.CoreTests
             for (var i = 0; i < response.RowCount; i++)
             {
                 response.Rows[i].Value.Should().BeNull();
-                DbClient.Entities.Serializer.Deserialize<Artist>(response.Rows[i].IncludedDoc).ShouldBeEquivalentTo(ArtistsById[i]);
+                DbClient.Entities.Serializer.Deserialize<Artist>(response.Rows[i].IncludedDoc).Should().BeEquivalentTo(ArtistsById[i]);
             }
         }
 
@@ -83,7 +83,7 @@ namespace MyCouch.IntegrationTests.CoreTests
             for (var i = 0; i < response.RowCount; i++)
             {
                 response.Rows[i].Value.Should().BeNull();
-                response.Rows[i].IncludedDoc.ShouldBeEquivalentTo(ArtistsById[i]);
+                response.Rows[i].IncludedDoc.Should().BeEquivalentTo(ArtistsById[i]);
             }
         }
 

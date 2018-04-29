@@ -118,10 +118,10 @@ namespace MyCouch.UnitTests.Serialization
 
             rows.Length.Should().Be(2);
             rows[0].Id.Should().Be("complex:1");
-            ((object[])rows[0].Key).ShouldBeEquivalentTo(new object[] { "test1", (long)1, 3.14, new DateTime(2013, 09, 22, 22, 36, 00) });
+            ((object[])rows[0].Key).Should().BeEquivalentTo(new object[] { "test1", (long)1, 3.14, new DateTime(2013, 09, 22, 22, 36, 00) });
 
             rows[1].Id.Should().Be("complex:2");
-            ((object[])rows[1].Key).ShouldBeEquivalentTo(new object[] { "test2", (long)2, 3.15, new DateTime(2013, 09, 22, 22, 37, 00) });
+            ((object[])rows[1].Key).Should().BeEquivalentTo(new object[] { "test2", (long)2, 3.15, new DateTime(2013, 09, 22, 22, 37, 00) });
         }
 
         [Fact]
@@ -189,22 +189,22 @@ namespace MyCouch.UnitTests.Serialization
             rows[0].Id.Should().Be("1");
             rows[0].Key.Should().Be("Fake artist 1");
             rows[0].Value.Length.Should().Be(1);
-            rows[0].Value.ShouldBeEquivalentTo(ClientTestData.Artists.Artist1.Albums);
+            rows[0].Value.Should().BeEquivalentTo(ClientTestData.Artists.Artist1.Albums);
 
             rows[1].Id.Should().Be("2");
             rows[1].Key.Should().Be("Fake artist 2");
             rows[1].Value.Length.Should().Be(2);
-            rows[1].Value.ShouldBeEquivalentTo(ClientTestData.Artists.Artist2.Albums);
+            rows[1].Value.Should().BeEquivalentTo(ClientTestData.Artists.Artist2.Albums);
 
             rows[2].Id.Should().Be("3");
             rows[2].Key.Should().Be("Fake artist 3");
             rows[2].Value.Length.Should().Be(3);
-            rows[2].Value.ShouldBeEquivalentTo(ClientTestData.Artists.Artist3.Albums);
+            rows[2].Value.Should().BeEquivalentTo(ClientTestData.Artists.Artist3.Albums);
 
             rows[3].Id.Should().Be("4");
             rows[3].Key.Should().Be("Fake artist 4");
             rows[3].Value.Length.Should().Be(4);
-            rows[3].Value.ShouldBeEquivalentTo(ClientTestData.Artists.Artist4.Albums);
+            rows[3].Value.Should().BeEquivalentTo(ClientTestData.Artists.Artist4.Albums);
         }
 
         [Fact]
@@ -214,7 +214,7 @@ namespace MyCouch.UnitTests.Serialization
 
             rows.Length.Should().Be(1);
             var key = (object[])rows[0].Key;
-            key[0].As<object[]>().Select(i => i as string).ShouldBeEquivalentTo(new [] {"a", "b"});
+            key[0].As<object[]>().Select(i => i as string).Should().BeEquivalentTo(new [] {"a", "b"});
             key[1].As<long>().Should().Be(123234);
         }
 
