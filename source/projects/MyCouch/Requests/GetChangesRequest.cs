@@ -52,6 +52,7 @@ namespace MyCouch.Requests
         /// from a design document to selectively get updates. 
         /// </summary>
         public string Filter { get; set; }
+
         /// <summary>
         /// Set other parameters (eg. in combination with the filter) 
         /// </summary>
