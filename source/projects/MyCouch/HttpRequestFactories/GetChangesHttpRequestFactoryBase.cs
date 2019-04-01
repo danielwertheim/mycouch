@@ -72,6 +72,11 @@ namespace MyCouch.HttpRequestFactories
             if (request.Style.HasValue)
                 kvs.Add(KeyNames.Style, request.Style.Value.AsString());
 
+            if (request.Other != null)
+                foreach(var kvp in request.Other)
+                {
+                    kvs.Add(kvp.Key, kvp.Value);
+                }
             return kvs;
         }
 

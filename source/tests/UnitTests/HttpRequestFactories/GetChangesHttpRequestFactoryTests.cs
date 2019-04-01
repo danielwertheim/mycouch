@@ -162,6 +162,34 @@ namespace UnitTests.HttpRequestFactories
                 req => req.RelativeUrl.ToTestUriFromRelative().Query.Should().Be("?style=all_docs"));
         }
 
+
+        [Fact]
+        public void When_Other_is_assigned_It_should_get_included_in_the_querystring()
+        {
+            var request = CreateRequest();
+            request.Other = new System.Collections.Generic.Dictionary<string, string> { 
+                { "par1", "val1" }
+            };
+
+            WithHttpRequestFor(
+                request,
+                req => req.RelativeUrl.ToTestUriFromRelative().Query.Should().Be("?par1=val1"));
+        }
+
+        [Fact]
+        public void When_2Other_is_assigned_It_should_get_included_in_the_querystring()
+        {
+            var request = CreateRequest();
+            request.Other = new System.Collections.Generic.Dictionary<string, string> {
+                { "par1", "val1" },
+                { "par2", "val2" }
+            };
+
+            WithHttpRequestFor(
+                request,
+                req => req.RelativeUrl.ToTestUriFromRelative().Query.Should().Be("?par1=val1&par2=val2"));
+        }
+
         protected virtual GetChangesRequest CreateRequest()
         {
             return new GetChangesRequest();
