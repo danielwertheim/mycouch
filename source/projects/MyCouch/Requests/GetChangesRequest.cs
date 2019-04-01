@@ -1,4 +1,6 @@
-﻿namespace MyCouch.Requests
+﻿using System.Collections.Generic;
+
+namespace MyCouch.Requests
 {
     public class GetChangesRequest : Request
     {
@@ -50,5 +52,9 @@
         /// from a design document to selectively get updates. 
         /// </summary>
         public string Filter { get; set; }
+        /// <summary>
+        /// Set other parameters (eg. in combination with the filter) 
+        /// </summary>
+        public Dictionary<string, string> Other { get; set; }
     }
 }
