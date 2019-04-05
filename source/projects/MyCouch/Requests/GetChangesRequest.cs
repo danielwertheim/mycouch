@@ -55,6 +55,6 @@ namespace MyCouch.Requests
         /// <summary>
         /// Set other parameters (eg. in combination with the filter) 
         /// </summary>
-        public Dictionary<string, string> Other { get; set; }
+        public Dictionary<string, string> Custom{ get; set; }
     }
 }
