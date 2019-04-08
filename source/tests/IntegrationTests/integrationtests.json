@@ -1,0 +1,25 @@
+﻿{
+  "SupportedScenarios": [
+    "client",
+    "attachmentscontext",
+    "databasecontext",
+    "databasescontext",
+    "changescontext",
+    "documentscontext",
+    "entitiescontext",
+    "queriescontext",
+    "viewscontext",
+    "listscontext",
+    "showscontext",
+    "mycouchstore",
+    "createdbs",
+    "deletedbs",
+    "_compactdbs_",
+    "_viewcleanup_",
+    "replication"
+  ],
+  "ServerUrl": "http://localhost:5984",
+  "PrimaryDbName": "mycouchtests_pri",
+  "SecondaryDbName": "mycouchtests_sec",
+  "TempDbName": "mycouchtests_tmp"
+}

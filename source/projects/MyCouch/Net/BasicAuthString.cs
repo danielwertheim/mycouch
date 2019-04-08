@@ -17,9 +17,7 @@ namespace MyCouch.Net
         }
 
         private string GenerateBasicAuthorizationCredentials(string username, string password)
-        {
-            return $"{username}:{password}".AsBase64Encoded();
-        }
+            => $"{username}:{password}".AsBase64Encoded();
 
         public static implicit operator string(BasicAuthString item)
         {
