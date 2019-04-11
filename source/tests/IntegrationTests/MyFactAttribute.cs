@@ -7,35 +7,35 @@ using Xunit.Sdk;
 
 namespace IntegrationTests
 {
-    public class Discoverer : IXunitTestCaseDiscoverer
-    {
-        private readonly IMessageSink _messageSink;
+    //public class Discoverer : IXunitTestCaseDiscoverer
+    //{
+    //    private readonly IMessageSink _messageSink;
 
-        public Discoverer(IMessageSink messageSink)
-        {
-            _messageSink = messageSink;
-        }
+    //    public Discoverer(IMessageSink messageSink)
+    //    {
+    //        _messageSink = messageSink;
+    //    }
 
-        protected virtual IXunitTestCase CreateTestCase(ITestFrameworkDiscoveryOptions discoveryOptions, ITestMethod testMethod, IAttributeInfo factAttribute)
-            => new XunitTestCase(_messageSink, discoveryOptions.MethodDisplayOrDefault(), TestMethodDisplayOptions.All, testMethod);
+    //    protected virtual IXunitTestCase CreateTestCase(ITestFrameworkDiscoveryOptions discoveryOptions, ITestMethod testMethod, IAttributeInfo factAttribute)
+    //        => new XunitTestCase(_messageSink, discoveryOptions.MethodDisplayOrDefault(), TestMethodDisplayOptions.All, testMethod);
 
-        public virtual IEnumerable<IXunitTestCase> Discover(ITestFrameworkDiscoveryOptions discoveryOptions, ITestMethod testMethod, IAttributeInfo factAttribute)
-        {
-            IXunitTestCase testCase;
+    //    public virtual IEnumerable<IXunitTestCase> Discover(ITestFrameworkDiscoveryOptions discoveryOptions, ITestMethod testMethod, IAttributeInfo factAttribute)
+    //    {
+    //        IXunitTestCase testCase;
 
-            if (testMethod.Method.GetParameters().Any())
-                testCase = new ExecutionErrorTestCase(_messageSink, discoveryOptions.MethodDisplayOrDefault(), discoveryOptions.MethodDisplayOptionsOrDefault(), testMethod, "[Fact] methods are not allowed to have parameters. Did you mean to use [Theory]?");
-            else if (testMethod.Method.IsGenericMethodDefinition)
-                testCase = new ExecutionErrorTestCase(_messageSink, discoveryOptions.MethodDisplayOrDefault(), discoveryOptions.MethodDisplayOptionsOrDefault(), testMethod, "[Fact] methods are not allowed to be generic.");
-            else
-                testCase = CreateTestCase(discoveryOptions, testMethod, factAttribute);
+    //        if (testMethod.Method.GetParameters().Any())
+    //            testCase = new ExecutionErrorTestCase(_messageSink, discoveryOptions.MethodDisplayOrDefault(), discoveryOptions.MethodDisplayOptionsOrDefault(), testMethod, "[Fact] methods are not allowed to have parameters. Did you mean to use [Theory]?");
+    //        else if (testMethod.Method.IsGenericMethodDefinition)
+    //            testCase = new ExecutionErrorTestCase(_messageSink, discoveryOptions.MethodDisplayOrDefault(), discoveryOptions.MethodDisplayOptionsOrDefault(), testMethod, "[Fact] methods are not allowed to be generic.");
+    //        else
+    //            testCase = CreateTestCase(discoveryOptions, testMethod, factAttribute);
 
-            return new[] { testCase };
-        }
-    }
+    //        return new[] { testCase };
+    //    }
+    //}
 
     [AttributeUsage(AttributeTargets.Method)]
-    [XunitTestCaseDiscoverer("IntegrationTests.Discoverer", "IntegrationTests")]
+    //[XunitTestCaseDiscoverer("IntegrationTests.Discoverer", "IntegrationTests")]
     public class MyFactAttribute : FactAttribute
     {
         public MyFactAttribute(params string[] scenarios)

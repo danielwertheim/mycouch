@@ -251,7 +251,7 @@ namespace IntegrationTests
 
         public static TestEnvironment Read()
         {
-            var fullPath = GetTestEnvironmentFullPath(@".\integrationtests.json");
+            var fullPath = GetTestEnvironmentFullPath(@"./integrationtests.json");
             var content = File.ReadAllText(fullPath);
             var environment = JsonConvert.DeserializeObject<TestEnvironment>(content);
             if (environment == null)
