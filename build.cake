@@ -15,28 +15,22 @@ Task("Default")
     .IsDependentOn("UnitTests");
 
 Task("CI")
+    .IsDependentOn("Docker-Compose-Up")
     .IsDependentOn("Default")
     .IsDependentOn("IntegrationTests")
-    .IsDependentOn("Pack");
+    .IsDependentOn("Pack")
+    .Finally(() => {
+        Information("Running 'docker-compose down'...");
+        StartProcess("docker-compose", "down");
+    });
 /********************************************/
+Task("Docker-Compose-Up").Does(() => {
+    StartProcess("docker-compose", "up -d");
+});
+
 Task("Clean").Does(() => {
     EnsureDirectoryExists(config.ArtifactsDir);
     CleanDirectory(config.ArtifactsDir);
-});
-
-Task("Build").Does(() => {
-    foreach(var sln in GetFiles($"{config.SrcDir}*.sln")) {
-        MSBuild(sln, settings =>
-            settings
-                .SetConfiguration(config.BuildProfile)
-                .SetVerbosity(Verbosity.Minimal)
-                .WithTarget("Rebuild")
-                .WithProperty("TreatWarningsAsErrors", "true")
-                .WithProperty("NoRestore", "true")
-                .WithProperty("Version", config.SemVer)
-                .WithProperty("AssemblyVersion", config.BuildVersion)
-                .WithProperty("FileVersion", config.BuildVersion));
-    }
 });
 
 Task("Build").Does(() => {
