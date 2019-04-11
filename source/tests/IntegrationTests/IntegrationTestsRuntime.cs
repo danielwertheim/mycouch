@@ -131,13 +131,29 @@ namespace IntegrationTests
             }
 
             if (Environment.HasSupportFor(TestScenarios.Replication))
+            {
+                UpsertDb("_replicator");
                 ClearAllDocuments("_replicator");
+            }
         }
 
         private static void CreateDb(string dbName)
         {
             using (var client = CreateServerClient())
             {
+                var put = client.Databases.PutAsync(dbName).Result;
+                if (!put.IsSuccess)
+                    throw new MyCouchResponseException(put);
+            }
+        }
+
+        private static void UpsertDb(string dbName)
+        {
+            using (var client = CreateServerClient())
+            {
+                if (client.Databases.HeadAsync(dbName).Result.IsSuccess)
+                    return;
+
                 var put = client.Databases.PutAsync(dbName).Result;
                 if (!put.IsSuccess)
                     throw new MyCouchResponseException(put);
