@@ -92,6 +92,6 @@ Pass=sample_password
 - Environment variables: `MYCOUCH__Credentials__User` and `MYCOUCH__Credentials__Pass`, e.g.:
 
 ```
-MYCOUCH__Credentials__User=sample_user
-MYCOUCH__Credentials__Pass=sample_password
+MYCOUCH_Credentials__User=sample_user
+MYCOUCH_Credentials__Pass=sample_password
 ```
