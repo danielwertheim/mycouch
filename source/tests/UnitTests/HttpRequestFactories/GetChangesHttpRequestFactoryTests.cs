@@ -164,10 +164,10 @@ namespace UnitTests.HttpRequestFactories
 
 
         [Fact]
-        public void When_Other_is_assigned_It_should_get_included_in_the_querystring()
+        public void When_Custom_is_assigned_It_should_get_included_in_the_querystring()
         {
             var request = CreateRequest();
-            request.Other = new System.Collections.Generic.Dictionary<string, string> { 
+            request.Custom = new System.Collections.Generic.Dictionary<string, string> { 
                 { "par1", "val1" }
             };
 
@@ -177,10 +177,10 @@ namespace UnitTests.HttpRequestFactories
         }
 
         [Fact]
-        public void When_2Other_is_assigned_It_should_get_included_in_the_querystring()
+        public void When_2_Custom_is_assigned_It_should_get_included_in_the_querystring()
         {
             var request = CreateRequest();
-            request.Other = new System.Collections.Generic.Dictionary<string, string> {
+            request.Custom = new System.Collections.Generic.Dictionary<string, string> {
                 { "par1", "val1" },
                 { "par2", "val2" }
             };
