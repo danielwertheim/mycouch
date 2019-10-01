@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Reflection;
 using EnsureThat;
@@ -43,6 +44,14 @@ namespace MyCouch.Net
         {
             if (content != null && content.Length > 0)
                 Content = new BytesContent(content, contentType);
+
+            return this;
+        }
+
+        public virtual HttpRequest SetContent(Stream content, string contentType)
+        {
+            if (content != null && content.Length > 0)
+                Content = new StreamedContent(content, contentType);
 
             return this;
         }

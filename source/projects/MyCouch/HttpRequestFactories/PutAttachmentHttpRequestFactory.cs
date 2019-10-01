@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using EnsureThat;
 using MyCouch.Net;
 using MyCouch.Requests;
@@ -38,7 +39,18 @@ namespace MyCouch.HttpRequestFactories
             if (bufferRequest != null)
             {
                 httpRequest.SetContent(bufferRequest.Content, request.ContentType);
+                return;
             }
+
+            var streamRequest = request as PutAttachmentStreamRequest;
+            if (streamRequest == null)
+            {
+                throw new ArgumentException(
+                    string.Format("Unsupported {0} implementation.", nameof(PutAttachmentRequestBase)),
+                    nameof(request));
+            }
+
+            httpRequest.SetContent(streamRequest.Content, request.ContentType);
         }
     }
 }

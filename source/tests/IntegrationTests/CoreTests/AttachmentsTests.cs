@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System.IO;
+using FluentAssertions;
 using MyCouch;
 using MyCouch.Requests;
 using MyCouch.Testing;
@@ -41,6 +42,28 @@ namespace IntegrationTests.CoreTests
             var putAttachmentResponse = SUT.PutAsync(putRequest).Result;
 
             putAttachmentResponse.Should().BeSuccessfulPut(ClientTestData.Artists.Artist1Id);
+        }
+
+        [MyFact(TestScenarios.AttachmentsContext)]
+        public void When_PUT_with_stream_of_a_new_attachment_The_stream_is_transferred_correctly()
+        {
+            var putDocResponse = DbClient.Documents.PostAsync(ClientTestData.Artists.Artist1Json).Result;
+
+            var putRequest = new PutAttachmentStreamRequest(
+                putDocResponse.Id,
+                putDocResponse.Rev,
+                ClientTestData.Attachments.One.Name,
+                ClientTestData.Attachments.One.ContentType,
+                new MemoryStream(ClientTestData.Attachments.One.Bytes));
+            var putAttachmentResponse = SUT.PutAsync(putRequest).Result;
+
+            var getRequest = new GetAttachmentRequest(
+                putAttachmentResponse.Id,
+                ClientTestData.Attachments.One.Name);
+            var getAttachmentResponse = SUT.GetAsync(getRequest).Result;
+
+            getAttachmentResponse.Should().BeSuccessfulGet(ClientTestData.Artists.Artist1Id, ClientTestData.Attachments.One.Name);
+            getAttachmentResponse.Content.Should().Equal(ClientTestData.Attachments.One.Bytes);
         }
 
         [MyFact(TestScenarios.AttachmentsContext)]
