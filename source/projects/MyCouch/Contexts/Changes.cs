@@ -27,8 +27,8 @@ namespace MyCouch.Contexts
         {
             Ensure.Any.IsNotNull(serializer, nameof(serializer));
 
-            HttpRequestFactory = new GetChangesHttpRequestFactory();
-            ContinuousHttpRequestFactory = new GetContinuousChangesHttpRequestFactory();
+            HttpRequestFactory = new GetChangesHttpRequestFactory(serializer);
+            ContinuousHttpRequestFactory = new GetContinuousChangesHttpRequestFactory(serializer);
             ChangesResponseFactory = new ChangesResponseFactory(serializer);
             ContinuousChangesResponseFactory = new ContinuousChangesResponseFactory(serializer);
             ObservableWorkTaskFactoryResolver = () => Task.Factory;

@@ -1,9 +1,13 @@
 ﻿using System;
 using FluentAssertions;
 using MyCouch;
+using MyCouch.EntitySchemes;
+using MyCouch.EntitySchemes.Reflections;
 using MyCouch.HttpRequestFactories;
 using MyCouch.Net;
 using MyCouch.Requests;
+using MyCouch.Serialization;
+using MyCouch.Serialization.Meta;
 using MyCouch.Testing;
 using Xunit;
 
@@ -13,7 +17,10 @@ namespace UnitTests.HttpRequestFactories
     {
         public GetChangesHttpRequestFactoryTests()
         {
-            SUT = new GetChangesHttpRequestFactory();
+            var entityReflector = new EntityReflector(new IlDynamicPropertyFactory());
+            var configuration = new SerializationConfiguration(new SerializationContractResolver());
+            var serializer = new DefaultSerializer(configuration, new DocumentSerializationMetaProvider(), entityReflector);
+            SUT = new GetChangesHttpRequestFactory(serializer);
         }
 
         [Fact]
@@ -149,6 +156,18 @@ namespace UnitTests.HttpRequestFactories
             WithHttpRequestFor(
                 request,
                 req => req.RelativeUrl.ToTestUriFromRelative().Query.Should().Be("?filter=app%2Fimportant"));
+        }
+
+        [Fact]
+        public void When_DocIds_is_assigned_It_should_get_included_in_the_querystring()
+        {
+            var request = CreateRequest();
+            request.DocIds = new[] { "7bed7f2dc89b45479b9ac09504fff1eb" };
+
+            WithHttpRequestFor(
+                request,
+                req => req.RelativeUrl.ToTestUriFromRelative().Query.Should().Be(
+                    "?doc_ids=%5B%227bed7f2dc89b45479b9ac09504fff1eb%22%5D&filter=_doc_ids"));
         }
 
         [Fact]

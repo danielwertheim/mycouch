@@ -1,9 +1,13 @@
 using System;
 using FluentAssertions;
 using MyCouch;
+using MyCouch.EntitySchemes;
+using MyCouch.EntitySchemes.Reflections;
 using MyCouch.HttpRequestFactories;
 using MyCouch.Net;
 using MyCouch.Requests;
+using MyCouch.Serialization;
+using MyCouch.Serialization.Meta;
 using MyCouch.Testing;
 using Xunit;
 
@@ -13,7 +17,10 @@ namespace UnitTests.HttpRequestFactories
     {
         public GetContinuousChangesHttpRequestFactoryTests()
         {
-            SUT = new GetContinuousChangesHttpRequestFactory();
+            var entityReflector = new EntityReflector(new IlDynamicPropertyFactory());
+            var configuration = new SerializationConfiguration(new SerializationContractResolver());
+            var serializer = new DefaultSerializer(configuration, new DocumentSerializationMetaProvider(), entityReflector);
+            SUT = new GetContinuousChangesHttpRequestFactory(serializer);
         }
 
         [Fact]
