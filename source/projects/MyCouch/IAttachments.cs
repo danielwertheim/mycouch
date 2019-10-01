@@ -43,7 +43,7 @@ namespace MyCouch
         /// <param name="request"></param>
         /// <param name="cancellationToken">Used to end the request.</param>
         /// <returns></returns>
-        Task<DocumentHeaderResponse> PutAsync(PutAttachmentRequest request, CancellationToken cancellationToken = default);
+        Task<DocumentHeaderResponse> PutAsync(PutAttachmentRequestBase request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Used to delete an existing attachment.

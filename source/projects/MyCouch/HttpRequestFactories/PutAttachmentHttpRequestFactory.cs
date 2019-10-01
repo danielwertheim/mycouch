@@ -7,19 +7,20 @@ namespace MyCouch.HttpRequestFactories
 {
     public class PutAttachmentHttpRequestFactory
     {
-        public virtual HttpRequest Create(PutAttachmentRequest request)
+        public virtual HttpRequest Create(PutAttachmentRequestBase request)
         {
             Ensure.Any.IsNotNull(request, nameof(request));
 
             var httpRequest = new HttpRequest(HttpMethod.Put, GenerateRelativeUrl(request))
                 .SetRequestTypeHeader(request.GetType())
-                .SetIfMatchHeader(request.DocRev)
-                .SetContent(request.Content, request.ContentType);
+                .SetIfMatchHeader(request.DocRev);
+
+            SetContent(request, httpRequest);
 
             return httpRequest;
         }
 
-        protected virtual string GenerateRelativeUrl(PutAttachmentRequest request)
+        protected virtual string GenerateRelativeUrl(PutAttachmentRequestBase request)
         {
             var urlParams = new UrlParams();
 
@@ -29,6 +30,15 @@ namespace MyCouch.HttpRequestFactories
                 new UrlSegment(request.DocId),
                 new UrlSegment(request.Name),
                 new QueryString(urlParams));
+        }
+
+        protected virtual void SetContent(PutAttachmentRequestBase request, HttpRequest httpRequest)
+        {
+            var bufferRequest = request as PutAttachmentRequest;
+            if (bufferRequest != null)
+            {
+                httpRequest.SetContent(bufferRequest.Content, request.ContentType);
+            }
         }
     }
 }

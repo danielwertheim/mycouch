@@ -50,7 +50,7 @@ namespace MyCouch.Contexts
             }
         }
 
-        public virtual async Task<DocumentHeaderResponse> PutAsync(PutAttachmentRequest request, CancellationToken cancellationToken = default)
+        public virtual async Task<DocumentHeaderResponse> PutAsync(PutAttachmentRequestBase request, CancellationToken cancellationToken = default)
         {
             var httpRequest = PutAttachmentHttpRequestFactory.Create(request);
 
