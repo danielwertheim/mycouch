@@ -30,8 +30,8 @@ resources:
     ports:
     - 5984:5984
     env:
-      COUCHDB_USER: ${MyCouch_User}
-      COUCHDB_PASSWORD: ${MyCouch_Pass}
+      COUCHDB_USER: $(MyCouch_User)
+      COUCHDB_PASSWORD: $(MyCouch_Pass)
 
 pool:
   vmImage: ubuntu-18.04
