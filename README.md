@@ -66,18 +66,18 @@ The `./.env` file and `./src/tests/IntegrationTests/integrationtests.local.ini` 
 ```
 
 ### Docker-Compose
-There's a `docker-compose.yml` file, that defines usage of a single node CouchDB over port `5984`. The `COUCHDB_USER` and `COUCHDB_PASSWORD` is configured via environment key `MYCOUCH_USER` and `MYCOUCH_PASS`; which can either be specified via:
+There's a `docker-compose.yml` file, that defines usage of a single node CouchDB over port `5984`. The `COUCHDB_USER` and `COUCHDB_PASSWORD` is configured via environment key `MyCouch_User` and `MyCouch_Pass`; which can either be specified via:
 
-- Environment variable: `MYCOUCH_USER` and `MYCOUCH_PASS`, e.g.:
+- Environment variable: `MyCouch_User` and `MyCouch_Pass`, e.g.:
 ```
-MYCOUCH_USER=sample_user
-MYCOUCH_PASS=sample_password
+MyCouch_User=sample_user
+MyCouch_Pass=sample_password
 ```
 
 - Docker Environment file `./.env` (`.gitignored`), e.g.:
 ```
-MYCOUCH_USER=sample_user
-MYCOUCH_PASS=sample_password
+MyCouch_User=sample_user
+MyCouch_Pass=sample_password
 ```
 
 ### Test configuration
@@ -85,14 +85,13 @@ Credentials need to be provided, either via:
 
 - Local-INI-file (`.gitignored`): `./src/tests/IntegrationTests/integrationtests.local.ini`, e.g.:
 ```
-[Credentials]
 User=sample_user
 Pass=sample_password
 ```
 
-- Environment variables: `MYCOUCH__Credentials__User` and `MYCOUCH__Credentials__Pass`, e.g.:
+- Environment variables: `MyCouch_User` and `MyCouch_Pass`, e.g.:
 
 ```
-MYCOUCH_Credentials__User=sample_user
-MYCOUCH_Credentials__Pass=sample_password
+MyCouch_User=sample_user
+MyCouch_Pass=sample_password
 ```
