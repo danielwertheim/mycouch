@@ -41,8 +41,10 @@ stages:
   jobs:
   - job: BuildTestPack
     displayName: 'Build, test & pack'
-    timeoutInMinutes: 10
+    timeoutInMinutes: 6
     cancelTimeoutInMinutes: 2
+    services:
+      couchdb: couchdb
     steps:
     - task: DotNetCoreCLI@2
       displayName: 'Build Solution'
@@ -88,7 +90,7 @@ stages:
   - deployment: DeployArtifacts
     environment: 'Prod'
     displayName: 'Deploys artifacts'
-    timeoutInMinutes: 10
+    timeoutInMinutes: 4
     cancelTimeoutInMinutes: 2
     strategy: 
       runOnce:
