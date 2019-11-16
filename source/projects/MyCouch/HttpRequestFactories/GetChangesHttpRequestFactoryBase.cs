@@ -4,11 +4,21 @@ using System.Net.Http;
 using EnsureThat;
 using MyCouch.Net;
 using MyCouch.Requests;
+using MyCouch.Serialization;
 
 namespace MyCouch.HttpRequestFactories
 {
     public abstract class GetChangesHttpRequestFactoryBase
     {
+        protected ISerializer Serializer { get; private set; }
+
+        protected GetChangesHttpRequestFactoryBase(ISerializer serializer)
+        {
+            Ensure.Any.IsNotNull(serializer, nameof(serializer));
+
+            Serializer = serializer;
+        }
+
         public virtual HttpRequest Create(GetChangesRequest request)
         {
             Ensure.Any.IsNotNull(request, nameof(request));
@@ -66,8 +76,15 @@ namespace MyCouch.HttpRequestFactories
             if (request.Timeout.HasValue)
                 kvs.Add(KeyNames.Timeout, request.Timeout.Value.ToString(MyCouchRuntime.FormatingCulture.NumberFormat));
 
-            if (request.Filter != null)
+            if (request.DocIds != null)
+            {
+                kvs.Add(KeyNames.DocIds, Serializer.ToJson(request.DocIds));
+                kvs.Add(KeyNames.Filter, "_doc_ids");
+            }
+            else if (request.Filter != null)
+            {
                 kvs.Add(KeyNames.Filter, request.Filter);
+            }
 
             if (request.Style.HasValue)
                 kvs.Add(KeyNames.Style, request.Style.Value.AsString());
@@ -93,6 +110,7 @@ namespace MyCouch.HttpRequestFactories
             public const string HeartBeat = "heartbeat";
             public const string Timeout = "timeout";
             public const string Filter = "filter";
+            public const string DocIds = "doc_ids";
             public const string Style = "style";
         }
     }

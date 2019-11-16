@@ -1,0 +1,34 @@
+name: $(SemVer)
+
+variables:
+  BuildRev: $[counter(format('{0:yyyyMMdd}', pipeline.startTime), 1)]
+  SemVer: $[format('{0:yyyy}.{0:MM}.{0:dd}-pre{1}', pipeline.startTime, variables.BuildRev)]
+  CommitId: $(Build.SourceVersion)
+
+trigger:
+  batch: true
+  branches:
+    include:
+    - master
+
+pr:
+  autoCancel: true
+  branches:
+    include:
+    - master
+
+resources:
+  containers:
+  - container: couchdb
+    image: couchdb:2.3.1
+    ports:
+    - 5984:5984
+    env:
+      COUCHDB_USER: $(MyCouch_User)
+      COUCHDB_PASSWORD: $(MyCouch_Pass)
+
+pool:
+  vmImage: ubuntu-18.04
+
+stages:
+- template: azure-templates/stage-build.yml

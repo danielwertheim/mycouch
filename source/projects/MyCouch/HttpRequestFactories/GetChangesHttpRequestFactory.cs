@@ -2,11 +2,16 @@ using System;
 using EnsureThat;
 using MyCouch.Net;
 using MyCouch.Requests;
+using MyCouch.Serialization;
 
 namespace MyCouch.HttpRequestFactories
 {
     public class GetChangesHttpRequestFactory : GetChangesHttpRequestFactoryBase
     {
+        public GetChangesHttpRequestFactory(ISerializer serializer) : base(serializer)
+        {
+        }
+
         public override HttpRequest Create(GetChangesRequest request)
         {
             Ensure.Any.IsNotNull(request, nameof(request));

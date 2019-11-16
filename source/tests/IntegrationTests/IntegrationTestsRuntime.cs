@@ -284,7 +284,7 @@ namespace IntegrationTests
             var builder = new ConfigurationBuilder();
             var configRoot = builder
                 .AddIniFile("integrationtests.local.ini", true, false)
-                .AddEnvironmentVariables("MYCOUCH_")
+                .AddEnvironmentVariables("MyCouch_")
                 .Build();
 
             return new Config(configRoot);
@@ -299,8 +299,8 @@ namespace IntegrationTests
             return value;
         }
 
-        public string GetUsername() => GetRequiredValue("Credentials:User");
+        public string GetUsername() => GetRequiredValue("User");
 
-        public string GetPassword() => GetRequiredValue("Credentials:Pass");
+        public string GetPassword() => GetRequiredValue("Pass");
     }
 }
