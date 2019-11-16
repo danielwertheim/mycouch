@@ -3,7 +3,7 @@ The asynchronous CouchDB client for .NET - builds on top of the asynchronous HTT
 
 **Multiple target frameworks:** `.NET Standard 1.1`, `.NET Standard 2.0`; using a .NET Standard project.
 
-[![Build Status](https://dev.azure.com/danielwertheim/mycouch/_apis/build/status/danielwertheim.mycouch?branchName=master)](https://dev.azure.com/danielwertheim/mycouch/_build/latest?definitionId=23&branchName=master)
+[![Build Status](https://dev.azure.com/danielwertheim/mycouch/_apis/build/status/danielwertheim.mycouch-CI?branchName=master)](https://dev.azure.com/danielwertheim/mycouch/_build/latest?definitionId=23&branchName=master)
 [![Nuget](https://img.shields.io/nuget/v/mycouch.svg)](https://www.nuget.org/packages/mycouch/)
 
 The documentation is contained in the [project wiki](https://github.com/danielwertheim/mycouch/wiki).
