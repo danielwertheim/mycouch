@@ -31,7 +31,7 @@ namespace MyCouch
         public BasicAuthString BasicAuth { get; set; }
         public bool AllowAutoRedirect { get; set; } = false;
         public bool ExpectContinue { get; set; } = false;
-        public bool UseProxy { get; set; } = false;
+        public bool UseProxy { get; set; } = true;
 
         protected ConnectionInfo(Uri address)
         {
