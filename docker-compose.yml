@@ -3,7 +3,7 @@ services:
   couchdb:
     image: "couchdb:2.3.1"
     environment:
-      COUCHDB_USER: ${MYCOUCH_USER}
-      COUCHDB_PASSWORD: ${MYCOUCH_PASS}
+      COUCHDB_USER: ${MyCouch_User}
+      COUCHDB_PASSWORD: ${MyCouch_Pass}
     ports:
       - "5984:5984"
