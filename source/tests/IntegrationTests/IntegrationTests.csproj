@@ -3,11 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove="integrationtests.json" />
-  </ItemGroup>
 
   <ItemGroup>
     <Content Include="integrationtests.json">

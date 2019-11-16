@@ -1,2 +1,2 @@
 cp ./resources/.env.sample .env
-cp ./resources/integrationtests.local.ini.sample ./src/tests/integrationtests/integrationtests.local.ini
+cp ./resources/integrationtests.local.ini.sample ./source/tests/IntegrationTests/integrationtests.local.ini
