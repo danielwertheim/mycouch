@@ -27,8 +27,8 @@ namespace MyCouch.Contexts
         {
             Ensure.Any.IsNotNull(serializer, nameof(serializer));
 
-            HttpRequestFactory = new GetChangesHttpRequestFactory();
-            ContinuousHttpRequestFactory = new GetContinuousChangesHttpRequestFactory();
+            HttpRequestFactory = new GetChangesHttpRequestFactory(serializer);
+            ContinuousHttpRequestFactory = new GetContinuousChangesHttpRequestFactory(serializer);
             ChangesResponseFactory = new ChangesResponseFactory(serializer);
             ContinuousChangesResponseFactory = new ContinuousChangesResponseFactory(serializer);
             ObservableWorkTaskFactoryResolver = () => Task.Factory;
@@ -97,11 +97,13 @@ namespace MyCouch.Contexts
 
             Task.Factory.StartNew(async () =>
             {
-                using (var httpResponse = await SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ForAwait())
+                try
                 {
-                    var response = await ContinuousChangesResponseFactory.CreateAsync(httpResponse).ForAwait();
-                    if (response.IsSuccess)
+                    using (var httpResponse = await SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ForAwait())
                     {
+                        var response = await ContinuousChangesResponseFactory.CreateAsync(httpResponse).ForAwait();
+                        if (!response.IsSuccess)
+                            throw new MyCouchResponseException(response);
                         using (var content = await httpResponse.Content.ReadAsStreamAsync().ForAwait())
                         {
                             using (var reader = new StreamReader(content, MyCouchRuntime.DefaultEncoding))
@@ -116,6 +118,10 @@ namespace MyCouch.Contexts
                             }
                         }
                     }
+                }
+                catch (Exception e)
+                {
+                    ob.Error(e);
                 }
             }, cancellationToken).ForAwait();
 

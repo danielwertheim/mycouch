@@ -19,8 +19,6 @@
 
 # deploy
 [Aa]rtifacts/
-[Tt]ools/**
-![Tt]ools/packages.config
 
 # misc
 *~

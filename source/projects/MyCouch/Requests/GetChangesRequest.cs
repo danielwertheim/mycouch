@@ -54,6 +54,13 @@ namespace MyCouch.Requests
         public string Filter { get; set; }
 
         /// <summary>
+        /// Set the document IDs by which to filter the changes stream.
+        /// If this property is not <c>null</c>, the <see cref="Filter"/>
+        /// will be ignored and the built-in filter "_doc_ids" will be used.
+        /// </summary>
+        public IList<string> DocIds { get; set; }
+
+        /// <summary>
         /// Set other parameters (eg. in combination with the filter) 
         /// </summary>
         public Dictionary<string, string> Custom { get; set; }
