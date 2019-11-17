@@ -38,6 +38,15 @@ namespace MyCouch
                 observer.OnCompleted();
         }
 
+        public virtual void Error(Exception error)
+        {
+            var obs = _observers.ToArray();
+            _observers.Clear();
+
+            foreach (var observer in obs)
+                observer.OnError(error);
+        }
+
         private class Unsubscriber : IDisposable
         {
             private readonly IList<IObserver<T>> _observers;
