@@ -7,14 +7,18 @@
     <PackageId>MyCouch</PackageId>    
     <PackageTags>CouchDB NoSQL</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageReleaseNotes>https://github.com/danielwertheim/mycouch/wiki/release-notes</PackageReleaseNotes>
-    <PackageIconUrl>https://raw.githubusercontent.com/danielwertheim/mycouch/master/resources/mycouch-nuget.png</PackageIconUrl>
+    <PackageReleaseNotes>https://github.com/danielwertheim/mycouch/releases</PackageReleaseNotes>
+    <PackageIcon>package-icon.png</PackageIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>bin\Release\$(TargetFramework)\MyCouch.xml</DocumentationFile>
     <NoWarn>1701;1702;1705;1591</NoWarn>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="package-icon.png" Pack="true" PackagePath="\"/>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Ensure.That" Version="8.1.1" />
