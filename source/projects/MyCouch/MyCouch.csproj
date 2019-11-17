@@ -7,7 +7,7 @@
     <PackageId>MyCouch</PackageId>    
     <PackageTags>CouchDB NoSQL</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageReleaseNotes>https://github.com/danielwertheim/mycouch/wiki/release-notes</PackageReleaseNotes>
+    <PackageReleaseNotes>https://github.com/danielwertheim/mycouch/releases</PackageReleaseNotes>
     <PackageIconUrl>https://raw.githubusercontent.com/danielwertheim/mycouch/master/resources/mycouch-nuget.png</PackageIconUrl>
   </PropertyGroup>
 
