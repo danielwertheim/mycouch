@@ -18,6 +18,7 @@
         public const string LastSeq = "last_seq";
         public const string TotalRows = "total_rows";
         public const string Conflicts = "_conflicts";
+        public const string Revisions = "_revisions";
 
         public const string LocalId = "_local_id";
         public const string NoChanges = "no_changes";

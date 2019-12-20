@@ -26,6 +26,20 @@ namespace IntegrationTests.CoreTests
         }
 
         [MyFact(TestScenarios.DocumentsContext)]
+        public void When_GET_of_document_when_including_revisions_It_returns_at_least_its_revision()
+        {
+            var postResponse = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
+            var postResponseRevId = postResponse.Rev.Split('-')[1];
+            var request = new GetDocumentRequest(postResponse.Id) { Revisions = true };
+
+            var response = SUT.GetAsync(request).Result;
+
+            response.Should().BeSuccessfulGet(postResponse.Id, postResponse.Rev);
+            response.Revisions.Should().NotBeNull();
+            response.Revisions.Ids.Should().NotBeNullOrEmpty().And.Contain(postResponseRevId);
+        }
+
+        [MyFact(TestScenarios.DocumentsContext)]
         public void When_HEAD_of_non_existing_document_The_response_is_empty()
         {
             var response = SUT.HeadAsync("fooId").Result;

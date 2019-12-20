@@ -15,6 +15,15 @@ namespace MyCouch.Responses
         [JsonProperty(JsonScheme.Conflicts)]
         public string[] Conflicts { get; set; }
 
+        [JsonProperty(JsonScheme.Revisions)]
+        public RevisionList Revisions { get; set; }        
+
+        public class RevisionList
+        {
+            public string[] Ids { get; set; }
+            public int Start { get; set; }
+        }
+
         public override string ToStringDebugVersion()
         {
             return string.Format("{1}{0}Id: {2}{0}Rev: {3}",

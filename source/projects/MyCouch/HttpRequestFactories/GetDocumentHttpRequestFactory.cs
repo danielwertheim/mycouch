@@ -22,6 +22,7 @@ namespace MyCouch.HttpRequestFactories
 
             urlParams.AddIfNotNullOrWhiteSpace("rev", request.Rev);
             urlParams.AddIfTrue("conflicts", request.Conflicts);
+            urlParams.AddIfTrue("revs", request.Revisions);
 
             return string.Format("/{0}{1}", new UrlSegment(request.Id), new QueryString(urlParams));
         }
