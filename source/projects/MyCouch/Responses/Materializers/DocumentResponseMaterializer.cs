@@ -35,7 +35,7 @@ namespace MyCouch.Responses.Materializers
                 response.Id = jt[JsonScheme._Id]?.Value<string>();
                 response.Rev = jt[JsonScheme._Rev]?.Value<string>();
                 response.Conflicts = jt[JsonScheme.Conflicts]?.Values<string>().ToArray();
-                response.Revisions = jt[JsonScheme.Revisions]?.Value<DocumentResponse.RevisionList>();
+                response.Revisions = jt[JsonScheme.Revisions]?.ToObject<DocumentResponse.RevisionList>();
 
                 SetMissingIdFromRequestUri(response, httpResponse.RequestMessage);
                 SetMissingRevFromResponseHeaders(response, httpResponse.Headers);
