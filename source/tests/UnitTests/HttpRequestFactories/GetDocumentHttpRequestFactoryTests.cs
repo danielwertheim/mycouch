@@ -73,6 +73,21 @@ namespace UnitTests.HttpRequestFactories
                 });
         }
 
+        [Fact]
+        public void When_configured_with_revisions_It_yields_url_with_revs()
+        {
+            var request = CreateRequest();
+            request.Revisions = true;
+
+            WithHttpRequestFor(
+                request,
+                req =>
+                {
+                    req.RelativeUrl.ToTestUriFromRelative().AbsolutePath.Should().EndWith("/" + FakeId);
+                    req.RelativeUrl.ToTestUriFromRelative().Query.Should().Be("?revs=true");
+                });
+        }        
+
         protected virtual GetDocumentRequest CreateRequest(string id = FakeId, string rev = null)
         {
             return new GetDocumentRequest(id, rev);

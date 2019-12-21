@@ -7,6 +7,7 @@ namespace MyCouch.Requests
         public string Id { get; private set; }
         public string Rev { get; private set; }
         public bool? Conflicts { get; set; }
+        public bool? Revisions { get; set; }
 
         public GetDocumentRequest(string id, string rev = null)
         {
