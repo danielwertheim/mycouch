@@ -162,7 +162,7 @@ namespace MyCouch.Serialization
                 return null;
 
             if (value is string)
-                return string.Format("\"{0}\"", value as string);
+                return JsonConvert.ToString(value as string, '"', Configuration.Settings.StringEscapeHandling);
 
             if (value is Enum)
                 return string.Format("\"{0}\"", value);
