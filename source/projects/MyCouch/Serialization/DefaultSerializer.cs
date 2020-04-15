@@ -130,6 +130,9 @@ namespace MyCouch.Serialization
             {
                 using (var jsonReader = Configuration.ApplyConfigToReader(CreateReaderFor<T>(sr)))
                 {
+                    if (!jsonReader.Read())
+                        return;
+
                     InternalSerializer.Populate(jsonReader, item);
                 }
             }
