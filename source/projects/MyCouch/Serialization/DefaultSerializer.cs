@@ -116,6 +116,11 @@ namespace MyCouch.Serialization
             {
                 using (var jsonReader = Configuration.ApplyConfigToReader(CreateReaderFor<T>(sr)))
                 {
+                    if (!jsonReader.Read())
+                    {
+                        return default(T);
+                    }
+
                     return InternalSerializer.Deserialize<T>(jsonReader);
                 }
             }
@@ -130,6 +135,11 @@ namespace MyCouch.Serialization
             {
                 using (var jsonReader = Configuration.ApplyConfigToReader(CreateReaderFor<T>(sr)))
                 {
+                    if (!jsonReader.Read())
+                    {
+                        return;
+                    }
+
                     InternalSerializer.Populate(jsonReader, item);
                 }
             }
