@@ -1,7 +1,7 @@
 version: '3'
 services:
   couchdb:
-    image: "couchdb:2.3.1"
+    image: "ibmcom/couchdb3:3.1.0"
     environment:
       COUCHDB_USER: ${MyCouch_User}
       COUCHDB_PASSWORD: ${MyCouch_Pass}
