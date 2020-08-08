@@ -134,8 +134,8 @@ namespace MyCouch.Testing
             Response.DbName.Should().NotBeNullOrEmpty();
             Response.DbName.Should().Be(dbName);
             Response.UpdateSeq.Should().NotBeNullOrEmpty();
-            Response.DataSize.Should().BeGreaterThan(0);
-            Response.DiskSize.Should().BeGreaterThan(0);
+            Response.Sizes.Active.Should().BeGreaterThan(0);
+            Response.Sizes.File.Should().BeGreaterThan(0);
             Response.DocCount.Should().BeGreaterThan(0);
             Response.DocDelCount.Should().BeGreaterThan(0);
             Response.DiskFormatVersion.Should().BeGreaterThan(0);
