@@ -221,7 +221,7 @@ namespace IntegrationTests
         public const string DocumentsContext = "documentscontext";
         public const string EntitiesContext = "entitiescontext";
         public const string ViewsContext = "viewscontext";
-        //public const string SearchesContext = "searchescontext";
+        public const string SearchesContext = "searchescontext";
         public const string QueriesContext = "queriescontext";
         public const string ListsContext = "listscontext";
         public const string ShowsContext = "showscontext";
