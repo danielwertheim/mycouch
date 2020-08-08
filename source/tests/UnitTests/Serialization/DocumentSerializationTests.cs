@@ -188,5 +188,16 @@ namespace UnitTests.Serialization
             json.Should().Contain("\"_id\":\"abc\"");
             json.Should().NotContain("\"modelFourId\":\"abc\"");
         }
+
+        [Fact]
+        public void When_serializing_entity_with_strings_needing_escaping_it_will_escape_them()
+        {
+            var model = new ModelOne { Id = @"some\id", Value = @"This ""Needs"" \escaping\\" };
+
+            var json = SUT.Serialize(model);
+
+            json.Should().Contain("\"_id\":\"some\\\\id\"");
+            json.Should().Contain("\"value\":\"This \\\"Needs\\\" \\\\escaping\\\\\\\\\"");
+        }
     }
 }
