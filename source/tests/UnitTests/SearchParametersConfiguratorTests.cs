@@ -1,157 +1,158 @@
-﻿//using FluentAssertions;
-//using MyCouch.Searching;
-//using Xunit;
+﻿using FluentAssertions;
+using MyCouch;
+using MyCouch.Searching;
+using Xunit;
 
-//namespace UnitTests
-//{
-//    public class SearchParametersConfiguratorTests : UnitTestsOf<SearchParametersConfigurator>
-//    {
-//        private readonly ISearchParameters _parameters;
+namespace UnitTests
+{
+   public class SearchParametersConfiguratorTests : UnitTestsOf<SearchParametersConfigurator>
+   {
+       private readonly ISearchParameters _parameters;
 
-//        public SearchParametersConfiguratorTests()
-//        {
-//            _parameters = new SearchParameters(new SearchIndexIdentity("foodesigndocument", "barindexname"));
+       public SearchParametersConfiguratorTests()
+       {
+           _parameters = new SearchParameters(new SearchIndexIdentity("foodesigndocument", "barindexname"));
 
-//            SUT = new SearchParametersConfigurator(_parameters);
-//        }
+           SUT = new SearchParametersConfigurator(_parameters);
+       }
 
-//        [Fact]
-//        public void When_config_of_Expression_of_string_It_configures_underlying_options_Expression()
-//        {
-//            const string configuredValue = "some value";
+       [Fact]
+       public void When_config_of_Expression_of_string_It_configures_underlying_options_Expression()
+       {
+           const string configuredValue = "some value";
 
-//            SUT.Expression(configuredValue);
+           SUT.Expression(configuredValue);
 
-//            _parameters.Expression.Should().Be(configuredValue);
-//        }
+           _parameters.Expression.Should().Be(configuredValue);
+       }
 
-//        [Fact]
-//        public void When_config_of_Bookmark_of_string_It_configures_underlying_options_Bookmark()
-//        {
-//            const string configuredValue = "g1AAAADOeJzLYWBgYM5gTmGQT0lKzi9KdUhJMtbLSs1LLUst0kvOyS9NScwr0ctLLckBKmRKZEiy____f1YGk5v9l1kRDUCxRCaideexAEmGBiAFNGM_2JBvNSdBYomMJBpyAGLIfxRDmLIAxz9DAg";
+       [Fact]
+       public void When_config_of_Bookmark_of_string_It_configures_underlying_options_Bookmark()
+       {
+           const string configuredValue = "g1AAAADOeJzLYWBgYM5gTmGQT0lKzi9KdUhJMtbLSs1LLUst0kvOyS9NScwr0ctLLckBKmRKZEiy____f1YGk5v9l1kRDUCxRCaideexAEmGBiAFNGM_2JBvNSdBYomMJBpyAGLIfxRDmLIAxz9DAg";
 
-//            SUT.Bookmark(configuredValue);
+           SUT.Bookmark(configuredValue);
 
-//            _parameters.Bookmark.Should().Be(configuredValue);
-//        }
+           _parameters.Bookmark.Should().Be(configuredValue);
+       }
 
-//        [Fact]
-//        public void When_config_of_Sort_It_configures_underlying_options_Sort()
-//        {
-//            var configuredValue = new [] { "diet<string>", "latin_name<string>", "min_length<number>" };
+       [Fact]
+       public void When_config_of_Sort_It_configures_underlying_options_Sort()
+       {
+           var configuredValue = new [] { "diet<string>", "latin_name<string>", "min_length<number>" };
 
-//            SUT.Sort(configuredValue);
+           SUT.Sort(configuredValue);
 
-//            _parameters.Sort.Should().ContainInOrder(configuredValue);
-//        }
+           _parameters.Sort.Should().ContainInOrder(configuredValue);
+       }
 
-//        [Fact]
-//        public void When_config_of_Sort_which_already_is_configures_It_uses_the_last_value_to_configure_underlying_options_Sort()
-//        {
-//            var configuredValue1 = new[] { "diet<string>", "latin_name<string>", "min_length<number>" };
-//            var configuredValue2 = new[] { "-diet<string>", "-latin_name<string>", "-min_length<number>" };
+       [Fact]
+       public void When_config_of_Sort_which_already_is_configures_It_uses_the_last_value_to_configure_underlying_options_Sort()
+       {
+           var configuredValue1 = new[] { "diet<string>", "latin_name<string>", "min_length<number>" };
+           var configuredValue2 = new[] { "-diet<string>", "-latin_name<string>", "-min_length<number>" };
 
-//            SUT.Sort(configuredValue1);
-//            SUT.Sort(configuredValue2);
+           SUT.Sort(configuredValue1);
+           SUT.Sort(configuredValue2);
 
-//            _parameters.Sort.Should().ContainInOrder(configuredValue2);
-//        }
+           _parameters.Sort.Should().ContainInOrder(configuredValue2);
+       }
 
-//        [Fact]
-//        public void When_config_of_IncludeDocs_It_configures_underlying_options_IncludeDocs()
-//        {
-//            const bool configuredValue = true;
+       [Fact]
+       public void When_config_of_IncludeDocs_It_configures_underlying_options_IncludeDocs()
+       {
+           const bool configuredValue = true;
 
-//            SUT.IncludeDocs(configuredValue);
+           SUT.IncludeDocs(configuredValue);
 
-//            _parameters.IncludeDocs.Should().Be(configuredValue);
-//        }
+           _parameters.IncludeDocs.Should().Be(configuredValue);
+       }
 
-//        [Fact]
-//        public void When_config_of_Stale_It_configures_underlying_options_Stale()
-//        {
-//            var configuredValue = Stale.UpdateAfter;
+       [Fact]
+       public void When_config_of_Stale_It_configures_underlying_options_Stale()
+       {
+           var configuredValue = Stale.UpdateAfter;
 
-//            SUT.Stale(configuredValue);
+           SUT.Stale(configuredValue);
 
-//            _parameters.Stale.Should().Be(configuredValue);
-//        }
+           _parameters.Stale.Should().Be(configuredValue);
+       }
 
-//        [Fact]
-//        public void When_config_of_Limit_It_configures_underlying_options_Limit()
-//        {
-//            const int configuredValue = 10;
+       [Fact]
+       public void When_config_of_Limit_It_configures_underlying_options_Limit()
+       {
+           const int configuredValue = 10;
 
-//            SUT.Limit(configuredValue);
+           SUT.Limit(configuredValue);
 
-//            _parameters.Limit.Should().Be(configuredValue);
-//        }
+           _parameters.Limit.Should().Be(configuredValue);
+       }
 
-//        [Fact]
-//        public void When_config_of_GroupField_It_configures_underlying_options_GroupField()
-//        {
-//            const string configuredValue = "name";
+       [Fact]
+       public void When_config_of_GroupField_It_configures_underlying_options_GroupField()
+       {
+           const string configuredValue = "name";
 
-//            SUT.GroupField(configuredValue);
+           SUT.GroupField(configuredValue);
 
-//            _parameters.GroupField.Should().Be(configuredValue);
-//        }
+           _parameters.GroupField.Should().Be(configuredValue);
+       }
 
-//        [Fact]
-//        public void When_config_of_GroupLimit_It_configures_underlying_options_GroupLimit()
-//        {
-//            const int configuredValue = 10;
+       [Fact]
+       public void When_config_of_GroupLimit_It_configures_underlying_options_GroupLimit()
+       {
+           const int configuredValue = 10;
 
-//            SUT.GroupLimit(configuredValue);
+           SUT.GroupLimit(configuredValue);
 
-//            _parameters.GroupLimit.Should().Be(configuredValue);
-//        }
+           _parameters.GroupLimit.Should().Be(configuredValue);
+       }
 
-//        [Fact]
-//        public void When_config_of_GroupSort_It_configures_underlying_options_GroupSort()
-//        {
-//            var configuredValue = new[] { "a", "b", "c" };
+       [Fact]
+       public void When_config_of_GroupSort_It_configures_underlying_options_GroupSort()
+       {
+           var configuredValue = new[] { "a", "b", "c" };
 
-//            SUT.GroupSort(configuredValue);
+           SUT.GroupSort(configuredValue);
 
-//            _parameters.GroupSort.Should().ContainInOrder(configuredValue);
-//        }
+           _parameters.GroupSort.Should().ContainInOrder(configuredValue);
+       }
 
-//        [Fact]
-//        public void When_config_of_Counts_It_configures_underlying_options_Counts()
-//        {
-//            var configuredValue = new[] { "a", "b", "c" };
+       [Fact]
+       public void When_config_of_Counts_It_configures_underlying_options_Counts()
+       {
+           var configuredValue = new[] { "a", "b", "c" };
 
-//            SUT.Counts(configuredValue);
+           SUT.Counts(configuredValue);
 
-//            _parameters.Counts.Should().ContainInOrder(configuredValue);
-//        }
+           _parameters.Counts.Should().ContainInOrder(configuredValue);
+       }
 
-//        [Fact]
-//        public void When_config_of_Ranges_It_configures_underlying_options_Ranges()
-//        {
-//            var configuredValue = new
-//            {
-//                min_length = new { minlight = "[0 TO 100]", minheavy = "{101 TO Infinity}" },
-//                max_length = new { maxlight = "[0 TO 100]", maxheavy = "{101 TO Infinity}" }
-//            };
+       [Fact]
+       public void When_config_of_Ranges_It_configures_underlying_options_Ranges()
+       {
+           var configuredValue = new
+           {
+               min_length = new { minlight = "[0 TO 100]", minheavy = "{101 TO Infinity}" },
+               max_length = new { maxlight = "[0 TO 100]", maxheavy = "{101 TO Infinity}" }
+           };
 
-//            SUT.Ranges(configuredValue);
+           SUT.Ranges(configuredValue);
 
-//            _parameters.Ranges.Should().BeSameAs(configuredValue);
-//        }
+           _parameters.Ranges.Should().BeSameAs(configuredValue);
+       }
 
-//        [Fact]
-//        public void When_config_of_DrillDown_It_configures_underlying_DrillDown()
-//        {
-//            var configuredfieldName = "configuredfieldName";
-//            var configuredfieldValue = "configuredfielValue";
+       [Fact]
+       public void When_config_of_DrillDown_It_configures_underlying_DrillDown()
+       {
+           var configuredfieldName = "configuredfieldName";
+           var configuredfieldValue = "configuredfielValue";
 
-//            SUT.DrillDown(configuredfieldName, configuredfieldValue);
+           SUT.DrillDown(configuredfieldName, configuredfieldValue);
 
-//            _parameters.DrillDown.Should().NotBeNull();
-//            _parameters.DrillDown.Value.Key.Should().Be(configuredfieldName);
-//            _parameters.DrillDown.Value.Value.Should().Be(configuredfieldValue);
-//        }
-//    }
-//}
+           _parameters.DrillDown.Should().NotBeNull();
+           _parameters.DrillDown.Value.Key.Should().Be(configuredfieldName);
+           _parameters.DrillDown.Value.Value.Should().Be(configuredfieldValue);
+       }
+   }
+}
