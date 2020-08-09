@@ -42,8 +42,7 @@
         public const string DocDelCount = "doc_del_count";
         public const string PurgeSeq = "purge_seq";
         public const string CompactRunning = "compact_running";
-        public const string DiskSize = "disk_size";
-        public const string DataSize = "data_size";
+        public const string Sizes = "sizes";
         public const string DiskFormatVersion = "disk_format_version";
 
         public const string DesignDoc = "ddoc";
