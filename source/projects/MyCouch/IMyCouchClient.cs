@@ -65,7 +65,7 @@ namespace MyCouch
         ///// <summary>
         ///// Used to access Search Indexes.
         ///// </summary>
-        //ISearches Searches { get; }
+        ISearches Searches { get; }
 
         /// <summary>
         /// View oriented API operations, for accessing and managing views.

@@ -95,7 +95,7 @@ namespace MyCouch
         ///// <summary>
         ///// Used e.g. for bootrstraping <see cref="IMyCouchClient.Searches"/>.
         ///// </summary>
-        //public Func<IDbConnection, ISearches> SearchesFn { get; set; }
+        public Func<IDbConnection, ISearches> SearchesFn { get; set; }
 
         /// <summary>
         /// Used e.g. for bootstraping <see cref="IMyCouchClient.Views"/>.
@@ -120,7 +120,7 @@ namespace MyCouch
             ConfigureDocumentsFn();
             ConfigureEntitiesFn();
             ConfigureQueriesFn();
-            //ConfigureSearchesFn();
+            ConfigureSearchesFn();
             ConfigureViewsFn();
         }
 
@@ -182,13 +182,13 @@ namespace MyCouch
                 SerializerFn());
         }
 
-        //protected virtual void ConfigureSearchesFn()
-        //{
-        //    SearchesFn = cn => new Searches(
-        //        cn,
-        //        DocumentSerializerFn(),
-        //        SerializerFn());
-        //}
+        protected virtual void ConfigureSearchesFn()
+        {
+           SearchesFn = cn => new Searches(
+               cn,
+               DocumentSerializerFn(),
+               SerializerFn());
+        }
 
         protected virtual void ConfigureViewsFn()
         {
