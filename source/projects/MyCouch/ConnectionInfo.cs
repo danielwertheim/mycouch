@@ -32,6 +32,7 @@ namespace MyCouch
         public bool AllowAutoRedirect { get; set; } = false;
         public bool ExpectContinue { get; set; } = false;
         public bool UseProxy { get; set; } = true;
+        public IWebProxy Proxy { get; set; } = null;
 
         protected ConnectionInfo(Uri address)
         {
