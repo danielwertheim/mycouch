@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Net;
 using EnsureThat;
 using MyCouch.Net;
 
