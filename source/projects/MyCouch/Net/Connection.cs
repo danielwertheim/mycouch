@@ -62,6 +62,7 @@ namespace MyCouch.Net
                 AllowAutoRedirect = connectionInfo.AllowAutoRedirect,
                 UseProxy = connectionInfo.UseProxy
             };
+            handler.Proxy = connectionInfo.Proxy;
 
             var client = new HttpClient(handler, true)
             {
