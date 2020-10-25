@@ -1,7 +1,7 @@
 name: $(SemVer)
 
 variables:
-  BuildRev: $[counter(format('{0:yyyyMMdd}', pipeline.startTime), 1)]
+  BuildConfiguration: Release
   SemVer: $[ variables['Build.SourceBranchName'] ]
   CommitId: $(Build.SourceVersion)
 
