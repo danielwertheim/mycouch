@@ -5,6 +5,7 @@ variables:
   BuildRev: $[counter(format('{0:yyyyMMdd}', pipeline.startTime), 1)]
   SemVer: $[format('{0:yyyy}.{0:MM}.{0:dd}-pre{1}', pipeline.startTime, variables.BuildRev)]
   CommitId: $(Build.SourceVersion)
+  MyCouch_Pass: $(MyCouch_Pass)
 
 trigger:
   batch: true
