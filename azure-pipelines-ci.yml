@@ -20,7 +20,7 @@ pr:
 resources:
   containers:
   - container: couchdb
-    image: couchdb:2.3.1
+    image: ibmcom/couchdb3:3.1.0
     ports:
     - 5984:5984
     env:
