@@ -25,6 +25,8 @@ stages:
 
     - task: DotNetCoreCLI@2
       displayName: 'IntegrationTests'
+      env:
+        MyCouch_Pass: $(MyCouch_Pass)
       inputs:
         command: test
         projects: 'source/tests/**/IntegrationTests.csproj'

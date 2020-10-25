@@ -4,7 +4,6 @@ variables:
   BuildConfiguration: Release
   SemVer: $[ variables['Build.SourceBranchName'] ]
   CommitId: $(Build.SourceVersion)
-  MyCouch_Pass: $(MyCouch_Pass)
 
 trigger:
   batch: true
