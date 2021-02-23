@@ -71,11 +71,6 @@ namespace MyCouch.Serialization
             base.WriteEndObject();
         }
 
-        public override void WriteNull()
-        {
-            base.WriteRaw(string.Empty);
-        }
-
         public override void WritePropertyName(string name)
         {
             if (Level > 1 || name == CouchIdMemberName || name == CouchRevMemberName)

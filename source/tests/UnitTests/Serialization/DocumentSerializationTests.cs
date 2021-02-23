@@ -3,6 +3,7 @@ using MyCouch.EntitySchemes;
 using MyCouch.EntitySchemes.Reflections;
 using MyCouch.Serialization;
 using MyCouch.Serialization.Meta;
+using System.Collections.Generic;
 using Xunit;
 
 namespace UnitTests.Serialization
@@ -91,6 +92,23 @@ namespace UnitTests.Serialization
             var json = SUT.Serialize(model);
 
             json.Should().NotContain("\"$doctype\":\"modelentity\"");
+        }
+
+        [Fact]
+        public void When_serializing_anonymous_entity_It_will_contain_null_values_in_json()
+        {
+            var model = new
+            {
+                Id = "abc",
+                Rev = "505e07eb-41a4-4bb1-8a4c-fb6453f9927d",
+                Value = "Some value.",
+                NullValue = (string)null,
+                Dict = new Dictionary<string, object> { { "prop1", (string)null }, { "prop2", (string)null } }
+            };
+
+            var json = SUT.Serialize(model);
+
+            json.Should().Contain("\"prop1\":null");
         }
 
         [Fact]
