@@ -17,15 +17,18 @@
 *.local.json
 *.local.ini
 
-# deploy
-[Aa]rtifacts/
-
 # misc
 *~
 *.swp
 *.sdf
 *.orig
 *.pfx
+
+# rider
+.idea
+
+# vs-code
+.vscode
 
 # resharper
 _ReSharper.*
