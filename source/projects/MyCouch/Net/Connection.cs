@@ -164,7 +164,11 @@ namespace MyCouch.Net
 
         protected virtual string GenerateRequestUri(HttpRequest httpRequest)
         {
-            return $"{Address.ToString().TrimEnd('/')}/{httpRequest.RelativeUrl.TrimStart('/')}";
+            var relative = httpRequest.RelativeUrl.TrimStart('/');
+            
+            return relative.StartsWith("_design%2F") 
+                ? $"{Address.ToString().TrimEnd('/')}/{Uri.UnescapeDataString(relative)}" 
+                : $"{Address.ToString().TrimEnd('/')}/{relative}";
         }
     }
 }
