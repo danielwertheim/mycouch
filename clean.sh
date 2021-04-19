@@ -1,0 +1,1 @@
+git clean -dfx -e clean.sh -e source/tests/IntegrationTests/integrationtests.local.ini -e .env
