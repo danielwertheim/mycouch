@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using FluentAssertions;
 using IntegrationTests.TestFixtures;
 using MyCouch;
@@ -20,6 +21,16 @@ namespace IntegrationTests.CoreTests
         {
             ArtistsById = data.Init(Environment);
             SUT = DbClient.Views;
+        }
+        
+        [MyFact(TestScenarios.ViewsContext)]
+        public async Task Can_retrieve_views()
+        {
+            var id = $"_design/{ClientTestData.Views.ArtistsAlbumsViewId.DesignDocument}";
+            
+            var response = await DbClient.Documents.GetAsync(id);
+            
+            response.Should().BeSuccessfulGetAnyRev(id);
         }
 
         [MyFact(TestScenarios.ViewsContext)]
