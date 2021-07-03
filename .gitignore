@@ -12,18 +12,6 @@
 *.suo
 *.cache
 
-.env
-*.local
-*.local.json
-*.local.ini
-
-# misc
-*~
-*.swp
-*.sdf
-*.orig
-*.pfx
-
 # rider
 .idea
 
@@ -35,6 +23,19 @@ _ReSharper.*
 *.resharper*
 *.[Rr]e[Ss]harper.user
 *.DotSettings.user
+
+# env config etc
+.env
+*.local
+*.local.json
+*.local.ini
+
+# misc
+*~
+*.swp
+*.sdf
+*.orig
+*.pfx
 
 #windows stuff
 Thumbs.db

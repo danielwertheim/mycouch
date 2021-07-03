@@ -1,12 +1,30 @@
+# top-most EditorConfig file
 root = true
 
+# Baseline
 [*]
-end_of_line = crlf
+charset = utf-8
 insert_final_newline = true
 indent_style = space
+indent_size = 4
+trim_trailing_whitespace = true
+max_line_length = 160
 
-[*.props, *.csproj, *.yml, *.json]
+[*.{yml,json}]
 indent_size = 2
 
+# Xml files (data, config, projects)
+[*.{xml,props,targets,config,csproj}]
+indent_size = 2
+
+# Xml project files
+[*.{csproj}]
+indent_size = 2
+
+# Shell scripts
+[*.sh]
+end_of_line = lf
+
+# C#
 [*.cs]
-indent_size = 4
+dotnet_sort_system_directives_first = true
