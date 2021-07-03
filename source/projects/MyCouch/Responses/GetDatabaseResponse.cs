@@ -27,9 +27,11 @@ namespace MyCouch.Responses
         public DbSizes Sizes { get; set; }
 
         [Obsolete("Use sizes.file instead")]
+        [JsonProperty("disk_size")]
         public long DiskSize { get; set; }
 
         [Obsolete("Use sizes.active instead")]
+        [JsonProperty("data_size")]
         public long DataSize { get; set; }
 
         [JsonProperty(JsonScheme.DiskFormatVersion)]
