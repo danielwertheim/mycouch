@@ -492,7 +492,7 @@ namespace MyCouch.Testing
             Response = response;
         }
 
-        public void BeSuccessfulGet(string id, string rev)
+        private void SuccessfulGet(string id, string rev = null)
         {
             Response.RequestMethod.Should().Be(HttpMethod.Get);
             Response.IsSuccess.Should().BeTrue("StatusCode:" + Response.StatusCode);
@@ -503,8 +503,13 @@ namespace MyCouch.Testing
             Response.Content.Should().NotBeNullOrEmpty();
             Response.Id.Should().NotBeNullOrEmpty().And.Be(id);
             Response.Rev.Should().NotBeNullOrEmpty();
-            Response.Rev.Should().Be(rev);
+            if(rev != null)
+                Response.Rev.Should().Be(rev);
         }
+
+        public void BeSuccessfulGet(string id, string rev) => SuccessfulGet(id, rev);
+        
+        public void BeSuccessfulGetAnyRev(string id) => SuccessfulGet(id);
     }
 
     public class AttachmentResponseAssertions

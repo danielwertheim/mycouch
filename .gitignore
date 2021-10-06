@@ -12,13 +12,23 @@
 *.suo
 *.cache
 
+# rider
+.idea
+
+# vs-code
+.vscode
+
+# resharper
+_ReSharper.*
+*.resharper*
+*.[Rr]e[Ss]harper.user
+*.DotSettings.user
+
+# env config etc
 .env
 *.local
 *.local.json
 *.local.ini
-
-# deploy
-[Aa]rtifacts/
 
 # misc
 *~
@@ -26,12 +36,6 @@
 *.sdf
 *.orig
 *.pfx
-
-# resharper
-_ReSharper.*
-*.resharper*
-*.[Rr]e[Ss]harper.user
-*.DotSettings.user
 
 #windows stuff
 Thumbs.db
