@@ -81,6 +81,11 @@ namespace MyCouch.Testing
         {
             return new ReplicationResponseAssertions(response);
         }
+
+        public static PurgeResponseAssertions Should(this PurgeResponse response)
+        {
+            return new PurgeResponseAssertions(response);
+        }
     }
 
     public abstract class ResponseAssertions<T> where T : Response
@@ -671,6 +676,30 @@ namespace MyCouch.Testing
             Response.Reason.Should().BeNull();
             Response.Id.Should().Be(initialId);
             Response.Rev.Should().NotBeNullOrEmpty();
+        }
+    }
+
+    public class PurgeResponseAssertions
+    {
+        protected readonly PurgeResponse Response;
+
+        [DebuggerStepThrough]
+        public PurgeResponseAssertions(PurgeResponse response)
+        {
+            Response = response;
+        }
+
+        public void BeSuccessfulPurge(string initialId, string initialRev)
+        {
+            var codes = new[] { HttpStatusCode.Accepted, HttpStatusCode.Created };
+
+            Response.RequestMethod.Should().Be(HttpMethod.Post);
+            Response.IsSuccess.Should().BeTrue("StatusCode:" + Response.StatusCode);
+            codes.Should().Contain(Response.StatusCode);
+            Response.Error.Should().BeNull();
+            Response.Reason.Should().BeNull();
+            Response.Purged.SeqsById.Should().ContainKey(initialId);
+            Response.Purged.SeqsById[initialId].Contains(initialRev);
         }
     }
 

@@ -215,5 +215,22 @@ namespace MyCouch
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         Task<RawResponse> ShowAsync(QueryShowRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Purges the document that matches sent <paramref name="id"/> and <paramref name="rev"/>.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="rev"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<PurgeResponse> PurgeAsync(string id, string rev, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Purges the document that matches sent <paramref name="request"/>.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<PurgeResponse> PurgeAsync(PurgeRequest request, CancellationToken cancellationToken = default);
     }
 }

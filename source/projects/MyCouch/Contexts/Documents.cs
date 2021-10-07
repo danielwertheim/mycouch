@@ -21,10 +21,12 @@ namespace MyCouch.Contexts
         protected PutDocumentHttpRequestFactory PutDocumentHttpRequestFactory { get; set; }
         protected DeleteDocumentHttpRequestFactory DeleteDocumentHttpRequestFactory { get; set; }
         protected QueryShowHttpRequestFactory QueryShowHttpRequestFactory { get; set; }
+        protected PurgeHttpRequestFactory PurgeHttpRequestFactory { get; set; }
         protected DocumentResponseFactory DocumentReponseFactory { get; set; }
         protected DocumentHeaderResponseFactory DocumentHeaderReponseFactory { get; set; }
         protected BulkResponseFactory BulkReponseFactory { get; set; }
         protected RawResponseFactory RawResponseFactory { get; set; }
+        protected PurgeResponseFactory PurgeResponseFactory { get; set; }
 
         public ISerializer Serializer { get; private set; }
 
@@ -43,11 +45,13 @@ namespace MyCouch.Contexts
             PutDocumentHttpRequestFactory = new PutDocumentHttpRequestFactory();
             DeleteDocumentHttpRequestFactory = new DeleteDocumentHttpRequestFactory();
             QueryShowHttpRequestFactory = new QueryShowHttpRequestFactory(Serializer);
+            PurgeHttpRequestFactory = new PurgeHttpRequestFactory(Serializer);
 
             DocumentReponseFactory = new DocumentResponseFactory(Serializer);
             DocumentHeaderReponseFactory = new DocumentHeaderResponseFactory(Serializer);
             BulkReponseFactory = new BulkResponseFactory(Serializer);
             RawResponseFactory = new RawResponseFactory(Serializer);
+            PurgeResponseFactory = new PurgeResponseFactory(Serializer);
         }
 
         public virtual async Task<BulkResponse> BulkAsync(BulkRequest request, CancellationToken cancellationToken = default)
@@ -187,6 +191,21 @@ namespace MyCouch.Contexts
             using (var res = await SendAsync(httpRequest, cancellationToken).ForAwait())
             {
                 return await RawResponseFactory.CreateAsync(res).ForAwait();
+            }
+        }
+
+        public virtual Task<PurgeResponse> PurgeAsync(string id, string rev, CancellationToken cancellationToken = default)
+        {
+            return PurgeAsync(new PurgeRequest(id, rev), cancellationToken);
+        }
+
+        public virtual async Task<PurgeResponse> PurgeAsync(PurgeRequest request, CancellationToken cancellationToken = default)
+        {
+            var httpRequest = PurgeHttpRequestFactory.Create(request);
+
+            using (var res = await SendAsync(httpRequest, cancellationToken).ForAwait())
+            {
+                return await PurgeResponseFactory.CreateAsync(res).ForAwait();
             }
         }
     }
