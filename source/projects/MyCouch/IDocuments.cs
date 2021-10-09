@@ -231,6 +231,6 @@ namespace MyCouch
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<PurgeResponse> PurgeAsync(PurgeRequest request, CancellationToken cancellationToken = default);
+        Task<PurgeResponse> PurgeAsync(PurgeDocumentRequest request, CancellationToken cancellationToken = default);
     }
 }

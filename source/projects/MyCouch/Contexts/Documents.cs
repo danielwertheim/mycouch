@@ -21,7 +21,7 @@ namespace MyCouch.Contexts
         protected PutDocumentHttpRequestFactory PutDocumentHttpRequestFactory { get; set; }
         protected DeleteDocumentHttpRequestFactory DeleteDocumentHttpRequestFactory { get; set; }
         protected QueryShowHttpRequestFactory QueryShowHttpRequestFactory { get; set; }
-        protected PurgeHttpRequestFactory PurgeHttpRequestFactory { get; set; }
+        protected PurgeDocumentHttpRequestFactory PurgeDocumentHttpRequestFactory { get; set; }
         protected DocumentResponseFactory DocumentReponseFactory { get; set; }
         protected DocumentHeaderResponseFactory DocumentHeaderReponseFactory { get; set; }
         protected BulkResponseFactory BulkReponseFactory { get; set; }
@@ -45,7 +45,7 @@ namespace MyCouch.Contexts
             PutDocumentHttpRequestFactory = new PutDocumentHttpRequestFactory();
             DeleteDocumentHttpRequestFactory = new DeleteDocumentHttpRequestFactory();
             QueryShowHttpRequestFactory = new QueryShowHttpRequestFactory(Serializer);
-            PurgeHttpRequestFactory = new PurgeHttpRequestFactory(Serializer);
+            PurgeDocumentHttpRequestFactory = new PurgeDocumentHttpRequestFactory(Serializer);
 
             DocumentReponseFactory = new DocumentResponseFactory(Serializer);
             DocumentHeaderReponseFactory = new DocumentHeaderResponseFactory(Serializer);
@@ -196,12 +196,12 @@ namespace MyCouch.Contexts
 
         public virtual Task<PurgeResponse> PurgeAsync(string id, string rev, CancellationToken cancellationToken = default)
         {
-            return PurgeAsync(new PurgeRequest(id, rev), cancellationToken);
+            return PurgeAsync(new PurgeDocumentRequest(id, rev), cancellationToken);
         }
 
-        public virtual async Task<PurgeResponse> PurgeAsync(PurgeRequest request, CancellationToken cancellationToken = default)
+        public virtual async Task<PurgeResponse> PurgeAsync(PurgeDocumentRequest request, CancellationToken cancellationToken = default)
         {
-            var httpRequest = PurgeHttpRequestFactory.Create(request);
+            var httpRequest = PurgeDocumentHttpRequestFactory.Create(request);
 
             using (var res = await SendAsync(httpRequest, cancellationToken).ForAwait())
             {

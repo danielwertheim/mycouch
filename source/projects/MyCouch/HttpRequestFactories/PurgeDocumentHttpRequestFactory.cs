@@ -6,18 +6,18 @@ using MyCouch.Serialization;
 
 namespace MyCouch.HttpRequestFactories
 {
-    public class PurgeHttpRequestFactory
+    public class PurgeDocumentHttpRequestFactory
     {
         protected ISerializer Serializer { get; private set; }
 
-        public PurgeHttpRequestFactory(ISerializer serializer)
+        public PurgeDocumentHttpRequestFactory(ISerializer serializer)
         {
             Ensure.Any.IsNotNull(serializer, nameof(serializer));
 
             Serializer = serializer;
         }
 
-        public virtual HttpRequest Create(PurgeRequest request)
+        public virtual HttpRequest Create(PurgeDocumentRequest request)
         {
             Ensure.Any.IsNotNull(request, nameof(request));
 
@@ -26,7 +26,7 @@ namespace MyCouch.HttpRequestFactories
                 .SetJsonContent(Serializer.ToJson(request));
         }
 
-        protected virtual string GenerateRelativeUrl(PurgeRequest request)
+        protected virtual string GenerateRelativeUrl(PurgeDocumentRequest request)
         {
             return "/_purge";
         }
