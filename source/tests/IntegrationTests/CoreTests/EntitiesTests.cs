@@ -186,6 +186,28 @@ namespace IntegrationTests.CoreTests
         }
 
         [MyFact(TestScenarios.EntitiesContext)]
+        public void When_PURGE_of_an_existing_entity_Then_the_document_is_purged()
+        {
+            var artist = ClientTestData.Artists.CreateArtist();
+            SUT.PostAsync(artist).Wait();
+
+            var response = SUT.PurgeAsync(artist).Result;
+
+            response.Should().BeSuccessfulPurge(artist.ArtistId, artist.ArtistRev);
+        }
+
+        [MyFact(TestScenarios.EntitiesContext)]
+        public void When_PURGE_of_an_existing_entity_using_anonymous_Then_the_document_is_purged()
+        {
+            var artist = ClientTestData.Artists.CreateArtist();
+            SUT.PostAsync(artist).Wait();
+
+            var response = SUT.PurgeAsync(new { Id = artist.ArtistId, Rev = artist.ArtistRev }).Result;
+
+            response.Should().BeSuccessfulPurge(artist.ArtistId, artist.ArtistRev);
+        }
+
+        [MyFact(TestScenarios.EntitiesContext)]
         public void Flow_tests()
         {
             var artists = ClientTestData.Artists.CreateArtists(2);
@@ -213,8 +235,17 @@ namespace IntegrationTests.CoreTests
             put1.Result.Should().BeSuccessfulPut(get1.Result.Id, i => i.ArtistId, i => i.ArtistRev);
             put2.Result.Should().BeSuccessfulPut(get2.Result.Id, i => i.ArtistId, i => i.ArtistRev);
 
-            SUT.DeleteAsync(put1.Result.Content).Result.Should().BeSuccessfulDelete(put1.Result.Id, e => e.ArtistId, e => e.ArtistRev);
-            SUT.DeleteAsync(put2.Result.Content).Result.Should().BeSuccessfulDelete(put2.Result.Id, e => e.ArtistId, e => e.ArtistRev);
+            var delete1 = SUT.DeleteAsync(put1.Result.Content);
+            var delete2 = SUT.DeleteAsync(put2.Result.Content);
+
+            delete1.Result.Should().BeSuccessfulDelete(put1.Result.Id, e => e.ArtistId, e => e.ArtistRev);
+            delete2.Result.Should().BeSuccessfulDelete(put2.Result.Id, e => e.ArtistId, e => e.ArtistRev);
+
+            var purge1 = SUT.PurgeAsync(delete1.Result);
+            var purge2 = SUT.PurgeAsync(delete2.Result);
+
+            purge1.Result.Should().BeSuccessfulPurge(delete1.Result.Id, delete1.Result.Rev);
+            purge2.Result.Should().BeSuccessfulPurge(delete2.Result.Id, delete2.Result.Rev);
         }
 
         [MyFact(TestScenarios.EntitiesContext)]

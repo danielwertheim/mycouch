@@ -19,17 +19,23 @@ namespace UnitTests.Responses.Factories
         [Fact]
         public void When_response_for_purge_success_It_especifies_an_id_and_rev()
         {
-            var message = new HttpResponseMessage {
-                StatusCode = HttpStatusCode.Accepted,
-                RequestMessage = new HttpRequestMessage(HttpMethod.Post, "/_purge"),
-                Content = new StringContent("{\"purge_seq\":null,\"purged\":{\"my_doc_id\":[\"my_doc_rev\"]}}")
-            };
+            var message = CreateResponse(HttpStatusCode.Accepted, HttpMethod.Post, "/_purge", "{\"purge_seq\":null,\"purged\":{\"my_doc_id\":[\"my_doc_rev\"]}}");
             var r = SUT.CreateAsync(message);
 
             r.Result.IsSuccess.Should().BeTrue();
             r.Result.PurgeSeq.Should().BeNull();
             r.Result.Purged.SeqsById.Should().ContainKey("my_doc_id");
             r.Result.Purged.SeqsById["my_doc_id"].Should().Contain("my_doc_rev");
+        }
+
+        protected virtual HttpResponseMessage CreateResponse(HttpStatusCode statusCode, HttpMethod method, string requestUri, string content)
+        {
+            return new HttpResponseMessage 
+            {
+                StatusCode = statusCode,
+                RequestMessage = new HttpRequestMessage(method, requestUri),
+                Content = new StringContent(content)
+            };
         }
     }
 }

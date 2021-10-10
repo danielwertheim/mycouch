@@ -21,8 +21,10 @@ namespace MyCouch.Contexts
         protected PostEntityHttpRequestFactory PostHttpRequestFactory { get; set; }
         protected PutEntityHttpRequestFactory PutHttpRequestFactory { get; set; }
         protected DeleteEntityHttpRequestFactory DeleteHttpRequestFactory { get; set; }
+        protected PurgeEntityHttpRequestFactory PurgeHttpRequestFactory { get; set; }
 
         protected EntityResponseFactory EntityResponseFactory { get; set; }
+        protected PurgeResponseFactory PurgeResponseFactory { get; set; }
 
         public Entities(IDbConnection connection, ISerializer serializer, IEntityReflector entityReflector)
             : base(connection)
@@ -37,6 +39,8 @@ namespace MyCouch.Contexts
             PostHttpRequestFactory = new PostEntityHttpRequestFactory(Serializer);
             PutHttpRequestFactory = new PutEntityHttpRequestFactory(Reflector, Serializer);
             DeleteHttpRequestFactory = new DeleteEntityHttpRequestFactory(Reflector);
+            PurgeHttpRequestFactory = new PurgeEntityHttpRequestFactory(Reflector, Serializer);
+            PurgeResponseFactory = new PurgeResponseFactory(Serializer);
         }
 
         public virtual Task<GetEntityResponse<T>> GetAsync<T>(string id, string rev = null, CancellationToken cancellationToken = default) where T : class
@@ -149,6 +153,21 @@ namespace MyCouch.Contexts
                 Reflector.RevMember.SetValueTo(entityResponse.Content, entityResponse.Rev);
 
             return entityResponse;
+        }
+
+        public virtual Task<PurgeResponse> PurgeAsync<T>(T entity, CancellationToken cancellationToken = default) where T : class
+        {
+            return PurgeAsync(new PurgeEntityRequest<T>(entity), cancellationToken);
+        }
+
+        public virtual async Task<PurgeResponse> PurgeAsync<T>(PurgeEntityRequest<T> request, CancellationToken cancellationToken = default) where T : class
+        {
+            var httpRequest = PurgeHttpRequestFactory.Create(request);
+
+            using (var res = await SendAsync(httpRequest, cancellationToken).ForAwait())
+            {
+                return await PurgeResponseFactory.CreateAsync(res).ForAwait();
+            }
         }
     }
 }
