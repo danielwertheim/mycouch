@@ -13,6 +13,7 @@ namespace MyCouch.Contexts
     public class Documents : ApiContextBase<IDbConnection>, IDocuments
     {
         protected BulkHttpRequestFactory BulkHttpRequestFactory { get; set; }
+        protected PurgeHttpRequestFactory PurgeHttpRequestFactory { get; set; }
         protected CopyDocumentHttpRequestFactory CopyDocumentHttpRequestFactory { get; set; }
         protected ReplaceDocumentHttpRequestFactory ReplaceDocumentHttpRequestFactory { get; set; }
         protected HeadDocumentHttpRequestFactory HeadDocumentHttpRequestFactory { get; set; }
@@ -21,7 +22,6 @@ namespace MyCouch.Contexts
         protected PutDocumentHttpRequestFactory PutDocumentHttpRequestFactory { get; set; }
         protected DeleteDocumentHttpRequestFactory DeleteDocumentHttpRequestFactory { get; set; }
         protected QueryShowHttpRequestFactory QueryShowHttpRequestFactory { get; set; }
-        protected PurgeDocumentHttpRequestFactory PurgeDocumentHttpRequestFactory { get; set; }
         protected DocumentResponseFactory DocumentReponseFactory { get; set; }
         protected DocumentHeaderResponseFactory DocumentHeaderReponseFactory { get; set; }
         protected BulkResponseFactory BulkReponseFactory { get; set; }
@@ -37,6 +37,7 @@ namespace MyCouch.Contexts
 
             Serializer = serializer;
             BulkHttpRequestFactory = new BulkHttpRequestFactory();
+            PurgeHttpRequestFactory = new PurgeHttpRequestFactory(Serializer);
             CopyDocumentHttpRequestFactory = new CopyDocumentHttpRequestFactory();
             ReplaceDocumentHttpRequestFactory = new ReplaceDocumentHttpRequestFactory();
             HeadDocumentHttpRequestFactory = new HeadDocumentHttpRequestFactory();
@@ -45,7 +46,6 @@ namespace MyCouch.Contexts
             PutDocumentHttpRequestFactory = new PutDocumentHttpRequestFactory();
             DeleteDocumentHttpRequestFactory = new DeleteDocumentHttpRequestFactory();
             QueryShowHttpRequestFactory = new QueryShowHttpRequestFactory(Serializer);
-            PurgeDocumentHttpRequestFactory = new PurgeDocumentHttpRequestFactory(Serializer);
 
             DocumentReponseFactory = new DocumentResponseFactory(Serializer);
             DocumentHeaderReponseFactory = new DocumentHeaderResponseFactory(Serializer);
@@ -61,6 +61,16 @@ namespace MyCouch.Contexts
             using (var res = await SendAsync(httpRequest, cancellationToken).ForAwait())
             {
                 return await BulkReponseFactory.CreateAsync(res).ForAwait();
+            }
+        }
+
+        public virtual async Task<PurgeResponse> PurgeAsync(PurgeRequest request, CancellationToken cancellationToken = default)
+        {
+            var httpRequest = PurgeHttpRequestFactory.Create(request);
+
+            using (var res = await SendAsync(httpRequest, cancellationToken).ForAwait())
+            {
+                return await PurgeResponseFactory.CreateAsync(res).ForAwait();
             }
         }
 
@@ -191,21 +201,6 @@ namespace MyCouch.Contexts
             using (var res = await SendAsync(httpRequest, cancellationToken).ForAwait())
             {
                 return await RawResponseFactory.CreateAsync(res).ForAwait();
-            }
-        }
-
-        public virtual Task<PurgeResponse> PurgeAsync(string id, string rev, CancellationToken cancellationToken = default)
-        {
-            return PurgeAsync(new PurgeDocumentRequest(id, rev), cancellationToken);
-        }
-
-        public virtual async Task<PurgeResponse> PurgeAsync(PurgeDocumentRequest request, CancellationToken cancellationToken = default)
-        {
-            var httpRequest = PurgeDocumentHttpRequestFactory.Create(request);
-
-            using (var res = await SendAsync(httpRequest, cancellationToken).ForAwait())
-            {
-                return await PurgeResponseFactory.CreateAsync(res).ForAwait();
             }
         }
     }

@@ -251,7 +251,7 @@ namespace IntegrationTests.CoreTests
         {
             var r = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
 
-            var response = SUT.PurgeAsync(r.Id, r.Rev).Result;
+            var response = SUT.PurgeAsync(new PurgeRequest().Include(r.Id, r.Rev)).Result;
 
             response.Should().BeSuccessfulPurge(r.Id, r.Rev);
         }
@@ -290,11 +290,10 @@ namespace IntegrationTests.CoreTests
             delete1.Result.Should().BeSuccessfulDelete(put1.Result.Id);
             delete2.Result.Should().BeSuccessfulDelete(put2.Result.Id);
 
-            var purge1 = SUT.PurgeAsync(delete1.Result.Id, delete1.Result.Rev);
-            var purge2 = SUT.PurgeAsync(delete2.Result.Id, delete2.Result.Rev);
-
-            purge1.Result.Should().BeSuccessfulPurge(delete1.Result.Id, delete1.Result.Rev);
-            purge2.Result.Should().BeSuccessfulPurge(delete2.Result.Id, delete2.Result.Rev);
+            var purgeReq = new PurgeRequest()
+                .Include(delete1.Result.Id, delete1.Result.Rev)
+                .Include(delete2.Result.Id, delete2.Result.Rev);
+            SUT.PurgeAsync(purgeReq).Result.Should().BeSuccessfulPurge(purgeReq.SeqsById);
         }
     }
 }

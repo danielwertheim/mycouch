@@ -28,11 +28,11 @@ namespace MyCouch.HttpRequestFactories
 
             var entityId = GetEntityId(request);
             var entityRev = GetEntityRev(request);
-            var docRequest = new PurgeDocumentRequest(entityId, entityRev);
+            var data = new PurgeData(entityId, entityRev);
 
             return new HttpRequest(HttpMethod.Post, GenerateRelativeUrl(entityId, entityRev))
                 .SetRequestTypeHeader(request.GetType())
-                .SetJsonContent(Serializer.ToJson(docRequest));
+                .SetJsonContent(Serializer.ToJson(data));
         }
 
         protected virtual string GetEntityId<T>(PurgeEntityRequest<T> request) where T : class
