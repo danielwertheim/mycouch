@@ -352,6 +352,23 @@ namespace MyCouch
         /// <returns></returns>
         Task<IEnumerable<TIncludedDoc>> GetIncludedDocByKeysAsync<TIncludedDoc>(ViewIdentity view, object[] keys, CancellationToken cancellationToken = default) where TIncludedDoc : class;
 
+        /// <summary>
+        /// Purges a document by extracting id and rev from sent entity.
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="entity"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<bool> PurgeAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : class;
+
+        /// <summary>
+        /// Issues a bulk delete of passed <see cref="DocumentHeader"/> in <paramref name="documents"/>.
+        /// </summary>
+        /// <param name="documents"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<PurgeData> PurgeManyAsync(DocumentHeader[] documents, CancellationToken cancellationToken = default);
+
         Task<IEnumerable<Row>> QueryAsync(Query query, CancellationToken cancellationToken = default);
         Task<IEnumerable<Row<TValue>>> QueryAsync<TValue>(Query query, CancellationToken cancellationToken = default);
         Task<IEnumerable<Row<TValue, TIncludedDoc>>> QueryAsync<TValue, TIncludedDoc>(Query query, CancellationToken cancellationToken = default);

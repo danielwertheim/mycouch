@@ -28,6 +28,21 @@ namespace MyCouch.Requests
             else SeqsById[id] = foundRevs.Union(revs).ToArray();
 
             return this;
-        } 
+        }
+
+        /// <summary>
+        /// Includes documents for purge
+        /// </summary>
+        /// <param name="headers"></param>
+        /// <returns></returns>
+        public virtual PurgeRequest Include(params DocumentHeader[] headers)
+        {
+            EnsureArg.HasItems(headers, nameof(headers));
+
+            foreach (var header in headers)
+                Include(header.Id, header.Rev);
+
+            return this;
+        }
     }
 }
