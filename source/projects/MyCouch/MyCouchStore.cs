@@ -529,47 +529,6 @@ namespace MyCouch
             return response.Rows.Where(r => r.IncludedDoc != null).Select(r => r.IncludedDoc);
         }
 
-        public virtual async Task<bool> PurgeAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default)
-            where TEntity : class
-        {
-            ThrowIfDisposed();
-
-            EnsureArg.IsNotNull(entity, nameof(entity));
-
-            var rev = Client.Entities.Reflector.RevMember.GetValueFrom(entity);
-            if (string.IsNullOrWhiteSpace(rev))
-            {
-                var id = Client.Entities.Reflector.IdMember.GetValueFrom(entity);
-                var head = await GetHeaderAsync(id, null, cancellationToken).ForAwait();
-                if (head == null)
-                    return false;
-
-                Client.Entities.Reflector.RevMember.SetValueTo(entity, head.Rev);
-            }
-
-            var response = await Client.Entities.PurgeAsync(entity, cancellationToken).ForAwait();
-
-            ThrowIfNotSuccessfulResponse(response);
-
-            return true;
-        }
-
-        public virtual async Task<PurgeData> PurgeManyAsync(DocumentHeader[] documents, CancellationToken cancellationToken = default)
-        {
-            ThrowIfDisposed();
-
-            EnsureArg.HasItems(documents, nameof(documents));
-
-            var request = new PurgeRequest()
-                .Include(documents);
-
-            var response = await Client.Documents.PurgeAsync(request, cancellationToken);
-
-            ThrowIfNotSuccessfulResponse(response);
-
-            return response.Purged;
-        }
-
         public virtual async Task<IEnumerable<Row>> QueryAsync(Query query, CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
