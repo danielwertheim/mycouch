@@ -700,7 +700,7 @@ namespace MyCouch.Testing
             Response.Error.Should().BeNull();
             Response.Reason.Should().BeNull();
             Response.Purged.SeqsById.Should().ContainKey(initialId);
-            Response.Purged.SeqsById[initialId].Contains(initialRev);
+            Response.Purged.SeqsById[initialId].Should().Contain(initialRev);
         }
 
         public void BeSuccessfulPurge(Dictionary<string, string[]> initialSeqsById)
