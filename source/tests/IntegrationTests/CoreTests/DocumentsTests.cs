@@ -247,6 +247,16 @@ namespace IntegrationTests.CoreTests
         }
 
         [MyFact(TestScenarios.DocumentsContext)]
+        public void When_PURGE_of_existing_document_Using_id_and_rev_The_document_is_purged()
+        {
+            var r = SUT.PostAsync(ClientTestData.Artists.Artist1Json).Result;
+
+            var response = SUT.PurgeAsync(new PurgeRequest().Include(r.Id, r.Rev)).Result;
+
+            response.Should().BeSuccessfulPurge(r.Id, r.Rev);
+        }
+
+        [MyFact(TestScenarios.DocumentsContext)]
         public void Flow_tests()
         {
             var post1 = SUT.PostAsync(ClientTestData.Artists.Artist1Json);
@@ -279,6 +289,11 @@ namespace IntegrationTests.CoreTests
 
             delete1.Result.Should().BeSuccessfulDelete(put1.Result.Id);
             delete2.Result.Should().BeSuccessfulDelete(put2.Result.Id);
+
+            var purgeReq = new PurgeRequest()
+                .Include(delete1.Result.Id, delete1.Result.Rev)
+                .Include(delete2.Result.Id, delete2.Result.Rev);
+            SUT.PurgeAsync(purgeReq).Result.Should().BeSuccessfulPurge(purgeReq.SeqsById);
         }
     }
 }

@@ -39,3 +39,6 @@ _ReSharper.*
 
 #windows stuff
 Thumbs.db
+
+#mac stuff
+.DS_Store

@@ -32,6 +32,15 @@ namespace MyCouch
         Task<BulkResponse> BulkAsync(BulkRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// Lets you use the underlying purge API to permanently remove the references to documents in the database
+        /// documents.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<PurgeResponse> PurgeAsync(PurgeRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// Copies the document having a document id matching <paramref name="srcId"/> to a new document
         /// with a new id being <paramref name="newId"/>.
         /// For more options use <see cref="CopyAsync(CopyDocumentRequest, CancellationToken)"/> instead.

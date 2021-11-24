@@ -250,6 +250,26 @@ namespace IntegrationTests.CoreTests
             header.Rev.Should().Be(store.Rev);
         }
 
+        [MyFact(TestScenarios.MyCouchStore)]
+        public virtual void PurgeManyAsync_It_disapears_the_documents()
+        {
+            var stored1 = SUT.StoreAsync(ClientTestData.Artists.Artist2).Result;
+            var stored2 = SUT.StoreAsync(ClientTestData.Artists.Artist3).Result;
+
+            var result = SUT.PurgeManyAsync(new[]{
+                new DocumentHeader(stored1.ArtistId, stored1.ArtistRev),
+                new DocumentHeader(stored2.ArtistId, stored2.ArtistRev)}).Result;
+
+            SUT.ExistsAsync(stored1.ArtistId).Result.Should().BeFalse();
+            SUT.ExistsAsync(stored2.ArtistId).Result.Should().BeFalse();
+
+            result.SeqsById.Should().NotBeNull();
+            result.SeqsById.Should().ContainKey(stored1.ArtistId);
+            result.SeqsById.Should().ContainKey(stored1.ArtistId);
+            result.SeqsById[stored1.ArtistId].Should().Contain(stored1.ArtistRev);
+            result.SeqsById[stored2.ArtistId].Should().Contain(stored2.ArtistRev);
+        }
+
         private class Temp
         {
             public string Id { get; set; }

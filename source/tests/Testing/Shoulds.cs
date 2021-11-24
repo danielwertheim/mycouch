@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
@@ -80,6 +81,11 @@ namespace MyCouch.Testing
         public static ReplicationResponseAssertions Should(this ReplicationResponse response)
         {
             return new ReplicationResponseAssertions(response);
+        }
+
+        public static PurgeResponseAssertions Should(this PurgeResponse response)
+        {
+            return new PurgeResponseAssertions(response);
         }
     }
 
@@ -671,6 +677,44 @@ namespace MyCouch.Testing
             Response.Reason.Should().BeNull();
             Response.Id.Should().Be(initialId);
             Response.Rev.Should().NotBeNullOrEmpty();
+        }
+    }
+
+    public class PurgeResponseAssertions
+    {
+        protected readonly PurgeResponse Response;
+
+        [DebuggerStepThrough]
+        public PurgeResponseAssertions(PurgeResponse response)
+        {
+            Response = response;
+        }
+     
+        public void BeSuccessfulPurge(string initialId, string initialRev)
+        {
+            var codes = new[] { HttpStatusCode.Accepted, HttpStatusCode.Created };
+
+            Response.RequestMethod.Should().Be(HttpMethod.Post);
+            Response.IsSuccess.Should().BeTrue("StatusCode:" + Response.StatusCode);
+            codes.Should().Contain(Response.StatusCode);
+            Response.Error.Should().BeNull();
+            Response.Reason.Should().BeNull();
+            Response.Purged.SeqsById.Should().ContainKey(initialId);
+            Response.Purged.SeqsById[initialId].Contains(initialRev);
+        }
+
+        public void BeSuccessfulPurge(Dictionary<string, string[]> initialSeqsById)
+        {
+            var codes = new[] { HttpStatusCode.Accepted, HttpStatusCode.Created };
+
+            Response.RequestMethod.Should().Be(HttpMethod.Post);
+            Response.IsSuccess.Should().BeTrue("StatusCode:" + Response.StatusCode);
+            codes.Should().Contain(Response.StatusCode);
+            Response.Error.Should().BeNull();
+            Response.Reason.Should().BeNull();
+            Response.Purged.SeqsById.Should().ContainKeys(initialSeqsById.Keys);
+            foreach (var key in Response.Purged.SeqsById.Keys) 
+                Response.Purged.SeqsById[key].Should().Equal(initialSeqsById[key]);
         }
     }
 

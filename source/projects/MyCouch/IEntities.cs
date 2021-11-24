@@ -123,5 +123,14 @@ namespace MyCouch
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         Task<EntityResponse<T>> DeleteAsync<T>(T entity, CancellationToken cancellationToken = default) where T : class;
+
+        /// <summary>
+        /// Purges the document that matches the values of the document _id and _rev extracted from <paramref name="entity"/>.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="entity"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<PurgeResponse> PurgeAsync<T>(T entity, CancellationToken cancellationToken = default) where T : class;
     }
 }
