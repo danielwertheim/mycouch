@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace MyCouch.Querying
 {
@@ -15,6 +15,16 @@ namespace MyCouch.Querying
         public IList<string> Fields { get; set; }
 
         public int? ReadQuorum { get; set; }
+
+        public bool? Conflicts { get; set; }
+
+        public bool? Stable { get; set; }
+
+        public bool? Update { get; set; }
+
+        public string UseIndex { get; set; }
+
+        public string Bookmark { get; set; }
 
         public FindParameters()
         {

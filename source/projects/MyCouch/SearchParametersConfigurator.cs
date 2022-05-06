@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using EnsureThat;
 using System.Collections.Generic;
 
@@ -83,13 +83,15 @@ namespace MyCouch
            return this;
        }
 
-       /// <summary>
-       /// Limit the number of the returned documents to the specified number.
-       /// </summary>
-       /// <param name="value"></param>
-       /// <returns></returns>
-       public virtual SearchParametersConfigurator Limit(int value)
+        /// <summary>
+        /// Limit the number of the returned documents to the specified number. 
+        /// </summary>
+        /// <param name="value">Number of items to be returned.</param>
+        /// <remarks>The number of results returned from a global search query if no limit is specified. Defaults to 25. The maximum value is 200.</remarks>
+        public virtual SearchParametersConfigurator Limit(int value)
        {
+            Ensure.That(value, "limit").IsLte(200);
+
            Parameters.Limit = value;
 
            return this;

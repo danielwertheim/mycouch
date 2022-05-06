@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>netstandard1.1;netstandard2.0</TargetFrameworks>
@@ -9,6 +9,7 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReleaseNotes>https://github.com/danielwertheim/mycouch/releases</PackageReleaseNotes>
     <PackageIcon>package-icon.png</PackageIcon>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

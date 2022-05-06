@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using EnsureThat;
@@ -65,10 +65,11 @@ namespace MyCouch.Requests
            set { State.IncludeDocs = value; }
        }
 
-       /// <summary>
-       /// Limit the number of the returned documents to the specified number.
-       /// </summary>
-       public int? Limit
+        /// <summary>
+        /// Limit the number of the returned documents to the specified number. 
+        /// </summary>
+        /// <remarks>The number of results returned from a global search query if no limit is specified. Defaults to 25. The maximum value is 200.</remarks>
+        public int? Limit
        {
            get { return State.Limit; }
            set { State.Limit = value; }

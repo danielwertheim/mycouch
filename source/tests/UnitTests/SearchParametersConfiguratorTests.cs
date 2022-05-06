@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+using System;
+using FluentAssertions;
 using MyCouch;
 using MyCouch.Searching;
 using Xunit;
@@ -89,6 +90,16 @@ namespace UnitTests
        }
 
        [Fact]
+       public void When_config_of_Limit_above_limit_then_It_should_fail()
+       {
+           const int configuredValue = 201;
+
+           Action test = () => SUT.Limit(configuredValue);
+
+           test.Should().Throw<ArgumentOutOfRangeException>();
+       }
+
+        [Fact]
        public void When_config_of_GroupField_It_configures_underlying_options_GroupField()
        {
            const string configuredValue = "name";
